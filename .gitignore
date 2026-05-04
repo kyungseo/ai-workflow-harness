@@ -1,0 +1,36 @@
+# Build outputs
+build/
+out/
+
+# Compiled files
+*.class
+*.jar
+*.war
+
+# Environment (절대 커밋 금지)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Gradle cache
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# Misc
+temp/
+tmp/

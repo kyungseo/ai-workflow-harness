@@ -1,0 +1,11 @@
+logging:
+  level:
+    root: INFO
+    org.mybatis: "OFF"
+  # JSON structured logs via logstash-logback-encoder (logback-spring.xml required)
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

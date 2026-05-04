@@ -1,0 +1,41 @@
+# Build artifacts
+build/
+bin/
+.gradle/
+
+# Secrets (자동 스캔 제외 — 직접 요청 시 접근 가능)
+.env
+.env.*
+!.env.example
+
+# Binaries
+*.jar
+*.war
+*.class
+*.zip
+*.tar
+*.gz
+*.png
+*.jpg
+*.mp4
+*.key
+*.pem
+*.crt
+
+# VCS / IDE
+.git/
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Misc
+temp/
+tmp/

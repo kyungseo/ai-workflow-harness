@@ -1,0 +1,52 @@
+server:
+  port: 8091
+  shutdown: graceful
+
+spring:
+  application:
+    name: auth-service
+  threads:
+    virtual:
+      enabled: true
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      # Virtual Threads 환경: 이 값이 실질적 DB 동시 처리 상한선
+      # VT는 수천 개 동시 생성 가능 → pool 대기 큐 적체 가능성
+      # 고부하 환경(Phase 2 전환 시) 서비스 트래픽 기준으로 재조정 필요
+      maximum-pool-size: ${DB_POOL_MAX:10}
+      minimum-idle: ${DB_POOL_MIN:5}
+      connection-timeout: ${DB_CONN_TIMEOUT:30000}
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT:6379}
+
+jwt:
+  secret: ${JWT_SECRET}
+  access-token-expiry: ${JWT_ACCESS_EXPIRY:900}
+  refresh-token-expiry: ${JWT_REFRESH_EXPIRY:604800}
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+management:
+  server:
+    port: 8099
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always

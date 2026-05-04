@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew :common:common-core:test --no-daemon)",
+      "Bash(./gradlew :services:auth-service:compileJava :services:user-service:compileJava :services:todo-service:compileJava :gateway:api-gateway:compileJava --no-daemon)"
+    ]
+  }
+}

@@ -1,0 +1,117 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: msa-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-msa_db}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-sql:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - msa-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: msa-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - msa-net
+
+  auth-service:
+    build:
+      context: ../..
+      dockerfile: services/auth-service/Dockerfile
+    container_name: msa-auth-service
+    ports:
+      - "8091:8091"
+      - "8099:8099"
+    env_file: ../../.env
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - msa-net
+
+  user-service:
+    build:
+      context: ../..
+      dockerfile: services/user-service/Dockerfile
+    container_name: msa-user-service
+    ports:
+      - "8092:8092"
+    env_file: ../../.env
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - msa-net
+
+  todo-service:
+    build:
+      context: ../..
+      dockerfile: services/todo-service/Dockerfile
+    container_name: msa-todo-service
+    ports:
+      - "8093:8093"
+    env_file: ../../.env
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - msa-net
+
+  api-gateway:
+    build:
+      context: ../..
+      dockerfile: gateway/api-gateway/Dockerfile
+    container_name: msa-api-gateway
+    ports:
+      - "8090:8090"
+    env_file: ../../.env
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      auth-service:
+        condition: service_started
+      user-service:
+        condition: service_started
+      todo-service:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    networks:
+      - msa-net
+
+volumes:
+  postgres_data:
+
+networks:
+  msa-net:
+    driver: bridge
