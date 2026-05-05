@@ -102,8 +102,8 @@ base-msa-template/
 │   ├── docker/
 │   │   ├── docker-compose.yml           # 전체 스택 통합 실행 (make run)
 │   │   └── init-sql/
-│   │       ├── schema.sql               # 테이블 DDL (PostgreSQL 방언)
-│   │       └── data.sql                 # 초기 데이터 (테스트 계정, 샘플 Todo)
+│   │       ├── 01-schema.sql            # 테이블 DDL (PostgreSQL 방언)
+│   │       └── 02-data.sql             # 초기 데이터 (테스트 계정, 샘플 Todo)
 │   ├── k8s/                             # 구조만 생성 (Phase 2)
 │   │   ├── base/
 │   │   │   ├── gateway/
@@ -127,7 +127,7 @@ base-msa-template/
 │   ├── TODO/
 │   │   ├── TODO-BLOCK1.md               # 프로젝트 골격
 │   │   ├── TODO-BLOCK2.md               # common-core
-│   │   ├── TODO-BLOCK3.md               # 도메인 모델 + schema.sql
+│   │   ├── TODO-BLOCK3.md               # 도메인 모델 + 01-schema.sql / 02-data.sql
 │   │   ├── TODO-BLOCK4.md               # auth-service
 │   │   ├── TODO-BLOCK5.md               # user-service
 │   │   ├── TODO-BLOCK6.md               # todo-service
@@ -302,7 +302,8 @@ Secret (민감):
 
 - 처음부터 PostgreSQL로 실제 운영 환경과 동일하게 검증
 - SQL 방언 차이로 인한 전환 비용 제거 (MyBatis XML 쿼리를 PostgreSQL 방언으로 작성)
-- `schema.sql` + `data.sql`은 PostgreSQL init 스크립트(`/docker-entrypoint-initdb.d`)로 자동 실행
+- `01-schema.sql` + `02-data.sql`은 PostgreSQL init 스크립트(`/docker-entrypoint-initdb.d`)로 자동 실행
+  > **파일명 규칙**: 알파벳 순 실행 특성상 `data.sql`(d)이 `schema.sql`(s)보다 먼저 실행됨. 숫자 접두사(`01-`, `02-`)로 순서 보장.
 
 ### Docker Compose DB 구성
 
@@ -327,7 +328,7 @@ postgres:
     - "5432:5432"
   volumes:
     - postgres_data:/var/lib/postgresql/data
-    - ./init-sql:/docker-entrypoint-initdb.d   # schema.sql + data.sql 자동 실행
+    - ./init-sql:/docker-entrypoint-initdb.d   # 01-schema.sql → 02-data.sql 순서로 자동 실행
   healthcheck:
     test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
     interval: 10s
@@ -356,7 +357,7 @@ Phase 3 (K8s):  관리형 DB (RDS, Cloud SQL 등) 또는 서비스별 StatefulSe
 ```
 
 > **updated_at 자동 갱신**: `DEFAULT NOW()`는 INSERT 시에만 적용된다. UPDATE 시 자동 갱신을
-> 위해 `schema.sql`에 `update_updated_at_column()` PostgreSQL 트리거 함수를 추가한다.
+> 위해 `01-schema.sql`에 `update_updated_at_column()` PostgreSQL 트리거 함수를 추가한다.
 > (→ `docs/TODO/TODO-BLOCK3.md §3-2` 참조)
 >
 > **Phase 1 설계 원칙**: DB 분리를 고려하여 서비스 간 테이블에 FK 제약조건을 사용하지 않는다.
@@ -383,7 +384,7 @@ spring:
 - 다른 서비스 소유 테이블 참조 시 반드시 API 호출로 대체 (Phase 2 기준)
 - `@Primary` / `@Qualifier` / `AbstractRoutingDataSource` 구성은 Phase 2에서 추가
 
-### 초기 데이터 (data.sql)
+### 초기 데이터 (02-data.sql)
 
 | 계정 | 비밀번호 | 역할 | 용도 |
 |---|---|---|---|
@@ -406,13 +407,13 @@ spring:
 | `user` | **8건** | 5건 | **3건** | 페이징(size=5)·필터 테스트 필수 |
 | `user2` | 2건 | 2건 | 0건 | 타인 소유권 테스트용 |
 
-- 비밀번호는 평문이 아닌 **BCrypt(strength 12) 해시값**으로 data.sql에 삽입
+- 비밀번호는 평문이 아닌 **BCrypt(strength 12) 해시값**으로 02-data.sql에 삽입
 - `todos.user_id` 삽입 시 하드코딩 대신 **서브셀렉트** 사용 (ID 순서 의존 방지)
   ```sql
   INSERT INTO todos (user_id, title, description, completed)
   SELECT id, '제목', '설명', false FROM users WHERE username = 'user';
   ```
-- 테스트 계정은 `local` / `dev` 프로파일 전용 (stg/prd data.sql 미포함)
+- 테스트 계정은 `local` / `dev` 프로파일 전용 (stg/prd 02-data.sql 미포함)
 
 ---
 
@@ -908,8 +909,9 @@ make create-service  # 새 서비스 스캐폴딩 (이름 입력 프롬프트)
 - [ ] todo-service (CRUD, 인가 확인, 가이드 샘플)
 
 **DB**
-- [ ] `schema.sql` (PostgreSQL 방언, 전 테이블 DDL — 서비스 간 FK 미사용)
-- [ ] `data.sql` (admin/admin ROLE_ADMIN, user/user ROLE_USER BCrypt 해시, 샘플 Todo)
+
+- [x] `01-schema.sql` (PostgreSQL 방언, 전 테이블 DDL — 서비스 간 FK 미사용)
+- [x] `02-data.sql` (admin/admin ROLE_ADMIN, user/user ROLE_USER BCrypt 해시, 샘플 Todo)
 
 **공통 설정 (전 서비스)**
 - [ ] springdoc-openapi + JWT 인증 + API 그룹 설정
