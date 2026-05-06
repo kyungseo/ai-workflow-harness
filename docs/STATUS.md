@@ -1,6 +1,6 @@
 # STATUS.md — 진행 상태 트래킹
 
-> 마지막 업데이트: 2026-05-06 (BLOCK 7 완료)
+> 마지막 업데이트: 2026-05-06 (BLOCK 8 완료 — CP-3 통과)
 > 이 파일은 구현 진행에 따라 지속적으로 업데이트된다.
 > Claude Code는 각 태스크 완료 후 이 파일의 해당 항목을 업데이트할 것을 **제안**하고,
 > 사용자 확인 후 반영한다.
@@ -9,7 +9,7 @@
 
 ## 현재 진행 블록
 
-**▶ BLOCK 8 — Dockerfile + 통합 테스트**
+**▶ BLOCK 9 — Frontend (대기)**
 
 ---
 
@@ -24,7 +24,7 @@
 | BLOCK 5 | user-service | ✅ 완료 | 100% |
 | BLOCK 6 | todo-service | ✅ 완료 | 100% |
 | BLOCK 7 | api-gateway | ✅ 완료 | 100% |
-| BLOCK 8 | Dockerfile + 통합 테스트 | ⏸ 대기 | - |
+| BLOCK 8 | Dockerfile + 통합 테스트 | ✅ 완료 | 100% |
 | BLOCK 9 | Frontend | ⏸ 대기 | - |
 | BLOCK 10 | 문서화 및 마무리 | ⏸ 대기 | - |
 
@@ -149,7 +149,7 @@
 | CP-2 (auth) | auth-service 단독 기동 → 로그인 API 응답 확인 | ✅ 통과 |
 | CP-2 (user) | user-service 단독 기동 → 회원가입 API 응답 확인 | 🟡 미검증 (빌드/테스트 통과, 기동 미확인) |
 | CP-2 (todo) | todo-service 단독 기동 → Todo 생성 API 응답 확인 | 🟡 미검증 (빌드/테스트 통과, 기동 미확인) |
-| CP-3 | 전체 스택 기동 → 로그인 → Todo 생성 E2E Gateway 경유 확인 | ⏸ 대기 |
+| CP-3 | 전체 스택 기동 → 로그인 → Todo 생성 E2E Gateway 경유 확인 | ✅ 통과 |
 
 ---
 
@@ -332,6 +332,119 @@
 
 ---
 
+## BLOCK 8 세부 진행 (완료)
+
+### 8-1. 사전 정비
+
+- [x] `ARCHITECTURE.md §11` MDC Phase 1 결정 반영 (방식 A → Phase 2, 방식 B 현재 적용 명시)
+- [x] `.dockerignore` 루트 생성 (build/, .env, docs/, .git/ 등 제외)
+
+### 8-2. Dockerfile (멀티스테이지)
+
+- [x] `services/auth-service/Dockerfile`
+- [x] `services/user-service/Dockerfile`
+- [x] `services/todo-service/Dockerfile`
+- [x] `gateway/api-gateway/Dockerfile`
+
+> **빌드 명령**: `docker build -f services/auth-service/Dockerfile -t auth-service .` (루트에서 실행)
+> **fat jar 추출**: `find ... | grep -v plain` — Spring Boot plain jar와 실행 jar 분리
+
+### 8-3. E2E HTTP 테스트 파일
+
+- [x] `tests/http/e2e-gateway.http` (Gateway 경유 전체 흐름 — 4 Phase, 16 시나리오)
+  - Phase 1: admin/user 로그인, 실패 케이스
+  - Phase 2: 회원가입, ADMIN 전용 조회, USER 403
+  - Phase 3: Todo 생성→조회→수정→토글→타인수정→삭제 (todoId 자동 캡처)
+  - Phase 4: 토큰 갱신, 블랙리스트 401, Header Spoofing 방어, 무인증 401
+
+### 8-4. CP-3 검증 절차 ✅ 통과
+
+#### 사전 확인
+
+```bash
+# .env 파일이 프로젝트 루트에 있어야 함
+ls /path/to/base-msa-template/.env   # 없으면 .env.example 복사 후 값 채우기
+
+# Docker 컨테이너에서 실행 시 DB_URL 호스트가 컨테이너명이어야 함
+# .env 에서 아래 값으로 설정 (localhost → msa-postgres)
+# DB_URL=jdbc:postgresql://msa-postgres:5432/msa_db
+# REDIS_HOST=msa-redis
+```
+
+#### Step 1. 전체 스택 기동
+
+`docker-compose.yml`은 `infra/docker/`에 있다.  
+**Makefile 사용 (권장)** — `scripts/` 디렉토리에서 실행:
+
+```bash
+cd scripts
+make run          # 전체 스택 기동 (postgres + redis + 4개 서비스)
+make ps           # 컨테이너 상태 확인
+```
+
+**직접 실행** — 프로젝트 루트에서:
+
+```bash
+docker compose -f infra/docker/docker-compose.yml up -d
+docker compose -f infra/docker/docker-compose.yml ps
+```
+
+> 최초 실행 시 Gradle 멀티스테이지 빌드가 포함되어 **10~20분** 소요될 수 있음.  
+> 이후 실행은 레이어 캐시 덕분에 훨씬 빠름.
+
+#### Step 2. 기동 상태 확인
+
+```bash
+# 컨테이너 상태 — 모두 "Up" 이어야 함
+docker compose -f infra/docker/docker-compose.yml ps
+
+# Gateway health (외부 노출 포트: 8090)
+curl -s http://localhost:8090/actuator/health
+# → SecurityConfig에서 denyAll 처리 → 403 응답이 정상
+
+# auth-service Actuator (management port 8099 외부 노출됨)
+curl -s http://localhost:8099/actuator/health | jq .
+# → {"status":"UP", "components":{"db":..., "redis":...}}
+
+# 로그 실시간 확인 (문제 발생 시)
+cd scripts && make logs SERVICE=api-gateway
+cd scripts && make logs SERVICE=auth-service
+```
+
+#### Step 3. E2E 테스트 실행
+
+**IntelliJ HTTP Client** 에서 `tests/http/e2e-gateway.http` 열고 **Run All Requests in File** 로 전체 실행.  
+> ⚠️ 개별 실행 버튼을 누르면 세션 변수(토큰, todoId)가 초기화된다.
+
+| 단계 | 요청 | 기대 응답 |
+|------|------|-----------|
+| 1-1 admin 로그인 | `POST /api/v1/auth/login` | 200 + accessToken/refreshToken |
+| 1-2 user 로그인 | `POST /api/v1/auth/login` | 200 + accessToken/refreshToken |
+| 1-3 잘못된 비밀번호 | `POST /api/v1/auth/login` | **400** AUTH-0001 |
+| 2-1 회원가입 | `POST /api/v1/users` | 201 (재실행 시 409 정상) |
+| 2-2 이메일 중복 | `POST /api/v1/users` | 409 USER-0001 |
+| 2-3 사용자 목록 (ADMIN) | `GET /api/v1/users` | 200 + totalElements >= 5 |
+| 2-4 사용자 목록 (USER) | `GET /api/v1/users` | 403 |
+| 3-2 Todo 생성 | `POST /api/v1/todos` | 201 + id → `todoId` 자동 캡처 |
+| 3-6 타인 Todo 수정 | `PUT /api/v1/todos/{{todoId}}` | 403 TODO-0002 |
+| 4-1 토큰 갱신 | `POST /api/v1/auth/refresh` | 200 (Rotation) |
+| 4-3 로그아웃 | `POST /api/v1/auth/logout` | 200 |
+| 4-4 블랙리스트 토큰 | `GET /api/v1/todos` | 401 |
+| 4-5 Header Spoofing | `GET /api/v1/todos` (X-User-Id: 99999 포함) | 200 (user 본인 기준 응답) |
+| 4-6 무인증 | `GET /api/v1/todos` | 401 |
+
+#### Step 4. 종료
+
+```bash
+cd scripts && make stop
+# 또는
+docker compose -f infra/docker/docker-compose.yml down
+```
+
+데이터 볼륨까지 초기화하려면: `docker compose -f infra/docker/docker-compose.yml down -v`
+
+---
+
 ## 이슈 / 블로킹 사항
 
 > 현재 없음
@@ -351,3 +464,8 @@
 | 2026-05-06 | BLOCK 5 | BLOCK 5 전체 완료 (user-service 구현, 테스트 17/17 통과, CP-2 user 기동 미검증) |
 | 2026-05-06 | BLOCK 6 | BLOCK 6 전체 완료 (todo-service 구현, 테스트 19/19 통과, CP-2 todo 기동 미검증) |
 | 2026-05-06 | BLOCK 7 | BLOCK 7 전체 완료 (api-gateway 구현, 테스트 10/10 통과, MDC doFirst 버그 수정) |
+| 2026-05-06 | BLOCK 8 | BLOCK 8 전체 완료 — .dockerignore, Dockerfile×4, e2e-gateway.http, CP-3 통과 (4 Phase 전 시나리오 pass) |
+| 2026-05-06 | BLOCK 8 (이슈) | Spring Boot 3.5.0 + Spring Cloud 2024.0.1 비호환 → common-core에서 spring-boot-starter-web exclude, Spring Cloud 2025.0.0 업그레이드로 해결 |
+| 2026-05-06 | BLOCK 8 (이슈) | spring-cloud-starter-gateway deprecated → spring-cloud-starter-gateway-server-webflux 변경, YAML 키 spring.cloud.gateway.server.webflux.routes 변경 |
+| 2026-05-06 | BLOCK 8 (이슈) | RateLimitFilter auth 버킷 공유 → login/refresh/logout 경로별 독립 버킷 분리 |
+| 2026-05-06 | BLOCK 8 (이슈) | e2e-gateway.http IntelliJ HTTP Client 형식 변환 (VS Code REST Client 변수 캡처 문법 → > {% client.global.set() %}) |

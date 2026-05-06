@@ -5,6 +5,8 @@ server:
 spring:
   application:
     name: api-gateway
+  main:
+    web-application-type: reactive
   threads:
     virtual:
       enabled: true
@@ -16,19 +18,21 @@ spring:
       port: ${REDIS_PORT:6379}
   cloud:
     gateway:
-      routes:
-        - id: auth-service
-          uri: ${AUTH_SERVICE_URL:http://localhost:8091}
-          predicates:
-            - Path=/api/v1/auth/**
-        - id: user-service
-          uri: ${USER_SERVICE_URL:http://localhost:8092}
-          predicates:
-            - Path=/api/v1/users/**
-        - id: todo-service
-          uri: ${TODO_SERVICE_URL:http://localhost:8093}
-          predicates:
-            - Path=/api/v1/todos/**
+      server:
+        webflux:
+          routes:
+            - id: auth-service
+              uri: ${AUTH_SERVICE_URL:http://localhost:8091}
+              predicates:
+                - Path=/api/v1/auth/**
+            - id: user-service
+              uri: ${USER_SERVICE_URL:http://localhost:8092}
+              predicates:
+                - Path=/api/v1/users/**
+            - id: todo-service
+              uri: ${TODO_SERVICE_URL:http://localhost:8093}
+              predicates:
+                - Path=/api/v1/todos/**
 
 jwt:
   secret: ${JWT_SECRET}

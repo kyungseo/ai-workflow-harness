@@ -16,11 +16,11 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Redis 기반 Sliding Window Rate Limiting.
- * - 인증 경로 (/api/v1/auth/**): 5 req/s
+ * Redis 기반 Fixed Window Rate Limiting (1s window).
+ * - 인증 경로 (/api/v1/auth/**): 5 req/s, 경로 액션별 독립 버킷 (login/refresh/logout 분리)
  * - 일반 경로: 100 req/s
- * - Key: rl:{userId} (인증 후 X-User-Id 헤더) 또는 rl:ip:{remoteAddr} (미인증)
- * - 초과 시 429 + Retry-After 헤더 반환
+ * - Key: rl:{userId} (인증 후) | rl:ip:{addr}:{action} (auth) | rl:ip:{addr} (일반)
+ * - 초과 시 429 + Retry-After: 1
  *
  * Lua script로 INCR + TTL을 원자적으로 처리하여 race condition 방지.
  */
@@ -80,6 +80,12 @@ public class RateLimitFilter implements GlobalFilter, Ordered {
         }
         String remoteAddr = Objects.requireNonNull(
                 exchange.getRequest().getRemoteAddress()).getAddress().getHostAddress();
+        if (isAuthPath) {
+            // login/refresh/logout별 독립 버킷 — login brute-force 방지와 무관한 경로가 한도를 소모하지 않도록
+            String path = exchange.getRequest().getPath().value();
+            String action = path.substring(path.lastIndexOf('/') + 1);
+            return "rl:ip:" + remoteAddr + ":" + action;
+        }
         return "rl:ip:" + remoteAddr;
     }
 }

@@ -1,6 +1,6 @@
 [versions]
 spring-boot-plugin           = "3.5.0"
-spring-cloud                 = "2024.0.1"
+spring-cloud                 = "2025.0.0"
 spring-dependency-management = "1.1.7"
 jjwt                         = "0.12.6"
 mybatis-spring               = "3.0.4"

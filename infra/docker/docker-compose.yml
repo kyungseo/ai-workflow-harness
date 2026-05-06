@@ -2,6 +2,7 @@ services:
   postgres:
     image: postgres:16-alpine
     container_name: msa-postgres
+    env_file: ../../.env
     environment:
       POSTGRES_DB: ${DB_NAME:-msa_db}
       POSTGRES_USER: ${DB_USERNAME}
@@ -43,6 +44,8 @@ services:
     env_file: ../../.env
     environment:
       SPRING_PROFILES_ACTIVE: dev
+      DB_URL: jdbc:postgresql://msa-postgres:5432/${DB_NAME:-msa_db}
+      REDIS_HOST: msa-redis
     depends_on:
       postgres:
         condition: service_healthy
@@ -61,6 +64,8 @@ services:
     env_file: ../../.env
     environment:
       SPRING_PROFILES_ACTIVE: dev
+      DB_URL: jdbc:postgresql://msa-postgres:5432/${DB_NAME:-msa_db}
+      REDIS_HOST: msa-redis
     depends_on:
       postgres:
         condition: service_healthy
@@ -79,6 +84,8 @@ services:
     env_file: ../../.env
     environment:
       SPRING_PROFILES_ACTIVE: dev
+      DB_URL: jdbc:postgresql://msa-postgres:5432/${DB_NAME:-msa_db}
+      REDIS_HOST: msa-redis
     depends_on:
       postgres:
         condition: service_healthy
@@ -97,6 +104,10 @@ services:
     env_file: ../../.env
     environment:
       SPRING_PROFILES_ACTIVE: dev
+      REDIS_HOST: msa-redis
+      AUTH_SERVICE_URL: http://msa-auth-service:8091
+      USER_SERVICE_URL: http://msa-user-service:8092
+      TODO_SERVICE_URL: http://msa-todo-service:8093
     depends_on:
       auth-service:
         condition: service_started
