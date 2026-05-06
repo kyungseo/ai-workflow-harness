@@ -1,8 +1,8 @@
 # PLAN.md — base-msa-template
 
 > 작성일: 2026-05-03
-> 문서 버전: v1.5
-> 최종 수정: 2026-05-04 (MapStruct, Caffeine, Virtual Threads, HikariCP, SQL 로깅, Multi DataSource 준비 전략 추가)
+> 문서 버전: v1.6
+> 최종 수정: 2026-05-07 (ErrorCode enum→interface 반영, PATCH 수정, e2e-gateway.http 형식 명시, Spring Cloud 2025.0.0 반영)
 > 목적: 프로젝트 시 즉시 활용할 수 있는 수준의 MSA 템플릿 구축
 > 기준: JDK 21+, Spring Boot 3.5.x, Mono Repo, Multi-Module
 
@@ -24,7 +24,7 @@
 | **Runtime** | JDK 21 (Eclipse Temurin) | Virtual Threads 활성화 (`spring.threads.virtual.enabled=true`) |
 | **Framework** | Spring Boot 3.5.x | 최신 안정 버전 |
 | **Build** | Gradle 8.x (Kotlin DSL) | 버전 카탈로그(libs.versions.toml) |
-| **Gateway** | Spring Cloud Gateway (WebFlux) | 라우팅, JWT 검증, Rate Limiting, CORS, Security Headers |
+| **Gateway** | Spring Cloud Gateway (WebFlux) 2025.0.0 | 라우팅, JWT 검증, Rate Limiting, CORS, Security Headers. `spring-cloud-starter-gateway-server-webflux` 사용 |
 | **Security** | Spring Security 6.5 + JJWT 0.12.x | RBAC (ROLE_ADMIN / ROLE_USER) |
 | **Token Store** | Redis | Refresh Token 저장, Blacklist 관리 |
 | **ORM** | MyBatis 3.x (mybatis-spring-boot-starter 3.x) | XML Mapper 방식 |
@@ -94,10 +94,11 @@ base-msa-template/
 │           ├── auth.js                  # 로그인/로그아웃, 토큰 관리
 │           └── todo.js                  # 할 일 CRUD UI
 ├── tests/
-│   └── http/                            # API 통합 테스트 (VS Code REST Client)
-│       ├── auth.http                    # 로그인, 토큰 갱신, 로그아웃
-│       ├── user.http                    # 회원가입, 사용자 CRUD
-│       └── todo.http                    # 할 일 CRUD
+│   └── http/                            # API 통합 테스트
+│       ├── auth.http                    # 로그인, 토큰 갱신, 로그아웃 (VS Code REST Client)
+│       ├── user.http                    # 회원가입, 사용자 CRUD (VS Code REST Client)
+│       ├── todo.http                    # 할 일 CRUD (VS Code REST Client)
+│       └── e2e-gateway.http             # Gateway 경유 E2E 전체 흐름 (IntelliJ HTTP Client)
 ├── infra/
 │   ├── docker/
 │   │   ├── docker-compose.yml           # 전체 스택 통합 실행 (make run)
@@ -168,7 +169,8 @@ common-core/src/main/java/io/kyungseo/msa/common/
 │   └── PageResponse<T>         # 페이징 응답 래퍼 { content, page, size, totalElements, totalPages }
 ├── exception/
 │   ├── BusinessException       # 비즈니스 예외 베이스 클래스
-│   ├── ErrorCode               # 에러 코드 enum (§11 에러 코드 체계 참고)
+│   ├── ErrorCode               # 에러 코드 interface (§11 에러 코드 체계 참고)
+│   ├── CommonErrorCode         # 공통 에러 코드 enum (COMMON-0001~0006, ErrorCode 구현체)
 │   └── GlobalExceptionHandler  # @RestControllerAdvice
 │                               #   - MethodArgumentNotValidException 처리 포함
 │                               #   - BusinessException 처리 포함
@@ -526,7 +528,7 @@ POST   /api/v1/auth/logout                    # 로그아웃 (인증 필요)
 GET    /api/v1/users                          # 사용자 목록 조회 (ADMIN 전용, ?page=0&size=20)
 POST   /api/v1/users                          # 회원가입 (공개)
 GET    /api/v1/users/{id}                     # 사용자 단건 조회 (본인 또는 ADMIN)
-PUT    /api/v1/users/{id}                     # 사용자 정보 수정 (본인 또는 ADMIN)
+PATCH  /api/v1/users/{id}                     # 사용자 정보 수정 (본인 또는 ADMIN, 선택적 필드)
 DELETE /api/v1/users/{id}                     # 사용자 삭제 (ADMIN 전용)
 
 GET    /api/v1/todos                          # 내 할 일 목록 (?page=0&size=20&completed=)
@@ -633,7 +635,7 @@ logging:
 예: AUTH-0001, USER-0001, TODO-0001, COMMON-0001
 ```
 
-### 공통 에러 코드 (common-core ErrorCode enum)
+### 공통 에러 코드 (CommonErrorCode enum — ErrorCode interface 구현체)
 
 | 코드 | HTTP Status | 설명 |
 |---|---|---|
@@ -676,7 +678,8 @@ tests/http/
 
 ### 운영 원칙
 
-- VS Code REST Client 기준 작성 (`.http` 파일)
+- `auth.http`, `user.http`, `todo.http`: VS Code REST Client 형식
+- `e2e-gateway.http`: IntelliJ HTTP Client 형식 (`> {% client.global.set() %}` 변수 캡처)
 - 모든 요청은 **Gateway(8090)를 통해** 호출 (`/api/v1/` prefix)
 - `auth.http` 로그인 응답에서 토큰 변수 추출 → 이후 `.http` 파일에서 재사용
 - 각 파일에 `### [성공 케이스]` + `### [실패 케이스]` 구분 주석 포함

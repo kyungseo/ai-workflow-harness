@@ -1,9 +1,9 @@
 # ARCHITECTURE.md — base-msa-template
 
 > 작성일: 2026-05-03
-> 문서 버전: v1.3
-> 최종 수정: 2026-05-03 (기본 패키지 io.kyungseo.msa 확정, §14 Mermaid 버그 수정)
-> 기준: PLAN.md v1.5
+> 문서 버전: v1.4
+> 최종 수정: 2026-05-07 (ErrorCode enum→interface 반영, MDC Phase 1/2 분리 반영)
+> 기준: PLAN.md v1.6
 > 목적: 시스템 전체 아키텍처 및 주요 흐름 시각화
 
 ---
@@ -198,7 +198,7 @@ graph TD
         end
         subgraph EXC["exception/"]
             BE["BusinessException"]
-            EC["ErrorCode (enum)"]
+            EC["ErrorCode (interface)\n+ CommonErrorCode (enum)"]
             GEH["GlobalExceptionHandler\n@RestControllerAdvice"]
         end
         subgraph LOG["logging/"]

@@ -1,11 +1,13 @@
 package io.kyungseo.msa.user.service;
 
-import io.kyungseo.msa.common.response.PageResponse;
 import io.kyungseo.msa.common.exception.BusinessException;
+import io.kyungseo.msa.common.exception.CommonErrorCode;
+import io.kyungseo.msa.common.response.PageResponse;
 import io.kyungseo.msa.user.domain.User;
 import io.kyungseo.msa.user.dto.RegisterRequest;
 import io.kyungseo.msa.user.dto.UpdateUserRequest;
 import io.kyungseo.msa.user.dto.UserResponse;
+import io.kyungseo.msa.user.dto.mapper.UserResponseMapper;
 import io.kyungseo.msa.user.exception.UserErrorCode;
 import io.kyungseo.msa.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class UserService {
 
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final UserResponseMapper userResponseMapper;
 
     @Transactional
     public UserResponse register(RegisterRequest request) {
@@ -38,7 +41,7 @@ public class UserService {
                 .enabled(true)
                 .build();
         userMapper.insert(user);
-        return UserResponse.from(user);
+        return userResponseMapper.toResponse(user);
     }
 
     @Transactional(readOnly = true)
@@ -46,7 +49,7 @@ public class UserService {
         int offset = page * size;
         long total = userMapper.count();
         List<UserResponse> content = userMapper.findAll(offset, size).stream()
-                .map(UserResponse::from)
+                .map(userResponseMapper::toResponse)
                 .toList();
         int totalPages = (int) Math.ceil((double) total / size);
         return PageResponse.<UserResponse>builder()
@@ -61,10 +64,10 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserResponse getUser(Long targetUserId, Long requesterId, String requesterRole) {
         if (!targetUserId.equals(requesterId) && !"ROLE_ADMIN".equals(requesterRole)) {
-            throw new BusinessException(io.kyungseo.msa.common.exception.CommonErrorCode.FORBIDDEN);
+            throw new BusinessException(CommonErrorCode.FORBIDDEN);
         }
         return userMapper.findById(targetUserId)
-                .map(UserResponse::from)
+                .map(userResponseMapper::toResponse)
                 .orElseThrow(() -> new BusinessException(UserErrorCode.USER_NOT_FOUND));
     }
 
@@ -72,7 +75,7 @@ public class UserService {
     public UserResponse updateUser(Long targetUserId, UpdateUserRequest request,
                                    Long requesterId, String requesterRole) {
         if (!targetUserId.equals(requesterId) && !"ROLE_ADMIN".equals(requesterRole)) {
-            throw new BusinessException(io.kyungseo.msa.common.exception.CommonErrorCode.FORBIDDEN);
+            throw new BusinessException(CommonErrorCode.FORBIDDEN);
         }
         User existing = userMapper.findById(targetUserId)
                 .orElseThrow(() -> new BusinessException(UserErrorCode.USER_NOT_FOUND));
@@ -86,7 +89,7 @@ public class UserService {
                 .build();
         userMapper.update(toUpdate);
         return userMapper.findById(targetUserId)
-                .map(UserResponse::from)
+                .map(userResponseMapper::toResponse)
                 .orElseThrow(() -> new BusinessException(UserErrorCode.USER_NOT_FOUND));
     }
 

@@ -6,6 +6,7 @@ import io.kyungseo.msa.user.domain.User;
 import io.kyungseo.msa.user.dto.RegisterRequest;
 import io.kyungseo.msa.user.dto.UpdateUserRequest;
 import io.kyungseo.msa.user.dto.UserResponse;
+import io.kyungseo.msa.user.dto.mapper.UserResponseMapper;
 import io.kyungseo.msa.user.exception.UserErrorCode;
 import io.kyungseo.msa.user.mapper.UserMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,10 +36,12 @@ class UserServiceTest {
 
     @Mock private UserMapper userMapper;
     @Mock private PasswordEncoder passwordEncoder;
+    @Mock private UserResponseMapper userResponseMapper;
 
     @InjectMocks private UserService userService;
 
     private User sampleUser;
+    private UserResponse sampleResponse;
 
     @BeforeEach
     void setUp() {
@@ -52,6 +55,18 @@ class UserServiceTest {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
+
+        sampleResponse = UserResponse.builder()
+                .id(1L)
+                .username("alice")
+                .email("alice@example.com")
+                .role("ROLE_USER")
+                .enabled(true)
+                .createdAt(sampleUser.getCreatedAt())
+                .updatedAt(sampleUser.getUpdatedAt())
+                .build();
+
+        given(userResponseMapper.toResponse(any(User.class))).willReturn(sampleResponse);
     }
 
     @Test
@@ -129,9 +144,14 @@ class UserServiceTest {
         User updated = User.builder().id(1L).username("bob").email("alice@example.com")
                 .role("ROLE_USER").enabled(true).createdAt(sampleUser.getCreatedAt())
                 .updatedAt(LocalDateTime.now()).build();
+        UserResponse updatedResponse = UserResponse.builder()
+                .id(1L).username("bob").email("alice@example.com")
+                .role("ROLE_USER").enabled(true).build();
+
         given(userMapper.findById(1L))
                 .willReturn(Optional.of(sampleUser))
                 .willReturn(Optional.of(updated));
+        given(userResponseMapper.toResponse(updated)).willReturn(updatedResponse);
 
         UserResponse result = userService.updateUser(1L, req, 1L, "ROLE_USER");
 
