@@ -1,6 +1,6 @@
 # STATUS.md — 진행 상태 트래킹
 
-> 마지막 업데이트: 2026-05-06 (BLOCK 8 완료 — CP-3 통과)
+> 마지막 업데이트: 2026-05-07 (BLOCK 9 완료 — Frontend 브라우저 E2E 확인 통과)
 > 이 파일은 구현 진행에 따라 지속적으로 업데이트된다.
 > Claude Code는 각 태스크 완료 후 이 파일의 해당 항목을 업데이트할 것을 **제안**하고,
 > 사용자 확인 후 반영한다.
@@ -9,7 +9,7 @@
 
 ## 현재 진행 블록
 
-**▶ BLOCK 9 — Frontend (대기)**
+**▶ BLOCK 10 — 문서화 및 마무리 (대기)**
 
 ---
 
@@ -25,7 +25,7 @@
 | BLOCK 6 | todo-service | ✅ 완료 | 100% |
 | BLOCK 7 | api-gateway | ✅ 완료 | 100% |
 | BLOCK 8 | Dockerfile + 통합 테스트 | ✅ 완료 | 100% |
-| BLOCK 9 | Frontend | ⏸ 대기 | - |
+| BLOCK 9 | Frontend | ✅ 완료 | 100% |
 | BLOCK 10 | 문서화 및 마무리 | ⏸ 대기 | - |
 
 **상태 아이콘**: 🔵 시작 전 / 🟡 진행 중 / ✅ 완료 / ⏸ 대기 / ⚠️ 블로킹 이슈
@@ -445,6 +445,28 @@ docker compose -f infra/docker/docker-compose.yml down
 
 ---
 
+## BLOCK 9 세부 진행 (완료)
+
+### 9-1. JS 모듈
+
+- [x] `js/auth.js` — getOrCreateDeviceId, login, logout, setTokens/clearTokens, requireAuth
+- [x] `js/api.js` — fetchWithAuth, 401 시 Refresh 자동 재시도 (최대 1회), 실패 시 login.html 리다이렉트
+
+### 9-2. HTML 페이지
+
+- [x] `login.html` — 로그인 폼, 오류 메시지, 로그인 후 todo.html 리다이렉트
+- [x] `index.html` — 사용자 정보 대시보드, 로그아웃
+- [x] `todo.html` + `js/todo.js` — 할 일 목록/추가/완료토글/삭제, 페이지네이션
+
+### 9-3. 수동 E2E 확인 ✅ 통과
+
+- [x] 로그인 성공/실패
+- [x] 할 일 생성/완료토글/삭제/페이지네이션
+- [x] 로그아웃 후 login.html 리다이렉트
+- [x] 미인증 접근 시 login.html 리다이렉트
+
+---
+
 ## 이슈 / 블로킹 사항
 
 > 현재 없음
@@ -469,3 +491,4 @@ docker compose -f infra/docker/docker-compose.yml down
 | 2026-05-06 | BLOCK 8 (이슈) | spring-cloud-starter-gateway deprecated → spring-cloud-starter-gateway-server-webflux 변경, YAML 키 spring.cloud.gateway.server.webflux.routes 변경 |
 | 2026-05-06 | BLOCK 8 (이슈) | RateLimitFilter auth 버킷 공유 → login/refresh/logout 경로별 독립 버킷 분리 |
 | 2026-05-06 | BLOCK 8 (이슈) | e2e-gateway.http IntelliJ HTTP Client 형식 변환 (VS Code REST Client 변수 캡처 문법 → > {% client.global.set() %}) |
+| 2026-05-07 | BLOCK 9 | Frontend 완료 (login.html, index.html, todo.html, js/auth.js, js/api.js, js/todo.js) — 브라우저 E2E 수동 확인 통과 |

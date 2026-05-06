@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>로그인 — MSA Template</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+    .login-card { max-width: 400px; margin: 100px auto; }
+  </style>
+</head>
+<body>
+  <div class="login-card card shadow-sm">
+    <div class="card-body p-4">
+      <h4 class="card-title mb-4 text-center">MSA Template 로그인</h4>
+      <div id="error-msg" class="alert alert-danger d-none"></div>
+      <form id="login-form" novalidate>
+        <div class="mb-3">
+          <label for="username" class="form-label">사용자명</label>
+          <input type="text" id="username" class="form-control" placeholder="admin 또는 user" required autofocus>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">비밀번호</label>
+          <input type="password" id="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100" id="login-btn">로그인</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    if (getAccessToken()) window.location.href = 'todo.html';
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('login-btn');
+      const errEl = document.getElementById('error-msg');
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      btn.disabled = true;
+      btn.textContent = '로그인 중...';
+      errEl.classList.add('d-none');
+
+      try {
+        await login(username, password);
+        window.location.href = 'todo.html';
+      } catch (err) {
+        errEl.textContent = err.message;
+        errEl.classList.remove('d-none');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '로그인';
+      }
+    });
+  </script>
+</body>
+</html>
