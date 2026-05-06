@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/msa_db
+    username: msa_user
+    password: msa_pass
+    hikari:
+      maximum-pool-size: 3
+      minimum-idle: 1
+      connection-timeout: 5000
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+jwt:
+  secret: "test-secret-key-for-integration-test-must-be-at-least-256-bits-long!!"
+  access-token-expiry: 900
+  refresh-token-expiry: 604800
+
+logging:
+  level:
+    root: WARN
+    io.kyungseo: DEBUG

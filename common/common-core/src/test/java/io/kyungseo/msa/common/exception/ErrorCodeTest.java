@@ -9,37 +9,37 @@ class ErrorCodeTest {
 
     @Test
     void invalidInput_isBadRequest() {
-        assertThat(ErrorCode.INVALID_INPUT.getHttpStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(ErrorCode.INVALID_INPUT.getCode()).isEqualTo("COMMON-0001");
+        assertThat(CommonErrorCode.INVALID_INPUT.getHttpStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(CommonErrorCode.INVALID_INPUT.getCode()).isEqualTo("COMMON-0001");
     }
 
     @Test
     void validationFailed_isBadRequest() {
-        assertThat(ErrorCode.VALIDATION_FAILED.getHttpStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(ErrorCode.VALIDATION_FAILED.getCode()).isEqualTo("COMMON-0002");
+        assertThat(CommonErrorCode.VALIDATION_FAILED.getHttpStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(CommonErrorCode.VALIDATION_FAILED.getCode()).isEqualTo("COMMON-0002");
     }
 
     @Test
     void unauthorized_isUnauthorized() {
-        assertThat(ErrorCode.UNAUTHORIZED.getHttpStatus()).isEqualTo(HttpStatus.UNAUTHORIZED);
-        assertThat(ErrorCode.UNAUTHORIZED.getCode()).isEqualTo("COMMON-0003");
+        assertThat(CommonErrorCode.UNAUTHORIZED.getHttpStatus()).isEqualTo(HttpStatus.UNAUTHORIZED);
+        assertThat(CommonErrorCode.UNAUTHORIZED.getCode()).isEqualTo("COMMON-0003");
     }
 
     @Test
     void forbidden_isForbidden() {
-        assertThat(ErrorCode.FORBIDDEN.getHttpStatus()).isEqualTo(HttpStatus.FORBIDDEN);
-        assertThat(ErrorCode.FORBIDDEN.getCode()).isEqualTo("COMMON-0004");
+        assertThat(CommonErrorCode.FORBIDDEN.getHttpStatus()).isEqualTo(HttpStatus.FORBIDDEN);
+        assertThat(CommonErrorCode.FORBIDDEN.getCode()).isEqualTo("COMMON-0004");
     }
 
     @Test
     void resourceNotFound_isNotFound() {
-        assertThat(ErrorCode.RESOURCE_NOT_FOUND.getHttpStatus()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(ErrorCode.RESOURCE_NOT_FOUND.getCode()).isEqualTo("COMMON-0005");
+        assertThat(CommonErrorCode.RESOURCE_NOT_FOUND.getHttpStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(CommonErrorCode.RESOURCE_NOT_FOUND.getCode()).isEqualTo("COMMON-0005");
     }
 
     @Test
     void internalError_isInternalServerError() {
-        assertThat(ErrorCode.INTERNAL_ERROR.getHttpStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-        assertThat(ErrorCode.INTERNAL_ERROR.getCode()).isEqualTo("COMMON-0006");
+        assertThat(CommonErrorCode.INTERNAL_ERROR.getHttpStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+        assertThat(CommonErrorCode.INTERNAL_ERROR.getCode()).isEqualTo("COMMON-0006");
     }
 }

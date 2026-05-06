@@ -59,7 +59,7 @@ class GlobalExceptionHandlerTest {
 
         @GetMapping("/business-error")
         void throwBusiness() {
-            throw new BusinessException(ErrorCode.RESOURCE_NOT_FOUND);
+            throw new BusinessException(CommonErrorCode.RESOURCE_NOT_FOUND);
         }
 
         @GetMapping("/unknown-error")
