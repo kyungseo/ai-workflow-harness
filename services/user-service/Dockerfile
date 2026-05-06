@@ -7,6 +7,11 @@ RUN gradle :services:user-service:bootJar --no-daemon && \
     cp $(find services/user-service/build/libs -name "*.jar" | grep -v plain) app.jar
 
 FROM eclipse-temurin:21-jre-jammy
+RUN apt-get update && apt-get install -y --no-install-recommends tzdata && \
+    ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime && \
+    echo "Asia/Seoul" > /etc/timezone && \
+    rm -rf /var/lib/apt/lists/*
+ENV TZ=Asia/Seoul
 WORKDIR /app
 COPY --from=builder /app/app.jar app.jar
-ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75.0", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
+ENTRYPOINT ["sh", "-c", "exec java ${JAVA_OPTS} -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom -jar app.jar"]

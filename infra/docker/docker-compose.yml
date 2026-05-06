@@ -46,6 +46,8 @@ services:
       SPRING_PROFILES_ACTIVE: dev
       DB_URL: jdbc:postgresql://msa-postgres:5432/${DB_NAME:-msa_db}
       REDIS_HOST: msa-redis
+      TZ: Asia/Seoul
+      JAVA_OPTS: -Duser.timezone=Asia/Seoul
     depends_on:
       postgres:
         condition: service_healthy
@@ -66,6 +68,8 @@ services:
       SPRING_PROFILES_ACTIVE: dev
       DB_URL: jdbc:postgresql://msa-postgres:5432/${DB_NAME:-msa_db}
       REDIS_HOST: msa-redis
+      TZ: Asia/Seoul
+      JAVA_OPTS: -Duser.timezone=Asia/Seoul
     depends_on:
       postgres:
         condition: service_healthy
@@ -86,6 +90,8 @@ services:
       SPRING_PROFILES_ACTIVE: dev
       DB_URL: jdbc:postgresql://msa-postgres:5432/${DB_NAME:-msa_db}
       REDIS_HOST: msa-redis
+      TZ: Asia/Seoul
+      JAVA_OPTS: -Duser.timezone=Asia/Seoul
     depends_on:
       postgres:
         condition: service_healthy
@@ -108,6 +114,8 @@ services:
       AUTH_SERVICE_URL: http://msa-auth-service:8091
       USER_SERVICE_URL: http://msa-user-service:8092
       TODO_SERVICE_URL: http://msa-todo-service:8093
+      TZ: Asia/Seoul
+      JAVA_OPTS: -Duser.timezone=Asia/Seoul
     depends_on:
       auth-service:
         condition: service_started
