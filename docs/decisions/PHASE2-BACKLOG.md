@@ -7,6 +7,7 @@
 
 ## Phase 2 태스크
 
+- [ ] **Caffeine + Redis 2단계 캐시 활성화** — Phase 1에서 설정 파일(`application.yml`)만 구성하고 `@EnableCaching` / `@Cacheable` 적용은 보류. Phase 2에서 캐시 전략(TTL, 무효화 범위, Pod 간 공유 제약) 정책 수립 후 활성화
 - [ ] Circuit Breaker (Resilience4j) — 서비스 간 RestClient 호출 발생 시
 - [ ] 서비스별 PostgreSQL 분리 (DB per Service) — Phase 1 FK 미사용 설계 기반으로 전환
 - [ ] **분산 트랜잭션 전략 수립** — Saga 패턴 또는 Outbox 패턴

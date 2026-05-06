@@ -125,6 +125,7 @@ base-msa-template/
 │   ├── STATUS.md                        # 진행 상태 트래킹 (단일 진실 공급원)
 │   ├── PLAN.md                          # 이 문서 (설계 결정 및 기술 원칙 전체)
 │   ├── ARCHITECTURE.md                  # 아키텍처 다이어그램 및 흐름
+│   ├── DEVELOPER-GUIDE.md               # 개발자 가이드 (아키텍처 상세 + 개발 절차)
 │   ├── TODO/
 │   │   ├── TODO-BLOCK1.md               # 프로젝트 골격
 │   │   ├── TODO-BLOCK2.md               # common-core
