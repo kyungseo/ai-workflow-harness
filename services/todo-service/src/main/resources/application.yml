@@ -25,9 +25,6 @@ spring:
     caffeine:
       spec: maximumSize=1000,expireAfterWrite=300s
 
-jwt:
-  secret: ${JWT_SECRET}
-
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   configuration:

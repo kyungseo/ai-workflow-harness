@@ -9,7 +9,7 @@
 
 ## 현재 진행 블록
 
-**▶ BLOCK 6 — todo-service**
+**▶ BLOCK 7 — api-gateway**
 
 ---
 
@@ -22,7 +22,7 @@
 | BLOCK 3 | 도메인 모델 + schema.sql | ✅ 완료 | 100% |
 | BLOCK 4 | auth-service | ✅ 완료 | 100% |
 | BLOCK 5 | user-service | ✅ 완료 | 100% |
-| BLOCK 6 | todo-service | 🔵 시작 전 | 0% |
+| BLOCK 6 | todo-service | ✅ 완료 | 100% |
 | BLOCK 7 | api-gateway | ⏸ 대기 | - |
 | BLOCK 8 | Dockerfile + 통합 테스트 | ⏸ 대기 | - |
 | BLOCK 9 | Frontend | ⏸ 대기 | - |
@@ -148,7 +148,7 @@
 | CP-1 | BLOCK 3 완료 → `docker compose up postgres` + psql 스키마/데이터 확인 | ✅ 통과 |
 | CP-2 (auth) | auth-service 단독 기동 → 로그인 API 응답 확인 | ✅ 통과 |
 | CP-2 (user) | user-service 단독 기동 → 회원가입 API 응답 확인 | 🟡 미검증 (빌드/테스트 통과, 기동 미확인) |
-| CP-2 (todo) | todo-service 단독 기동 → Todo 생성 API 응답 확인 | ⏸ 대기 |
+| CP-2 (todo) | todo-service 단독 기동 → Todo 생성 API 응답 확인 | 🟡 미검증 (빌드/테스트 통과, 기동 미확인) |
 | CP-3 | 전체 스택 기동 → 로그인 → Todo 생성 E2E Gateway 경유 확인 | ⏸ 대기 |
 
 ---
@@ -252,6 +252,47 @@
 
 ---
 
+## BLOCK 6 세부 진행 (완료)
+
+### 6-1. MyBatis
+
+- [x] `mapper/TodoMapper.java` (findAllByUserId/countByUserId/findById/insert/update/updateCompleted/deleteById)
+- [x] `mapper/UserExistenceMapper.java` (existsById — users 테이블 직접 조회, FK 미사용 설계 보완)
+- [x] `resources/mapper/TodoMapper.xml` / `UserExistenceMapper.xml` (#{} 바인딩, completed nullable 필터)
+
+### 6-2. 도메인 / 예외 / DTO
+
+- [x] `domain/Todo.java` (@Getter @Builder)
+- [x] `exception/TodoErrorCode.java` (TODO-0001~0002)
+- [x] `dto/CreateTodoRequest.java` / `UpdateTodoRequest.java` / `TodoResponse.java`
+
+### 6-3. 보안 필터 / 설정
+
+- [x] `filter/TodoContextFilter.java` (Header Spoofing Phase 1/2 주석 포함)
+- [x] `config/SecurityConfig.java` (STATELESS, 전체 인증 필수, @EnableMethodSecurity)
+- [x] `config/MyBatisConfig.java` / `config/OpenApiConfig.java`
+- [x] `TodoServiceApplication.java` (scanBasePackages 추가 — GlobalExceptionHandler 등록 필수)
+
+### 6-4. 서비스 / 컨트롤러
+
+- [x] `service/TodoService.java` (getTodos/createTodo/getTodo/updateTodo/toggleComplete/deleteTodo, validateOwnership 공통 메서드, @Transactional)
+- [x] `controller/TodoController.java` (6개 엔드포인트, SecurityContextHolder 직접 참조)
+
+### 6-5. 테스트
+
+- [x] `TodoServiceTest.java` (Mockito 단위, 9케이스)
+- [x] `TodoControllerTest.java` (@WebMvcTest 슬라이스, SecurityContextHolder 직접 설정, 4케이스)
+- [x] `TodoIntegrationTest.java` (@SpringBootTest, .with(authentication(...)) per-request 방식, 4케이스)
+- [x] `test/resources/application-test.yml` / `test-schema.sql`
+- [x] `tests/http/todo.http` (12개 시나리오)
+
+### 구현 중 발견한 사항
+
+- 통합 테스트에서 SecurityContextHolder.setAuthentication() 후 중간 전환 시 SecurityContextHolderFilter와 충돌 (다음 요청에서 이전 userId가 유지됨): `SecurityMockMvcRequestPostProcessors.authentication()` per-request 방식으로 해결
+- build.gradle.kts에 불필요한 JJWT 의존성, application.yml에 jwt.secret 설정 제거 (user-service와 동일 패턴)
+
+---
+
 ## 이슈 / 블로킹 사항
 
 > 현재 없음
@@ -269,3 +310,4 @@
 | 2026-05-05 | common-core | ErrorCode enum → interface 리팩토링 + CommonErrorCode enum 신규 (서비스별 에러코드 분리 지원) |
 | 2026-05-05 | BLOCK 4 | BLOCK 4 전체 완료 (auth-service 구현, 테스트 28/28 통과, CP-2 auth 통과) |
 | 2026-05-06 | BLOCK 5 | BLOCK 5 전체 완료 (user-service 구현, 테스트 17/17 통과, CP-2 user 기동 미검증) |
+| 2026-05-06 | BLOCK 6 | BLOCK 6 전체 완료 (todo-service 구현, 테스트 19/19 통과, CP-2 todo 기동 미검증) |
