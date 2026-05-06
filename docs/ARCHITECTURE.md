@@ -405,8 +405,8 @@ sequenceDiagram
 
     FE->>GW: HTTP 요청
 
-    GW->>GW: X-Correlation-ID 생성 (없으면)\nMDC: {traceId, spanId, correlationId}
-    note over GW: 로그: [api-gateway, traceId, spanId, corrId]
+    GW->>GW: X-Correlation-ID 생성 (없으면)\nReactor Context에 correlationId 저장
+    note over GW: 로그: [api-gateway, traceId, spanId] (correlationId MDC는 Phase 2)
 
     GW->>AUTH: 요청 전달\n헤더: X-Correlation-ID
     AUTH->>AUTH: MdcFilter: correlationId → MDC 저장
@@ -422,14 +422,15 @@ sequenceDiagram
 > 전파 방식이 동작하지 않는다. 하나의 요청이 여러 스레드에 걸쳐 실행될 수 있기 때문에 일반적인
 > `MDC.put()` 방식으로는 MDC 값이 전파되지 않음.
 >
-> **Gateway MdcGatewayFilter 구현 방식 (권장: 방식 A)**
-> - **방식 A (권장)**: `Hooks.onEachOperator`를 활용한 Context → MDC 자동 전파
+> **Gateway MdcGatewayFilter 구현 방식**
+>
+> - **방식 A**: `Hooks.onEachOperator`를 활용한 Context → MDC 자동 전파 (Phase 2 적용 예정)
 >   - `reactor.util.context.Context`에 correlationId 저장 → 각 operator 실행 시 MDC 자동 주입
 >   - Micrometer Tracing이 이미 Reactor Context 연동을 지원하므로 traceId/spanId도 함께 전파됨
-> - **방식 B**: `ServerWebExchange` attribute에 저장 후 필요 시점에 MDC 수동 설정
->   - 구현은 간단하나 비동기 체인에서 MDC 누락 가능성 있음
->
-> Phase 1 권장: 방식 A. 상세 구현은 `docs/TODO/TODO-BLOCK7.md §7-2` 참조.
+> - **방식 B (Phase 1 적용)**: `contextWrite`로 Reactor Context에만 저장
+>   - ThreadLocal MDC 직접 설정(`MDC.put()`)은 비동기 체인에서 신뢰할 수 없어 사용하지 않음
+>   - Gateway 자체 로그의 correlationId MDC 주입은 Phase 2에서 방식 A로 교체
+>   - X-Correlation-ID 헤더 전파(하위 서비스 → 클라이언트)는 Phase 1에서도 정상 동작
 
 ---
 

@@ -1,6 +1,6 @@
 # STATUS.md — 진행 상태 트래킹
 
-> 마지막 업데이트: 2026-05-06 (BLOCK 5 완료)
+> 마지막 업데이트: 2026-05-06 (BLOCK 7 완료)
 > 이 파일은 구현 진행에 따라 지속적으로 업데이트된다.
 > Claude Code는 각 태스크 완료 후 이 파일의 해당 항목을 업데이트할 것을 **제안**하고,
 > 사용자 확인 후 반영한다.
@@ -9,7 +9,7 @@
 
 ## 현재 진행 블록
 
-**▶ BLOCK 7 — api-gateway**
+**▶ BLOCK 8 — Dockerfile + 통합 테스트**
 
 ---
 
@@ -23,7 +23,7 @@
 | BLOCK 4 | auth-service | ✅ 완료 | 100% |
 | BLOCK 5 | user-service | ✅ 완료 | 100% |
 | BLOCK 6 | todo-service | ✅ 완료 | 100% |
-| BLOCK 7 | api-gateway | ⏸ 대기 | - |
+| BLOCK 7 | api-gateway | ✅ 완료 | 100% |
 | BLOCK 8 | Dockerfile + 통합 테스트 | ⏸ 대기 | - |
 | BLOCK 9 | Frontend | ⏸ 대기 | - |
 | BLOCK 10 | 문서화 및 마무리 | ⏸ 대기 | - |
@@ -293,6 +293,45 @@
 
 ---
 
+## BLOCK 7 세부 진행 (완료)
+
+### 7-1. 설정 / 공통
+
+- [x] `ApiGatewayApplication.java` (scanBasePackages 추가 — GlobalExceptionHandler 등록 필수)
+- [x] `config/GatewayProperties.java` (blacklistFailPolicy, allowedOrigins, isFailClose())
+- [x] `security/JwtVerifier.java` (JJWT 0.12.x 검증, type == "access" token confusion 방어)
+- [x] `config/OpenApiConfig.java` (springdoc-webflux, JWT Bearer 스킴)
+- [x] `config/SecurityConfig.java` (@EnableWebFluxSecurity, CORS, Actuator denyAll)
+- [x] `test/resources/application-test.yml`
+
+### 7-2. GlobalFilter 체인 (Order: -5 → -1)
+
+- [x] `filter/MdcGatewayFilter.java` (Order -5 — X-Correlation-ID 생성/전파, Reactor Context 저장)
+- [x] `filter/SecurityHeadersFilter.java` (Order -4 — X-Content-Type-Options, X-Frame-Options, HSTS stg/prd만)
+- [x] `filter/RateLimitFilter.java` (Order -3 — Redis Lua sliding window, auth 5/s, 일반 100/s, 429+Retry-After)
+- [x] `filter/JwtAuthFilter.java` (Order -2 — JWT 검증, Redis 블랙리스트 조회, fail-close/fail-open 정책)
+- [x] `filter/UserContextFilter.java` (Order -1 — Header Spoofing 방어, X-User-Id/Role 강제 대체)
+
+### 7-3. 테스트 (10/10 통과)
+
+- [x] `JwtAuthFilterTest.java` (6케이스 — 공개경로 스킵, 유효토큰 통과, 401×2, fail-close, fail-open)
+- [x] `UserContextFilterTest.java` (2케이스 — 스푸핑 헤더 교체, claims 없음 시 제거)
+- [x] `RateLimitFilterTest.java` (2케이스 — 제한 이하 통과, 초과 시 429)
+
+### 7-4. HTTP 테스트 파일
+
+- [x] `tests/http/gateway.http` (6개 시나리오 — 공개경로, 인증, 헤더스푸핑, 인증실패, Actuator차단, Rate Limit)
+
+### 구현 중 발견한 사항
+
+- `reactor-test` 의존성 누락 → `testImplementation("io.projectreactor:reactor-test")` 추가
+- `ReactiveRedisTemplate.execute()` Mockito 오버로드 모호성 → 필드 타입을 `ReactiveRedisOperations`(인터페이스)로 변경, 스텁 시 `anyList()` 사용
+- `MockServerWebExchange` remoteAddress 기본값 null → `.remoteAddress(new InetSocketAddress("127.0.0.1", 0))` 필수
+- `UnnecessaryStubbingException` → `@BeforeEach` chain 스텁은 `lenient().when(...)` 적용
+- MDC 편차 수정: 계획(방식 A)과 달리 `doFirst(() -> MDC.put(...))` ThreadLocal 방식이 적용되어 있었음 → 제거하고 `contextWrite` Reactor Context 저장만 유지. 방식 A (Hooks.onEachOperator) 는 Phase 2 적용
+
+---
+
 ## 이슈 / 블로킹 사항
 
 > 현재 없음
@@ -311,3 +350,4 @@
 | 2026-05-05 | BLOCK 4 | BLOCK 4 전체 완료 (auth-service 구현, 테스트 28/28 통과, CP-2 auth 통과) |
 | 2026-05-06 | BLOCK 5 | BLOCK 5 전체 완료 (user-service 구현, 테스트 17/17 통과, CP-2 user 기동 미검증) |
 | 2026-05-06 | BLOCK 6 | BLOCK 6 전체 완료 (todo-service 구현, 테스트 19/19 통과, CP-2 todo 기동 미검증) |
+| 2026-05-06 | BLOCK 7 | BLOCK 7 전체 완료 (api-gateway 구현, 테스트 10/10 통과, MDC doFirst 버그 수정) |
