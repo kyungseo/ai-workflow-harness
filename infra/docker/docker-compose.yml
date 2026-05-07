@@ -13,7 +13,7 @@ services:
       - ./init-sql:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -40,7 +40,7 @@ services:
     container_name: msa-auth-service
     ports:
       - "8091:8091"
-      - "8099:8099"
+      # - "8099:8099"  # Actuator 외부 노출 차단 원칙. 로컬 확인 필요 시 주석 해제 후 재기동
     env_file: ../../.env
     environment:
       SPRING_PROFILES_ACTIVE: dev

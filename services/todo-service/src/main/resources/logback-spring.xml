@@ -3,7 +3,7 @@
   <springProfile name="local,dev">
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
       <encoder>
-        <pattern>%d{HH:mm:ss.SSS} %5p [${spring.application.name:},%X{traceId:-},%X{spanId:-},%X{X-Correlation-ID:-}] %logger{36} - %msg%n</pattern>
+        <pattern>%d{HH:mm:ss.SSS} %5p [${spring.application.name:-},%X{traceId:-},%X{spanId:-},%X{X-Correlation-ID:-}] %logger{36} - %msg%n</pattern>
       </encoder>
     </appender>
     <root level="DEBUG">
