@@ -1,0 +1,82 @@
+### User Service API - VS Code REST Client
+### 사전 조건: gateway(8080) 또는 user-service(8092) 직접 접근
+### X-User-Id / X-User-Role 헤더는 Gateway가 주입 (직접 접근 시 수동 설정)
+
+@baseUrl = http://localhost:8092
+@adminId = 1
+@userId = 2
+
+### 1. 회원가입 (공개 엔드포인트)
+POST {{baseUrl}}/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "alice",
+  "email": "alice@example.com",
+  "password": "Password1"
+}
+
+### 2. 이메일 중복 시 409
+POST {{baseUrl}}/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "alice2",
+  "email": "alice@example.com",
+  "password": "Password1"
+}
+
+### 3. 비밀번호 정책 위반 시 400
+POST {{baseUrl}}/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "bob",
+  "email": "bob@example.com",
+  "password": "weak"
+}
+
+### 4. 전체 사용자 목록 조회 (ADMIN 전용)
+GET {{baseUrl}}/api/v1/users?page=0&size=10
+X-User-Id: {{adminId}}
+X-User-Role: ROLE_ADMIN
+
+### 5. 특정 사용자 조회 (본인 or ADMIN)
+GET {{baseUrl}}/api/v1/users/{{userId}}
+X-User-Id: {{userId}}
+X-User-Role: ROLE_USER
+
+### 6. 타인 조회 시 403 (ROLE_USER가 다른 사용자 조회)
+GET {{baseUrl}}/api/v1/users/{{adminId}}
+X-User-Id: {{userId}}
+X-User-Role: ROLE_USER
+
+### 7. 사용자 정보 수정 (본인)
+PATCH {{baseUrl}}/api/v1/users/{{userId}}
+Content-Type: application/json
+X-User-Id: {{userId}}
+X-User-Role: ROLE_USER
+
+{
+  "username": "alice_updated"
+}
+
+### 8. 비밀번호 변경
+PATCH {{baseUrl}}/api/v1/users/{{userId}}
+Content-Type: application/json
+X-User-Id: {{userId}}
+X-User-Role: ROLE_USER
+
+{
+  "password": "NewPass123"
+}
+
+### 9. 사용자 삭제 (ADMIN 전용)
+DELETE {{baseUrl}}/api/v1/users/{{userId}}
+X-User-Id: {{adminId}}
+X-User-Role: ROLE_ADMIN
+
+### 10. 존재하지 않는 사용자 삭제 시 404
+DELETE {{baseUrl}}/api/v1/users/9999
+X-User-Id: {{adminId}}
+X-User-Role: ROLE_ADMIN

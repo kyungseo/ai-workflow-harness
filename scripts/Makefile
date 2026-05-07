@@ -2,8 +2,10 @@ SHELL := /bin/bash
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 PROJECT_ROOT := $(ROOT_DIR)/..
 COMPOSE_FILE := $(PROJECT_ROOT)/infra/docker/docker-compose.yml
+ENV_FILE := $(PROJECT_ROOT)/.env
+COMPOSE := docker compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE)
 
-.PHONY: build test clean run run-local run-infra stop logs ps create-service help
+.PHONY: build test clean run rebuild rebuild-nc run-local run-infra stop logs ps create-service help
 
 help:
 	@echo "Available targets:"
@@ -11,6 +13,8 @@ help:
 	@echo "  test           - Run all tests"
 	@echo "  clean          - Clean all build outputs"
 	@echo "  run            - Start full stack (all services + infra)"
+	@echo "  rebuild        - Rebuild images and start full stack"
+	@echo "  rebuild-nc     - Rebuild images (no cache) and start full stack"
 	@echo "  run-local      - Start infra only (postgres + redis)"
 	@echo "  stop           - Stop all containers"
 	@echo "  logs           - Tail logs (SERVICE=<name> for specific service)"
@@ -27,23 +31,30 @@ clean:
 	@cd $(PROJECT_ROOT) && ./gradlew clean
 
 run:
-	@docker compose -f $(COMPOSE_FILE) up -d
+	@$(COMPOSE) up -d
+
+rebuild:
+	@$(COMPOSE) up --build -d
+
+rebuild-nc:
+	@$(COMPOSE) build --no-cache
+	@$(COMPOSE) up -d
 
 run-local:
-	@docker compose -f $(COMPOSE_FILE) up postgres redis -d
+	@$(COMPOSE) up postgres redis -d
 
 stop:
-	@docker compose -f $(COMPOSE_FILE) down
+	@$(COMPOSE) down
 
 logs:
 ifdef SERVICE
-	@docker compose -f $(COMPOSE_FILE) logs -f $(SERVICE)
+	@$(COMPOSE) logs -f $(SERVICE)
 else
-	@docker compose -f $(COMPOSE_FILE) logs -f
+	@$(COMPOSE) logs -f
 endif
 
 ps:
-	@docker compose -f $(COMPOSE_FILE) ps
+	@$(COMPOSE) ps
 
 create-service:
 ifndef NAME

@@ -83,8 +83,8 @@
   - `.env` 파일 참조 (`env_file: ../../.env`)
 - [x] `.devcontainer/docker-compose.devcontainer.yml` 작성
   - PostgreSQL + Redis만 기동 (서비스는 VS Code에서 직접 실행)
-- [x] `infra/docker/init-sql/schema.sql` 생성 (빈 파일 — BLOCK 3에서 작성)
-- [x] `infra/docker/init-sql/data.sql` 생성 (빈 파일 — BLOCK 3에서 작성)
+- [x] `infra/docker/init-sql/01-schema.sql` (BLOCK 3에서 작성 완료 — 파일명 변경: init 스크립트 알파벳 순 실행 순서 보장)
+- [x] `infra/docker/init-sql/02-data.sql` (BLOCK 3에서 작성 완료 — 파일명 변경)
 
 ---
 

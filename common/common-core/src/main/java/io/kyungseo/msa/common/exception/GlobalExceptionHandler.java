@@ -34,10 +34,10 @@ public class GlobalExceptionHandler {
                 .toList();
 
         return ResponseEntity
-                .status(ErrorCode.VALIDATION_FAILED.getHttpStatus())
+                .status(CommonErrorCode.VALIDATION_FAILED.getHttpStatus())
                 .body(ErrorResponse.builder()
-                        .code(ErrorCode.VALIDATION_FAILED.getCode())
-                        .message(ErrorCode.VALIDATION_FAILED.getMessage())
+                        .code(CommonErrorCode.VALIDATION_FAILED.getCode())
+                        .message(CommonErrorCode.VALIDATION_FAILED.getMessage())
                         .errors(fieldErrors)
                         .build());
     }
@@ -46,15 +46,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiResponse<Void>> handleAccessDeniedException(AccessDeniedException e) {
         return ResponseEntity
-                .status(ErrorCode.FORBIDDEN.getHttpStatus())
-                .body(ApiResponse.error(ErrorCode.FORBIDDEN));
+                .status(CommonErrorCode.FORBIDDEN.getHttpStatus())
+                .body(ApiResponse.error(CommonErrorCode.FORBIDDEN));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleException(Exception e) {
         log.warn("Unhandled exception", e);
         return ResponseEntity
-                .status(ErrorCode.INTERNAL_ERROR.getHttpStatus())
-                .body(ApiResponse.error(ErrorCode.INTERNAL_ERROR));
+                .status(CommonErrorCode.INTERNAL_ERROR.getHttpStatus())
+                .body(ApiResponse.error(CommonErrorCode.INTERNAL_ERROR));
     }
 }

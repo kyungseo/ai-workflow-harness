@@ -1,6 +1,7 @@
 # Build outputs
 build/
 out/
+**/bin/
 
 # Compiled files
 *.class

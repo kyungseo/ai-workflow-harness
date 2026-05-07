@@ -1,6 +1,6 @@
 package io.kyungseo.msa.common.response;
 
-import io.kyungseo.msa.common.exception.ErrorCode;
+import io.kyungseo.msa.common.exception.CommonErrorCode;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,7 +26,7 @@ class ApiResponseTest {
 
     @Test
     void error_returnsErrorCodeAndMessage() {
-        ApiResponse<Void> response = ApiResponse.error(ErrorCode.RESOURCE_NOT_FOUND);
+        ApiResponse<Void> response = ApiResponse.error(CommonErrorCode.RESOURCE_NOT_FOUND);
 
         assertThat(response.getCode()).isEqualTo("COMMON-0005");
         assertThat(response.getMessage()).isEqualTo("리소스를 찾을 수 없습니다");

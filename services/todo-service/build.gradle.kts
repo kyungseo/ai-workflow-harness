@@ -13,10 +13,6 @@ dependencies {
     // MyBatis
     implementation(libs.mybatis.starter)
     runtimeOnly(libs.postgresql)
-    // JJWT - X-User-Id header trust and direct token parsing
-    implementation(libs.jjwt.api)
-    runtimeOnly(libs.jjwt.impl)
-    runtimeOnly(libs.jjwt.jackson)
     // Caffeine local cache
     implementation(libs.caffeine)
     // MapStruct DTO conversion - annotation processor order mandatory: lombok -> mapstruct

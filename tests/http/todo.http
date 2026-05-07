@@ -1,0 +1,94 @@
+### todo-service HTTP 테스트
+### 사전 조건: auth-service 로그인 후 @accessToken 변수 설정
+### VS Code REST Client 사용
+
+@baseUrl = http://localhost:8093
+@accessToken = <로그인_후_발급된_ACCESS_TOKEN>
+
+### ─────────────────────────────────────────
+### 1. Todo 목록 조회 (전체)
+GET {{baseUrl}}/api/v1/todos
+Authorization: Bearer {{accessToken}}
+
+###
+
+### 2. Todo 목록 조회 (미완료만)
+GET {{baseUrl}}/api/v1/todos?completed=false
+Authorization: Bearer {{accessToken}}
+
+###
+
+### 3. Todo 목록 조회 (완료만, 페이징)
+GET {{baseUrl}}/api/v1/todos?page=0&size=5&completed=true
+Authorization: Bearer {{accessToken}}
+
+###
+
+### 4. Todo 생성
+POST {{baseUrl}}/api/v1/todos
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "title": "Spring Security 공부",
+  "description": "MSA 보안 아키텍처 정리"
+}
+
+###
+
+### 5. Todo 생성 — 제목 없음 (유효성 검증 실패, 400)
+POST {{baseUrl}}/api/v1/todos
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "제목이 비어 있어서 실패해야 함"
+}
+
+###
+
+### 6. Todo 단건 조회
+GET {{baseUrl}}/api/v1/todos/1
+Authorization: Bearer {{accessToken}}
+
+###
+
+### 7. Todo 단건 조회 — 존재하지 않는 ID (404)
+GET {{baseUrl}}/api/v1/todos/99999
+Authorization: Bearer {{accessToken}}
+
+###
+
+### 8. Todo 수정 (PUT — 전체 수정)
+PUT {{baseUrl}}/api/v1/todos/1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "title": "Spring Security 공부 (수정)",
+  "description": "내용 업데이트 완료",
+  "completed": false
+}
+
+###
+
+### 9. 완료 상태 토글 (PATCH)
+PATCH {{baseUrl}}/api/v1/todos/1/complete
+Authorization: Bearer {{accessToken}}
+
+###
+
+### 10. Todo 삭제
+DELETE {{baseUrl}}/api/v1/todos/1
+Authorization: Bearer {{accessToken}}
+
+###
+
+### 11. 인증 없이 요청 (401)
+GET {{baseUrl}}/api/v1/todos
+
+###
+
+### 12. Actuator 헬스 체크
+GET http://localhost:8099/actuator/health

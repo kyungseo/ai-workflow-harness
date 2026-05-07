@@ -1,8 +1,8 @@
 # PLAN.md — base-msa-template
 
 > 작성일: 2026-05-03
-> 문서 버전: v1.5
-> 최종 수정: 2026-05-04 (MapStruct, Caffeine, Virtual Threads, HikariCP, SQL 로깅, Multi DataSource 준비 전략 추가)
+> 문서 버전: v1.6
+> 최종 수정: 2026-05-07 (ErrorCode enum→interface 반영, PATCH 수정, e2e-gateway.http 형식 명시, Spring Cloud 2025.0.0 반영)
 > 목적: 프로젝트 시 즉시 활용할 수 있는 수준의 MSA 템플릿 구축
 > 기준: JDK 21+, Spring Boot 3.5.x, Mono Repo, Multi-Module
 
@@ -24,7 +24,7 @@
 | **Runtime** | JDK 21 (Eclipse Temurin) | Virtual Threads 활성화 (`spring.threads.virtual.enabled=true`) |
 | **Framework** | Spring Boot 3.5.x | 최신 안정 버전 |
 | **Build** | Gradle 8.x (Kotlin DSL) | 버전 카탈로그(libs.versions.toml) |
-| **Gateway** | Spring Cloud Gateway (WebFlux) | 라우팅, JWT 검증, Rate Limiting, CORS, Security Headers |
+| **Gateway** | Spring Cloud Gateway (WebFlux) 2025.0.0 | 라우팅, JWT 검증, Rate Limiting, CORS, Security Headers. `spring-cloud-starter-gateway-server-webflux` 사용 |
 | **Security** | Spring Security 6.5 + JJWT 0.12.x | RBAC (ROLE_ADMIN / ROLE_USER) |
 | **Token Store** | Redis | Refresh Token 저장, Blacklist 관리 |
 | **ORM** | MyBatis 3.x (mybatis-spring-boot-starter 3.x) | XML Mapper 방식 |
@@ -94,16 +94,17 @@ base-msa-template/
 │           ├── auth.js                  # 로그인/로그아웃, 토큰 관리
 │           └── todo.js                  # 할 일 CRUD UI
 ├── tests/
-│   └── http/                            # API 통합 테스트 (VS Code REST Client)
-│       ├── auth.http                    # 로그인, 토큰 갱신, 로그아웃
-│       ├── user.http                    # 회원가입, 사용자 CRUD
-│       └── todo.http                    # 할 일 CRUD
+│   └── http/                            # API 통합 테스트
+│       ├── auth.http                    # 로그인, 토큰 갱신, 로그아웃 (VS Code REST Client)
+│       ├── user.http                    # 회원가입, 사용자 CRUD (VS Code REST Client)
+│       ├── todo.http                    # 할 일 CRUD (VS Code REST Client)
+│       └── e2e-gateway.http             # Gateway 경유 E2E 전체 흐름 (IntelliJ HTTP Client)
 ├── infra/
 │   ├── docker/
 │   │   ├── docker-compose.yml           # 전체 스택 통합 실행 (make run)
 │   │   └── init-sql/
-│   │       ├── schema.sql               # 테이블 DDL (PostgreSQL 방언)
-│   │       └── data.sql                 # 초기 데이터 (테스트 계정, 샘플 Todo)
+│   │       ├── 01-schema.sql            # 테이블 DDL (PostgreSQL 방언)
+│   │       └── 02-data.sql             # 초기 데이터 (테스트 계정, 샘플 Todo)
 │   ├── k8s/                             # 구조만 생성 (Phase 2)
 │   │   ├── base/
 │   │   │   ├── gateway/
@@ -124,10 +125,11 @@ base-msa-template/
 │   ├── STATUS.md                        # 진행 상태 트래킹 (단일 진실 공급원)
 │   ├── PLAN.md                          # 이 문서 (설계 결정 및 기술 원칙 전체)
 │   ├── ARCHITECTURE.md                  # 아키텍처 다이어그램 및 흐름
+│   ├── DEVELOPER-GUIDE.md               # 개발자 가이드 (아키텍처 상세 + 개발 절차)
 │   ├── TODO/
 │   │   ├── TODO-BLOCK1.md               # 프로젝트 골격
 │   │   ├── TODO-BLOCK2.md               # common-core
-│   │   ├── TODO-BLOCK3.md               # 도메인 모델 + schema.sql
+│   │   ├── TODO-BLOCK3.md               # 도메인 모델 + 01-schema.sql / 02-data.sql
 │   │   ├── TODO-BLOCK4.md               # auth-service
 │   │   ├── TODO-BLOCK5.md               # user-service
 │   │   ├── TODO-BLOCK6.md               # todo-service
@@ -168,7 +170,8 @@ common-core/src/main/java/io/kyungseo/msa/common/
 │   └── PageResponse<T>         # 페이징 응답 래퍼 { content, page, size, totalElements, totalPages }
 ├── exception/
 │   ├── BusinessException       # 비즈니스 예외 베이스 클래스
-│   ├── ErrorCode               # 에러 코드 enum (§11 에러 코드 체계 참고)
+│   ├── ErrorCode               # 에러 코드 interface (§11 에러 코드 체계 참고)
+│   ├── CommonErrorCode         # 공통 에러 코드 enum (COMMON-0001~0006, ErrorCode 구현체)
 │   └── GlobalExceptionHandler  # @RestControllerAdvice
 │                               #   - MethodArgumentNotValidException 처리 포함
 │                               #   - BusinessException 처리 포함
@@ -302,7 +305,8 @@ Secret (민감):
 
 - 처음부터 PostgreSQL로 실제 운영 환경과 동일하게 검증
 - SQL 방언 차이로 인한 전환 비용 제거 (MyBatis XML 쿼리를 PostgreSQL 방언으로 작성)
-- `schema.sql` + `data.sql`은 PostgreSQL init 스크립트(`/docker-entrypoint-initdb.d`)로 자동 실행
+- `01-schema.sql` + `02-data.sql`은 PostgreSQL init 스크립트(`/docker-entrypoint-initdb.d`)로 자동 실행
+  > **파일명 규칙**: 알파벳 순 실행 특성상 `data.sql`(d)이 `schema.sql`(s)보다 먼저 실행됨. 숫자 접두사(`01-`, `02-`)로 순서 보장.
 
 ### Docker Compose DB 구성
 
@@ -327,7 +331,7 @@ postgres:
     - "5432:5432"
   volumes:
     - postgres_data:/var/lib/postgresql/data
-    - ./init-sql:/docker-entrypoint-initdb.d   # schema.sql + data.sql 자동 실행
+    - ./init-sql:/docker-entrypoint-initdb.d   # 01-schema.sql → 02-data.sql 순서로 자동 실행
   healthcheck:
     test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
     interval: 10s
@@ -356,7 +360,7 @@ Phase 3 (K8s):  관리형 DB (RDS, Cloud SQL 등) 또는 서비스별 StatefulSe
 ```
 
 > **updated_at 자동 갱신**: `DEFAULT NOW()`는 INSERT 시에만 적용된다. UPDATE 시 자동 갱신을
-> 위해 `schema.sql`에 `update_updated_at_column()` PostgreSQL 트리거 함수를 추가한다.
+> 위해 `01-schema.sql`에 `update_updated_at_column()` PostgreSQL 트리거 함수를 추가한다.
 > (→ `docs/TODO/TODO-BLOCK3.md §3-2` 참조)
 >
 > **Phase 1 설계 원칙**: DB 분리를 고려하여 서비스 간 테이블에 FK 제약조건을 사용하지 않는다.
@@ -383,7 +387,7 @@ spring:
 - 다른 서비스 소유 테이블 참조 시 반드시 API 호출로 대체 (Phase 2 기준)
 - `@Primary` / `@Qualifier` / `AbstractRoutingDataSource` 구성은 Phase 2에서 추가
 
-### 초기 데이터 (data.sql)
+### 초기 데이터 (02-data.sql)
 
 | 계정 | 비밀번호 | 역할 | 용도 |
 |---|---|---|---|
@@ -406,13 +410,13 @@ spring:
 | `user` | **8건** | 5건 | **3건** | 페이징(size=5)·필터 테스트 필수 |
 | `user2` | 2건 | 2건 | 0건 | 타인 소유권 테스트용 |
 
-- 비밀번호는 평문이 아닌 **BCrypt(strength 12) 해시값**으로 data.sql에 삽입
+- 비밀번호는 평문이 아닌 **BCrypt(strength 12) 해시값**으로 02-data.sql에 삽입
 - `todos.user_id` 삽입 시 하드코딩 대신 **서브셀렉트** 사용 (ID 순서 의존 방지)
   ```sql
   INSERT INTO todos (user_id, title, description, completed)
   SELECT id, '제목', '설명', false FROM users WHERE username = 'user';
   ```
-- 테스트 계정은 `local` / `dev` 프로파일 전용 (stg/prd data.sql 미포함)
+- 테스트 계정은 `local` / `dev` 프로파일 전용 (stg/prd 02-data.sql 미포함)
 
 ---
 
@@ -525,7 +529,7 @@ POST   /api/v1/auth/logout                    # 로그아웃 (인증 필요)
 GET    /api/v1/users                          # 사용자 목록 조회 (ADMIN 전용, ?page=0&size=20)
 POST   /api/v1/users                          # 회원가입 (공개)
 GET    /api/v1/users/{id}                     # 사용자 단건 조회 (본인 또는 ADMIN)
-PUT    /api/v1/users/{id}                     # 사용자 정보 수정 (본인 또는 ADMIN)
+PATCH  /api/v1/users/{id}                     # 사용자 정보 수정 (본인 또는 ADMIN, 선택적 필드)
 DELETE /api/v1/users/{id}                     # 사용자 삭제 (ADMIN 전용)
 
 GET    /api/v1/todos                          # 내 할 일 목록 (?page=0&size=20&completed=)
@@ -632,7 +636,7 @@ logging:
 예: AUTH-0001, USER-0001, TODO-0001, COMMON-0001
 ```
 
-### 공통 에러 코드 (common-core ErrorCode enum)
+### 공통 에러 코드 (CommonErrorCode enum — ErrorCode interface 구현체)
 
 | 코드 | HTTP Status | 설명 |
 |---|---|---|
@@ -675,7 +679,8 @@ tests/http/
 
 ### 운영 원칙
 
-- VS Code REST Client 기준 작성 (`.http` 파일)
+- `auth.http`, `user.http`, `todo.http`: VS Code REST Client 형식
+- `e2e-gateway.http`: IntelliJ HTTP Client 형식 (`> {% client.global.set() %}` 변수 캡처)
 - 모든 요청은 **Gateway(8090)를 통해** 호출 (`/api/v1/` prefix)
 - `auth.http` 로그인 응답에서 토큰 변수 추출 → 이후 `.http` 파일에서 재사용
 - 각 파일에 `### [성공 케이스]` + `### [실패 케이스]` 구분 주석 포함
@@ -908,8 +913,9 @@ make create-service  # 새 서비스 스캐폴딩 (이름 입력 프롬프트)
 - [ ] todo-service (CRUD, 인가 확인, 가이드 샘플)
 
 **DB**
-- [ ] `schema.sql` (PostgreSQL 방언, 전 테이블 DDL — 서비스 간 FK 미사용)
-- [ ] `data.sql` (admin/admin ROLE_ADMIN, user/user ROLE_USER BCrypt 해시, 샘플 Todo)
+
+- [x] `01-schema.sql` (PostgreSQL 방언, 전 테이블 DDL — 서비스 간 FK 미사용)
+- [x] `02-data.sql` (admin/admin ROLE_ADMIN, user/user ROLE_USER BCrypt 해시, 샘플 Todo)
 
 **공통 설정 (전 서비스)**
 - [ ] springdoc-openapi + JWT 인증 + API 그룹 설정

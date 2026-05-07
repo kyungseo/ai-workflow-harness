@@ -1,0 +1,99 @@
+### api-gateway HTTP 테스트 (VS Code REST Client)
+### 포트: 8090 (Gateway), 내부 서비스는 Gateway가 라우팅
+### 전제조건: auth-service / user-service / todo-service 모두 기동
+
+@gatewayUrl = http://localhost:8090
+@contentType = application/json
+
+### ─────────────────────────────────────────
+### 1. 공개 경로 — JWT 없이 접근 가능
+### ─────────────────────────────────────────
+
+### 1-1. 로그인 (Gateway → auth-service)
+# @name login
+POST {{gatewayUrl}}/api/v1/auth/login
+Content-Type: {{contentType}}
+
+{
+  "username": "user",
+  "password": "user",
+  "deviceId": "gw-test-device"
+}
+
+###
+
+@accessToken = {{login.response.body.accessToken}}
+
+### ─────────────────────────────────────────
+### 2. 인증 경로 — Bearer 토큰 필요
+### ─────────────────────────────────────────
+
+### 2-1. 내 Todo 목록 (Gateway JWT 검증 + 라우팅)
+GET {{gatewayUrl}}/api/v1/todos
+Authorization: Bearer {{accessToken}}
+
+###
+
+### 2-2. Todo 생성
+POST {{gatewayUrl}}/api/v1/todos
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "title": "Gateway 경유 Todo",
+  "description": "api-gateway 통합 테스트"
+}
+
+###
+
+### ─────────────────────────────────────────
+### 3. 헤더 스푸핑 방어 검증
+### ─────────────────────────────────────────
+
+### 3-1. X-User-Id 스푸핑 시도 — Gateway가 제거 후 JWT 값으로 대체
+GET {{gatewayUrl}}/api/v1/todos
+Authorization: Bearer {{accessToken}}
+X-User-Id: 99999
+X-User-Role: ROLE_ADMIN
+
+###
+
+### ─────────────────────────────────────────
+### 4. 인증 실패 케이스
+### ─────────────────────────────────────────
+
+### 4-1. Authorization 헤더 없음 → 401
+GET {{gatewayUrl}}/api/v1/todos
+
+###
+
+### 4-2. 잘못된 토큰 → 401
+GET {{gatewayUrl}}/api/v1/todos
+Authorization: Bearer invalid.jwt.token
+
+###
+
+### ─────────────────────────────────────────
+### 5. Actuator (Gateway 내부 — 외부 차단 확인)
+### ─────────────────────────────────────────
+
+### 5-1. Actuator health — SecurityConfig에서 denyAll 처리 (403 예상)
+GET {{gatewayUrl}}/actuator/health
+
+###
+
+### ─────────────────────────────────────────
+### 6. Rate Limit 확인 (auth 경로 5 req/s 제한)
+### ─────────────────────────────────────────
+
+### 6-1. 로그인 연속 호출 6회 → 6번째부터 429 예상
+POST {{gatewayUrl}}/api/v1/auth/login
+Content-Type: {{contentType}}
+
+{
+  "username": "user",
+  "password": "user",
+  "deviceId": "rate-limit-test"
+}
+
+###
