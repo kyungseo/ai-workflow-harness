@@ -153,6 +153,84 @@
 | CP-2 (todo) | todo-service 단독 기동 → Todo 생성 API 응답 확인 | 🟡 미검증 (빌드/테스트 통과, 기동 미확인) |
 | CP-3 | 전체 스택 기동 → 로그인 → Todo 생성 E2E Gateway 경유 확인 | ✅ 통과 |
 
+### CP-2 검증 방법
+
+> CP-2 (user) / CP-2 (todo) 는 빌드·테스트 통과 상태이나 단독 기동 미검증. 아래 절차로 확인한다.
+
+**사전 조건 — infra 기동**
+
+```bash
+cd scripts
+make run-local    # PostgreSQL + Redis만 기동 (서비스 제외)
+```
+
+`.env` 파일이 프로젝트 루트에 있어야 한다 (`DB_URL`은 `localhost` 기준):
+```
+DB_URL=jdbc:postgresql://localhost:5432/msa_db
+DB_USERNAME=<값>
+DB_PASSWORD=<값>
+```
+
+**CP-2 (user-service)**
+
+```bash
+# 기동 (프로젝트 루트에서)
+export $(grep -v '^#' .env | xargs)
+SPRING_PROFILES_ACTIVE=local ./gradlew :services:user-service:bootRun
+```
+
+```bash
+# 1. Actuator health — DB 연결 확인
+curl -s http://localhost:8099/actuator/health | python3 -m json.tool
+# 기대: {"status":"UP", "components":{"db":{"status":"UP"}, ...}}
+
+# 2. 회원가입 (공개 엔드포인트 — 인증 불필요)
+curl -s http://localhost:8092/api/v1/users \
+  -X POST -H "Content-Type: application/json" \
+  -d '{"username":"testcp2","email":"testcp2@example.com","password":"Test1234!"}' \
+  | python3 -m json.tool
+# 기대: 201 + {"code":"SUCCESS", "data":{"id":...,"username":"testcp2"}}
+
+# 3. 사용자 목록 — X-User-Id/Role 헤더 직접 주입 (Gateway 없이 단독 호출 시 정상 패턴)
+curl -s "http://localhost:8092/api/v1/users?page=0&size=5" \
+  -H "X-User-Id: 1" -H "X-User-Role: ROLE_ADMIN" \
+  | python3 -m json.tool
+# 기대: 200 + PageResponse (totalElements >= 5)
+```
+
+> Gateway 없이 직접 호출 시 `UserContextFilter`가 `X-User-Id` / `X-User-Role` 헤더를 읽어 SecurityContext를 구성한다. JWT 검증은 Gateway 역할이므로 단독 기동 검증 시 헤더 직접 주입이 정상 동작이다.
+
+**CP-2 (todo-service)**
+
+user-service 종료 후 기동 (Actuator management port 8099 충돌 방지):
+
+```bash
+# Ctrl+C 로 user-service 종료 후
+SPRING_PROFILES_ACTIVE=local ./gradlew :services:todo-service:bootRun
+```
+
+```bash
+# 1. Actuator health
+curl -s http://localhost:8099/actuator/health | python3 -m json.tool
+# 기대: {"status":"UP", "components":{"db":{"status":"UP"}}}
+
+# 2. Todo 생성
+curl -s http://localhost:8093/api/v1/todos \
+  -X POST -H "Content-Type: application/json" \
+  -H "X-User-Id: 1" -H "X-User-Role: ROLE_ADMIN" \
+  -d '{"title":"CP-2 검증용 Todo","description":"단독 기동 테스트"}' \
+  | python3 -m json.tool
+# 기대: 201 + {"code":"SUCCESS", "data":{"id":...,"title":"CP-2 검증용 Todo"}}
+
+# 3. 목록 조회
+curl -s "http://localhost:8093/api/v1/todos?page=0&size=5" \
+  -H "X-User-Id: 1" -H "X-User-Role: ROLE_ADMIN" \
+  | python3 -m json.tool
+# 기대: 200 + PageResponse (방금 생성한 항목 포함)
+```
+
+검증 완료 후 위 표의 상태를 `✅ 통과`로 업데이트한다.
+
 ---
 
 ## BLOCK 4 세부 진행 (완료)
