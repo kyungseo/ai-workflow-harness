@@ -34,18 +34,27 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-cache")
+    // MyBatis
     implementation(libs.mybatis.starter)
-    implementation(libs.springdoc.mvc)
-    implementation(libs.jjwt.api)
+    runtimeOnly(libs.postgresql)
+    // Caffeine local cache - JVM-scoped, no cross-pod sharing (allowed by design), short TTL required
+    implementation(libs.caffeine)
+    // MapStruct DTO conversion - annotation processor order mandatory: lombok -> mapstruct
     implementation(libs.mapstruct)
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
     annotationProcessor(libs.mapstruct.processor)
-    runtimeOnly(libs.jjwt.impl)
-    runtimeOnly(libs.jjwt.jackson)
-    runtimeOnly("org.postgresql:postgresql")
+    // API docs (active on local/dev profiles only)
+    implementation(libs.springdoc.mvc)
+    // Micrometer Tracing
+    implementation(libs.micrometer.tracing)
+    // JSON structured logs (stg/prd only, runtimeOnly)
     runtimeOnly(libs.logstash)
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
     testImplementation(libs.mybatis.starter.test)
     testImplementation(libs.tc.postgresql)
     testImplementation(libs.tc.junit)
@@ -53,7 +62,7 @@ dependencies {
 }
 GRADLE
 
-# Application class
+# Application class — scanBasePackages 필수: common-core의 GlobalExceptionHandler 등록에 필요
 SERVICE_PACKAGE="${SERVICE_NAME//-/}"
 APP_DIR="${SERVICE_DIR}/src/main/java/${PACKAGE_DIR}/${SERVICE_PACKAGE}"
 mkdir -p "${APP_DIR}"
@@ -64,7 +73,7 @@ package ${PACKAGE_BASE}.${SERVICE_PACKAGE};
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"${PACKAGE_BASE}.${SERVICE_PACKAGE}", "${PACKAGE_BASE}.common"})
 public class ${CLASS_NAME}Application {
     public static void main(String[] args) {
         SpringApplication.run(${CLASS_NAME}Application.class, args);
@@ -72,7 +81,7 @@ public class ${CLASS_NAME}Application {
 }
 JAVA
 
-# application.yml profiles
+# application.yml
 cat > "${SERVICE_DIR}/src/main/resources/application.yml" << 'YAML'
 spring:
   application:
@@ -88,10 +97,12 @@ spring:
       maximum-pool-size: ${DB_POOL_MAX:10}
       minimum-idle: ${DB_POOL_MIN:5}
       connection-timeout: ${DB_CONN_TIMEOUT:30000}
-  data:
-    redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=300s
   lifecycle:
     timeout-per-shutdown-phase: 30s
 
@@ -108,10 +119,12 @@ management:
         include: health,info,metrics
   endpoint:
     health:
-      show-details: when-authorized
+      probes:
+        enabled: true
+      show-details: always
 
 mybatis:
-  mapper-locations: classpath:mappers/**/*.xml
+  mapper-locations: classpath:mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
 YAML
@@ -123,8 +136,6 @@ logging:
     root: INFO
     io.kyungseo: DEBUG
     org.mybatis: DEBUG
-  pattern:
-    console: "[${SERVICE_NAME},%X{traceId},%X{spanId},%X{X-Correlation-ID}] %d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"
 
 springdoc:
   api-docs:
@@ -160,6 +171,34 @@ springdoc:
     enabled: false
 YAML
 
+# logback-spring.xml — local/dev: 패턴 출력, stg/prd: Logstash JSON
+# ${spring.application.name:-} 문법 필수: Logback은 :- 로 기본값 지정 (: 단독 사용 시 파서 오류)
+cat > "${SERVICE_DIR}/src/main/resources/logback-spring.xml" << 'XML'
+<configuration>
+
+  <springProfile name="local,dev">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder>
+        <pattern>%d{HH:mm:ss.SSS} %5p [${spring.application.name:-},%X{traceId:-},%X{spanId:-},%X{X-Correlation-ID:-}] %logger{36} - %msg%n</pattern>
+      </encoder>
+    </appender>
+    <root level="DEBUG">
+      <appender-ref ref="CONSOLE" />
+    </root>
+  </springProfile>
+
+  <springProfile name="stg,prd">
+    <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+    <root level="INFO">
+      <appender-ref ref="JSON" />
+    </root>
+  </springProfile>
+
+</configuration>
+XML
+
 # Register in settings.gradle.kts (duplicate-safe)
 SETTINGS_FILE="${PROJECT_ROOT}/settings.gradle.kts"
 INCLUDE_LINE="include(\"services:${SERVICE_NAME}\")"
@@ -174,4 +213,5 @@ echo ""
 echo "Service '${SERVICE_NAME}' created at ${SERVICE_DIR}"
 echo "Next steps:"
 echo "  1. Update application.yml: set spring.application.name and server.port"
-echo "  2. Run: cd ${PROJECT_ROOT} && ./gradlew build -x test"
+echo "  2. Add SecurityConfig, UserContextFilter, OpenApiConfig (refer to user-service or todo-service)"
+echo "  3. Run: cd ${PROJECT_ROOT} && ./gradlew build -x test"
