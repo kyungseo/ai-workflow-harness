@@ -7,6 +7,96 @@
 
 # Part 1. 아키텍처 요소 상세
 
+## 0. Overall 아키텍처
+
+### 서비스 구성도
+
+```mermaid
+graph TB
+    subgraph CLIENT["Client (Browser :3000)"]
+        FE["Vanilla JS + Bootstrap"]
+    end
+
+    subgraph GW["api-gateway :8090"]
+        F1["MdcGatewayFilter (-5)\nX-Correlation-ID 생성/전파"]
+        F2["SecurityHeadersFilter (-4)\nX-Content-Type-Options 등"]
+        F3["RateLimitFilter (-3)\nRedis sliding window"]
+        F4["JwtAuthFilter (-2)\nJWT 검증 + Blacklist 조회"]
+        F5["UserContextFilter (-1)\nHeader Spoofing 방어"]
+        F1 --> F2 --> F3 --> F4 --> F5
+    end
+
+    subgraph SVC["Service Layer"]
+        AUTH["auth-service :8091\nJWT 발급/갱신/블랙리스트"]
+        USER["user-service :8092\nCRUD / RBAC"]
+        TODO["todo-service :8093\nCRUD 가이드 샘플"]
+    end
+
+    subgraph INFRA["Infrastructure"]
+        PG[("PostgreSQL :5432")]
+        RD[("Redis :6379")]
+    end
+
+    FE -->|"HTTP /api/v1/*"| GW
+    GW -->|"라우팅"| AUTH
+    GW -->|"X-User-Id, X-User-Role"| USER
+    GW -->|"X-User-Id, X-User-Role"| TODO
+    GW -->|"Blacklist 조회 / Rate Limit"| RD
+    AUTH --> PG
+    AUTH --> RD
+    USER --> PG
+    TODO --> PG
+```
+
+### 요청 흐름 (로그인 → Todo 조회)
+
+```mermaid
+sequenceDiagram
+    participant B as Browser
+    participant GW as api-gateway
+    participant AUTH as auth-service
+    participant TODO as todo-service
+    participant RD as Redis
+
+    B->>GW: POST /api/v1/auth/login
+    GW->>AUTH: 공개 경로 — JWT 검증 스킵
+    AUTH->>RD: rt:{userId}:{deviceId} 저장
+    AUTH-->>B: accessToken + refreshToken
+
+    B->>GW: GET /api/v1/todos (Authorization: Bearer ...)
+    GW->>GW: JwtAuthFilter — JWT 서명/만료 검증
+    GW->>RD: bl:{jti} 블랙리스트 조회
+    RD-->>GW: (없음 → 정상)
+    GW->>GW: UserContextFilter — X-User-Id, X-User-Role 주입
+    GW->>TODO: GET /api/v1/todos (X-User-Id, X-User-Role 헤더 포함)
+    TODO-->>B: 할 일 목록 응답
+```
+
+### Token Rotation 흐름
+
+```mermaid
+sequenceDiagram
+    participant B as Browser
+    participant GW as api-gateway
+    participant AUTH as auth-service
+    participant RD as Redis
+
+    Note over B: Access Token 만료 감지 (401 수신 또는 exp < 60초)
+    B->>GW: POST /api/v1/auth/refresh {refreshToken, deviceId}
+    GW->>AUTH: 공개 경로 — JWT 검증 스킵
+    AUTH->>RD: rt:{userId}:{deviceId} 존재 확인
+    alt Refresh Token 유효
+        AUTH->>RD: 기존 토큰 삭제 (Rotation)
+        AUTH->>RD: 새 rt:{userId}:{deviceId} 저장
+        AUTH-->>B: 새 accessToken + refreshToken
+    else Refresh Token 없음 (탈취 의심)
+        AUTH->>RD: rt:{userId}:* 전체 삭제 (전 세션 무효화)
+        AUTH-->>B: 401
+    end
+```
+
+---
+
 ## 1. common-core
 
 모든 서비스가 공유하는 공통 모듈. `io.kyungseo.msa.common` 패키지 하위에 위치하며, 별도 `@ComponentScan` 없이 각 서비스의 `scanBasePackages`에 포함되어 자동 등록된다.
@@ -317,42 +407,71 @@ frontend/web-app/
 ├── index.html         # 사용자 정보 대시보드
 ├── todo.html          # Todo CRUD
 └── js/
-    ├── auth.js        # 인증 유틸 (login, logout, requireAuth, 토큰 저장)
-    ├── api.js         # HTTP 클라이언트 (fetchWithAuth, 401 자동 갱신)
+    ├── auth.js        # 인증 유틸 (login, logout, 토큰 저장/조회)
+    ├── api.js         # HTTP 클라이언트 (fetchWithAuth, requireAuth, 401 자동 갱신)
     └── todo.js        # Todo 화면 로직
 ```
+
+> `requireAuth()`는 `api.js`에 위치한다. 페이지 진입 시 토큰 만료 여부를 확인하고 선제 리프레시를 수행하는 로직이 포함되어 있어 `fetchWithAuth`와 같은 파일에서 관리한다.
 
 ### 6-2. fetchWithAuth — 401 자동 갱신
 
 ```javascript
 // api.js
-let _refreshing = false;   // 동시 갱신 방지 플래그
+let _refreshPromise = null;  // 진행 중인 refresh Promise (없으면 null)
 
 async function fetchWithAuth(url, options = {}) {
-    const res = await fetch(url, withBearer(options));
-    if (res.status === 401 && !_refreshing) {
-        _refreshing = true;
-        const ok = await _tryRefresh();      // Refresh Token으로 갱신 시도
-        _refreshing = false;
-        if (ok) return fetch(url, withBearer(options));  // 1회 재시도
-        clearTokens();
-        location.href = '/login.html';       // 갱신 실패 → 로그인 페이지
+    // ... Bearer 헤더 추가 후 요청
+    if (res.status === 401) {
+        const refreshed = await _ensureRefresh();  // 동시 401이 와도 refresh는 1회만
+        if (refreshed) {
+            // 새 토큰으로 원래 요청 재시도
+        } else {
+            clearTokens();
+            window.location.href = 'login.html';
+        }
     }
-    return res;
+}
+
+// 핵심: 이미 refresh 중이면 같은 Promise를 반환 → 동시 호출이 모두 결과를 공유
+function _ensureRefresh() {
+    if (!_refreshPromise) {
+        _refreshPromise = _tryRefresh().finally(() => { _refreshPromise = null; });
+    }
+    return _refreshPromise;
 }
 ```
 
-`_refreshing` 플래그로 병렬 401이 여러 번 발생해도 갱신 요청은 1회만 전송된다.
+**`_refreshPromise` 방식의 동시성 보장:**  
+여러 요청이 동시에 401을 받으면 첫 번째 호출만 `_tryRefresh()`를 실행하고 Promise를 저장한다. 나머지는 같은 Promise를 `await`하므로 refresh 요청은 네트워크에 **단 1회**만 발생한다. refresh 완료 후 모든 대기 중인 요청이 새 토큰으로 재시도한다.
+
+**선제 리프레시 (`requireAuth`):**
+
+```javascript
+async function requireAuth() {
+    const token = getAccessToken();
+    if (!token) { window.location.href = 'login.html'; return; }
+    // JWT payload의 exp를 디코딩해 만료 60초 이내면 미리 갱신
+    if (_getSecondsUntilExpiry(token) < 60) {
+        const refreshed = await _ensureRefresh();
+        if (!refreshed) { clearTokens(); window.location.href = 'login.html'; }
+    }
+}
+```
+
+페이지 진입 시 `await requireAuth()`를 호출하면 만료 직전 토큰을 페이지 로드 시점에 갱신하므로 첫 API 호출에서 401이 발생하지 않는다.
 
 ### 6-3. 토큰 저장소 (Phase 1)
 
 현재는 `localStorage`에 토큰을 저장한다. XSS 공격에 취약하다는 것을 인지하고 있으며, Phase 2에서 `HttpOnly Cookie` + `SameSite=Strict`로 전환할 계획이다. (`docs/decisions/PHASE2-BACKLOG.md` 참조)
 
 ```javascript
+// auth.js
 const KEYS = {
-    ACCESS:  'msa_access_token',
-    REFRESH: 'msa_refresh_token',
-    DEVICE:  'msa_device_id',
+    ACCESS:  'accessToken',
+    REFRESH: 'refreshToken',
+    DEVICE:  'deviceId',
+    USER:    'currentUser',
 };
 ```
 
@@ -735,26 +854,37 @@ spring:
 | `DB_POOL_MAX` | — | 기본값 `10` | — |
 
 환경변수가 누락된 채로 기동하면 `ApplicationContext` 초기화 단계에서 실패한다.  
-기동 후 `curl http://localhost:8099/actuator/health | python3 -m json.tool`로 DB + Redis 연결 상태를 확인한다.
+기동 후 아래 명령으로 DB + Redis 연결 상태를 확인한다:
+
+```bash
+docker exec msa-auth-service wget -qO- http://localhost:8099/actuator/health
+```
 
 ---
 
 ## 6. 포트 FAQ
 
-### Q. auth-service만 8091 + 8099 두 포트를 노출하는 이유는?
+### Q. 8099 Actuator에 외부에서 접근하려면?
 
-`docker-compose.yml`에서 auth-service만 8099(management port)를 호스트에 노출한다:
+모든 서비스는 내부적으로 8099에서 Actuator를 서빙하지만, `docker-compose.yml`에서 호스트 포트를 노출하지 않는다 (보안 원칙). 컨테이너 내부에서 직접 접근한다:
+
+```bash
+# 컨테이너 내부에서 Actuator health 확인
+docker exec msa-auth-service wget -qO- http://localhost:8099/actuator/health
+
+# 또는 docker compose exec 사용
+docker compose -f infra/docker/docker-compose.yml exec auth-service \
+  wget -qO- http://localhost:8099/actuator/health
+```
+
+로컬 개발 시 일시적으로 외부에서 접근이 필요하면 `docker-compose.yml`의 주석을 해제한다:
 
 ```yaml
 auth-service:
   ports:
     - "8091:8091"
-    - "8099:8099"   # ← auth-service만 노출
+    # - "8099:8099"  # 로컬 확인 필요 시 주석 해제 후 재기동
 ```
-
-이유: CP-3(E2E 체크포인트)에서 `curl http://localhost:8099/actuator/health`로 PostgreSQL + Redis 연결 상태를 Docker 외부에서 직접 확인하기 위함이다.
-
-다른 서비스(user-service, todo-service, api-gateway)도 내부적으로 8099에서 Actuator를 서빙하지만, `docker-compose.yml`에서 호스트 포트를 바인딩하지 않는다. 운영 환경에서는 모든 서비스의 8099를 외부에 노출하지 않는 것이 원칙이다.
 
 ### Q. 로컬에서 서비스를 직접 실행할 때 DB_URL을 바꿔야 하나?
 
@@ -811,3 +941,170 @@ cd scripts
 make run-local   # postgres + redis 기동
 ./gradlew :services:order-service:test
 ```
+
+---
+
+## 7. 로그 확인 및 Trace 추적
+
+### 7-1. 서비스 로그 보기
+
+```bash
+cd scripts
+
+make logs                        # 전체 서비스 로그 (스트리밍)
+make logs SERVICE=auth-service   # 특정 서비스만
+make logs SERVICE=api-gateway
+
+# Docker 직접 사용
+docker compose -f infra/docker/docker-compose.yml logs -f --tail=100 todo-service
+```
+
+### 7-2. 로그 패턴 해석
+
+local/dev 환경에서 출력되는 로그 형식:
+
+```
+12:34:56.789  INFO [auth-service,6a3f1b2c4d5e6f7a,1a2b3c4d,abc-123-def] i.k.m.a.s.AuthService - 로그인 성공
+              ↑      ↑              ↑              ↑          ↑
+           시각   서비스명       traceId         spanId   X-Correlation-ID
+```
+
+| 필드 | 출처 | 설명 |
+|------|------|------|
+| 서비스명 | `spring.application.name` | 어느 서비스에서 찍힌 로그인지 |
+| traceId | Micrometer Tracing 자동 주입 | 하나의 요청 체인 전체를 묶는 ID |
+| spanId | Micrometer Tracing 자동 주입 | 서비스 내 개별 작업 단위 |
+| X-Correlation-ID | Gateway MdcGatewayFilter 생성 | 클라이언트 요청 단위 추적용 |
+
+### 7-3. 요청 하나를 여러 서비스에서 추적하기
+
+Gateway가 생성한 `X-Correlation-ID`는 하위 서비스로 전파된다. 같은 ID로 grep하면 요청이 어느 서비스를 거쳤는지 전체 흐름을 추적할 수 있다.
+
+```bash
+# 전체 로그를 파일로 저장
+docker compose -f infra/docker/docker-compose.yml logs > /tmp/msa-logs.txt
+
+# X-Correlation-ID로 요청 추적
+grep "abc-123-def" /tmp/msa-logs.txt
+
+# 결과 예시 (요청이 gateway → auth-service를 거친 흐름)
+# msa-api-gateway   | ... [api-gateway,,, abc-123-def] JwtAuthFilter - JWT 검증 통과
+# msa-auth-service  | ... [auth-service,,, abc-123-def] AuthService - 로그인 성공
+```
+
+### 7-4. 특정 서비스 Actuator health 확인
+
+```bash
+# 컨테이너 내부에서 DB + Redis 연결 상태 확인
+docker exec msa-auth-service wget -qO- http://localhost:8099/actuator/health
+
+# 응답 예시
+# {"status":"UP","components":{"db":{"status":"UP"},"redis":{"status":"UP"}}}
+```
+
+---
+
+## 8. Swagger UI 사용 가이드
+
+### 8-1. 접속 URL
+
+| 서비스 | URL | 프로파일 |
+|--------|-----|----------|
+| auth-service | http://localhost:8091/swagger-ui.html | local / dev |
+| user-service | http://localhost:8092/swagger-ui.html | local / dev |
+| todo-service | http://localhost:8093/swagger-ui.html | local / dev |
+
+> stg/prd 환경에서는 `springdoc.swagger-ui.enabled: false`로 비활성화된다.
+
+### 8-2. 화면 구성 이해
+
+| UI 요소 | 설명 |
+|---------|------|
+| 제목 아래 `/v3/api-docs` | Swagger가 읽는 OpenAPI JSON 엔드포인트. 직접 열면 API 명세 원본 JSON을 볼 수 있다 |
+| `Authorize` 버튼 | JWT Access Token을 입력하는 곳. 입력 후 모든 요청에 `Authorization: Bearer ...` 헤더가 자동 첨부된다 |
+| 🔒 자물쇠 아이콘 | 해당 API가 인증 토큰을 요구함을 표시 |
+
+### 8-3. 인증이 필요한 API 호출 순서
+
+```
+1. auth-service Swagger UI 접속
+   → POST /api/v1/auth/login → "Try it out" → username/password/deviceId 입력 → Execute
+   → 응답 body에서 accessToken 복사
+
+2. 같은 창 또는 다른 서비스 Swagger UI에서
+   → 우상단 "Authorize" 클릭
+   → Value 입력란에 복사한 accessToken 붙여넣기 (Bearer 없이 토큰만)
+   → "Authorize" 클릭 → "Close"
+
+3. 이후 🔒 표시된 API의 "Try it out" → Execute 시 자동으로 Authorization 헤더 첨부
+```
+
+### 8-4. Postman / Insomnia에 API 명세 import
+
+```bash
+# OpenAPI JSON URL을 Postman에 직접 입력
+http://localhost:8091/v3/api-docs   # auth-service
+http://localhost:8092/v3/api-docs   # user-service
+http://localhost:8093/v3/api-docs   # todo-service
+
+# Postman: Import → Link → URL 입력
+# Insomnia: Import → From URL
+```
+
+---
+
+## 9. Token Refresh 테스트 방법
+
+### 방법 1 — Access Token 만료 시간 단축 (가장 확실)
+
+`.env`에서 만료 시간을 10초로 줄인다:
+
+```bash
+JWT_ACCESS_EXPIRY=10   # 기본값 900(15분) → 10초로 단축
+```
+
+```bash
+cd scripts && make rebuild   # 이미지 재빌드 후 기동
+```
+
+로그인 → 10초 대기 → Todo 생성 시도. 정상 응답이 오면 reactive refresh 동작 확인.  
+`JWT_ACCESS_EXPIRY=10`이면 페이지 진입 시 이미 만료 60초 이내이므로 선제 리프레시(`requireAuth`)도 함께 확인된다.
+
+### 방법 2 — 브라우저 DevTools에서 토큰 조작
+
+로그인 후 DevTools Console에서 Access Token만 유효하지 않은 값으로 교체한다 (Refresh Token은 유지):
+
+```javascript
+// Refresh Token은 유지하면서 Access Token만 만료된 값으로 교체
+localStorage.setItem('accessToken', 'invalid.token.value');
+```
+
+페이지 새로고침 → Todo 목록이 정상 로드되면 reactive refresh 동작 확인.
+
+### 방법 3 — 토큰 만료까지 남은 시간 확인
+
+DevTools Console에서 직접 함수 호출:
+
+```javascript
+// 현재 Access Token의 만료까지 남은 초 확인
+_getSecondsUntilExpiry(localStorage.getItem('accessToken'))
+// → 예: 723 (약 12분 남음)
+```
+
+`JWT_ACCESS_EXPIRY=10`으로 줄이면 로그인 직후에도 10초 미만이 반환되어 선제 리프레시가 즉시 발동한다.
+
+### 방법 4 — 동시 401 레이스 컨디션 확인
+
+만료된 토큰 상태에서 DevTools Console에서 동시 요청 3개를 발사한다:
+
+```javascript
+// Access Token 만료 상태에서 실행
+Promise.all([
+  fetchWithAuth('http://localhost:8090/api/v1/todos'),
+  fetchWithAuth('http://localhost:8090/api/v1/todos'),
+  fetchWithAuth('http://localhost:8090/api/v1/todos'),
+]);
+```
+
+Network 탭에서 `/api/v1/auth/refresh` 요청이 **정확히 1번**만 발생하면 `_refreshPromise` 방식이 정상 동작하는 것이다.  
+(구버전 `_refreshing` boolean 방식이었다면 1번 요청 후 나머지 2개는 그대로 실패했을 것이다.)

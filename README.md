@@ -99,12 +99,8 @@ python3 -m http.server 3000
 | todo-service | 8093 | 할 일 CRUD (가이드 샘플) |
 | PostgreSQL | 5432 | 공유 DB (Phase 1) |
 | Redis | 6379 | Refresh Token, Blacklist, Rate Limiting |
-| Actuator (공통) | 8099 | management port (auth-service만 외부 노출) |
+| Actuator (공통) | 8099 | management port — 모든 서비스 내부 전용, 외부 미노출 |
 | Frontend | 3000 | Vanilla JS 독립 서빙 |
-
-> auth-service만 8091 + 8099 두 포트를 노출하는 이유:  
-> Actuator health endpoint(`/actuator/health`)로 PostgreSQL + Redis 연결 상태를 Docker 외부에서 확인하기 위함.  
-> 다른 서비스의 8099는 docker-compose.yml에서 호스트에 노출하지 않는다.
 
 ---
 
@@ -129,7 +125,15 @@ python3 -m http.server 3000
 | PATCH | `/api/v1/todos/{id}/complete` | Bearer | 완료 토글 |
 | DELETE | `/api/v1/todos/{id}` | Bearer | 할 일 삭제 |
 
-Swagger UI: `http://localhost:8091/swagger-ui.html` (auth), `8092` (user), `8093` (todo) — local/dev 프로파일에서만 활성화.
+**Swagger UI** (local/dev 프로파일에서만 활성화):
+
+| 서비스 | URL |
+|--------|-----|
+| auth-service | http://localhost:8091/swagger-ui.html |
+| user-service | http://localhost:8092/swagger-ui.html |
+| todo-service | http://localhost:8093/swagger-ui.html |
+
+인증이 필요한 API는 먼저 `/api/v1/auth/login`으로 로그인 후 `Authorize` 버튼에 Access Token을 입력한다.
 
 ---
 
