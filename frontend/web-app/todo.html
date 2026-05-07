@@ -40,12 +40,14 @@
   <script src="js/api.js"></script>
   <script src="js/todo.js"></script>
   <script>
-    requireAuth();
-    loadTodos(0);
+    (async () => {
+      await requireAuth();
+      await loadTodos(0);
 
-    document.getElementById('todo-title').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') createTodo();
-    });
+      document.getElementById('todo-title').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') createTodo();
+      });
+    })();
   </script>
 </body>
 </html>

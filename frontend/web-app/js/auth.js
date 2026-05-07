@@ -57,6 +57,3 @@ async function logout() {
     window.location.href = 'login.html';
 }
 
-function requireAuth() {
-    if (!getAccessToken()) window.location.href = 'login.html';
-}
