@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    api("org.springframework.boot:spring-boot-starter-web")
-    api("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     // GlobalExceptionHandler: AccessDeniedException 처리용 (소비자에게 전파 안 함)
     compileOnly("org.springframework.security:spring-security-core")
