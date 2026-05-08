@@ -3,7 +3,7 @@ ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 PROJECT_ROOT := $(ROOT_DIR)/..
 COMPOSE_FILE := $(PROJECT_ROOT)/infra/docker/docker-compose.yml
 ENV_FILE := $(PROJECT_ROOT)/.env
-COMPOSE := docker compose -p base-msa-template --env-file $(ENV_FILE) -f $(COMPOSE_FILE)
+COMPOSE := docker compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE)
 
 .PHONY: build test clean run rebuild rebuild-nc run-local run-infra stop logs ps create-service help
 
