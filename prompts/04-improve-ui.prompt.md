@@ -2,7 +2,19 @@
 name: improve-ui
 description: UI 개선
 agent: agent
+id: improve-ui.v1
+purpose: 기존 UI를 사용성 중심으로 개선하기 위한 프롬프트
+portability: generic
+difficulty: beginner
+inputs:
+  - target_ui
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 이 화면의 UI를 개선해 줘.
 

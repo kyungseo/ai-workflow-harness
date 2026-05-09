@@ -2,7 +2,19 @@
 name: migrate-ts
 description: JavaScript에서 TypeScript로 마이그레이션
 agent: agent
+id: migrate-ts.v1
+purpose: JavaScript 코드를 TypeScript로 단계적 이전하기 위한 프롬프트
+portability: generic
+difficulty: advanced
+inputs:
+  - target_scope
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 이 코드를 JavaScript에서 TypeScript로 옮겨 줘.
 

@@ -2,7 +2,20 @@
 name: design-feature
 description: 기능 설계 우선
 agent: agent
+id: design-feature.v1
+purpose: 구현 전에 기능 설계안을 정리하기 위한 프롬프트
+portability: generic
+difficulty: intermediate
+inputs:
+  - feature_goal
+  - constraints
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 새 기능을 구현하기 전에 설계안을 먼저 제시해 줘.
 

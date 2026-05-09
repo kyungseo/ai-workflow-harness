@@ -2,7 +2,19 @@
 name: form-validation
 description: 폼 검증 추가
 agent: agent
+id: form-validation.v1
+purpose: 폼 입력 검증 규칙 및 메시지를 추가하기 위한 프롬프트
+portability: generic
+difficulty: beginner
+inputs:
+  - form_fields
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 이 폼에 검증 로직을 추가해 줘.
 

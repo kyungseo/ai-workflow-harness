@@ -2,7 +2,19 @@
 name: todo-mvp
 description: 로그인 없는 할 일 앱 생성
 agent: agent
+id: todo-mvp.v1
+purpose: 작은 MVP를 빠르게 구현하기 위한 프롬프트
+portability: generic
+difficulty: beginner
+inputs:
+  - requirements
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 로그인 없는 할 일 관리 웹앱을 만들어 줘.
 

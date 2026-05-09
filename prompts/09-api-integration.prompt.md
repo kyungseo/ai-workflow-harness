@@ -2,7 +2,19 @@
 name: api-integration
 description: REST API 연동
 agent: agent
+id: api-integration.v1
+purpose: 외부/내부 API를 클라이언트 코드에 연동하기 위한 프롬프트
+portability: generic
+difficulty: intermediate
+inputs:
+  - api_spec
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 이 화면에 API 연동을 추가해 줘.
 

@@ -1,5 +1,6 @@
-
 You are working on a Spring Boot MSA project.
+This is a Cursor-specific session bootstrap prompt.
+It is not a generic cross-AI task prompt.
 
 Follow strictly:
 

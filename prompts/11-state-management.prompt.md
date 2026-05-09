@@ -2,7 +2,19 @@
 name: state-management
 description: 상태 관리 구조 정리
 agent: agent
+id: state-management.v1
+purpose: 상태 관리 전략을 정리/개선하기 위한 프롬프트
+portability: generic
+difficulty: advanced
+inputs:
+  - current_state_flow
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 이 프로젝트의 상태 관리를 정리해 줘.
 

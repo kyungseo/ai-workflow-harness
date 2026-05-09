@@ -2,7 +2,19 @@
 name: code-review
 description: 코드 리뷰
 agent: agent
+id: code-review.v1
+purpose: 변경사항의 결함/리스크를 검토하기 위한 프롬프트
+portability: generic
+difficulty: intermediate
+inputs:
+  - diff_or_scope
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 이 변경사항을 시니어 개발자 관점에서 리뷰해 줘.
 

@@ -2,7 +2,19 @@
 name: write-tests-first
 description: 테스트 우선 작성
 agent: agent
+id: write-tests-first.v1
+purpose: 테스트를 먼저 작성하고 구현을 보완하기 위한 프롬프트
+portability: generic
+difficulty: intermediate
+inputs:
+  - target_behavior
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 아래 대상에 대한 테스트를 먼저 작성해 줘.
 

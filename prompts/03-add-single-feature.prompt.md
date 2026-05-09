@@ -2,7 +2,19 @@
 name: add-single-feature
 description: 기존 코드에 기능 하나 추가
 agent: agent
+id: add-single-feature.v1
+purpose: 기존 코드에 단일 기능을 안전하게 추가하기 위한 프롬프트
+portability: generic
+difficulty: beginner
+inputs:
+  - feature
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 현재 코드에 {{feature}} 기능만 추가해 줘.
 

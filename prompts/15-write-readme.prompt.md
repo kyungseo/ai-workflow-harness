@@ -2,7 +2,19 @@
 name: write-readme
 description: README 작성
 agent: agent
+id: write-readme.v1
+purpose: 프로젝트 README를 작성/개선하기 위한 프롬프트
+portability: generic
+difficulty: beginner
+inputs:
+  - project_summary
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 이 프로젝트의 README를 작성해 줘.
 
