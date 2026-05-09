@@ -2,7 +2,20 @@
 name: debug-error
 description: 에러 분석 및 수정
 agent: agent
+id: debug-error.v1
+purpose: 에러의 원인을 분석하고 수정하기 위한 프롬프트
+portability: generic
+difficulty: intermediate
+inputs:
+  - error_log
+  - repro_steps
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 아래 에러 로그를 분석해 줘.
 

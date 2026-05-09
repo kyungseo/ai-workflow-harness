@@ -2,7 +2,19 @@
 name: generic-task
 description: 일반 작업 템플릿
 agent: agent
+id: general-task.v1
+purpose: 일반적인 코드/문서 작업을 안정적으로 수행하기 위한 범용 프롬프트
+portability: generic
+difficulty: beginner
+inputs:
+  - goal
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 너는 시니어 소프트웨어 엔지니어다.
 

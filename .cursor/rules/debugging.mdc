@@ -1,7 +1,19 @@
 # Debugging Rules
 
-- ALWAYS run tests after making changes
-- Verify behavior using actual code, not assumptions
-- If tests fail:
-  - Analyze the root cause
-  - Fix and re-run tests
+적용 우선순위:
+
+1. `CLAUDE.md`
+2. `docs/CLAUDE.md`
+3. 이 파일
+
+디버깅 절차:
+
+1. 재현 조건을 먼저 명확히 기록
+2. 실제 코드/로그 기반으로 원인 후보를 좁힘 (가정 금지)
+3. 최소 수정으로 원인 해결
+4. 테스트 및 동작 검증 재실행
+
+테스트 실패 시:
+
+- 루트 원인 분석
+- 수정 후 동일 시나리오 재검증

@@ -1,0 +1,42 @@
+# Git Commit Rules
+
+## Scope
+
+- Applies when:
+  - user asks to create a commit
+  - user asks for git commit message
+  - user runs git commit
+
+## Commit Message Format
+
+- MUST follow Conventional Commits:
+  - feat:
+  - fix:
+  - docs:
+  - style:
+  - refactor:
+  - chore:
+  - config:
+  - test:
+  - perf:
+  - ci:
+  - revert:
+
+## Forbidden
+
+- NEVER include metadata:
+  - --trailer
+  - Co-authored-by
+  - Signed-off-by
+
+## Command Output Rule
+
+When user requests a commit command:
+
+- ONLY output:
+  `git commit -m "message"`
+
+- DO NOT:
+  - include explanations
+  - include multiple commands
+  - include metadata

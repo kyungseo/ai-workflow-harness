@@ -2,7 +2,20 @@
 name: scaffold-project
 description: 새 프로젝트 뼈대 생성
 agent: agent
+id: scaffold-project.v1
+purpose: 신규 프로젝트 뼈대와 초기 구조를 설계/생성하기 위한 프롬프트
+portability: generic
+difficulty: intermediate
+inputs:
+  - goal
+  - stack
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 너는 시니어 풀스택 개발자다.
 

@@ -1,21 +1,22 @@
 # 세션 시작 프롬프트
 
 > 새 Claude Code 세션 시작 시 이 프롬프트를 복사하여 사용.
+> 범용 프롬프트가 아니라 `Claude Code + 현재 레포 운영 규칙`에 맞춘 도구 특화 프롬프트다.
 
 ---
 
 ## 기본 세션 시작
 
 ```
-CLAUDE.md와 AGENTS.md를 읽어줘. 
-그리고 plans/ 디렉토리에서 활성 plan을 확인하고 
+CLAUDE.md와 docs/CLAUDE.md를 읽어줘.
+그리고 docs/STATUS.md에서 현재 블록과 진행 상태를 확인하고
 어떤 태스크를 다음으로 진행해야 하는지 알려줘.
 ```
 
 ## 신규 프로젝트 시작
 
 ```
-CLAUDE.md와 AGENTS.md를 읽어줘.
+CLAUDE.md와 docs/CLAUDE.md를 읽어줘.
 
 이 프로젝트는:
 - 목표: [한 문장]
@@ -23,14 +24,14 @@ CLAUDE.md와 AGENTS.md를 읽어줘.
 - 제약 조건: [성능, 호환성, 기간 등]
 - 우선순위: [뭐가 가장 중요한가]
 
-plans/PLAN_001.md를 PLAN_TEMPLATE.md 기반으로 작성해줘.
+docs/PLAN.md를 참고해 docs/TODO/TODO-BLOCK{n}.md 형식으로 실행 계획 초안을 작성해줘.
 구현은 내가 plan을 검토하고 승인한 후 시작해.
 ```
 
 ## 기존 프로젝트 리팩토링 시작
 
 ```
-CLAUDE.md와 AGENTS.md를 읽어줘.
+CLAUDE.md와 docs/CLAUDE.md를 읽어줘.
 
 현재 상황:
 - 리팩토링 대상: [파일/모듈/기능]
@@ -38,14 +39,14 @@ CLAUDE.md와 AGENTS.md를 읽어줘.
 - 목표: [리팩토링 후 기대하는 상태]
 - 금지: [건드리면 안 되는 것]
 
-plans/PLAN_001.md를 작성하되, 
+docs/STATUS.md와 docs/PLAN.md를 기반으로 리팩토링 실행 계획을 작성하되,
 기존 코드를 먼저 읽고 현황 파악 섹션을 포함해줘.
 ```
 
 ## 특정 태스크 재개
 
 ```
-CLAUDE.md 읽어줘. plans/PLAN_<N>.md 읽고
+CLAUDE.md와 docs/CLAUDE.md를 읽어줘. docs/STATUS.md와 관련 TODO 문서를 읽고
 [#태스크번호] <태스크명>을 이어서 진행해줘.
 현재 상태: [어디까지 했는지]
 ```

@@ -29,9 +29,13 @@ bin/
 *.pem
 *.crt
 
-# [VCS / IDE] 
+# [VCS / IDE]
+# Claude 스캔에서는 Cursor 내부 설정을 기본 제외한다.
+# 단, 규칙 정합성 확인을 위해 .cursor/rules/*.mdc만 최소 허용한다.
 .git/
 .cursor/    # Cursor 제외
+!.cursor/rules/
+!.cursor/rules/*.mdc
 .idea/      # IntelliJ 설정 파일은 AI 검색 노이즈가 되므로 제외 권장
 *.iml
 

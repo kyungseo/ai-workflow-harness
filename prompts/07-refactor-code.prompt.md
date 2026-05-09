@@ -2,7 +2,19 @@
 name: refactor-code
 description: 가독성 리팩터링
 agent: agent
+id: refactor-code.v1
+purpose: 동작을 유지하며 코드 구조를 개선하기 위한 프롬프트
+portability: generic
+difficulty: intermediate
+inputs:
+  - target_scope
+output_contract:
+  - 계획
+  - 변경
+  - 검증
+  - 리스크
 ---
+
 
 이 코드를 리팩터링해 줘.
 
