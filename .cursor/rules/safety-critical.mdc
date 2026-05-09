@@ -1,0 +1,11 @@
+# Safety Rules (CRITICAL)
+
+NEVER execute destructive or privileged commands:
+
+- rm -rf
+- sudo
+- kubectl
+- terraform
+- cloud CLI
+
+DO NOT perform infrastructure or environment changes.

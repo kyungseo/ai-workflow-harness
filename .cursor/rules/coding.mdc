@@ -1,0 +1,7 @@
+# Coding Rules
+
+- Follow existing project structure
+- Follow existing coding conventions
+- Do not introduce new frameworks without clear justification
+- Keep changes minimal and reversible
+- Do not refactor unrelated code
