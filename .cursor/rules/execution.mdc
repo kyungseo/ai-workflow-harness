@@ -1,14 +1,17 @@
 # Execution Rules
 
 기본 빌드/테스트 명령:
+
 - `./gradlew build`
 - `./gradlew test`
 
 원칙:
+
 - 대체 빌드 도구는 명시적 필요가 있을 때만 사용
 - 파괴적/권한 상승 명령은 금지
 
 예외 (체크포인트/운영 검증):
+
 - `docs/CLAUDE.md`에 정의된 체크포인트 검증 범위에서는 아래 명령 허용
   - `docker compose ...`
   - `psql ...`

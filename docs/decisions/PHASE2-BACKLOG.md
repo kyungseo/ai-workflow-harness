@@ -39,7 +39,7 @@
 ## 미결 사항 (결정 보류)
 
 | 항목 | 내용 |
-|------|------|
+| --- | --- |
 | K8s 배포 도구 | Helm vs Kustomize → Phase 2에서 결정 |
 | 복잡 RBAC | 리소스+액션 기반 퍼미션 → Phase 2에서 결정 |
 | 메시지 큐 | Kafka / RabbitMQ 도입 여부 → Phase 2에서 결정 |
