@@ -1,0 +1,52 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/build": true,
+    "**/.gradle": true
+  },
+  "search.exclude": {
+    "**/build": true,
+    "**/.gradle": true
+  },
+
+  "permissions": {
+    "allow": [
+      "Read(*)",
+
+      // Git
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+
+      // File ops
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(cat:*)",
+      "Bash(echo:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)",
+
+      // Build & Test
+      "Bash(./gradlew:*)",
+      "Bash(gradle:*)",
+      "Bash(mvn:*)",
+
+      // Node
+      "Bash(npm:*)",
+      "Bash(yarn:*)",
+
+      // 컨테이너
+      "Bash(docker:*)",
+      "Bash(docker-compose:*)"
+    ],
+    "deny": ["Bash(rm -rf /:*)", "Bash(sudo:*)"]
+  },
+  "java.compile.nullAnalysis.mode": "automatic"
+}

@@ -1,0 +1,7 @@
+# Debugging Rules
+
+- ALWAYS run tests after making changes
+- Verify behavior using actual code, not assumptions
+- If tests fail:
+  - Analyze the root cause
+  - Fix and re-run tests

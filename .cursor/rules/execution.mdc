@@ -1,0 +1,8 @@
+# Execution Rules
+
+Use only the following commands for build and test:
+
+- ./gradlew build
+- ./gradlew test
+
+Do not use alternative build tools unless explicitly required.
