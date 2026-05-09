@@ -87,7 +87,14 @@
 - `claude-session-start.md`
   - Claude Code에서 현재 레포 규칙(`CLAUDE.md`, `docs/CLAUDE.md`)을 먼저 반영해 시작할 때 사용
 - `cursor-start.md`
-  - Cursor 환경에서 `.cursor/rules`를 기준으로 세션을 시작할 때 사용
+  - Cursor 환경에서 Claude와 동일한 컨텍스트 로딩 절차로 세션을 시작할 때 사용
+
+공통 세션 시작 절차 (Claude/Cursor):
+
+1. `CLAUDE.md` -> `docs/CLAUDE.md` -> `docs/STATUS.md` 순서로 읽기
+2. 현재 블록의 `docs/TODO/TODO-BLOCK{n}.md` 읽기
+3. 상태 요약 + 작업 목록 제시 후 사용자 승인 대기
+4. 필요 시 `docs/PLAN.md`, `docs/ARCHITECTURE.md`를 추가 로딩
 
 ## 8) 유지보수 규칙
 
