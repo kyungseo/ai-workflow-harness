@@ -30,9 +30,12 @@ bin/
 *.pem
 *.crt
 
-# [VCS / IDE] 
+# [VCS / IDE]
+# Cursor 인덱싱에서는 Claude 내부 설정을 기본 제외한다.
+# 단, 시스템 규칙 정합성 확인을 위해 .claude/system.md만 최소 허용한다.
 .git/
 .claude/    # Claude 제외
+!.claude/system.md
 .idea/      # IntelliJ 설정 파일은 AI 검색 노이즈가 되므로 제외 권장
 *.iml
 

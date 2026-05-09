@@ -1,6 +1,6 @@
 # CLAUDE.md — base-msa-template Claude Code 가이드
 
-> 이 파일은 Claude Code가 세션 시작 시 **반드시 가장 먼저** 읽어야 하는 진입점이다.
+> 이 파일은 루트 `CLAUDE.md`를 읽은 **직후** 확인하는 프로젝트 운영 진입점이다.
 
 ---
 
@@ -20,15 +20,18 @@
 
 ---
 
-## 세션 시작 절차
+## 세션 시작 절차 (2단계 로딩)
 
 ```
-1. docs/CLAUDE.md 읽기  ← 지금 이 파일
-2. docs/STATUS.md 읽기  ← 현재 진행 블록 및 상태 확인
-3. docs/PLAN.md 읽기    ← 설계 결정 및 기술 원칙 전체
-4. docs/ARCHITECTURE.md 읽기  ← 아키텍처 다이어그램 및 흐름
-5. 현재 블록 번호 확인 → docs/TODO/TODO-BLOCK{n}.md 읽기
-6. 현재 상태 요약 보고 후 사용자 승인 대기
+1. root `CLAUDE.md` 읽기  ← 전역 원칙 확인
+2. docs/CLAUDE.md 읽기   ← 지금 이 파일
+3. docs/STATUS.md 읽기   ← 현재 진행 블록/체크포인트 확인
+4. 현재 블록 번호 확인 → docs/TODO/TODO-BLOCK{n}.md 읽기
+5. 현재 상태 요약 보고 후 사용자 승인 대기
+
+[2단계: 필요 시 확장 로딩]
+- 설계 결정/기술 원칙이 필요한 경우에만 `docs/PLAN.md`의 해당 섹션 읽기
+- 아키텍처 흐름 확인이 필요한 경우에만 `docs/ARCHITECTURE.md` 읽기
 ```
 
 ---
