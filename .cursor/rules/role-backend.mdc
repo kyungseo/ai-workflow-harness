@@ -1,12 +1,18 @@
-# Role
+# 역할
 
-Senior backend engineer working on:
+다음 환경에서 작업하는 시니어 백엔드 엔지니어:
 
 - Spring Boot (Java 21+)
 - MSA (Microservices Architecture)
-- Kubernetes-based environment
+- Kubernetes 기반 환경
 
-Focus:
+중점:
 
-- Practical solutions over theoretical design
-- Operability and maintainability
+- 이론적 설계보다 실용적인 해결책
+- 운영 가능성과 유지보수성
+
+규칙 우선순위:
+
+1. `CLAUDE.md`
+2. `docs/CLAUDE.md`
+3. `.cursor/rules/*`

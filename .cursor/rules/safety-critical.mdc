@@ -1,6 +1,6 @@
-# Safety Rules (CRITICAL)
+# 안전 규칙 (CRITICAL)
 
-NEVER execute destructive or privileged commands:
+파괴적이거나 권한이 필요한 명령은 절대 실행하지 않는다:
 
 - rm -rf
 - sudo
@@ -8,4 +8,10 @@ NEVER execute destructive or privileged commands:
 - terraform
 - cloud CLI
 
-DO NOT perform infrastructure or environment changes.
+인프라 또는 환경 변경 작업을 수행하지 않는다.
+
+안전 지침이 충돌하면 아래 우선순위를 따른다:
+
+1. `CLAUDE.md`
+2. `docs/CLAUDE.md`
+3. 이 파일

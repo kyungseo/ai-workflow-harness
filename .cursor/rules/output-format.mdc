@@ -1,7 +1,8 @@
-# Output Format
+# 출력 형식
 
-Always respond in the following structure:
+항상 아래 구조로 응답한다:
 
-1. Summary
-2. Changes
-3. Risk
+1. 결론
+2. 변경사항
+3. 검증
+4. 리스크 (되돌리기 비용과 가정 포함)
