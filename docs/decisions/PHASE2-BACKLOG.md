@@ -1,9 +1,9 @@
 # PHASE2-BACKLOG.md
 
-This file is kept as a compatibility pointer.
+이 파일은 호환성을 위한 pointer다.
 
-The active Phase 2 backlog now lives at:
+현재 활성 Phase 2 backlog는 아래 파일을 사용한다.
 
 - `docs/backlog/PHASE2.md`
 
-Use `docs/STATUS.md` for active work and checkpoint state.
+Active Work와 checkpoint 상태는 `docs/STATUS.md`에서 관리한다.
