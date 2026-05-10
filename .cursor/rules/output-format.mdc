@@ -19,5 +19,6 @@ MUST:
 - State assumptions when they affect the decision.
 - Include reversal cost for technical decisions.
 - Mention verification commands, scenarios, or checks.
+- Mention `docs/STATUS.md` updates when task state, checkpoints, blockers, or next actions change.
 
 Keep responses concise unless the user asks for detailed analysis.

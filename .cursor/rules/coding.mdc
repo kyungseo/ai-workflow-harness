@@ -15,6 +15,8 @@ Instruction priority:
 MUST:
 
 - Read the relevant project context before editing.
+- Use `docs/STATUS.md` as the active work index.
+- Use `docs/backlog/*.md` for candidate work and `docs/archive/*.md` only for historical detail.
 - State assumptions before implementation when the task is ambiguous.
 - Keep every change SURGICAL, MINIMAL, and REVERSIBLE.
 - Follow the existing package structure, naming, formatting, and coding conventions.
@@ -26,5 +28,6 @@ NEVER:
 - Refactor unrelated code.
 - Rewrite adjacent code only for style preference.
 - Introduce a new framework, dependency, or architectural layer without explicit justification and approval.
+- Load long historical documents by default when the current state file is enough.
 
 STOP AND ASK when requirements are unclear, multiple interpretations are possible, or the safer path depends on user intent.

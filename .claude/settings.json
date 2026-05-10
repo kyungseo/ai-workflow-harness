@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "defaultMode": "plan",
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Bash(sudo:*)",
+      "Bash(rm:*)",
+      "Bash(kubectl:*)",
+      "Bash(terraform:*)"
+    ]
+  }
+}

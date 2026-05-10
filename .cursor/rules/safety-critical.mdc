@@ -17,7 +17,10 @@ NEVER run destructive or privileged commands without explicit user approval:
 - cloud provider CLI commands
 - commands that delete data, reset history, rotate secrets, or mutate shared infrastructure
 
-NEVER make infrastructure or environment changes unless the user explicitly asks for that exact action.
+NEVER:
+
+- Make infrastructure or environment changes unless the user explicitly asks for that exact action.
+- Read or expose `.env`, secret files, credentials, full tokens, or password values unless the user explicitly approves a specific need.
 
 MUST:
 

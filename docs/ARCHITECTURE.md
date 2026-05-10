@@ -327,7 +327,7 @@ graph LR
 > `rt:{userId}:* SCAN + DEL` 패턴은 탈취 감지 시 전체 세션 무효화에 사용된다.
 > 운영 환경 대규모 키 공간에서는 SCAN 성능 저하 및 Redis CPU 급증 위험이 있음.
 > Phase 1(소규모 사용자)에서는 허용 가능한 수준이나, Phase 2에서는 `rt:sessions:{userId}` Set
-> 구조로 전환하여 SCAN 없이 O(1)로 세션 목록 조회할 것을 권장한다. (→ PHASE2-BACKLOG.md 참조)
+> 구조로 전환하여 SCAN 없이 O(1)로 세션 목록 조회할 것을 권장한다. (→ `docs/backlog/PHASE2.md`의 P2-003 참조)
 
 ---
 
@@ -1072,4 +1072,4 @@ sequenceDiagram
 
 ---
 
-*다음 단계: `docs/STATUS.md` 확인 후 현재 BLOCK의 `docs/TODO/TODO-BLOCK{n}.md` 참고하여 구현 진행*
+*다음 단계: `docs/STATUS.md`에서 Active Work를 확인하고, 필요한 경우 `docs/backlog/PHASE2.md`에서 다음 작업을 선택한다.*

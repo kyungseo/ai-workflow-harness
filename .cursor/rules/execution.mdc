@@ -16,7 +16,8 @@ MUST:
 - Prefer the Gradle wrapper over system Gradle.
 - Choose the narrowest verification command that proves the change.
 - Report any command you could not run and why.
-- Follow the checkpoint flow in `docs/CLAUDE.md` before Docker, database, or end-to-end validation.
+- Check `docs/STATUS.md` for active checkpoints before Docker, database, or end-to-end validation.
+- Follow any verification scope defined in the active backlog or plan.
 
 NEVER:
 
@@ -24,7 +25,7 @@ NEVER:
 - Run privileged commands.
 - Use alternate build tools unless the repository explicitly requires them.
 
-Allowed checkpoint commands ONLY when required by `docs/CLAUDE.md`:
+Allowed checkpoint commands ONLY when required by active work verification:
 
 - `docker compose ...`
 - `psql ...`

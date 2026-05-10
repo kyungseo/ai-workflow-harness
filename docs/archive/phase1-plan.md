@@ -121,16 +121,11 @@ base-msa-template/
 │   ├── create-service.sh                # 새 서비스 스캐폴딩 자동화
 │   └── Makefile                         # build/run/test/clean 자동화
 ├── docs/
-│   ├── CLAUDE.md                        # Claude Code project operating rules
-│   ├── STATUS.md                        # Live project state and active work
-│   ├── PLAN.md                          # Approved architecture and plan reference
+│   ├── CLAUDE.md                        # Claude Code 진입점 (운영 규칙, 참조 맵)
+│   ├── STATUS.md                        # 진행 상태 트래킹 (단일 진실 공급원)
+│   ├── PLAN.md                          # 이 문서 (설계 결정 및 기술 원칙 전체)
 │   ├── ARCHITECTURE.md                  # 아키텍처 다이어그램 및 흐름
 │   ├── DEVELOPER-GUIDE.md               # 개발자 가이드 (아키텍처 상세 + 개발 절차)
-│   ├── backlog/
-│   │   └── PHASE2.md                    # Phase 2 prioritized backlog
-│   ├── archive/
-│   │   ├── phase1-status.md             # Phase 1 completed work history
-│   │   └── phase1-plan.md               # Phase 1 plan snapshot
 │   ├── TODO/
 │   │   ├── TODO-BLOCK1.md               # 프로젝트 골격
 │   │   ├── TODO-BLOCK2.md               # common-core
@@ -143,7 +138,7 @@ base-msa-template/
 │   │   ├── TODO-BLOCK9.md               # Frontend
 │   │   └── TODO-BLOCK10.md              # 문서화 및 마무리
 │   └── decisions/
-│       └── PHASE2-BACKLOG.md            # Compatibility pointer to docs/backlog/PHASE2.md
+│       └── PHASE2-BACKLOG.md            # Phase 2 백로그 (Phase 1 중 격리)
 ├── .env.example                         # 환경변수 템플릿 (값 없음, Git 추적)
 ├── .env                                 # 로컬 실제값 (gitignore)
 ├── .gitignore

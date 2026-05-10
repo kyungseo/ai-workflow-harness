@@ -54,4 +54,4 @@
 
 ## Phase 2 전환
 
-BLOCK 10 완료 → `docs/decisions/PHASE2-BACKLOG.md` 참조하여 Phase 2 계획 수립
+BLOCK 10 완료 → `docs/backlog/PHASE2.md` 참조하여 Phase 2 계획 수립

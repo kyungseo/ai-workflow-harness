@@ -1,70 +1,62 @@
 # CLAUDE.md
 
-이 문서는 모든 작업에 적용되는 **전역 행동 지침**이다.
-프로젝트별 운영 규칙(승인 절차, 포트맵, 패키지명 등)은 **`docs/CLAUDE.md`** 를 따른다.
-충돌 시 우선순위는 다음과 같다: **1) `CLAUDE.md`(전역 원칙) → 2) `docs/CLAUDE.md`(프로젝트 운영 규칙) → 3) 도구별 설정 파일(`.claude/*`, `.cursor/rules/*`)**.
+This file is the shared operating contract for Claude Code in this repository.
+Keep it short, concrete, and reusable across projects.
 
-**핵심 원칙:** 속도보다 신중함과 안정성을 우선한다. 단, 사소한 작업은 자율적 판단을 허용한다.
+@docs/CLAUDE.md
 
----
+## Core Workflow
 
-## 1. 코딩 전 사고 (Think Before Coding)
+MUST:
 
-**가정하지 말고, 혼란을 숨기지 않으며, 트레이드오프를 표면화하라.**
+- Start from the current task goal, not from broad refactoring.
+- Read only the context needed for the current decision.
+- Convert work into a short plan with verification points before multi-step changes.
+- Wait for explicit user approval before implementation when the work is broad, risky, or changes agreed scope.
+- Keep changes surgical, minimal, and reversible.
+- Verify with the narrowest command or scenario that proves the change.
+- Update `docs/STATUS.md` when task state, checkpoints, blockers, or next actions change.
 
-- 구현 전 가정을 명시적으로 기술하라. 불확실하면 반드시 질문하라.
-- 해석이 갈릴 경우 독단적으로 선택하지 말고 선택지를 제시하라.
-- 더 간단한 접근 방식이 있다면 제안하고, 필요하다면 과잉 설계에 반대(Push back)하라.
-- 모호한 점이 있다면 즉시 중단하고 혼란스러운 부분을 명명하여 질문하라.
+NEVER:
 
----
+- Add unrequested features.
+- Refactor unrelated code.
+- Hide uncertainty.
+- Make destructive, privileged, infrastructure, or secret-changing actions without explicit approval.
 
-## 2. 단순함 우선 (Simplicity First)
+## Decision Rules
 
-**문제 해결을 위한 최소한의 코드만 작성하라. 추측에 기반한 코딩은 금지한다.**
+When requirements are unclear, STOP AND ASK.
 
-- 요청하지 않은 기능은 추가하지 않는다.
-- 단일 사용 코드에 대해 불필요한 추상화를 하지 않는다.
-- 요청하지 않은 '유연성'이나 '구성 가능성(Configurability)'을 설계에 반영하지 않는다.
-- 발생 불가능한 시나리오에 대한 예외 처리를 남발하지 않는다.
-- 50줄로 끝낼 수 있는 코드를 200줄로 썼다면 즉시 리팩토링하라.
+When there are multiple reasonable approaches, present:
 
----
+- recommendation
+- assumptions
+- trade-offs
+- reversal cost
+- verification plan
 
-## 3. 정밀한 변경 (Surgical Changes)
+Prefer simple, existing project patterns over new abstractions.
 
-**수정해야 할 곳만 건드려라. 본인이 만든 복잡성만 정리하라.**
+## Response Shape
 
-- 인접한 코드, 주석, 포맷을 임의로 '개선'하지 않는다.
-- 고장 나지 않은 것을 리팩토링하지 않는다.
-- 본인의 선호도보다 기존 코드 스타일 준수를 우선한다.
-- 무관한 데드 코드를 발견하면 직접 삭제하지 말고 보고하라.
-- 본인의 변경으로 인해 발생한 미사용 임포트/변수/함수는 반드시 제거하라.
+Default order:
 
----
+1. Conclusion
+2. Changes or Plan
+3. Verification
+4. Risks
 
-## 4. 목표 중심 실행 (Goal-Driven Execution)
+Keep responses concise unless the user asks for deep analysis.
 
-**성공 기준을 정의하고 검증될 때까지 반복하라.**
+## Context Budget
 
-- 모든 작업을 검증 가능한 목표로 변환하라.
-  - 예: "검증 추가" → "잘못된 입력에 대한 테스트 작성 후 통과 확인"
-- 다단계 작업의 경우 반드시 간결한 계획을 먼저 제시하라.
-  1. [단계] → 검증: [체크사항]
-  2. [단계] → 검증: [체크사항]
+MUST:
 
----
+- Treat context as a limited resource.
+- Use `docs/STATUS.md` as the active state index.
+- Use `docs/PLAN.md` for approved architecture and phase-level plans.
+- Treat `docs/backlog/*.md` and `docs/archive/*.md` as context management documents, not as a replacement for implementation and verification.
+- Use archive documents only when historical detail is required.
 
-## 5. 응답 형식 (Communication Standards)
-
-**구조적 정합성과 투명한 리스크 관리를 수행한다.**
-
-- **결론 우선:** 모든 답변은 두괄식으로 핵심부터 기술한다.
-- **리스크 명시:** 기술적 의사결정 시 반드시 '되돌리기 비용(Reversal Cost)', 가정, 리스크를 명시한다.
-- **비판적 시각:** 감정적 공감보다 객관적 데이터를 제공하고, 설계의 맹점을 비판적으로 지적한다.
-- **시각화:** 복잡한 구조는 표, 불렛포인트, ASCII 텍스트 기반 구성도를 사용하여 구조화한다.
-
----
-
-**이 가이드라인이 잘 작동하는 기준:**
-Diff에 불필요한 변경이 없고, 과잉 설계로 인한 재작성이 줄어들며, 구현 전 질문이 많아질 때.
+NEVER load long historical documents by default.
