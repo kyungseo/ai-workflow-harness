@@ -13,7 +13,8 @@ This is a reference priority order, NOT the implementation process:
 3. `docs/STATUS.md` — current state, active work, checkpoints, blockers
 4. `docs/PLAN.md` — approved plan and architecture reference
 5. `docs/backlog/*.md` or `docs/decisions/*.md` — candidate work and unresolved decisions
-6. `docs/archive/*.md` — historical reference only
+6. `docs/TODO/*.md` — completed phase task breakdowns or explicitly assigned detailed task lists
+7. `docs/archive/*.md` — historical reference only
 
 ## Session Startup
 
@@ -45,7 +46,21 @@ Every active item should have:
 
 Use `docs/STATUS.md` for the live board.
 Use backlog files for candidate work.
+Use `docs/TODO/*.md` only when a phase intentionally needs detailed task decomposition or when reviewing completed phase details.
 Use archive files for completed phase history.
+
+## Legacy Phase Task Files
+
+`docs/TODO/TODO-BLOCK*.md` is NOT discarded.
+Those files are Phase 1 detailed task breakdowns and remain useful for historical reconstruction, implementation rationale, and checkpoint details.
+
+For new phases, default to:
+
+- `docs/backlog/PHASE{n}.md` for prioritized candidate work.
+- `docs/STATUS.md` for active work and checkpoint state.
+- `docs/TODO/PHASE{n}/...` only when a large phase needs finer-grained task files.
+
+Do not load Phase 1 TODO block files by default during Phase 2 work.
 
 ## Approval Boundaries
 

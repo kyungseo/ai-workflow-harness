@@ -3,6 +3,7 @@
 이 문서는 Cursor에서 새 세션을 시작할 때 복사해서 쓰는 부트스트랩 프롬프트다.
 현재 프로젝트는 `CLAUDE.md`, `docs/CLAUDE.md`, `docs/STATUS.md`, `docs/backlog/*.md`, `.cursor/rules/*.mdc`를 기준으로 작업한다.
 이 문서들은 작업 컨텍스트와 상태를 관리하기 위한 기준이며, 실제 작업은 `계획 수립 -> 승인 -> 구현 -> 검증 -> STATUS 갱신` 순서로 진행한다.
+`docs/TODO/TODO-BLOCK*.md`는 Phase 1 상세 작업 분해 문서이며, Phase 1 구현 맥락이 필요할 때만 참고한다.
 
 Cursor는 `.cursor/rules/*.mdc`를 함께 참고하되, 충돌 시 아래 우선순위를 따른다.
 
@@ -18,6 +19,7 @@ Cursor는 `.cursor/rules/*.mdc`를 함께 참고하되, 충돌 시 아래 우선
 ```
 CLAUDE.md와 docs/CLAUDE.md를 읽어줘.
 그다음 docs/STATUS.md의 Current State, Active Work, Checkpoints, Next Actions만 확인해줘.
+Phase 1 구현 상세가 필요한 경우에만 docs/TODO/TODO-BLOCK*.md를 추가로 참고해줘.
 
 .cursor/rules/*.mdc도 적용해줘.
 
