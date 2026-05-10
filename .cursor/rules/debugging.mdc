@@ -1,19 +1,26 @@
+---
+description: Use this when debugging failures, broken tests, runtime errors, or unexpected behavior.
+globs:
+alwaysApply: false
+---
+
 # Debugging Rules
 
-적용 우선순위:
+MUST follow this sequence:
 
-1. `CLAUDE.md`
-2. `docs/CLAUDE.md`
-3. 이 파일
+1. Reproduce or clearly describe the failing condition.
+2. Narrow the cause using actual code, logs, stack traces, tests, or runtime output.
+3. Fix the ROOT CAUSE with the smallest reasonable change.
+4. Re-run the same scenario or test that exposed the issue.
 
-디버깅 절차:
+MUST NOT:
 
-1. 재현 조건을 먼저 명확히 기록
-2. 실제 코드/로그 기반으로 원인 후보를 좁힘 (가정 금지)
-3. 최소 수정으로 원인 해결
-4. 테스트 및 동작 검증 재실행
+- Guess the cause without evidence.
+- Mask a failure by weakening assertions, deleting tests, or broadening exception handling.
+- Change unrelated behavior while debugging.
 
-테스트 실패 시:
+When a test fails, explain:
 
-- 루트 원인 분석
-- 수정 후 동일 시나리오 재검증
+- The failing scenario.
+- The most likely root cause.
+- The verification command or scenario used after the fix.

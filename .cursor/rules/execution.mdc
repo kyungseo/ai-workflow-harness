@@ -1,17 +1,30 @@
+---
+description: Repository execution, build, test, and verification commands.
+globs:
+alwaysApply: true
+---
+
 # Execution Rules
 
-기본 빌드/테스트 명령:
+Default verification commands:
 
-- `./gradlew build`
 - `./gradlew test`
+- `./gradlew build`
 
-원칙:
+MUST:
 
-- 대체 빌드 도구는 명시적 필요가 있을 때만 사용
-- 파괴적/권한 상승 명령은 금지
+- Prefer the Gradle wrapper over system Gradle.
+- Choose the narrowest verification command that proves the change.
+- Report any command you could not run and why.
+- Follow the checkpoint flow in `docs/CLAUDE.md` before Docker, database, or end-to-end validation.
 
-예외 (체크포인트/운영 검증):
+NEVER:
 
-- `docs/CLAUDE.md`에 정의된 체크포인트 검증 범위에서는 아래 명령 허용
-  - `docker compose ...`
-  - `psql ...`
+- Run destructive commands.
+- Run privileged commands.
+- Use alternate build tools unless the repository explicitly requires them.
+
+Allowed checkpoint commands ONLY when required by `docs/CLAUDE.md`:
+
+- `docker compose ...`
+- `psql ...`

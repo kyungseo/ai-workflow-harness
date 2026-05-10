@@ -1,17 +1,26 @@
-# 안전 규칙 (CRITICAL)
+---
+description: Critical safety limits for destructive, privileged, infrastructure, and environment-changing actions.
+globs:
+alwaysApply: true
+---
 
-파괴적이거나 권한이 필요한 명령은 절대 실행하지 않는다:
+# Safety Rules
 
-- rm -rf
-- sudo
-- kubectl
-- terraform
-- cloud CLI
+CRITICAL: Safety rules override convenience.
 
-인프라 또는 환경 변경 작업을 수행하지 않는다.
+NEVER run destructive or privileged commands without explicit user approval:
 
-안전 지침이 충돌하면 아래 우선순위를 따른다:
+- `rm -rf`
+- `sudo`
+- `kubectl`
+- `terraform`
+- cloud provider CLI commands
+- commands that delete data, reset history, rotate secrets, or mutate shared infrastructure
 
-1. `CLAUDE.md`
-2. `docs/CLAUDE.md`
-3. 이 파일
+NEVER make infrastructure or environment changes unless the user explicitly asks for that exact action.
+
+MUST:
+
+- Ask before any operation with irreversible or hard-to-reverse impact.
+- Prefer read-only inspection commands when diagnosing infrastructure or environment issues.
+- Explain the risk and reversal cost before proposing high-impact actions.

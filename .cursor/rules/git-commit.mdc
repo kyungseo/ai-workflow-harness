@@ -1,42 +1,41 @@
+---
+description: Use this when the user asks for a git commit, commit message, or commit command.
+globs:
+alwaysApply: false
+---
+
 # Git Commit Rules
 
-## Scope
+MUST use Conventional Commits:
 
-- Applies when:
-  - user asks to create a commit
-  - user asks for git commit message
-  - user runs git commit
+- `feat:`
+- `fix:`
+- `docs:`
+- `style:`
+- `refactor:`
+- `chore:`
+- `config:`
+- `test:`
+- `perf:`
+- `ci:`
+- `revert:`
 
-## Commit Message Format
+MUST:
 
-- MUST follow Conventional Commits:
-  - feat:
-  - fix:
-  - docs:
-  - style:
-  - refactor:
-  - chore:
-  - config:
-  - test:
-  - perf:
-  - ci:
-  - revert:
+- Keep the message specific to the staged or requested change.
+- Use a concise imperative subject.
+- Avoid claiming work that is not included in the diff.
 
-## Forbidden
+NEVER include metadata:
 
-- NEVER include metadata:
-  - --trailer
-  - Co-authored-by
-  - Signed-off-by
+- `--trailer`
+- `Co-authored-by`
+- `Signed-off-by`
 
-## Command Output Rule
+When the user asks ONLY for a commit command, output ONLY:
 
-When user requests a commit command:
+```bash
+git commit -m "type: concise message"
+```
 
-- ONLY output:
-  `git commit -m "message"`
-
-- DO NOT:
-  - include explanations
-  - include multiple commands
-  - include metadata
+Do not include explanations, multiple commands, or metadata in that case.

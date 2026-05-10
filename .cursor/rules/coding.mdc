@@ -1,14 +1,30 @@
-# Coding Rules
+---
+description: Core coding behavior for this repository. Always prefer cautious, minimal, reversible changes.
+globs:
+alwaysApply: true
+---
 
-적용 우선순위:
+# Core Coding Rules
 
-1. `CLAUDE.md` (전역 원칙)
-2. `docs/CLAUDE.md` (프로젝트 운영 규칙)
-3. 이 파일 (`.cursor/rules/*`)
+Instruction priority:
 
-코딩 원칙:
+1. `CLAUDE.md` — global principles
+2. `docs/CLAUDE.md` — project operating rules
+3. `.cursor/rules/*` — tool-specific rules
 
-- 기존 프로젝트 구조/코딩 컨벤션 준수
-- 변경은 최소 단위, 되돌릴 수 있게 유지
-- 무관한 리팩터링 금지
-- 신규 프레임워크/의존성은 명확한 근거가 있을 때만 도입
+MUST:
+
+- Read the relevant project context before editing.
+- State assumptions before implementation when the task is ambiguous.
+- Keep every change SURGICAL, MINIMAL, and REVERSIBLE.
+- Follow the existing package structure, naming, formatting, and coding conventions.
+- Remove unused imports, variables, functions, and test fixtures introduced by your own change.
+
+NEVER:
+
+- Add unrequested features.
+- Refactor unrelated code.
+- Rewrite adjacent code only for style preference.
+- Introduce a new framework, dependency, or architectural layer without explicit justification and approval.
+
+STOP AND ASK when requirements are unclear, multiple interpretations are possible, or the safer path depends on user intent.
