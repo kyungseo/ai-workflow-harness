@@ -101,6 +101,18 @@ MUST wait for user approval before:
 
 Verification을 실행할 수 없다면 이유와 남은 risk를 보고한다.
 
+## Language Rules
+
+파일 유형에 따라 언어를 구분한다.
+
+**영어로 작성:**
+- `CLAUDE.md` (루트), `.claude/rules/*.md` — Claude가 instruction으로 직접 처리하는 파일. 영어가 token 효율과 instruction 준수율이 높다.
+- frontmatter 키 (`paths`, `name`, `description` 등) — 도구가 파싱하는 메타데이터.
+
+**한국어로 작성 (기술 용어는 영어 원문 유지):**
+- `docs/*.md`, `prompts/*.md`, `docs/decisions/DR-*.md` — 사람이 읽는 문서.
+- 기술 용어 (`@Transactional`, N+1, Circuit Breaker 등)는 번역하지 않는다.
+
 ## Documentation Rules
 
 MUST:

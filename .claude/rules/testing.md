@@ -18,34 +18,34 @@ paths:
 
 ## Integration Test Infrastructure
 
-현재 통합 테스트는 외부 실행 중인 Docker 컨테이너에 의존한다 (`application-test.yml` → `localhost:5432`).
-Testcontainers 의존성은 `libs.versions.toml`에 선언됐지만 실제 사용하는 테스트가 없다.
+Integration tests depend on externally running Docker containers (`application-test.yml` → `localhost:5432`).
+Testcontainers dependency is declared in `libs.versions.toml` but no tests use it yet.
 
-MUST NOT: 명시적 승인 없이 `@Testcontainers`, `@Container`, `@ServiceConnection` 어노테이션을 추가하지 않는다.
-이 변경은 테스트 실행 모델을 바꾸므로 P2-006 범위에서 별도 결정이 필요하다.
+MUST NOT add `@Testcontainers`, `@Container`, or `@ServiceConnection` without explicit approval.
+This changes the test execution model and requires a separate decision under P2-006.
 
 ## Assertion and Mocking Style
 
 MUST:
 
-- AssertJ 사용: `assertThat(...)`, `assertThatThrownBy(...)`
-- BDD 스타일 선호: `given(mock).willReturn(value)` (Mockito `when/thenReturn` 지양)
-- `@MockitoSettings(strictness = Strictness.LENIENT)` — 프로젝트 표준; 이유 없이 제거하지 않는다.
+- Use AssertJ: `assertThat(...)`, `assertThatThrownBy(...)`
+- Prefer BDD style: `given(mock).willReturn(value)` over Mockito `when/thenReturn`
+- Keep `@MockitoSettings(strictness = Strictness.LENIENT)` — project standard; do not remove without reason.
 
 NEVER:
 
-- JUnit5 raw assertions (`assertEquals`, `assertTrue`) — AssertJ로 대체
-- `@Data` mock 사용
-- 테스트 필드에 `@Autowired` 필드 주입 (인스턴스 주입이 필요하면 생성자 방식 사용)
+- Use JUnit 5 raw assertions (`assertEquals`, `assertTrue`) — replace with AssertJ
+- Use `@Data` on mock objects
+- Use `@Autowired` field injection in test classes — use constructor injection if needed
 
 ## Naming Conventions
 
-- 메서드명: `methodName_scenario_expectedBehavior` (영어)
-- `@DisplayName`: 한국어 (`"로그인 성공 시 액세스 토큰을 반환한다"`)
-- 테스트 클래스명: `{TargetClass}Test`
+- Method name: `methodName_scenario_expectedBehavior` (English)
+- `@DisplayName`: Korean (e.g. `"로그인 성공 시 액세스 토큰을 반환한다"`) — Korean display names are intentional
+- Test class name: `{TargetClass}Test`
 
 ## Verification Command
 
-- 단위/모듈 변경: `./gradlew :services:{service-name}:test`
-- 전체: `./gradlew test`
-- 외부 Docker 없이 실행하려면 `@SpringBootTest` 통합 테스트는 제외: `./gradlew test --tests "*UnitTest*"`
+- Unit / module change: `./gradlew :services:{service-name}:test`
+- Full test suite: `./gradlew test`
+- Exclude `@SpringBootTest` integration tests when no external Docker is running: `./gradlew test --tests "*UnitTest*"`
