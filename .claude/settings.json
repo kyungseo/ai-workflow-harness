@@ -24,16 +24,6 @@
         ]
       }
     ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo '[hook] Before ending: verify docs/STATUS.md Active Work, checkpoints, and next actions match current state.'"
-          }
-        ]
-      }
-    ]
+    "Stop": []
   }
 }
