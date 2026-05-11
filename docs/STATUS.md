@@ -13,7 +13,7 @@ Last updated: 2026-05-11
 | Phase 1 | Complete |
 | Active plan | `docs/PLAN.md` |
 | Active backlog | `docs/backlog/PHASE2.md` |
-| Phase 1 task details | `docs/TODO/TODO-BLOCK*.md` |
+| Phase 1 task details | `docs/TODO//PHASE1/TODO-BLOCK*.md` |
 | Phase 1 status archive | `docs/archive/phase1-status.md` |
 | Phase 1 plan archive | `docs/archive/phase1-plan.md` |
 

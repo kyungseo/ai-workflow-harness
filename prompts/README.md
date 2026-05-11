@@ -92,7 +92,7 @@
 공통 세션 시작 절차 (Claude/Cursor):
 
 1. `CLAUDE.md` -> `docs/CLAUDE.md` -> `docs/STATUS.md` 순서로 읽기
-2. 현재 블록의 `docs/TODO/TODO-BLOCK{n}.md` 읽기
+2. 현재 블록의 `docs/TODO/PHASE{n}/TODO-BLOCK{n}.md` 읽기
 3. 상태 요약 + 작업 목록 제시 후 사용자 승인 대기
 4. 필요 시 `docs/PLAN.md`, `docs/ARCHITECTURE.md`를 추가 로딩
 

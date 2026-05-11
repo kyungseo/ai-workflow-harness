@@ -13,7 +13,7 @@ Phase와 무관하게 유지하여 다른 프로젝트에서도 같은 구조로
 3. `docs/STATUS.md` — 현재 상태, Active Work, checkpoints, blockers
 4. `docs/PLAN.md` — 승인된 계획과 아키텍처 참조
 5. `docs/backlog/*.md` 또는 `docs/decisions/*.md` — 후보 작업과 미결정 사항
-6. `docs/TODO/*.md` — 완료된 Phase의 상세 작업 분해 또는 명시적으로 지정된 세부 작업 목록
+6. `docs/TODO//PHASE{n}/*.md` — 완료된 Phase의 상세 작업 분해 또는 명시적으로 지정된 세부 작업 목록
 7. `docs/archive/*.md` — 과거 이력 참조
 
 ## Session Startup
@@ -50,12 +50,12 @@ MUST NOT:
 
 - `docs/STATUS.md`: live board와 현재 작업 상태
 - `docs/backlog/*.md`: 후보 작업과 우선순위
-- `docs/TODO/*.md`: Phase가 의도적으로 세부 작업 분해를 필요로 하거나 완료된 Phase 상세를 검토할 때만 사용
+- `docs/TODO//PHASE{n}/*.md`: Phase가 의도적으로 세부 작업 분해를 필요로 하거나 완료된 Phase 상세를 검토할 때만 사용
 - `docs/archive/*.md`: 완료된 Phase의 과거 이력
 
 ## Legacy Phase Task Files
 
-`docs/TODO/TODO-BLOCK*.md`는 폐기된 문서가 아니다.
+`docs/TODO//PHASE1/TODO-BLOCK*.md`는 폐기된 문서가 아니다.
 이 파일들은 Phase 1의 상세 작업 분해이며, 과거 구현 맥락, 판단 근거, checkpoint 세부 내용을 복원할 때 유용하다.
 
 새 Phase의 기본값은 다음과 같다.
@@ -87,7 +87,7 @@ MUST wait for user approval before:
 - Active state file: `docs/STATUS.md`
 - Phase 1 archive: `docs/archive/phase1-status.md`
 - Phase 1 plan archive: `docs/archive/phase1-plan.md`
-- Phase 1 task details: `docs/TODO/TODO-BLOCK*.md`
+- Phase 1 task details: `docs/TODO//PHASE1/TODO-BLOCK*.md`
 
 ## Verification Defaults
 

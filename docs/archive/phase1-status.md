@@ -36,7 +36,7 @@
 
 ## BLOCK 1 세부 진행 (완료)
 
-> 상세 태스크는 `docs/TODO/TODO-BLOCK1.md` 참조
+> 상세 태스크는 `docs/TODO/PHASE1/TODO-BLOCK1.md` 참조
 
 ### 1-1. Gradle 멀티모듈 초기화
 - [x] 루트 `build.gradle.kts`
@@ -76,7 +76,7 @@
 
 ## BLOCK 2 세부 진행 (완료)
 
-> 상세 태스크는 `docs/TODO/TODO-BLOCK2.md` 참조
+> 상세 태스크는 `docs/TODO/PHASE1/TODO-BLOCK2.md` 참조
 
 ### response/
 - [x] `ApiResponse<T>`
@@ -112,7 +112,7 @@
 
 ## BLOCK 3 세부 진행 (완료)
 
-> 상세 태스크는 `docs/TODO/TODO-BLOCK3.md` 참조
+> 상세 태스크는 `docs/TODO/PHASE1/TODO-BLOCK3.md` 참조
 
 ### 3-1. 도메인 모델 확정
 
@@ -235,7 +235,7 @@ curl -s "http://localhost:8093/api/v1/todos?page=0&size=5" \
 
 ## BLOCK 4 세부 진행 (완료)
 
-> 상세 태스크는 `docs/TODO/TODO-BLOCK4.md` 참조
+> 상세 태스크는 `docs/TODO/PHASE1/TODO-BLOCK4.md` 참조
 
 ### 선행 작업 — common-core 리팩토링
 

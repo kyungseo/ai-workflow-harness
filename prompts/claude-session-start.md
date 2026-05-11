@@ -9,7 +9,7 @@
 - `CLAUDE.md`와 `docs/CLAUDE.md`를 먼저 따른다.
 - `docs/STATUS.md`를 현재 작업 상태의 기준으로 삼는다.
 - 긴 문서는 처음부터 전부 읽지 말고, 필요한 섹션만 읽는다.
-- Phase 1 상세 맥락이 필요할 때만 `docs/TODO/TODO-BLOCK*.md`를 참고한다.
+- Phase 1 상세 맥락이 필요할 때만 `docs/TODO/PHASE1/TODO-BLOCK*.md`를 참고한다.
 - 구현 전에는 계획, 검증 방법, 리스크를 먼저 보고한다.
 - 작업 상태가 바뀌면 `docs/STATUS.md` 업데이트 필요 여부를 제안한다.
 
@@ -20,7 +20,7 @@
 ```
 CLAUDE.md와 docs/CLAUDE.md를 읽어줘.
 그다음 docs/STATUS.md의 Current State, Active Work, Checkpoints, Next Actions만 확인해줘.
-Phase 1 구현 상세가 필요한 경우에만 docs/TODO/TODO-BLOCK*.md를 추가로 참고해줘.
+Phase 1 구현 상세가 필요한 경우에만 docs/TODO/PHASE1/TODO-BLOCK*.md를 추가로 참고해줘.
 
 아래 형식으로 현재 상태를 요약해줘.
 
