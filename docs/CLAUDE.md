@@ -17,6 +17,19 @@ Phase와 무관하게 유지하여 다른 프로젝트에서도 같은 구조로
 7. `docs/archive/*.md` — 과거 이력 참조
 8. `docs/PLAN.md` — 전체 기술 근거 (969줄, 상세 검토가 필요할 때만 로드)
 
+### Context 로드 조건
+
+각 레벨은 아래 조건이 충족될 때만 로드한다. 조건이 없으면 로드하지 않는다.
+
+| 레벨 | 파일 | 로드 조건 |
+| --- | --- | --- |
+| 4 | `docs/PLAN-SUMMARY.md` | 기술 스택·포트·패키지 구조 확인 필요 시; 새 서비스·레이어 추가 전 |
+| 5 | `docs/backlog/*.md` | `/pick`, `/work` 실행 시; 작업 범위·우선순위 확인 필요 시 |
+| 5 | `docs/decisions/*.md` | 관련 DR이 있는 작업 시작 시; 아키텍처 결정이 구현에 직접 영향을 줄 때 |
+| 6 | `docs/TODO/PHASE{n}/*.md` | 해당 Phase 세부 작업 분해 확인 시; 명시적 TODO block 참조 요청 시 |
+| 7 | `docs/archive/*.md` | 이전 Phase 구현 맥락 복원 필요 시; 명시적으로 "Phase {n}에서 어떻게 했는지" 요청 시 |
+| 8 | `docs/PLAN.md` | PLAN-SUMMARY로 부족한 상세 근거 필요 시; 아키텍처 변경 검토 시; Phase 계획 자체 수정 시 |
+
 ## Session Startup
 
 > Claude Code 환경에서는 `CLAUDE.md`와 `docs/CLAUDE.md`(이 파일)가 세션 시작 시 자동 로드된다.
@@ -57,6 +70,34 @@ MUST NOT:
 - `docs/backlog/*.md`: 후보 작업과 우선순위
 - `docs/TODO/PHASE{n}/*.md`: Phase가 의도적으로 세부 작업 분해를 필요로 하거나 완료된 Phase 상세를 검토할 때만 사용
 - `docs/archive/*.md`: 완료된 Phase의 과거 이력
+
+### STATUS.md → Archive 이동
+
+**트리거 (다음 중 하나):**
+- Phase의 모든 Checkpoint가 Done 상태로 전환되었을 때
+- 새 Phase 시작 전 STATUS.md를 새 Phase 기준으로 재편할 때
+
+**이동 대상:**
+- 완료된 Phase의 Active Work 테이블 전체
+- 해당 Phase의 Checkpoints 테이블
+- 해당 Phase의 Recent Decisions 항목
+
+**절차:**
+1. Claude가 트리거 조건 감지 시 이동을 제안한다. 승인 없이 진행하지 않는다.
+2. 사용자 승인 후 `docs/archive/phase{n}-status.md`에 이동 내용을 작성한다.
+3. STATUS.md에서 이동한 섹션을 제거하고 현재 Phase 내용만 유지한다.
+
+### docs/TODO/PHASE{n}/ 생성
+
+**트리거 (다음 중 하나 이상):**
+- 단일 backlog 항목이 3개 이상의 독립 서브태스크로 분해되어야 할 때
+- 작업 범위가 3개 이상의 서비스·모듈을 가로질러 상세 조율이 필요할 때
+- 사용자가 명시적으로 세부 분해를 요청할 때
+
+**절차:**
+1. Claude가 필요성을 제안하고 구조 초안을 제시한다. 승인 없이 생성하지 않는다.
+2. 사용자 승인 후 `TODO-BLOCK{n}-{주제}.md` 형식으로 생성한다.
+3. 생성 후 STATUS.md의 해당 Active Work 항목에 TODO 파일 경로를 Notes에 추가한다.
 
 ## Legacy Phase Task Files
 

@@ -1,7 +1,7 @@
 # Claude Code 세션 시작 프롬프트
 
 이 문서는 새 Claude Code 세션을 시작할 때 복사해서 쓰는 부트스트랩 프롬프트 모음이다.
-현재 프로젝트의 작업 컨텍스트는 `docs/STATUS.md`, `docs/PLAN.md`, `docs/backlog/`, `docs/archive/`로 관리한다.
+현재 프로젝트의 작업 컨텍스트는 `docs/STATUS.md`, `docs/PLAN-SUMMARY.md`(기본) / `docs/PLAN.md`(상세), `docs/backlog/`, `docs/decisions/`, `docs/archive/`로 관리한다.
 실제 작업은 `계획 수립 -> 승인 -> 구현 -> 검증 -> STATUS 갱신 -> 필요 시 archive 정리` 순서로 진행한다.
 
 핵심 원칙:
@@ -111,15 +111,18 @@ Active Work 중 [작업 ID 또는 작업명]을 이어서 진행하려고 해.
 
 다음 파일 구조를 기준으로 초안을 제안해줘.
 
-- CLAUDE.md
-- docs/CLAUDE.md
-- docs/STATUS.md
-- docs/PLAN.md
-- docs/backlog/PHASE1.md
-- docs/archive/
-- .claude/settings.json
-- .claude/rules/
-- .claude/commands/
+- CLAUDE.md (루트, 영어)
+- docs/CLAUDE.md (한국어, Context Sources·Session Startup·언어 규칙 포함)
+- docs/STATUS.md (Current State·Active Work·Checkpoints 스켈레톤)
+- docs/PLAN-SUMMARY.md (기술 스택·포트·핵심 아키텍처 결정, 기본 로드용)
+- docs/PLAN.md (전체 기술 근거, 필요 시만 로드)
+- docs/backlog/PHASE1.md (우선순위별 후보 작업)
+- docs/decisions/ (DECISION-TEMPLATE.md 포함)
+- docs/archive/ (빈 폴더)
+- .claude/settings.json (defaultMode=plan, 금지 명령 목록, 필요 시 hook)
+- .claude/rules/ (docs-workflow, git-workflow, infra, [언어]-[프레임워크], testing)
+- .claude/commands/ (start, pick, work, resume, debug, done)
+- prompts/ (세션 부트스트랩 + 재사용 태스크 프롬프트 라이브러리)
 
 구현이나 파일 생성은 내가 승인한 뒤 진행해줘.
 ```
