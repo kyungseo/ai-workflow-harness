@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-11
+Last updated: 2026-05-11 (AI workflow 개선 완료)
 
 ## Current State
 
@@ -37,6 +37,7 @@ Last updated: 2026-05-11
 | ID | Priority | Status | Scope | Done Criteria | Verification |
 | --- | --- | --- | --- | --- | --- |
 | P2-PLAN-001 | P0 | Done | Claude Code context와 Phase 2 작업관리 구조 정리 | `CLAUDE.md`, `docs/CLAUDE.md`, `docs/STATUS.md`, Phase 2 backlog가 context-efficient하고 재사용 가능함 | Documentation diff inspection |
+| P2-PLAN-002 | P0 | Done | AI workflow 점검 및 개선 (Vibe Coding best practice 기준) | `.claude/commands/` 6개, `.claude/rules/testing.md`, `docs/decisions/` 구조, `docs/PLAN-SUMMARY.md`, `settings.json` 수정 완료 | 파일 존재 확인 및 `/start` slash command 동작 확인 |
 
 ## Phase 2 Checkpoints
 
@@ -52,7 +53,7 @@ Last updated: 2026-05-11
 
 | ID | Status | Question | Decision Needed |
 | --- | --- | --- | --- |
-| OQ-001 | Open | Phase 2는 infrastructure 확장보다 security hardening을 먼저 해야 하는가? | 권장: yes |
+| OQ-001 | Closed | Phase 2는 infrastructure 확장보다 security hardening을 먼저 해야 하는가? | DR-003 참조: Security first 결정. P2-001→002→003→004 순서 |
 | OQ-002 | Open | K8s 배포 도구는 Helm과 Kustomize 중 무엇을 쓸 것인가? | manifests 작성 전 결정 |
 | OQ-003 | Open | token storage를 localStorage에서 HttpOnly Cookie로 전환할 것인가? | frontend/auth 변경 전 결정 |
 | OQ-004 | Closed | `.claude/claude.json`은 legacy custom harness config였는가? | 삭제 완료. 공식 Claude Code config는 `.claude/settings.json` |
@@ -65,9 +66,11 @@ Last updated: 2026-05-11
 | 2026-05-11 | root `CLAUDE.md`를 재사용 가능하게 만들고 `docs/CLAUDE.md`를 명시 import | instruction loading 개선 및 cross-project reuse | Low |
 | 2026-05-11 | 공식 `.claude/settings.json`과 path-scoped `.claude/rules/` 추가 | 중복 prompt context 감소 및 Claude Code 설정 정렬 | Low |
 | 2026-05-11 | legacy `.claude/claude.json` 삭제 | 사용자 확인 후 obsolete custom harness configuration 제거 | Low |
+| 2026-05-11 | AI workflow 개선: `.claude/commands/` 6개, `testing.md` rule, `PLAN-SUMMARY.md`, `decisions/` DR 초안 3개, `settings.json` 수정 | Phase 2 착수 전 workflow 마찰 최소화, Vibe Coding best practice 정렬 | Low |
 
 ## Next Actions
 
-1. Phase 2 backlog priority를 사용자와 검토한다.
-2. `docs/backlog/PHASE2.md`에서 첫 implementation item을 선택한다.
-3. work-management model이 바뀌면 Cursor rules도 함께 정렬한다.
+1. `/pick` 커맨드로 Phase 2 첫 구현 항목 선택 (P2-001 권장).
+2. `docs/decisions/DR-001-token-storage.md`를 채워서 P2-001 착수 전 결정 완료.
+3. `docs/decisions/DR-002-k8s-tool.md`는 P2-004 착수 전까지 Draft 유지.
+4. Cursor rules (`.cursor/rules/*.mdc`)를 새 `.claude/rules/*.md`와 정렬 필요 여부 확인.

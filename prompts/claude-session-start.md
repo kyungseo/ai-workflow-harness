@@ -119,6 +119,7 @@ Active Work 중 [작업 ID 또는 작업명]을 이어서 진행하려고 해.
 - docs/archive/
 - .claude/settings.json
 - .claude/rules/
+- .claude/commands/
 
 구현이나 파일 생성은 내가 승인한 뒤 진행해줘.
 ```

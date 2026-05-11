@@ -11,10 +11,11 @@ Phase와 무관하게 유지하여 다른 프로젝트에서도 같은 구조로
 1. `CLAUDE.md` — 공통 작업 계약
 2. `docs/CLAUDE.md` — 프로젝트 운영 규칙
 3. `docs/STATUS.md` — 현재 상태, Active Work, checkpoints, blockers
-4. `docs/PLAN.md` — 승인된 계획과 아키텍처 참조
+4. `docs/PLAN-SUMMARY.md` — 기술 스택, 포트, 핵심 아키텍처 결정 요약 (기본 로드)
 5. `docs/backlog/*.md` 또는 `docs/decisions/*.md` — 후보 작업과 미결정 사항
 6. `docs/TODO//PHASE{n}/*.md` — 완료된 Phase의 상세 작업 분해 또는 명시적으로 지정된 세부 작업 목록
 7. `docs/archive/*.md` — 과거 이력 참조
+8. `docs/PLAN.md` — 전체 기술 근거 (969줄, 상세 검토가 필요할 때만 로드)
 
 ## Session Startup
 
