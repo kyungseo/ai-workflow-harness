@@ -5,6 +5,14 @@
 이 문서들은 작업 컨텍스트와 상태를 관리하기 위한 기준이며, 실제 작업은 `계획 수립 -> 승인 -> 구현 -> 검증 -> STATUS 갱신` 순서로 진행한다.
 `docs/TODO/PHASE1/TODO-BLOCK*.md`는 Phase 1 상세 작업 분해 문서이며, Phase 1 구현 맥락이 필요할 때만 참고한다.
 
+컨텍스트 참조 우선순위:
+1. `CLAUDE.md` — 공통 작업 계약
+2. `docs/CLAUDE.md` — 프로젝트 운영 규칙
+3. `docs/STATUS.md` — 현재 작업 상태
+4. `docs/PLAN-SUMMARY.md` — 기술 스택·포트·아키텍처 요약 (기본 참조용, `docs/PLAN.md`는 상세 필요시만)
+5. `docs/backlog/*.md` — 후보 작업
+6. `.cursor/rules/*.mdc` — 도구별 규칙
+
 Cursor는 `.cursor/rules/*.mdc`를 함께 참고하되, 충돌 시 아래 우선순위를 따른다.
 
 1. `CLAUDE.md`
@@ -19,6 +27,7 @@ Cursor는 `.cursor/rules/*.mdc`를 함께 참고하되, 충돌 시 아래 우선
 ```
 CLAUDE.md와 docs/CLAUDE.md를 읽어줘.
 그다음 docs/STATUS.md의 Current State, Active Work, Checkpoints, Next Actions만 확인해줘.
+아키텍처나 기술 스택 정보가 필요하면 docs/PLAN-SUMMARY.md를 읽어줘 (docs/PLAN.md는 상세 검토 시에만).
 Phase 1 구현 상세가 필요한 경우에만 docs/TODO/PHASE1/TODO-BLOCK*.md를 추가로 참고해줘.
 
 .cursor/rules/*.mdc도 적용해줘.
