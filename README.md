@@ -312,6 +312,19 @@ base-msa-template/
 - Spring Boot 특화: `21-create-layer` (레이어별 생성), `22-minimal-diff` (최소 수정 강제) 등
 - 상세 안내: `prompts/README.md`
 
+**경로 규칙** (`.claude/rules/`):
+
+대화 중 접근한 파일 경로가 각 rule의 `paths` glob과 매칭될 때 자동 로드된다. 별도 지정 불필요.
+
+| 파일 | 적용 경로 | 내용 |
+|------|-----------|------|
+| `java-spring.md` | `services/**`, `gateway/**`, `common/**/*.java` 등 | Lombok 규칙, MyBatis `#{}` 강제, 패키지 컨벤션 |
+| `testing.md` | `**/src/test/**/*.java` | 테스트 레이어 어노테이션, AssertJ/BDD 스타일, Testcontainers 미사용 주의 |
+| `infra.md` | `infra/**`, `**/Dockerfile`, `.github/workflows/**` | 인프라 변경 제약 |
+| `docs-workflow.md` | `docs/**/*.md`, `CLAUDE.md` | 문서 작성 규칙 |
+
+> **주의**: `paths`가 없는 rule은 모든 대화에 전역 적용된다. 컨텍스트 낭비를 막기 위해 반드시 `paths`를 지정할 것.
+
 ---
 
 ## 다음 단계 (Phase 2)
