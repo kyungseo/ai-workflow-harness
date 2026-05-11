@@ -55,7 +55,7 @@ MUST:
 
 - Treat context as a limited resource.
 - Use `docs/STATUS.md` as the active state index.
-- Use `docs/PLAN.md` for approved architecture and phase-level plans.
+- Use `docs/PLAN-SUMMARY.md` as the default architecture reference; load `docs/PLAN.md` only when full technical detail is needed.
 - Treat `docs/backlog/*.md` and `docs/archive/*.md` as context management documents, not as a replacement for implementation and verification.
 - Use archive documents only when historical detail is required.
 

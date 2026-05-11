@@ -1,5 +1,4 @@
-CLAUDE.md, docs/CLAUDE.md, docs/STATUS.md를 확인해줘.
-docs/backlog/PHASE2.md에서 $ARGUMENTS 항목을 읽고 진행 계획을 세워줘.
+docs/STATUS.md와 docs/backlog/PHASE2.md에서 $ARGUMENTS 항목을 확인하고 진행 계획을 세워줘.
 
 계획에는 반드시 아래 내용을 포함해줘.
 

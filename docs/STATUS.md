@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-11 (AI workflow 개선 완료)
+Last updated: 2026-05-11 (AI workflow 정비 심화 + Cursor 정렬 완료)
 
 ## Current State
 
@@ -13,24 +13,16 @@ Last updated: 2026-05-11 (AI workflow 개선 완료)
 | Phase 1 | Complete |
 | Active plan | `docs/PLAN.md` |
 | Active backlog | `docs/backlog/PHASE2.md` |
-| Phase 1 task details | `docs/TODO//PHASE1/TODO-BLOCK*.md` |
+| Phase 1 task details | `docs/TODO/PHASE1/TODO-BLOCK*.md` |
 | Phase 1 status archive | `docs/archive/phase1-status.md` |
 | Phase 1 plan archive | `docs/archive/phase1-plan.md` |
 
 ## Work Context Rule
 
 이 파일은 작업 상태를 관리하기 위한 문서이며, planning, implementation, testing을 대체하지 않는다.
+작업 흐름 상세: `docs/CLAUDE.md` → Work Management Model 참조.
 
-새 작업 항목은 다음 흐름으로 관리한다.
-
-1. backlog 항목을 선택하거나 새로 만든다.
-2. Priority, Dependencies, Done Criteria, Verification을 확인한다.
-3. 작업이 크거나 위험하면 짧은 plan을 작성하고 approval을 받는다.
-4. 구현 전 항목을 Active Work로 올린다.
-5. 승인된 scope만 구현한다.
-6. 합의된 command 또는 scenario로 검증한다.
-7. Active Work, checkpoint status, blockers, next actions를 갱신한다.
-8. 현재 작업 판단에 더 이상 필요 없는 완료 상세는 archive로 옮긴다.
+실행 흐름 요약: `backlog 선택 → plan → approval → implementation → verification → status update`
 
 ## Active Work
 
@@ -38,6 +30,7 @@ Last updated: 2026-05-11 (AI workflow 개선 완료)
 | --- | --- | --- | --- | --- | --- |
 | P2-PLAN-001 | P0 | Done | Claude Code context와 Phase 2 작업관리 구조 정리 | `CLAUDE.md`, `docs/CLAUDE.md`, `docs/STATUS.md`, Phase 2 backlog가 context-efficient하고 재사용 가능함 | Documentation diff inspection |
 | P2-PLAN-002 | P0 | Done | AI workflow 점검 및 개선 (Vibe Coding best practice 기준) | `.claude/commands/` 6개, `.claude/rules/testing.md`, `docs/decisions/` 구조, `docs/PLAN-SUMMARY.md`, `settings.json` 수정 완료 | 파일 존재 확인 및 `/start` slash command 동작 확인 |
+| P2-PLAN-003 | P0 | Done | AI workflow 정비 심화 + Cursor 정렬 | 언어 원칙 정의, rules 정합성·token 효율 개선, prompts 라이브러리 Spring Boot 특화, Cursor rules Claude와 정렬 완료 | 파일 존재 확인 및 git log 검토 |
 
 ## Phase 2 Checkpoints
 
@@ -67,10 +60,13 @@ Last updated: 2026-05-11 (AI workflow 개선 완료)
 | 2026-05-11 | 공식 `.claude/settings.json`과 path-scoped `.claude/rules/` 추가 | 중복 prompt context 감소 및 Claude Code 설정 정렬 | Low |
 | 2026-05-11 | legacy `.claude/claude.json` 삭제 | 사용자 확인 후 obsolete custom harness configuration 제거 | Low |
 | 2026-05-11 | AI workflow 개선: `.claude/commands/` 6개, `testing.md` rule, `PLAN-SUMMARY.md`, `decisions/` DR 초안 3개, `settings.json` 수정 | Phase 2 착수 전 workflow 마찰 최소화, Vibe Coding best practice 정렬 | Low |
+| 2026-05-11 | 언어 원칙 정의: `.claude/rules/*.md`·루트 `CLAUDE.md` → 영어, `docs/*.md`·`prompts/*.md` → 한국어+기술용어 영어 유지 | token 효율 및 instruction 준수율 향상 | Low |
+| 2026-05-11 | `git-workflow.md` rule 신규 추가: 커밋 전 `git status → add → status → diff --cached` 프로세스 강제 | 커밋 누락 방지 (unstaged/untracked 미확인 문제) | Low |
+| 2026-05-11 | Cursor rules를 Claude rules와 정렬: `java-spring.mdc`, `testing.mdc` 신규, `git-commit.mdc` 프로세스 추가, `.cursorignore` 업데이트 | Claude/Cursor 간 규칙 정합성 확보 | Low |
+| 2026-05-11 | prompts 라이브러리 Spring Boot 특화: `21-create-layer`, `22-minimal-diff` 신규, 기존 5개 개선 (minimal patch, API contract 불변, Spring 안티패턴 체크) | AI 작업 품질 및 범위 제어 향상 | Low |
 
 ## Next Actions
 
 1. `/pick` 커맨드로 Phase 2 첫 구현 항목 선택 (P2-001 권장).
 2. `docs/decisions/DR-001-token-storage.md`를 채워서 P2-001 착수 전 결정 완료.
 3. `docs/decisions/DR-002-k8s-tool.md`는 P2-004 착수 전까지 Draft 유지.
-4. Cursor rules (`.cursor/rules/*.mdc`)를 새 `.claude/rules/*.md`와 정렬 필요 여부 확인.

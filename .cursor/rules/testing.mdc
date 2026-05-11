@@ -1,8 +1,7 @@
 ---
-paths:
-  - "services/**/src/test/**/*.java"
-  - "gateway/**/src/test/**/*.java"
-  - "common/**/src/test/**/*.java"
+description: Java testing rules for this repository. Apply when editing test files.
+globs: ["services/**/src/test/**/*.java", "gateway/**/src/test/**/*.java", "common/**/src/test/**/*.java"]
+alwaysApply: false
 ---
 
 # Java Testing Rules

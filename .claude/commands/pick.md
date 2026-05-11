@@ -1,5 +1,4 @@
-CLAUDE.md, docs/CLAUDE.md, docs/STATUS.md를 확인해줘.
-그리고 docs/backlog/PHASE2.md에서 우선순위가 높은 후보 작업을 검토해줘.
+docs/STATUS.md와 docs/backlog/PHASE2.md를 확인하고 우선순위가 높은 후보 작업을 검토해줘.
 
 각 후보에 대해 아래 항목을 비교해줘.
 
