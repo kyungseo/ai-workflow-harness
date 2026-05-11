@@ -30,7 +30,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '[hook] 세션 종료 전 확인: docs/STATUS.md의 Active Work, checkpoints, next actions가 현재 상태와 일치하는지 확인해줘.'"
+            "command": "echo '[hook] Before ending: verify docs/STATUS.md Active Work, checkpoints, and next actions match current state.'"
           }
         ]
       }

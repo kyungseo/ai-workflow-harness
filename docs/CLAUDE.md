@@ -13,16 +13,19 @@ Phase와 무관하게 유지하여 다른 프로젝트에서도 같은 구조로
 3. `docs/STATUS.md` — 현재 상태, Active Work, checkpoints, blockers
 4. `docs/PLAN-SUMMARY.md` — 기술 스택, 포트, 핵심 아키텍처 결정 요약 (기본 로드)
 5. `docs/backlog/*.md` 또는 `docs/decisions/*.md` — 후보 작업과 미결정 사항
-6. `docs/TODO//PHASE{n}/*.md` — 완료된 Phase의 상세 작업 분해 또는 명시적으로 지정된 세부 작업 목록
+6. `docs/TODO/PHASE{n}/*.md` — 완료된 Phase의 상세 작업 분해 또는 명시적으로 지정된 세부 작업 목록
 7. `docs/archive/*.md` — 과거 이력 참조
 8. `docs/PLAN.md` — 전체 기술 근거 (969줄, 상세 검토가 필요할 때만 로드)
 
 ## Session Startup
 
+> Claude Code 환경에서는 `CLAUDE.md`와 `docs/CLAUDE.md`(이 파일)가 세션 시작 시 자동 로드된다.
+> 아래 1~2번은 Claude Code에서 자동 충족된다. Cursor / ChatGPT 등 다른 도구에서는 수동으로 진행한다.
+
 MUST:
 
-1. `CLAUDE.md`를 읽는다.
-2. 이 파일을 읽는다.
+1. `CLAUDE.md`를 읽는다. *(Claude Code: 자동)*
+2. 이 파일을 읽는다. *(Claude Code: 자동, `@docs/CLAUDE.md` via CLAUDE.md)*
 3. `docs/STATUS.md`의 상단/current 섹션만 읽는다.
 4. 요청 작업에 필요할 때만 active plan 또는 backlog를 읽는다.
 5. 큰 변경 전에는 현재 상태, 제안 단계, Verification, Risks를 요약한다.
@@ -35,6 +38,7 @@ MUST NOT:
 
 아래 파일들은 작업 context와 상태를 관리하기 위한 것이다.
 실제 실행은 항상 `plan -> approval -> implementation -> verification -> status update` 흐름을 따른다.
+작업 상태가 바뀌면 `docs/STATUS.md` 업데이트 필요 여부를 제안한다.
 
 모든 Active Work 항목은 가능하면 아래 정보를 가진다.
 
@@ -51,12 +55,12 @@ MUST NOT:
 
 - `docs/STATUS.md`: live board와 현재 작업 상태
 - `docs/backlog/*.md`: 후보 작업과 우선순위
-- `docs/TODO//PHASE{n}/*.md`: Phase가 의도적으로 세부 작업 분해를 필요로 하거나 완료된 Phase 상세를 검토할 때만 사용
+- `docs/TODO/PHASE{n}/*.md`: Phase가 의도적으로 세부 작업 분해를 필요로 하거나 완료된 Phase 상세를 검토할 때만 사용
 - `docs/archive/*.md`: 완료된 Phase의 과거 이력
 
 ## Legacy Phase Task Files
 
-`docs/TODO//PHASE1/TODO-BLOCK*.md`는 폐기된 문서가 아니다.
+`docs/TODO/PHASE1/TODO-BLOCK*.md`는 폐기된 문서가 아니다.
 이 파일들은 Phase 1의 상세 작업 분해이며, 과거 구현 맥락, 판단 근거, checkpoint 세부 내용을 복원할 때 유용하다.
 
 새 Phase의 기본값은 다음과 같다.
@@ -88,7 +92,7 @@ MUST wait for user approval before:
 - Active state file: `docs/STATUS.md`
 - Phase 1 archive: `docs/archive/phase1-status.md`
 - Phase 1 plan archive: `docs/archive/phase1-plan.md`
-- Phase 1 task details: `docs/TODO//PHASE1/TODO-BLOCK*.md`
+- Phase 1 task details: `docs/TODO/PHASE1/TODO-BLOCK*.md`
 
 ## Verification Defaults
 
@@ -107,10 +111,12 @@ Verification을 실행할 수 없다면 이유와 남은 risk를 보고한다.
 
 **영어로 작성:**
 - `CLAUDE.md` (루트), `.claude/rules/*.md` — Claude가 instruction으로 직접 처리하는 파일. 영어가 token 효율과 instruction 준수율이 높다.
+- `.claude/settings.json` hook 메시지 중 Claude에게 전달되는 instruction — 영어.
 - frontmatter 키 (`paths`, `name`, `description` 등) — 도구가 파싱하는 메타데이터.
 
 **한국어로 작성 (기술 용어는 영어 원문 유지):**
 - `docs/*.md`, `prompts/*.md`, `docs/decisions/DR-*.md` — 사람이 읽는 문서.
+- `.claude/commands/*.md` — 사용자가 직접 읽고 수정하는 slash command. 한국어 유지.
 - 기술 용어 (`@Transactional`, N+1, Circuit Breaker 등)는 번역하지 않는다.
 
 ## Documentation Rules

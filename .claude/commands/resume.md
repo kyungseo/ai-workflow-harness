@@ -1,4 +1,4 @@
-CLAUDE.md, docs/CLAUDE.md, docs/STATUS.md를 읽어줘.
+docs/STATUS.md를 읽어줘.
 Active Work 중 $ARGUMENTS 을 이어서 진행하려고 해.
 
 먼저 실제 파일 상태와 docs/STATUS.md가 일치하는지 확인하고,

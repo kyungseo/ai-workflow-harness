@@ -13,24 +13,16 @@ Last updated: 2026-05-11 (AI workflow 개선 완료)
 | Phase 1 | Complete |
 | Active plan | `docs/PLAN.md` |
 | Active backlog | `docs/backlog/PHASE2.md` |
-| Phase 1 task details | `docs/TODO//PHASE1/TODO-BLOCK*.md` |
+| Phase 1 task details | `docs/TODO/PHASE1/TODO-BLOCK*.md` |
 | Phase 1 status archive | `docs/archive/phase1-status.md` |
 | Phase 1 plan archive | `docs/archive/phase1-plan.md` |
 
 ## Work Context Rule
 
 이 파일은 작업 상태를 관리하기 위한 문서이며, planning, implementation, testing을 대체하지 않는다.
+작업 흐름 상세: `docs/CLAUDE.md` → Work Management Model 참조.
 
-새 작업 항목은 다음 흐름으로 관리한다.
-
-1. backlog 항목을 선택하거나 새로 만든다.
-2. Priority, Dependencies, Done Criteria, Verification을 확인한다.
-3. 작업이 크거나 위험하면 짧은 plan을 작성하고 approval을 받는다.
-4. 구현 전 항목을 Active Work로 올린다.
-5. 승인된 scope만 구현한다.
-6. 합의된 command 또는 scenario로 검증한다.
-7. Active Work, checkpoint status, blockers, next actions를 갱신한다.
-8. 현재 작업 판단에 더 이상 필요 없는 완료 상세는 archive로 옮긴다.
+실행 흐름 요약: `backlog 선택 → plan → approval → implementation → verification → status update`
 
 ## Active Work
 

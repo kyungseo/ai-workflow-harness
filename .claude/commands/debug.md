@@ -1,4 +1,4 @@
-CLAUDE.md, docs/CLAUDE.md, docs/STATUS.md를 확인해줘.
+docs/STATUS.md를 확인해줘.
 
 작업 대상: $ARGUMENTS
 
