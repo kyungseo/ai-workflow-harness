@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "defaultMode": "plan",
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Bash(sudo *)",
+      "Bash(rm -rf*)",
+      "Bash(rm -r *)",
+      "Bash(kubectl *)",
+      "Bash(terraform *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"import sys,json; d=json.load(sys.stdin); f=d.get('tool_input',{}).get('file_path',''); print(f'[hook] Java 파일 수정됨: {f}\\n제안: ./gradlew test 또는 ./gradlew :<module>:test') if f and f.endswith('.java') else None\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[hook] 세션 종료 전 확인: docs/STATUS.md의 Active Work, checkpoints, next actions가 현재 상태와 일치하는지 확인해줘.'"
+          }
+        ]
+      }
+    ]
+  }
+}

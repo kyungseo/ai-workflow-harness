@@ -121,16 +121,11 @@ base-msa-template/
 │   ├── create-service.sh                # 새 서비스 스캐폴딩 자동화
 │   └── Makefile                         # build/run/test/clean 자동화
 ├── docs/
-│   ├── CLAUDE.md                        # Claude Code project operating rules
-│   ├── STATUS.md                        # Live project state and active work
-│   ├── PLAN.md                          # Approved architecture and plan reference
+│   ├── CLAUDE.md                        # Claude Code 진입점 (운영 규칙, 참조 맵)
+│   ├── STATUS.md                        # 진행 상태 트래킹 (단일 진실 공급원)
+│   ├── PLAN.md                          # 이 문서 (설계 결정 및 기술 원칙 전체)
 │   ├── ARCHITECTURE.md                  # 아키텍처 다이어그램 및 흐름
 │   ├── DEVELOPER-GUIDE.md               # 개발자 가이드 (아키텍처 상세 + 개발 절차)
-│   ├── backlog/
-│   │   └── PHASE2.md                    # Phase 2 prioritized backlog
-│   ├── archive/
-│   │   ├── phase1-status.md             # Phase 1 completed work history
-│   │   └── phase1-plan.md               # Phase 1 plan snapshot
 │   ├── TODO/
 │   │   ├── PHASE1/
 │   │   │   ├── TODO-BLOCK1.md           # 프로젝트 골격
@@ -145,7 +140,7 @@ base-msa-template/
 │   │   │   └── TODO-BLOCK10.md          # 문서화 및 마무리
 │   │   └── PHASE2/
 │   └── decisions/
-│       └── PHASE2-BACKLOG.md            # Compatibility pointer to docs/backlog/PHASE2.md
+│       └── PHASE2-BACKLOG.md            # Phase 2 백로그 (Phase 1 중 격리)
 ├── .env.example                         # 환경변수 템플릿 (값 없음, Git 추적)
 ├── .env                                 # 로컬 실제값 (gitignore)
 ├── .gitignore
@@ -368,7 +363,7 @@ Phase 3 (K8s):  관리형 DB (RDS, Cloud SQL 등) 또는 서비스별 StatefulSe
 
 > **updated_at 자동 갱신**: `DEFAULT NOW()`는 INSERT 시에만 적용된다. UPDATE 시 자동 갱신을
 > 위해 `01-schema.sql`에 `update_updated_at_column()` PostgreSQL 트리거 함수를 추가한다.
-> (→ `docs/TODO//PHASE1/TODO-BLOCK3.md §3-2` 참조)
+> (→ `docs/TODO/PHASE1/TODO-BLOCK3.md §3-2` 참조)
 >
 > **Phase 1 설계 원칙**: DB 분리를 고려하여 서비스 간 테이블에 FK 제약조건을 사용하지 않는다.
 > `todos.user_id`는 `users.id`에 대한 **논리적 참조**로만 유지하며, 참조 무결성은 애플리케이션 레이어에서 보장한다.

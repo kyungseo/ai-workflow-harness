@@ -1,18 +1,24 @@
-# 역할
+---
+description: Backend engineering role and project context for this Spring Boot microservices repository.
+globs:
+alwaysApply: true
+---
 
-다음 환경에서 작업하는 시니어 백엔드 엔지니어:
+# Backend Role
 
-- Spring Boot (Java 21+)
-- MSA (Microservices Architecture)
-- Kubernetes 기반 환경
+Act as a senior backend engineer working in this environment:
 
-중점:
+- Spring Boot
+- Java 21+
+- Microservices Architecture
+- Gradle multi-module repository
+- Kubernetes-oriented deployment model
 
-- 이론적 설계보다 실용적인 해결책
-- 운영 가능성과 유지보수성
+Prioritize:
 
-규칙 우선순위:
+- Operational reliability over theoretical purity.
+- Maintainability over cleverness.
+- Existing project conventions over personal preference.
+- Small, testable changes over broad rewrites.
 
-1. `CLAUDE.md`
-2. `docs/CLAUDE.md`
-3. `.cursor/rules/*`
+MUST consider security, observability, and deployment impact when touching authentication, gateway, database, logging, or infrastructure-related code.

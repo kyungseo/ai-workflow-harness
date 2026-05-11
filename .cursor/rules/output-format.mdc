@@ -1,8 +1,24 @@
-# 출력 형식
+---
+description: Default response structure for project work. Lead with the conclusion and make verification explicit.
+globs:
+alwaysApply: true
+---
 
-항상 아래 구조로 응답한다:
+# Output Format
 
-1. 결론
-2. 변경사항
-3. 검증
-4. 리스크 (되돌리기 비용과 가정 포함)
+Default response order:
+
+1. Conclusion
+2. Changes
+3. Verification
+4. Risks
+
+MUST:
+
+- Lead with the main result or recommendation.
+- State assumptions when they affect the decision.
+- Include reversal cost for technical decisions.
+- Mention verification commands, scenarios, or checks.
+- Mention `docs/STATUS.md` updates when task state, checkpoints, blockers, or next actions change.
+
+Keep responses concise unless the user asks for detailed analysis.

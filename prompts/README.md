@@ -2,11 +2,14 @@
 
 이 디렉토리는 자주 쓰는 작업 프롬프트 모음이다.
 
+현재 총 **23개** 범용 프롬프트 (`00~22`) + 세션 부트스트랩 2개.
+
 ## 1) 프롬프트 종류
 
-- `00~20 *.prompt.md`: 범용(task) 프롬프트
+- `00~22 *.prompt.md`: 범용(task) 프롬프트
   - Claude, Cursor, ChatGPT, Gemini 등에서 공통 사용 가능
-- `claude-session-start.md`, `cursor-start.md`: 세션 부트스트랩 프롬프트
+  - `00~20`: 일반 범용, `21~22`: Spring Boot 백엔드 특화
+- `claude-session-start.md`, `cursor-session-start.md`: 세션 부트스트랩 프롬프트
   - 특정 도구/레포 운영 규칙에 맞춘 특화 프롬프트
 
 ## 2) 빠른 사용 절차 (초심자용)
@@ -24,27 +27,34 @@
 
 ## 3) 프롬프트 선택표
 
+### 일반
+
 - 일반 작업 시작: `00-generic-task.prompt.md`
 - 신규 뼈대 생성: `01-scaffold-project.prompt.md`
-- 작은 앱 MVP: `02-todo-mvp.prompt.md`
-- 기존 기능 1개 추가: `03-add-single-feature.prompt.md`
-- UI 개선: `04-improve-ui.prompt.md`
-- 에러 원인 분석/수정: `05-debug-error.prompt.md`
-- 테스트 먼저 작성: `06-write-tests-first.prompt.md`
-- 구조 리팩토링: `07-refactor-code.prompt.md`
-- 큰 컴포넌트 분리: `08-split-component.prompt.md`
+- 기존 기능 1개 추가 (단계 분리): `03-add-single-feature.prompt.md`
+- 에러 원인 분석/수정 (minimal patch): `05-debug-error.prompt.md`
+- 테스트 먼저 작성 (JUnit5/Mockito/AssertJ): `06-write-tests-first.prompt.md`
+- 구조 리팩토링 (API contract 불변): `07-refactor-code.prompt.md`
 - API 연동: `09-api-integration.prompt.md`
-- 폼 검증: `10-form-validation.prompt.md`
-- 상태 관리 정리: `11-state-management.prompt.md`
-- 성능 개선: `12-performance-fix.prompt.md`
-- 접근성 개선: `13-accessibility-fix.prompt.md`
-- 반응형 문제 수정: `14-responsive-fix.prompt.md`
 - README 작성: `15-write-readme.prompt.md`
-- 코드 리뷰: `16-code-review.prompt.md`
+- 코드 리뷰 (Spring 안티패턴 체크): `16-code-review.prompt.md`
 - 재현 후 수정: `17-reproduce-and-fix.prompt.md`
-- JS -> TS 마이그레이션: `18-migrate-ts.prompt.md`
 - 기능 설계 우선: `19-design-feature.prompt.md`
 - 변경사항 요약: `20-summarize-work.prompt.md`
+
+### Spring Boot 백엔드 특화
+
+- 서비스 신규 생성 (구조 포함): `02-scaffold-service.prompt.md`
+- 보안 검토 (Spring Security / JWT): `04-security-review.prompt.md`
+- 서비스 분리 리팩토링: `08-split-service.prompt.md`
+- 입력 검증 및 예외 처리 추가: `10-add-validation.prompt.md`
+- Resilience4j 내결함성 추가: `11-add-resilience.prompt.md`
+- 성능 개선 (N+1 / JVM / 캐시): `12-performance-fix.prompt.md`
+- Micrometer 메트릭 추가: `13-add-metrics.prompt.md`
+- DB 마이그레이션 스크립트 작성: `14-write-migration.prompt.md`
+- 캐시 레이어 추가 (Redis): `18-add-cache.prompt.md`
+- 레이어별 코드 생성 (Controller/Service/Repository): `21-create-layer.prompt.md`
+- 최소 수정 강제 (지정 부분만): `22-minimal-diff.prompt.md`
 
 ## 4) 추천 시작 3개 프롬프트 (초심자 스타터팩)
 
@@ -84,21 +94,27 @@
 
 ## 7) 도구 특화 프롬프트 사용 시점
 
-- `claude-session-start.md`
-  - Claude Code에서 현재 레포 규칙(`CLAUDE.md`, `docs/CLAUDE.md`)을 먼저 반영해 시작할 때 사용
-- `cursor-start.md`
-  - Cursor 환경에서 Claude와 동일한 컨텍스트 로딩 절차로 세션을 시작할 때 사용
+- **Claude Code** (권장): `.claude/commands/` 슬래시 커맨드를 사용한다.
+  - `/start` — 세션 시작, STATUS.md 상태 요약
+  - `/pick` — Phase 2 백로그에서 작업 선택
+  - `/work P2-001` — 특정 백로그 항목 계획 수립
+  - `/resume` — 중단된 작업 재개
+  - `/debug` — 에러 분석/리팩토링 시작
+  - `/done` — 세션 종료 요약
+- **`claude-session-start.md`**: Claude Code 슬래시 커맨드를 사용할 수 없는 환경에서 복붙용
+- **`cursor-session-start.md`**: Cursor 환경에서 동일한 컨텍스트 로딩 절차로 세션 시작
 
 공통 세션 시작 절차 (Claude/Cursor):
 
-1. `CLAUDE.md` -> `docs/CLAUDE.md` -> `docs/STATUS.md` 순서로 읽기
-2. 현재 블록의 `docs/TODO/TODO-BLOCK{n}.md` 읽기
+1. `CLAUDE.md` → `docs/CLAUDE.md` → `docs/STATUS.md` 순서로 읽기
+2. 필요 시 `docs/PLAN-SUMMARY.md`(핵심 요약) 또는 `docs/PLAN.md`(전체 기술 근거) 로딩
 3. 상태 요약 + 작업 목록 제시 후 사용자 승인 대기
-4. 필요 시 `docs/PLAN.md`, `docs/ARCHITECTURE.md`를 추가 로딩
 
 ## 8) 유지보수 규칙
 
-- 새 프롬프트를 추가할 때 `00~20` 파일과 같은 frontmatter 키를 유지한다.
+- 새 프롬프트를 추가할 때 기존 파일과 같은 frontmatter 키를 유지한다.
   - `id`, `purpose`, `portability`, `difficulty`, `inputs`, `output_contract`
 - 범용 프롬프트(task)와 도구 특화(session)를 섞지 않는다.
 - 프롬프트가 길어지면 "입력 예시 1개 + 출력 형식"을 우선 유지한다.
+- Spring Boot 특화 프롬프트(`21~`)는 `io.kyungseo.msa` 패키지 규칙을 따른다.
+- 새 슬래시 커맨드는 `.claude/commands/`에 추가하고 이 README 섹션 7에 반영한다.

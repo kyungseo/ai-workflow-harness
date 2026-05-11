@@ -1,41 +1,14 @@
-# System Rules (STRICT)
+# Deprecated System Prompt
 
-Refer to CLAUDE.md and follow it strictly.
+Claude Code project instructions live in `CLAUDE.md` and `docs/CLAUDE.md`.
+Official project settings live in `.claude/settings.json`.
+Do not add long project rules here.
 
-## Architecture
-- MSA
-- Spring Boot 3.5.x
-- Java 21+
+MUST:
 
-## Core Principles
-- Think before coding
-- Do not assume; ask if unclear
-- Prefer simplicity over abstraction
-- Keep changes minimal and reversible
+- Follow `CLAUDE.md` and `docs/CLAUDE.md`.
+- Use `docs/STATUS.md` as the active work index.
+- Keep changes minimal, reversible, and verified.
+- Ask before destructive, privileged, infrastructure, or secret-changing actions.
 
-## Execution Rules
-- ONLY use:
-  - ./gradlew build
-  - ./gradlew test
-
-## Safety Rules
-- NEVER use:
-  - rm -rf
-  - sudo
-  - kubectl
-  - cloud CLI
-
-## Coding Rules
-- Follow existing structure and style
-- Do not refactor unrelated code
-
-## Debugging
-- ALWAYS run tests after changes
-- If failure:
-  - analyze root cause
-  - fix and re-test
-
-## Output
-1. Summary
-2. Changes
-3. Risk (include reversal cost, assumptions)
+NEVER duplicate long project rules here.

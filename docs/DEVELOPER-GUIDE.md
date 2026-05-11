@@ -463,7 +463,7 @@ async function requireAuth() {
 
 ### 6-3. 토큰 저장소 (Phase 1)
 
-현재는 `localStorage`에 토큰을 저장한다. XSS 공격에 취약하다는 것을 인지하고 있으며, Phase 2에서 `HttpOnly Cookie` + `SameSite=Strict`로 전환할 계획이다. (`docs/decisions/PHASE2-BACKLOG.md` 참조)
+현재는 `localStorage`에 토큰을 저장한다. XSS 공격에 취약하다는 것을 인지하고 있으며, Phase 2에서 `HttpOnly Cookie` + `SameSite=Strict`로 전환할 계획이다. (`docs/backlog/PHASE2.md`의 P2-001 참조)
 
 ```javascript
 // auth.js

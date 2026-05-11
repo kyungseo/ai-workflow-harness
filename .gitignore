@@ -33,7 +33,7 @@ out/
 #   prompts/
 # 
 # 조건부:
-#   .claude/claude.json
+#   .claude/settings.json
 #   .cursor/config.json
 #   .vscode/settings.json
 #   .vscode/extensions.json
