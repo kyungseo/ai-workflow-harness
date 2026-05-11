@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -a
+. "$(dirname "$0")/../.env"
+set +a
+exec npx -y @modelcontextprotocol/server-postgres \
+  "postgresql://${DB_USERNAME}:${DB_PASSWORD}@localhost:5432/${DB_NAME:-msa_db}"
