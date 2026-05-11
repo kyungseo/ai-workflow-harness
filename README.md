@@ -271,11 +271,20 @@ base-msa-template/
 │   ├── Makefile
 │   └── create-service.sh     # 서비스 스캐폴딩 스크립트
 ├── docs/
-│   ├── PLAN.md               # 설계 결정 및 기술 원칙
+│   ├── STATUS.md             # 현재 작업 상태 (active board)
+│   ├── PLAN-SUMMARY.md       # 기술 스택·포트·Phase 요약 (경량 참조용)
+│   ├── PLAN.md               # 전체 설계 결정 및 기술 원칙 (969줄, 상세용)
 │   ├── ARCHITECTURE.md       # 아키텍처 다이어그램
 │   ├── DEVELOPER-GUIDE.md    # 개발자 가이드 (상세)
-│   └── decisions/
-│       └── PHASE2-BACKLOG.md # Phase 2 백로그
+│   ├── CLAUDE.md             # Claude Code 프로젝트 운영 규칙
+│   ├── decisions/            # 미결정 사항 ADR (DR-001~)
+│   ├── backlog/              # Phase별 후보 작업 목록
+│   └── archive/              # 완료된 Phase 이력
+├── prompts/                  # AI 작업 프롬프트 라이브러리 (23개, prompts/README.md 참조)
+├── .claude/
+│   ├── commands/             # 슬래시 커맨드 (/start, /pick, /work, /resume, /debug, /done)
+│   ├── rules/                # 경로별 규칙 (java-spring, testing, infra, docs-workflow)
+│   └── settings.json         # 권한 설정, hooks
 ├── .env.example
 ├── .devcontainer/
 └── build.gradle.kts          # 루트 빌드 파일
@@ -283,12 +292,40 @@ base-msa-template/
 
 ---
 
+## AI 개발 워크플로우 (Claude Code)
+
+이 템플릿은 Claude Code 기반 Vibe Coding 워크플로우를 내장하고 있다.
+
+**슬래시 커맨드** (`.claude/commands/`):
+
+| 커맨드 | 역할 |
+|--------|------|
+| `/start` | 세션 시작 — `STATUS.md` 상태 요약 |
+| `/pick` | Phase 2 백로그에서 작업 선택 |
+| `/work P2-001` | 특정 백로그 항목 계획 수립 |
+| `/resume` | 중단된 작업 재개 |
+| `/debug` | 에러 분석 / 리팩토링 시작 |
+| `/done` | 세션 종료 요약 |
+
+**프롬프트 라이브러리** (`prompts/`):
+- 23개 범용 프롬프트 (Claude / Cursor / ChatGPT 공용)
+- Spring Boot 특화: `21-create-layer` (레이어별 생성), `22-minimal-diff` (최소 수정 강제) 등
+- 상세 안내: `prompts/README.md`
+
+---
+
 ## 다음 단계 (Phase 2)
 
-`docs/decisions/PHASE2-BACKLOG.md` 참조:
+`docs/backlog/PHASE2.md` 참조 (우선순위: `docs/decisions/DR-003-phase2-priority.md`):
+
+- **P2-001**: Spring Security RBAC 강화 (Permission 기반 세분화)
+- **P2-002**: JWT 보안 강화 (HttpOnly Cookie, Secure flag)
+- **P2-003**: Rate Limiting 고도화 (사용자별 / 역할별)
+- **P2-004**: Resilience4j Circuit Breaker 실전 적용
 - DB per Service 분리
 - Prometheus + Grafana 연동
 - K8s 매니페스트 (Kustomize)
-- Circuit Breaker (Resilience4j)
 - Caffeine + Redis 2단계 캐시 활성화
 - GitHub Actions CI/CD
+
+미결정 사항은 `docs/decisions/DR-001~003.md` 참조.
