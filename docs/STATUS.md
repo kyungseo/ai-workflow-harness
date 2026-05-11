@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-11 (AI workflow 정비 심화 + Cursor 정렬 완료)
+Last updated: 2026-05-11 (Session A/B/C 정비 항목 Active Work 반영)
 
 ## Current State
 
@@ -26,11 +26,21 @@ Last updated: 2026-05-11 (AI workflow 정비 심화 + Cursor 정렬 완료)
 
 ## Active Work
 
+> PRE-A/B/C 항목의 상세 맥락(이슈 원인, 트레이드오프, 진행 방법)은 작업 시작 전 반드시 참조:
+> `~/.claude/plans/claude-md-docs-claude-md-streamed-starlight.md`
+
 | ID | Priority | Status | Scope | Done Criteria | Verification |
 | --- | --- | --- | --- | --- | --- |
 | P2-PLAN-001 | P0 | Done | Claude Code context와 Phase 2 작업관리 구조 정리 | `CLAUDE.md`, `docs/CLAUDE.md`, `docs/STATUS.md`, Phase 2 backlog가 context-efficient하고 재사용 가능함 | Documentation diff inspection |
 | P2-PLAN-002 | P0 | Done | AI workflow 점검 및 개선 (Vibe Coding best practice 기준) | `.claude/commands/` 6개, `.claude/rules/testing.md`, `docs/decisions/` 구조, `docs/PLAN-SUMMARY.md`, `settings.json` 수정 완료 | 파일 존재 확인 및 `/start` slash command 동작 확인 |
 | P2-PLAN-003 | P0 | Done | AI workflow 정비 심화 + Cursor 정렬 | 언어 원칙 정의, rules 정합성·token 효율 개선, prompts 라이브러리 Spring Boot 특화, Cursor rules Claude와 정렬 완료 | 파일 존재 확인 및 git log 검토 |
+| PRE-A1 | P0 | Done | Makefile `-p base-msa-template` 추가 (container/network 이름 고정) | `-p` 추가 후 `make run` 정상 동작, container_name 충돌 없음 | `curl http://localhost:8090/api/v1/auth/login` 정상 응답 |
+| PRE-A2 | P0 | Candidate | Java 클래스 파일 헤더 주석 템플릿 + `.claude/rules/` 안내 | IntelliJ 템플릿 적용 방법 문서화, rules 파일 업데이트 완료 | 파일 존재 및 diff 확인 |
+| PRE-A3 | P0 | Candidate | Lint 설정 (Checkstyle 기준, SpotBugs 선택) | `./gradlew check` 통과, 규칙 파일 존재 | CI-equivalent local run |
+| PRE-B | P0 | Candidate | 개발환경 전략 결정 (로컬 실행 구조, Windows 지원, devcontainer, mono-repo) | B-1~B-4 결정 사항 decision record 또는 STATUS 반영 완료 | 결정 문서 리뷰 |
+| PRE-C1 | P0 | Candidate | Phase 1 아키텍처 현황 분석 (레이어 일관성, common-core, gateway, 테스트 커버리지) | 분석 결과와 개선 필요 항목 목록 작성 | docs/backlog 또는 STATUS 반영 |
+| PRE-C2 | P0 | Candidate | Phase 2 요건 정의 확정 (Session B 결정 반영, DR-001/002 완료) | backlog PHASE2.md 업데이트, DR-001 결정 완료 | backlog + decision review |
+| PRE-C3 | P1 | Candidate | Dockerfile 개선 (Gradle 캐시 레이어, JAVA_OPTS 외부화, HEALTHCHECK) | 각 서비스 Dockerfile 개선 적용, 재빌드 성공 | `make rebuild` 후 서비스 정상 기동 |
 
 ## Phase 2 Checkpoints
 
@@ -67,6 +77,11 @@ Last updated: 2026-05-11 (AI workflow 정비 심화 + Cursor 정렬 완료)
 
 ## Next Actions
 
-1. `/pick` 커맨드로 Phase 2 첫 구현 항목 선택 (P2-001 권장).
-2. `docs/decisions/DR-001-token-storage.md`를 채워서 P2-001 착수 전 결정 완료.
-3. `docs/decisions/DR-002-k8s-tool.md`는 P2-004 착수 전까지 Draft 유지.
+1. PRE-A1: Makefile `-p` 이슈 확인 및 수정 (독립, 빠른 처리).
+2. PRE-A2: Java 클래스 헤더 템플릿 + `.claude/rules/` 안내 추가.
+3. PRE-A3: Lint(Checkstyle) 설정.
+4. PRE-B: 개발환경 전략 4개 결정 (B-1~B-4) — PRE-C2 전 선행 필요.
+5. PRE-C1: Phase 1 아키텍처 분석 → PRE-C2 backlog 업데이트.
+6. PRE-C2: DR-001 완료 + Phase 2 backlog 최종 확정.
+7. PRE-C3: Dockerfile 개선 (P1, C2 이후 병행 가능).
+8. P2-001 착수 (PRE-C2 완료 후).
