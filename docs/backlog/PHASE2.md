@@ -21,7 +21,7 @@ Spring Boot MSA template의 Phase 2 backlog다.
 | P2-003 | P0 | Candidate | Redis refresh-token session index 개선 | 기존 `TokenRedisRepository` | SCAN 기반 invalidation을 per-user session set 또는 승인된 대안으로 대체 | Repository tests; logout-all scenario |
 | P2-004 | P1 | Candidate | K8s 배포 도구 선택: Helm vs Kustomize | Deployment target assumptions | dev/stg/prd overlay 전략을 포함한 decision record 작성 | Manifest dry-run plan |
 | P2-005 | P1 | Candidate | K8s manifests와 NetworkPolicy baseline 추가 | P2-004 | Gateway-to-service traffic은 허용되고 의도하지 않은 service access는 차단됨 | Kustomize/Helm render check; policy review |
-| P2-006 | P1 | Candidate | automated tests를 포함한 CI/CD pipeline 추가 | 안정적인 Gradle/test commands | GitHub Actions pipeline이 build/test를 수행하고 failure signal이 명확함 | CI run or local action equivalent |
+| P2-006 | P1 | In Progress | Testcontainers 도입 — 통합 테스트 자급자족화 (DR-010) | DR-010 Accepted | auth/user/todo-service의 @SpringBootTest가 Testcontainers로 전환됨, ci.yml services 블록 제거 가능 | `./gradlew test` (docker compose 없이) 통과 |
 | P2-007 | P1 | Candidate | Prometheus/Grafana observability baseline 추가 | Service metrics endpoints | metric naming convention과 기본 dashboard baseline 작성 | Metrics endpoint check; dashboard provisioning review |
 | P2-008 | P2 | Candidate | Caffeine + Redis cache strategy 활성화 | Cache policy decision | TTL, invalidation, Pod-scope constraints가 문서화되고 안전한 cache만 활성화됨 | Cache tests; stale-data scenario review |
 | P2-009 | P2 | Candidate | Resilience4j 기반 service-to-service resilience 추가 | 실제 inter-service RestClient calls | call이 존재하는 곳에 circuit breaker policy 적용 | Failure-path tests |

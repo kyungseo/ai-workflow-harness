@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-12 (docs 구조 정비 완료: 파일명 표준화, 독자 분류표, DR-008 기록)
+Last updated: 2026-05-12 (CI 통합 테스트 수정, trigger 분리, DR-009/010 기록, Testcontainers 방향 확정)
 
 ## Current State
 
@@ -36,6 +36,8 @@ Last updated: 2026-05-12 (docs 구조 정비 완료: 파일명 표준화, 독자
 | P2-PLAN-003 | P0 | Done | AI workflow 정비 심화 + Cursor 정렬 | 언어 원칙 정의, rules 정합성·token 효율 개선, prompts 라이브러리 Spring Boot 특화, Cursor rules Claude와 정렬 완료 | 파일 존재 확인 및 git log 검토 |
 | PRE-A1 | P0 | Done | Makefile `-p base-msa-template` 추가 (container/network 이름 고정) | `-p` 추가 후 `make run` 정상 동작, container_name 충돌 없음 | `curl http://localhost:8090/api/v1/auth/login` 정상 응답 |
 | PRE-A2+A3 | P0 | Done | 코드 컨벤션 SSOT, Checkstyle, CI 기반 구축 (파일 헤더 없음 정책, DR-004~006) | `./gradlew checkstyleMain checkstyleTest` 0 위반, `.editorconfig`·`ci.yml`·`tools/git-hooks/`·`docs/CODING-CONVENTIONS.md` 생성 완료 | `./gradlew check` 통과 확인 |
+| P2-006 | P0 | Candidate | Testcontainers 도입 (DR-010) — 통합 테스트 자급자족화 | DR-010 Accepted | auth/user/todo 서비스 @SpringBootTest가 Testcontainers로 전환, ci.yml services 블록 제거 | `./gradlew test` docker compose 없이 통과 |
+| DOC-001 | P1 | Candidate | git 구성·브랜치 전략·flow 가이드 문서 생성 | 현재 git workflow 운영 확립 | `docs/GIT-WORKFLOW.md` 생성, feature→develop→PR to main 전략 및 CI trigger 연계 설명 포함 | 문서 리뷰 |
 | PRE-B | P0 | Candidate | 개발환경 전략 결정 (로컬 실행 구조, Windows 지원, devcontainer, mono-repo) | B-1~B-4 결정 사항 decision record 또는 STATUS 반영 완료 | 결정 문서 리뷰 |
 | PRE-C1 | P0 | Candidate | Phase 1 아키텍처 현황 분석 (레이어 일관성, common-core, gateway, 테스트 커버리지) | 분석 결과와 개선 필요 항목 목록 작성 | docs/backlog 또는 STATUS 반영 |
 | PRE-C2 | P0 | Candidate | Phase 2 요건 정의 확정 (Session B 결정 반영, DR-001/002 완료) | backlog PHASE2.md 업데이트, DR-001 결정 완료 | backlog + decision review |
@@ -79,11 +81,15 @@ Last updated: 2026-05-12 (docs 구조 정비 완료: 파일명 표준화, 독자
 | 2026-05-12 | 기술 결정 기록 워크플로우 도입: `/record-decision` command, `docs/CLAUDE.md` Decision Records 섹션, `/done` 7번 단계 추가 | 세션 중 확정 결정의 체계적 DR 보존 | Low |
 | 2026-05-11 | 파일 유형별 언어 원칙 확정 (DR-007): `.claude/rules/`·루트 CLAUDE.md → 영어, `docs/`·commands → 한국어+기술용어 영어 | token 효율 및 instruction 준수율 향상, 문서 가독성 보존 | Medium |
 | 2026-05-12 | docs/ 파일명 표준 (DR-008): 루트·backlog/·decisions/ → UPPERCASE-HYPHENATED, archive/ → lowercase-hyphenated | 기존 다수 파일 패턴 유지, 신규 파일 생성 기준 명확화 | Low |
+| 2026-05-12 | CI trigger 분리 (DR-009): develop push = Checkstyle only, PR to main = 전체 테스트 | 개발 흐름 유지하면서 main 진입 전 검증 보장 | Low |
+| 2026-05-12 | 통합 테스트 인프라 전략 (DR-010): Testcontainers 채택, GitHub Actions services는 interim | 테스트 자급자족화, 템플릿 best practice 제시 | Medium |
 
 ## Next Actions
 
-1. PRE-B: 개발환경 전략 4개 결정 (B-1~B-4) — PRE-C2 전 선행 필요.
-3. PRE-C1: Phase 1 아키텍처 분석 → PRE-C2 backlog 업데이트.
-4. PRE-C2: DR-001 완료 + Phase 2 backlog 최종 확정.
-5. PRE-C3: Dockerfile 개선 (P1, C2 이후 병행 가능).
-6. P2-001 착수 (PRE-C2 완료 후).
+1. **P2-006**: Testcontainers 도입 (DR-010 Accepted, 즉시 착수 가능)
+2. **DOC-001**: git 구성·브랜치 전략·flow 가이드 문서 생성
+3. PRE-B: 개발환경 전략 4개 결정 (B-1~B-4) — PRE-C2 전 선행 필요.
+4. PRE-C1: Phase 1 아키텍처 분석 → PRE-C2 backlog 업데이트.
+5. PRE-C2: DR-001 완료 + Phase 2 backlog 최종 확정.
+6. PRE-C3: Dockerfile 개선 (P1, C2 이후 병행 가능).
+7. P2-001 착수 (PRE-C2 완료 후).
