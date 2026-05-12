@@ -210,6 +210,24 @@ cascade 업데이트 대상:
 
 **루프 안전:** T6 결과(ARCHITECTURE.md 수정)는 T5 또는 T1을 재발동시키지 않는다.
 
+### WORKFLOW-MANUAL.md 업데이트 (T7)
+
+**발동 조건 (다음 중 하나):**
+- `docs/CLAUDE.md` 워크플로우 규칙 변경 (컨텍스트 로드 조건, DR 기준, STATUS 규칙, 실패 복구 규칙 등)
+- `.claude/commands/*.md` 내용 변경
+- T1~T6 트리거 추가·변경
+
+**cascade (섹션별):**
+
+| 변경 원인 | 확인 대상 섹션 |
+| --- | --- |
+| 컨텍스트 로드 조건 변경 | `WORKFLOW-MANUAL.md §4-4` |
+| 슬래시 커맨드 변경 | `WORKFLOW-MANUAL.md §5` |
+| DR 기준 변경 | `WORKFLOW-MANUAL.md §6` |
+| 트리거 추가·변경 | `WORKFLOW-MANUAL.md §10` |
+
+**루프 안전:** T7 결과(WORKFLOW-MANUAL.md 수정)는 다른 트리거를 재발동시키지 않는다.
+
 ---
 
 **아카이빙 (STATUS.md → Archive 이동 절차에 통합):**
