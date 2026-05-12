@@ -138,6 +138,69 @@ cascade 업데이트 대상:
 1. Claude가 트리거 조건 감지 시 이동을 제안한다. 승인 없이 진행하지 않는다.
 2. 사용자 승인 후 `docs/archive/phase{n}-status.md`에 이동 내용을 작성한다.
 3. STATUS.md에서 이동한 섹션을 제거하고 현재 Phase 내용만 유지한다.
+4. PLAN.md 현재 내용 → `docs/archive/phase{n}-plan.md` 스냅샷 저장.
+5. PLAN.md를 신규 Phase 기준으로 재편 제안.
+
+### PLAN.md 라이프사이클 관리
+
+**업데이트 트리거 (다음 중 하나 해당 시):**
+- DR Accepted 중 §2 기술 스택·§14 테스트 전략·§15 K8s·§16 Secure Coding에 영향을 주는 것
+- 기술 스택 추가·교체·제거
+
+**업데이트 절차:**
+1. 영향받는 §(섹션)만 수정 — 전체 재작성 금지
+2. 문서 헤더 버전/날짜 갱신
+3. PLAN-SUMMARY.md 불일치 확인 → 필요 시 함께 갱신
+4. cascade 체크 (아래 표)
+
+**cascade 체크 목록:**
+
+| 변경 섹션 | 확인 대상 |
+| --- | --- |
+| §2 기술 스택 | `docs/PLAN-SUMMARY.md`, `.cursor/rules/execution.mdc`, `README.md` 기술 스택 테이블 |
+| §4 디렉토리 구조 | `docs/DEVELOPER-GUIDE.md`, `docs/ARCHITECTURE.md §2`, `README.md` 프로젝트 구조 섹션 |
+| §8 인증/인가 | `docs/ARCHITECTURE.md §3, §8, §16` |
+| §10 Logging | `docs/ARCHITECTURE.md §11` |
+| §14 테스트 전략 | `.claude/rules/testing.md`, `.cursor/rules/testing.mdc` |
+| §15 K8s | `docs/ARCHITECTURE.md §14` |
+| §16 Secure Coding | `docs/CODING-CONVENTIONS.md`, `docs/ARCHITECTURE.md §15` |
+| §19 Phase 계획 | `docs/backlog/PHASE2.md`, `docs/STATUS.md` Next Actions |
+
+> **참고**: 같은 세션 안에서 DR Superseded cascade가 먼저 `PLAN-SUMMARY.md`를 수정한 경우,
+> §2 cascade의 `PLAN-SUMMARY.md` 항목은 재편집 없이 확인만 한다.
+
+> **중요**: PLAN.md 문서 현행화 작업 자체는 DR 기록 불필요.
+> 기존 DR 결정의 결과를 문서에 반영하는 것이므로 `/done` 시 DR 제안 대상에서 제외한다.
+
+### ARCHITECTURE.md · DEVELOPER-GUIDE.md 직접 업데이트 (T6)
+
+**발동 조건 (다음 중 하나):**
+- 인증/토큰 흐름 변경 (auth flow 다이어그램 영향)
+- 새 서비스 추가 또는 제거 (시스템 개요 다이어그램 영향)
+- 서비스 간 통신 방식 변경 (서비스 간 호출 구조 변경)
+- 인프라 토폴로지 변경 (Gateway 필터 체인, Redis 구조 등)
+
+> T5 cascade로 커버되지 않는 **구현 변경 주도** 업데이트가 대상.
+> T5가 먼저 발동된 경우 해당 cascade 항목(ARCHITECTURE.md §X)은 T6와 중복 처리 않고 확인만 한다.
+
+**절차:**
+1. 영향받는 섹션만 수정 (다이어그램 포함) — 전체 재작성 금지
+2. 문서 헤더 버전/날짜 갱신
+3. PLAN.md 참조 섹션 일치 확인 (역방향 cascade)
+
+**루프 안전:** T6 결과(ARCHITECTURE.md 수정)는 T5 또는 T1을 재발동시키지 않는다.
+
+---
+
+**아카이빙 (STATUS.md → Archive 이동 절차에 통합):**
+
+PLAN.md 아카이빙은 독립 트리거가 아닌 기존 **STATUS.md → Archive 이동 절차 4~5번 단계**로 처리한다:
+
+> 4. PLAN.md 현재 내용 → `docs/archive/phase{n}-plan.md` 스냅샷 저장
+> 5. PLAN.md를 신규 Phase 기준으로 재편 제안
+
+Phase 전환 시 승인이 한 번(STATUS.md Archive와 동시)으로 통합된다.
+승인 없이 아카이빙하지 않는다.
 
 ### docs/TODO/PHASE{n}/ 생성
 

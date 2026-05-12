@@ -1,8 +1,8 @@
 # PLAN.md — base-msa-template
 
 > 작성일: 2026-05-03
-> 문서 버전: v1.6
-> 최종 수정: 2026-05-07 (ErrorCode enum→interface 반영, PATCH 수정, e2e-gateway.http 형식 명시, Spring Cloud 2025.0.0 반영)
+> 문서 버전: v1.8
+> 최종 수정: 2026-05-12 (v1.7 대비: 구현 세부사항 제거, 아키텍처 결정 근거 중심 재편, ARCHITECTURE.md 교차 참조 추가)
 > 목적: 프로젝트 시 즉시 활용할 수 있는 수준의 MSA 템플릿 구축
 > 기준: JDK 21+, Spring Boot 3.5.x, Mono Repo, Multi-Module
 
@@ -43,25 +43,17 @@
 | **Frontend** | Vanilla JS + Bootstrap CDN | 빌드 도구 없음, 가이드 샘플 목적 |
 | **Infra** | Docker Compose | 로컬 통합 실행 (PostgreSQL, Redis 포함) |
 | **Dev Env** | VS Code + DevContainer | Java 21 이미지, docker-in-docker |
-| **테스트** | Testcontainers | `@MybatisTest` + `@SpringBootTest` 통합 테스트에서 PostgreSQL/Redis 컨테이너 기동 |
+| **테스트** | Testcontainers | DR-010 Accepted — P2-006에서 `@SpringBootTest` 전환 예정. CI는 GitHub Actions services 블록 interim 유지 |
+| **CI** | GitHub Actions | `develop` push → Checkstyle lint only / PR to main → 전체 테스트 (DR-009), `.github/workflows/ci.yml` |
+| **Code Quality** | Checkstyle 10.21.0 | Google Java Style + LineLength=120/Indentation=4 오버라이드, 파일 헤더 없음 정책 (DR-004, DR-005) |
 | **로그 포맷** | logstash-logback-encoder | stg/prd 환경 JSON 구조화 로그 (§10 참조). `runtimeOnly` 의존성으로 추가 |
 
 ---
 
 ## 3. 서비스 구성 및 포트
 
-| 서비스 | 포트 | 역할 |
-|---|---|---|
-| `api-gateway` | 8090 | 단일 진입점, 라우팅, 인증/인가, Rate Limiting |
-| `auth-service` | 8091 | JWT 발급/갱신/블랙리스트, 로그인/로그아웃 |
-| `user-service` | 8092 | 회원가입, 사용자 CRUD, RBAC 권한 관리 |
-| `todo-service` | 8093 | 할 일 CRUD (가이드 샘플) |
-| `PostgreSQL` | 5432 | 공유 DB (Phase 1), DB per Service는 Phase 2 |
-| `Redis` | 6379 | Refresh Token, Blacklist, Rate Limiting |
-| `Actuator` | 8099 | management port 분리 (외부 노출 차단) |
-| `Frontend` | 3000 | Vanilla JS 독립 서빙 (python http.server / npx serve) |
-
-> **서비스 디스커버리**: Eureka 미사용. 로컬은 localhost URL, K8s는 서비스명(DNS)으로 대체.
+> 서비스 목록·포트·역할 전체 → `docs/PLAN-SUMMARY.md §서비스 포트`
+> 서비스 디스커버리: Eureka 미사용. 로컬은 localhost URL, K8s는 서비스명(DNS)으로 대체.
 
 ---
 
@@ -123,9 +115,11 @@ base-msa-template/
 ├── docs/
 │   ├── CLAUDE.md                        # Claude Code project operating rules
 │   ├── STATUS.md                        # Live project state and active work
-│   ├── PLAN.md                          # Approved architecture and plan reference
+│   ├── PLAN.md                          # Approved architecture and plan reference (this file)
+│   ├── PLAN-SUMMARY.md                  # 세션 컨텍스트용 기술 스택·포트·Phase 방향 요약
 │   ├── ARCHITECTURE.md                  # 아키텍처 다이어그램 및 흐름
 │   ├── DEVELOPER-GUIDE.md               # 개발자 가이드 (아키텍처 상세 + 개발 절차)
+│   ├── CODING-CONVENTIONS.md            # 코드 컨벤션 SSOT (DR-004, DR-005 반영)
 │   ├── backlog/
 │   │   └── PHASE2.md                    # Phase 2 prioritized backlog
 │   ├── archive/
@@ -143,9 +137,16 @@ base-msa-template/
 │   │   │   ├── TODO-BLOCK8.md           # Dockerfile + 통합 테스트
 │   │   │   ├── TODO-BLOCK9.md           # Frontend
 │   │   │   └── TODO-BLOCK10.md          # 문서화 및 마무리
-│   │   └── PHASE2/
+│   │   └── PHASE2/                      # Phase 2 세부 분해 (필요 시 생성)
 │   └── decisions/
-│       └── PHASE2-BACKLOG.md            # Compatibility pointer to docs/backlog/PHASE2.md
+│       ├── DECISION-TEMPLATE.md         # DR 작성 템플릿
+│       └── DR-001 ~ DR-010.md           # 기술 결정 기록 (§21 참조)
+├── .claude/
+│   ├── commands/                        # slash commands (start, work, pick, done 등)
+│   ├── rules/                           # path-scoped rules (java-spring.md, testing.md 등)
+│   └── settings.json                    # Claude Code 권한·hooks 설정
+├── .cursor/
+│   └── rules/                           # Cursor AI rules (.mdc 형식, §21 참조)
 ├── .env.example                         # 환경변수 템플릿 (값 없음, Git 추적)
 ├── .env                                 # 로컬 실제값 (gitignore)
 ├── .gitignore
@@ -169,31 +170,9 @@ base-msa-template/
 
 ### 포함 항목 (경계 명시)
 
-```
-common-core/src/main/java/io/kyungseo/msa/common/
-├── response/
-│   ├── ApiResponse<T>          # 공통 응답 래퍼 { code, message, data }
-│   ├── ErrorResponse           # 에러 응답 { code, message, errors[] }
-│   └── PageResponse<T>         # 페이징 응답 래퍼 { content, page, size, totalElements, totalPages }
-├── exception/
-│   ├── BusinessException       # 비즈니스 예외 베이스 클래스
-│   ├── ErrorCode               # 에러 코드 interface (§11 에러 코드 체계 참고)
-│   ├── CommonErrorCode         # 공통 에러 코드 enum (COMMON-0001~0006, ErrorCode 구현체)
-│   └── GlobalExceptionHandler  # @RestControllerAdvice
-│                               #   - MethodArgumentNotValidException 처리 포함
-│                               #   - BusinessException 처리 포함
-├── logging/
-│   ├── MdcFilter               # X-Correlation-ID 추출/생성 → MDC 저장
-│   └── LoggingConstants        # MDC key 상수 정의
-├── security/
-│   └── JwtProperties           # JWT 설정값 @ConfigurationProperties 바인딩
-├── mybatis/
-│   └── SlowQueryInterceptor    # 100ms 초과 쿼리 WARN 로깅 (@Profile local/dev 전용)
-├── mapper/ (선택적)
-│   └── BaseMapper<S, T>        # MapStruct 공통 변환 인터페이스
-└── util/
-    └── DateTimeUtils           # 날짜 포맷 유틸
-```
+> 패키지 트리 상세 → `docs/ARCHITECTURE.md §5 common-core`
+
+핵심 구성: `response/` (ApiResponse, ErrorResponse, PageResponse), `exception/` (BusinessException, ErrorCode, GlobalExceptionHandler), `logging/` (MdcFilter, LoggingConstants), `security/` (JwtProperties), `mybatis/` (SlowQueryInterceptor — local/dev 전용), `util/` (DateTimeUtils)
 
 ### 포함하지 않는 항목
 
@@ -222,87 +201,17 @@ common-core/src/main/java/io/kyungseo/msa/common/
 | `stg` | 스테이징 서버 | PostgreSQL (외부) | INFO | JSON 구조화 | ❌ 비활성 |
 | `prd` | 프로덕션 | PostgreSQL (외부) | WARN | JSON 구조화 | ❌ 비활성 |
 
-### 설정 파일 구조 (각 서비스 공통 패턴)
-
-```
-src/main/resources/
-├── application.yml           # 공통 설정 (프로파일 무관)
-├── application-local.yml     # 로컬 전용
-├── application-dev.yml       # 개발 서버 전용
-├── application-stg.yml       # 스테이징 전용
-└── application-prd.yml       # 프로덕션 전용
-```
-
 ### 환경변수 기반 Config 원칙
 
-```yaml
-# application.yml — 민감정보는 기본값 없이 환경변수에서만 주입
-# 값 없으면 기동 실패 → 의도적 설계 (보안)
-spring:
-  threads:
-    virtual:
-      enabled: true                  # JDK 21 Virtual Threads 활성화
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    hikari:
-      maximum-pool-size: ${DB_POOL_MAX:10}    # Virtual Threads 환경 주의: 이 값이 실질적 DB 동시 처리 상한선
-                                              # VT는 수천 개 동시 생성 가능 → pool 대기 큐 적체 가능성
-                                              # 고부하 Phase 2 전환 시 서비스별 트래픽 기준으로 재조정
-      minimum-idle: ${DB_POOL_MIN:5}
-      connection-timeout: ${DB_CONN_TIMEOUT:30000}
-      idle-timeout: 600000
-      max-lifetime: 1800000
-  data:
-    redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT:6379}        # 비민감 항목은 기본값 허용
-jwt:
-  secret: ${JWT_SECRET}              # 기본값 절대 금지
-  access-token-expiry: ${JWT_ACCESS_EXPIRY:900}
-  refresh-token-expiry: ${JWT_REFRESH_EXPIRY:604800}
-management:
-  server:
-    port: 8099                        # Actuator 전용 포트 분리
-```
+- 민감정보(JWT_SECRET, DB_PASSWORD 등)는 환경변수에서만 주입 — 기본값 절대 금지 (값 없으면 기동 실패, 의도적 설계)
+- 비민감 항목(REDIS_PORT, DB_POOL_MAX 등)은 기본값 허용
+- HikariCP pool size: Virtual Threads 환경에서 이 값이 실질적 DB 동시 처리 상한선. VT는 수천 개 동시 생성 가능 → pool 대기 큐 적체 가능. 고부하 Phase 2 전환 시 서비스별 트래픽 기준 재조정 필요
 
-### 로컬 환경변수 관리
+**K8s 환경변수 분류:**
+- `ConfigMap` (비민감): SPRING_PROFILES_ACTIVE, SERVER_PORT, REDIS_HOST, DB_URL 등
+- `Secret` (민감): JWT_SECRET, DB_PASSWORD, DB_USERNAME, REDIS_PASSWORD 등
 
-```bash
-# .env.example (Git 추적, 값 없음 — 온보딩 가이드 역할)
-SPRING_PROFILES_ACTIVE=local
-JWT_SECRET=
-DB_URL=jdbc:postgresql://localhost:5432/msa_db
-DB_USERNAME=
-DB_PASSWORD=
-DB_NAME=msa_db
-DB_POOL_MAX=10
-DB_POOL_MIN=5
-DB_CONN_TIMEOUT=30000
-REDIS_HOST=localhost
-REDIS_PORT=6379
-ALLOWED_ORIGINS=http://localhost:3000
-BLACKLIST_FAIL_POLICY=fail-close
-
-# .env (Git 제외, 실제값 기입)
-SPRING_PROFILES_ACTIVE=local
-JWT_SECRET=your-256bit-random-secret-here
-DB_USERNAME=msa_user
-DB_PASSWORD=msa_pass
-...
-```
-
-### K8s 환경변수 분류
-
-```
-ConfigMap (비민감):
-  SPRING_PROFILES_ACTIVE, SERVER_PORT, REDIS_HOST, REDIS_PORT,
-  DB_URL, SERVICE_URL 등
-
-Secret (민감):
-  JWT_SECRET, DB_PASSWORD, DB_USERNAME, REDIS_PASSWORD 등
-```
+> `.env.example` 전체 변수 목록 → 프로젝트 루트 `.env.example` 참조
 
 ---
 
@@ -314,49 +223,6 @@ Secret (민감):
 - SQL 방언 차이로 인한 전환 비용 제거 (MyBatis XML 쿼리를 PostgreSQL 방언으로 작성)
 - `01-schema.sql` + `02-data.sql`은 PostgreSQL init 스크립트(`/docker-entrypoint-initdb.d`)로 자동 실행
   > **파일명 규칙**: 알파벳 순 실행 특성상 `data.sql`(d)이 `schema.sql`(s)보다 먼저 실행됨. 숫자 접두사(`01-`, `02-`)로 순서 보장.
-
-### Docker Compose DB 구성
-
-```yaml
-redis:
-  image: redis:7-alpine          # 버전 명시 필수 — latest 사용 금지 (재현 불가)
-  ports:
-    - "6379:6379"
-  healthcheck:
-    test: ["CMD", "redis-cli", "ping"]
-    interval: 10s
-    timeout: 5s
-    retries: 5
-
-postgres:
-  image: postgres:16-alpine
-  environment:
-    POSTGRES_DB: ${DB_NAME:-msa_db}
-    POSTGRES_USER: ${DB_USERNAME}
-    POSTGRES_PASSWORD: ${DB_PASSWORD}
-  ports:
-    - "5432:5432"
-  volumes:
-    - postgres_data:/var/lib/postgresql/data
-    - ./init-sql:/docker-entrypoint-initdb.d   # 01-schema.sql → 02-data.sql 순서로 자동 실행
-  healthcheck:
-    test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
-    interval: 10s
-    timeout: 5s
-    retries: 5
-```
-
-### 서비스 기동 순서 보장
-
-```yaml
-# 각 서비스 공통 패턴 (docker-compose.yml)
-auth-service:
-  depends_on:
-    postgres:
-      condition: service_healthy
-    redis:
-      condition: service_healthy
-```
 
 ### DB 진화 경로
 
@@ -376,22 +242,11 @@ Phase 3 (K8s):  관리형 DB (RDS, Cloud SQL 등) 또는 서비스별 StatefulSe
 
 ### Multi DataSource 준비 전략
 
-Phase 1에서는 모든 서비스가 단일 DataSource를 공유하지만,
-Phase 2 전환 비용을 최소화하기 위해 다음 원칙을 Phase 1부터 준수한다.
+Phase 1에서는 모든 서비스가 단일 DataSource를 공유하지만, Phase 2 전환 비용 최소화를 위해:
 
-```yaml
-# 각 서비스 application.yml — 지금은 모두 동일한 DB를 바라보지만
-# 서비스별 독립 환경변수로 선언하여 Phase 2 전환 시 값만 교체
-# auth-service / user-service / todo-service 모두 동일한 구조 사용
-spring:
-  datasource:
-    url: ${DB_URL}          # Phase 2: 서비스별 DB URL로 교체
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-```
-
-- 서비스 간 테이블을 직접 JOIN하는 쿼리 작성 금지
-- 다른 서비스 소유 테이블 참조 시 반드시 API 호출로 대체 (Phase 2 기준)
+- 서비스별 독립 환경변수(`DB_URL`, `DB_USERNAME`, `DB_PASSWORD`)로 선언 — Phase 2 전환 시 값만 교체
+- 서비스 간 테이블 직접 JOIN 금지
+- 다른 서비스 소유 테이블 참조 시 반드시 API 호출로 대체
 - `@Primary` / `@Qualifier` / `AbstractRoutingDataSource` 구성은 Phase 2에서 추가
 
 ### 초기 데이터 (02-data.sql)
@@ -452,52 +307,15 @@ Refresh Token 클레임:
   auth-service /refresh  — type == "refresh" 강제. "access"이면 401 반환
 ```
 
-### JWT 흐름
+### JWT 흐름 및 Redis 키 구조
 
-```
-[로그인]
-클라이언트 → POST /api/v1/auth/login
-           ← Access Token (15분) + Refresh Token (7일) + deviceId
-              Refresh Token → Redis 저장 (key: rt:{userId}:{deviceId}, TTL: 7일)
+> 인증 흐름 다이어그램 (login / refresh / logout) → `docs/ARCHITECTURE.md §3 인증 흐름`
+> Redis 키 구조 상세 (`rt:`, `bl:`, `rl:`) → `docs/ARCHITECTURE.md §8 Redis 데이터 구조`
 
-[API 요청]
-클라이언트 → Authorization: Bearer <access_token>
-Gateway   → JWT 서명 검증
-          → Redis Blacklist 조회 (로그아웃된 토큰 차단)
-          → 유효: X-User-Id, X-User-Role 헤더로 하위 서비스 전달
-
-[토큰 갱신 — Rotation]
-클라이언트 → POST /api/v1/auth/refresh (Refresh Token + deviceId 전달)
-auth-service → Redis에서 rt:{userId}:{deviceId} 존재 확인
-             → 존재: 기존 토큰 삭제 + 신규 Access/Refresh Token 발급
-             → 미존재 (탈취 의심): 해당 userId의 전체 디바이스 세션 무효화
-
-[로그아웃]
-클라이언트 → POST /api/v1/auth/logout (deviceId 전달)
-auth-service → Access Token → Redis Blacklist 저장 (TTL = 잔여 만료시간)
-             → rt:{userId}:{deviceId} → Redis에서 삭제
-```
-
-### Refresh Token Redis 키 구조
-
-```
-rt:{userId}:{deviceId}
-  - userId  : 사용자 식별자
-  - deviceId: 클라이언트가 최초 로그인 시 생성한 UUID (localStorage 보관)
-              서버는 검증만 수행, 발급 주체는 클라이언트
-
-예시)
-  rt:42:a1b2c3d4-...   ← 사용자 42번의 Chrome 세션
-  rt:42:e5f6g7h8-...   ← 사용자 42번의 모바일 앱 세션
-
-멀티 디바이스 로그아웃:
-  - 단일 디바이스: rt:{userId}:{deviceId} 삭제
-  - 전체 디바이스: rt:{userId}:* 패턴으로 전체 삭제 (탈취 감지 시)
-```
-
-> **Phase 1 범위**: deviceId 기반 멀티 세션 구조로 설계하되,
-> 프론트엔드 샘플에서는 단일 deviceId만 사용한다.
-> 복수 디바이스 관리 UI는 Phase 2에서 추가한다.
+**핵심 설계 결정:**
+- Refresh Token Rotation: 사용 즉시 폐기 + 재발급. 탈취 의심(Redis에 키 없음) 시 해당 userId 전체 세션 무효화
+- deviceId: 클라이언트가 최초 로그인 시 생성한 UUID — 서버는 검증만, 발급 주체는 클라이언트
+- Phase 1: 프론트엔드 샘플은 단일 deviceId만 사용. 복수 디바이스 관리 UI는 Phase 2 추가 예정
 
 ### RBAC
 
@@ -557,39 +375,11 @@ DELETE /api/v1/todos/{id}                     # 할 일 삭제
 - **X-Correlation-ID**: Gateway에서 생성/전파, 각 서비스 `MdcFilter`에서 수신 및 MDC 저장
 - **로그 포맷**: JSON 구조화 (stg/prd), 콘솔 패턴 (local/dev)
 
-### 로그 패턴
+### 로그 패턴 및 설정
 
-```yaml
-# local/dev: 콘솔 가독성 우선
-logging:
-  pattern:
-    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-},%X{X-Correlation-ID:-}]"
+> logback-spring.xml 프로파일별 구조, WebFlux MDC 주의사항 → `docs/ARCHITECTURE.md §11 Logging & Tracing`
 
-# stg/prd: logstash-logback-encoder 사용 (JSON 구조화)
-# 의존성 추가 필요 — 각 서비스 build.gradle.kts에 아래 추가
-#   runtimeOnly(libs.logstash.logback.encoder)
-# libs.versions.toml에 버전 선언 필요
-#   logstash-logback-encoder = "7.4"
-```
-
-`logback-spring.xml` 프로파일별 구조 (각 서비스 `src/main/resources/`):
-
-```xml
-<configuration>
-  <springProfile name="local,dev">
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-      <encoder><pattern>%d{HH:mm:ss} %5p [%X{traceId:-},%X{X-Correlation-ID:-}] %logger{36} - %msg%n</pattern></encoder>
-    </appender>
-    <root level="DEBUG"><appender-ref ref="CONSOLE"/></root>
-  </springProfile>
-  <springProfile name="stg,prd">
-    <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
-      <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
-    </appender>
-    <root level="INFO"><appender-ref ref="JSON"/></root>
-  </springProfile>
-</configuration>
-```
+의존성: `runtimeOnly(libs.logstash.logback.encoder)` — stg/prd JSON 구조화 로그 필수
 
 ### 민감정보 마스킹 원칙
 
@@ -611,26 +401,9 @@ logging:
 
 ### SQL 로깅 설계 (local / dev 전용)
 
-```yaml
-# application-local.yml / application-dev.yml
-logging:
-  level:
-    io.kyungseo.msa: DEBUG
-    org.mybatis: DEBUG                          # MyBatis SQL 출력
-    org.springframework.jdbc.core: DEBUG        # JDBC 바인딩 파라미터 출력
-
-# application-stg.yml / application-prd.yml
-logging:
-  level:
-    org.mybatis: OFF                            # stg/prd SQL 로깅 전면 차단 (민감정보 보호)
-    org.springframework.jdbc.core: OFF
-```
-
-**MyBatis 실행시간 로깅 (SlowQueryInterceptor)**
-- `local` / `dev` 프로파일 전용 MyBatis Interceptor (`@Intercepts`) 구현
-- 100ms 초과 쿼리: `WARN` 레벨 로깅
-- 적용 위치: `io.kyungseo.msa.common.mybatis.SlowQueryInterceptor`
-- SQL 파라미터에 포함된 민감 필드는 마스킹 후 출력
+- local/dev: MyBatis + JDBC 바인딩 파라미터 DEBUG 출력
+- stg/prd: `org.mybatis`, `org.springframework.jdbc.core` → `OFF` (민감정보 보호)
+- `SlowQueryInterceptor`: local/dev 전용, 100ms 초과 쿼리 WARN 로깅, 민감 필드 마스킹 후 출력
 
 ---
 
@@ -675,56 +448,11 @@ TODO-0002: 본인 소유 아님 (권한 없음)
 
 ## 12. API 테스트 파일 구성
 
-### 위치 및 구조
+위치: `tests/http/` (auth.http, user.http, todo.http, e2e-gateway.http)
 
-```
-tests/http/
-├── auth.http     # 로그인, 토큰 갱신, 로그아웃 (토큰 변수 추출 포함)
-├── user.http     # 회원가입, 사용자 조회/수정/삭제
-└── todo.http     # 할 일 생성/조회/수정/삭제
-```
-
-### 운영 원칙
-
-- `auth.http`, `user.http`, `todo.http`: VS Code REST Client 형식
-- `e2e-gateway.http`: IntelliJ HTTP Client 형식 (`> {% client.global.set() %}` 변수 캡처)
-- 모든 요청은 **Gateway(8090)를 통해** 호출 (`/api/v1/` prefix)
-- `auth.http` 로그인 응답에서 토큰 변수 추출 → 이후 `.http` 파일에서 재사용
-- 각 파일에 `### [성공 케이스]` + `### [실패 케이스]` 구분 주석 포함
-- curl 등가 명령어도 주석으로 병기
-
-### 예시 (auth.http)
-
-```http
-### 로그인 (admin)
-# @name loginAdmin
-POST http://localhost:8090/api/v1/auth/login
-Content-Type: application/json
-
-{
-  "username": "admin",
-  "password": "admin",
-  "deviceId": "dev-local-001"
-}
-
-### 토큰 갱신
-POST http://localhost:8090/api/v1/auth/refresh
-Content-Type: application/json
-
-{
-  "refreshToken": "{{loginAdmin.response.body.data.refreshToken}}",
-  "deviceId": "dev-local-001"
-}
-
-### 로그아웃
-POST http://localhost:8090/api/v1/auth/logout
-Authorization: Bearer {{loginAdmin.response.body.data.accessToken}}
-Content-Type: application/json
-
-{
-  "deviceId": "dev-local-001"
-}
-```
+- VS Code REST Client 형식 (`auth.http`, `user.http`, `todo.http`) + IntelliJ HTTP Client 형식 (`e2e-gateway.http`)
+- 모든 요청은 Gateway(8090) 경유 (`/api/v1/` prefix), 성공/실패 케이스 구분 주석 포함
+- `auth.http` 로그인 응답에서 토큰 변수 추출 → 이후 파일에서 재사용
 
 ---
 
@@ -748,6 +476,15 @@ Content-Type: application/json
 | 통합 테스트 | `@SpringBootTest` + Testcontainers | 전체 흐름 | PostgreSQL + Redis 컨테이너 |
 | API 테스트 | `.http` 파일 | 각 엔드포인트 (Gateway 경유) | `tests/http/` 디렉토리 |
 
+> **Testcontainers 전환 계획 (DR-010 Accepted)**:
+> P2-006에서 `@SpringBootTest` 통합 테스트를 Testcontainers 기반으로 전환.
+> 전환 전까지 CI는 GitHub Actions `services` 블록(PostgreSQL/Redis)으로 interim 운영.
+> 전환 완료 후 `services` 블록 제거.
+
+> **CI 단계별 테스트 실행 (DR-009)**:
+> `develop` push: Checkstyle lint만 실행 (`./gradlew checkstyleMain checkstyleTest`)
+> PR to main: 전체 테스트 실행 (`./gradlew test`)
+
 > **Phase 2**: CI/CD 연동 자동화 테스트 필요 시 RestAssured 도입 검토 (Phase 2 백로그 참고)
 
 ### TestFixture 전략 (전 서비스 공통)
@@ -768,59 +505,12 @@ public class TestFixture {
 
 ## 15. K8s / Cloud 배포 준비 사항
 
-### 컨테이너 이미지 (멀티스테이지 Dockerfile)
+> 멀티스테이지 Dockerfile, Actuator Health Probe YAML, K8s Probe 설정, Graceful Shutdown 설정 → `docs/ARCHITECTURE.md §14 K8s 배포`
 
-```dockerfile
-# Stage 1: Build
-FROM gradle:8-jdk21 AS builder
-WORKDIR /app
-COPY . .
-RUN gradle :services:auth-service:bootJar --no-daemon
-
-# Stage 2: Run
-FROM eclipse-temurin:21-jre-jammy
-COPY --from=builder /app/services/auth-service/build/libs/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
-```
-
-### Actuator Health Probes (각 서비스 공통)
-
-```yaml
-management:
-  server:
-    port: 8099                        # 외부 노출 차단용 포트 분리
-  endpoints:
-    web:
-      exposure:
-        include: health, info, prometheus
-  endpoint:
-    health:
-      probes:
-        enabled: true                 # liveness / readiness 분리
-```
-
-### K8s Probe 설정 예시
-
-```yaml
-livenessProbe:
-  httpGet:
-    path: /actuator/health/liveness
-    port: 8099
-readinessProbe:
-  httpGet:
-    path: /actuator/health/readiness
-    port: 8099
-```
-
-### Graceful Shutdown (각 서비스 공통)
-
-```yaml
-server:
-  shutdown: graceful
-spring:
-  lifecycle:
-    timeout-per-shutdown-phase: 30s
-```
+**설계 결정 근거:**
+- management port(8099) 분리: 외부 Gateway에서 `/actuator/**` 차단 가능 (보안)
+- Graceful Shutdown (`timeout-per-shutdown-phase: 30s`): K8s pod 교체 시 in-flight 요청 안전 처리
+- liveness/readiness 프로브 분리: 재시작 vs 트래픽 차단 정책 독립 설정
 
 ### 서비스 URL 환경별 전략
 
@@ -875,79 +565,35 @@ K8s       : http://{service-name}:{port}     (K8s DNS, 환경변수로 주입)
 
 ## 18. 개발 자동화 (scripts)
 
-### Makefile 주요 타겟
-
-```makefile
-make build           # 전체 빌드 (Gradle)
-make run             # Docker Compose 전체 스택 기동 (PostgreSQL + Redis + 서비스)
-make run-local       # 로컬 직접 실행 (SPRING_PROFILES_ACTIVE=local)
-make test            # 전체 테스트 실행
-make clean           # 빌드 산출물 정리
-make logs            # Docker Compose 로그 확인
-make ps              # 실행 중인 컨테이너 상태 확인
-make create-service  # 새 서비스 스캐폴딩 (이름 입력 프롬프트)
-```
-
-### create-service.sh 기능
-
-- 새 서비스 디렉토리 및 패키지 구조 생성
-- `build.gradle.kts`, `application.yml`, `Dockerfile` 템플릿 복사
-- `settings.gradle.kts` 자동 등록
+> Makefile 타겟 목록 및 `create-service.sh` 사용법 → `README.md §개발 자동화`
 
 ---
 
 ## 19. 구현 단계 (Phase)
 
-### Phase 1 — 골격 구축 (현재 목표)
+### Phase 1 — 골격 구축 ✅ 완료 (2026-05)
 
-**인프라 / 환경**
-- [ ] Gradle 멀티모듈 프로젝트 초기화 (Kotlin DSL + 버전 카탈로그)
-- [ ] `infra/docker/docker-compose.yml` 구성 (PostgreSQL + Redis, healthcheck, depends_on)
-- [ ] `.devcontainer/docker-compose.devcontainer.yml` 구성 (PostgreSQL + Redis만)
-- [ ] DevContainer 설정 (Java 21 이미지, docker-in-docker)
-- [ ] `.env.example` 작성 및 `.gitignore` 설정
-- [ ] `Makefile` + `create-service.sh` 작성
-- [ ] 각 서비스 멀티스테이지 `Dockerfile` 작성
-- [ ] `infra/k8s/`, `infra/prometheus/`, `infra/grafana/` 디렉토리 구조 생성 (빈 상태)
+> 상세 체크리스트 → `docs/archive/phase1-plan.md`
 
-**공통 모듈**
-- [ ] common-core 구현 (ApiResponse, ErrorCode, GlobalExceptionHandler, MdcFilter, JwtProperties)
+### Phase 2 — 운영 준비 (진행 중)
 
-**서비스 구현**
-- [ ] api-gateway (라우팅, JWT 검증, Blacklist 확인, Rate Limiting, CORS, Security Headers)
-- [ ] auth-service (로그인, JWT 발급/갱신/블랙리스트, Redis 연동, Rotation, deviceId 기반 멀티 세션)
-- [ ] user-service (회원가입, CRUD, RBAC, BCrypt, Bean Validation)
-- [ ] todo-service (CRUD, 인가 확인, 가이드 샘플)
+**P0 즉시 착수 (backlog 참조: `docs/backlog/PHASE2.md`)**
+- [ ] [P2-006] Testcontainers 도입 — `@SpringBootTest` 통합 테스트 자급자족화 (DR-010 Accepted)
+- [ ] [P2-001] Security hardening — token storage HttpOnly Cookie, Redis session index (DR-003, OQ-003)
+- [ ] [P2-002] Gateway IP rate limiting + Trusted Proxy 설정
 
-**DB**
+**P1 다음 단계 (PRE-B/C 완료 후)**
+- [ ] [PRE-B] 개발환경 전략 결정 (로컬 실행 구조, Windows 지원, devcontainer, mono-repo)
+- [ ] [PRE-C1/C2] Phase 1 아키텍처 현황 분석 + Phase 2 요건 정의 확정 (DR-001 완료)
+- [ ] [P2-004] K8s 배포 도구 결정 (DR-002 Draft → Accepted 필요)
+- [ ] [P2-005] K8s manifests baseline — DR-002 결정 후 착수
+- [ ] [P2-007] Prometheus + Grafana observability baseline
+- [ ] [P2-008] Resilience4j Circuit Breaker — 서비스 간 RestClient 호출 발생 시
+- [ ] K8s NetworkPolicy 적용 — Gateway → Service 직접 통신만 허용
 
-- [x] `01-schema.sql` (PostgreSQL 방언, 전 테이블 DDL — 서비스 간 FK 미사용)
-- [x] `02-data.sql` (admin/admin ROLE_ADMIN, user/user ROLE_USER BCrypt 해시, 샘플 Todo)
-
-**공통 설정 (전 서비스)**
-- [ ] springdoc-openapi + JWT 인증 + API 그룹 설정
-- [ ] MDC + Micrometer Tracing 설정
-- [ ] Actuator health probes + management port(8099) 분리
-- [ ] Graceful Shutdown 설정
-- [ ] 프로파일별 `application-{profile}.yml` 작성 (local/dev/stg/prd)
-
-**테스트 및 문서**
-- [ ] 각 서비스 단위/슬라이스 테스트 작성
-- [ ] `tests/http/` API 테스트 파일 작성 (auth.http, user.http, todo.http)
-- [ ] `README.md` 작성 (실행 가이드, 환경 설정, 포트 정보 포함)
-
-**Frontend**
-- [ ] Vanilla JS Frontend (로그인, 사용자 관리, 할 일 관리, deviceId 관리 포함)
-
-### Phase 2 — 운영 준비
-
-- [ ] Circuit Breaker (Resilience4j) 적용 — 서비스 간 RestClient 호출 발생 시
-- [ ] 서비스별 PostgreSQL 분리 (DB per Service) — Phase 1 FK 미사용 설계 기반으로 전환
-- [ ] 분산 트랜잭션 전략 수립 (Saga 패턴 / Outbox 패턴) — 서비스 간 데이터 정합성 보장
-- [ ] Prometheus + Grafana 연결 및 대시보드 구성
-- [ ] K8s 매니페스트 작성 (Kustomize, overlays: dev/stg/prd)
-- [ ] K8s NetworkPolicy 적용 — Gateway → Service 직접 통신만 허용, 내부 서비스 외부 접근 차단
-- [ ] CI/CD 파이프라인 (GitHub Actions) — RestAssured 기반 자동화 테스트 연동
+**P2 장기**
+- [ ] 서비스별 PostgreSQL 분리 (DB per Service) — Phase 1 FK 미사용 설계 기반
+- [ ] 분산 트랜잭션 전략 수립 (Saga 패턴 / Outbox 패턴)
 - [ ] 복잡 RBAC (리소스+액션 기반 퍼미션)
 - [ ] 서비스 간 내부 인증 전략 수립
 - [ ] 멀티 디바이스 세션 관리 UI 추가
@@ -956,14 +602,87 @@ make create-service  # 새 서비스 스캐폴딩 (이름 입력 프롬프트)
 
 ## 20. 미결 사항 (결정 보류)
 
-| 항목 | 내용 |
-|---|---|
-| K8s 배포 도구 | Helm vs Kustomize → Phase 2에서 결정 |
-| 복잡 RBAC | 리소스+액션 기반 퍼미션 → Phase 2에서 결정 |
-| 메시지 큐 | Kafka / RabbitMQ 도입 여부 → Phase 2에서 결정 |
-| 서비스 간 인증 | 내부 호출 시 토큰 전략 (서비스 계정 JWT 등) → Phase 2에서 결정 |
-| 분산 트랜잭션 | Saga vs Outbox 패턴 선택 → Phase 2에서 결정 |
+| 항목 | 내용 | DR |
+|---|---|---|
+| K8s 배포 도구 | Helm vs Kustomize — manifests 작성 전 결정 필요 | DR-002 Draft |
+| token storage 전환 | localStorage → HttpOnly Cookie — frontend/auth 변경 전 결정 필요 | OQ-003 Open |
+| 복잡 RBAC | 리소스+액션 기반 퍼미션 → Phase 2 중후반 결정 | — |
+| 메시지 큐 | Kafka / RabbitMQ 도입 여부 → Phase 2에서 결정 | — |
+| 서비스 간 인증 | 내부 호출 시 토큰 전략 (서비스 계정 JWT 등) → Phase 2에서 결정 | — |
+| 분산 트랜잭션 | Saga vs Outbox 패턴 선택 → Phase 2 중후반 결정 | — |
 
 ---
 
-*이 문서는 ARCHITECTURE.md 및 TODO.md 작성의 기반이 됩니다.*
+---
+
+## 21. 개발 도구 및 AI Workflow 구조
+
+Phase 2부터 Claude Code / Cursor 기반 AI workflow를 적극 활용한다.
+
+### Claude Code 도구 (`.claude/`)
+
+| 파일 | 용도 |
+|---|---|
+| `commands/start.md` | 세션 시작 — STATUS.md Current State / Active Work / Next Actions 빠른 확인 |
+| `commands/work.md` | 작업 착수 — backlog에서 항목 선택하고 진행 계획 수립 |
+| `commands/pick.md` | 다음 작업 후보 검토 — 우선순위 기준으로 착수 가능한 항목 제안 |
+| `commands/done.md` | 세션 종료 — 완료 요약, STATUS.md 업데이트, DR 제안 |
+| `commands/record-decision.md` | DR 즉시 기록 — 확정 결정을 `docs/decisions/DR-XXX.md`로 저장 |
+| `commands/health.md` | 워크플로우·문서 건강 상태 점검 (Quick/Full 모드) |
+| `rules/java-spring.md` | Java·Spring Boot 코딩 규칙 (glob: `*.java`, `*.kts`) |
+| `rules/testing.md` | 테스트 작성 규칙 (glob: `**/src/test/**/*.java`) |
+| `rules/git-workflow.md` | 커밋 전 체크리스트 강제 (alwaysApply) |
+| `rules/infra.md` | 인프라·Docker·K8s 변경 안전 규칙 |
+| `settings.json` | 권한 허용 목록, hooks 설정 |
+
+### Cursor AI rules (`.cursor/rules/`)
+
+| 파일 | `alwaysApply` | 용도 |
+|---|---|---|
+| `role-backend.mdc` | true | 백엔드 엔지니어 역할 및 프로젝트 컨텍스트 |
+| `coding.mdc` | true | 핵심 코딩 원칙 (최소·가역적 변경) |
+| `execution.mdc` | true | 빌드·테스트·검증 명령어 및 CI 구조 |
+| `output-format.mdc` | true | 응답 구조 (결론 → 변경 → Verification → Risk) |
+| `safety-critical.mdc` | true | 파괴적·권한 필요 작업 안전 제한 |
+| `java-spring.mdc` | false (glob) | Java·Spring Boot 규칙 (`.java`, `*.kts` 대상) |
+| `testing.mdc` | false (glob) | 테스트 작성 규칙 (`**/src/test/**/*.java` 대상) |
+| `git-commit.mdc` | false (on-demand) | git commit 요청 시 커밋 절차 |
+| `debugging.mdc` | false (on-demand) | 디버깅·오류 추적 절차 |
+
+### 코드 컨벤션 SSOT
+
+- `docs/CODING-CONVENTIONS.md` — 전 규칙의 단일 진실 출처
+- `config/checkstyle/checkstyle.xml` — Checkstyle 설정 파일 (DR-005)
+- `.editorconfig` — 에디터 포맷 기준
+- `tools/git-hooks/pre-commit` — 커밋 전 Checkstyle 자동 실행
+
+### 기술 결정 기록 (Decision Records)
+
+`docs/decisions/DR-XXX.md` 형식. DR-worthy 기준은 `docs/CLAUDE.md` §Decision Records 관리 참조.
+
+| DR | 결정 내용 | Status |
+|---|---|---|
+| DR-001 | Phase 2 요건 정의 | Draft |
+| DR-002 | K8s 배포 도구 선택 (Helm vs Kustomize) | Draft |
+| DR-003 | Phase 2 Security hardening 우선 | Accepted |
+| DR-004 | 파일 헤더 없음 정책 | Accepted |
+| DR-005 | Checkstyle 채택 (Google Style 기반) | Accepted |
+| DR-006 | CI job 분리 구조 | Accepted |
+| DR-007 | 파일 유형별 언어 원칙 | Accepted |
+| DR-008 | docs/ 파일명 대소문자 표준 | Accepted |
+| DR-009 | CI trigger 분리 (develop=lint, PR to main=전체) | Accepted |
+| DR-010 | 통합 테스트 인프라 — Testcontainers 채택 | Accepted |
+
+---
+
+---
+
+## 문서 관계
+
+| 문서 | 역할 |
+|---|---|
+| `docs/PLAN.md` (이 문서) | 아키텍처 결정 근거 (WHY) + Phase 로드맵 |
+| `docs/ARCHITECTURE.md` | 다이어그램 중심 아키텍처 레퍼런스 (Mermaid, 흐름도) |
+| `docs/PLAN-SUMMARY.md` | 세션 컨텍스트용 요약 (기술 스택, 포트, 핵심 결정) |
+| `docs/DEVELOPER-GUIDE.md` | 개발자 온보딩 + HOW (설정법, 실행법, 패턴 예시) |
+| `docs/CODING-CONVENTIONS.md` | 코딩 컨벤션 SSOT |

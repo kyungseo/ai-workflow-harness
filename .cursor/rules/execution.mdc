@@ -29,3 +29,22 @@ Allowed checkpoint commands ONLY when required by active work verification:
 
 - `docker compose ...`
 - `psql ...`
+
+## CI Trigger Structure (DR-009)
+
+- `develop` branch push: Checkstyle lint only
+- `PR to main`: Full test suite
+
+## Code Quality Commands
+
+- `./gradlew checkstyleMain` — main sources lint
+- `./gradlew checkstyleTest` — test sources lint
+- `./gradlew check` — lint + test combined
+
+## Makefile Shortcuts
+
+- `make run` — Docker Compose full stack (`-p base-msa-template`)
+- `make build` — Gradle full build
+- `make test` — full test suite
+- `make logs` — Docker Compose logs
+- `make ps` — running container status

@@ -17,11 +17,12 @@ alwaysApply: false
 
 ## Integration Test Infrastructure
 
-Integration tests depend on externally running Docker containers (`application-test.yml` → `localhost:5432`).
-Testcontainers dependency is declared in `libs.versions.toml` but no tests use it yet.
+Integration tests currently depend on externally running Docker containers (`application-test.yml` → `localhost:5432`).
+Testcontainers adoption is decided (DR-010 Accepted). P2-006 will migrate `@SpringBootTest` to Testcontainers.
 
-MUST NOT add `@Testcontainers`, `@Container`, or `@ServiceConnection` without explicit approval.
-This changes the test execution model and requires a separate decision under P2-006.
+MUST NOT add `@Testcontainers`, `@Container`, or `@ServiceConnection` outside of P2-006 scope.
+When working on P2-006: follow DR-010 — use `@ServiceConnection` with PostgreSQL + Redis containers,
+remove `application-test.yml` localhost overrides after migration is complete.
 
 ## Assertion and Mocking Style
 
