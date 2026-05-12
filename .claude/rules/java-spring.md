@@ -25,3 +25,19 @@ NEVER:
 - Add service-specific domain logic to `common-core`.
 - Add default secret values for `JWT_SECRET`, `DB_PASSWORD`, or similar sensitive settings.
 - Log full tokens, passwords, or `Authorization` header values.
+
+## Comments
+
+MUST:
+
+- Add class-level Javadoc only for: architecture boundaries, security-sensitive logic, complex state.
+  Skip for DTOs, mappers, and standard CRUD controllers.
+- Use `// Korean reason — English technical term` for inline comments. Explain WHY, not WHAT.
+- Let `@Operation`, `@Schema`, and `@DisplayName` serve as documentation in their contexts.
+
+NEVER:
+
+- Add comments that repeat what the code already expresses.
+- Add file headers (no-header policy; LICENSE file covers the project).
+
+Full reference: `docs/CODING-CONVENTIONS.md`

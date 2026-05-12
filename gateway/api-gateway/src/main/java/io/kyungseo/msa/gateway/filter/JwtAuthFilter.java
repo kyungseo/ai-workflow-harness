@@ -86,7 +86,9 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
     }
 
     private Mono<Boolean> checkBlacklist(String jti) {
-        if (jti == null) return Mono.just(false);
+        if (jti == null) {
+            return Mono.just(false);
+        }
         return redisTemplate.hasKey("bl:" + jti)
                 .onErrorResume(e -> {
                     log.error("Redis blacklist check failed for jti={}: {}", jti, e.getMessage());
@@ -98,7 +100,9 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
     }
 
     private boolean isPublicPath(String path, String method) {
-        if (PUBLIC_PATHS.stream().anyMatch(path::startsWith)) return true;
+        if (PUBLIC_PATHS.stream().anyMatch(path::startsWith)) {
+            return true;
+        }
         return "POST".equalsIgnoreCase(method) && path.equals(PUBLIC_POST_PATH);
     }
 

@@ -7,6 +7,10 @@ spring:
       maximum-pool-size: 3
       minimum-idle: 1
       connection-timeout: 5000
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:test-schema.sql
 
 jwt:
   secret: "test-secret-key-for-integration-test-must-be-at-least-256-bits-long!!"

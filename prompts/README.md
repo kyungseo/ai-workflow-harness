@@ -101,6 +101,8 @@
   - `/resume` — 중단된 작업 재개
   - `/debug` — 에러 분석/리팩토링 시작
   - `/done` — 세션 종료 요약
+  - `/record-decision` — 확정된 기술 결정을 DR로 기록
+  - `/health` — 워크플로우·문서 정합성 점검 (`--full`로 심화 점검)
 - **`claude-session-start.md`**: Claude Code 슬래시 커맨드를 사용할 수 없는 환경에서 복붙용
 - **`cursor-session-start.md`**: Cursor 환경에서 동일한 컨텍스트 로딩 절차로 세션 시작
 

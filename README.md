@@ -17,6 +17,8 @@ JWT 인증(Token Rotation), Redis Rate Limiting, API Gateway, MyBatis, Vanilla J
 | 로컬 캐시 | Caffeine (설정 포함, Phase 2에서 활성화) |
 | 인프라 | Docker Compose, PostgreSQL 16, Redis 7 |
 | 빌드 | Gradle 8 (Kotlin DSL, 멀티모듈) |
+| 코드 품질 | Checkstyle 10.21.0 (Google Java Style + 프로젝트 오버라이드) |
+| CI | GitHub Actions (lint → test, `.github/workflows/ci.yml`) |
 | API 문서 | springdoc-openapi (Swagger UI) |
 | 프론트엔드 | Vanilla JS + Bootstrap 5.3 |
 | 로깅 | Logback (로컬: 패턴, stg/prd: JSON via logstash-logback-encoder) |
@@ -51,7 +53,20 @@ DB_PASSWORD=<postgres 비밀번호>
 > `DB_USERNAME` / `DB_PASSWORD` 는 PostgreSQL 컨테이너 초기화에도 사용된다.
 > 최초 기동 후 변경하려면 `docker volume rm docker_postgres_data` 로 볼륨을 초기화해야 한다.
 
-### 2. 전체 스택 기동
+### 2. 개발 환경 초기 설정 (최초 1회)
+
+```bash
+# Git hooks 설치 (Conventional Commits 검증 + Checkstyle pre-commit)
+sh tools/git-hooks/install.sh
+
+# Checkstyle 로컬 확인
+./gradlew checkstyleMain
+```
+
+`.editorconfig`는 IntelliJ / VS Code에서 자동 인식된다.
+상세 컨벤션: [`docs/CODING-CONVENTIONS.md`](docs/CODING-CONVENTIONS.md)
+
+### 3. 전체 스택 기동
 
 ```bash
 cd scripts
@@ -226,7 +241,7 @@ make create-service NAME=order-service
 ```bash
 cd scripts
 
-make help               # 명령어 목록
+make help               # 명령어 목록 (make help로 확인)
 make run                # 전체 스택 기동
 make run-local          # infra만 기동 (postgres + redis)
 make rebuild            # 이미지 재빌드 후 기동
@@ -270,25 +285,42 @@ base-msa-template/
 ├── scripts/
 │   ├── Makefile
 │   └── create-service.sh     # 서비스 스캐폴딩 스크립트
+├── config/
+│   └── checkstyle/           # Checkstyle 설정 (checkstyle.xml, suppressions.xml)
+├── tools/
+│   └── git-hooks/            # pre-commit, commit-msg, install.sh
+├── .github/
+│   └── workflows/
+│       └── ci.yml            # lint → test CI
 ├── docs/
 │   ├── STATUS.md             # 현재 작업 상태 (active board)
 │   ├── PLAN-SUMMARY.md       # 기술 스택·포트·Phase 요약 (경량 참조용)
 │   ├── PLAN.md               # 전체 설계 결정 및 기술 원칙 (969줄, 상세용)
 │   ├── ARCHITECTURE.md       # 아키텍처 다이어그램
 │   ├── DEVELOPER-GUIDE.md    # 개발자 가이드 (상세)
+│   ├── CODING-CONVENTIONS.md # 코드 컨벤션 SSOT
 │   ├── CLAUDE.md             # Claude Code 프로젝트 운영 규칙
-│   ├── decisions/            # 미결정 사항 ADR (DR-001~)
+│   ├── decisions/            # 기술 결정 기록 (DR-001~)
 │   ├── backlog/              # Phase별 후보 작업 목록
 │   └── archive/              # 완료된 Phase 이력
 ├── prompts/                  # AI 작업 프롬프트 라이브러리 (23개, prompts/README.md 참조)
 ├── .claude/
-│   ├── commands/             # 슬래시 커맨드 (/start, /pick, /work, /resume, /debug, /done)
+│   ├── commands/             # 슬래시 커맨드 (/start, /pick, /work, /resume, /debug, /done, /record-decision, /health)
 │   ├── rules/                # 경로별 규칙 (java-spring, testing, infra, docs-workflow)
 │   └── settings.json         # 권한 설정, hooks
+├── .editorconfig             # IDE 공통 스타일 (4-space, UTF-8, LF, 120자)
 ├── .env.example
 ├── .devcontainer/
 └── build.gradle.kts          # 루트 빌드 파일
 ```
+
+### docs/ 파일 독자 분류
+
+| 독자 | 파일 |
+|------|------|
+| 개발자 | `ARCHITECTURE.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`, `DOCKERFILE-GUIDE.md`, `WORKFLOW-MANUAL.md`, `PLAN.md` |
+| AI 운영 (Claude) | `CLAUDE.md`, `STATUS.md`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `archive/`, `TODO/` |
+| 개발자 + AI 겸용 | `PLAN-SUMMARY.md` (기술 스택·포트 요약, AI 기본 참조 + 개발자 빠른 조회) |
 
 ---
 
@@ -306,6 +338,8 @@ base-msa-template/
 | `/resume` | 중단된 작업 재개 |
 | `/debug` | 에러 분석 / 리팩토링 시작 |
 | `/done` | 세션 종료 요약 |
+| `/record-decision` | 확정된 기술 결정을 DR로 기록 |
+| `/health` | 워크플로우·문서 전체 정합성 점검 및 보고 (`--full`로 심화 점검) |
 
 **프롬프트 라이브러리** (`prompts/`):
 - 23개 범용 프롬프트 (Claude / Cursor / ChatGPT 공용)
@@ -318,7 +352,7 @@ base-msa-template/
 
 | 파일 | 적용 경로 | 내용 |
 |------|-----------|------|
-| `java-spring.md` | `services/**`, `gateway/**`, `common/**/*.java` 등 | Lombok 규칙, MyBatis `#{}` 강제, 패키지 컨벤션 |
+| `java-spring.md` | `services/**`, `gateway/**`, `common/**/*.java` 등 | Lombok 규칙, MyBatis `#{}` 강제, 패키지 컨벤션, 주석 정책 (파일 헤더 없음, WHY-only 주석) |
 | `testing.md` | `**/src/test/**/*.java` | 테스트 레이어 어노테이션, AssertJ/BDD 스타일, Testcontainers 미사용 주의 |
 | `infra.md` | `infra/**`, `**/Dockerfile`, `.github/workflows/**` | 인프라 변경 제약 |
 | `docs-workflow.md` | `docs/**/*.md`, `CLAUDE.md` | 문서 작성 규칙 |
@@ -339,6 +373,7 @@ base-msa-template/
 - Prometheus + Grafana 연동
 - K8s 매니페스트 (Kustomize)
 - Caffeine + Redis 2단계 캐시 활성화
-- GitHub Actions CI/CD
 
-미결정 사항은 `docs/decisions/DR-001~003.md` 참조.
+> GitHub Actions CI (lint → test)는 PRE-A2+A3에서 구현 완료. Docker build·deploy 단계는 Phase 2 인프라 결정 후 추가.
+
+미결정 사항은 `docs/decisions/DR-001~007.md` 참조.

@@ -488,13 +488,37 @@ const KEYS = {
 cp .env.example .env
 # .env 편집: JWT_SECRET, DB_USERNAME, DB_PASSWORD 입력
 
-# 2. infra만 기동 (로컬 서비스 실행 시)
+# 2. Git hooks 설치 (최초 1회 — pre-commit Checkstyle + commit-msg 검증)
+sh tools/git-hooks/install.sh
+
+# 3. infra만 기동 (로컬 서비스 실행 시)
 cd scripts
 make run-local   # PostgreSQL + Redis만 기동
 
-# 3. 서비스 로컬 실행 (IntelliJ 또는 터미널)
+# 4. 서비스 로컬 실행 (IntelliJ 또는 터미널)
 SPRING_PROFILES_ACTIVE=local ./gradlew :services:user-service:bootRun
 ```
+
+### 코드 컨벤션 설정
+
+`.editorconfig`는 IntelliJ / VS Code에서 자동 인식된다 (별도 설정 불필요).
+
+**IntelliJ Checkstyle 플러그인 설정:**
+1. `Settings → Plugins` → "Checkstyle-IDEA" 설치
+2. `Settings → Tools → Checkstyle` → Configuration File에 `config/checkstyle/checkstyle.xml` 추가
+3. 이후 편집기 내 실시간 위반 표시 활성화
+
+**로컬 Checkstyle 실행:**
+```bash
+./gradlew checkstyleMain   # main 소스만 검사
+./gradlew checkstyleTest   # test 소스까지 검사
+./gradlew check            # Checkstyle + test 전부
+```
+
+CI는 PR 생성 시 `lint → test` 순서로 자동 실행된다 (`.github/workflows/ci.yml`).
+lint 실패 시 Report: `build/reports/checkstyle/main.html` 또는 GitHub Actions 로그 확인.
+
+상세 컨벤션 규칙: [`docs/CODING-CONVENTIONS.md`](CODING-CONVENTIONS.md)
 
 ### .env 주의사항
 

@@ -19,6 +19,8 @@
 | Logging | SLF4J + Logback (JSON: stg/prd, 콘솔: local/dev) |
 | Tracing | Micrometer Tracing + MDC (X-Correlation-ID) |
 | Infra | Docker Compose (로컬), K8s (Phase 2) |
+| CI | GitHub Actions — lint (Checkstyle) → test 체인, `.github/workflows/ci.yml` |
+| Code Quality | Checkstyle 10.21.0, Google Java Style + LineLength=120/Indentation=4 오버라이드 |
 | Test | Testcontainers (선언됨, Phase 2에서 실제 활성화) |
 
 ## 서비스 포트
@@ -68,5 +70,6 @@
 |------|------|
 | 현재 작업 상태 | `docs/STATUS.md` |
 | Phase 2 backlog | `docs/backlog/PHASE2.md` |
-| 의사결정 기록 | `docs/decisions/DR-00*.md` |
+| 의사결정 기록 | `docs/decisions/DR-001~007.md` |
+| 코드 컨벤션 SSOT | `docs/CODING-CONVENTIONS.md` |
 | 전체 기술 근거 | `docs/PLAN.md` (969줄, 필요시만 로드) |

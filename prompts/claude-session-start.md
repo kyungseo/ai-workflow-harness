@@ -121,7 +121,7 @@ Active Work 중 [작업 ID 또는 작업명]을 이어서 진행하려고 해.
 - docs/archive/ (빈 폴더)
 - .claude/settings.json (defaultMode=plan, 금지 명령 목록, 필요 시 hook)
 - .claude/rules/ (docs-workflow, git-workflow, infra, [언어]-[프레임워크], testing)
-- .claude/commands/ (start, pick, work, resume, debug, done)
+- .claude/commands/ (start, pick, work, resume, debug, done, record-decision, health)
 - prompts/ (세션 부트스트랩 + 재사용 태스크 프롬프트 라이브러리)
 
 구현이나 파일 생성은 내가 승인한 뒤 진행해줘.
@@ -161,6 +161,9 @@ CLAUDE.md, docs/CLAUDE.md, docs/STATUS.md를 확인해줘.
 4. 남은 리스크
 5. 다음 세션에서 먼저 볼 파일
 6. docs/STATUS.md 업데이트 필요 여부
+7. 의사결정 기록 필요 여부
+   - 이번 작업에서 DR-worthy 결정이 확정되었으면 목록화하고 기록 여부를 물어봐.
+   - 계획·검토 중 발견된 미결 의사결정이 있으면 STATUS.md OQ 추가 및 DR Draft 생성을 제안해.
 
 다음 세션의 시작 프롬프트로 바로 사용할 수 있는 짧은 문장도 마지막에 작성해줘.
 ```

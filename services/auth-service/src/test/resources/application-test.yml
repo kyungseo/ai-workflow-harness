@@ -11,6 +11,10 @@ spring:
     redis:
       host: localhost
       port: 6379
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:test-schema.sql
 
 jwt:
   secret: "test-secret-key-for-integration-test-must-be-at-least-256-bits-long!!"
