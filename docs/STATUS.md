@@ -35,7 +35,7 @@ Last updated: 2026-05-12 (PRE-A2+A3 통합 완료: 코드 컨벤션, Checkstyle,
 | P2-PLAN-002 | P0 | Done | AI workflow 점검 및 개선 (Vibe Coding best practice 기준) | `.claude/commands/` 6개, `.claude/rules/testing.md`, `docs/decisions/` 구조, `docs/PLAN-SUMMARY.md`, `settings.json` 수정 완료 | 파일 존재 확인 및 `/start` slash command 동작 확인 |
 | P2-PLAN-003 | P0 | Done | AI workflow 정비 심화 + Cursor 정렬 | 언어 원칙 정의, rules 정합성·token 효율 개선, prompts 라이브러리 Spring Boot 특화, Cursor rules Claude와 정렬 완료 | 파일 존재 확인 및 git log 검토 |
 | PRE-A1 | P0 | Done | Makefile `-p base-msa-template` 추가 (container/network 이름 고정) | `-p` 추가 후 `make run` 정상 동작, container_name 충돌 없음 | `curl http://localhost:8090/api/v1/auth/login` 정상 응답 |
-| PRE-A2+A3 | P0 | Done | 코드 컨벤션 SSOT, Checkstyle, CI 기반 구축 (파일 헤더 없음 정책, DR-004~006) | `./gradlew checkstyleMain checkstyleTest` 0 위반, `.editorconfig`·`ci.yml`·`tools/git-hooks/`·`docs/coding-conventions.md` 생성 완료 | `./gradlew check` 통과 확인 |
+| PRE-A2+A3 | P0 | Done | 코드 컨벤션 SSOT, Checkstyle, CI 기반 구축 (파일 헤더 없음 정책, DR-004~006) | `./gradlew checkstyleMain checkstyleTest` 0 위반, `.editorconfig`·`ci.yml`·`tools/git-hooks/`·`docs/CODING-CONVENTIONS.md` 생성 완료 | `./gradlew check` 통과 확인 |
 | PRE-B | P0 | Candidate | 개발환경 전략 결정 (로컬 실행 구조, Windows 지원, devcontainer, mono-repo) | B-1~B-4 결정 사항 decision record 또는 STATUS 반영 완료 | 결정 문서 리뷰 |
 | PRE-C1 | P0 | Candidate | Phase 1 아키텍처 현황 분석 (레이어 일관성, common-core, gateway, 테스트 커버리지) | 분석 결과와 개선 필요 항목 목록 작성 | docs/backlog 또는 STATUS 반영 |
 | PRE-C2 | P0 | Candidate | Phase 2 요건 정의 확정 (Session B 결정 반영, DR-001/002 완료) | backlog PHASE2.md 업데이트, DR-001 결정 완료 | backlog + decision review |

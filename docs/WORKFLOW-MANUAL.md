@@ -95,6 +95,16 @@ graph TD
 
 ### 파일 분류 기준
 
+**독자별 분류 (`docs/` 파일)**
+
+| 독자 | 파일 |
+| --- | --- |
+| 개발자 | `ARCHITECTURE.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`, `DOCKERFILE-GUIDE.md`, `WORKFLOW-MANUAL.md`, `PLAN.md` |
+| AI 운영 (Claude) | `CLAUDE.md`, `STATUS.md`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `archive/`, `TODO/` |
+| 개발자 + AI 겸용 | `PLAN-SUMMARY.md` |
+
+**Claude 컨텍스트 로드 방식**
+
 | 분류 | 파일 | Claude 로드 방식 |
 | --- | --- | --- |
 | 항상 자동 로드 | `CLAUDE.md`, `docs/CLAUDE.md` | 세션 시작 시 자동 |

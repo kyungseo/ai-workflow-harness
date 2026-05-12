@@ -40,4 +40,4 @@ NEVER:
 - Add comments that repeat what the code already expresses.
 - Add file headers (no-header policy; LICENSE file covers the project).
 
-Full reference: `docs/coding-conventions.md`
+Full reference: `docs/CODING-CONVENTIONS.md`

@@ -64,7 +64,7 @@ sh tools/git-hooks/install.sh
 ```
 
 `.editorconfig`는 IntelliJ / VS Code에서 자동 인식된다.
-상세 컨벤션: [`docs/coding-conventions.md`](docs/coding-conventions.md)
+상세 컨벤션: [`docs/CODING-CONVENTIONS.md`](docs/CODING-CONVENTIONS.md)
 
 ### 3. 전체 스택 기동
 
@@ -298,7 +298,7 @@ base-msa-template/
 │   ├── PLAN.md               # 전체 설계 결정 및 기술 원칙 (969줄, 상세용)
 │   ├── ARCHITECTURE.md       # 아키텍처 다이어그램
 │   ├── DEVELOPER-GUIDE.md    # 개발자 가이드 (상세)
-│   ├── coding-conventions.md # 코드 컨벤션 SSOT
+│   ├── CODING-CONVENTIONS.md # 코드 컨벤션 SSOT
 │   ├── CLAUDE.md             # Claude Code 프로젝트 운영 규칙
 │   ├── decisions/            # 기술 결정 기록 (DR-001~)
 │   ├── backlog/              # Phase별 후보 작업 목록
@@ -313,6 +313,14 @@ base-msa-template/
 ├── .devcontainer/
 └── build.gradle.kts          # 루트 빌드 파일
 ```
+
+### docs/ 파일 독자 분류
+
+| 독자 | 파일 |
+|------|------|
+| 개발자 | `ARCHITECTURE.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`, `DOCKERFILE-GUIDE.md`, `WORKFLOW-MANUAL.md`, `PLAN.md` |
+| AI 운영 (Claude) | `CLAUDE.md`, `STATUS.md`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `archive/`, `TODO/` |
+| 개발자 + AI 겸용 | `PLAN-SUMMARY.md` (기술 스택·포트 요약, AI 기본 참조 + 개발자 빠른 조회) |
 
 ---
 

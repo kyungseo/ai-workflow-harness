@@ -71,5 +71,5 @@
 | 현재 작업 상태 | `docs/STATUS.md` |
 | Phase 2 backlog | `docs/backlog/PHASE2.md` |
 | 의사결정 기록 | `docs/decisions/DR-001~007.md` |
-| 코드 컨벤션 SSOT | `docs/coding-conventions.md` |
+| 코드 컨벤션 SSOT | `docs/CODING-CONVENTIONS.md` |
 | 전체 기술 근거 | `docs/PLAN.md` (969줄, 필요시만 로드) |

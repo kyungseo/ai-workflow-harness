@@ -518,7 +518,7 @@ SPRING_PROFILES_ACTIVE=local ./gradlew :services:user-service:bootRun
 CI는 PR 생성 시 `lint → test` 순서로 자동 실행된다 (`.github/workflows/ci.yml`).
 lint 실패 시 Report: `build/reports/checkstyle/main.html` 또는 GitHub Actions 로그 확인.
 
-상세 컨벤션 규칙: [`docs/coding-conventions.md`](coding-conventions.md)
+상세 컨벤션 규칙: [`docs/CODING-CONVENTIONS.md`](CODING-CONVENTIONS.md)
 
 ### .env 주의사항
 
