@@ -138,6 +138,7 @@ base-msa-template/
 │   │   │   ├── TODO-BLOCK9.md           # Frontend
 │   │   │   └── TODO-BLOCK10.md          # 문서화 및 마무리
 │   │   └── PHASE2/                      # Phase 2 세부 분해 (필요 시 생성)
+│   ├── retrospectives/              # 시점별 harness 평가 및 워크플로우 회고 (분기별)
 │   └── decisions/
 │       ├── DECISION-TEMPLATE.md         # DR 작성 템플릿
 │       └── DR-001 ~ DR-010.md           # 기술 결정 기록 (§21 참조)

@@ -65,6 +65,7 @@ graph TD
     DOCS --> BACKLOG["📁 backlog/<br/>PHASE{n}.md"]
     DOCS --> DECISIONS["📁 decisions/<br/>DR-*.md"]
     DOCS --> ARCHIVE["📁 archive/<br/>phase{n}-status.md"]
+    DOCS --> RETRO["📁 retrospectives/<br/>harness-evaluation-*.md"]
     DOCS --> TODO["📁 TODO/<br/>PHASE{n}/ (선택)"]
 
     DOT_CLAUDE --> SETTINGS["📄 settings.json<br/><i>권한·훅 설정</i>"]
@@ -147,6 +148,7 @@ graph TD
     end
 
     ARC["docs/archive/\n완료 Phase 이력"]
+    RETRO["docs/retrospectives/\n시점별 회고·평가"]
 
     ST <-->|pick / work| BL
     ST <-->|OQ · 결정| DR
@@ -156,6 +158,7 @@ graph TD
     PL -->|"T5 cascade"| PS
     AR -->|"T6 역확인"| DG
     ST -->|"Phase 완료 T3"| ARC
+    ST -.->|"정기 회고"| RETRO
 
     style ST fill:#d4edda,stroke:#28a745
     style CR fill:#ffeeba,stroke:#ffc107
@@ -274,6 +277,14 @@ STATUS.md가 실제 코드·파일 상태와 불일치할 경우:
 완료된 Phase의 Active Work, Checkpoints, Decisions 이력을 보관하는 장기 보존 파일. STATUS.md를 현재 중심으로 유지하기 위해 완료 이력을 이쪽으로 분리한다.
 
 **로드 조건:** 이전 Phase 구현 맥락 복원이 필요할 때, "Phase {n}에서 어떻게 했는지" 명시적으로 요청할 때. 기본적으로 로드하지 않는다.
+
+### `docs/retrospectives/`
+
+워크플로우·harness의 시점별 평가와 회고를 보관하는 폴더. Phase 전환 주기 또는 정기적인 시점(분기)에 평가 문서를 생성하고 시계열로 누적한다. `docs/archive/`가 구현 이력을 보존한다면, `docs/retrospectives/`는 **개발 방식 자체의 이력**을 보존한다.
+
+**파일 명명 규칙:** `harness-evaluation-YYYYMMDD.md` 또는 `retrospective-YYYYMMDD.md`
+
+**로드 조건:** 명시적인 회고·비교 요청 시에만 로드. 기본적으로 로드하지 않는다.
 
 ### `docs/TODO/PHASE{n}/TODO-BLOCK{n}-{주제}.md`
 
