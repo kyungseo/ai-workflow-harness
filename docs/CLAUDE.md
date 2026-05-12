@@ -15,7 +15,7 @@ Phase와 무관하게 유지하여 다른 프로젝트에서도 같은 구조로
 5. `docs/backlog/*.md` 또는 `docs/decisions/*.md` — 후보 작업과 미결정 사항
 6. `docs/TODO/PHASE{n}/*.md` — 완료된 Phase의 상세 작업 분해 또는 명시적으로 지정된 세부 작업 목록
 7. `docs/archive/*.md` — 과거 이력 참조
-8. `docs/PLAN.md` — 전체 기술 근거 (969줄, 상세 검토가 필요할 때만 로드)
+8. `docs/PLAN.md` — 전체 기술 근거 (688줄, 상세 검토가 필요할 때만 로드)
 
 ### Context 로드 조건
 
@@ -206,7 +206,7 @@ cascade 업데이트 대상:
 **절차:**
 1. 영향받는 섹션만 수정 (다이어그램 포함) — 전체 재작성 금지
 2. 문서 헤더 버전/날짜 갱신
-3. PLAN.md 참조 섹션 일치 확인 (역방향 cascade)
+3. PLAN.md 및 DEVELOPER-GUIDE.md 참조 섹션 역확인
 
 **루프 안전:** T6 결과(ARCHITECTURE.md 수정)는 T5 또는 T1을 재발동시키지 않는다.
 
