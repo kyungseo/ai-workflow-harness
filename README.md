@@ -295,14 +295,15 @@ base-msa-template/
 ├── docs/
 │   ├── STATUS.md             # 현재 작업 상태 (active board)
 │   ├── PLAN-SUMMARY.md       # 기술 스택·포트·Phase 요약 (경량 참조용)
-│   ├── PLAN.md               # 전체 설계 결정 및 기술 원칙 (969줄, 상세용)
+│   ├── PLAN.md               # 전체 설계 결정 및 기술 원칙 (상세용, 필요 시만 로드)
 │   ├── ARCHITECTURE.md       # 아키텍처 다이어그램
 │   ├── DEVELOPER-GUIDE.md    # 개발자 가이드 (상세)
 │   ├── CODING-CONVENTIONS.md # 코드 컨벤션 SSOT
 │   ├── CLAUDE.md             # Claude Code 프로젝트 운영 규칙
 │   ├── decisions/            # 기술 결정 기록 (DR-001~)
 │   ├── backlog/              # Phase별 후보 작업 목록
-│   └── archive/              # 완료된 Phase 이력
+│   ├── archive/              # 완료된 Phase 이력
+│   └── retrospectives/       # 시점별 harness 평가 및 워크플로우 회고
 ├── prompts/                  # AI 작업 프롬프트 라이브러리 (23개, prompts/README.md 참조)
 ├── .claude/
 │   ├── commands/             # 슬래시 커맨드 (/start, /pick, /work, /resume, /debug, /done, /record-decision, /health)

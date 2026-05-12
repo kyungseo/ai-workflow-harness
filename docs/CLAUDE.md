@@ -15,7 +15,7 @@ Phase와 무관하게 유지하여 다른 프로젝트에서도 같은 구조로
 5. `docs/backlog/*.md` 또는 `docs/decisions/*.md` — 후보 작업과 미결정 사항
 6. `docs/TODO/PHASE{n}/*.md` — 완료된 Phase의 상세 작업 분해 또는 명시적으로 지정된 세부 작업 목록
 7. `docs/archive/*.md` — 과거 이력 참조
-8. `docs/PLAN.md` — 전체 기술 근거 (969줄, 상세 검토가 필요할 때만 로드)
+8. `docs/PLAN.md` — 전체 기술 근거 (688줄, 상세 검토가 필요할 때만 로드)
 
 ### Context 로드 조건
 
@@ -28,7 +28,7 @@ Phase와 무관하게 유지하여 다른 프로젝트에서도 같은 구조로
 | 5 | `docs/decisions/*.md` | 관련 DR이 있는 작업 시작 시; 아키텍처 결정이 구현에 직접 영향을 줄 때 |
 | 6 | `docs/TODO/PHASE{n}/*.md` | 해당 Phase 세부 작업 분해 확인 시; 명시적 TODO block 참조 요청 시 |
 | 7 | `docs/archive/*.md` | 이전 Phase 구현 맥락 복원 필요 시; 명시적으로 "Phase {n}에서 어떻게 했는지" 요청 시 |
-| 8 | `docs/PLAN.md` | PLAN-SUMMARY로 부족한 상세 근거 필요 시; 아키텍처 변경 검토 시; Phase 계획 자체 수정 시 |
+| 8 | `docs/PLAN.md` | PLAN-SUMMARY로 부족한 상세 근거 필요 시; 아키텍처 변경 검토 시; Phase 계획 자체 수정 시; **신규 서비스·모듈 생성 시; Cross-service interaction 구현 시; Infra·배포 방식 변경 시; DB schema 변경 시** |
 
 ## Session Startup
 
@@ -71,6 +71,20 @@ MUST NOT:
 - `docs/TODO/PHASE{n}/*.md`: Phase가 의도적으로 세부 작업 분해를 필요로 하거나 완료된 Phase 상세를 검토할 때만 사용
 - `docs/archive/*.md`: 완료된 Phase의 과거 이력
 
+### STATUS.md 안전 업데이트 규칙
+
+MUST:
+- STATUS.md 수정 전 반드시 최신 내용 재-read — 세션 중 다른 변경이 반영되었을 수 있음
+- 전체 overwrite 금지 — 관련 항목(행)만 수정
+- 변경 범위 밖 내용은 그대로 유지
+
+### 실패 복구 규칙
+
+STATUS.md가 실제 코드·파일 상태와 불일치할 경우:
+- **코드를 진실로 삼는다** — STATUS.md가 아닌 실제 파일 상태가 기준
+- 불일치 내용을 보고하고 STATUS.md 수정을 제안한다. 직접 수정은 승인 후 진행
+- 실패한 작업은 `Failed`로 기록하고, 재시도는 신규 작업 항목으로 분리
+
 ### Decision Records 관리
 
 **DR-worthy 기준 (하나 이상 해당 시 기록):**
@@ -78,6 +92,12 @@ MUST NOT:
 - 아키텍처 경계·정책 결정 (예: CI job 분리 구조, 파일 헤더 없음 정책)
 - 되돌리기 비용 Medium 이상
 - 두 개 이상 컴포넌트 또는 개발자에 영향
+
+**다음 카테고리는 위 기준에 해당하므로 DR 필수:**
+- 외부 시스템 연동 방식 (예: 메시지 큐 도입, 외부 인증 서버 연동)
+- 인증·보안 방식 변경 (예: token storage 전환, 인증 흐름 변경)
+- 데이터 모델(스키마) 변경 (예: 테이블 추가·삭제, 컬럼 타입 변경)
+- 인프라 구조 변경 (예: K8s 배포 도구 선택, DB per Service 전환)
 
 **DR 불필요:**
 - 구현 세부사항 (변수명, 줄 순서)
@@ -138,6 +158,87 @@ cascade 업데이트 대상:
 1. Claude가 트리거 조건 감지 시 이동을 제안한다. 승인 없이 진행하지 않는다.
 2. 사용자 승인 후 `docs/archive/phase{n}-status.md`에 이동 내용을 작성한다.
 3. STATUS.md에서 이동한 섹션을 제거하고 현재 Phase 내용만 유지한다.
+4. PLAN.md 현재 내용 → `docs/archive/phase{n}-plan.md` 스냅샷 저장.
+5. PLAN.md를 신규 Phase 기준으로 재편 제안.
+
+### PLAN.md 라이프사이클 관리
+
+**업데이트 트리거 (다음 중 하나 해당 시):**
+- DR Accepted 중 §2 기술 스택·§14 테스트 전략·§15 K8s·§16 Secure Coding에 영향을 주는 것
+- 기술 스택 추가·교체·제거
+
+**업데이트 절차:**
+1. 영향받는 §(섹션)만 수정 — 전체 재작성 금지
+2. 문서 헤더 버전/날짜 갱신
+3. PLAN-SUMMARY.md 불일치 확인 → 필요 시 함께 갱신
+4. cascade 체크 (아래 표)
+
+**cascade 체크 목록:**
+
+| 변경 섹션 | 확인 대상 |
+| --- | --- |
+| §2 기술 스택 | `docs/PLAN-SUMMARY.md`, `.cursor/rules/execution.mdc`, `README.md` 기술 스택 테이블 |
+| §4 디렉토리 구조 | `docs/DEVELOPER-GUIDE.md`, `docs/ARCHITECTURE.md §2`, `README.md` 프로젝트 구조 섹션 |
+| §8 인증/인가 | `docs/ARCHITECTURE.md §3, §8, §16` |
+| §10 Logging | `docs/ARCHITECTURE.md §11` |
+| §14 테스트 전략 | `.claude/rules/testing.md`, `.cursor/rules/testing.mdc` |
+| §15 K8s | `docs/ARCHITECTURE.md §14` |
+| §16 Secure Coding | `docs/CODING-CONVENTIONS.md`, `docs/ARCHITECTURE.md §15` |
+| §19 Phase 계획 | `docs/backlog/PHASE2.md`, `docs/STATUS.md` Next Actions |
+
+> **참고**: 같은 세션 안에서 DR Superseded cascade가 먼저 `PLAN-SUMMARY.md`를 수정한 경우,
+> §2 cascade의 `PLAN-SUMMARY.md` 항목은 재편집 없이 확인만 한다.
+
+> **중요**: PLAN.md 문서 현행화 작업 자체는 DR 기록 불필요.
+> 기존 DR 결정의 결과를 문서에 반영하는 것이므로 `/done` 시 DR 제안 대상에서 제외한다.
+
+### ARCHITECTURE.md · DEVELOPER-GUIDE.md 직접 업데이트 (T6)
+
+**발동 조건 (다음 중 하나):**
+- 인증/토큰 흐름 변경 (auth flow 다이어그램 영향)
+- 새 서비스 추가 또는 제거 (시스템 개요 다이어그램 영향)
+- 서비스 간 통신 방식 변경 (서비스 간 호출 구조 변경)
+- 인프라 토폴로지 변경 (Gateway 필터 체인, Redis 구조 등)
+
+> T5 cascade로 커버되지 않는 **구현 변경 주도** 업데이트가 대상.
+> T5가 먼저 발동된 경우 해당 cascade 항목(ARCHITECTURE.md §X)은 T6와 중복 처리 않고 확인만 한다.
+
+**절차:**
+1. 영향받는 섹션만 수정 (다이어그램 포함) — 전체 재작성 금지
+2. 문서 헤더 버전/날짜 갱신
+3. PLAN.md 및 DEVELOPER-GUIDE.md 참조 섹션 역확인
+
+**루프 안전:** T6 결과(ARCHITECTURE.md 수정)는 T5 또는 T1을 재발동시키지 않는다.
+
+### WORKFLOW-MANUAL.md 업데이트 (T7)
+
+**발동 조건 (다음 중 하나):**
+- `docs/CLAUDE.md` 워크플로우 규칙 변경 (컨텍스트 로드 조건, DR 기준, STATUS 규칙, 실패 복구 규칙 등)
+- `.claude/commands/*.md` 내용 변경
+- T1~T6 트리거 추가·변경
+
+**cascade (섹션별):**
+
+| 변경 원인 | 확인 대상 섹션 |
+| --- | --- |
+| 컨텍스트 로드 조건 변경 | `WORKFLOW-MANUAL.md §4-4` |
+| 슬래시 커맨드 변경 | `WORKFLOW-MANUAL.md §5` |
+| DR 기준 변경 | `WORKFLOW-MANUAL.md §6` |
+| 트리거 추가·변경 | `WORKFLOW-MANUAL.md §10` |
+
+**루프 안전:** T7 결과(WORKFLOW-MANUAL.md 수정)는 다른 트리거를 재발동시키지 않는다.
+
+---
+
+**아카이빙 (STATUS.md → Archive 이동 절차에 통합):**
+
+PLAN.md 아카이빙은 독립 트리거가 아닌 기존 **STATUS.md → Archive 이동 절차 4~5번 단계**로 처리한다:
+
+> 4. PLAN.md 현재 내용 → `docs/archive/phase{n}-plan.md` 스냅샷 저장
+> 5. PLAN.md를 신규 Phase 기준으로 재편 제안
+
+Phase 전환 시 승인이 한 번(STATUS.md Archive와 동시)으로 통합된다.
+승인 없이 아카이빙하지 않는다.
 
 ### docs/TODO/PHASE{n}/ 생성
 
