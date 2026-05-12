@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-12 (PRE-A2+A3 통합 완료: 코드 컨벤션, Checkstyle, CI 기반 구축)
+Last updated: 2026-05-12 (docs 구조 정비 완료: 파일명 표준화, 독자 분류표, DR-008 기록)
 
 ## Current State
 
@@ -78,11 +78,11 @@ Last updated: 2026-05-12 (PRE-A2+A3 통합 완료: 코드 컨벤션, Checkstyle,
 | 2026-05-12 | CI job 분리 구조 (DR-006): lint→test 체인 + 확장 포인트 주석 명시, `gradle/actions/setup-gradle@v3` | CI/CD 점진적 확장 가능 구조 | Low |
 | 2026-05-12 | 기술 결정 기록 워크플로우 도입: `/record-decision` command, `docs/CLAUDE.md` Decision Records 섹션, `/done` 7번 단계 추가 | 세션 중 확정 결정의 체계적 DR 보존 | Low |
 | 2026-05-11 | 파일 유형별 언어 원칙 확정 (DR-007): `.claude/rules/`·루트 CLAUDE.md → 영어, `docs/`·commands → 한국어+기술용어 영어 | token 효율 및 instruction 준수율 향상, 문서 가독성 보존 | Medium |
+| 2026-05-12 | docs/ 파일명 표준 (DR-008): 루트·backlog/·decisions/ → UPPERCASE-HYPHENATED, archive/ → lowercase-hyphenated | 기존 다수 파일 패턴 유지, 신규 파일 생성 기준 명확화 | Low |
 
 ## Next Actions
 
-1. DR-004~006 기록 (`/record-decision` — 이번 세션 확정 결정 3건).
-2. PRE-B: 개발환경 전략 4개 결정 (B-1~B-4) — PRE-C2 전 선행 필요.
+1. PRE-B: 개발환경 전략 4개 결정 (B-1~B-4) — PRE-C2 전 선행 필요.
 3. PRE-C1: Phase 1 아키텍처 분석 → PRE-C2 backlog 업데이트.
 4. PRE-C2: DR-001 완료 + Phase 2 backlog 최종 확정.
 5. PRE-C3: Dockerfile 개선 (P1, C2 이후 병행 가능).
