@@ -37,6 +37,7 @@ Last updated: 2026-05-12 (CI 통합 테스트 수정, trigger 분리, DR-009/010
 | PRE-A1 | P0 | Done | Makefile `-p base-msa-template` 추가 (container/network 이름 고정) | `-p` 추가 후 `make run` 정상 동작, container_name 충돌 없음 | `curl http://localhost:8090/api/v1/auth/login` 정상 응답 |
 | PRE-A2+A3 | P0 | Done | 코드 컨벤션 SSOT, Checkstyle, CI 기반 구축 (파일 헤더 없음 정책, DR-004~006) | `./gradlew checkstyleMain checkstyleTest` 0 위반, `.editorconfig`·`ci.yml`·`tools/git-hooks/`·`docs/CODING-CONVENTIONS.md` 생성 완료 | `./gradlew check` 통과 확인 |
 | P2-006 | P0 | Candidate | Testcontainers 도입 (DR-010) — 통합 테스트 자급자족화 | DR-010 Accepted | auth/user/todo 서비스 @SpringBootTest가 Testcontainers로 전환, ci.yml services 블록 제거 | `./gradlew test` docker compose 없이 통과 |
+| HRN-001 | P1 | Candidate | Stop hook 추가 — `/done` 없이 세션 종료 시 reminder 출력 | `settings.json` Stop hooks에 `/done` reminder 스크립트 등록 완료 | 세션 종료 시 reminder 메시지 확인 |
 | DOC-001 | P1 | Candidate | git 구성·브랜치 전략·flow 가이드 문서 생성 | 현재 git workflow 운영 확립 | `docs/GIT-WORKFLOW.md` 생성, feature→develop→PR to main 전략 및 CI trigger 연계 설명 포함 | 문서 리뷰 |
 | PRE-B | P0 | Candidate | 개발환경 전략 결정 (로컬 실행 구조, Windows 지원, devcontainer, mono-repo) | B-1~B-4 결정 사항 decision record 또는 STATUS 반영 완료 | 결정 문서 리뷰 |
 | PRE-C1 | P0 | Candidate | Phase 1 아키텍처 현황 분석 (레이어 일관성, common-core, gateway, 테스트 커버리지) | 분석 결과와 개선 필요 항목 목록 작성 | docs/backlog 또는 STATUS 반영 |
@@ -87,9 +88,10 @@ Last updated: 2026-05-12 (CI 통합 테스트 수정, trigger 분리, DR-009/010
 ## Next Actions
 
 1. **P2-006**: Testcontainers 도입 (DR-010 Accepted, 즉시 착수 가능)
-2. **DOC-001**: git 구성·브랜치 전략·flow 가이드 문서 생성
-3. PRE-B: 개발환경 전략 4개 결정 (B-1~B-4) — PRE-C2 전 선행 필요.
-4. PRE-C1: Phase 1 아키텍처 분석 → PRE-C2 backlog 업데이트.
-5. PRE-C2: DR-001 완료 + Phase 2 backlog 최종 확정.
-6. PRE-C3: Dockerfile 개선 (P1, C2 이후 병행 가능).
-7. P2-001 착수 (PRE-C2 완료 후).
+2. **HRN-001**: Stop hook 추가 — `/done` 없이 세션 종료 시 reminder (quick win, 즉시 착수 가능)
+3. **DOC-001**: git 구성·브랜치 전략·flow 가이드 문서 생성
+4. PRE-B: 개발환경 전략 4개 결정 (B-1~B-4) — PRE-C2 전 선행 필요.
+5. PRE-C1: Phase 1 아키텍처 분석 → PRE-C2 backlog 업데이트.
+6. PRE-C2: DR-001 완료 + Phase 2 backlog 최종 확정.
+7. PRE-C3: Dockerfile 개선 (P1, C2 이후 병행 가능).
+8. P2-001 착수 (PRE-C2 완료 후).
