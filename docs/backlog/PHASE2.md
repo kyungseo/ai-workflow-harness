@@ -36,8 +36,9 @@ Spring Boot MSA template의 Phase 2 backlog다.
 | HRN-002 | P1 | Candidate | Hard enforcement 강화 — git hook + PostToolUse 실실행 | git pre-commit hook이 STATUS.md 최근 수정 여부를 체크; PostToolUse hook이 Java 파일 변경 시 `./gradlew checkstyleMain` 실제 실행 | hook 트리거 확인 및 lint 결과 확인 |
 | HRN-003 | P2 | Candidate | WORKFLOW-MANUAL Quick Reference 카드 분리 | 핵심 내용을 1~2페이지로 압축한 Quick Ref 문서 생성; 일상 참조는 Quick Ref, 전문 참조는 WORKFLOW-MANUAL.md로 경로 명확화 | 문서 리뷰 및 WORKFLOW-MANUAL.md 링크 추가 |
 | HRN-004 | P3 | Candidate | prompts/ vs commands/ 중복 정리 — 역할 경계 명확화 | slash command로 커버되는 prompts 항목 정리; 각 경로의 사용 목적 구분 문서화 | `prompts/README.md` 업데이트 및 파일 목록 확인 |
+| HRN-005 | P2 | Candidate | 구조 변경 cascade 트리거 보완 — `docs/` 디렉토리 추가·삭제 자동 감지 | `docs/` 하위 디렉토리 추가·삭제 시 cascade 대상(PLAN.md §4, README.md, WORKFLOW-MANUAL.md §2·§3-0·§3)이 명시적으로 정의됨. 구현 방식은 착수 시 선택: (A) T5 발동 조건 확장 또는 (B) `/health` B영역 점검 항목 추가 | 신규 디렉토리 추가 시 cascade 누락 없이 업데이트됨 확인 |
 
-> **Harness Hardening (HRN-001~004):** Phase 2 개발을 진행하면서 Claude Code workflow harness의 실전 강도를 높이는 작업 묶음이다.
+> **Harness Hardening (HRN-001~005):** Phase 2 개발을 진행하면서 Claude Code workflow harness의 실전 강도를 높이는 작업 묶음이다.
 > 핵심 방향: ① 강제력 없는 "부탁"을 기술적 인포스먼트로 전환, ② 유지보수 부채 누적 방지, ③ 참조 문서 실사용률 제고.
 > Phase 2 실제 개발 중에 어디서 harness가 무너지는지 관찰하는 것(P0)이 HRN-002~004 우선순위 조정의 기준이 된다.
 
