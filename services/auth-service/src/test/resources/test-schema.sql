@@ -9,6 +9,9 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP    NOT NULL DEFAULT NOW()
 );
 
--- 통합 테스트용 계정 (BCrypt strength 12, 평문: user/user)
+-- 통합 테스트용 계정 (BCrypt strength 12)
+-- user/user, user2/user2 — 해시 출처: infra/docker/init-sql/02-data.sql
 INSERT INTO users (username, email, password, role) VALUES
-    ('user', 'user@example.com', '$2a$12$NW/D1g7XsE.ex5YVnzqlpeqzLtFU/jOLkYiOOYMVXF.SwWQhSsyt6', 'ROLE_USER');
+    ('user',  'user@example.com',  '$2a$12$NW/D1g7XsE.ex5YVnzqlpeqzLtFU/jOLkYiOOYMVXF.SwWQhSsyt6', 'ROLE_USER'),
+    ('user2', 'user2@example.com', '$2a$12$ZyNGRWFG9uS64brz2PGqseYTGuwwvQixTXXx21Mg5B191/65goO8m', 'ROLE_USER')
+ON CONFLICT DO NOTHING;

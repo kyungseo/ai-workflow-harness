@@ -11,5 +11,6 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- 통합 테스트용 계정 (BCrypt strength 12, 평문: Password1)
 INSERT INTO users (username, email, password, role) VALUES
-    ('testuser', 'test@example.com', '$2a$12$NW/D1g7XsE.ex5YVnzqlpeqzLtFU/jOLkYiOOYMVXF.SwWQhSsyt6', 'ROLE_USER'),
-    ('adminuser', 'admin@example.com', '$2a$12$NW/D1g7XsE.ex5YVnzqlpeqzLtFU/jOLkYiOOYMVXF.SwWQhSsyt6', 'ROLE_ADMIN');
+    ('testuser',  'test@example.com',  '$2a$12$NW/D1g7XsE.ex5YVnzqlpeqzLtFU/jOLkYiOOYMVXF.SwWQhSsyt6', 'ROLE_USER'),
+    ('adminuser', 'admin@example.com', '$2a$12$NW/D1g7XsE.ex5YVnzqlpeqzLtFU/jOLkYiOOYMVXF.SwWQhSsyt6', 'ROLE_ADMIN')
+ON CONFLICT DO NOTHING;
