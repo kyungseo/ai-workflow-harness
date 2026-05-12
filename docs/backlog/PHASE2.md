@@ -31,6 +31,7 @@ Spring Boot MSA template의 Phase 2 backlog다.
 | P2-013 | P3 | Candidate | resource/action 기반 RBAC 추가 | 현재 role model | permission model과 migration path 정의 | Authorization tests |
 | P2-014 | P3 | Candidate | multi-device session management UI 추가 | P2-003 | UI에서 session list 조회와 revoke가 안전하게 가능 | Frontend/manual flow test |
 | P2-015 | P3 | Candidate | message queue 도입 검토 | Event-driven use case | Kafka/RabbitMQ decision 기록 또는 보류 결정 | Decision review |
+| P2-016 | P3 | Candidate | `/health` 주간 자동 실행 설정 (CronCreate + PushNotification) | `.claude/commands/health.md` 구현 완료 | 매주 월요일 `/health` 자동 실행, 종합 상태(🟢/🟡/🔴)와 발견 항목 수가 PushNotification으로 전달됨 | 스케줄 실행 확인 및 알림 수신 확인 |
 
 ## Recommended Start Order
 
