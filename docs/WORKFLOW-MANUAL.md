@@ -339,7 +339,7 @@ flowchart LR
 | 5 | `docs/decisions/*.md` | 관련 DR이 있는 작업 시작; 아키텍처 결정이 구현에 직접 영향을 줄 때 | DR과 무관한 구현·테스트 작업 |
 | 6 | `docs/TODO/PHASE{n}/*.md` | 해당 Phase 세부 서브태스크 확인; 명시적 TODO block 참조 요청 | 일반 작업 진행 (backlog와 STATUS.md로 충분) |
 | 7 | `docs/archive/*.md` | 이전 Phase 구현 맥락 복원; "Phase {n}에서 어떻게 했는지" 명시적 요청 | 현재 Phase 작업 (과거 이력 불필요) |
-| 8 | `docs/PLAN.md` | PLAN-SUMMARY로 부족한 상세 근거; 아키텍처 변경 검토; Phase 계획 자체 수정 | 일반 구현·디버깅 (PLAN-SUMMARY로 충분) |
+| 8 | `docs/PLAN.md` | PLAN-SUMMARY로 부족한 상세 근거; 아키텍처 변경 검토; Phase 계획 자체 수정; **신규 서비스·모듈 생성; Cross-service interaction 구현; Infra·배포 방식 변경; DB schema 변경** | 일반 구현·디버깅 (PLAN-SUMMARY로 충분) |
 
 ---
 
@@ -351,8 +351,8 @@ Claude Code에서 `/명령명`으로 호출. 파일 위치: `.claude/commands/*.
 | --- | --- | --- |
 | `/start` | 세션 시작 시 | CLAUDE.md + STATUS.md 로드, 현재 상태 요약, 다음 작업 제안 |
 | `/pick` | 다음 작업을 선택할 때 | backlog 후보 비교, 우선순위 추천, 관련 DR 표시, 구현 전 승인 대기 |
-| `/work {ID}` | 특정 작업을 시작할 때 | 해당 backlog 항목 계획 수립, "진행할까요?" 후 대기, DR-worthy 결정 목록 제안 |
-| `/resume {ID}` | 중단된 작업을 재개할 때 | 파일 상태 vs STATUS.md 비교 후 계속 진행 |
+| `/work {ID}` | 특정 작업을 시작할 때 | PLAN.md 강제 로드 조건 체크 → 위험도 판단(L1/L2/L3) → 계획 수립 → "진행할까요?" 후 대기 → DR-worthy 결정 목록 제안 |
+| `/resume {ID}` | 중단된 작업을 재개할 때 | 파일 상태 vs STATUS.md 비교 → 불일치 시 코드를 진실로 삼아 수정 제안 → 남은 계획 제안 |
 | `/debug` | 버그 분석/수정 시 | 코드·로그·테스트 근거로 원인 파악, 최소 변경 계획 |
 | `/done` | 세션 종료 시 | 완료 작업, 변경 파일, 검증 결과, 리스크, 다음 세션 primer 요약, DR 검토 |
 | `/record-decision` | 기술 결정을 DR로 기록할 때 | 현재 대화의 확정 결정을 DR 초안으로 작성, 승인 후 파일 생성 |
@@ -397,6 +397,12 @@ Claude Code에서 `/명령명`으로 호출. 파일 위치: `.claude/commands/*.
 - 보안·운영 방식 변경 (ex. token 저장소 전략)
 - 되돌리기 비용이 Medium 이상인 결정
 - Open Question이 backlog 진행을 블로킹할 때
+
+**다음 카테고리는 DR 필수 (위 기준에 자동 해당):**
+- 외부 시스템 연동 방식 (ex. 메시지 큐, 외부 인증 서버)
+- 인증·보안 방식 변경 (ex. token storage 전환, 인증 흐름 변경)
+- 데이터 모델(스키마) 변경 (ex. 테이블 추가·삭제, 컬럼 타입 변경)
+- 인프라 구조 변경 (ex. K8s 배포 도구, DB per Service 전환)
 
 ### DR 생애주기
 
