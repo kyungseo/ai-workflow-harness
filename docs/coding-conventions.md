@@ -161,6 +161,12 @@ ORDER BY ${validatedColumn}  <!-- whitelist: created_at | updated_at -->
 통합 테스트는 외부 Docker 컨테이너에 의존한다 (`application-test.yml` → `localhost:5432`).
 Testcontainers는 선언되었으나 미사용. P2-006 결정 후 활성화 예정.
 
+### 탐색적 API 테스트 (*.http)
+
+`tests/http/*.http` — IntelliJ HTTP Client 형식의 탐색적 API 테스트.
+자동화 테스트를 대체하지 않으며, 새 API 추가 시 함께 작성한다.
+작성 절차: `docs/DEVELOPER-GUIDE.md` Step 7 참조.
+
 ---
 
 ## 8. Checkstyle 규칙
