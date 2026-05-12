@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.spring.boot) apply false
     alias(libs.plugins.spring.dependency.management) apply false
     java
+    checkstyle
 }
 
 allprojects {
@@ -11,9 +12,17 @@ allprojects {
     version = "0.0.1-SNAPSHOT"
 }
 
+checkstyle {
+    toolVersion = "10.21.0"
+    configFile = rootProject.file("config/checkstyle/checkstyle.xml")
+    isIgnoreFailures = false
+    maxWarnings = 0
+}
+
 subprojects {
     apply(plugin = "java")
     apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "checkstyle")
 
     java {
         toolchain {

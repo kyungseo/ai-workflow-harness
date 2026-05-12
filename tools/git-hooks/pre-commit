@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+# Runs Checkstyle before each commit.
+# Tests are intentionally excluded — they run in CI (see .github/workflows/ci.yml).
+#
+# First run may take 15-30s (Gradle cold start + Checkstyle download).
+# Subsequent runs: < 5s with Gradle daemon warm.
+
+echo "Running Checkstyle..."
+
+./gradlew checkstyleMain --daemon -q
+STATUS=$?
+
+if [ $STATUS -ne 0 ]; then
+    echo ""
+    echo "  Checkstyle failed. Fix violations before committing."
+    echo "  Details: ./gradlew checkstyleMain"
+    echo "  Report : build/reports/checkstyle/"
+    echo ""
+    exit 1
+fi
+
+echo "Checkstyle passed."

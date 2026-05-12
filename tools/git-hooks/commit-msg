@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+# Validates commit message format: Conventional Commits
+# https://www.conventionalcommits.org
+#
+# Valid types: feat fix docs style refactor chore config test perf ci revert
+# Format: type(optional-scope): subject
+
+TYPES="feat|fix|docs|style|refactor|chore|config|test|perf|ci|revert"
+MSG=$(cat "$1")
+
+if ! echo "$MSG" | grep -qE "^($TYPES)(\(.+\))?: .+"; then
+    echo ""
+    echo "  ERROR: Invalid commit message format."
+    echo ""
+    echo "  Expected : type(scope?): subject"
+    echo "  Example  : feat(auth): add refresh token rotation"
+    echo "  Types    : feat fix docs style refactor chore config test perf ci revert"
+    echo ""
+    exit 1
+fi

@@ -12,3 +12,5 @@ docs/STATUS.md와 docs/backlog/PHASE2.md를 확인하고 우선순위가 높은 
 
 최종적으로 지금 착수할 작업 1개를 추천해줘.
 구현은 내가 승인하기 전까지 시작하지 마.
+
+추천 작업에 관련 DR(`docs/decisions/`)이 있으면 해당 DR 번호와 현재 상태(Draft/Accepted)를 함께 표시해줘.

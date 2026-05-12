@@ -71,6 +71,58 @@ MUST NOT:
 - `docs/TODO/PHASE{n}/*.md`: Phase가 의도적으로 세부 작업 분해를 필요로 하거나 완료된 Phase 상세를 검토할 때만 사용
 - `docs/archive/*.md`: 완료된 Phase의 과거 이력
 
+### Decision Records 관리
+
+**DR-worthy 기준 (하나 이상 해당 시 기록):**
+- 도구·프레임워크 선택 (예: Checkstyle vs Spotless, Helm vs Kustomize)
+- 아키텍처 경계·정책 결정 (예: CI job 분리 구조, 파일 헤더 없음 정책)
+- 되돌리기 비용 Medium 이상
+- 두 개 이상 컴포넌트 또는 개발자에 영향
+
+**DR 불필요:**
+- 구현 세부사항 (변수명, 줄 순서)
+- 버그 수정
+- 명확한 범위 내 마이너 config 조정
+
+**트리거 (Claude가 능동적으로 제안하는 시점):**
+1. 계획 승인 직후 (구현 시작 전) — 해당 계획의 DR-worthy 결정 목록화 후 일괄 제안
+2. STATUS.md의 Open Question이 Closed로 전환될 때
+3. `/done` 커맨드 실행 시 (7번 단계)
+
+**묻는 형식 — 목록화 후 일괄 제안:**
+
+> 이번 작업에서 아래 결정이 확정되었습니다. DR로 기록해둘까요?
+> - DR-00X: 결정 제목 (reversal cost: Low/Medium/High)
+
+**미결 의사결정 발견 시 (계획 검토 중):**
+1. STATUS.md `Blockers And Open Questions`에 OQ-XXX 추가 제안
+2. `docs/decisions/DR-XXX.md` Draft 파일 생성 제안
+
+승인 없이 파일을 생성하지 않는다.
+
+**DR 삭제/통합/Superseded 절차:**
+
+DR이 삭제·통합·Superseded 처리될 때 아래 cascade 대상을 함께 업데이트한다.
+
+| 유형 | 판단 기준 |
+| --- | --- |
+| 삭제 후보 | Draft 장기 유지 + 연결 backlog 없음 + 관련 OQ Closed → 결정 자체가 불필요해진 것 |
+| 통합 후보 | 동일·유사 주제가 복수 DR로 분산 |
+| Superseded 후보 | 이후 결정으로 내용이 실질적으로 대체되었으나 status가 여전히 Accepted인 것 |
+
+cascade 업데이트 대상:
+
+| 파일 | 업데이트 내용 |
+| --- | --- |
+| `docs/STATUS.md` Recent Decisions | 해당 항목 제거 또는 수정 |
+| `docs/STATUS.md` Blockers/OQ | 연관 OQ Closed 처리 |
+| `docs/backlog/PHASE2.md` | DR 번호 참조 항목 수정 |
+| `docs/PLAN-SUMMARY.md` | 의사결정 기록 참조 범위 수정 |
+| 연관 DR 파일 | Superseded 처리 시 후속 DR 번호 명시 |
+
+승인 없이 파일을 수정·삭제하지 않는다.
+`/health` 커맨드 E영역에서 후보 식별 시, cascade 업데이트 대상 목록을 함께 제시한다.
+
 ### STATUS.md → Archive 이동
 
 **트리거 (다음 중 하나):**
