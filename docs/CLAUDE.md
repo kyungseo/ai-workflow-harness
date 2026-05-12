@@ -28,7 +28,7 @@ Phase와 무관하게 유지하여 다른 프로젝트에서도 같은 구조로
 | 5 | `docs/decisions/*.md` | 관련 DR이 있는 작업 시작 시; 아키텍처 결정이 구현에 직접 영향을 줄 때 |
 | 6 | `docs/TODO/PHASE{n}/*.md` | 해당 Phase 세부 작업 분해 확인 시; 명시적 TODO block 참조 요청 시 |
 | 7 | `docs/archive/*.md` | 이전 Phase 구현 맥락 복원 필요 시; 명시적으로 "Phase {n}에서 어떻게 했는지" 요청 시 |
-| 8 | `docs/PLAN.md` | PLAN-SUMMARY로 부족한 상세 근거 필요 시; 아키텍처 변경 검토 시; Phase 계획 자체 수정 시 |
+| 8 | `docs/PLAN.md` | PLAN-SUMMARY로 부족한 상세 근거 필요 시; 아키텍처 변경 검토 시; Phase 계획 자체 수정 시; **신규 서비스·모듈 생성 시; Cross-service interaction 구현 시; Infra·배포 방식 변경 시; DB schema 변경 시** |
 
 ## Session Startup
 
@@ -71,6 +71,20 @@ MUST NOT:
 - `docs/TODO/PHASE{n}/*.md`: Phase가 의도적으로 세부 작업 분해를 필요로 하거나 완료된 Phase 상세를 검토할 때만 사용
 - `docs/archive/*.md`: 완료된 Phase의 과거 이력
 
+### STATUS.md 안전 업데이트 규칙
+
+MUST:
+- STATUS.md 수정 전 반드시 최신 내용 재-read — 세션 중 다른 변경이 반영되었을 수 있음
+- 전체 overwrite 금지 — 관련 항목(행)만 수정
+- 변경 범위 밖 내용은 그대로 유지
+
+### 실패 복구 규칙
+
+STATUS.md가 실제 코드·파일 상태와 불일치할 경우:
+- **코드를 진실로 삼는다** — STATUS.md가 아닌 실제 파일 상태가 기준
+- 불일치 내용을 보고하고 STATUS.md 수정을 제안한다. 직접 수정은 승인 후 진행
+- 실패한 작업은 `Failed`로 기록하고, 재시도는 신규 작업 항목으로 분리
+
 ### Decision Records 관리
 
 **DR-worthy 기준 (하나 이상 해당 시 기록):**
@@ -78,6 +92,12 @@ MUST NOT:
 - 아키텍처 경계·정책 결정 (예: CI job 분리 구조, 파일 헤더 없음 정책)
 - 되돌리기 비용 Medium 이상
 - 두 개 이상 컴포넌트 또는 개발자에 영향
+
+**다음 카테고리는 위 기준에 해당하므로 DR 필수:**
+- 외부 시스템 연동 방식 (예: 메시지 큐 도입, 외부 인증 서버 연동)
+- 인증·보안 방식 변경 (예: token storage 전환, 인증 흐름 변경)
+- 데이터 모델(스키마) 변경 (예: 테이블 추가·삭제, 컬럼 타입 변경)
+- 인프라 구조 변경 (예: K8s 배포 도구 선택, DB per Service 전환)
 
 **DR 불필요:**
 - 구현 세부사항 (변수명, 줄 순서)
