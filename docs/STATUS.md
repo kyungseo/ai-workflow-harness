@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-12 (CI 통합 테스트 수정, trigger 분리, DR-009/010 기록, Testcontainers 방향 확정)
+Last updated: 2026-05-13 (WORKFLOW-MANUAL.md 종합 보완, Harness Hardening 백로그 등록 HRN-001~005, docs/retrospectives/ 신설)
 
 ## Current State
 
