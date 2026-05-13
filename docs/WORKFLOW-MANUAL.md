@@ -104,6 +104,7 @@ graph TD
 | --- | --- |
 | 개발자 | `ARCHITECTURE.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`, `DOCKERFILE-GUIDE.md`, `WORKFLOW-MANUAL.md`, `PLAN.md` |
 | AI 운영 (Claude) | `CLAUDE.md`, `STATUS.md`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `archive/`, `TODO/` |
+| ※ AI 운영 (Cursor) | `.cursor/rules/*.mdc` 참고 (9개 mdc 구성) |
 | 개발자 + AI 겸용 | `PLAN-SUMMARY.md` |
 
 **Claude 컨텍스트 로드 방식**
@@ -577,8 +578,7 @@ prompts/
 ├── 00-generic-task.prompt.md    ← 범용 태스크
 ├── 01~20-*.prompt.md            ← 상황별 재사용 프롬프트
 ├── 21-create-layer.prompt.md    ← Spring Boot 레이어 생성
-├── 22-minimal-diff.prompt.md    ← 최소 변경 원칙
-└── bak/                         ← 백업 (참조용)
+└── 22-minimal-diff.prompt.md    ← 최소 변경 원칙
 ```
 
 ### 빠른 선택 가이드

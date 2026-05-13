@@ -72,4 +72,4 @@
 | Phase 2 backlog | `docs/backlog/PHASE2.md` |
 | 의사결정 기록 | `docs/decisions/DR-001~010.md` |
 | 코드 컨벤션 SSOT | `docs/CODING-CONVENTIONS.md` |
-| 전체 기술 근거 | `docs/PLAN.md` (688줄, 필요시만 로드) |
+| 전체 기술 근거 | `docs/PLAN.md` (필요시만 로드) |

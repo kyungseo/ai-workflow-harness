@@ -312,6 +312,7 @@ base-msa-template/
 ├── .editorconfig             # IDE 공통 스타일 (4-space, UTF-8, LF, 120자)
 ├── .env.example
 ├── .devcontainer/
+├── CLAUDE.md                 # Claude와의 공통 작업 계약
 └── build.gradle.kts          # 루트 빌드 파일
 ```
 
@@ -321,6 +322,7 @@ base-msa-template/
 |------|------|
 | 개발자 | `ARCHITECTURE.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`, `DOCKERFILE-GUIDE.md`, `WORKFLOW-MANUAL.md`, `PLAN.md` |
 | AI 운영 (Claude) | `CLAUDE.md`, `STATUS.md`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `archive/`, `TODO/` |
+| ※ AI 운영 (Cursor) | `.cursor/rules/*.mdc` 참고 (9개 mdc 구성) |
 | 개발자 + AI 겸용 | `PLAN-SUMMARY.md` (기술 스택·포트 요약, AI 기본 참조 + 개발자 빠른 조회) |
 
 ---

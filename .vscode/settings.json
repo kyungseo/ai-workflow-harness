@@ -48,5 +48,37 @@
     ],
     "deny": ["Bash(rm -rf /:*)", "Bash(sudo:*)"]
   },
+
+  // 임시 블럭 시작 (2026-05-14) ========
+
+  // TODO: 문제 장식 및 마크다운 린트 비활성화는 다시 활성화 해야 함.
+  // 문제 장식 비활성화 (git 변경을 표시해주는 것과 헛깔림)
+  "problems.decorations.enabled": false,
+
+  // 마크다운 린트 비활성화
+  "markdownlint.enable": false,
+  "markdownlint.run": "onSave", // 타이핑 시 실시간 검사 차단
+  "markdownlint.config": {
+    "default": false // 모든 마크다운린트 규칙을 통째로 끔
+  },
+
+  // 코드를 타이핑할 때 AI가 흐릿한 글씨로 자동 제안하는 기능 끄기
+  //"editor.inlineSuggest.enabled": false,
+  //"github.copilot.editor.enableAutoCompletions": false,
+
+  // 타사 AI(Claude 등)가 생성한 로컬 세션을 Copilot에 동기화하지 않도록 차단하려면 다음 설정을 추가
+  //"github.copilot.chat.claudeAgent.enabled": false,
+
+  // Copilot 자동완성 및 OpenAI ChatGPT 인라인 제안 비활성화
+  //  - VS Code 자체 인라인 제안의 수동 트리거는 Option+Space로 유지
+  //  - Copilt 제안의 수동 트리거는 Option+\(주)로 유지 (보조는 CMD+Enter)
+  //  - OpenAI ChatGPT 인라인 제안의 수동 트리거는 Option+Enter로 유지 (CMD+I로도 가능)
+  //"editor.inlineSuggest.enabled": false, // VS Code 자체의 인라인 제안 기능 끄기
+  //"github.copilot.editor.enableAutoCompletions": false, // GitHub Copilot 자동 완성 끄기
+  //"openai.chatgpt.inlineSuggestions": false, // OpenAI ChatGPT 인라인 제안 끄기
+  //""openai.chatgpt.inlineSuggestions": false, // OpenAI ChatGPT 인라인 제안 끄기
+
+  // ======== 임시 블럭 끝
+
   "java.compile.nullAnalysis.mode": "automatic"
 }

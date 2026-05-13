@@ -15,7 +15,7 @@ Phase와 무관하게 유지하여 다른 프로젝트에서도 같은 구조로
 5. `docs/backlog/*.md` 또는 `docs/decisions/*.md` — 후보 작업과 미결정 사항
 6. `docs/TODO/PHASE{n}/*.md` — 완료된 Phase의 상세 작업 분해 또는 명시적으로 지정된 세부 작업 목록
 7. `docs/archive/*.md` — 과거 이력 참조
-8. `docs/PLAN.md` — 전체 기술 근거 (688줄, 상세 검토가 필요할 때만 로드)
+8. `docs/PLAN.md` — 전체 기술 근거 (상세 검토가 필요할 때만 로드)
 
 ### Context 로드 조건
 
@@ -324,4 +324,4 @@ MUST:
 
 NEVER:
 
-- 같은 긴 규칙 블록을 `CLAUDE.md`, `docs/CLAUDE.md`, `.claude/system.md`에 중복 작성하지 않는다.
+- 같은 긴 규칙 블록을 `CLAUDE.md`, `docs/CLAUDE.md`에 중복 작성하지 않는다.

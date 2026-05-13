@@ -1,4 +1,12 @@
-1. 냉정한 재평가 (타겟: Claude Code 숙련자)
+
+temp 디렉토리 하위의 다음 세 파일은 최초 ChatGPT의 검토 의견이다. 아래는 개선 이후 다시 받아본 답변
+* workflow_review-01.md
+* workflow_review-02.md
+* workflow_review-03.md
+
+---
+
+1냉정한 재평가 (타겟: Claude Code 숙련자)
 
 결론
 
