@@ -577,8 +577,7 @@ prompts/
 ├── 00-generic-task.prompt.md    ← 범용 태스크
 ├── 01~20-*.prompt.md            ← 상황별 재사용 프롬프트
 ├── 21-create-layer.prompt.md    ← Spring Boot 레이어 생성
-├── 22-minimal-diff.prompt.md    ← 최소 변경 원칙
-└── bak/                         ← 백업 (참조용)
+└── 22-minimal-diff.prompt.md    ← 최소 변경 원칙
 ```
 
 ### 빠른 선택 가이드
