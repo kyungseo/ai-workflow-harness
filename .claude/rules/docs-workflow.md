@@ -18,4 +18,4 @@ MUST:
 NEVER:
 
 - Turn `docs/STATUS.md` into a full changelog.
-- Duplicate long instruction blocks across `CLAUDE.md`, `docs/CLAUDE.md`, and `.claude/system.md`.
+- Duplicate long instruction blocks across `CLAUDE.md`, `docs/CLAUDE.md`.

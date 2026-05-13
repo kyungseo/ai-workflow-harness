@@ -324,4 +324,4 @@ MUST:
 
 NEVER:
 
-- 같은 긴 규칙 블록을 `CLAUDE.md`, `docs/CLAUDE.md`, `.claude/system.md`에 중복 작성하지 않는다.
+- 같은 긴 규칙 블록을 `CLAUDE.md`, `docs/CLAUDE.md`에 중복 작성하지 않는다.
