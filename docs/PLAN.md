@@ -614,8 +614,6 @@ K8s       : http://{service-name}:{port}     (K8s DNS, 환경변수로 주입)
 
 ---
 
----
-
 ## 21. 개발 도구 및 AI Workflow 구조
 
 Phase 2부터 Claude Code / Cursor 기반 AI workflow를 적극 활용한다.
@@ -673,8 +671,6 @@ Phase 2부터 Claude Code / Cursor 기반 AI workflow를 적극 활용한다.
 | DR-008 | docs/ 파일명 대소문자 표준 | Accepted |
 | DR-009 | CI trigger 분리 (develop=lint, PR to main=전체) | Accepted |
 | DR-010 | 통합 테스트 인프라 — Testcontainers 채택 | Accepted |
-
----
 
 ---
 

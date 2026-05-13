@@ -104,6 +104,7 @@ graph TD
 | --- | --- |
 | 개발자 | `ARCHITECTURE.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`, `DOCKERFILE-GUIDE.md`, `WORKFLOW-MANUAL.md`, `PLAN.md` |
 | AI 운영 (Claude) | `CLAUDE.md`, `STATUS.md`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `archive/`, `TODO/` |
+| ※ AI 운영 (Cursor) | `.cursor/rules/*.mdc` 참고 (9개 mdc 구성) |
 | 개발자 + AI 겸용 | `PLAN-SUMMARY.md` |
 
 **Claude 컨텍스트 로드 방식**
