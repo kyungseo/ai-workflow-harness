@@ -3,8 +3,9 @@
 ## 실행 원칙
 
 - **구현 금지**: 보고와 제안만 한다. 수정·생성·커밋은 사용자 승인 후에만 진행한다.
+- **STATUS 보호**: `docs/STATUS.md` 변경 필요가 발견되면 즉시 수정하지 말고 `STATUS Update Proposal`로 보고한다.
 - **컨텍스트 절약**: `CLAUDE.md`와 `docs/CLAUDE.md`는 세션 시작 시 자동 로드됨 — 재읽기 금지.
-  파일 목록·상태 확인은 full read 대신 `ls`, `grep` 명령을 우선 사용한다.
+  파일 목록·상태 확인은 full read 대신 `ls`, `rg` 명령을 우선 사용한다.
 - **모드**:
   - (없음) → Quick 모드: A+B+E 영역, ~10개 타깃 읽기, 작업 블록 시작 전 사용
   - `--full` → 전체 모드: A+B+E+F+C+D 영역, 분기별·Phase 전환 전 사용
@@ -22,7 +23,7 @@ ls .claude/rules/       # 파일 수·이름 확인
 목록 이상 시에만 해당 파일 내용 확인. 정상이면 전체 로드하지 않는다.
 
 **Phase 3 — 문서 파악 (섹션 단위)**
-`docs/WORKFLOW-MANUAL.md` (Section 3·5·6만) → `README.md` (구조 블록·AI workflow 섹션만)
+`docs/HARNESS-PROTOCOL.md` (문서 지도·아이템 위치 결정표만) → `README.md` (구조 블록·AI workflow 섹션만)
 → `docs/PLAN-SUMMARY.md` (기술 스택 테이블만)
 
 **Phase 4 — 정렬 파악 (--full 시에만)**
@@ -31,12 +32,12 @@ ls .claude/rules/       # 파일 수·이름 확인
 **Phase 5 — 현행화 확인 (--full, F영역 전용)**
 ```bash
 # 최근 30일 변경된 구현 파일 목록
-git log --since="30 days ago" --name-only --format="" | sort -u | grep -E "\.(java|kts|yml|xml|sh)$"
+git log --since="30 days ago" --name-only --format="" | sort -u | rg "\.(java|kts|yml|xml|sh)$"
 ```
 변경 파일 목록을 기반으로 관련 문서만 선택적 확인.
 `docs/decisions/DR-*.md` 상태 확인:
 ```bash
-grep -h "^# \|^Status:" docs/decisions/DR-*.md
+rg -n "^# |^Status:" docs/decisions
 ```
 제목과 Status 필드만 추출. 내용 읽기는 통합 후보로 의심되는 쌍에만 한정.
 
@@ -50,11 +51,11 @@ grep -h "^# \|^Status:" docs/decisions/DR-*.md
 - `docs/CLAUDE.md` 워크플로우 기술 ↔ 실제 command 구현 사이 gap
   (이미 컨텍스트에 있는 docs/CLAUDE.md 기준으로 확인)
 - STATUS.md Active Work 항목: Done Criteria + Verification 모두 존재하는가
-- DR 생애주기 양방향: STATUS.md Recent Decisions ↔ grep 결과의 DR Status 일치
+- DR 생애주기 양방향: STATUS.md Recent Decisions ↔ `rg` 결과의 DR Status 일치
 
 ### B. 문서 상호 정합성
 
-- WORKFLOW-MANUAL.md command·rule 목록 ↔ Phase 2 ls 결과 일치
+- HARNESS-PROTOCOL.md와 `docs/harness-protocol/` 상세 문서 링크 ↔ 실제 파일 목록 일치
 - README.md 프로젝트 구조 블록 ↔ 실제 디렉토리 구조
   ```bash
   ls -d */ .github .claude .cursor .devcontainer 2>/dev/null
@@ -83,8 +84,9 @@ grep -h "^# \|^Status:" docs/decisions/DR-*.md
 ### E. 백로그/DR 위생
 
 - STATUS.md Active Work: Verification 완료되었으나 Done 처리가 지연된 항목
-- `docs/backlog/PHASE2.md`: 선행 조건이 이미 충족된 항목, 범위·우선순위 재검토 필요 항목
-- DR 상태 확인 (Phase 5 grep 결과 재사용):
+- `docs/backlog/PHASE2.md`: product/preparation 항목 중 선행 조건이 이미 충족된 항목, 범위·우선순위 재검토 필요 항목
+- `docs/backlog/HARNESS.md`: harness 항목 중 완료되었거나 새 상태 머신과 충돌하는 항목, hard enforcement 후보
+- DR 상태 확인 (Phase 5 `rg` 결과 재사용):
   - Draft 상태이나 결정이 실질적으로 완료된 DR → Accepted 처리 필요
   - STATUS.md Blockers/OQ 중 이미 해소되었으나 Closed 처리 누락
   - DR ↔ backlog 연결: `Linked Backlog Items` 섹션 누락·오기
@@ -95,7 +97,8 @@ grep -h "^# \|^Status:" docs/decisions/DR-*.md
   - 통합 후보: 동일·유사 주제 복수 DR (1단계 필터 후 확인)
   - Superseded 후보: 이후 결정으로 실질적으로 대체되었으나 Accepted 유지
   - 후보 발견 시, cascade 업데이트 대상을 함께 제시:
-    `docs/STATUS.md` / `docs/backlog/PHASE2.md` DR 참조 항목 / `docs/PLAN-SUMMARY.md` DR 범위 / 연관 DR 파일
+    `docs/STATUS.md` / 관련 backlog(`PHASE2.md` 또는 `HARNESS.md`) DR 참조 항목 /
+    `docs/PLAN-SUMMARY.md` DR 범위 / 연관 DR 파일
 
 ### F. 구현 반영 현행화 (--full)
 
@@ -106,7 +109,7 @@ Phase 5의 git log 결과를 기준으로, 변경된 구현 파일 유형별로 
 | `*.java`, `*.kts` (새 모듈·레이어) | `README.md` 기술 스택, `PLAN-SUMMARY.md` |
 | `Dockerfile`, `docker-compose.yml` | `DOCKERFILE-GUIDE.md`, `README.md` 셋업 |
 | `.github/workflows/*.yml` | `README.md` CI 항목, `DEVELOPER-GUIDE.md` CI 섹션 |
-| `.claude/commands/*.md` (신규) | `WORKFLOW-MANUAL.md` 목록, `README.md` AI workflow 섹션 |
+| `.claude/commands/*.md` (신규) | `HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/`, `README.md` AI workflow 섹션 |
 | `config/checkstyle/**`, `.editorconfig` | `DEVELOPER-GUIDE.md` 코드 컨벤션 섹션 |
 | `docs/decisions/DR-*.md` (신규 Accepted) | STATUS.md Recent Decisions, 연관 backlog Done Criteria |
 
@@ -119,7 +122,7 @@ STATUS.md Recent Decisions는 **최근 8개 항목만** 대상으로 한다.
 
 `docs/PLAN.md`는 제목·섹션 헤더 수준만 확인한다:
 ```bash
-grep "^## \|^### " docs/PLAN.md
+rg -n "^## |^### " docs/PLAN.md
 ```
 
 ## 보고 형식
@@ -146,4 +149,5 @@ P1 (계획 필요):
 P2 (선택적 개선):
 ```
 
+STATUS.md 변경이 필요한 발견 항목은 `STATUS Update Proposal` 섹션으로 별도 제안한다.
 보고 후 "승인하신 항목부터 진행할까요?"로 끝낸다.

@@ -31,7 +31,7 @@ ENTRYPOINT ["sh", "-c", "exec java ${JAVA_OPTS} -XX:MaxRAMPercentage=75.0 -Djava
 
 ---
 
-# 1. 전체 구조 이해
+## 1. 전체 구조 이해
 
 ```dockerfile
 FROM gradle:8-jdk21 AS builder   ← 빌드용 컨테이너 
@@ -45,9 +45,9 @@ FROM eclipse-temurin:21-jre-jammy ← 실행용 컨테이너
 
 ---
 
-# 2. 빌드 스테이지 (builder)
+## 2. 빌드 스테이지 (builder)
 
-## 2.1 베이스 이미지
+### 2.1 베이스 이미지
 
 ```dockerfile
 FROM gradle:8-jdk21 AS builder 
@@ -59,7 +59,7 @@ FROM gradle:8-jdk21 AS builder
 
 ---
 
-## 2.2 작업 디렉토리 설정
+### 2.2 작업 디렉토리 설정
 
 ```dockerfile
 WORKDIR /app 
@@ -69,7 +69,7 @@ WORKDIR /app
 
 ---
 
-## 2.3 소스 복사
+### 2.3 소스 복사
 
 ```dockerfile
 COPY . . 
@@ -82,9 +82,11 @@ COPY . .
 
 ---
 
-## 2.4 Gradle 빌드
+### 2.4 Gradle 빌드
 
-dockerfile RUN gradle :gateway:api-gateway:bootJar --no-daemon 
+```dockerfile
+RUN gradle :gateway:api-gateway:bootJar --no-daemon
+```
 
 👉 의미:
 - 특정 모듈만 빌드
@@ -92,7 +94,7 @@ dockerfile RUN gradle :gateway:api-gateway:bootJar --no-daemon
 
 ---
 
-## 2.5 실행 JAR 추출
+### 2.5 실행 JAR 추출
 
 ```dockerfile
 cp $(find gateway/api-gateway/build/libs -name "*.jar" | grep -v plain) app.jar 
@@ -112,9 +114,9 @@ xxx-plain.jar  ← 일반 jar (의존성 없음)
 
 ---
 
-# 3. 실행 스테이지 (runtime)
+## 3. 실행 스테이지 (runtime)
 
-## 3.1 베이스 이미지
+### 3.1 베이스 이미지
 
 ```dockerfile
 FROM eclipse-temurin:21-jre-jammy 
@@ -127,7 +129,7 @@ FROM eclipse-temurin:21-jre-jammy
 
 ---
 
-## 3.2 타임존 설정
+### 3.2 타임존 설정
 
 ```dockerfile
 RUN apt-get update && apt-get install -y tzdata 
@@ -161,7 +163,7 @@ rm -rf /var/lib/apt/lists/*
 
 ---
 
-## 3.3 환경 변수 설정
+### 3.3 환경 변수 설정
 
 ```dockerfile
 ENV TZ=Asia/Seoul 
@@ -171,7 +173,7 @@ ENV TZ=Asia/Seoul
 
 ---
 
-## 3.4 작업 디렉토리
+### 3.4 작업 디렉토리
 
 ```dockerfile
 WORKDIR /app 
@@ -179,7 +181,7 @@ WORKDIR /app
 
 ---
 
-## 3.5 빌드 결과 복사
+### 3.5 빌드 결과 복사
 
 ```dockerfile
 COPY --from=builder /app/app.jar app.jar 
@@ -191,7 +193,7 @@ COPY --from=builder /app/app.jar app.jar
 
 ---
 
-# 4. 실행 명령 (ENTRYPOINT)
+## 4. 실행 명령 (ENTRYPOINT)
 
 ```dockerfile
 ENTRYPOINT ["sh", "-c", "exec java ${JAVA_OPTS} -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom -jar app.jar"] 
@@ -199,7 +201,7 @@ ENTRYPOINT ["sh", "-c", "exec java ${JAVA_OPTS} -XX:MaxRAMPercentage=75.0 -Djava
 
 ---
 
-## 4.1 exec 사용 이유
+### 4.1 exec 사용 이유
 
 ```bash
 exec java ... 
@@ -211,7 +213,7 @@ exec java ...
 
 ---
 
-## 4.2 JAVA_OPTS
+### 4.2 JAVA_OPTS
 
 ```bash
 ${JAVA_OPTS} 
@@ -227,7 +229,7 @@ ${JAVA_OPTS}
 
 ---
 
-## 4.3 메모리 설정
+### 4.3 메모리 설정
 
 ```bash
 -XX:MaxRAMPercentage=75.0 
@@ -241,7 +243,7 @@ ${JAVA_OPTS}
 
 ---
 
-## 4.4 난수 생성 최적화
+### 4.4 난수 생성 최적화
 
 ```bash
 -Djava.security.egd=file:/dev/./urandom 
@@ -253,23 +255,23 @@ ${JAVA_OPTS}
 
 ---
 
-# 5. 왜 멀티 스테이지를 쓰는가
+## 5. 왜 멀티 스테이지를 쓰는가
 
-## ❌ 단일 스테이지
+### 단일 스테이지
 
 - Gradle + 소스 + build tool 전부 포함
 - 이미지 매우 큼
 
 ---
 
-## ✔ 멀티 스테이지
+### 멀티 스테이지
 
 - 빌드 결과만 포함
 - 이미지 작고 안전
 
 ---
 
-# 6. 빌드 방법
+## 6. 빌드 방법
 
 ```bash
 docker build -f gateway/api-gateway/Dockerfile -t api-gateway . 
@@ -282,17 +284,17 @@ docker build -f gateway/api-gateway/Dockerfile -t api-gateway .
 
 ---
 
-# 7. 실행 방법
+## 7. 실행 방법
 
 ```bash
-docker run -p 8080:8080 api-gateway 
+docker run -p 8090:8090 api-gateway
 ```
 
 ---
 
-# 8. 실무 팁 (중요)
+## 8. 실무 팁
 
-## ✔ Gradle 캐시 최적화 (개선 가능)
+### Gradle 캐시 최적화 (개선 가능)
 
 현재:
 
@@ -316,7 +318,7 @@ COPY . .
 
 ---
 
-## ✔ JVM 옵션 외부화
+### JVM 옵션 외부화
 
 ```bash
 JAVA_OPTS="-Xms512m -Xmx1g" 
@@ -324,11 +326,11 @@ JAVA_OPTS="-Xms512m -Xmx1g"
 
 ---
 
-## ✔ Health Check 추가 (추천)
+### Health Check 추가 (추천)
 
 ---
 
-# 9. 구조 요약
+## 9. 구조 요약
 
 ```text
 [ Builder Stage ]
@@ -344,7 +346,7 @@ JAVA_OPTS="-Xms512m -Xmx1g"
 
 ---
 
-# 10. 한 줄 결론
+## 10. 한 줄 결론
 
 > 이 Dockerfile은  
 > “빌드는 무겁게, 실행은 가볍게”라는 컨테이너 설계 원칙을 정확히 따르는 구조다.
@@ -355,3 +357,5 @@ JAVA_OPTS="-Xms512m -Xmx1g"
 - Layered JAR 적용 (Docker build cache 최적화)
 - Distroless 이미지 적용
 - Kubernetes readiness/liveness 연계
+
+관련 작업 후보: `docs/backlog/PHASE2.md`의 `PRE-C3`.

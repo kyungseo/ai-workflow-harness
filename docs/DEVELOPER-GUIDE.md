@@ -2,6 +2,7 @@
 
 > 대상: 이 템플릿을 처음 접하는 개발자 또는 신규 서비스를 추가하려는 팀원.  
 > 구성: Part 1 (아키텍처 요소 상세) + Part 2 (개발 절차 가이드)
+> 전체 구조 다이어그램의 기준 문서는 [`ARCHITECTURE.md`](ARCHITECTURE.md)이며, 이 문서는 개발 절차와 작업 예시를 중심으로 설명한다.
 
 ---
 
@@ -515,7 +516,7 @@ SPRING_PROFILES_ACTIVE=local ./gradlew :services:user-service:bootRun
 ./gradlew check            # Checkstyle + test 전부
 ```
 
-CI는 PR 생성 시 `lint → test` 순서로 자동 실행된다 (`.github/workflows/ci.yml`).
+CI는 `develop` push에서 Checkstyle을 실행하고, `main` push 또는 `main` 대상 PR에서 `lint → test` 순서로 실행된다 (`.github/workflows/ci.yml`).
 lint 실패 시 Report: `build/reports/checkstyle/main.html` 또는 GitHub Actions 로그 확인.
 
 상세 컨벤션 규칙: [`docs/CODING-CONVENTIONS.md`](CODING-CONVENTIONS.md)
@@ -855,9 +856,8 @@ spring:
     password: ${DB_PASSWORD}
 ```
 
-> **Testcontainers 미사용 이유**:  
-> Docker Desktop 환경에서 Testcontainers와 호환 문제 발생 확인.  
-> 통합 테스트는 `make run-local`로 기동한 로컬 컨테이너를 직접 사용한다.
+> **현재 상태**: DR-010에서 Testcontainers 채택은 확정되었지만, 실제 전환은 `docs/backlog/PHASE2.md`의 `P2-006`에서 수행한다.<br>
+> 전환 전까지 통합 테스트는 `make run-local`로 기동한 로컬 컨테이너를 직접 사용한다.
 
 ---
 

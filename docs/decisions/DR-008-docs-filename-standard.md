@@ -13,7 +13,9 @@ Status: Accepted
 
 | 위치 | 표준 | 예시 |
 |------|------|------|
-| `docs/` 루트, `docs/backlog/`, `docs/decisions/` | UPPERCASE-HYPHENATED | `CODING-CONVENTIONS.md`, `PHASE2.md`, `DR-008-*.md` |
+| `docs/` 루트, `docs/backlog/`, `docs/decisions/` | UPPERCASE-HYPHENATED | `HARNESS-PROTOCOL.md`, `PHASE2.md`, `DR-008-*.md` |
+| `docs/TODO/PHASE{n}/` | `{BACKLOG-ID}-{lowercase-topic}.md` | `P2-006-testcontainers.md`, `PRE-C1-architecture-audit.md` |
+| `docs/harness-protocol/` | `{NN}-{lowercase-topic}.md` | `03-work-items-and-naming.md` |
 | `docs/archive/` | lowercase-hyphenated | `phase1-status.md`, `phase1-plan.md` |
 
 ## Options Considered
@@ -34,6 +36,8 @@ Status: Accepted
 ## Consequences
 
 - 신규 `docs/` 루트 파일, `backlog/`, `decisions/` 파일은 UPPERCASE-HYPHENATED로 작성한다.
+- 신규 `docs/TODO/PHASE{n}/` 파일은 backlog ID 기반 파일명을 사용한다.
+- 신규 `docs/harness-protocol/` 파일은 번호 prefix가 있는 lowercase-hyphenated 파일명을 사용한다.
 - `docs/archive/` 자동 생성 파일은 기존 lowercase-hyphenated 유지.
 - `docs/coding-conventions.md` → `docs/CODING-CONVENTIONS.md` 이름 변경 완료 (참조 8곳 업데이트).
 - `docs/decisions/PHASE2-BACKLOG.md` (pointer 파일, 참조 없음) 삭제 완료.

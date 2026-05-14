@@ -1,4 +1,5 @@
-# 이 파일에 등록된 파일들은 Claude 스캔 시 제외된다. 
+# 이 파일에 등록된 파일들은 Claude 스캔 시 제외된다.
+# 민감 파일 접근 차단의 강제 기준은 .claude/settings.json permissions.deny다.
 
 # [Build artifacts] AI가 컴파일된 결과물을 읽지 않도록 제외
 build/
@@ -9,6 +10,11 @@ bin/
 .env
 .env.*
 !.env.example
+.claude/settings.local.json
+secrets/
+**/*.key
+**/*.pem
+**/*.crt
 
 # [Binaries] 텍스트가 아닌 파일은 AI가 해석할 수 없으므로 제외
 *.jar
@@ -25,9 +31,6 @@ bin/
 *.ico
 *.mp4
 *.pdf
-*.key
-*.pem
-*.crt
 
 # [VCS / IDE]
 # Claude 스캔에서는 Cursor 내부 설정을 기본 제외한다.

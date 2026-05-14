@@ -15,7 +15,7 @@ MUST:
 - Wait for explicit user approval before implementation when the work is broad, risky, or changes agreed scope.
 - Keep changes surgical, minimal, and reversible.
 - Verify with the narrowest command or scenario that proves the change.
-- Update `docs/STATUS.md` when task state, checkpoints, blockers, or next actions change.
+- Propose a `docs/STATUS.md` update when task state, checkpoints, blockers, or next actions change, and edit it only after explicit user approval.
 
 NEVER:
 
@@ -56,7 +56,9 @@ MUST:
 - Treat context as a limited resource.
 - Use `docs/STATUS.md` as the active state index.
 - Use `docs/PLAN-SUMMARY.md` as the default architecture reference; load `docs/PLAN.md` only when full technical detail is needed.
-- Treat `docs/backlog/*.md` and `docs/archive/*.md` as context management documents, not as a replacement for implementation and verification.
+- Use `docs/backlog/PHASE2.md` for product or Phase 2 preparation candidates.
+- Use `docs/backlog/HARNESS.md` for harness, command/rule, or workflow hardening candidates.
+- Treat backlog and archive files as context management documents, not as a replacement for implementation and verification.
 - Use archive documents only when historical detail is required.
 
 NEVER load long historical documents by default.

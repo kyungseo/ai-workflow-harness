@@ -3,7 +3,7 @@
 > 이 문서는 base-msa-template의 코딩 컨벤션 SSOT(Single Source of Truth)다.
 > AI rules(`.claude/rules/`, `.cursor/rules/`)는 여기서 파생된 imperative 형태다. 중복 작성하지 않는다.
 >
-> 최종 업데이트: 2026-05-12
+> 최종 업데이트: 2026-05-14
 
 ---
 
@@ -24,7 +24,7 @@ io.kyungseo.msa.{service}.{layer}
 | `mapper` | MyBatis 인터페이스 |
 | `filter` | Servlet/WebFlux 필터 |
 | `config` | Spring 설정 |
-| `exception` | 예외 코드 (ErrorCode Enum) |
+| `exception` | 예외 코드 (`ErrorCode` interface 구현 enum) |
 
 공통 모듈: `io.kyungseo.msa.common.*`
 - `common-core`는 **서비스 간 공유 가능한** 코드만 포함한다 (ApiResponse, BusinessException, GlobalExceptionHandler, MdcFilter, JwtProperties).
@@ -63,7 +63,7 @@ Controller → Service → Mapper(Repository)
 
 ### 파일 헤더
 
-없음. `LICENSE` 파일이 전체 프로젝트의 라이선스를 커버한다. (DR-004 참조)
+없음. `LICENSE.txt` 파일이 전체 프로젝트의 라이선스를 커버한다. (DR-004 참조)
 
 ### 클래스 Javadoc
 
@@ -158,8 +158,8 @@ ORDER BY ${validatedColumn}  <!-- whitelist: created_at | updated_at -->
 
 ### 현재 제약
 
-통합 테스트는 외부 Docker 컨테이너에 의존한다 (`application-test.yml` → `localhost:5432`).
-Testcontainers는 선언되었으나 미사용. P2-006 결정 후 활성화 예정.
+통합 테스트는 현재 외부 Docker 컨테이너에 의존한다 (`application-test.yml` → `localhost:5432`).
+DR-010에서 Testcontainers 채택은 확정되었고, 실제 전환은 `docs/backlog/PHASE2.md`의 `P2-006`에서 수행한다.
 
 ### 탐색적 API 테스트 (*.http)
 

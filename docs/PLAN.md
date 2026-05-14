@@ -121,23 +121,14 @@ base-msa-template/
 │   ├── DEVELOPER-GUIDE.md               # 개발자 가이드 (아키텍처 상세 + 개발 절차)
 │   ├── CODING-CONVENTIONS.md            # 코드 컨벤션 SSOT (DR-004, DR-005 반영)
 │   ├── backlog/
-│   │   └── PHASE2.md                    # Phase 2 prioritized backlog
+│   │   ├── PHASE2.md                    # Phase 2 product backlog
+│   │   └── HARNESS.md                   # Harness improvement backlog
 │   ├── archive/
 │   │   ├── phase1-status.md             # Phase 1 completed work history
 │   │   └── phase1-plan.md               # Phase 1 plan snapshot
 │   ├── TODO/
-│   │   ├── PHASE1/
-│   │   │   ├── TODO-BLOCK1.md           # 프로젝트 골격
-│   │   │   ├── TODO-BLOCK2.md           # common-core
-│   │   │   ├── TODO-BLOCK3.md           # 도메인 모델 + 01-schema.sql / 02-data.sql
-│   │   │   ├── TODO-BLOCK4.md           # auth-service
-│   │   │   ├── TODO-BLOCK5.md           # user-service
-│   │   │   ├── TODO-BLOCK6.md           # todo-service
-│   │   │   ├── TODO-BLOCK7.md           # api-gateway
-│   │   │   ├── TODO-BLOCK8.md           # Dockerfile + 통합 테스트
-│   │   │   ├── TODO-BLOCK9.md           # Frontend
-│   │   │   └── TODO-BLOCK10.md          # 문서화 및 마무리
-│   │   └── PHASE2/                      # Phase 2 세부 분해 (필요 시 생성)
+│   │   ├── PHASE1/                      # Legacy Phase 1 TODOs; archive/migration target (see HRN-006)
+│   │   └── PHASE2/                      # Phase 2 detailed task plans, if required
 │   ├── retrospectives/              # 시점별 harness 평가 및 워크플로우 회고 (분기별)
 │   └── decisions/
 │       ├── DECISION-TEMPLATE.md         # DR 작성 템플릿
@@ -235,7 +226,7 @@ Phase 3 (K8s):  관리형 DB (RDS, Cloud SQL 등) 또는 서비스별 StatefulSe
 
 > **updated_at 자동 갱신**: `DEFAULT NOW()`는 INSERT 시에만 적용된다. UPDATE 시 자동 갱신을
 > 위해 `01-schema.sql`에 `update_updated_at_column()` PostgreSQL 트리거 함수를 추가한다.
-> (→ `docs/TODO//PHASE1/TODO-BLOCK3.md §3-2` 참조)
+> (→ legacy Phase 1 note: `docs/TODO/PHASE1/TODO-BLOCK3.md §3-2`; archive/migration policy is tracked by HRN-006)
 >
 > **Phase 1 설계 원칙**: DB 분리를 고려하여 서비스 간 테이블에 FK 제약조건을 사용하지 않는다.
 > `todos.user_id`는 `users.id`에 대한 **논리적 참조**로만 유지하며, 참조 무결성은 애플리케이션 레이어에서 보장한다.
@@ -657,7 +648,7 @@ Phase 2부터 Claude Code / Cursor 기반 AI workflow를 적극 활용한다.
 
 ### 기술 결정 기록 (Decision Records)
 
-`docs/decisions/DR-XXX.md` 형식. DR-worthy 기준은 `docs/CLAUDE.md` §Decision Records 관리 참조.
+`docs/decisions/DR-XXX.md` 형식. DR-worthy 기준은 `docs/CLAUDE.md` 요약과 `docs/harness-protocol/05-triggers-and-cascade.md`를 참조한다.
 
 | DR | 결정 내용 | Status |
 |---|---|---|

@@ -16,7 +16,14 @@ MUST:
 
 - Read the relevant project context before editing.
 - Use `docs/STATUS.md` as the active work index.
-- Use `docs/backlog/*.md` for candidate work and `docs/archive/*.md` only for historical detail.
+- Follow the workflow state machine: `INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END`.
+- Request explicit user approval before editing `docs/STATUS.md`; report a `STATUS Update Proposal` first.
+- Use `docs/backlog/PHASE2.md` for product and Phase2 preparation candidate work.
+- Use `docs/backlog/HARNESS.md` for harness, command/rule, and workflow hardening candidate work.
+- Include scope, files, verification, risk, and reversal cost before implementation.
+- Use backlog ID based filenames for large task TODO files: `docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md`.
+- Do not reuse task IDs for different meanings.
+- Use `docs/archive/*.md` only for historical detail.
 - State assumptions before implementation when the task is ambiguous.
 - Keep every change SURGICAL, MINIMAL, and REVERSIBLE.
 - Follow the existing package structure, naming, formatting, and coding conventions.
@@ -26,6 +33,7 @@ NEVER:
 
 - Add unrequested features.
 - Refactor unrelated code.
+- Implement before plan approval when the change is non-trivial or user-facing.
 - Rewrite adjacent code only for style preference.
 - Introduce a new framework, dependency, or architectural layer without explicit justification and approval.
 - Load long historical documents by default when the current state file is enough.

@@ -1,0 +1,40 @@
+# 04. Document Lifecycle
+
+이 문서는 document lifecycle과 문서 역할 구분의 canonical source다.
+
+## Lifecycle
+
+```text
+CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
+```
+
+## Document Roles
+
+| Document | Role |
+| --- | --- |
+| `docs/STATUS.md` | 현재 상태 |
+| `docs/backlog/PHASE2.md` | Product 후보 작업 |
+| `docs/backlog/HARNESS.md` | Harness 후보 작업 |
+| `docs/TODO/PHASE{n}/` | 대형 작업 내부 계획 |
+| `docs/decisions/` | 결정 근거 |
+| `docs/HARNESS-PROTOCOL.md` | Agent 실행 프로토콜 허브 |
+| `docs/harness-protocol/` | Agent 실행 프로토콜 상세 |
+| `docs/WORKFLOW-MANUAL.md` | 사용자용 워크플로우 매뉴얼 |
+| `docs/PLAN.md` | WHY |
+| `docs/ARCHITECTURE.md` | WHAT |
+| `docs/DEVELOPER-GUIDE.md` | HOW |
+| `docs/archive/` | 완료된 이력 |
+
+## Update Rules
+
+- 현재 상태가 바뀌면 `STATUS.md` 갱신 여부를 확인한다.
+- 구조가 바뀌면 `ARCHITECTURE.md` 업데이트를 제안한다.
+- 개발 절차가 바뀌면 `DEVELOPER-GUIDE.md` 업데이트를 제안한다.
+- 결정 근거가 생기면 DR 생성을 제안한다.
+- 완료된 Phase 상세는 archive로 이동한다.
+
+## Validation
+
+- 새 문서는 `STATUS.md`, harness protocol, 또는 관련 backlog에서 참조되어야 한다.
+- 같은 설명을 자동 로드 문서와 상세 문서에 길게 중복하지 않는다.
+- 문서와 실제 파일이 충돌하면 실제 파일을 우선한다.

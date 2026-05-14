@@ -3,95 +3,114 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-13 (WORKFLOW-MANUAL.md 종합 보완, Harness Hardening 백로그 등록 HRN-001~005, docs/retrospectives/ 신설)
+Last updated: 2026-05-15 (하네스 리팩터링 리뷰 패키지 작성 및 세션 종료 준비)
 
 ## Current State
 
 | Field | Value |
 | --- | --- |
-| Current phase | Phase 2 planning |
+| Current phase | Phase 2 pre-entry |
+| Current focus | Phase2 pre-entry planning |
 | Phase 1 | Complete |
-| Active plan | `docs/PLAN.md` |
-| Active backlog | `docs/backlog/PHASE2.md` |
-| Phase 1 task details | `docs/TODO/PHASE1/TODO-BLOCK*.md` |
+| Active plan | `docs/HARNESS-REFACTOR-PLAN.md` |
+| Product backlog | `docs/backlog/PHASE2.md` |
+| Harness backlog | `docs/backlog/HARNESS.md` |
+| Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
+| Harness protocol | `docs/HARNESS-PROTOCOL.md` |
+| User workflow manual | `docs/WORKFLOW-MANUAL.md` |
+| Pre-refactor backup | `docs/archive/harness-refactor-20260514/` |
 | Phase 1 status archive | `docs/archive/phase1-status.md` |
 | Phase 1 plan archive | `docs/archive/phase1-plan.md` |
 
 ## Work Context Rule
 
-이 파일은 작업 상태를 관리하기 위한 문서이며, planning, implementation, testing을 대체하지 않는다.
-작업 흐름 상세: `docs/CLAUDE.md` → Work Management Model 참조.
+이 파일은 현재 작업 상태의 단일 기준이다. 단, 문서와 실제 파일 상태가 충돌하면 실제 파일 상태를 우선한다.
 
-실행 흐름 요약: `backlog 선택 → plan → approval → implementation → verification → status update`
+실행 흐름:
+
+```text
+INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
+                 ^              |
+                 |              v
+              RECOVER <- FAIL <-+
+```
+
+세션 시작 시에는 이 파일의 `Current State`, `Active Work`, `Checkpoints`, `Blockers And Open Questions`, `Next Actions`만 확인한다.
+Phase1 또는 Phase2 이전 계획의 상세 맥락은 필요할 때만 백업과 archive에서 확인한다.
 
 ## Active Work
 
-> PRE-A/B/C 항목의 상세 맥락(이슈 원인, 트레이드오프, 진행 방법)은 작업 시작 전 반드시 참조:
-> `~/.claude/plans/claude-md-docs-claude-md-streamed-starlight.md`
+| ID | Priority | Status | Risk | Scope | Done Criteria | Verification |
+| --- | --- | --- | --- | --- | --- | --- |
+| HRF-001 | P0 | Done | L3 | Phase1 이후 하네스를 경량 상태 머신 기반 운영 체계로 재편 | 백업 완료, STATUS 재정의, product/harness backlog 분리, Quick Reference 생성 | 문서 링크 확인, backlog 분리 확인, orphan 문서 없음 |
 
-| ID | Priority | Status | Scope | Done Criteria | Verification |
-| --- | --- | --- | --- | --- | --- |
-| P2-PLAN-001 | P0 | Done | Claude Code context와 Phase 2 작업관리 구조 정리 | `CLAUDE.md`, `docs/CLAUDE.md`, `docs/STATUS.md`, Phase 2 backlog가 context-efficient하고 재사용 가능함 | Documentation diff inspection |
-| P2-PLAN-002 | P0 | Done | AI workflow 점검 및 개선 (Vibe Coding best practice 기준) | `.claude/commands/` 6개, `.claude/rules/testing.md`, `docs/decisions/` 구조, `docs/PLAN-SUMMARY.md`, `settings.json` 수정 완료 | 파일 존재 확인 및 `/start` slash command 동작 확인 |
-| P2-PLAN-003 | P0 | Done | AI workflow 정비 심화 + Cursor 정렬 | 언어 원칙 정의, rules 정합성·token 효율 개선, prompts 라이브러리 Spring Boot 특화, Cursor rules Claude와 정렬 완료 | 파일 존재 확인 및 git log 검토 |
-| PRE-A1 | P0 | Done | Makefile `-p base-msa-template` 추가 (container/network 이름 고정) | `-p` 추가 후 `make run` 정상 동작, container_name 충돌 없음 | `curl http://localhost:8090/api/v1/auth/login` 정상 응답 |
-| PRE-A2+A3 | P0 | Done | 코드 컨벤션 SSOT, Checkstyle, CI 기반 구축 (파일 헤더 없음 정책, DR-004~006) | `./gradlew checkstyleMain checkstyleTest` 0 위반, `.editorconfig`·`ci.yml`·`tools/git-hooks/`·`docs/CODING-CONVENTIONS.md` 생성 완료 | `./gradlew check` 통과 확인 |
-| P2-006 | P0 | Candidate | Testcontainers 도입 (DR-010) — 통합 테스트 자급자족화 | DR-010 Accepted | auth/user/todo 서비스 @SpringBootTest가 Testcontainers로 전환, ci.yml services 블록 제거 | `./gradlew test` docker compose 없이 통과 |
-| HRN-001 | P1 | Candidate | Stop hook 추가 — `/done` 없이 세션 종료 시 reminder 출력 | `settings.json` Stop hooks에 `/done` reminder 스크립트 등록 완료 | 세션 종료 시 reminder 메시지 확인 |
-| DOC-001 | P1 | Candidate | git 구성·브랜치 전략·flow 가이드 문서 생성 | 현재 git workflow 운영 확립 | `docs/GIT-WORKFLOW.md` 생성, feature→develop→PR to main 전략 및 CI trigger 연계 설명 포함 | 문서 리뷰 |
-| PRE-B | P0 | Candidate | 개발환경 전략 결정 (로컬 실행 구조, Windows 지원, devcontainer, mono-repo) | B-1~B-4 결정 사항 decision record 또는 STATUS 반영 완료 | 결정 문서 리뷰 |
-| PRE-C1 | P0 | Candidate | Phase 1 아키텍처 현황 분석 (레이어 일관성, common-core, gateway, 테스트 커버리지) | 분석 결과와 개선 필요 항목 목록 작성 | docs/backlog 또는 STATUS 반영 |
-| PRE-C2 | P0 | Candidate | Phase 2 요건 정의 확정 (Session B 결정 반영, DR-001/002 완료) | backlog PHASE2.md 업데이트, DR-001 결정 완료 | backlog + decision review |
-| PRE-C3 | P1 | Candidate | Dockerfile 개선 (Gradle 캐시 레이어, JAVA_OPTS 외부화, HEALTHCHECK) | 각 서비스 Dockerfile 개선 적용, 재빌드 성공 | `make rebuild` 후 서비스 정상 기동 |
-
-## Phase 2 Checkpoints
+## Checkpoints
 
 | Checkpoint | Purpose | Status | Verification |
 | --- | --- | --- | --- |
-| CP-P2-0 | Phase 2 계획과 backlog 구조화 | Done | `docs/STATUS.md`, `docs/backlog/PHASE2.md` 검토 |
-| CP-P2-1 | token/session 관련 보안 의사결정 완료 | Not started | Decision records and targeted tests |
-| CP-P2-2 | gateway/proxy 동작을 운영 환경 기준으로 보정 | Not started | Rate limiting and trusted proxy tests |
-| CP-P2-3 | infrastructure 방향 결정 | Not started | K8s/CI decision records and dry-run validation |
-| CP-P2-4 | observability baseline 구현 | Not started | Metrics/tracing/logging validation |
+| CP-HRF-1 | 기존 상태 백업 | Done | `docs/archive/harness-refactor-20260514/MANIFEST.md` 및 snapshot 파일 확인 |
+| CP-HRF-2 | 현재 운영 상태 재정의 | Done | `docs/STATUS.md`가 현재 focus, active work, next action만 담는지 확인 |
+| CP-HRF-3 | Product backlog와 Harness backlog 분리 | Done | `docs/backlog/PHASE2.md`, `docs/backlog/HARNESS.md` 확인 |
+| CP-HRF-4 | 일상 실행 규칙 Quick Reference 생성 | Done | `docs/HARNESS-QUICK-REFERENCE.md` 확인 |
+| CP-HRF-5 | Harness protocol 연결 | Done | `docs/HARNESS-PROTOCOL.md`와 `docs/harness-protocol/` 링크 확인 |
+| CP-HRF-6 | WORKFLOW-MANUAL.md 사용자 매뉴얼 역할 현행화 | Done | manual/protocol 역할 분리, T7 cascade 대상, context load 기준 확인 |
+| CP-HRF-7 | WORKFLOW-MANUAL.md Mermaid 다이어그램 현행화 | Done | 디렉토리 구조, 문서 생태계, 세션 생애주기, 실행 흐름, context load, DR lifecycle 다이어그램 확인 |
+| CP-HRF-8 | WORKFLOW-MANUAL.md 신규 프로젝트 초기화 절차 현행화 | Done | protocol/quick reference/detail docs, product/harness backlog, command 목록, 초기 검증 흐름 확인 |
+| CP-HRF-9 | README/prompts/product docs 정합성 현행화 | Done | README 링크 허브화, prompts routing 현행화, product docs의 CI/Testcontainers/Dockerfile/라이선스 표현 확인 |
+| CP-HRF-10 | 하네스 리팩토링 자체 평가 회고 기록 | Done | `docs/retrospectives/harness-evaluation-20260514.md` 생성 |
+| CP-HRF-11 | Codex 세션 시작 프롬프트 추가 | Done | `prompts/codex-session-start.md` 생성, `prompts/README.md`와 `docs/backlog/HARNESS.md` 참조 반영 |
+| CP-HRF-12 | 반복 세션 시뮬레이션 정합성 보정 | Done | product/harness routing, legacy TODO 표기, document lifecycle 역할 표기 확인 |
+| CP-HRF-13 | STATUS Update Approval Gate 반영 | Done | `docs/CLAUDE.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/harness-protocol/`, commands/prompts/rules에 STATUS Update Proposal 규칙 확인 |
+| CP-HRF-14 | Claude command/rule flow 정합성 보정 | Done | `.claude/commands/`, `.claude/rules/`, Cursor rules의 plan/approval/validation/status/commit gate 확인 |
+| CP-HRF-15 | ignore/permission 정합성 보정 | Done | `.claudignore` → `.claudeignore` rename, `.cursorignore`, `.claude/settings.json` permissions.deny 확인 |
+| CP-HRF-16 | protocol routing과 canonical source 보정 | Done | `docs/CLAUDE.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/harness-protocol/*.md` 역할 확인 |
+| CP-HRF-17 | retrospective conditional loading 반영 | Done | `/pick`, `/work`, `docs/CLAUDE.md`, `docs/harness-protocol/02-context-loading.md`에 회고 조건부 로드 규칙 확인 |
+| CP-HRF-18 | 최종 반복 세션·다중 Agent 시뮬레이션 | Done | Claude/Codex/Cursor 시작·선택·계획·검증·종료·재개 흐름과 residual risk 확인 |
+| CP-HRF-19 | 하네스 리팩터링 리뷰 패키지 작성 | Done | `docs/retrospectives/harness-refactor-review-request-20260515.md` 생성 및 `git diff --check` 확인 |
 
 ## Blockers And Open Questions
 
 | ID | Status | Question | Decision Needed |
 | --- | --- | --- | --- |
-| OQ-001 | Closed | Phase 2는 infrastructure 확장보다 security hardening을 먼저 해야 하는가? | DR-003 참조: Security first 결정. P2-001→002→003→004 순서 |
-| OQ-002 | Open | K8s 배포 도구는 Helm과 Kustomize 중 무엇을 쓸 것인가? | manifests 작성 전 결정 |
-| OQ-003 | Open | token storage를 localStorage에서 HttpOnly Cookie로 전환할 것인가? | frontend/auth 변경 전 결정 |
-| OQ-004 | Closed | `.claude/claude.json`은 legacy custom harness config였는가? | 삭제 완료. 공식 Claude Code config는 `.claude/settings.json` |
+| HRF-OQ-001 | Closed | 기존 Phase2 작업, 체크포인트, DR을 백업하고 백지 재편할 것인가? | 백업 후 재편하기로 결정 |
+| HRF-OQ-002 | Closed | `HRN-*`을 Phase2 product backlog에서 분리할 것인가? | `docs/backlog/HARNESS.md`로 분리 |
+| HRF-OQ-003 | Open | `.harness/config.json` 같은 SSOT config를 지금 도입할 것인가? | Manual-first 안정화 후 재검토 |
+| HRF-OQ-004 | Closed | `docs/CLAUDE.md`, `.claude/commands`, `.claude/rules`를 1차 재편에서 수정할 것인가? | product/harness backlog 분리와 상태 머신 게이트를 최소 반영 |
+| HRF-OQ-005 | Open | 한국어 문서에서 섹션명·하네스 용어·기술 용어를 어느 정도 영어로 유지할 것인가? | 리뷰 문서와 DR-007 언어 정책을 함께 보며 후속 정리 |
 
 ## Recent Decisions
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
-| 2026-05-11 | active state는 `docs/STATUS.md`에 유지하고 Phase 1 상세는 archive로 이동 | Phase 2에서 Claude context load 감소 | Low |
-| 2026-05-11 | root `CLAUDE.md`를 재사용 가능하게 만들고 `docs/CLAUDE.md`를 명시 import | instruction loading 개선 및 cross-project reuse | Low |
-| 2026-05-11 | 공식 `.claude/settings.json`과 path-scoped `.claude/rules/` 추가 | 중복 prompt context 감소 및 Claude Code 설정 정렬 | Low |
-| 2026-05-11 | legacy `.claude/claude.json` 삭제 | 사용자 확인 후 obsolete custom harness configuration 제거 | Low |
-| 2026-05-11 | AI workflow 개선: `.claude/commands/` 6개, `testing.md` rule, `PLAN-SUMMARY.md`, `decisions/` DR 초안 3개, `settings.json` 수정 | Phase 2 착수 전 workflow 마찰 최소화, Vibe Coding best practice 정렬 | Low |
-| 2026-05-11 | 언어 원칙 정의: `.claude/rules/*.md`·루트 `CLAUDE.md` → 영어, `docs/*.md`·`prompts/*.md` → 한국어+기술용어 영어 유지 | token 효율 및 instruction 준수율 향상 | Low |
-| 2026-05-11 | `git-workflow.md` rule 신규 추가: 커밋 전 `git status → add → status → diff --cached` 프로세스 강제 | 커밋 누락 방지 (unstaged/untracked 미확인 문제) | Low |
-| 2026-05-11 | Cursor rules를 Claude rules와 정렬: `java-spring.mdc`, `testing.mdc` 신규, `git-commit.mdc` 프로세스 추가, `.cursorignore` 업데이트 | Claude/Cursor 간 규칙 정합성 확보 | Low |
-| 2026-05-11 | prompts 라이브러리 Spring Boot 특화: `21-create-layer`, `22-minimal-diff` 신규, 기존 5개 개선 (minimal patch, API contract 불변, Spring 안티패턴 체크) | AI 작업 품질 및 범위 제어 향상 | Low |
-| 2026-05-12 | 파일 헤더 없음 정책 (DR-004): LICENSE 파일로 충분, AI 컨텍스트 낭비 없음 | 코드 파일당 헤더 주석 제거 | Low |
-| 2026-05-12 | Checkstyle 채택 (DR-005): Google Java Style 기반 + LineLength=120/Indentation=4 오버라이드, Javadoc 비활성 | 코드 품질 자동 검증 도입 | Medium |
-| 2026-05-12 | CI job 분리 구조 (DR-006): lint→test 체인 + 확장 포인트 주석 명시, `gradle/actions/setup-gradle@v3` | CI/CD 점진적 확장 가능 구조 | Low |
-| 2026-05-12 | 기술 결정 기록 워크플로우 도입: `/record-decision` command, `docs/CLAUDE.md` Decision Records 섹션, `/done` 7번 단계 추가 | 세션 중 확정 결정의 체계적 DR 보존 | Low |
-| 2026-05-11 | 파일 유형별 언어 원칙 확정 (DR-007): `.claude/rules/`·루트 CLAUDE.md → 영어, `docs/`·commands → 한국어+기술용어 영어 | token 효율 및 instruction 준수율 향상, 문서 가독성 보존 | Medium |
-| 2026-05-12 | docs/ 파일명 표준 (DR-008): 루트·backlog/·decisions/ → UPPERCASE-HYPHENATED, archive/ → lowercase-hyphenated | 기존 다수 파일 패턴 유지, 신규 파일 생성 기준 명확화 | Low |
-| 2026-05-12 | CI trigger 분리 (DR-009): develop push = Checkstyle only, PR to main = 전체 테스트 | 개발 흐름 유지하면서 main 진입 전 검증 보장 | Low |
-| 2026-05-12 | 통합 테스트 인프라 전략 (DR-010): Testcontainers 채택, GitHub Actions services는 interim | 테스트 자급자족화, 템플릿 best practice 제시 | Medium |
+| 2026-05-14 | Phase1 이후 현재 작업·예정 작업·체크포인트·DR을 백업하고 하네스 상태를 백지 재편 | Phase2 기능 개발과 Harness 개선 상태가 섞여 있어 재개 기준이 흐려짐 | Low |
+| 2026-05-14 | `STATUS.md`를 Harness Refactor 중심의 live board로 축소 | 세션 시작 시 현재 focus와 next action을 빠르게 복원하기 위함 | Low |
+| 2026-05-14 | `HRN-*` 항목을 `docs/backlog/HARNESS.md`로 분리 | Product backlog와 Harness lifecycle이 다름 | Low |
+| 2026-05-14 | `docs/CLAUDE.md`, `.claude/commands`, `.claude/rules/docs-workflow.md`에 상태 머신과 backlog 분리 규칙 반영 | 실제 Agent 실행 규칙이 새 하네스 구조를 따르도록 정렬 | Low |
+| 2026-05-14 | `.cursor/rules`에 상태 머신, backlog 분리, verification fail 처리 규칙 반영 | Cursor 작업도 Claude와 같은 하네스 상태 모델을 따르도록 정렬 | Low |
+| 2026-05-14 | Claude/Cursor dry-run에서 product/harness backlog 선택 흐름 확인 | 다음 작업 선택 기준이 `PHASE2.md`와 `HARNESS.md`로 명확히 분리됨 | Low |
+| 2026-05-14 | 대형 작업 TODO 분해 조건과 ID/file naming 규칙 정리 | TODO 남발을 막고 backlog·STATUS·TODO 간 추적성을 유지 | Low |
+| 2026-05-14 | `docs/CLAUDE.md` 슬림화와 `HARNESS-PROTOCOL.md` 허브 구조 도입 | 자동 로드 컨텍스트를 줄이고 상세 레퍼런스를 필요 시 로드하도록 분리 | Low |
+| 2026-05-14 | `WORKFLOW-MANUAL-V2.md`를 `HARNESS-PROTOCOL.md`로 명명 변경 | 사용자 매뉴얼이 아니라 하네스 운영 프로토콜임을 명확히 하기 위함 | Low |
+| 2026-05-14 | `prompts/`와 `.claude/commands/` 역할 경계 결정 작업을 HRN-007로 등록 | prompt library와 반복 실행 command의 중복·혼선을 별도 기준으로 정리하기 위함 | Low |
+| 2026-05-14 | `WORKFLOW-MANUAL.md`를 사용자 매뉴얼로 현행화하고 protocol 문서와 역할 분리 | 사용자용 설명과 Agent 실행 규칙 원본이 섞이지 않도록 하기 위함 | Low |
+| 2026-05-14 | `WORKFLOW-MANUAL.md`의 Mermaid 다이어그램을 상태 머신과 product/harness 분리 구조에 맞춰 현행화 | 텍스트와 시각 자료가 서로 다른 운영 모델을 안내하지 않도록 하기 위함 | Low |
+| 2026-05-14 | `WORKFLOW-MANUAL.md`의 신규 프로젝트 초기화 절차를 현재 harness protocol 구조에 맞춰 현행화 | 새 프로젝트에 옛 manual-first 구조가 복사되는 것을 방지하기 위함 | Low |
+| 2026-05-14 | `README.md`, `prompts/`, 주요 product docs를 현재 harness/product 문서 구조와 맞춰 현행화 | GitHub 첫 화면 중복을 줄이고 구식 prompt·CI·Testcontainers·라이선스 표현을 제거하기 위함 | Low |
+| 2026-05-14 | 하네스 리팩토링 결과를 “Lightweight Manual-first AI Workflow Harness v1”로 자체 평가 | 문서 현행화 이상의 개선점과 자동화 부족이라는 한계를 다음 hardening 기준으로 남기기 위함 | Low |
+| 2026-05-14 | Codex용 세션 bootstrap prompt를 추가하고 `AGENTS.md` 도입 여부를 HRN-008로 등록 | Codex는 `.claude/commands`를 직접 실행하지 않으므로 같은 하네스 절차를 수동으로 복원할 진입점이 필요함 | Low |
+| 2026-05-15 | `STATUS.md` 변경은 STATUS Update Proposal과 사용자 승인 후에만 수행 | `STATUS.md`가 Agent 메모장이 아니라 승인된 현재 상태 기록으로 남아야 함 | Low |
+| 2026-05-15 | 상세 하네스 규칙의 canonical source를 `docs/harness-protocol/*.md`로 명확화 | 자동 로드 문서와 quick reference의 중복 drift를 줄이기 위함 | Low |
+| 2026-05-15 | 작업 선택·계획·아이디어 도출 시 회고를 조건부 의사결정 보조 맥락으로 사용 | backlog만으로 놓칠 수 있는 반복 리스크와 이전 평가 내용을 반영하기 위함 | Low |
+| 2026-05-15 | ignore/permission 정책을 `.claudeignore`, `.cursorignore`, `.claude/settings.json` 기준으로 정렬 | AI 컨텍스트 비용과 민감 파일 접근 위험을 줄이기 위함 | Low |
+| 2026-05-15 | Claude/Cursor/Codex 반복 세션 시뮬레이션 결과 현재 구조를 manual-first harness v1로 최종 정리 | 자동 강제는 약하지만 시작·선택·계획·검증·종료·재개 흐름은 일관됨 | Low |
+| 2026-05-15 | 하네스 리팩터링 결과를 외부 리뷰 요청 문서로 정리 | 기존 대비 변경점, 잔여 리스크, 리뷰 체크리스트를 한 문서에서 검토하기 위함 | Low |
 
 ## Next Actions
 
-1. **P2-006**: Testcontainers 도입 (DR-010 Accepted, 즉시 착수 가능)
-2. **HRN-001**: Stop hook 추가 — `/done` 없이 세션 종료 시 reminder (quick win, 즉시 착수 가능)
-3. **DOC-001**: git 구성·브랜치 전략·flow 가이드 문서 생성
-4. PRE-B: 개발환경 전략 4개 결정 (B-1~B-4) — PRE-C2 전 선행 필요.
-5. PRE-C1: Phase 1 아키텍처 분석 → PRE-C2 backlog 업데이트.
-6. PRE-C2: DR-001 완료 + Phase 2 backlog 최종 확정.
-7. PRE-C3: Dockerfile 개선 (P1, C2 이후 병행 가능).
-8. P2-001 착수 (PRE-C2 완료 후).
+1. `docs/retrospectives/harness-refactor-review-request-20260515.md`의 언어 스타일을 리뷰 관점에서 재검토.
+2. Phase2 본계획 수립을 위해 `docs/backlog/PHASE2.md`의 `Phase 2 Preparation Candidates`부터 검토.
+3. Manual-first 운영이 안정화되면 `docs/backlog/HARNESS.md`의 HRN-001 또는 HRN-002 착수 여부 결정.
+4. `docs/` 정보 구조 재분류는 HRN-006에서 별도 계획으로 검토.
+5. `prompts/`와 `.claude/commands/` 역할 경계는 HRN-007에서 별도 기준 수립.
+6. Codex 사용 빈도가 늘어나면 HRN-008에서 `AGENTS.md` 도입 여부 결정.
+7. `docs/` 파일·디렉토리 naming audit은 HRN-009에서 DR-008 기준으로 검토.

@@ -7,9 +7,21 @@ $ARGUMENTS 또는 현재 대화에서 확정된 기술적 의사결정 사항을
    - 채택 이유
    - 되돌리기 비용 (Low / Medium / High)
 3. `docs/decisions/DR-{번호}-{topic}.md` 초안을 제시해.
-4. 승인 후 파일을 생성하고 `docs/STATUS.md`의 Recent Decisions 업데이트를 제안해.
+4. 승인 후 파일을 생성해.
+5. `docs/STATUS.md`의 Recent Decisions 업데이트가 필요하면 `STATUS Update Proposal`로 별도 제안해.
+6. PLAN/ARCHITECTURE/DEVELOPER-GUIDE/backlog cascade 대상이 있는지 확인하고 제안해.
 
 승인 없이 파일을 생성하지 마.
+승인 없이 STATUS.md를 수정하지 마.
+
+STATUS Update Proposal에는 아래 항목을 포함해줘.
+
+- 변경 섹션
+- 변경 이유
+- 변경 후 상태
+- 되돌리기 비용
+
+DR Draft는 Accepted 전까지 PLAN cascade를 발동하지 않는다.
 
 ## DR-worthy 판단 기준 (하나 이상 해당 시)
 - 도구·프레임워크 선택 (예: Checkstyle vs Spotless, Helm vs Kustomize)

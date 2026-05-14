@@ -4,7 +4,11 @@
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
+      "Read(./.claude/settings.local.json)",
       "Read(./secrets/**)",
+      "Read(./**/*.key)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.crt)",
       "Bash(sudo *)",
       "Bash(rm -rf*)",
       "Bash(rm -r *)",
