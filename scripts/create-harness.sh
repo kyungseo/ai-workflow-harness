@@ -37,7 +37,7 @@ TARGET_ROOT="${2:-${TEMPLATE_ROOT}/temp/${PROJECT_NAME}}"
 if [[ "${DRY_RUN}" == true ]]; then
   echo "Dry-run [mode: ${MODE}] — would target: ${TARGET_ROOT}"
   echo ""
-  echo "${PROJECT_NAME}/"
+  echo "$(basename "${TARGET_ROOT}")/"
   echo "├── CLAUDE.md"
   echo "├── AGENTS.md"
   echo "├── README.md              (generated skeleton)"
