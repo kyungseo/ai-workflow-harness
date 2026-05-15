@@ -25,3 +25,16 @@
 
 Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 파일 수정은 사용자 승인 또는 명시 요청 후 진행한다.
+
+## STATUS.md 섹션별 삭제 Cascade 체크리스트
+
+STATUS.md 항목 삭제 또는 이동 전 해당 섹션의 체크리스트를 확인한다.
+모든 STATUS.md 변경은 STATUS Update Proposal → 사용자 승인 후 수행한다.
+
+| 섹션 | 삭제/이동 전 확인 사항 |
+| --- | --- |
+| Active Work | 연결된 backlog 항목(`PHASE2.md` 또는 `HARNESS.md`) 상태 업데이트 필요 여부 확인 |
+| Checkpoints | 해당 Phase 전체 Done 시 T3(Phase 완료) 트리거 — `docs/archive/`로 이동 제안 |
+| Blockers / Open Questions | Closed OQ에 연결된 DR이 있으면 DR Status → Accepted 처리 여부 확인 |
+| Next Actions | 연결된 backlog 항목이 있으면 항목 완료 상태 일치 여부 확인 |
+| Recent Decisions | **삭제 금지** — rolling window(최근 8개) 초과분은 drop. DR-worthy였으면 DR이 canonical. |
