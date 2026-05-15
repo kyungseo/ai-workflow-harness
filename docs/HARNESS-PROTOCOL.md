@@ -54,6 +54,8 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | `docs/ARCHITECTURE.md` | WHAT, 현재 구조 |
 | `docs/DEVELOPER-GUIDE.md` | HOW, 개발 절차 |
 | `docs/decisions/` | 결정 기록 |
+| `docs/reports/` | 보고서, review package, decision brief |
+| `docs/presentations/` | 발표자료, deck, slide source |
 | `docs/TODO/PHASE{n}/` | 큰 작업 하나의 내부 실행 계획 |
 | `docs/archive/` | 완료된 과거 상태 |
 
@@ -67,6 +69,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
 | 한 작업의 세부 실행 계획 | `docs/TODO/PHASE{n}/{BACKLOG-ID}-{topic}.md` |
 | 확정된 기술 결정 | `docs/decisions/DR-*.md` |
+| 발표/보고 산출물 | `docs/presentations/` 또는 `docs/reports/` |
 | 미결 질문 | `docs/STATUS.md` Blockers/OQ |
 | 현재 시스템 구조 | `docs/ARCHITECTURE.md` |
 | 개발 절차 | `docs/DEVELOPER-GUIDE.md` |

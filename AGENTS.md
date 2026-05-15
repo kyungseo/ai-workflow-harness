@@ -27,6 +27,7 @@ NEVER:
 | `/register [description]` | Register a new work item; route to STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md based on urgency and type; propose STATUS Update if needed |
 | `/work <ID>` | Find the backlog item, declare risk level, propose scope/files/verification/risk, then wait for approval |
 | `/resume <ID>` | Compare `docs/STATUS.md` with actual files, report drift, and propose recovery before editing |
+| `/doc [brief]` | Create high-quality presentation/report artifacts; confirm brief, route sources, choose output format/tool, verify quality |
 | `/done` | Report completed work, changed files, validation, residual risk, STATUS update need, decision need, state, commit status |
 
 ## Command Intent Recognition
@@ -39,6 +40,7 @@ When the user's intent matches a workflow operation without an explicit slash co
 | Record a decision as DR | `/record-decision` — DR format, file naming, OQ linkage |
 | Start / plan a specific task | `/work` — pre-checks: PLAN.md force-load conditions, troubleshooting check, risk level declaration |
 | Resume an interrupted task | `/resume` — drift check: compare actual file state vs `docs/STATUS.md` before editing |
+| Create presentation/report/review document material | `/doc` — use for PPT, deck, report, review package, decision brief, or polished shareable document artifacts; brief-first workflow, source routing, quality verification |
 
 Work item routing:
 

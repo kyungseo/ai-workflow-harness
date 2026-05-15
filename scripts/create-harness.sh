@@ -158,6 +158,8 @@ for dir in \
   "${TARGET_ROOT}/docs/harness-protocol" \
   "${TARGET_ROOT}/docs/archive" \
   "${TARGET_ROOT}/docs/retrospectives" \
+  "${TARGET_ROOT}/docs/reports" \
+  "${TARGET_ROOT}/docs/presentations" \
   "${TARGET_ROOT}/docs/troubleshooting" \
   "${TARGET_ROOT}/.claude/rules" \
   "${TARGET_ROOT}/.claude/commands" \
@@ -601,6 +603,8 @@ write_text "${TARGET_ROOT}/docs/backlog/HARNESS.md" "# Harness Backlog
 
 touch_file "${TARGET_ROOT}/docs/archive/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/retrospectives/.gitkeep"
+touch_file "${TARGET_ROOT}/docs/reports/.gitkeep"
+touch_file "${TARGET_ROOT}/docs/presentations/.gitkeep"
 
 echo ""
 if [[ "${DRY_RUN}" == true ]]; then

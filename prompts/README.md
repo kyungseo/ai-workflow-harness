@@ -77,6 +77,7 @@ Claude Code에서는 slash command가 기준이다.
 | `/work {ID}` | 특정 작업의 plan 수립 |
 | `/resume {ID}` | 중단된 작업 재개 |
 | `/debug` | 에러 분석 또는 리팩토링 진입 |
+| `/doc [brief]` | 발표/보고 자료 생성 — brief, source, format, quality 기준 먼저 확정 |
 | `/done` | 세션 종료 요약과 상태 갱신 점검 (세션 끝낼 때만 사용) |
 | `/record-decision` | 확정된 결정을 DR로 기록 |
 | `/health` | command/rule/protocol/backlog 정합성 점검 |

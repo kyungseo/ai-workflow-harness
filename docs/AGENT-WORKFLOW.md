@@ -98,6 +98,7 @@ MUST:
 | 구조 변경 | `docs/ARCHITECTURE.md` 업데이트 제안 |
 | 개발 절차 변경 | `docs/DEVELOPER-GUIDE.md` 업데이트 제안 |
 | workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/` 업데이트 |
+| 발표/보고 산출물 생성 | 목적, audience, source, format, output path, 품질 검증 기준 확인 |
 | Phase 완료 또는 새 Phase 시작 | STATUS/archive 재편 제안 |
 | 큰 작업 조건 충족 | TODO 분해 제안 |
 | 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |

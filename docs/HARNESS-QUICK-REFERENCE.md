@@ -136,6 +136,7 @@ L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commi
 | Workflow rule/command change | `docs/HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/` 업데이트 |
 | Phase complete | STATUS archive 제안 |
 | Non-trivial issue resolved | `docs/troubleshooting/` 기록 제안 |
+| Presentation/report artifact created | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |
 
 ## 9. TODO Decomposition
 

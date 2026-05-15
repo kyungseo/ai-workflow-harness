@@ -239,7 +239,56 @@ AGENTS.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 확인해줘.
 
 ---
 
-## 8. 문서 전용 작업
+## 8. 발표/보고 자료 생성
+
+**AGENTS.md 있음:**
+
+```text
+AGENTS.md Codex Command Mapping의 /doc 절차에 따라 발표/보고 자료를 준비해줘.
+
+요청:
+- 목적: [발표/보고/의사결정/리뷰/교육]
+- Audience: [경영진/기술 리더/개발팀/외부 리뷰어]
+- Format: [pptx/slide outline/markdown/docx/pdf-ready]
+- Source: [STATUS/backlog/DR/diff/retrospective/메모]
+- Length: [slide/page 수 또는 발표 시간]
+
+먼저 brief와 outline을 제안하고, 승인 전에는 최종 파일을 만들지 마.
+STATUS.md 변경이 필요하면 STATUS Update Proposal을 먼저 보고해줘.
+```
+
+**AGENTS.md 없음:**
+
+```text
+docs/AGENT-WORKFLOW.md와 docs/STATUS.md를 확인해줘.
+
+고품질 발표/보고 자료를 만들고 싶어.
+
+- 목적: [발표/보고/의사결정/리뷰/교육]
+- Audience: [경영진/기술 리더/개발팀/외부 리뷰어]
+- Format: [pptx/slide outline/markdown/docx/pdf-ready]
+- Source: [STATUS/backlog/DR/diff/retrospective/메모]
+- Length: [slide/page 수 또는 발표 시간]
+- Tone: [executive/technical/reviewer-facing/tutorial]
+
+먼저 아래를 제안해줘:
+1. Brief
+2. Source loading plan
+3. Outline 또는 slide/page 구조
+4. 사용할 수 있는 presentation/document 도구와 fallback
+5. Output path (`docs/presentations/` 또는 `docs/reports/`)
+6. Verification 기준
+
+승인 전에는 최종 파일을 만들지 마.
+STATUS.md 변경이 필요하면 STATUS Update Proposal을 먼저 보고해줘.
+```
+
+---
+
+## 9. 문서 전용 작업
+
+발표자료, 보고서, review package, decision brief, 외부 공유용 문서 산출물처럼 품질 높은 문서 생성 문맥이면 이 섹션 대신 `/doc` 절차를 사용한다.
+기존 문서 일부 편집, 오탈자 수정, README 갱신처럼 source 문서 자체를 고치는 작업이면 아래 절차를 사용한다.
 
 **AGENTS.md 있음:**
 
@@ -267,7 +316,7 @@ STATUS.md 변경이 필요하면 변경 섹션, 변경 이유, 변경 후 상태
 
 ---
 
-## 9. 세션 종료 요약
+## 10. 세션 종료 요약
 
 **AGENTS.md 있음:**
 
@@ -304,7 +353,7 @@ AGENTS.md Codex Command Mapping의 /done 절차에 따라 세션을 마무리해
 
 ---
 
-## 10. 실패/복구
+## 11. 실패/복구
 
 **AGENTS.md 있음:**
 

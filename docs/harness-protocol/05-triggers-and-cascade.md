@@ -14,11 +14,13 @@
 | T6 | 구조/흐름 구현 변경 | ARCHITECTURE/DEVELOPER-GUIDE 확인 |
 | T7 | workflow rule/command 변경 | harness protocol 또는 workflow 상세 문서 업데이트 |
 | T8 | 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |
+| T9 | 발표/보고 산출물 생성 | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |
 
 ## Loop Safety
 
 - T4는 STATUS 참조만 갱신하고 다른 trigger를 발동하지 않는다.
 - T7 결과는 다시 T7을 발동하지 않는다.
+- T9 결과물은 source 문서를 수정하지 않는다. source 변경이 필요하면 별도 작업으로 분리한다.
 - T5와 T6가 같은 문서를 건드릴 때는 한쪽은 수정, 다른 쪽은 확인만 한다.
 - DR Draft는 Accepted 전까지 PLAN cascade를 발동하지 않는다.
 
