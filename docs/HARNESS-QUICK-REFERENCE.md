@@ -40,7 +40,20 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 - **CHECKPOINT** = 작업 완료 후 커밋 + STATUS 업데이트. 다음 작업을 바로 이어갈 수 있다.
 - **END (`/done`)** = 세션 종료 시에만 실행. 작업마다 호출하지 않는다.
 
-## 3. Execution Gate
+## 3. Work Item Registration
+
+새 작업 항목이 생기면 `/register`로 등록한다.
+
+| 긴급도 / 성격 | 등록 위치 |
+| --- | --- |
+| 지금 바로 착수 (긴급 패치 등) | `docs/STATUS.md` Active Work → `/work`로 연결 |
+| 곧 할 것 | `docs/STATUS.md` Next Actions |
+| Product / Phase2 작업 | `docs/backlog/PHASE2.md` |
+| Harness / workflow / rule 개선 | `docs/backlog/HARNESS.md` |
+
+STATUS.md 변경이 포함되면 STATUS Update Proposal → 승인 순서를 따른다.
+
+## 4. Execution Gate
 
 구현 또는 문서 변경 전 plan을 먼저 제시한다.
 
@@ -68,7 +81,7 @@ Plan must include:
 
 `Done` 상태의 작업은 다시 수정하지 않는다. 완료 후 보정이 필요하면 신규 작업으로 분리한다.
 
-## 4. Risk Level
+## 5. Risk Level
 
 | Level | Examples | Rule |
 | --- | --- | --- |
@@ -76,7 +89,7 @@ Plan must include:
 | L2 Normal | 기능 구현, 설정 변경, hook 추가 | 상세 plan 후 승인 |
 | L3 Critical | 아키텍처, 보안, 인프라, DB schema, harness 구조 | AS-IS/TO-BE와 rollback 포함 |
 
-## 5. Validation
+## 6. Validation
 
 완료 전 확인:
 
@@ -96,7 +109,7 @@ COMMIT 전 확인:
 
 L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commit에는 하나의 검증 가능한 목적을 담고, rollback plan은 commit 또는 단계 단위로 설명한다.
 
-## 6. Failure Rules
+## 7. Failure Rules
 
 다음은 실패 상태다.
 
@@ -113,7 +126,7 @@ L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commi
 3. Recovery options 제시
 4. 사용자 승인 후 재계획
 
-## 7. Documentation Triggers
+## 8. Documentation Triggers
 
 | Trigger | Action |
 | --- | --- |
@@ -124,7 +137,7 @@ L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commi
 | Phase complete | STATUS archive 제안 |
 | Non-trivial issue resolved | `docs/troubleshooting/` 기록 제안 |
 
-## 8. TODO Decomposition
+## 9. TODO Decomposition
 
 TODO 파일은 큰 작업 하나의 내부 실행 계획이다. backlog나 STATUS를 대체하지 않는다.
 
@@ -153,7 +166,7 @@ docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md
 - `docs/TODO/PHASE2/P2-006-testcontainers.md`
 - `docs/TODO/PHASE2/PRE-C1-architecture-audit.md`
 
-## 9. Naming
+## 10. Naming
 
 | Prefix | Meaning |
 | --- | --- |
@@ -167,7 +180,7 @@ docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md
 
 ID를 다른 의미로 재사용하지 않는다.
 
-## 10. Never
+## 11. Never
 
 - 전체 repo를 먼저 스캔하지 않는다.
 - 모든 문서를 한 번에 읽지 않는다.

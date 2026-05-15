@@ -15,6 +15,15 @@
 | 미결 질문 | `docs/STATUS.md` Blockers/OQ |
 | 완료 이력 | `docs/archive/` |
 
+새 항목 등록은 `/register`로 수행한다. 긴급도와 성격에 따라 위 위치 중 적절한 곳으로 라우팅된다.
+
+| 긴급도 / 성격 | 라우팅 대상 |
+| --- | --- |
+| 지금 바로 착수 | `docs/STATUS.md` Active Work → `/work` 연결 |
+| 곧 할 것 | `docs/STATUS.md` Next Actions |
+| Product 작업 | `docs/backlog/PHASE2.md` |
+| Harness 작업 | `docs/backlog/HARNESS.md` |
+
 ## ID Prefixes
 
 | Prefix | Meaning | Home |

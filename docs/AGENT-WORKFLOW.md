@@ -67,6 +67,8 @@ Plan에는 Scope, Files, Verification, Risk, Reversal Cost를 포함한다.
 | 결정 근거 | `docs/decisions/DR-*.md` |
 | 완료된 과거 상태 | `docs/archive/` |
 
+새 작업 항목 등록은 `/register`로 수행한다. 긴급도와 성격에 따라 위 위치 중 적절한 곳에 라우팅된다.
+
 상세 기준: `docs/harness-protocol/03-work-items-and-naming.md`
 
 ## Risk Gate

@@ -24,6 +24,7 @@ NEVER:
 | --- | --- |
 | `/start` | Read `docs/STATUS.md` current sections and summarize current state, candidates, needed context, risks |
 | `/pick` | Route to `docs/backlog/PHASE2.md` or `docs/backlog/HARNESS.md`, compare candidates, recommend one |
+| `/register [설명]` | Register a new work item; route to STATUS Active Work / Next Actions / PHASE2.md / HARNESS.md based on urgency and type; propose STATUS Update if needed |
 | `/work <ID>` | Find the backlog item, declare risk level, propose scope/files/verification/risk, then wait for approval |
 | `/resume <ID>` | Compare `docs/STATUS.md` with actual files, report drift, and propose recovery before editing |
 | `/done` | Report completed work, changed files, validation, residual risk, STATUS update need, decision need, state, commit status |
