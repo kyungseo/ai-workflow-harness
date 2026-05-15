@@ -886,6 +886,8 @@ testcontainers.ryuk.disabled=true
 
 설정 후 `./gradlew test`가 정상 실행된다.
 
+원인 분석과 상세 절차는 [docs/troubleshooting/testcontainers-docker-desktop-4.73.md](troubleshooting/testcontainers-docker-desktop-4.73.md)를 참조한다.
+
 ---
 
 ## 5. 환경변수 레퍼런스

@@ -121,6 +121,7 @@ make create-service NAME=order-service
 | [docs/backlog/PHASE2.md](docs/backlog/PHASE2.md) | Product 및 Phase 2 준비 backlog |
 | [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) | AI workflow harness backlog |
 | [docs/decisions/](docs/decisions/) | Decision Records |
+| [docs/troubleshooting/](docs/troubleshooting/) | 증상별 원인 분석 및 조치 기록 |
 
 ## AI Workflow Harness
 
