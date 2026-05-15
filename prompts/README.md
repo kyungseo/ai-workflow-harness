@@ -49,7 +49,7 @@ Claude Code에서는 기본적으로 `.claude/commands/`를 먼저 사용하고,
 | 기능 설계 | `19-design-feature.prompt.md` |
 | 변경사항 요약 | `20-summarize-work.prompt.md` |
 
-### Spring Boot 백엔드
+### Spring Boot 백엔드 (`create-harness.sh --profile spring-boot` 사용 시)
 
 | 상황 | Prompt |
 | --- | --- |
@@ -108,4 +108,4 @@ Codex 사용 시:
 - 새 task prompt는 기존 frontmatter key를 유지한다: `id`, `purpose`, `portability`, `difficulty`, `inputs`, `output_contract`.
 - 범용 task prompt와 도구 특화 session prompt를 섞지 않는다.
 - 세션 시작 절차가 바뀌면 이 문서, `claude-session-start.md`, `cursor-session-start.md`, `codex-session-start.md`, `.claude/commands/` 정합성을 함께 확인한다.
-- Spring Boot 특화 prompt는 `io.kyungseo.msa` 패키지 규칙을 따른다.
+- profile 특화 prompt는 해당 프로젝트의 package/module 규칙에 맞게 조정한다.
