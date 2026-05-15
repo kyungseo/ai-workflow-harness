@@ -67,7 +67,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | 파일 | 역할 |
 | --- | --- |
 | [`CLAUDE.md`](../../CLAUDE.md) | Claude Code 공통 운영 계약. 짧고 재사용 가능하게 유지 |
-| [`docs/CLAUDE.md`](../CLAUDE.md) | 자동 로드되는 프로젝트 최소 운영 규칙 |
+| [`docs/AGENT-WORKFLOW.md`](../CLAUDE.md) | 자동 로드되는 프로젝트 최소 운영 규칙 |
 | [`docs/STATUS.md`](../STATUS.md) | 현재 상태판과 checkpoint 기준 |
 | [`docs/HARNESS-PROTOCOL.md`](../HARNESS-PROTOCOL.md) | Agent 실행 프로토콜 허브 |
 | [`docs/HARNESS-QUICK-REFERENCE.md`](../HARNESS-QUICK-REFERENCE.md) | 세션 중 빠르게 확인하는 실행 요약 |
@@ -134,7 +134,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 - [`docs/HARNESS-PROTOCOL.md`](../HARNESS-PROTOCOL.md)
 - [`docs/HARNESS-QUICK-REFERENCE.md`](../HARNESS-QUICK-REFERENCE.md)
 - [`docs/harness-protocol/`](../harness-protocol/)
-- [`docs/CLAUDE.md`](../CLAUDE.md)
+- [`docs/AGENT-WORKFLOW.md`](../CLAUDE.md)
 
 변경 내용:
 
@@ -147,7 +147,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 
 - 자동 로드 문서와 detailed protocol 사이의 중복이 적절한가?
 - "조건이 생기면 읽는다"는 라우팅이 충분히 명확한가?
-- `docs/CLAUDE.md`에 routing decision table을 더 강화해야 하는가?
+- `docs/AGENT-WORKFLOW.md`에 routing decision table을 더 강화해야 하는가?
 
 ### 5.3 Commands와 Rules
 
@@ -282,7 +282,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 예상 흐름:
 
 ```text
-CLAUDE.md -> docs/CLAUDE.md -> docs/STATUS.md -> /pick or /work -> plan -> approval -> execute -> validate -> /done
+CLAUDE.md -> docs/AGENT-WORKFLOW.md -> docs/STATUS.md -> /pick or /work -> plan -> approval -> execute -> validate -> /done
 ```
 
 평가:
@@ -321,7 +321,7 @@ prompts/cursor-session-start.md + .cursor/rules/*.mdc -> docs/STATUS.md -> backl
 예상 흐름:
 
 ```text
-prompts/codex-session-start.md -> CLAUDE.md -> docs/CLAUDE.md -> docs/STATUS.md -> manual command-equivalent flow
+prompts/codex-session-start.md -> CLAUDE.md -> docs/AGENT-WORKFLOW.md -> docs/STATUS.md -> manual command-equivalent flow
 ```
 
 평가:

@@ -28,6 +28,15 @@
         ]
       }
     ],
-    "Stop": []
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"print('[hook] 세션 종료 전 확인: /done 절차로 validation, STATUS Update Proposal 필요 여부, DR-worthy 결정, commit 상태를 보고했는지 확인하세요.')\""
+          }
+        ]
+      }
+    ]
   }
 }

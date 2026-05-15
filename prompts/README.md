@@ -8,7 +8,7 @@ Claude Code에서는 기본적으로 `.claude/commands/`를 먼저 사용하고,
 - `00~22 *.prompt.md`: Claude, Cursor, ChatGPT, Gemini 등에서 재사용 가능한 task prompt
 - `claude-session-start.md`: Claude Code slash command를 사용할 수 없는 환경의 fallback prompt
 - `cursor-session-start.md`: Cursor에서 현재 하네스 상태를 복원하는 bootstrap prompt
-- `codex-session-start.md`: Codex에서 현재 하네스 상태를 복원하는 bootstrap prompt
+- `codex-session-start.md`: `AGENTS.md`를 사용할 수 없거나 수동 복원이 필요한 환경의 fallback prompt
 
 ## 1) Prompt vs Command
 
@@ -18,7 +18,8 @@ Claude Code에서는 기본적으로 `.claude/commands/`를 먼저 사용하고,
 | `prompts/*.prompt.md` | 여러 AI 도구 | 기능 구현, 디버깅, 리팩토링, 리뷰 같은 task template |
 | `claude-session-start.md` | Claude fallback | slash command를 사용할 수 없을 때 세션 시작 |
 | `cursor-session-start.md` | Cursor | `.cursor/rules`와 하네스 상태를 함께 로드 |
-| `codex-session-start.md` | Codex | `.claude/commands`를 수동 절차로 해석해 세션 시작 |
+| `AGENTS.md` | Codex | repo-level entry point. 공통 규칙은 `docs/AGENT-WORKFLOW.md`로 위임 |
+| `codex-session-start.md` | Codex fallback | `.claude/commands`를 수동 절차로 해석해 세션 시작 |
 
 역할 경계가 애매한 prompt는 `docs/backlog/HARNESS.md`의 HRN-007에서 command 전환 여부를 판단한다.
 
@@ -81,7 +82,7 @@ Claude Code에서는 slash command가 기준이다.
 
 공통 context routing:
 
-1. `CLAUDE.md`, `docs/CLAUDE.md`, `docs/STATUS.md` 확인
+1. 도구별 진입점(`CLAUDE.md` 또는 `AGENTS.md`), `docs/AGENT-WORKFLOW.md`, `docs/STATUS.md` 확인
 2. Product 작업은 `docs/backlog/PHASE2.md` 또는 현재 Phase backlog 확인
 3. Harness 작업은 `docs/backlog/HARNESS.md` 확인
 4. Workflow rule 변경은 `docs/HARNESS-PROTOCOL.md`와 필요한 `docs/harness-protocol/*.md`만 확인
@@ -89,8 +90,9 @@ Claude Code에서는 slash command가 기준이다.
 
 Codex 사용 시:
 
+- repo root `AGENTS.md`를 기본 진입점으로 사용한다.
 - `.claude/commands/*`는 직접 실행하지 않고 같은 절차를 수동으로 따른다.
-- Codex 전용 프로젝트 instruction은 추후 `AGENTS.md` 도입 여부를 검토한다.
+- `codex-session-start.md`는 `AGENTS.md`를 사용할 수 없거나 수동 bootstrap이 필요한 환경의 fallback이다.
 
 ## 5) 품질 체크리스트
 

@@ -2,6 +2,7 @@
 paths:
   - "docs/**/*.md"
   - "CLAUDE.md"
+  - "AGENTS.md"
   - ".claude/**/*.md"
 ---
 
@@ -26,6 +27,6 @@ MUST:
 NEVER:
 
 - Turn `docs/STATUS.md` into a full changelog.
-- Duplicate long instruction blocks across `CLAUDE.md`, `docs/CLAUDE.md`.
+- Duplicate long instruction blocks across `CLAUDE.md`, `AGENTS.md`, `docs/AGENT-WORKFLOW.md`.
 - Mix product backlog items and harness backlog items without an explicit reason.
 - Edit `docs/STATUS.md` silently as an agent scratchpad.

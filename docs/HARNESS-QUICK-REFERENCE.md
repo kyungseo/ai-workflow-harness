@@ -1,7 +1,7 @@
 # Harness Quick Reference
 
 AI Workflow Harness의 일상 실행 규칙이다.
-상세 설명은 `docs/HARNESS-PROTOCOL.md`, 현재 리팩터링 계획은 `docs/HARNESS-REFACTOR-PLAN.md`를 따른다.
+상세 설명은 `docs/HARNESS-PROTOCOL.md`를 따른다.
 이 문서는 세션 중 빠르게 확인하는 요약이다. 충돌하거나 상세 판단이 필요하면 `docs/harness-protocol/*.md`를 우선한다.
 
 ## 1. Session Start
@@ -89,6 +89,8 @@ COMMIT 전 확인:
 - `git add <files>`
 - `git status`
 - `git diff --cached`
+
+L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commit에는 하나의 검증 가능한 목적을 담고, rollback plan은 commit 또는 단계 단위로 설명한다.
 
 ## 6. Failure Rules
 

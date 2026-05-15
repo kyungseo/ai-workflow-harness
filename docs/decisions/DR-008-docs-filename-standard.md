@@ -30,7 +30,7 @@ Status: Accepted
 
 - `docs/` 루트 파일 8개가 이미 UPPERCASE 패턴이었고, `coding-conventions.md` 1개만 이번 세션에서 생성된 예외였다.
 - 최소 변경 원칙에 따라 1개 파일만 rename하는 UPPERCASE 표준화를 선택했다.
-- `docs/archive/`는 STATUS → archive 이동 절차(`docs/CLAUDE.md`)에서 `phase{n}-status.md` 형식을 명시하므로 lowercase 유지가 자연스럽다.
+- `docs/archive/`는 STATUS → archive 이동 절차(`docs/AGENT-WORKFLOW.md`)에서 `phase{n}-status.md` 형식을 명시하므로 lowercase 유지가 자연스럽다.
 - 파일명 대소문자 혼용은 macOS(case-insensitive) 환경에서 git 추적 오류를 유발할 수 있다.
 
 ## Consequences

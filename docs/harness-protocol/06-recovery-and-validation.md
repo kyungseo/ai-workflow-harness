@@ -59,3 +59,10 @@ Commit 전:
 4. `git diff --cached`
 
 `VALIDATE` 실패 상태에서는 commit하지 않는다.
+
+L3 이상 작업은 논리 단계별 commit을 기본값으로 한다.
+
+- 한 commit은 하나의 검증 가능한 목적을 담는다.
+- 대형 문서·하네스 변경은 상태판, backlog, command/rule, protocol, prompt 같은 변경 축을 가능한 한 분리한다.
+- rollback plan은 파일 복구뿐 아니라 어떤 commit 또는 단계까지 되돌릴 수 있는지 설명한다.
+- 여러 축을 하나의 commit에 묶어야 한다면 이유와 부분 rollback 비용을 종료 요약에 남긴다.

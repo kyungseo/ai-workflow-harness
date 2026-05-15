@@ -9,7 +9,7 @@ alwaysApply: true
 Instruction priority:
 
 1. `CLAUDE.md` — global principles
-2. `docs/CLAUDE.md` — project operating rules
+2. `docs/AGENT-WORKFLOW.md` — project operating rules
 3. `.cursor/rules/*` — tool-specific rules
 
 MUST:

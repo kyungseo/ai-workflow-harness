@@ -14,7 +14,7 @@ docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾
 - DB schema 변경
 
 Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROTOCOL.md`와 관련 `docs/harness-protocol/*.md`를 필요한 범위만 로드해줘.
-진행 중인 harness refactor 계획 근거가 필요하면 `docs/HARNESS-REFACTOR-PLAN.md`를 확인해줘.
+완료된 harness refactor의 배경 근거가 필요할 때만 `docs/HARNESS-REFACTOR-PLAN.md`를 참고해줘.
 `HRN-*`, `PRE-*`, `DOC-*` 또는 계획·아이디어 성격이 강한 작업이면 `docs/retrospectives/`에서 최신/관련 회고 1개만 선택해 반복 리스크와 우선순위 근거를 확인해줘.
 
 **2. 위험도 판단**

@@ -4,7 +4,7 @@
 
 - **구현 금지**: 보고와 제안만 한다. 수정·생성·커밋은 사용자 승인 후에만 진행한다.
 - **STATUS 보호**: `docs/STATUS.md` 변경 필요가 발견되면 즉시 수정하지 말고 `STATUS Update Proposal`로 보고한다.
-- **컨텍스트 절약**: `CLAUDE.md`와 `docs/CLAUDE.md`는 세션 시작 시 자동 로드됨 — 재읽기 금지.
+- **컨텍스트 절약**: `CLAUDE.md`와 `docs/AGENT-WORKFLOW.md`는 세션 시작 시 자동 로드됨 — 재읽기 금지.
   파일 목록·상태 확인은 full read 대신 `ls`, `rg` 명령을 우선 사용한다.
 - **모드**:
   - (없음) → Quick 모드: A+B+E 영역, ~10개 타깃 읽기, 작업 블록 시작 전 사용
@@ -13,7 +13,7 @@
 ## 파일 읽기 순서
 
 **Phase 1 — 현재 상태 파악 (1개만)**
-`docs/STATUS.md` — CLAUDE.md·docs/CLAUDE.md는 이미 컨텍스트에 있으므로 스킵.
+`docs/STATUS.md` — CLAUDE.md·docs/AGENT-WORKFLOW.md는 이미 컨텍스트에 있으므로 스킵.
 
 **Phase 2 — 워크플로우 구조 파악 (목록 우선)**
 ```bash
@@ -25,6 +25,9 @@ ls .claude/rules/       # 파일 수·이름 확인
 **Phase 3 — 문서 파악 (섹션 단위)**
 `docs/HARNESS-PROTOCOL.md` (문서 지도·아이템 위치 결정표만) → `README.md` (구조 블록·AI workflow 섹션만)
 → `docs/PLAN-SUMMARY.md` (기술 스택 테이블만)
+
+(조건부) Validation, STATUS Update Proposal, Commit Gate 정합성 확인이 필요하면
+`docs/harness-protocol/06-recovery-and-validation.md`의 해당 섹션만 읽는다.
 
 **Phase 4 — 정렬 파악 (--full 시에만)**
 `.cursor/rules/*.mdc` (frontmatter paths만) → `prompts/README.md` (인덱스만, 개별 파일 금지)
@@ -48,8 +51,9 @@ rg -n "^# |^Status:" docs/decisions
 - 각 slash command: 트리거 조건 명확성, Done Criteria 존재, 승인 대기 명시 여부
   (Phase 2에서 목록 확인 후 의심 항목만 내용 확인)
 - 각 `.claude/rules/*.md`: `paths` glob이 실제 디렉토리 구조와 일치하는가
-- `docs/CLAUDE.md` 워크플로우 기술 ↔ 실제 command 구현 사이 gap
-  (이미 컨텍스트에 있는 docs/CLAUDE.md 기준으로 확인)
+- `docs/AGENT-WORKFLOW.md` 워크플로우 기술 ↔ 실제 command 구현 사이 gap
+  (이미 컨텍스트에 있는 docs/AGENT-WORKFLOW.md 기준으로 확인)
+- command/prompt 종료 요약 ↔ `docs/harness-protocol/06-recovery-and-validation.md`의 Validation Checklist, STATUS Update Proposal, Commit Gate 정합성
 - STATUS.md Active Work 항목: Done Criteria + Verification 모두 존재하는가
 - DR 생애주기 양방향: STATUS.md Recent Decisions ↔ `rg` 결과의 DR Status 일치
 

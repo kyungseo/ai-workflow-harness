@@ -648,7 +648,7 @@ Phase 2부터 Claude Code / Cursor 기반 AI workflow를 적극 활용한다.
 
 ### 기술 결정 기록 (Decision Records)
 
-`docs/decisions/DR-XXX.md` 형식. DR-worthy 기준은 `docs/CLAUDE.md` 요약과 `docs/harness-protocol/05-triggers-and-cascade.md`를 참조한다.
+`docs/decisions/DR-XXX.md` 형식. DR-worthy 기준은 `docs/AGENT-WORKFLOW.md` 요약과 `docs/harness-protocol/05-triggers-and-cascade.md`를 참조한다.
 
 | DR | 결정 내용 | Status |
 |---|---|---|

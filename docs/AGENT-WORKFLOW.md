@@ -1,12 +1,14 @@
-# docs/CLAUDE.md
+# docs/AGENT-WORKFLOW.md
 
-Claude Code의 프로젝트 운영 규칙이다.
-이 파일은 루트 `CLAUDE.md`에서 자동 import되므로 짧고 실행 중심으로 유지한다.
+Claude Code, Codex, Cursor의 공통 프로젝트 운영 규칙이다.
+루트 `CLAUDE.md`와 `AGENTS.md`는 동등한 도구별 진입점이며, 공유 규칙은 이 파일과 상세 harness protocol 문서가 담당한다.
 상세 레퍼런스는 `docs/HARNESS-PROTOCOL.md`를 따른다.
 
 ## Session Startup
 
-Claude Code는 세션 시작 시 `CLAUDE.md`와 이 파일을 자동 로드한다.
+Claude Code는 세션 시작 시 `CLAUDE.md`를 통해 이 파일을 로드한다.
+Codex는 세션 시작 시 `AGENTS.md`를 통해 이 파일을 참조한다.
+Cursor는 session prompt와 `.cursor/rules/`를 통해 이 파일을 참조한다.
 세션 시작 시 harness protocol 전체를 읽지 않는다. 필요한 조건이 생길 때만 `docs/HARNESS-PROTOCOL.md` 또는 상세 문서를 로드한다.
 
 MUST:

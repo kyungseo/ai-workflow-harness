@@ -43,8 +43,9 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 
 | 문서 | 역할 |
 | --- | --- |
-| `CLAUDE.md` | Claude Code 공통 계약, 자동 로드 |
-| `docs/CLAUDE.md` | 자동 로드되는 최소 운영 규칙 |
+| `CLAUDE.md` | Claude Code 진입점, 자동 로드 |
+| `AGENTS.md` | Codex 진입점 |
+| `docs/AGENT-WORKFLOW.md` | 도구 공통 운영 규칙 |
 | `docs/STATUS.md` | 현재 상태 live board |
 | `docs/HARNESS-QUICK-REFERENCE.md` | 일상 실행 카드 |
 | `docs/backlog/PHASE2.md` | product/Phase2 후보 작업 |

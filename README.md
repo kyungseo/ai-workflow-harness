@@ -129,7 +129,8 @@ This repository includes a lightweight state-machine-based AI development workfl
 | Document | Purpose |
 | --- | --- |
 | [CLAUDE.md](CLAUDE.md) | Root Claude Code contract |
-| [docs/CLAUDE.md](docs/CLAUDE.md) | Project-specific minimal runtime rules |
+| [AGENTS.md](AGENTS.md) | Root Codex contract |
+| [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) | Shared agent operating rules |
 | [docs/STATUS.md](docs/STATUS.md) | Live project state |
 | [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) | Harness protocol hub |
 | [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) | Daily execution quick reference |
