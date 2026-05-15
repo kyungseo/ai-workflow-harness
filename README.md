@@ -3,7 +3,7 @@
 Spring Boot 3.5 + Spring Cloud 2025 기반 MSA 스캐폴딩 템플릿입니다.
 API Gateway, JWT token rotation, Redis rate limiting, MyBatis, PostgreSQL, Vanilla JS frontend, Checkstyle, GitHub Actions CI, Claude/Cursor AI workflow harness를 포함합니다.
 
-## Features
+## 주요 기능
 
 - Spring Boot 3.5, Java 21, Gradle Kotlin DSL multi-module
 - Spring Cloud Gateway 단일 진입점
@@ -14,9 +14,9 @@ API Gateway, JWT token rotation, Redis rate limiting, MyBatis, PostgreSQL, Vanil
 - Checkstyle + Git hooks + GitHub Actions CI
 - Claude Code / Cursor workflow harness
 
-## Tech Stack
+## 기술 스택
 
-| Area | Stack |
+| 영역 | 스택 |
 | --- | --- |
 | Runtime | Java 21, Spring Boot 3.5.0 |
 | Gateway | Spring Cloud Gateway 2025.0.0 |
@@ -27,28 +27,28 @@ API Gateway, JWT token rotation, Redis rate limiting, MyBatis, PostgreSQL, Vanil
 | CI | GitHub Actions |
 | Frontend | Vanilla JS, Bootstrap 5.3 |
 
-## Requirements
+## 사전 요건
 
 - Docker Desktop 4.x+
 - JDK 21+
 - GNU Make
-- Python 3 for local frontend serving
+- Python 3 (frontend 로컬 서빙용)
 
-## Quick Start
+## 빠른 시작
 
 ```bash
 cp .env.example .env
 ```
 
-Edit required values in `.env`:
+`.env`에 필수 값을 입력한다:
 
 ```bash
-JWT_SECRET=<256-bit random string>
-DB_USERNAME=<postgres username>
-DB_PASSWORD=<postgres password>
+JWT_SECRET=<256-bit 랜덤 문자열>
+DB_USERNAME=<postgres 사용자명>
+DB_PASSWORD=<postgres 비밀번호>
 ```
 
-Install hooks and run the full stack:
+Git hooks 설치 후 전체 스택 기동:
 
 ```bash
 sh tools/git-hooks/install.sh
@@ -58,7 +58,7 @@ make run
 make ps
 ```
 
-Verify:
+동작 확인:
 
 ```bash
 curl -s http://localhost:8090/actuator/health
@@ -68,30 +68,30 @@ curl -s http://localhost:8090/api/v1/auth/login \
   -d '{"username":"admin","password":"admin","deviceId":"test"}'
 ```
 
-Run the frontend:
+Frontend 실행:
 
 ```bash
 cd frontend/web-app
 python3 -m http.server 3000
 ```
 
-Open `http://localhost:3000/login.html`.
-Initial users are `admin / admin` and `user / user`.
+`http://localhost:3000/login.html`에 접속한다.
+초기 사용자는 `admin / admin`, `user / user`이다.
 
-## Services
+## 서비스 구성
 
-| Service | Port | Role |
+| 서비스 | 포트 | 역할 |
 | --- | --- | --- |
-| api-gateway | 8090 | Routing, JWT validation, rate limiting |
-| auth-service | 8091 | Login, refresh, logout, blacklist |
-| user-service | 8092 | User CRUD and RBAC sample |
-| todo-service | 8093 | Todo CRUD sample |
-| PostgreSQL | 5432 | Shared DB for Phase 1 |
-| Redis | 6379 | Refresh tokens, blacklist, rate limits |
+| api-gateway | 8090 | 라우팅, JWT 검증, rate limiting |
+| auth-service | 8091 | 로그인, refresh, logout, blacklist |
+| user-service | 8092 | 사용자 CRUD, RBAC 샘플 |
+| todo-service | 8093 | Todo CRUD 샘플 |
+| PostgreSQL | 5432 | Phase 1 공용 DB |
+| Redis | 6379 | Refresh token, blacklist, rate limit |
 | Actuator | 8099 | Management port |
-| Frontend | 3000 | Static web app |
+| Frontend | 3000 | 정적 웹 앱 |
 
-## Common Commands
+## 자주 쓰는 명령
 
 ```bash
 cd scripts
@@ -108,56 +108,75 @@ make build
 make create-service NAME=order-service
 ```
 
-## Documentation
+## 문서
 
-| Document | Purpose |
+| 문서 | 역할 |
 | --- | --- |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | System architecture and Mermaid diagrams |
-| [docs/DEVELOPER-GUIDE.md](docs/DEVELOPER-GUIDE.md) | Local setup, service/API/test procedures |
-| [docs/CODING-CONVENTIONS.md](docs/CODING-CONVENTIONS.md) | Coding convention SSOT |
-| [docs/DOCKERFILE-GUIDE.md](docs/DOCKERFILE-GUIDE.md) | Dockerfile explanation and improvement points |
-| [docs/PLAN-SUMMARY.md](docs/PLAN-SUMMARY.md) | Lightweight stack and architecture summary |
-| [docs/PLAN.md](docs/PLAN.md) | Full technical rationale |
-| [docs/backlog/PHASE2.md](docs/backlog/PHASE2.md) | Product and Phase2 preparation backlog |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 시스템 아키텍처 및 Mermaid 다이어그램 |
+| [docs/DEVELOPER-GUIDE.md](docs/DEVELOPER-GUIDE.md) | 로컬 설정, 서비스/API/테스트 절차 |
+| [docs/CODING-CONVENTIONS.md](docs/CODING-CONVENTIONS.md) | 코딩 컨벤션 SSOT |
+| [docs/DOCKERFILE-GUIDE.md](docs/DOCKERFILE-GUIDE.md) | Dockerfile 설명 및 개선 포인트 |
+| [docs/PLAN-SUMMARY.md](docs/PLAN-SUMMARY.md) | 스택 및 아키텍처 요약 |
+| [docs/PLAN.md](docs/PLAN.md) | 전체 기술 근거 |
+| [docs/backlog/PHASE2.md](docs/backlog/PHASE2.md) | Product 및 Phase 2 준비 backlog |
 | [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) | AI workflow harness backlog |
 | [docs/decisions/](docs/decisions/) | Decision Records |
 
 ## AI Workflow Harness
 
-This repository includes a lightweight state-machine-based AI development workflow.
+경량 상태 머신 기반 AI 개발 workflow가 포함되어 있다.
 
-| Document | Purpose |
+| 문서 | 역할 |
 | --- | --- |
-| [CLAUDE.md](CLAUDE.md) | Root Claude Code contract |
-| [AGENTS.md](AGENTS.md) | Root Codex contract |
-| [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) | Shared agent operating rules |
-| [docs/STATUS.md](docs/STATUS.md) | Live project state |
-| [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) | Harness protocol hub |
-| [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) | Daily execution quick reference |
-| [docs/harness-protocol/](docs/harness-protocol/) | Detailed protocol modules |
-| [prompts/README.md](prompts/README.md) | Reusable prompt library guide |
+| [CLAUDE.md](CLAUDE.md) | Claude Code 진입점 |
+| [AGENTS.md](AGENTS.md) | Codex 진입점 |
+| [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) | 공통 운영 규칙 |
+| [docs/STATUS.md](docs/STATUS.md) | 현재 프로젝트 상태 |
+| [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) | Harness protocol 허브 |
+| [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) | 일상 실행 빠른 참조 |
+| [docs/harness-protocol/](docs/harness-protocol/) | 상세 protocol 모듈 |
+| [prompts/README.md](prompts/README.md) | 재사용 prompt 라이브러리 |
 
-Claude Code slash commands live in `.claude/commands/`.
-Cursor rules live in `.cursor/rules/`.
+Claude Code slash command는 `.claude/commands/`에 있다.
+Cursor rules는 `.cursor/rules/`에 있다.
 
-## Testing
+## 테스트
+
+통합 테스트는 Testcontainers로 자급자족한다. `docker compose up` 없이 실행 가능하다.
 
 ```bash
-cd scripts
-make run-local
-make test
+./gradlew test
 ```
 
-Current integration tests use local PostgreSQL and Redis containers.
-DR-010 accepted Testcontainers as the target strategy; implementation is tracked in [P2-006](docs/backlog/PHASE2.md).
+PostgreSQL, Redis 컨테이너를 테스트 실행 시 자동 기동한다.
+
+### Docker Desktop 4.73.0+ 로컬 설정 (macOS)
+
+Docker Desktop 4.73.0은 최소 지원 API 버전을 1.40으로 상향했다. Testcontainers 내장 docker-java가 구버전을 기본값으로 사용하므로 아래 두 파일을 생성해야 한다.
+
+**`~/.docker-java.properties`** (신규 생성)
+
+```properties
+api.version=1.41
+```
+
+**`~/.testcontainers.properties`** (없으면 신규 생성, 있으면 아래 항목 추가)
+
+```properties
+docker.host=unix:///var/run/docker.sock
+docker.api.version=1.41
+testcontainers.ryuk.disabled=true
+```
+
+설정 후 `./gradlew test`가 정상 실행된다.
 
 ## CI
 
-GitHub Actions runs Checkstyle on `develop` pushes.
-Tests run after lint on `main` pushes and PRs targeting `main`.
+`develop` push 시 Checkstyle을 실행한다.
+`main` push 또는 `main` 대상 PR에서 `lint → test` 순서로 실행된다.
 
-See [.github/workflows/ci.yml](.github/workflows/ci.yml).
+[.github/workflows/ci.yml](.github/workflows/ci.yml) 참조.
 
-## License
+## 라이선스
 
-See [LICENSE.txt](LICENSE.txt).
+[LICENSE.txt](LICENSE.txt) 참조.

@@ -821,21 +821,25 @@ class OrderControllerTest {
 > 이 필터가 없으면 컨트롤러 실행 시점에 이미 SecurityContext가 비어 있다.  
 > `SecurityContextHolder.getContext().setAuthentication(auth)`로 직접 설정하면 항상 동작한다.
 
-### 4-3. 통합 테스트 (@SpringBootTest)
+### 4-3. 통합 테스트 (@SpringBootTest + Testcontainers)
 
-실제 PostgreSQL이 필요하다. `make run-local`로 infra를 기동한 후 실행한다.
+P2-006(DR-010 Accepted)으로 Testcontainers 전환 완료. `make run-local` 없이 `./gradlew test`만으로 실행된다.
 
 ```java
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
+@AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Transactional
+@Testcontainers
 class OrderIntegrationTest {
+
+    @Container
+    @ServiceConnection
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16");
 
     @Autowired private MockMvc mockMvc;
 
     @Test
     void createOrder_success() throws Exception {
-        // per-request 방식으로 인증 지정 (SecurityContextHolderFilter 충돌 방지)
         mockMvc.perform(
             post("/api/v1/orders")
                 .with(authentication(buildAuth(1L, "ROLE_USER")))
@@ -846,18 +850,41 @@ class OrderIntegrationTest {
 }
 ```
 
-`test/resources/application-test.yml`:
+`test/resources/application-test.yml`에는 datasource URL/username/password를 기재하지 않는다. `@ServiceConnection`이 컨테이너에서 자동 주입한다.
 
-```yaml
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/msa_db  # 로컬 컨테이너
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+Redis가 필요한 서비스(auth-service)는 `GenericContainer` + `@DynamicPropertySource`를 추가한다:
+
+```java
+@Container
+static GenericContainer<?> redis =
+    new GenericContainer<>(DockerImageName.parse("redis:7")).withExposedPorts(6379);
+
+@DynamicPropertySource
+static void redisProperties(DynamicPropertyRegistry registry) {
+    registry.add("spring.data.redis.host", redis::getHost);
+    registry.add("spring.data.redis.port", () -> redis.getMappedPort(6379));
+}
 ```
 
-> **현재 상태**: DR-010에서 Testcontainers 채택은 확정되었지만, 실제 전환은 `docs/backlog/PHASE2.md`의 `P2-006`에서 수행한다.<br>
-> 전환 전까지 통합 테스트는 `make run-local`로 기동한 로컬 컨테이너를 직접 사용한다.
+#### Docker Desktop 4.73.0+ 로컬 설정
+
+Docker Desktop 4.73.0은 최소 API 버전을 1.40으로 상향했다. Testcontainers 내장 docker-java가 구버전을 기본값으로 사용하므로 아래 파일을 생성해야 한다.
+
+**`~/.docker-java.properties`** (신규 생성)
+
+```properties
+api.version=1.41
+```
+
+**`~/.testcontainers.properties`** (없으면 신규 생성, 있으면 아래 항목 추가)
+
+```properties
+docker.host=unix:///var/run/docker.sock
+docker.api.version=1.41
+testcontainers.ryuk.disabled=true
+```
+
+설정 후 `./gradlew test`가 정상 실행된다.
 
 ---
 
