@@ -831,17 +831,138 @@ prompts/
 
 ## 8. 신규 프로젝트 초기화
 
-이 구조를 새 프로젝트에 적용할 때의 단계별 체크리스트다.
+이 구조를 새 프로젝트 또는 기존 프로젝트에 적용하는 두 가지 케이스를 다룬다.
 핵심은 `CLAUDE.md`와 `docs/AGENT-WORKFLOW.md`는 작게 유지하고, 실제 하네스 운영 규칙은 `docs/HARNESS-PROTOCOL.md`와 `docs/harness-protocol/`로 분리하는 것이다.
 
-### 전제 조건
+### 빠른 시작 — 스캐폴딩 스크립트
+
+`scripts/create-harness.sh`로 하네스 파일 구조를 자동 생성한다.
+
+#### 케이스 A — 신규 프로젝트
+
+아무것도 없는 상태에서 시작한다. 스크립트가 모든 하네스 파일과 빈 skeleton 문서를 생성한다.
+
+```bash
+# 기본: temp/my-app/ 하위에 생성
+scripts/create-harness.sh my-app
+
+# 경로 직접 지정
+scripts/create-harness.sh my-app /path/to/my-app
+
+# 생성 파일 목록 미리 확인 (실제 생성 안 함)
+scripts/create-harness.sh --dry-run my-app
+```
+
+생성 후 필수 입력 파일:
+
+```
+docs/STATUS.md         ← 프로젝트 목표와 Phase 1 설명
+docs/PLAN-SUMMARY.md   ← 기술 스택, 포트, 패키지 구조
+docs/backlog/PHASE1.md ← 초기 작업 항목 P1-001~
+```
+
+#### 케이스 B — 기존 프로젝트
+
+이미 코드가 있는 프로젝트에 하네스를 추가한다. `--existing` 플래그를 사용하면 **기존 파일을 덮어쓰지 않고** 하네스 파일만 추가한다.
+
+```bash
+# 기존 프로젝트 루트에 하네스 추가
+scripts/create-harness.sh --existing my-app /path/to/existing-project
+
+# 추가될 파일 목록 미리 확인
+scripts/create-harness.sh --dry-run --existing my-app /path/to/existing-project
+```
+
+기존 파일이 없으면 생성, 있으면 건너뜀. 실행 후 `docs/STATUS.md`, `docs/PLAN-SUMMARY.md`, `docs/backlog/PHASE1.md`를 기존 프로젝트 상태에 맞게 채운다.
+
+#### 스크립트 포함 파일
+
+| 파일 / 디렉토리 | 방식 | 비고 |
+| --- | --- | --- |
+| `CLAUDE.md`, `AGENTS.md` | 복사 | `base-msa-template` → 프로젝트명 치환 |
+| `.claudeignore`, `.cursorignore`, `.gitignore` | 복사 | 범용 — 언어 무관 |
+| `README.md` | 생성 | 하네스 skeleton (프로젝트 설명 placeholder 포함) |
+| `docs/AGENT-WORKFLOW.md`, `HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `WORKFLOW-MANUAL.md` | 복사 | — |
+| `docs/harness-protocol/01~06-*.md` | 복사 | — |
+| `docs/STATUS.md`, `PLAN.md`, `PLAN-SUMMARY.md` | 생성 | 빈 skeleton |
+| `docs/backlog/PHASE1.md`, `HARNESS.md` | 생성 | 빈 skeleton |
+| `docs/decisions/DECISION-TEMPLATE.md` | 복사 | DR 템플릿만 (기존 DR은 제외) |
+| `.claude/settings.json` | 생성 | Stop hook만 포함한 범용 버전 |
+| `.claude/rules/*.md`, `.claude/commands/*.md` | 복사 | — |
+| `.cursor/rules/*.mdc` | 복사 | — |
+| `prompts/*.md` | 복사 | Spring Boot 전용 10개 포함 → 불필요 시 삭제 |
+
+스크립트가 복사하지 않는 것: 현재 Phase 데이터(`PHASE2.md`), 프로젝트 특화 DR(`DR-*.md`), 과거 이력(`docs/archive/`).
+
+---
+
+### 첫 세션 가이드
+
+#### 케이스 A — 신규 프로젝트 첫 세션
+
+스캐폴딩 직후 `docs/STATUS.md`, `docs/PLAN-SUMMARY.md`, `docs/backlog/PHASE1.md`가 비어 있다. Claude에게 채워달라고 요청하는 것이 가장 빠르다.
+
+```text
+docs/AGENT-WORKFLOW.md와 docs/STATUS.md를 읽어줘.
+
+새 프로젝트 정보:
+- 목표: [한 문장]
+- 기술 스택: [언어, 프레임워크, DB, 배포 환경]
+- Phase 1 초기 범위: [첫 단계에서 만들 것]
+- 제약 조건: [성능, 보안, 일정 등 있다면]
+
+이 정보를 바탕으로 아래 파일을 채울 내용을 STATUS Update Proposal 형식으로 제안해줘.
+- docs/STATUS.md: Phase 목표, 첫 Active Work 항목
+- docs/PLAN-SUMMARY.md: 기술 스택, 포트, 패키지 구조 초안
+- docs/backlog/PHASE1.md: 초기 P1-001~ 항목
+
+파일 수정은 내 승인 전까지 하지 마.
+```
+
+승인 후 바로 작업으로 이어갈 수 있다:
+
+```bash
+/start          # STATUS 확인 및 현재 상태 요약
+/pick           # 첫 작업 후보 추천
+/work P1-001    # 선택한 작업 계획 수립
+```
+
+#### 케이스 B — 기존 프로젝트 첫 세션
+
+하네스가 설치되었지만 skeleton 문서는 비어 있다. 먼저 기존 코드베이스를 파악하고 현재 상태를 반영한 문서를 만든다.
+
+```text
+docs/AGENT-WORKFLOW.md와 docs/STATUS.md를 읽어줘.
+
+기존 프로젝트에 하네스를 새로 적용했어. 먼저 현황을 파악해야 해.
+
+아래 파일을 읽어서 프로젝트 구조를 파악해줘:
+- [기존 README 또는 기술 명세 파일]
+- [주요 설정 파일 — package.json / build.gradle.kts / pyproject.toml 등]
+- [소스 디렉토리 구조가 보이는 파일]
+
+파악한 내용을 바탕으로 아래를 STATUS Update Proposal 형식으로 제안해줘:
+- docs/STATUS.md: 현재 Phase, 진행 상태, 남은 작업 요약
+- docs/PLAN-SUMMARY.md: 현재 기술 스택, 포트, 패키지 구조
+- docs/backlog/PHASE1.md: 남은 작업 항목 P1-001~
+
+파일 수정은 내 승인 전까지 하지 마.
+```
+
+Claude가 코드베이스를 파악하고 STATUS Update Proposal을 제시하면 승인한다. 이후 `/pick`으로 작업을 선택해 바로 이어갈 수 있다.
+
+---
+
+### 수동 초기화 체크리스트
+
+스크립트를 사용하지 않고 수동으로 구성할 때 참고한다.
+
+#### 전제 조건
 
 - Claude Code CLI 설치 완료
 - Git 저장소 초기화 완료
 - 프로젝트 목표, 기술 스택, 초기 범위(Phase 1 범위) 확정
 - product 작업과 harness 작업을 분리해 관리할지 결정
-
-### 체크리스트
 
 #### Step 1 — 핵심 Instruction 파일
 
@@ -990,9 +1111,9 @@ prompts/
 # → 이상 없으면 개발 시작
 ```
 
-### 신규 프로젝트 초기화 프롬프트
+### Claude 보조 초기화 프롬프트
 
-새 프로젝트에서 Claude에게 이 구조를 설계하도록 요청할 때:
+기존 또는 신규 프로젝트에서 Claude에게 docs/ 구조 설계를 요청할 때:
 
 ```
 이 저장소의 Claude 운영 구조를 참고해서 새 프로젝트용 AI 작업 문서 구조를 설계해줘.

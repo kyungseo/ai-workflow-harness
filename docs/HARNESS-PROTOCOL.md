@@ -48,7 +48,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | `docs/AGENT-WORKFLOW.md` | 도구 공통 운영 규칙 |
 | `docs/STATUS.md` | 현재 상태 live board |
 | `docs/HARNESS-QUICK-REFERENCE.md` | 일상 실행 카드 |
-| `docs/backlog/PHASE2.md` | product/Phase2 후보 작업 |
+| `docs/backlog/PHASE{n}.md` | product/Phase{n} 후보 작업 |
 | `docs/backlog/HARNESS.md` | harness, command/rule, automation 후보 |
 | `docs/PLAN.md` | WHY, Phase/아키텍처 근거 |
 | `docs/ARCHITECTURE.md` | WHAT, 현재 구조 |
@@ -62,8 +62,8 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | 발생한 아이템 | 기록 위치 |
 | --- | --- |
 | 지금 진행 중인 작업 | `docs/STATUS.md` Active Work |
-| 다음에 할 product 후보 | `docs/backlog/PHASE2.md` |
-| Phase 진입 전 선행 작업 | `docs/backlog/PHASE2.md` Preparation Candidates |
+| 다음에 할 product 후보 | `docs/backlog/PHASE{n}.md` |
+| Phase 진입 전 선행 작업 | `docs/backlog/PHASE{n}.md` Preparation Candidates |
 | 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
 | 한 작업의 세부 실행 계획 | `docs/TODO/PHASE{n}/{BACKLOG-ID}-{topic}.md` |
 | 확정된 기술 결정 | `docs/decisions/DR-*.md` |
