@@ -5,12 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 
@@ -18,14 +22,15 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/**
- * 통합 테스트: 로컬 실행 중인 PostgreSQL 컨테이너 사용 (test 프로파일).
- * 사전 조건: docker compose up postgres 기동 상태
- */
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Testcontainers
 class UserIntegrationTest {
+
+    @Container
+    @ServiceConnection
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16");
 
     @Autowired MockMvc mockMvc;
     @Autowired ObjectMapper objectMapper;
