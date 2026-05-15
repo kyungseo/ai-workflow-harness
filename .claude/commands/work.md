@@ -1,6 +1,6 @@
 docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾아 계획을 세워줘.
 
-- `P2-*`, `PRE-*`: docs/backlog/PHASE2.md
+- `P{n}-*`, `PRE-*`: docs/backlog/PHASE{n}.md
 - `HRF-*`, `HRN-*`: docs/backlog/HARNESS.md
 - 항목 위치가 불명확하면 두 backlog에서 ID만 검색하고, 관련 없는 상세는 읽지 마.
 

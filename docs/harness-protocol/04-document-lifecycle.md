@@ -13,7 +13,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | Document | Role |
 | --- | --- |
 | `docs/STATUS.md` | 현재 상태 |
-| `docs/backlog/PHASE2.md` | Product 후보 작업 |
+| `docs/backlog/PHASE{n}.md` | Product 후보 작업 |
 | `docs/backlog/HARNESS.md` | Harness 후보 작업 |
 | `docs/TODO/PHASE{n}/` | 대형 작업 내부 계획 |
 | `docs/decisions/` | 결정 근거 |

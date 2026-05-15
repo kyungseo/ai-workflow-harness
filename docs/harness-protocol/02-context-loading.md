@@ -13,7 +13,7 @@
 | --- | --- |
 | 현재 상태 | `docs/STATUS.md` |
 | 실행 규칙 빠른 확인 | `docs/HARNESS-QUICK-REFERENCE.md` |
-| product/Phase2 후보 | `docs/backlog/PHASE2.md` |
+| product/Phase{n} 후보 | `docs/backlog/PHASE{n}.md` |
 | harness 후보 | `docs/backlog/HARNESS.md` |
 | 아키텍처 요약 | `docs/PLAN-SUMMARY.md` |
 | L3 또는 상세 근거 | `docs/PLAN.md` |

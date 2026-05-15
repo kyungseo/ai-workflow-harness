@@ -1,6 +1,6 @@
 docs/STATUS.md를 확인한 뒤, 작업 성격에 맞는 backlog를 선택해 우선순위가 높은 후보 작업을 검토해줘.
 
-- Product / Phase2 작업: docs/backlog/PHASE2.md
+- Product 작업: docs/backlog/PHASE{n}.md
 - Harness / workflow 작업: docs/backlog/HARNESS.md
 - 성격이 불명확하면 두 backlog의 제목과 우선순위만 비교하고, 불필요한 상세 로드는 하지 마.
 

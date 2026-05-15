@@ -7,8 +7,8 @@
 | Item | Location |
 | --- | --- |
 | 지금 진행 중인 작업 | `docs/STATUS.md` Active Work |
-| 다음 product 후보 | `docs/backlog/PHASE2.md` |
-| Phase 진입 전 선행 작업 | `docs/backlog/PHASE2.md` Preparation Candidates |
+| 다음 product 후보 | `docs/backlog/PHASE{n}.md` |
+| Phase 진입 전 선행 작업 | `docs/backlog/PHASE{n}.md` Preparation Candidates |
 | harness/command/rule/hook 개선 | `docs/backlog/HARNESS.md` |
 | 큰 작업 내부 계획 | `docs/TODO/PHASE{n}/{BACKLOG-ID}-{topic}.md` |
 | 기술 결정 | `docs/decisions/DR-*.md` |
@@ -21,7 +21,7 @@
 | --- | --- |
 | 지금 바로 착수 | `docs/STATUS.md` Active Work → `/work` 연결 |
 | 곧 할 것 | `docs/STATUS.md` Next Actions |
-| Product 작업 | `docs/backlog/PHASE2.md` |
+| Product 작업 | `docs/backlog/PHASE{n}.md` |
 | Harness 작업 | `docs/backlog/HARNESS.md` |
 
 ## ID Prefixes

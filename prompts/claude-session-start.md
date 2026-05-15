@@ -8,7 +8,7 @@ Claude Code 안에서는 `.claude/commands/`의 `/start`, `/pick`, `/work`, `/do
 - `CLAUDE.md`와 `docs/AGENT-WORKFLOW.md`를 먼저 따른다.
 - 현재 상태는 `docs/STATUS.md`를 기준으로 해석한다.
 - 상세 하네스 규칙은 `docs/HARNESS-PROTOCOL.md`와 필요한 `docs/harness-protocol/*.md`만 읽는다.
-- Product 작업은 `docs/backlog/PHASE2.md`, harness 작업은 `docs/backlog/HARNESS.md`로 분기한다.
+- Product 작업은 `docs/backlog/PHASE{n}.md`, harness 작업은 `docs/backlog/HARNESS.md`로 분기한다.
 - 구현 전에는 plan, verification, risk, reversal cost를 보고하고 승인 대기한다.
 
 ---
@@ -38,7 +38,7 @@ CLAUDE.md와 docs/AGENT-WORKFLOW.md를 읽어줘.
 CLAUDE.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 확인해줘.
 작업 성격에 따라 다음 backlog 중 하나를 선택해 검토해줘.
 
-- product 또는 Phase 준비 작업: docs/backlog/PHASE2.md
+- product 또는 Phase 준비 작업: docs/backlog/PHASE{n}.md
 - harness, command/rule, workflow hardening: docs/backlog/HARNESS.md
 
 후보 우선순위가 비슷하거나 harness/plan/idea 성격의 작업을 고르는 경우,

@@ -88,7 +88,7 @@ rg -n "^# |^Status:" docs/decisions
 ### E. 백로그/DR 위생
 
 - STATUS.md Active Work: Verification 완료되었으나 Done 처리가 지연된 항목
-- `docs/backlog/PHASE2.md`: product/preparation 항목 중 선행 조건이 이미 충족된 항목, 범위·우선순위 재검토 필요 항목
+- `docs/backlog/PHASE{n}.md`: product/preparation 항목 중 선행 조건이 이미 충족된 항목, 범위·우선순위 재검토 필요 항목
 - `docs/backlog/HARNESS.md`: harness 항목 중 완료되었거나 새 상태 머신과 충돌하는 항목, hard enforcement 후보
 - DR 상태 확인 (Phase 5 `rg` 결과 재사용):
   - Draft 상태이나 결정이 실질적으로 완료된 DR → Accepted 처리 필요
@@ -101,7 +101,7 @@ rg -n "^# |^Status:" docs/decisions
   - 통합 후보: 동일·유사 주제 복수 DR (1단계 필터 후 확인)
   - Superseded 후보: 이후 결정으로 실질적으로 대체되었으나 Accepted 유지
   - 후보 발견 시, cascade 업데이트 대상을 함께 제시:
-    `docs/STATUS.md` / 관련 backlog(`PHASE2.md` 또는 `HARNESS.md`) DR 참조 항목 /
+    `docs/STATUS.md` / 관련 backlog(`PHASE{n}.md` 또는 `HARNESS.md`) DR 참조 항목 /
     `docs/PLAN-SUMMARY.md` DR 범위 / 연관 DR 파일
 
 ### F. 구현 반영 현행화 (--full)

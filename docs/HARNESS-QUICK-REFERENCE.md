@@ -20,7 +20,7 @@ AI Workflow Harness의 일상 실행 규칙이다.
 
 | Need | Load |
 | --- | --- |
-| Product task 선택 | `docs/backlog/PHASE2.md` |
+| Product task 선택 | `docs/backlog/PHASE{n}.md` |
 | Harness task 선택 | `docs/backlog/HARNESS.md` |
 | Architecture summary | `docs/PLAN-SUMMARY.md` |
 | L3 change or planning basis | `docs/PLAN.md` |
@@ -48,7 +48,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | --- | --- |
 | 지금 바로 착수 (긴급 패치 등) | `docs/STATUS.md` Active Work → `/work`로 연결 |
 | 곧 할 것 | `docs/STATUS.md` Next Actions |
-| Product / Phase2 작업 | `docs/backlog/PHASE2.md` |
+| Product / Phase{n} 작업 | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule 개선 | `docs/backlog/HARNESS.md` |
 
 STATUS.md 변경이 포함되면 STATUS Update Proposal → 승인 순서를 따른다.

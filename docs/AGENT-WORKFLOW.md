@@ -30,7 +30,7 @@ MUST NOT:
 | --- | --- |
 | 현재 상태 | `docs/STATUS.md` |
 | 세션 실행 규칙 빠른 확인 | `docs/HARNESS-QUICK-REFERENCE.md` |
-| product 또는 Phase2 준비 작업 선택 | `docs/backlog/PHASE2.md` |
+| product 또는 Phase{n} 준비 작업 선택 | `docs/backlog/PHASE{n}.md` |
 | harness, command/rule, workflow 작업 선택 | `docs/backlog/HARNESS.md` |
 | 아키텍처 요약 | `docs/PLAN-SUMMARY.md` |
 | L3 변경, Phase 계획, 상세 근거 | `docs/PLAN.md` |
@@ -61,7 +61,7 @@ Plan에는 Scope, Files, Verification, Risk, Reversal Cost를 포함한다.
 | Item | Where |
 | --- | --- |
 | 지금 진행 중인 작업 | `docs/STATUS.md` Active Work |
-| 다음 후보 product 작업 | `docs/backlog/PHASE2.md` |
+| 다음 후보 product 작업 | `docs/backlog/PHASE{n}.md` |
 | 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
 | 한 작업의 세부 분해 | `docs/TODO/PHASE{n}/{BACKLOG-ID}-{topic}.md` |
 | 결정 근거 | `docs/decisions/DR-*.md` |

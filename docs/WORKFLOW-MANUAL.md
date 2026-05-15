@@ -263,7 +263,7 @@ Claude Code가 세션 시작 시 자동으로 읽는 핵심 instruction 파일.
 
 ```mermaid
 graph TD
-    BL["📋 backlog\nPHASE2.md / HARNESS.md"]
+    BL["📋 backlog\nPHASE{n}.md / HARNESS.md"]
 
     subgraph STATUS ["docs/STATUS.md"]
         AW["🔧 Active Work\n지금 하는 것"]
@@ -531,7 +531,7 @@ flowchart TD
     STARTUP --> STATE["Current State / Active Work\nCheckpoints / Blockers / Next Actions 해석"]
     STATE --> ASSESS{작업 선택?}
 
-    ASSESS --> PICK["/pick\nPHASE2 또는 HARNESS backlog 선택\n우선순위 추천"]
+    ASSESS --> PICK["/pick\nPHASE{n} 또는 HARNESS backlog 선택\n우선순위 추천"]
     ASSESS --> WORK_ID["/work {ID}\n특정 작업 계획 수립"]
     ASSESS --> RESUME["/resume {ID}\n기존 작업 재개"]
 
@@ -612,7 +612,7 @@ flowchart LR
     CURSOR_BOOT --> CMD
     CMD --> STATUS["docs/STATUS.md\n상단 섹션만"]
     STATUS --> ROUTE{작업 유형}
-    ROUTE -- Product / Phase2 --> PBACKLOG["docs/backlog/PHASE2.md"]
+    ROUTE -- Product / Phase{n} --> PBACKLOG["docs/backlog/PHASE{n}.md"]
     ROUTE -- Harness / Workflow --> HBACKLOG["docs/backlog/HARNESS.md"]
     ROUTE -- Harness 규칙 변경 --> HPROTO["docs/HARNESS-PROTOCOL.md\n+ 필요한 상세 1개"]
     ROUTE -- Architecture 필요 --> PLAN_S["docs/PLAN-SUMMARY.md"]
@@ -645,7 +645,7 @@ flowchart LR
 | 4 | `docs/HARNESS-PROTOCOL.md` | workflow/harness 규칙 변경; command/rule 변경; 프로토콜 충돌 검토 | 단순 product 구현 |
 | 4 | `docs/harness-protocol/*.md` | 특정 카테고리 규칙 수정 또는 상세 검토 | 전체 일괄 로드 금지 |
 | 5 | `docs/PLAN-SUMMARY.md` | 기술 스택·포트·패키지 구조 확인; 새 서비스·레이어 추가 전 | 단순 버그 수정, 문서 업데이트 |
-| 6 | `docs/backlog/PHASE2.md` | product 또는 Phase2 준비 작업 선택 | harness 작업 |
+| 6 | `docs/backlog/PHASE{n}.md` | product 또는 Phase{n} 준비 작업 선택 | harness 작업 |
 | 6 | `docs/backlog/HARNESS.md` | harness, command/rule, workflow hardening 작업 선택 | product 작업 |
 | 7 | `docs/decisions/*.md` | 관련 DR이 있는 작업 시작; 아키텍처 결정이 구현에 직접 영향을 줄 때 | DR과 무관한 구현·테스트 작업 |
 | 8 | `docs/TODO/PHASE{n}/*.md` | 해당 Phase 세부 서브태스크 확인; 명시적 TODO block 참조 요청 | 일반 작업 진행 (backlog와 STATUS.md로 충분) |
@@ -662,7 +662,7 @@ Claude Code에서 `/명령명`으로 호출. 파일 위치: `.claude/commands/*.
 | --- | --- | --- |
 | `/start` | 세션 시작 시 | CLAUDE.md + STATUS.md 로드, 현재 상태 요약, 다음 작업 제안 |
 | `/pick` | 다음 작업을 선택할 때 | backlog 후보 비교, 우선순위 추천, 관련 DR 표시, 구현 전 승인 대기 |
-| `/register [설명]` | 새 작업 항목을 등록할 때 | 긴급도·성격 판단 → STATUS Active Work / Next Actions / PHASE2.md / HARNESS.md 중 라우팅 → STATUS Update Proposal (필요 시) → 긴급 항목이면 /work 연결 제안 |
+| `/register [설명]` | 새 작업 항목을 등록할 때 | 긴급도·성격 판단 → STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md 중 라우팅 → STATUS Update Proposal (필요 시) → 긴급 항목이면 /work 연결 제안 |
 | `/work {ID}` | 특정 작업을 시작할 때 | PLAN.md 강제 로드 조건 체크 → 위험도 판단(L1/L2/L3) → 계획 수립 → "진행할까요?" 후 대기 → DR-worthy 결정 목록 제안 |
 | `/resume {ID}` | 중단된 작업을 재개할 때 | 파일 상태 vs STATUS.md 비교 → 불일치 시 코드를 진실로 삼아 수정 제안 → 남은 계획 제안 |
 | `/debug` | 버그 분석/수정 시 | 코드·로그·테스트 근거로 원인 파악, 최소 변경 계획 |
@@ -1177,7 +1177,7 @@ T3 자체가 T5를 즉시 발동시키지는 않는다. 루프 없음.
 | §14 테스트 전략 | `.claude/rules/testing.md`, `.cursor/rules/testing.mdc` |
 | §15 K8s | `docs/ARCHITECTURE.md §14` |
 | §16 Secure Coding | `docs/CODING-CONVENTIONS.md`, `docs/ARCHITECTURE.md §15` |
-| §19 Phase 계획 | `docs/backlog/PHASE2.md`, `docs/backlog/HARNESS.md`, `docs/STATUS.md` Next Actions |
+| §19 Phase 계획 | `docs/backlog/PHASE{n}.md`, `docs/backlog/HARNESS.md`, `docs/STATUS.md` Next Actions |
 
 > T5 cascade에서 ARCHITECTURE.md가 확인 대상인 섹션은 T6와 중복 처리하지 않는다. 확인만 한다.
 

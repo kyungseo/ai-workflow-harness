@@ -84,7 +84,7 @@ Claude Code에서는 slash command가 기준이다.
 공통 context routing:
 
 1. 도구별 진입점(`CLAUDE.md` 또는 `AGENTS.md`), `docs/AGENT-WORKFLOW.md`, `docs/STATUS.md` 확인
-2. Product 작업은 `docs/backlog/PHASE2.md` 또는 현재 Phase backlog 확인
+2. Product 작업은 `docs/backlog/PHASE{n}.md` 또는 현재 Phase backlog 확인
 3. Harness 작업은 `docs/backlog/HARNESS.md` 확인
 4. Workflow rule 변경은 `docs/HARNESS-PROTOCOL.md`와 필요한 `docs/harness-protocol/*.md`만 확인
 5. 아키텍처 세부 근거가 필요할 때만 `docs/PLAN.md` 확인

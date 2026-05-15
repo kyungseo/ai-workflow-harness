@@ -18,7 +18,7 @@ MUST:
 - Use `docs/STATUS.md` as the active work index.
 - Follow the workflow state machine: `INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END`.
 - Request explicit user approval before editing `docs/STATUS.md`; report a `STATUS Update Proposal` first.
-- Use `docs/backlog/PHASE2.md` for product and Phase2 preparation candidate work.
+- Use `docs/backlog/PHASE{n}.md` for product and Phase{n} preparation candidate work.
 - Use `docs/backlog/HARNESS.md` for harness, command/rule, and workflow hardening candidate work.
 - Include scope, files, verification, risk, and reversal cost before implementation.
 - Use backlog ID based filenames for large task TODO files: `docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md`.
