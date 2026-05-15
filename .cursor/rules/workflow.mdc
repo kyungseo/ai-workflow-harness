@@ -1,0 +1,31 @@
+---
+description: Workflow command intent recognition and work item routing rules.
+globs:
+alwaysApply: true
+---
+
+# Workflow Rules
+
+## Command Intent Recognition
+
+When the user's intent matches a workflow operation without an explicit slash command, follow the corresponding procedure. Read the referenced command file or follow the equivalent procedure from `docs/AGENT-WORKFLOW.md`.
+
+| Intent | Procedure to follow |
+| --- | --- |
+| Register / add a work item | `/register` — route based on urgency and type (see below) |
+| Record a decision as DR | `/record-decision` — DR format, file naming, OQ linkage |
+| Start / plan a specific task | `/work` — pre-checks: PLAN.md force-load conditions, troubleshooting check, risk level declaration |
+| Resume an interrupted task | `/resume` — drift check: compare actual file state vs `docs/STATUS.md` before editing |
+
+## Work Item Routing
+
+New work items are always routed based on urgency and type:
+
+| Urgency / Type | Target |
+| --- | --- |
+| Start immediately (urgent patch) | `docs/STATUS.md` Active Work → chain to /work |
+| Soon / next session | `docs/STATUS.md` Next Actions |
+| Product / Phase2 feature | `docs/backlog/PHASE2.md` |
+| Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
+
+Any change to `docs/STATUS.md` requires a STATUS Update Proposal before editing.
