@@ -24,6 +24,17 @@ MUST:
 - Keep `Done` work immutable. If follow-up correction is needed, propose a new work item.
 - Check `docs/harness-protocol/05-triggers-and-cascade.md` when workflow rules, commands, DRs, or document structure change.
 
+## Command Intent Recognition
+
+When the user's intent matches a workflow command without an explicit `/command` invocation, follow the corresponding command procedure by reading the command file:
+
+| Intent | Command file to follow |
+| --- | --- |
+| 작업 항목 등록·추가 | `.claude/commands/register.md` |
+| DR·의사결정 기록 | `.claude/commands/record-decision.md` |
+| 특정 작업 시작·계획 | `.claude/commands/work.md` (사전 체크 3가지 포함) |
+| 중단된 작업 재개 | `.claude/commands/resume.md` (drift 체크 포함) |
+
 NEVER:
 
 - Turn `docs/STATUS.md` into a full changelog.
