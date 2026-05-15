@@ -37,6 +37,9 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
               RECOVER <- FAIL <-+
 ```
 
+- **CHECKPOINT** = 작업 완료 후 커밋 + STATUS 업데이트. 다음 작업을 바로 이어갈 수 있다.
+- **END (`/done`)** = 세션 종료 시에만 실행. 작업마다 호출하지 않는다.
+
 ## 3. Execution Gate
 
 구현 또는 문서 변경 전 plan을 먼저 제시한다.
