@@ -73,10 +73,11 @@ Claude Code에서는 slash command가 기준이다.
 | --- | --- |
 | `/start` | `docs/STATUS.md` 기준 현재 상태 요약 |
 | `/pick` | product backlog 또는 harness backlog에서 작업 선택 |
+| `/register [설명]` | 새 작업 항목 등록 — 긴급도·성격에 따라 적절한 위치에 라우팅 |
 | `/work {ID}` | 특정 작업의 plan 수립 |
 | `/resume {ID}` | 중단된 작업 재개 |
 | `/debug` | 에러 분석 또는 리팩토링 진입 |
-| `/done` | 세션 종료 요약과 상태 갱신 점검 |
+| `/done` | 세션 종료 요약과 상태 갱신 점검 (세션 끝낼 때만 사용) |
 | `/record-decision` | 확정된 결정을 DR로 기록 |
 | `/health` | command/rule/protocol/backlog 정합성 점검 |
 

@@ -135,6 +135,7 @@ make create-service NAME=order-service
 | [docs/STATUS.md](docs/STATUS.md) | 현재 프로젝트 상태 |
 | [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) | Harness protocol 허브 |
 | [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) | 일상 실행 빠른 참조 |
+| [docs/WORKFLOW-MANUAL.md](docs/WORKFLOW-MANUAL.md) | 사용자용 워크플로우 매뉴얼 |
 | [docs/harness-protocol/](docs/harness-protocol/) | 상세 protocol 모듈 |
 | [prompts/README.md](prompts/README.md) | 재사용 prompt 라이브러리 |
 

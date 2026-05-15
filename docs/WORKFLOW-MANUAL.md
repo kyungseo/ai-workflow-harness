@@ -121,7 +121,7 @@ graph TD
 | 개발자 | `ARCHITECTURE.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`, `DOCKERFILE-GUIDE.md`, `WORKFLOW-MANUAL.md`, `PLAN.md` |
 | AI 운영 (Claude Code) | `CLAUDE.md`, `STATUS.md`, `HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `harness-protocol/`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `archive/`, `TODO/` |
 | AI 운영 (Codex) | `AGENTS.md` (진입점) → `docs/AGENT-WORKFLOW.md` (공통 운영 규칙) |
-| ※ AI 운영 (Cursor) | `.cursor/rules/*.mdc` 참고 (9개 mdc 구성) |
+| ※ AI 운영 (Cursor) | `.cursor/rules/*.mdc` 참고 (10개 mdc 구성) |
 | 개발자 + AI 겸용 | `PLAN-SUMMARY.md` |
 
 **Claude 컨텍스트 로드 방식**
@@ -965,7 +965,9 @@ prompts/
 #### Step 7 — Cursor 연동 (선택)
 
 - [ ] **`.cursor/rules/`** 파일 생성
-  - `execution.mdc`, `coding.mdc`, `output-format.mdc`, `testing.mdc`, `git-commit.mdc`를 Claude 하네스와 정렬
+  - `workflow.mdc` (alwaysApply) — command intent recognition, work item routing
+  - `execution.mdc` (alwaysApply) — build, test, verification commands
+  - `coding.mdc`, `output-format.mdc`, `testing.mdc`, `git-commit.mdc`, `debugging.mdc`
   - 언어·프레임워크별 rule은 프로젝트에 맞게 수정
 - [ ] **`.cursorignore`** 업데이트 (빌드 산출물, 민감 파일 제외)
 
