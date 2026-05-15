@@ -24,3 +24,5 @@ When a test fails, explain:
 - The failing scenario.
 - The most likely root cause.
 - The verification command or scenario used after the fix.
+
+When a non-trivial issue is fully resolved (environment mismatch, hidden constraint, non-obvious root cause, tool version incompatibility), record it in `docs/troubleshooting/` using the symptom → cause → action format. Link from `docs/DEVELOPER-GUIDE.md` if the issue affects local setup.

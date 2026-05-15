@@ -37,6 +37,7 @@ MUST NOT:
 | 관련 기술 결정 | `docs/decisions/DR-*.md` |
 | 큰 작업의 내부 실행 계획 | `docs/TODO/PHASE{n}/*.md` |
 | 회고 기반 우선순위·개선 방향 확인 | `docs/retrospectives/` |
+| 이슈 해결 내역 확인 | `docs/troubleshooting/` |
 | 과거 Phase 맥락 | `docs/archive/` |
 
 조건이 없으면 추가 문서를 로드하지 않는다.
@@ -97,6 +98,7 @@ MUST:
 | workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/` 업데이트 |
 | Phase 완료 또는 새 Phase 시작 | STATUS/archive 재편 제안 |
 | 큰 작업 조건 충족 | TODO 분해 제안 |
+| 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |
 
 문서, prompt, command, rule, Cursor rule, hook 메시지를 수정할 때는 `docs/decisions/DR-007-language-policy.md`의 언어 정책을 확인한다.
 

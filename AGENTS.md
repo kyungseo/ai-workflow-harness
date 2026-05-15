@@ -40,4 +40,6 @@ On validation failure, status drift, scope drift, or insufficient context, move 
 
 Then wait for user direction before returning to PLAN.
 
+When a non-trivial issue (environment mismatch, non-obvious root cause) is resolved during recovery, propose recording it in `docs/troubleshooting/` using the symptom → cause → action pattern.
+
 Detailed flow: `docs/harness-protocol/06-recovery-and-validation.md`

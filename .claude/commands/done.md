@@ -11,10 +11,13 @@
 7. 의사결정 기록 필요 여부
    - 이번 작업에서 DR-worthy 결정이 확정되었으면 목록화하고 기록 여부를 물어봐.
    - 계획·검토 중 발견된 미결 의사결정이 있으면 STATUS.md OQ 추가 및 DR Draft 생성을 제안해.
-8. 상태 머신 종료 상태
+8. troubleshooting 기록 필요 여부
+   - 이번 작업에서 비자명 이슈(환경 설정 문제, 재현 어려운 오류, 비직관적 원인)를 해결했으면 `docs/troubleshooting/`에 기록 여부를 물어봐.
+   - 이미 관련 파일이 있으면 업데이트 필요 여부를 확인해.
+9. 상태 머신 종료 상태
    - VALIDATE 결과
    - CHECKPOINT 또는 FAIL/RECOVER 필요 여부
-9. Commit 상태
+10. Commit 상태
    - commit 수행 여부
    - commit하지 않았다면 이유와 남은 risk
    - commit 전 필요한 경우 `git status -> git add <files> -> git status -> git diff --cached` 순서 확인

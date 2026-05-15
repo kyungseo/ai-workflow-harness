@@ -13,6 +13,7 @@
 | T5 | PLAN 영향 결정 | PLAN/summary/rules 관련 문서 확인 |
 | T6 | 구조/흐름 구현 변경 | ARCHITECTURE/DEVELOPER-GUIDE 확인 |
 | T7 | workflow rule/command 변경 | harness protocol 또는 workflow 상세 문서 업데이트 |
+| T8 | 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |
 
 ## Loop Safety
 

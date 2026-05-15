@@ -17,7 +17,11 @@ Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROT
 완료된 harness refactor의 배경 근거가 필요할 때만 `docs/HARNESS-REFACTOR-PLAN.md`를 참고해줘.
 `HRN-*`, `PRE-*`, `DOC-*` 또는 계획·아이디어 성격이 강한 작업이면 `docs/retrospectives/`에서 최신/관련 회고 1개만 선택해 반복 리스크와 우선순위 근거를 확인해줘.
 
-**2. 위험도 판단**
+**2. Troubleshooting 관련 이슈 확인**
+작업이 기존에 발생한 비자명 이슈(오류, 환경 설정 문제 등)와 관련된 경우 `docs/troubleshooting/`에 관련 기록이 있는지 확인해줘.
+있으면 계획에 참조로 포함하고, 새로 해결된 이슈가 있으면 `/done` 시 기록을 제안해줘.
+
+**3. 위험도 판단**
 작업을 아래 기준으로 분류하고 계획 서두에 선언해줘:
 - **L1 (안전)**: 버그 수정, 테스트 코드, 문서 소폭 수정 → 계획 간소화, 승인 후 진행
 - **L2 (일반)**: 일반 기능 구현, 설정 변경 → 계획 상세화, 승인 후 진행

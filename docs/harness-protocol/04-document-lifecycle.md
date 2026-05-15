@@ -24,6 +24,17 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | `docs/ARCHITECTURE.md` | WHAT |
 | `docs/DEVELOPER-GUIDE.md` | HOW |
 | `docs/archive/` | 완료된 이력 |
+| `docs/troubleshooting/` | 증상 → 원인 → 조치 기록 |
+
+## Document Role Distinction
+
+유사해 보이는 세 파일 유형은 역할이 다르다.
+
+| 유형 | 역할 | 기록 대상 |
+| --- | --- | --- |
+| `docs/decisions/DR-*.md` | 결정 근거 | 아키텍처·전략 선택의 WHY |
+| `docs/retrospectives/` | 회고 | 개발 방식 자체의 평가와 개선 방향 |
+| `docs/troubleshooting/` | 증상 → 원인 → 조치 | 비자명 이슈의 재현·원인·해결 내역 |
 
 ## Update Rules
 
@@ -32,6 +43,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 - 개발 절차가 바뀌면 `DEVELOPER-GUIDE.md` 업데이트를 제안한다.
 - 결정 근거가 생기면 DR 생성을 제안한다.
 - 완료된 Phase 상세는 archive로 이동한다.
+- 비자명 이슈(환경 문제, 비직관적 원인)가 해결되면 `docs/troubleshooting/`에 기록을 제안한다.
 
 ## Validation
 

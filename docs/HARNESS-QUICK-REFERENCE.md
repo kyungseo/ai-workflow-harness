@@ -25,6 +25,7 @@ AI Workflow Harness의 일상 실행 규칙이다.
 | Architecture summary | `docs/PLAN-SUMMARY.md` |
 | L3 change or planning basis | `docs/PLAN.md` |
 | Priority tie, planning, idea generation, repeated risk | latest or relevant `docs/retrospectives/` |
+| Non-trivial issue resolution history | `docs/troubleshooting/` |
 | Past Phase1 detail | `docs/archive/harness-refactor-20260514/` or `docs/archive/` |
 
 ## 2. State Machine
@@ -118,6 +119,7 @@ L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commi
 | Development flow change | `docs/DEVELOPER-GUIDE.md` 업데이트 제안 |
 | Workflow rule/command change | `docs/HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/` 업데이트 |
 | Phase complete | STATUS archive 제안 |
+| Non-trivial issue resolved | `docs/troubleshooting/` 기록 제안 |
 
 ## 8. TODO Decomposition
 
