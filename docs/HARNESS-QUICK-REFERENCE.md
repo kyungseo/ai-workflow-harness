@@ -78,6 +78,8 @@ Plan must include:
 - 사용자가 명시적으로 승인한 뒤에만 `docs/STATUS.md`를 수정한다.
 - 이미 승인된 plan에 구체적인 `STATUS.md` 변경 범위가 포함되어 있으면 그 승인으로 갈음할 수 있다.
 - 작업 중 예상 밖의 `STATUS.md` 변경 필요가 생기면 다시 승인받는다.
+- Recent Decisions는 최근 8개 rolling window만 유지하고, 후속 행동을 바꾸는 운영/기술 판단만 둔다.
+- Recent Decisions 초과분 제거 전 DR-worthy 항목이면 대응 DR 존재 여부를 확인한다.
 
 `Done` 상태의 작업은 다시 수정하지 않는다. 완료 후 보정이 필요하면 신규 작업으로 분리한다.
 

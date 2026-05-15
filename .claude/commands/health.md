@@ -117,7 +117,7 @@ Phase 5의 git log 결과를 기준으로, 변경된 구현 파일 유형별로 
 | `config/checkstyle/**`, `.editorconfig` | `DEVELOPER-GUIDE.md` 코드 컨벤션 섹션 |
 | `docs/decisions/DR-*.md` (신규 Accepted) | STATUS.md Recent Decisions, 연관 backlog Done Criteria |
 
-STATUS.md Recent Decisions는 **최근 8개 항목만** 대상으로 한다.
+STATUS.md Recent Decisions는 **최근 8개 rolling window**, 항목 품질(후속 행동을 바꾸는 판단만), DR-worthy 항목의 대응 DR 존재 여부를 점검한다.
 전체 이력 점검은 명시적 요청 시에만 진행한다.
 
 `docs/DEVELOPER-GUIDE.md`는 아래 변경이 감지될 때만 읽는다:

@@ -9,6 +9,8 @@ $ARGUMENTS 또는 현재 대화에서 확정된 기술적 의사결정 사항을
 3. `docs/decisions/DR-{번호}-{topic}.md` 초안을 제시해.
 4. 승인 후 파일을 생성해.
 5. `docs/STATUS.md`의 Recent Decisions 업데이트가 필요하면 `STATUS Update Proposal`로 별도 제안해.
+   - 후속 행동을 바꾸는 운영/기술 판단만 포함해. 단순 완료 사실은 Active Work, Checkpoints, commit history에 둬.
+   - 최근 8개 rolling window를 유지해. 초과분 제거 전 DR-worthy 항목이면 대응 DR 존재 여부를 확인해.
 6. PLAN/ARCHITECTURE/DEVELOPER-GUIDE/backlog cascade 대상이 있는지 확인하고 제안해.
 
 승인 없이 파일을 생성하지 마.
