@@ -246,6 +246,73 @@ Claude Code가 세션 시작 시 자동으로 읽는 핵심 instruction 파일.
 
 > **규칙:** STATUS.md는 짧고 현재 중심으로 유지한다. 완료된 Phase 상세는 `docs/archive/`로 이동.
 
+#### 섹션별 개념과 상관관계
+
+각 섹션의 역할과 시제를 구분해서 사용해야 STATUS.md가 짧고 정확하게 유지된다.
+
+| 섹션 | 한 줄 정의 | 시제 | 적정 규모 |
+| --- | --- | --- | --- |
+| Active Work | 지금 진행 중인 작업 | 현재 | 1~3개 |
+| Checkpoints | 큰 작업의 단계별 완료 기준 | 현재 (달성 전) | L2/L3 작업에만 |
+| Blockers / OQ | 진행을 막는 것 또는 결정이 필요한 것 | 현재 (미해결) | 해소되면 Closed |
+| Next Actions | 다음에 할 일 목록 | 미래 | 5개 이내 |
+| Recent Decisions | 최근 결정의 digest | 과거 | rolling window 최근 8개 |
+
+```mermaid
+graph TD
+    BL["📋 backlog\nPHASE2.md / HARNESS.md"]
+
+    subgraph STATUS ["docs/STATUS.md"]
+        AW["🔧 Active Work\n지금 하는 것"]
+        CP["✅ Checkpoints\n단계 완료 기준"]
+        OQ["❓ Blockers / OQ\n차단 · 결정 필요"]
+        NA["▶ Next Actions\n다음에 할 것"]
+        RD["📝 Recent Decisions\n결정 digest (최근 8개)"]
+    end
+
+    DR["📌 docs/decisions/DR-*.md\ncanonical 결정 기록"]
+    ARC["🗄 docs/archive/\n완료 이력"]
+
+    BL -->|"/pick → /work → 승인"| AW
+    AW <-->|"L2/L3 큰 작업에만"| CP
+    AW -->|"문제 발생 / 결정 필요"| OQ
+    OQ -->|"DR-worthy 결정"| DR
+    AW -->|"완료 후 다음 후보"| NA
+    NA -->|"착수 승인"| BL
+    AW -->|"세션 중 결정 발생"| RD
+    RD -.->|"DR-worthy면 DR이 canonical"| DR
+    CP -->|"Phase 완료 T3"| ARC
+    AW -->|"Phase 완료 T3"| ARC
+
+    style AW fill:#d4edda,stroke:#28a745
+    style CP fill:#d4edda,stroke:#28a745
+    style OQ fill:#fff3cd,stroke:#ffc107
+    style NA fill:#cce5ff,stroke:#004085
+    style RD fill:#e2e3e5,stroke:#6c757d
+    style DR fill:#f8d7da,stroke:#dc3545
+    style ARC fill:#e2e3e5,stroke:#6c757d
+```
+
+**섹션별 사용 원칙**
+
+- **Active Work** — 동시에 1~3개가 적정. 많아지면 집중력 분산의 신호. 완료되면 `Done`으로 표시하고 Phase 전환 시 archive로 이동.
+- **Checkpoints** — L2/L3 큰 작업에만 붙인다. "이 단계까지 완료되면 중간에 멈춰도 안전한가"를 기준으로 정의. 소규모 작업에는 불필요.
+- **Blockers / OQ** — Blocker는 외부 의존성으로 지금 당장 진행을 막는 것, OQ는 결정하지 않으면 방향이 갈리는 질문. OQ가 결정되면 `Closed` 처리, 중요하면 DR로 격상.
+- **Next Actions** — 백로그가 아니다. "다음 세션에서 가장 먼저 볼 것" 수준의 짧은 목록. 5개를 넘으면 백로그로 내려보낼 신호.
+- **Recent Decisions** — 세션 컨텍스트 복원용 digest. 영구 기록이 목적이 아니다. DR-worthy 결정은 `docs/decisions/DR-*.md`가 canonical이고 여기는 요약만. rolling window 8개 초과 시 가장 오래된 것부터 drop.
+
+**헷갈리기 쉬운 상황별 매핑**
+
+| 상황 | 기록 위치 |
+| --- | --- |
+| 새 기능 아이디어 발생 | **backlog** (Active Work 아님) |
+| 착수 승인된 작업 | **Active Work** |
+| 작업 중 발견한 차단 요소 | **Blockers** |
+| 방향 결정이 필요한 질문 | **OQ** → 결정 후 **Recent Decisions** → 중요하면 **DR** |
+| 다음 세션에 이어할 것 (단기) | **Next Actions** |
+| 다음 Phase 후보 작업 (중장기) | **backlog** |
+| 완료된 작업의 이력 | **archive** (STATUS.md에 남기지 않음) |
+
 #### Archive 이동 기준과 절차
 
 **트리거 — 다음 중 하나가 해당되면 Claude가 이동을 제안한다:**
