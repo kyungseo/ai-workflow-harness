@@ -121,6 +121,8 @@ TESTCONTAINERS_RYUK_DISABLED=false \
 - `docs/DEVELOPER-GUIDE.md` §4-3, `README.md` Testing 섹션: 별도 로컬 설정 불필요로 현행화
 - `./gradlew test` 전체 통과 검증 완료
 
+**주의:** IntelliJ Run 버튼으로 통합 테스트를 직접 실행하는 경우 Gradle을 거치지 않으므로 `build.gradle.kts` 설정이 적용되지 않는다. Docker Desktop 4.73.0+ 환경에서는 IntelliJ Run Configuration에 동일한 환경변수를 수동으로 추가해야 한다. 상세는 `docs/DEVELOPER-GUIDE.md` §4-3 참조.
+
 ---
 
 ## 검증
