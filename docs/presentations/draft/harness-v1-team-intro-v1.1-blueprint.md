@@ -386,30 +386,31 @@ HRN 하드닝          WORKFLOW-MANUAL.md    발표 산출물 생성
 
 ## Slide 14 — Why Build From Basics
 
-**Action Title:** 검증된 framework가 많아도, 내 workflow의 baseline은 직접 이해하고 소유해야 한다
+**Action Title:** 도구를 평가할 기준이 없으면, 검증된 도구도 그냥 복잡성 추가일 뿐이다
 
-**Layout Intent:** External landscape + adoption strategy. 왼쪽에는 community reference를 두고, 오른쪽에는 이 프로젝트의 선택 기준을 둔다.
+**Layout Intent:** 3-argument card structure. 각 논거를 카드로 구분하고 하단에 Positioning Statement 배치.
 
 ```text
-Community Reference                 My Adoption Strategy
-────────────────────                ─────────────────────────────
-gstack                              1. 원리를 이해할 수 있는 baseline부터 만든다
-Superpowers                         2. repo 안에서 상태와 gate를 소유한다
-GSD / Get Stuff Done                3. 내가 쓰는 Claude, Cursor, Codex에 공통 적용한다
-Everything Claude Code              4. 검증된 외부 skill은 선택적으로 흡수한다
-기타 skills / harness 사례          5. v2에서 자동화와 ecosystem 연계를 넓힌다
+Ecosystem 현황
+─────────────────────────────────────────────────────────────────
+gstack (Garry Tan)    Superpowers    GSD    Everything Claude Code
+검증된 skill pack,    빠르게 성장     3대     커뮤니티 집대성
+페르소나별 구성        중인 확장팩     프레임  가이드 레포
+
+                → 이미 검증된 도구들이 넘친다. 왜 직접 만드나?
 ```
 
-**Body Points:**
+| 논거 | 질문 | 답 |
+| --- | --- | --- |
+| 판단 능력 | 어느 부분을 채택하고 버릴지 알 수 있는가? | baseline 없이 설치하면 선택이 아니라 의존이 된다 |
+| 고장 대응 | 내 컨텍스트에서 충돌할 때 고칠 수 있는가? | 내가 만든 것만 어디를 고쳐야 하는지 안다 |
+| 팀 설명 | 왜 이 규칙이 필요한지 설명할 수 있는가? | "원래 그렇게 됐어요"는 팀 전파가 안 된다 |
 
-- 이미 검증된 Claude Code skill, plugin, guide repository는 많다.
-- 하지만 바로 가져오면 내가 왜 이 절차가 필요한지 이해하기보다 무엇을 설치해야 하는지에 집중하게 된다.
-- 이 프로젝트의 목적은 외부 framework를 대체하는 것이 아니라, 내가 이해하고 검증할 수 있는 최소 운영 기준을 만드는 것이다.
-- manual-first baseline이 있어야 외부 skill을 가져와도 어떤 부분을 채택하고 어떤 부분을 버릴지 판단할 수 있다.
+**핵심 전제:** 190k 스타 = 많은 사람에게 유용함. 내 컨텍스트에 맞다는 뜻이 아님.
 
-**Positioning Statement:** Build my first-principles baseline, then adopt proven ecosystem selectively.
+**Positioning Statement:** Baseline을 먼저 소유한다. 그 다음 ecosystem을 선택적으로 흡수한다.
 
-**Speaker Notes:** Superpowers, gstack, GSD, Everything Claude Code 같은 레퍼런스는 무시할 대상이 아니다. 오히려 v2와 이후 확장 단계에서 비교하고 흡수할 benchmark다. 다만 내 workflow를 이해하지 못한 채 외부 framework부터 가져오면 무엇을 채택하고 버릴지 판단하기 어렵다.
+**Speaker Notes:** gstack, Superpowers, GSD, ECC는 무시할 대상이 아니다. v2에서 비교하고 흡수할 benchmark다. 하지만 내 workflow를 이해하지 못한 채 외부 framework부터 가져오면 무엇을 채택하고 버릴지 판단하기 어렵다. 인기 있는 도구가 평균 사용자를 위해 최적화됐다는 사실도 기억해야 한다 — 내 팀, 내 스택, 내 컨벤션에 맞는 부분은 내가 직접 판단해야 한다.
 
 **Source:** `docs/retrospectives/harness-evaluation-20260514.md`
 
