@@ -13,7 +13,9 @@ Status: Accepted
 
 | 위치 | 표준 | 예시 |
 |------|------|------|
-| `docs/` 루트, `docs/backlog/`, `docs/decisions/` | UPPERCASE-HYPHENATED | `CODING-CONVENTIONS.md`, `PHASE2.md`, `DR-008-*.md` |
+| `docs/` 루트, `docs/backlog/`, `docs/decisions/` | UPPERCASE-HYPHENATED | `HARNESS-PROTOCOL.md`, `PHASE2.md`, `DR-008-*.md` |
+| `docs/TODO/PHASE{n}/` | `{BACKLOG-ID}-{lowercase-topic}.md` | `P2-006-testcontainers.md`, `PRE-C1-architecture-audit.md` |
+| `docs/harness-protocol/` | `{NN}-{lowercase-topic}.md` | `03-work-items-and-naming.md` |
 | `docs/archive/` | lowercase-hyphenated | `phase1-status.md`, `phase1-plan.md` |
 
 ## Options Considered
@@ -28,12 +30,14 @@ Status: Accepted
 
 - `docs/` 루트 파일 8개가 이미 UPPERCASE 패턴이었고, `coding-conventions.md` 1개만 이번 세션에서 생성된 예외였다.
 - 최소 변경 원칙에 따라 1개 파일만 rename하는 UPPERCASE 표준화를 선택했다.
-- `docs/archive/`는 STATUS → archive 이동 절차(`docs/CLAUDE.md`)에서 `phase{n}-status.md` 형식을 명시하므로 lowercase 유지가 자연스럽다.
+- `docs/archive/`는 STATUS → archive 이동 절차(`docs/AGENT-WORKFLOW.md`)에서 `phase{n}-status.md` 형식을 명시하므로 lowercase 유지가 자연스럽다.
 - 파일명 대소문자 혼용은 macOS(case-insensitive) 환경에서 git 추적 오류를 유발할 수 있다.
 
 ## Consequences
 
 - 신규 `docs/` 루트 파일, `backlog/`, `decisions/` 파일은 UPPERCASE-HYPHENATED로 작성한다.
+- 신규 `docs/TODO/PHASE{n}/` 파일은 backlog ID 기반 파일명을 사용한다.
+- 신규 `docs/harness-protocol/` 파일은 번호 prefix가 있는 lowercase-hyphenated 파일명을 사용한다.
 - `docs/archive/` 자동 생성 파일은 기존 lowercase-hyphenated 유지.
 - `docs/coding-conventions.md` → `docs/CODING-CONVENTIONS.md` 이름 변경 완료 (참조 8곳 업데이트).
 - `docs/decisions/PHASE2-BACKLOG.md` (pointer 파일, 참조 없음) 삭제 완료.

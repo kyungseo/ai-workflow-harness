@@ -1,9 +1,9 @@
 # ARCHITECTURE.md — base-msa-template
 
 > 작성일: 2026-05-03
-> 문서 버전: v1.4
-> 최종 수정: 2026-05-07 (ErrorCode enum→interface 반영, MDC Phase 1/2 분리 반영)
-> 기준: PLAN.md v1.6
+> 문서 버전: v1.5
+> 최종 수정: 2026-05-14 (Phase2 pre-entry 및 문서 역할 정리 반영)
+> 기준: PLAN.md, PLAN-SUMMARY.md
 > 목적: 시스템 전체 아키텍처 및 주요 흐름 시각화
 
 ---
@@ -482,7 +482,7 @@ graph TD
 
 ```mermaid
 graph TB
-    subgraph HOST["MacBook M4 Pro (Host)"]
+    subgraph HOST["Developer Host"]
         VSCODE["VS Code\n+ DevContainer Extension"]
         DOCKER["Docker Desktop"]
     end
@@ -1072,4 +1072,4 @@ sequenceDiagram
 
 ---
 
-*다음 단계: `docs/STATUS.md`에서 Active Work를 확인하고, 필요한 경우 `docs/backlog/PHASE2.md`에서 다음 작업을 선택한다.*
+*다음 단계: `docs/STATUS.md`에서 Active Work를 확인하고, product 작업은 `docs/backlog/PHASE2.md`, harness 작업은 `docs/backlog/HARNESS.md`에서 선택한다.*

@@ -1,8 +1,5 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/msa_db
-    username: msa_user
-    password: msa_pass
     hikari:
       maximum-pool-size: 3
       minimum-idle: 1

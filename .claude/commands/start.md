@@ -1,5 +1,5 @@
-docs/STATUS.md의 Current State, Active Work, Checkpoints, Next Actions만 확인해줘.
-Phase 1 구현 상세가 필요한 경우에만 docs/TODO/PHASE1/TODO-BLOCK*.md를 추가로 참고해줘.
+docs/STATUS.md의 Current State, Active Work, Checkpoints, Blockers And Open Questions, Next Actions만 확인해줘.
+Phase 1 또는 refactor 이전 상세가 필요한 경우에만 docs/archive/ 또는 docs/archive/harness-refactor-20260514/를 추가로 참고해줘.
 
 아래 형식으로 현재 상태를 요약해줘.
 

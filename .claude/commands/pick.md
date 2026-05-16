@@ -1,4 +1,12 @@
-docs/STATUS.md와 docs/backlog/PHASE2.md를 확인하고 우선순위가 높은 후보 작업을 검토해줘.
+docs/STATUS.md를 확인한 뒤, 작업 성격에 맞는 backlog를 선택해 우선순위가 높은 후보 작업을 검토해줘.
+
+- Product 작업: docs/backlog/PHASE{n}.md
+- Harness / workflow 작업: docs/backlog/HARNESS.md
+- 성격이 불명확하면 두 backlog의 제목과 우선순위만 비교하고, 불필요한 상세 로드는 하지 마.
+
+후보 우선순위가 비슷하거나 harness/plan/idea 성격의 작업을 고르는 경우,
+`docs/retrospectives/` 목록 또는 `rg` 검색으로 최신/관련 회고 1개만 선택해 참고해줘.
+회고는 backlog를 대체하지 않고 우선순위 판단 보조 맥락으로만 사용해줘.
 
 각 후보에 대해 아래 항목을 비교해줘.
 
@@ -12,5 +20,17 @@ docs/STATUS.md와 docs/backlog/PHASE2.md를 확인하고 우선순위가 높은 
 
 최종적으로 지금 착수할 작업 1개를 추천해줘.
 구현은 내가 승인하기 전까지 시작하지 마.
+
+추천 작업을 `docs/STATUS.md` Active Work로 올려야 한다면 즉시 수정하지 말고
+`STATUS Update Proposal`로 먼저 보고해줘.
+
+Proposal에는 아래 항목을 포함해줘.
+
+- 변경 섹션
+- 변경 이유
+- 변경 후 상태
+- 되돌리기 비용
+
+사용자가 명시적으로 승인한 뒤에만 STATUS.md를 수정해줘.
 
 추천 작업에 관련 DR(`docs/decisions/`)이 있으면 해당 DR 번호와 현재 상태(Draft/Accepted)를 함께 표시해줘.

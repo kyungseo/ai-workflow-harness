@@ -3,6 +3,9 @@ build/
 out/
 **/bin/
 
+# Generated / ephemeral working files (렌더링·검증용 작업 파일)
+outputs/
+
 # Compiled files
 *.class
 *.jar
@@ -61,6 +64,10 @@ temp/
 tmp/
 bak/
 *.bak
+
+# Office lock files / build manifests
+~$*
+artifact-build-manifest.json
 
 # Claude Code local settings
 .claude/settings.local.json

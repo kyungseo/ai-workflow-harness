@@ -17,7 +17,9 @@ MUST:
 - Choose the narrowest verification command that proves the change.
 - Report any command you could not run and why.
 - Check `docs/STATUS.md` for active checkpoints before Docker, database, or end-to-end validation.
-- Follow any verification scope defined in the active backlog or plan.
+- Follow any verification scope defined in the active plan or relevant backlog.
+- Use `docs/backlog/PHASE{n}.md` for product verification scope and `docs/backlog/HARNESS.md` for harness verification scope.
+- Treat failed verification as `FAIL -> RECOVER -> PLAN`; do not proceed to checkpoint until the failure is reported and resolved or explicitly accepted.
 
 NEVER:
 
