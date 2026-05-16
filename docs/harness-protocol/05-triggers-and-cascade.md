@@ -29,7 +29,7 @@
 Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 파일 수정은 사용자 승인 또는 명시 요청 후 진행한다.
 
-## STATUS.md 섹션별 삭제 Cascade 체크리스트
+## STATUS.md Section Deletion Cascade Checklist
 
 STATUS.md 항목 삭제 또는 이동 전 해당 섹션의 체크리스트를 확인한다.
 모든 STATUS.md 변경은 STATUS Update Proposal → 사용자 승인 후 수행한다.

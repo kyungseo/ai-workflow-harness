@@ -6,7 +6,7 @@
 
 `docs/WORKFLOW-MANUAL.md`는 사람이 읽는 사용자 매뉴얼이며, Agent 실행 규칙의 원본은 이 문서와 상세 프로토콜 문서다.
 
-## 1. 목적
+## 1. Purpose
 
 하네스의 목적은 자유로운 탐색이 아니라 상태 기반, 통제된 실행이다.
 
@@ -18,7 +18,7 @@
 - Failure-first Design: 실패와 복구 경로 명시
 - Reversibility: 백업, checkpoint, rollback 비용 고려
 
-## 2. 빠른 시작
+## 2. Quick Start
 
 1. `docs/STATUS.md`의 현재 섹션을 확인한다.
 2. 작업 성격에 따라 product backlog 또는 harness backlog를 선택한다.
@@ -28,7 +28,7 @@
 6. `STATUS.md` 갱신 필요 여부와 DR/TODO/문서 cascade를 확인한다.
 7. `STATUS.md` 변경이 필요하면 `STATUS Update Proposal`을 먼저 보고하고 사용자 승인 후 수정한다.
 
-## 3. 상태 머신
+## 3. State Machine
 
 ```text
 INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
@@ -39,7 +39,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 
 상세: `docs/harness-protocol/01-session-state-machine.md`
 
-## 4. 문서 지도
+## 4. Document Map
 
 | 문서 | 역할 |
 | --- | --- |
@@ -59,7 +59,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | `docs/TODO/PHASE{n}/` | 큰 작업 하나의 내부 실행 계획 |
 | `docs/archive/` | 완료된 과거 상태 |
 
-## 5. 아이템 위치 결정표
+## 5. Item Location Reference
 
 | 발생한 아이템 | 기록 위치 |
 | --- | --- |
@@ -83,27 +83,27 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 
 상세: `docs/harness-protocol/02-context-loading.md`
 
-## 7. 문서 생명주기
+## 7. Document Lifecycle
 
 문서는 CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE 흐름으로 관리한다.
 문서가 많아질수록 고립 문서와 중복 설명을 피한다.
 
 상세: `docs/harness-protocol/04-document-lifecycle.md`
 
-## 8. 트리거와 Cascade
+## 8. Triggers and Cascade
 
 DR, archive, TODO, PLAN/ARCHITECTURE/DEVELOPER-GUIDE, workflow rule 변경은 각각 cascade 대상이 다르다.
 루프 안전을 위해 trigger 결과가 같은 trigger를 즉시 재발동하지 않도록 한다.
 
 상세: `docs/harness-protocol/05-triggers-and-cascade.md`
 
-## 9. 복구와 검증
+## 9. Recovery and Validation
 
 검증 실패, 상태 불일치, 컨텍스트 손실은 실패 상태로 보고하고 `RECOVER -> PLAN`으로 되돌린다.
 
 상세: `docs/harness-protocol/06-recovery-and-validation.md`
 
-## 10. 운영 원칙
+## 10. Operating Principles
 
 - 자동 로드 문서는 작고 실행 중심으로 유지한다.
 - 상세 레퍼런스는 필요 시 로드한다.

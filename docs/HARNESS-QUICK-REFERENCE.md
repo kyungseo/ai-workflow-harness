@@ -139,6 +139,7 @@ L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commi
 | Phase complete | STATUS archive 제안 |
 | Non-trivial issue resolved | `docs/troubleshooting/` 기록 제안 |
 | Presentation/report artifact created | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |
+| 문서/command/rule 신규 작성 또는 섹션 추가 | DR-007 Bilingual Rules 적용 확인 |
 
 ## 9. TODO Decomposition
 

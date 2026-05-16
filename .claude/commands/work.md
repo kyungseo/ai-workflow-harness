@@ -4,7 +4,7 @@ docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾
 - `HRF-*`, `HRN-*`: docs/backlog/HARNESS.md
 - 항목 위치가 불명확하면 두 backlog에서 ID만 검색하고, 관련 없는 상세는 읽지 마.
 
-## 사전 체크 (계획 수립 전)
+## Pre-check (Before Planning)
 
 **1. PLAN.md 강제 로드 조건 확인**
 다음 중 하나라도 해당하면 반드시 docs/PLAN.md를 로드하고 계획에 반영해줘:
@@ -27,7 +27,7 @@ Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROT
 - **L2 (일반)**: 일반 기능 구현, 설정 변경 → 계획 상세화, 승인 후 진행
 - **L3 (구조 변경)**: 아키텍처·인증·인프라·DB schema 변경 → PLAN.md 로드 필수, 엄격 승인
 
-## 계획 항목
+## Plan Items
 
 계획에는 반드시 아래 내용을 포함해줘.
 

@@ -55,3 +55,4 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 - 같은 설명을 자동 로드 문서와 상세 문서에 길게 중복하지 않는다.
 - 문서와 실제 파일이 충돌하면 실제 파일을 우선한다.
 - 발표/보고 산출물은 source traceability, audience fit, narrative, slide/page count, render/preview 가능 여부를 확인한다.
+- 문서 신규 작성 또는 섹션 추가 시 DR-007 Bilingual Rules를 적용한다.
