@@ -67,6 +67,13 @@ Plan must include:
 
 승인 없이 구현하지 않는다.
 
+### Scope And Commit Approval
+
+- 대상 파일과 scope가 명확한 작은 L1 변경은 승인된 계획 안에서 빠르게 편집할 수 있다.
+- 승인된 scope 밖의 파일, 문서, 설정으로 변경이 확장되면 추가 scope, 이유, 검증 방법을 보고하고 승인 대기한다.
+- `README.md`, `docs/STATUS.md`, workflow 문서, command, prompt, rule, developer-facing 문서로 확장되면 반드시 먼저 승인받는다.
+- commit 전에는 validation 결과, diff summary, 제안 commit message를 보고하고 승인 대기한다.
+
 ### STATUS Update Gate
 
 `docs/STATUS.md` 변경은 항상 사용자 승인 후에만 수행한다.
@@ -108,6 +115,8 @@ COMMIT 전 확인:
 - `git add <files>`
 - `git status`
 - `git diff --cached`
+- validation 결과, diff summary, 제안 commit message 보고
+- 사용자 승인
 
 L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commit에는 하나의 검증 가능한 목적을 담고, rollback plan은 commit 또는 단계 단위로 설명한다.
 

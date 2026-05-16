@@ -20,6 +20,7 @@ MUST:
 - Use backlog ID based filenames for large task TODO files: `docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md`.
 - Do not reuse task IDs for different meanings.
 - Follow `docs/decisions/DR-007-language-policy.md` when editing docs, prompts, commands, rules, Cursor rules, or hook messages.
+- Follow `docs/AGENT-WORKFLOW.md` Scope And Commit Approval before expanding approved scope or committing.
 - Request explicit user approval before editing `docs/STATUS.md`; report a `STATUS Update Proposal` first.
 - Keep `Done` work immutable. If follow-up correction is needed, propose a new work item.
 - Check `docs/harness-protocol/05-triggers-and-cascade.md` when workflow rules, commands, DRs, or document structure change.
