@@ -70,6 +70,14 @@ Related: `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-QUICK-REFERENCE.md`
 
 ---
 
+## 변경 내역
+
+| Date | Commit | 내용 |
+| --- | --- | --- |
+| 2026-05-17 | `9d9fb29639c768cfbf0c419ebb3c3b5ed29e4f18` | Scope And Commit Approval 공통 규칙과 Claude/Codex/Cursor 표면 정렬 |
+
+---
+
 ## 관련 문서
 
 - [docs/AGENT-WORKFLOW.md](../AGENT-WORKFLOW.md)
