@@ -866,27 +866,11 @@ static void redisProperties(DynamicPropertyRegistry registry) {
 }
 ```
 
-#### Docker Desktop 4.73.0+ 로컬 설정
+#### Docker Desktop 4.73.0+
 
-Docker Desktop 4.73.0은 최소 API 버전을 1.40으로 상향했다. Testcontainers 내장 docker-java가 구버전을 기본값으로 사용하므로 아래 파일을 생성해야 한다.
+`build.gradle.kts`에 Docker API 버전(`-Dapi.version=1.41`)과 소켓 경로(`DOCKER_HOST`, `TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE`)가 설정되어 있으므로 별도 로컬 설정 없이 `./gradlew test`가 동작한다.
 
-**`~/.docker-java.properties`** (신규 생성)
-
-```properties
-api.version=1.41
-```
-
-**`~/.testcontainers.properties`** (없으면 신규 생성, 있으면 아래 항목 추가)
-
-```properties
-docker.host=unix:///var/run/docker.sock
-docker.api.version=1.41
-testcontainers.ryuk.disabled=true
-```
-
-설정 후 `./gradlew test`가 정상 실행된다.
-
-원인 분석과 상세 절차는 [docs/troubleshooting/testcontainers-docker-desktop-4.73.md](troubleshooting/testcontainers-docker-desktop-4.73.md)를 참조한다.
+연결 오류가 발생하면 [docs/troubleshooting/testcontainers-docker-desktop-4.73.md](troubleshooting/testcontainers-docker-desktop-4.73.md)를 참조한다.
 
 ---
 

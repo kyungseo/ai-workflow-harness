@@ -114,11 +114,12 @@ TESTCONTAINERS_RYUK_DISABLED=false \
 2. 반복 실행 편의가 필요할 때만 사용자 home 설정 파일을 선택적으로 사용한다.
 3. Ryuk 오류는 disable보다 `TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock` 우선으로 대응한다.
 
-후속 변경 범위 제안:
+후속 변경 완료 (2026-05-17):
 
-- 이 문서: 초기 조치를 보존하되 전역 홈 설정이 필수가 아님을 addendum으로 정정한다.
-- `docs/DEVELOPER-GUIDE.md`: 로컬 개발 절차를 실행 단위 설정 우선으로 낮춘다.
-- `README.md`: quick start 안내에서 전역 홈 설정 필수 표현을 제거하고 troubleshooting 문서로 연결한다.
+- `build.gradle.kts` `tasks.withType<Test>` 블록에 `-Dapi.version=1.41`, `DOCKER_HOST`, `TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE` 추가 — 개발자별 홈 설정 파일 불필요
+- P2-006 당시 생성한 `~/.docker-java.properties`, `~/.testcontainers.properties` 삭제 확인
+- `docs/DEVELOPER-GUIDE.md` §4-3, `README.md` Testing 섹션: 별도 로컬 설정 불필요로 현행화
+- `./gradlew test` 전체 통과 검증 완료
 
 ---
 
