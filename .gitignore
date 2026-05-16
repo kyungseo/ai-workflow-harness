@@ -65,5 +65,9 @@ tmp/
 bak/
 *.bak
 
+# Office lock files / build manifests
+~$*
+artifact-build-manifest.json
+
 # Claude Code local settings
 .claude/settings.local.json
