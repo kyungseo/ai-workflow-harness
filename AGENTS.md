@@ -51,6 +51,14 @@ Work item routing:
 | Product / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
 
+## Git Commit Format
+
+Follow Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-language-policy.md`):
+
+- **Type prefix** — always in English: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `style`, `ci`
+- **Subject line** — Korean primary; English for technical terms, proper nouns, file paths, IDs (e.g., `DR-007`, `STATUS.md`)
+- **Body** — Korean primary with English technical terms inline; explain *why*, not *what*
+
 ## Failure And Recovery
 
 On validation failure, status drift, scope drift, or insufficient context, move to FAIL and report:

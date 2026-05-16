@@ -28,24 +28,21 @@ MUST:
 
 ## Commit Message
 
-MUST use Conventional Commits:
+MUST use Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-language-policy.md`):
 
-- `feat:`
-- `fix:`
-- `docs:`
-- `style:`
-- `refactor:`
-- `chore:`
-- `config:`
-- `test:`
-- `perf:`
-- `ci:`
-- `revert:`
+**Type prefix** — always in English: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `style`, `ci`, `perf`, `revert`
+
+**Subject line** — Korean primary; English for technical terms and identifiers.
+
+- Use Korean verbs and sentence endings.
+- Keep English for proper nouns, tool names, file paths, IDs (e.g., `DR-007`, `STATUS.md`).
+- Example: `docs: DR-007 Bilingual Rules 적용 — commands 섹션 타이틀 영문화`
+
+**Body** — Korean primary with English technical terms inline; explain *why*, not *what*.
 
 MUST:
 
 - Keep the message specific to the staged or requested change.
-- Use a concise imperative subject.
 - Avoid claiming work that is not included in the diff.
 
 NEVER include metadata:
@@ -57,7 +54,7 @@ NEVER include metadata:
 When the user asks ONLY for a commit command, output ONLY:
 
 ```bash
-git commit -m "type: concise message"
+git commit -m "type: 한국어 주체 변경 내용"
 ```
 
 Do not include explanations, multiple commands, or metadata in that case.
