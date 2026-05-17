@@ -8,7 +8,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Status | Appetite | Start | End |
 |----|-------|--------|----------|-------|-----|
-| (착수 결정 시 Work 파일 생성 후 등록) | | | | | |
+| PRE-C1 | Phase 1 아키텍처 현황 분석 | Candidate | 3d | - | - |
 
 ## Done / Archived
 

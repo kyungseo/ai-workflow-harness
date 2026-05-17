@@ -26,10 +26,10 @@ NEVER:
 | `/start` | Read `docs/STATUS.md` current sections and summarize current state, candidates, needed context, risks |
 | `/pick` | Route to `docs/backlog/PHASE{n}.md` or `docs/backlog/HARNESS.md`, compare candidates, recommend one |
 | `/register [description]` | Register a new work item; route to STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md based on urgency and type; propose STATUS Update if needed |
-| `/work <ID>` | Find the backlog item, declare risk level, propose scope/files/verification/risk, then wait for approval |
-| `/resume <ID>` | Compare `docs/STATUS.md` with actual files, report drift, and propose recovery before editing |
+| `/work <ID>` | Find the backlog item; check `docs/works/{category}/` for an existing Work file; if none and decomposition criteria met, include Work file creation in the plan; declare risk level, propose scope/files/verification/risk, then wait for approval |
+| `/resume <ID>` | Compare `docs/STATUS.md` and Work file Checkpoints with actual files, report drift, and propose recovery before editing |
 | `/doc [brief]` | Create high-quality presentation/report artifacts; confirm brief, route sources, choose output format/tool, verify quality |
-| `/done` | Report completed work, changed files, validation, residual risk, STATUS update need, decision need, state, commit status |
+| `/done` | Report completed work, changed files, validation, residual risk, STATUS update need, decision need, state, commit status; if Active Work has a Work file, handle Done→Archive flow (status: Done, actual_end, git mv to `docs/archive/docs/works/{category}/`) |
 
 ## Command Intent Recognition
 

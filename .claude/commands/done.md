@@ -26,4 +26,11 @@
    - commit하지 않았다면 이유와 남은 risk
    - commit 전 필요한 경우 `git status -> git add <files> -> git status -> git diff --cached` 순서 확인
 
+11. Work 파일 완료 처리 (Active Work에 Work 파일이 있는 경우)
+   - Work 파일 frontmatter: `status: Done`, `actual_end: YYYY-MM-DD` 기입
+   - Done Criteria 전부 체크됐는지 확인
+   - `docs/works/{category}/README.md`: Active → Done/Archived 테이블 이동
+   - Work 파일을 `docs/archive/docs/works/{category}/` 로 이동 (`git mv`)
+   - STATUS Update Proposal: Active Work 포인터 제거
+
 다음 세션의 시작 프롬프트로 바로 사용할 수 있는 짧은 문장도 마지막에 작성해줘.

@@ -29,4 +29,8 @@ New work items are always routed based on urgency and type:
 | Product / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
 
+When starting a task (`/work`): check `docs/works/{category}/` for an existing Work file. If none exists and decomposition criteria are met (spec: `docs/decisions/DR-013-work-file-spec.md`), include Work file creation in the plan.
+
+When completing a task (`/done`): if the Active Work has a Work file, execute the Done→Archive flow — set `status: Done`, fill `actual_end`, move file to `docs/archive/docs/works/{category}/` via git mv, update README, propose STATUS pointer removal.
+
 Any change to `docs/STATUS.md` requires a STATUS Update Proposal before editing.
