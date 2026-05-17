@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-17 (DOC-001 완료 — GIT-WORKFLOW.md 생성)
+Last updated: 2026-05-17 (GIT-WORKFLOW.md 운영 규칙 정비 및 /health 개선)
 
 ## Current State
 

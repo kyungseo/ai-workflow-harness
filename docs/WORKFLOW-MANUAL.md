@@ -1,17 +1,17 @@
 # Lightweight Manual-First AI Workflow Harness v1 — Workflow Manual
 
-> **전제:** 본 매뉴얼의 내용은 'Claude'를 기준(예시)으로 기술한다. Codex 또는 Cursor 사용 시 해당 도구의 진입점과 설정을 참조한다.
+> **Note** 원래 소프트웨어에서 '하네스'란 테스트 환경을 감싸고 상태 관리와 흐름 제어를 담당하는 뼈대(Scaffolding)를 의미한다. 본 프로젝트가 구축하는 AI 워크플로우 역시 이와 구조적으로 같다. AI 세션을 감싸는 래퍼 역할을 하면서, STATUS로 상태를 추적하고 gate로 전체 흐름을 제어하는 'AI 워크플로우 하네스' 역할을 수행한다. 타이틀의 'Lightweight Manual-First AI Workflow Harness'는 본 프로젝트 내부에 적용된 이 시스템을 지칭한다.
 
-이 문서는 Lightweight Manual-First AI Workflow Harness를 사람이 읽기 위한 종합 가이드다.
-Claude에게 직접 전달되는 instruction은 `CLAUDE.md`와 `docs/AGENT-WORKFLOW.md`를 따른다.
-하네스 실행 규칙의 활성 기준은 `docs/HARNESS-PROTOCOL.md`와 `docs/harness-protocol/`이다.
-이 문서는 그 규칙을 사용자가 이해하고 운영할 수 있도록 설명하는 사용자 매뉴얼이다.
+Claude에게 직접 전달되는 instruction은 `CLAUDE.md`와 `docs/AGENT-WORKFLOW.md`를 따른다. 하네스 실행 규칙의 활성 기준은 `docs/HARNESS-PROTOCOL.md`와 `docs/harness-protocol/`이다.
+이 문서는 그 규칙을 사용자가 이해하고 운영할 수 있도록 설명하는 **Lightweight Manual-First AI Workflow Harness 종합 가이드(사용자 매뉴얼)** 이다.
 
-> **적용 범위:** 이 구조는 다른 프로젝트에도 그대로 복사/재사용 가능하도록 설계되었다.
+**안내**
 
-> **일상 실행:** 세션 중 빠른 실행 규칙은 `docs/HARNESS-QUICK-REFERENCE.md`를 먼저 본다.
-> **상세 프로토콜:** 상태 머신, 컨텍스트 로딩, 문서 lifecycle, recovery 규칙은 `docs/HARNESS-PROTOCOL.md`와 `docs/harness-protocol/`을 기준으로 한다.
-> 2026-05-17 기준 `docs/AGENT-WORKFLOW.md`, `.claude/commands/*`, `.claude/rules/docs-workflow.md`는 product/harness backlog 분리, 상태 머신 게이트, Scope And Commit Approval 명확화를 반영한다.
+- **적용 범위:** 이 구조는 다른 프로젝트에도 그대로 복사/재사용 가능하도록 설계되었다.
+- **일상 실행:** 세션 중 빠른 실행 규칙은 `docs/HARNESS-QUICK-REFERENCE.md`를 먼저 본다.
+- **상세 프로토콜:** 상태 머신, 컨텍스트 로딩, 문서 lifecycle, recovery 규칙은 `docs/HARNESS-PROTOCOL.md`와 `docs/harness-protocol/`을 기준으로 한다.
+
+> **전제:** 본 매뉴얼의 내용은 'Claude'를 기준(예시)으로 기술한다. Codex 또는 Cursor 사용 시 해당 도구의 진입점과 설정을 참조하도록 한다.
 
 ---
 
