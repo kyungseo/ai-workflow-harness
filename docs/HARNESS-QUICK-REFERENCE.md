@@ -171,13 +171,13 @@ TODO 파일은 큰 작업 하나의 내부 실행 계획이다. backlog나 STATU
 파일명:
 
 ```text
-docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md
+docs/works/{category}/{ID}-{lowercase-topic}.md
 ```
 
 예시:
 
-- `docs/TODO/PHASE2/P2-006-testcontainers.md`
-- `docs/TODO/PHASE2/PRE-C1-architecture-audit.md`
+- `docs/works/phase2/P2-006-testcontainers.md`
+- `docs/works/phase2/PRE-C1-architecture-audit.md`
 
 ## 10. Naming
 

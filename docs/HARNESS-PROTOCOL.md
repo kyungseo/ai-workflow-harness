@@ -56,7 +56,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | `docs/decisions/` | 결정 기록 |
 | `docs/reports/` | 보고서, review package, decision brief |
 | `docs/presentations/` | 발표자료, deck, slide source |
-| `docs/TODO/PHASE{n}/` | 큰 작업 하나의 내부 실행 계획 |
+| `docs/works/{category}/` | 큰 작업 단위 Work 파일 (DR-013) |
 | `docs/archive/` | 완료된 과거 상태 |
 
 ## 5. Item Location Reference
@@ -67,7 +67,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | 다음에 할 product 후보 | `docs/backlog/PHASE{n}.md` |
 | Phase 진입 전 선행 작업 | `docs/backlog/PHASE{n}.md` Preparation Candidates |
 | 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
-| 한 작업의 세부 실행 계획 | `docs/TODO/PHASE{n}/{BACKLOG-ID}-{topic}.md` |
+| 한 작업의 세부 실행 계획 | `docs/works/{category}/{ID}-{topic}.md` |
 | 확정된 기술 결정 | `docs/decisions/DR-*.md` |
 | 발표/보고 산출물 | `docs/presentations/` 또는 `docs/reports/` |
 | 미결 질문 | `docs/STATUS.md` Blockers/OQ |

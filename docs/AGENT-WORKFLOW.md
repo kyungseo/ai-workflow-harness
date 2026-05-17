@@ -21,7 +21,7 @@ MUST:
 
 MUST NOT:
 
-- 과거 맥락이 필요하지 않은데 `docs/archive/`, `docs/TODO/`, `docs/PLAN.md`를 읽지 않는다.
+- 과거 맥락이 필요하지 않은데 `docs/archive/`, `docs/works/`, `docs/PLAN.md`를 읽지 않는다.
 - 승인 없이 넓은 변경, L3 변경, scope 확장을 실행하지 않는다.
 
 ## Context Routing
@@ -35,7 +35,7 @@ MUST NOT:
 | 아키텍처 요약 | `docs/PLAN-SUMMARY.md` |
 | L3 변경, Phase 계획, 상세 근거 | `docs/PLAN.md` |
 | 관련 기술 결정 | `docs/decisions/DR-*.md` |
-| 큰 작업의 내부 실행 계획 | `docs/TODO/PHASE{n}/*.md` |
+| 큰 작업의 내부 실행 계획 | `docs/works/{category}/{ID}-{topic}.md` |
 | 회고 기반 우선순위·개선 방향 확인 | `docs/retrospectives/` |
 | 이슈 해결 내역 확인 | `docs/troubleshooting/` |
 | 과거 Phase 맥락 | `docs/archive/` |
@@ -79,7 +79,7 @@ MUST NOT:
 | 지금 진행 중인 작업 | `docs/STATUS.md` Active Work |
 | 다음 후보 product 작업 | `docs/backlog/PHASE{n}.md` |
 | 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
-| 한 작업의 세부 분해 | `docs/TODO/PHASE{n}/{BACKLOG-ID}-{topic}.md` |
+| 한 작업의 세부 분해 | `docs/works/{category}/{ID}-{topic}.md` |
 | 결정 근거 | `docs/decisions/DR-*.md` |
 | 완료된 과거 상태 | `docs/archive/` |
 

@@ -471,10 +471,11 @@ AI workflow, command/rule, 문서 구조, hook/automation 후보를 관리하는
 
 **파일 명명 규칙:** `harness-evaluation-YYYYMMDD.md` 또는 `retrospective-YYYYMMDD.md`
 
-### `docs/TODO/PHASE{n}/{BACKLOG-ID}-{topic}.md`
+### `docs/works/{category}/{ID}-{topic}.md`
 
-Active Work로 올라온 큰 작업 하나의 내부 실행 계획과 checkpoint를 관리하는 선택적 파일.
-일반 작업은 backlog와 STATUS.md만으로 충분해야 한다. TODO는 backlog를 대체하지 않는다.
+Active Work로 올라온 큰 작업 하나의 Work 파일. Plan, Done Criteria, Verification, Checkpoints, Discovery를 포함한다.
+일반 작업은 backlog와 STATUS.md만으로 충분해야 한다. Work 파일은 backlog를 대체하지 않는다.
+Work 파일 스펙: `docs/decisions/DR-013-work-file-spec.md`
 
 **생성 트리거 — 다음 중 둘 이상 또는 사용자 명시 요청 시 Claude가 생성을 제안한다:**
 
@@ -707,7 +708,7 @@ flowchart TD
     ROUTE -- "L3 / 상세 근거 필요" --> PLAN["docs/PLAN.md\n조건 충족 시"]
     ROUTE -- "DR 영향 작업" --> DECISIONS["docs/decisions/DR-*.md"]
     ROUTE -- "이전 Phase 맥락" --> ARCHIVE["docs/archive/\n이력 복원 시만"]
-    ROUTE -- "세부 분해 확인" --> TODO["docs/TODO/PHASE{n}/\n서브태스크 시만"]
+    ROUTE -- "세부 분해 확인" --> TODO["docs/works/{category}/\nWork 파일 시만"]
 
     HPROTO --> HDETAIL["docs/harness-protocol/*.md\n필요한 카테고리만"]
 
@@ -730,7 +731,7 @@ flowchart TD
 | `backlog/PHASE{n}.md` | product 또는 Phase{n} 준비 작업 선택 | harness 작업 |
 | `backlog/HARNESS.md` | harness·command/rule·workflow hardening 작업 선택 | product 작업 |
 | `decisions/*.md` | 관련 DR이 있는 작업 시작; 아키텍처 결정이 구현에 직접 영향을 줄 때 | DR과 무관한 구현·테스트 작업 |
-| `TODO/PHASE{n}/*.md` | 해당 Phase 세부 서브태스크 확인; 명시적 TODO block 참조 요청 | 일반 작업 (backlog와 STATUS.md로 충분) |
+| `works/{category}/*.md` | 해당 Phase Work 파일 확인; 세부 분해 또는 Checkpoint 참조 요청 | 일반 작업 (backlog와 STATUS.md로 충분) |
 | `archive/*.md` | 이전 Phase 구현 맥락 복원; 명시적 과거 이력 요청 | 현재 Phase 작업 |
 | `PLAN.md` | PLAN-SUMMARY로 부족한 상세 근거; 아키텍처 변경; **신규 서비스·모듈; Cross-service interaction; Infra·배포 변경; DB schema 변경** | 일반 구현·디버깅 |
 
@@ -1087,7 +1088,7 @@ T3 자체가 T5를 즉시 발동시키지는 않는다. 루프 없음.
 - 사용자가 명시적으로 세부 분해를 요청할 때
 
 **결과 (승인 후 실행):**
-- `docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md` 파일 생성
+- `docs/works/{category}/{ID}-{lowercase-topic}.md` Work 파일 생성
 - STATUS.md 해당 Active Work 항목 Notes 또는 Scope에 파일 경로 추가
 
 **cascade:** STATUS.md Active Work Notes 업데이트만. 다른 파일에 영향 없음.
@@ -1485,9 +1486,9 @@ Claude가 코드베이스를 파악하고 STATUS Update Proposal을 제시하면
 
 - [ ] **`docs/archive/`** 폴더 생성 (비워두기)
 
-- [ ] **`docs/TODO/PHASE1/`** 폴더 생성 여부 결정
+- [ ] **`docs/works/phase1/`** Work 파일 생성 여부 결정
   - 기본값은 생성하지 않는다
-  - 대형 작업 분해 조건이 충족될 때만 생성한다
+  - 대형 작업 분해 조건이 충족될 때만 생성한다 (DR-013 참조)
 
 #### Step 5 — Claude Code 설정
 

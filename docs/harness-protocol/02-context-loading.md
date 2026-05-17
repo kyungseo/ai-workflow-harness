@@ -18,7 +18,7 @@
 | 아키텍처 요약 | `docs/PLAN-SUMMARY.md` |
 | L3 또는 상세 근거 | `docs/PLAN.md` |
 | 관련 결정 | `docs/decisions/DR-*.md` |
-| 큰 작업 세부 분해 | `docs/TODO/PHASE{n}/*.md` |
+| 큰 작업 세부 분해 | `docs/works/{category}/{ID}-{topic}.md` |
 | 작업 우선순위·아이디어·반복 리스크 검토 | `docs/retrospectives/` |
 | 과거 이력 | `docs/archive/` |
 

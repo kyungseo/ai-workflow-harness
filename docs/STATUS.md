@@ -57,5 +57,5 @@ Last updated: 2026-05-18 (HRF-002 Phase D — STATUS 최종 정비)
 
 ## Next Actions
 
-1. HRF-002 Phase E: AI 도구 정렬 (Claude commands/rules, Codex AGENTS.md, Cursor rules, prompts)
-2. HRF-002 Phase F: 하네스 문서 업데이트 (docs/TODO → docs/works 경로 참조 전환)
+1. HRF-002 Phase G: 시뮬레이션 검증 (Claude / Codex / Cursor 세션 흐름 E2E)
+2. HRF-002 Phase H: README/매뉴얼 정렬 (WORKFLOW-MANUAL.md Work 파일 워크플로우 섹션 추가)
