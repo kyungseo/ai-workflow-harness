@@ -102,12 +102,12 @@ git push origin develop
 
 | 이벤트 | 실행 Job |
 |---|---|
-| `push` to `develop` | build |
+| `push` to `develop` | lint (Checkstyle) |
 | `push` to `main` | lint → test |
 | `pull_request` targeting `main` | lint → test |
 
 > feature → develop PR은 CI가 자동 실행되지 않는다.
-> develop → main PR 또는 main push 시 전체 검증이 실행된다.
+> develop push 시 Checkstyle만 실행되고, main push 또는 main 대상 PR에서 전체 검증이 실행된다.
 
 ## 5. Commit Message Format
 
