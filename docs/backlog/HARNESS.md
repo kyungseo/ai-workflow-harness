@@ -21,6 +21,7 @@ Phase1 종료 직후 백업본은 `docs/archive/harness-refactor-20260514/PHASE2
 | ID | Priority | Status | Risk | Task | Done Criteria | Verification |
 | --- | --- | --- | --- | --- | --- | --- |
 | HRF-001 | P0 | Done | L3 | Phase1 이후 하네스를 경량 상태 머신 기반 운영 체계로 재편 | 백업 완료, STATUS 재정의, product/harness backlog 분리, Quick Reference 생성 | `docs/STATUS.md`, `docs/backlog/PHASE2.md`, `docs/backlog/HARNESS.md`, `docs/HARNESS-QUICK-REFERENCE.md` 확인 |
+| HRF-002 | P0 | Active | L3 | Work 파일 기반 운영 체계 도입 — docs/works/ 구조, Archive 정책, STATUS.md 축소, AI 도구 정렬, 시뮬레이션 검증 | DR-013/014 확정, docs/works/ 구조 생성, STATUS.md 포인터 전환, 3개 AI 도구 시뮬레이션 통과, /health 통과 | `docs/works/harness/HRF-002-work-system-refactor.md` + `/health` |
 
 ## Backlog
 
