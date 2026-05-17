@@ -115,6 +115,7 @@ make create-service NAME=order-service
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 시스템 아키텍처 및 Mermaid 다이어그램 |
 | [docs/DEVELOPER-GUIDE.md](docs/DEVELOPER-GUIDE.md) | 로컬 설정, 서비스/API/테스트 절차 |
 | [docs/CODING-CONVENTIONS.md](docs/CODING-CONVENTIONS.md) | 코딩 컨벤션 SSOT |
+| [docs/GIT-WORKFLOW.md](docs/GIT-WORKFLOW.md) | 브랜치 전략·PR 흐름·CI 연동 |
 | [docs/DOCKERFILE-GUIDE.md](docs/DOCKERFILE-GUIDE.md) | Dockerfile 설명 및 개선 포인트 |
 | [docs/PLAN-SUMMARY.md](docs/PLAN-SUMMARY.md) | 스택 및 아키텍처 요약 |
 | [docs/PLAN.md](docs/PLAN.md) | 전체 기술 근거 |
