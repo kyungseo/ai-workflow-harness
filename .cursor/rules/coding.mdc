@@ -22,7 +22,7 @@ MUST:
 - Use `docs/backlog/HARNESS.md` for harness, command/rule, and workflow hardening candidate work.
 - Include scope, files, verification, risk, and reversal cost before implementation.
 - Before expanding approved scope to additional files, docs, or settings, report the added scope, reason, and verification plan, then wait for approval.
-- Use backlog ID based filenames for large task TODO files: `docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md`.
+- Use Work files for large tasks: `docs/works/{category}/{ID}-{lowercase-topic}.md` (spec: DR-013).
 - Do not reuse task IDs for different meanings.
 - Use `docs/archive/*.md` only for historical detail.
 - State assumptions before implementation when the task is ambiguous.

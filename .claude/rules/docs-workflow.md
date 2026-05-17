@@ -17,7 +17,7 @@ MUST:
 - Use `docs/archive/*.md` for completed historical detail.
 - Use `docs/HARNESS-QUICK-REFERENCE.md` for daily workflow execution rules.
 - Include done criteria and verification for actionable work items.
-- Use backlog ID based filenames for large task TODO files: `docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md`.
+- Use Work files for large tasks: `docs/works/{category}/{ID}-{lowercase-topic}.md` (spec: DR-013).
 - Do not reuse task IDs for different meanings.
 - Follow `docs/decisions/DR-007-language-policy.md` when editing docs, prompts, commands, rules, Cursor rules, or hook messages.
 - Follow `docs/AGENT-WORKFLOW.md` Scope And Commit Approval before expanding approved scope or committing.

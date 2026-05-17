@@ -21,7 +21,7 @@ repo root의 `AGENTS.md`가 Codex 기본 진입점이다.
 
 - Product 또는 Phase 준비 작업: `docs/backlog/PHASE{n}.md`
 - Harness, command/rule, workflow hardening: `docs/backlog/HARNESS.md`
-- 큰 작업의 세부 계획: `docs/TODO/PHASE{n}/{BACKLOG-ID}-{topic}.md`
+- 큰 작업 Work 파일: `docs/works/{category}/{ID}-{topic}.md` (spec: DR-013)
 
 ---
 
