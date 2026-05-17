@@ -1,9 +1,26 @@
 #!/usr/bin/env sh
-# Runs Checkstyle before each commit.
+# Runs Checkstyle before commits that can affect Java/Kotlin/Gradle output.
 # Tests are intentionally excluded — they run in CI (see .github/workflows/ci.yml).
 #
 # First run may take 15-30s (Gradle cold start + Checkstyle download).
 # Subsequent runs: < 5s with Gradle daemon warm.
+
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR)
+RUN_CHECKSTYLE=false
+
+for FILE in $STAGED_FILES; do
+    case "$FILE" in
+        *.java|*.kt|*.kts|*.gradle|*.gradle.kts|gradle.properties|*/gradle.properties|gradle/*|config/checkstyle/*|*/checkstyle.xml|*/checkstyle-suppressions.xml)
+            RUN_CHECKSTYLE=true
+            break
+            ;;
+    esac
+done
+
+if [ "$RUN_CHECKSTYLE" != "true" ]; then
+    echo "Skipping Checkstyle (no Java/Kotlin/Gradle changes staged)."
+    exit 0
+fi
 
 echo "Running Checkstyle..."
 
