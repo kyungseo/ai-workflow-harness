@@ -12,6 +12,7 @@ MUST:
 - Read `docs/STATUS.md` current sections before choosing or continuing work.
 - Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands.
 - When a Claude command is relevant, follow the same procedure manually.
+- Follow `docs/AGENT-WORKFLOW.md` Scope And Commit Approval before scope expansion and every commit.
 
 NEVER:
 

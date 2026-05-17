@@ -6,6 +6,7 @@
 
 | 증상 | 환경 | 파일 |
 | --- | --- | --- |
+| 승인된 범위 밖 문서까지 함께 수정됨 | Claude Code, Codex, Cursor 공통 workflow | [agent-scope-approval-drift.md](agent-scope-approval-drift.md) |
 | Testcontainers 실행 시 `Could not find a valid Docker environment` | macOS, Docker Desktop 4.73.0+ | [testcontainers-docker-desktop-4.73.md](testcontainers-docker-desktop-4.73.md) |
 
 ## 작성 규칙

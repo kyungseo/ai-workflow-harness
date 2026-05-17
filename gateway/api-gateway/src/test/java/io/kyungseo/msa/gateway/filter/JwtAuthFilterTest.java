@@ -17,6 +17,8 @@ import org.springframework.mock.web.server.MockServerWebExchange;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
+
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,8 +62,10 @@ class JwtAuthFilterTest {
         given(claims.getId()).willReturn("jti-123");
         given(jwtVerifier.verify(VALID_TOKEN)).willReturn(Optional.of(claims));
 
-        var redisTemplate = org.mockito.Mockito.mock(
-                org.springframework.data.redis.core.ReactiveRedisTemplate.class);
+        @SuppressWarnings("unchecked")
+        ReactiveRedisTemplate<String, String> redisTemplate =
+                (ReactiveRedisTemplate<String, String>) org.mockito.Mockito.mock(
+                        ReactiveRedisTemplate.class);
 
         // Rebuild filter with mocked redisTemplate
         JwtAuthFilter filterWithRedis = new JwtAuthFilter(jwtVerifier, redisTemplate, gatewayProperties);
@@ -114,8 +118,9 @@ class JwtAuthFilterTest {
         given(gatewayProperties.isFailClose()).willReturn(true);
 
         @SuppressWarnings("unchecked")
-        var redisTemplate = (org.springframework.data.redis.core.ReactiveRedisTemplate<String, String>)
-                org.mockito.Mockito.mock(org.springframework.data.redis.core.ReactiveRedisTemplate.class);
+        ReactiveRedisTemplate<String, String> redisTemplate =
+                (ReactiveRedisTemplate<String, String>) org.mockito.Mockito.mock(
+                        ReactiveRedisTemplate.class);
 
         JwtAuthFilter filterWithRedis = new JwtAuthFilter(jwtVerifier, redisTemplate, gatewayProperties);
         given(redisTemplate.hasKey("bl:jti-abc"))
@@ -141,8 +146,9 @@ class JwtAuthFilterTest {
         given(gatewayProperties.isFailClose()).willReturn(false);
 
         @SuppressWarnings("unchecked")
-        var redisTemplate = (org.springframework.data.redis.core.ReactiveRedisTemplate<String, String>)
-                org.mockito.Mockito.mock(org.springframework.data.redis.core.ReactiveRedisTemplate.class);
+        ReactiveRedisTemplate<String, String> redisTemplate =
+                (ReactiveRedisTemplate<String, String>) org.mockito.Mockito.mock(
+                        ReactiveRedisTemplate.class);
 
         JwtAuthFilter filterWithRedis = new JwtAuthFilter(jwtVerifier, redisTemplate, gatewayProperties);
         given(redisTemplate.hasKey("bl:jti-xyz"))
