@@ -163,7 +163,7 @@ graph TD
 
 | 독자 | 주요 파일 |
 | --- | --- |
-| 개발자 | `WORKFLOW-MANUAL.md`, `ARCHITECTURE.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`, `PLAN.md` |
+| 개발자 | `WORKFLOW-MANUAL.md`, `ARCHITECTURE.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`, `GIT-WORKFLOW.md`, `PLAN.md` |
 | AI 운영 공통 | `docs/AGENT-WORKFLOW.md` (Claude Code: `CLAUDE.md` → 자동 import / Codex: `AGENTS.md` → 위임 / Cursor: `.cursor/rules/*.mdc`) |
 | AI 운영 전용 | `STATUS.md`, `HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `harness-protocol/`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `archive/`, `TODO/` |
 | 개발자 + AI 겸용 | `PLAN-SUMMARY.md`, `WORKFLOW-MANUAL.md` |
@@ -216,6 +216,7 @@ graph TD
         PL["PLAN.md"]
         AR["ARCHITECTURE.md"]
         DG["DEVELOPER-GUIDE.md"]
+        GW["GIT-WORKFLOW.md"]
     end
 
     ARC2["archive/"]
