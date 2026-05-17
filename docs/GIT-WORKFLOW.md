@@ -2,6 +2,10 @@
 
 이 프로젝트의 Git 브랜치 전략, 일상 작업 사이클, CI 연동 방식을 정의한다.
 
+> **현재 채택 전략: Gitflow** (feature → develop → main)
+> 전략 변경 검토 중: `docs/backlog/HARNESS.md` HRN-FUT-004 참조
+> 전략 변경 시 §1~§3 전체 재검토 필요
+
 ## 1. Branch Strategy
 
 ```
@@ -51,11 +55,14 @@ git commit -m "..."
 
 ### 2-3. PR 생성 (feature → develop)
 
+> **feature PR의 base는 항상 `develop`이다. `main`으로 직접 PR하지 않는다.**
+
 ```bash
 gh pr create --base develop --title "..." --body "..."
 ```
 
 또는 GitHub UI에서 base를 `develop`으로 설정하여 PR 생성.
+`gh pr create` 기본 base는 저장소 default branch(`main`)이므로 `--base develop`을 반드시 명시한다.
 
 ### 2-4. Post-PR 정리 절차
 
