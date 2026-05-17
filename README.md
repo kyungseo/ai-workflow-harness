@@ -138,6 +138,7 @@ make create-service NAME=order-service
 | [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) | 일상 실행 빠른 참조 |
 | [docs/WORKFLOW-MANUAL.md](docs/WORKFLOW-MANUAL.md) | 사용자용 워크플로우 매뉴얼 |
 | [docs/harness-protocol/](docs/harness-protocol/) | 상세 protocol 모듈 |
+| [docs/works/](docs/works/) | 진행 중·완료된 Work 파일 (DR-013) |
 | [prompts/README.md](prompts/README.md) | 재사용 prompt 라이브러리 |
 
 Claude Code slash command는 `.claude/commands/`에 있다.

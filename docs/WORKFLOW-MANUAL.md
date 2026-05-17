@@ -19,7 +19,7 @@ Claude에게 직접 전달되는 instruction은 `CLAUDE.md`와 `docs/AGENT-WORKF
 
 1. [Overview](#1-overview)
 2. [Directory Structure](#2-directory-structure) · [2-0 Overview](#2-0-overview) · [2-1 docs/](#2-1-docs-상세) · [2-2 .claude/](#2-2-claude-상세)
-3. [Component Role Reference](#3-component-role-reference) · [3-0 Document Hierarchy](#3-0-document-hierarchy) · [Work Item Routing](#work-item-routing-flow)
+3. [Component Role Reference](#3-component-role-reference) · [3-0 Document Hierarchy](#3-0-document-hierarchy) · [Work File Lifecycle](#work-file-lifecycle) · [Work Item Routing](#work-item-routing-flow)
 4. [Workflow Diagrams](#4-workflow-diagrams) · [4-3-A Tool Entry](#4-3-a-tool-entry-point-comparison) · [4-3-B Context Load](#4-3-b-context-load-decision)
 5. [Slash Commands Reference](#5-slash-commands-reference) · [Risk Gate](#risk-gate-decision)
 6. [Decision Record Operations](#6-decision-record-operations)
@@ -116,7 +116,7 @@ graph TD
     GRP_STATE --> BL["backlog/<br/><i>PHASE{n}.md · HARNESS.md</i>"]
     GRP_STATE --> DR["decisions/<br/><i>DR-*.md</i>"]
     GRP_STATE --> ARC["archive/<br/><i>완료 Phase 이력</i>"]
-    GRP_STATE --> TODO["TODO/<br/><i>PHASE{n}/{ID}-{topic}.md</i>"]
+    GRP_STATE --> WORKS["works/<br/><i>{category}/{ID}-{topic}.md</i>"]
 
     GRP_ARCH --> PS["PLAN-SUMMARY.md<br/><i>요약 · 세션 참조용</i>"]
     GRP_ARCH --> PL["PLAN.md<br/><i>WHY — 결정 근거</i>"]
@@ -165,7 +165,7 @@ graph TD
 | --- | --- |
 | 개발자 | `WORKFLOW-MANUAL.md`, `ARCHITECTURE.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`, `GIT-WORKFLOW.md`, `PLAN.md` |
 | AI 운영 공통 | `docs/AGENT-WORKFLOW.md` (Claude Code: `CLAUDE.md` → 자동 import / Codex: `AGENTS.md` → 위임 / Cursor: `.cursor/rules/*.mdc`) |
-| AI 운영 전용 | `STATUS.md`, `HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `harness-protocol/`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `archive/`, `TODO/` |
+| AI 운영 전용 | `STATUS.md`, `HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `harness-protocol/`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `works/`, `archive/` |
 | 개발자 + AI 겸용 | `PLAN-SUMMARY.md`, `WORKFLOW-MANUAL.md` |
 
 > 파일별 로드 조건(언제·어떤 조건에서 읽는가)은 [§4-3-B Context Load Decision](#4-3-b-context-load-decision)을 참조한다.
@@ -487,52 +487,65 @@ Work 파일 스펙: `docs/decisions/DR-013-work-file-spec.md`
 - 다른 Agent 또는 도구로 인계될 가능성이 있을 때
 - 사용자가 명시적으로 세부 분해를 요청할 때
 
-**절차:**
+**착수 절차 (Candidate → Active):**
 
-1. Claude가 필요성을 제안하고 구조 초안을 제시한다 — 승인 없이 생성하지 않는다
-2. 사용자 승인 후 `{BACKLOG-ID}-{lowercase-topic}.md` 형식으로 생성한다
-3. 생성 후 STATUS.md 해당 Active Work 항목의 Notes 또는 Scope에 파일 경로를 추가한다
+1. `/work {ID}` 실행 — Claude가 `docs/works/{category}/`에서 기존 Work 파일 여부 확인
+2. 없고 생성 조건 충족 시 Work 파일 초안 제안 — 승인 없이 생성하지 않는다
+3. 사용자 승인 후 실행:
+   - `docs/works/{category}/{ID}-{lowercase-topic}.md` 생성
+   - `docs/works/{category}/README.md` Active 테이블에 행 추가
+   - STATUS Update Proposal: Active Work에 Work 파일 경로 포인터 추가
 
-**로드 조건:** 해당 Phase 세부 작업 분해 확인 시, 명시적 TODO block 참조 요청 시.
+**완료 절차 (Done → Archived):**
 
-**템플릿:**
+`/done` 시 Active Work에 Work 파일이 있으면:
 
-```md
-# TODO: {BACKLOG-ID} {title}
+1. Work 파일 frontmatter: `status: Done`, `actual_end: YYYY-MM-DD` 기입
+2. Done Criteria 전부 체크됐는지 확인
+3. `git mv docs/works/{category}/{file}.md docs/archive/docs/works/{category}/`
+4. `docs/works/{category}/README.md`: Done/Archived 테이블로 이동
+5. STATUS Update Proposal: Active Work 포인터 제거
 
-## Status
+**로드 조건:** `/resume` 또는 Active Work의 세부 Checkpoint 확인 시.
 
-| Field | Value |
-| --- | --- |
-| Backlog ID | {BACKLOG-ID} |
-| Risk | L1/L2/L3 |
-| State | PLAN |
-| Owner | Claude/Cursor/Codex/User |
-| Last checkpoint | Not started |
+**Work 파일 템플릿:**
 
-## Goal
+```yaml
+---
+id: {ID}
+priority: {P0|P1|P2|P3}
+status: {Candidate|Active|Done|Archived}
+risk: {Low|Medium|High}
+scope: {한 줄 범위 설명}
+appetite: {1d|3d|1w|2w}
+planned_start: YYYY-MM-DD
+planned_end: YYYY-MM-DD
+actual_end:
+related_dr: []
+related_commits: []
+related_troubleshooting: []
+---
 
-## Scope
+## Plan
+접근 방법. Alternatives 포함 — 왜 이 방법인지.
 
-## Out of Scope
+## Done Criteria
+- [ ] 사전 정의된 완료 기준
 
-## Task Breakdown
-
-| ID | Task | Status | Depends On | Verification |
-| --- | --- | --- | --- | --- |
-| T1 |  | Not started | - |  |
-| T2 |  | Not started | T1 |  |
+## Verification
+완료 기준 충족 확인 절차 또는 명령어.
 
 ## Checkpoints
+| CP | Description | Status |
+|----|-------------|--------|
+| 1  | ...         | Todo   |
 
-## Decisions Needed
-
-## Files Expected To Change
-
-## Verification Plan
-
-## Recovery Notes
+## Discovery
+계획과 달라진 것, 새로 발견한 것, 다음 작업을 위한 인사이트.
 ```
+
+상세 스펙: `docs/decisions/DR-013-work-file-spec.md`
+공통 운영 규칙: `docs/harness-protocol/03-work-items-and-naming.md` Work File Rules 섹션
 
 ### `.claude/settings.json`
 
@@ -949,7 +962,7 @@ flowchart LR
         C1["decisions/DR-*.md"]
         C2["STATUS · backlog\nPLAN-SUMMARY"]
         C3["archive/\nSTATUS 재편"]
-        C4["TODO/\nSTATUS Notes"]
+        C4["works/\nSTATUS Notes"]
         C5["PLAN · PLAN-SUMMARY\nrules · README"]
         C6["ARCHITECTURE.md\nDEVELOPER-GUIDE"]
         C7["HARNESS-PROTOCOL\nharness-protocol/"]

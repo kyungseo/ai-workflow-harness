@@ -33,8 +33,8 @@ archive 구조를 경로 미러링 방식으로 정비한다.
 - [x] STATUS.md 포인터 형식 전환 완료
 - [x] AI 도구 정렬: Claude commands/rules, Codex AGENTS.md, Cursor rules, prompts 일관성 확인
 - [x] 하네스 문서 업데이트 (AGENT-WORKFLOW.md, HARNESS-PROTOCOL.md 등)
-- [ ] 3개 AI 도구 시뮬레이션 갭 없음
-- [ ] README/매뉴얼 정렬 완료
+- [x] 3개 AI 도구 시뮬레이션 갭 없음
+- [x] README/매뉴얼 정렬 완료
 - [ ] `/health` 통과
 
 ## Verification
@@ -64,8 +64,8 @@ wc -l docs/STATUS.md  # 60줄 이내 목표
 | 5 | Phase D: STATUS.md 리팩토링 완료 | Done |
 | 6 | Phase E: AI 도구 정렬 (Claude/Codex/Cursor/prompts) | Done |
 | 7 | Phase F: 하네스 문서 업데이트 | Done |
-| 8 | Phase G: 시뮬레이션 검증 | Todo |
-| 9 | Phase H: README/매뉴얼 정렬 | Todo |
+| 8 | Phase G: 시뮬레이션 검증 | Done |
+| 9 | Phase H: README/매뉴얼 정렬 | Done |
 | 10 | Phase I: /health 최종 검증 | Todo |
 
 ## Discovery
