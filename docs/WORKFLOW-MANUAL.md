@@ -539,7 +539,7 @@ Claude Code 공식 설정 파일.
 
 - `defaultMode: "plan"` — 모든 작업을 기본적으로 Plan 모드로 시작
 - `permissions.deny` — 위험 명령 차단 (rm, sudo, kubectl, terraform 등)
-- `hooks.Stop` — 세션 종료 전 `/done` 절차 점검 reminder
+- `hooks.Stop` — 세션 종료 전 `/done` 절차 점검 reminder (단, `/exit` 직접 입력 시에는 Claude 응답 생명주기를 거치지 않아 발동하지 않음 — `/done` 실행 후 종료 권장)
 
 ### `.claude/rules/*.md`
 

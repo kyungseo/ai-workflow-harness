@@ -35,6 +35,7 @@ Phase1 종료 직후 백업본은 `docs/archive/harness-refactor-20260514/PHASE2
 | HRN-007 | P2 | Candidate | L1 | `prompts/` vs `.claude/commands/` 역할 경계와 전환 기준 결정 | Harness Protocol 안정화 | `prompts/` 파일을 command 승격/유지/archive-delete 후보로 분류하고, 전환 기준을 `prompts/README.md` 또는 harness protocol에 반영 | 파일 목록 점검, 중복 command/prompt 쌍 식별 |
 | HRN-008 | P1 | Done | L1 | Codex 전용 instruction 구조 도입 — root `AGENTS.md`를 `CLAUDE.md`와 동등한 진입점으로 추가 | Codex 사용 결정 | `AGENTS.md` 생성, `CLAUDE.md`와 대칭 구조 정렬, prompt/README와 공통 규칙 위임 경로 정렬 | 문서 참조 확인, Codex 시작 경로 정렬 확인, `.claude/settings.json` 충돌 없음 |
 | HRN-009 | P2 | Candidate | L1 | `docs/` 파일·디렉토리 naming audit — DR-008 기준 재검토, "harness" 용어 적정성 검토 포함 | `docs/decisions/DR-008-docs-filename-standard.md` | `docs/` 루트, `backlog/`, `decisions/`, `TODO/`, `harness-protocol/`, `archive/`, `retrospectives/`의 대소문자·hyphen 규칙을 재정의하거나 DR-008 예외를 명시; `VSCode-DevContainer구조.png`, legacy `TODO-BLOCK*.md`, archive snapshot 파일명 처리 방침 결정; "harness" 용어가 이 시스템의 lightweight 성격에 적합한지 검토하고 유지·변경·완화(modifier 추가) 중 방향을 결정하여 기록 | `find docs -maxdepth 3`, `rg` 참조 점검, case-only rename 필요 시 git-safe 절차 확인 |
+| HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 — Claude Code process-exit hook 지원 여부 모니터링 | — | Claude Code 릴리즈 노트에서 process-exit hook 지원 확인 시 `settings.json` 보완 및 문서 갱신 | 릴리즈 노트 확인 후 gap 해소 여부 검증 |
 | DOC-001 | P2 | Done | L1 | git 구성·브랜치 전략·flow 가이드 문서 생성 | git workflow 운영 확립 | `docs/GIT-WORKFLOW.md` 생성, 실제 Gitflow(feature→develop→main) 및 CI trigger·pre-commit hook·post-PR 절차 포함 | 문서 리뷰 |
 
 ## Deferred Ideas
