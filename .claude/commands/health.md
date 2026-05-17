@@ -91,6 +91,10 @@ rg -n "^# |^Status:" docs/decisions
 
 - STATUS.md Active Work: Verification 완료되었으나 Done 처리가 지연된 항목
 - `docs/backlog/PHASE{n}.md`: product/preparation 항목 중 선행 조건이 이미 충족된 항목, 범위·우선순위 재검토 필요 항목
+  ```bash
+  # 상태 확인 예시 — alternation은 | 사용 (\| 아님)
+  rg "Candidate|In Progress" docs/backlog/PHASE*.md
+  ```
 - `docs/backlog/HARNESS.md`: harness 항목 중 완료되었거나 새 상태 머신과 충돌하는 항목, hard enforcement 후보
 - DR 상태 확인 (Phase 5 `rg` 결과 재사용):
   - Draft 상태이나 결정이 실질적으로 완료된 DR → Accepted 처리 필요
@@ -118,6 +122,7 @@ Phase 5의 git log 결과를 기준으로, 변경된 구현 파일 유형별로 
 | `.claude/commands/*.md` (신규) | `HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/`, `README.md` AI workflow 섹션 |
 | `config/checkstyle/**`, `.editorconfig` | `DEVELOPER-GUIDE.md` 코드 컨벤션 섹션 |
 | `docs/decisions/DR-*.md` (신규 Accepted) | STATUS.md Recent Decisions, 연관 backlog Done Criteria |
+| `docs/*.md` (신규 개발자 문서) | 참조하는 config·yml 파일과 기술 내용 대조 (예: ci.yml ↔ CI trigger 설명, checkstyle.xml ↔ 컨벤션 설명) |
 
 STATUS.md Recent Decisions는 **최근 8개 rolling window**, 항목 품질(후속 행동을 바꾸는 판단만), DR-worthy 항목의 대응 DR 존재 여부를 점검한다.
 전체 이력 점검은 명시적 요청 시에만 진행한다.
