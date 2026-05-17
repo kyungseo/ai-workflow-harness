@@ -866,27 +866,21 @@ static void redisProperties(DynamicPropertyRegistry registry) {
 }
 ```
 
-#### Docker Desktop 4.73.0+ 로컬 설정
+#### Docker Desktop 4.73.0+
 
-Docker Desktop 4.73.0은 최소 API 버전을 1.40으로 상향했다. Testcontainers 내장 docker-java가 구버전을 기본값으로 사용하므로 아래 파일을 생성해야 한다.
+`build.gradle.kts`에 Docker API 버전(`-Dapi.version=1.41`)과 소켓 경로(`DOCKER_HOST`, `TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE`)가 설정되어 있으므로 별도 로컬 설정 없이 `./gradlew test`가 동작한다.
 
-**`~/.docker-java.properties`** (신규 생성)
+**IntelliJ에서 테스트를 직접 실행하는 경우** Gradle을 거치지 않으므로 위 설정이 적용되지 않는다. Docker Desktop 4.73.0+ 환경에서 IntelliJ Run 버튼으로 통합 테스트를 실행하려면 Run Configuration → Environment variables에 아래를 추가한다:
 
-```properties
-api.version=1.41
+```
+JAVA_TOOL_OPTIONS=-Dapi.version=1.41
+DOCKER_HOST=unix:///var/run/docker.sock
+TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock
 ```
 
-**`~/.testcontainers.properties`** (없으면 신규 생성, 있으면 아래 항목 추가)
+**원격 Docker 데몬 또는 Podman을 사용하는 경우** `DOCKER_HOST` 환경변수가 이미 설정되어 있으면 `build.gradle.kts`의 fallback이 override되므로 별도 조치 불필요.
 
-```properties
-docker.host=unix:///var/run/docker.sock
-docker.api.version=1.41
-testcontainers.ryuk.disabled=true
-```
-
-설정 후 `./gradlew test`가 정상 실행된다.
-
-원인 분석과 상세 절차는 [docs/troubleshooting/testcontainers-docker-desktop-4.73.md](troubleshooting/testcontainers-docker-desktop-4.73.md)를 참조한다.
+연결 오류가 발생하면 [docs/troubleshooting/testcontainers-docker-desktop-4.73.md](troubleshooting/testcontainers-docker-desktop-4.73.md)를 참조한다.
 
 ---
 

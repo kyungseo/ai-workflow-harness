@@ -51,5 +51,9 @@ subprojects {
 
     tasks.withType<Test> {
         useJUnitPlatform()
+        // Docker Desktop 4.73.0+ API 버전 요구사항 대응 — shaded docker-java 기본값 1.32 < 최소 1.40
+        jvmArgs("-Dapi.version=1.41")
+        environment("DOCKER_HOST", System.getenv("DOCKER_HOST") ?: "unix:///var/run/docker.sock")
+        environment("TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE", "/var/run/docker.sock")
     }
 }

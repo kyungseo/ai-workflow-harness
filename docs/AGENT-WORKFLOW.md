@@ -56,6 +56,22 @@ Plan에는 Scope, Files, Verification, Risk, Reversal Cost를 포함한다.
 `VALIDATE` 실패 상태에서는 checkpoint 또는 commit을 만들지 않는다.
 `docs/STATUS.md` 변경은 `STATUS Update Proposal` 보고와 사용자 승인 후에만 수행한다.
 
+## Scope And Commit Approval
+
+작은 L1 변경은 대상 파일과 scope가 명확하고 사용자가 진행을 승인했다면 승인된 scope 안에서 빠르게 편집할 수 있다.
+
+MUST:
+
+- 승인된 scope 밖의 파일, 문서, 설정으로 변경이 확장되면 먼저 추가 scope, 이유, 검증 방법을 보고하고 승인 대기한다.
+- 특히 `README.md`, `docs/STATUS.md`, workflow 문서, command, prompt, rule, developer-facing 문서로 확장되면 승인 없이 수정하지 않는다.
+- commit 전에는 validation 결과, diff summary, 제안 commit message를 보고하고 승인 대기한다.
+
+MUST NOT:
+
+- 편의상 관련 문서를 함께 고친다는 이유만으로 승인된 파일 범위를 확장하지 않는다.
+- validation 없이 commit하지 않는다.
+- diff summary와 commit message 승인 없이 commit하지 않는다.
+
 ## Work Item Routing
 
 | Item | Where |

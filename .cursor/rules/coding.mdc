@@ -21,6 +21,7 @@ MUST:
 - Use `docs/backlog/PHASE{n}.md` for product and Phase{n} preparation candidate work.
 - Use `docs/backlog/HARNESS.md` for harness, command/rule, and workflow hardening candidate work.
 - Include scope, files, verification, risk, and reversal cost before implementation.
+- Before expanding approved scope to additional files, docs, or settings, report the added scope, reason, and verification plan, then wait for approval.
 - Use backlog ID based filenames for large task TODO files: `docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md`.
 - Do not reuse task IDs for different meanings.
 - Use `docs/archive/*.md` only for historical detail.
@@ -33,6 +34,7 @@ NEVER:
 
 - Add unrequested features.
 - Refactor unrelated code.
+- Expand approved scope silently.
 - Implement before plan approval when the change is non-trivial or user-facing.
 - Rewrite adjacent code only for style preference.
 - Introduce a new framework, dependency, or architectural layer without explicit justification and approval.
