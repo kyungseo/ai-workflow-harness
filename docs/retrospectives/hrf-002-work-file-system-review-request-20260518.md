@@ -13,6 +13,7 @@
 | DR-013: Work 파일 스펙 | [`docs/decisions/DR-013-work-file-spec.md`](../decisions/DR-013-work-file-spec.md) |
 | DR-014: Archive 정책 | [`docs/decisions/DR-014-archive-policy.md`](../decisions/DR-014-archive-policy.md) |
 | DR-015: State Update Proposal 재설계 | [`docs/decisions/DR-015-state-update-proposal-redesign.md`](../decisions/DR-015-state-update-proposal-redesign.md) |
+| DR-016: Work Done→Archived 전환 트리거 | [`docs/decisions/DR-016-work-done-archive-trigger.md`](../decisions/DR-016-work-done-archive-trigger.md) |
 | HRF-001 리뷰 결과 | [`docs/retrospectives/harness-refactor-review-result-20260515.md`](harness-refactor-review-result-20260515.md) |
 | HRF-001 리뷰 요청서 | [`docs/retrospectives/harness-refactor-review-request-20260515.md`](harness-refactor-review-request-20260515.md) |
 | Work 항목·네이밍 규칙 | [`docs/harness-protocol/03-work-items-and-naming.md`](../harness-protocol/03-work-items-and-naming.md) |
@@ -36,6 +37,8 @@
 | `e24fe5e` | DR-015 기록 및 HRF-002 리뷰 요청 문서 작성 |
 | `6da7fe5` | G3 시뮬레이션 갭 수정 — create-harness.sh Work 파일 구조 동기화 (5개 갭) |
 | `8561c3b` | HRN-017 등록 — DR-015 2계층 State Update Proposal 구현 후속 추적 |
+| `143c404` | HRF-002 완료 처리 — STATUS 정리, Work 파일 Done, 리뷰 문서 최종 갱신 |
+| *(이후)* | DR-016 기록 — Work Done→Archived 전환 트리거 규칙 |
 
 ---
 
@@ -433,10 +436,11 @@ HRF-002 Work 파일 Discovery 섹션에 기록된 항목들:
 | 항목 | 심각도 | 추적 |
 | --- | --- | --- |
 | DR-015 2계층 게이트를 commands/AGENTS.md/workflow.mdc에 반영 미완료 | 중간 | HRN-017 (Candidate, P2) |
-| `STATUS.md` Next Actions가 Phase G, H를 아직 가리킴 | 높음 (P0) | STATUS Update Proposal 후 수정 |
+| `STATUS.md` Next Actions가 Phase G, H를 아직 가리킴 | 높음 (P0) | STATUS Update Proposal 후 수정 → **완료** |
 | `docs/backlog/HARNESS.md` HRN-006이 Open 상태 | 낮음 | Closed 처리 필요 |
 | Work 파일 Done→Archive 흐름 실제 실행 미검증 (G1 시뮬레이션은 Candidate까지만) | 중간 | PRE-C1 완료 시 첫 실제 실행 |
-| `HRN-002` hard enforcement와 DR-015 연계 검토 미완 | 낮음 | HRN-002 착수 시 |
+| Done→Archived 전환 트리거 규칙이 done.md·protocol에 미반영 | 중간 | DR-016 확정, 신규 HRN으로 구현 추적 |
+| `HRN-002` hard enforcement와 DR-015/DR-016 연계 검토 미완 | 낮음 | HRN-002 착수 시 |
 
 ---
 
@@ -489,10 +493,12 @@ git log --oneline | head -10
 - `/work`, `/resume`, `/done`, `AGENTS.md`, `workflow.mdc`에 추가된 Work 파일 절차가 실제 세션에서 작동할 만큼 구체적인가?
 - Done→Archive 흐름(git mv, README 업데이트, STATUS 포인터 제거)이 명확하게 정의되었는가?
 
-### 10.5 archive 구조 (DR-014)
+### 10.5 archive 구조 (DR-014, DR-016)
 
 - 경로 미러링 방식(`docs/archive/{원본-경로}/`)이 실용적인가?
-- 완료된 Work 파일을 `docs/archive/docs/works/{category}/`로 이동하는 규칙이 명확한가?
+- Done과 Archived를 분리한 설계(DR-016)가 실무에서 자연스럽게 작동하는가?
+- "2세션 이내 archive" 소프트 규칙이 충분한가, 아니면 더 강한 강제가 필요한가?
+- `docs/works/{category}/README.md`의 Active / Done / Archived 3단 테이블 구조가 관리 부담 없이 유지 가능한가?
 
 ### 10.6 도구 간 정렬
 
@@ -509,11 +515,12 @@ git log --oneline | head -10
 
 ## 11. 권장 다음 단계
 
-1. STATUS Update Proposal 승인 후 `STATUS.md` Next Actions 정리 및 HRF-002 완료 처리
+1. ~~STATUS Update Proposal 승인 후 `STATUS.md` Next Actions 정리 및 HRF-002 완료 처리~~ → **완료**
 2. `docs/backlog/HARNESS.md` HRN-006 Closed 처리
-3. HRN-017 착수 시 commands/AGENTS.md/workflow.mdc에 DR-015 2계층 게이트 반영
-4. PRE-C1 실제 착수 시 Work 파일 Done→Archive 첫 번째 실제 실행
-5. HRN-002(hard enforcement) 착수 시 DR-015와의 연계 검토
+3. DR-016 구현: `done.md` Done/Archive 단계 분리, `03-work-items-and-naming.md` 트리거 규칙 추가, `docs/works/{category}/README.md` 템플릿 갱신 (신규 HRN 등록)
+4. HRN-017 착수 시 commands/AGENTS.md/workflow.mdc에 DR-015 2계층 게이트 반영
+5. PRE-C1 실제 착수 시 Work 파일 Done→Archive 첫 번째 실제 실행
+6. HRN-002(hard enforcement) 착수 시 DR-015/DR-016과의 연계 검토
 
 ---
 
