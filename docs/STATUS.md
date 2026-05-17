@@ -57,5 +57,7 @@ Last updated: 2026-05-18 (HRF-002 완료 — Phase I /health, G3 시뮬레이션
 
 ## Next Actions
 
-1. PRE-B: 개발환경 전략 결정 (로컬 vs Docker, DevContainer 도입 여부)
-2. PRE-C1: Phase 1 아키텍처 현황 분석 (`docs/works/phase2/PRE-C1-arch-analysis.md` 착수)
+1. HRN-018: DR-016 구현 — `done.md` Done/Archive 단계 분리, Done→Archived 트리거 규칙 반영 (HRF-002 아카이빙 선행 필요)
+2. HRN-017: DR-015 구현 — commands/AGENTS.md/workflow.mdc 2계층 게이트 반영
+3. PRE-C1: Phase 1 아키텍처 현황 분석 (`docs/works/phase2/PRE-C1-arch-analysis.md` 착수)
+4. PRE-B: 개발환경 전략 결정
