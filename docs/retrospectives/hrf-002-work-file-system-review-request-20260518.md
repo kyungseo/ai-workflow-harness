@@ -19,6 +19,23 @@
 | Archive 라이프사이클 | [`docs/harness-protocol/04-document-lifecycle.md`](../harness-protocol/04-document-lifecycle.md) |
 | 상태 기준 문서 | [`docs/STATUS.md`](../STATUS.md) |
 | 워크플로우 매뉴얼 | [`docs/WORKFLOW-MANUAL.md`](../WORKFLOW-MANUAL.md) |
+| 하네스 backlog (HRN-017) | [`docs/backlog/HARNESS.md`](../backlog/HARNESS.md) |
+
+## 관련 커밋
+
+| 커밋 | 내용 |
+| --- | --- |
+| `3288155` | HRF-002 Phase 0~A — DR-013/014 작성, git 태그 및 스냅샷 생성 |
+| `4ebb5c9` | HRF-002 Phase B — 데이터 클린징 및 STATUS 구조 전환 |
+| `44202d1` | HRF-002 Phase C — docs/works/ 구조 도입 및 archive 정비 |
+| `ad9ed2f` | HRF-002 Phase D — STATUS 최종 정비 및 Work File Rules 확립 |
+| `3955806` | HRF-002 Phase E — AI 도구 경로 참조 전환 (docs/TODO → docs/works) |
+| `89b22bb` | HRF-002 Phase F — 하네스 문서 docs/works/ 경로 전환 |
+| `604e4b9` | HRF-002 Phase G — 시뮬레이션 검증 및 갭 수정 (G2: 5개 갭) |
+| `2779ba9` | HRF-002 Phase H — README/매뉴얼 정렬 |
+| `e24fe5e` | DR-015 기록 및 HRF-002 리뷰 요청 문서 작성 |
+| `6da7fe5` | G3 시뮬레이션 갭 수정 — create-harness.sh Work 파일 구조 동기화 (5개 갭) |
+| `8561c3b` | HRN-017 등록 — DR-015 2계층 State Update Proposal 구현 후속 추적 |
 
 ---
 
@@ -415,7 +432,7 @@ HRF-002 Work 파일 Discovery 섹션에 기록된 항목들:
 
 | 항목 | 심각도 | 추적 |
 | --- | --- | --- |
-| DR-015 2계층 게이트를 commands/AGENTS.md/workflow.mdc에 반영 미완료 | 중간 | 별도 HRN 등록 필요 |
+| DR-015 2계층 게이트를 commands/AGENTS.md/workflow.mdc에 반영 미완료 | 중간 | HRN-017 (Candidate, P2) |
 | `STATUS.md` Next Actions가 Phase G, H를 아직 가리킴 | 높음 (P0) | STATUS Update Proposal 후 수정 |
 | `docs/backlog/HARNESS.md` HRN-006이 Open 상태 | 낮음 | Closed 처리 필요 |
 | Work 파일 Done→Archive 흐름 실제 실행 미검증 (G1 시뮬레이션은 Candidate까지만) | 중간 | PRE-C1 완료 시 첫 실제 실행 |
@@ -494,7 +511,7 @@ git log --oneline | head -10
 
 1. STATUS Update Proposal 승인 후 `STATUS.md` Next Actions 정리 및 HRF-002 완료 처리
 2. `docs/backlog/HARNESS.md` HRN-006 Closed 처리
-3. DR-015 구현을 위한 신규 HRN 등록 및 commands/AGENTS.md/workflow.mdc 반영
+3. HRN-017 착수 시 commands/AGENTS.md/workflow.mdc에 DR-015 2계층 게이트 반영
 4. PRE-C1 실제 착수 시 Work 파일 Done→Archive 첫 번째 실제 실행
 5. HRN-002(hard enforcement) 착수 시 DR-015와의 연계 검토
 

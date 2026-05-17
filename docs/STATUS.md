@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-18 (HRF-002 Phase D — STATUS 최종 정비)
+Last updated: 2026-05-18 (HRF-002 완료 — Phase I /health, G3 시뮬레이션)
 
 ## Current State
 
@@ -29,7 +29,7 @@ Last updated: 2026-05-18 (HRF-002 Phase D — STATUS 최종 정비)
 
 ## Phase 2 Pre-Entry Completion Criteria
 
-- [ ] HRF-002 완료: Work 파일 체계 + Archive 정책 + STATUS 전환 + AI 도구 정렬 + 시뮬레이션 통과 + `/health` 통과
+- [x] HRF-002 완료: Work 파일 체계 + Archive 정책 + STATUS 전환 + AI 도구 정렬 + 시뮬레이션 통과 + `/health` 통과
 - [ ] PRE-B: 개발환경 전략 결정
 - [ ] PRE-C1: Phase 1 아키텍처 현황 분석
 - [ ] PRE-C2: Phase 2 요건 정의 확정
@@ -38,7 +38,6 @@ Last updated: 2026-05-18 (HRF-002 Phase D — STATUS 최종 정비)
 
 | ID | Status | Work File |
 | --- | --- | --- |
-| HRF-002 | Active | `docs/works/harness/HRF-002-work-system-refactor.md` |
 
 ## Blockers And Open Questions
 
@@ -54,8 +53,9 @@ Last updated: 2026-05-18 (HRF-002 Phase D — STATUS 최종 정비)
 | 2026-05-17 | Testcontainers Docker 환경 설정을 `build.gradle.kts`로 이관 — 개발자별 홈 파일 설정 불필요 | P2-006 회피 조치 정정, 신규 개발자 수동 설정 제거 | Low |
 | 2026-05-18 | DR-013: Work 파일 기반 작업 단위 체계 도입 — `docs/works/` 구조, frontmatter 스펙, Candidate→Active→Done→Archived lifecycle | STATUS.md 비대화 방지, 세션 간 이력 완전 보존 | Medium |
 | 2026-05-18 | DR-014: Archive 구조 정책 — `docs/archive/` 하위 경로 미러링, `-v{N}` / `-{YYYYMMDD}` 접미사 규칙 | 어느 파일이든 아카이빙 가능, 원본 위치 추적 직관적 | Low |
+| 2026-05-18 | DR-015: State Update Proposal 2계층 게이트 재설계 — Work 파일 변경(Layer 1)은 저마찰, STATUS.md 변경(Layer 2)은 차등 게이트 | Work 파일 SSoT 전환 이후 게이트 비용이 실질 위험과 역전된 구조 해소 | Low |
 
 ## Next Actions
 
-1. HRF-002 Phase G: 시뮬레이션 검증 (Claude / Codex / Cursor 세션 흐름 E2E)
-2. HRF-002 Phase H: README/매뉴얼 정렬 (WORKFLOW-MANUAL.md Work 파일 워크플로우 섹션 추가)
+1. PRE-B: 개발환경 전략 결정 (로컬 vs Docker, DevContainer 도입 여부)
+2. PRE-C1: Phase 1 아키텍처 현황 분석 (`docs/works/phase2/PRE-C1-arch-analysis.md` 착수)

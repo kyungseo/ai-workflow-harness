@@ -1,15 +1,15 @@
 ---
 id: HRF-002
 priority: P0
-status: Active
+status: Done
 risk: High
 scope: Work 파일 체계 도입, docs/works/ 구조 정비, STATUS 전환, AI 도구 정렬, 시뮬레이션 검증
 appetite: 2w
 planned_start: 2026-05-18
 planned_end: 2026-05-31
-actual_end:
+actual_end: 2026-05-18
 related_dr: [DR-013, DR-014]
-related_commits: [3288155, 4ebb5c9, 44202d1]
+related_commits: [3288155, 4ebb5c9, 44202d1, ad9ed2f, 3955806, 89b22bb, 604e4b9, 2779ba9, e24fe5e, 6da7fe5, 8561c3b]
 related_troubleshooting: []
 ---
 
@@ -35,7 +35,7 @@ archive 구조를 경로 미러링 방식으로 정비한다.
 - [x] 하네스 문서 업데이트 (AGENT-WORKFLOW.md, HARNESS-PROTOCOL.md 등)
 - [x] 3개 AI 도구 시뮬레이션 갭 없음
 - [x] README/매뉴얼 정렬 완료
-- [ ] `/health` 통과
+- [x] `/health` 통과
 
 ## Verification
 
@@ -66,7 +66,7 @@ wc -l docs/STATUS.md  # 60줄 이내 목표
 | 7 | Phase F: 하네스 문서 업데이트 | Done |
 | 8 | Phase G: 시뮬레이션 검증 | Done |
 | 9 | Phase H: README/매뉴얼 정렬 | Done |
-| 10 | Phase I: /health 최종 검증 | Todo |
+| 10 | Phase I: /health 최종 검증, G3 시뮬레이션, DR-015, HRN-017 등록 | Done |
 
 ## Discovery
 
