@@ -34,6 +34,10 @@ related_troubleshooting: []   # 관련 troubleshooting 문서 경로
 ---
 ```
 
+### Work 파일 운영 규칙
+
+공통 운영 규칙(실제 저장소 상태 우선 원칙 등)은 `docs/harness-protocol/03-work-items-and-naming.md` Work File Rules 섹션이 권위 문서다. 개별 Work 파일은 이를 반복하지 않는다.
+
 ### Work 파일 섹션 구성
 
 ```markdown

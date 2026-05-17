@@ -9,7 +9,7 @@ planned_start: 2026-05-18
 planned_end: 2026-05-31
 actual_end:
 related_dr: [DR-013, DR-014]
-related_commits: [3288155, 4ebb5c9]
+related_commits: [3288155, 4ebb5c9, 44202d1]
 related_troubleshooting: []
 ---
 
@@ -27,10 +27,10 @@ archive 구조를 경로 미러링 방식으로 정비한다.
 
 ## Done Criteria
 
-- [ ] DR-013, DR-014 작성 및 승인
-- [ ] docs/TODO/ → docs/works/ 리네이밍, 소문자 통일
-- [ ] archive 구조 정비 (경로 미러링 기반)
-- [ ] STATUS.md 포인터 형식 전환 완료
+- [x] DR-013, DR-014 작성 및 승인
+- [x] docs/TODO/ → docs/works/ 리네이밍, 소문자 통일
+- [x] archive 구조 정비 (경로 미러링 기반)
+- [x] STATUS.md 포인터 형식 전환 완료
 - [ ] AI 도구 정렬: Claude commands/rules, Codex AGENTS.md, Cursor rules, prompts 일관성 확인
 - [ ] 하네스 문서 업데이트 (AGENT-WORKFLOW.md, HARNESS-PROTOCOL.md 등)
 - [ ] 3개 AI 도구 시뮬레이션 갭 없음
@@ -60,8 +60,8 @@ wc -l docs/STATUS.md  # 60줄 이내 목표
 | 1 | Phase 0: git tag hrf-002-start, STATUS 스냅샷 | Done |
 | 2 | Phase A: DR-013, DR-014 작성, HARNESS.md HRF-002 등록 | Done |
 | 3 | Phase B: 데이터 클린징, STATUS 구조 전환 | Done |
-| 4 | Phase C: docs/works/ 리네이밍, archive 구조, Work 파일 생성 | In Progress |
-| 5 | Phase D: STATUS.md 리팩토링 완료 | Todo |
+| 4 | Phase C: docs/works/ 리네이밍, archive 구조, Work 파일 생성 | Done |
+| 5 | Phase D: STATUS.md 리팩토링 완료 | Done |
 | 6 | Phase E: AI 도구 정렬 (Claude/Codex/Cursor/prompts) | Todo |
 | 7 | Phase F: 하네스 문서 업데이트 | Todo |
 | 8 | Phase G: 시뮬레이션 검증 | Todo |
@@ -75,3 +75,6 @@ wc -l docs/STATUS.md  # 60줄 이내 목표
 - docs/works/PHASE2/ (빈 디렉토리)는 git이 추적하지 않아 OS mv로 처리함.
 - TODO-BLOCK*.md 파일들은 Phase 1 완료 당시 작업 단위로, 구형 형식(Work 파일 이전).
   docs/works/phase1/에 유지하되, 신규 Work 파일과 형식이 다름에 유의.
+- Work 파일 공통 규칙(실제 저장소 상태 우선 원칙)은 개별 Work 파일이 아닌
+  docs/harness-protocol/03-work-items-and-naming.md Work File Rules 섹션에 위치.
+  DR-013이 해당 섹션을 권위 문서로 참조하도록 업데이트함.
