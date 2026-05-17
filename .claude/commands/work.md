@@ -8,12 +8,14 @@ docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾
 
 작업 착수 전 `docs/works/{category}/` 에 해당 ID의 Work 파일이 있는지 확인해줘.
 
+- **디렉토리 자체가 없으면**: 생성 계획에 `mkdir -p docs/works/{category}/` 포함.
 - **Work 파일이 있으면**: 파일을 로드해 Plan, Done Criteria, Checkpoints를 계획에 반영해줘.
 - **Work 파일이 없으면**: `docs/harness-protocol/03-work-items-and-naming.md` Work File Decomposition 기준을 확인하고, 해당하면 Work 파일 생성을 계획에 포함해줘 (승인 후 생성).
 
 Work 파일 생성 시 함께 수행할 것:
-1. `docs/works/{category}/README.md` Active 테이블에 행 추가
-2. STATUS Update Proposal: STATUS.md Active Work에 포인터 추가
+1. `docs/works/{category}/README.md`가 없으면 먼저 생성 (Active/Done 테이블 포함)
+2. `docs/works/{category}/README.md` Active 테이블에 행 추가
+3. STATUS Update Proposal: STATUS.md Active Work에 포인터 추가
 
 ## Pre-check (Before Planning)
 

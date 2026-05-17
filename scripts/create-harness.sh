@@ -156,7 +156,9 @@ for dir in \
   "${TARGET_ROOT}/docs/backlog" \
   "${TARGET_ROOT}/docs/decisions" \
   "${TARGET_ROOT}/docs/harness-protocol" \
+  "${TARGET_ROOT}/docs/works" \
   "${TARGET_ROOT}/docs/archive" \
+  "${TARGET_ROOT}/docs/archive/docs/works" \
   "${TARGET_ROOT}/docs/retrospectives" \
   "${TARGET_ROOT}/docs/reports" \
   "${TARGET_ROOT}/docs/presentations" \
@@ -446,15 +448,21 @@ write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 | \`docs/HARNESS-QUICK-REFERENCE.md\` | 세션 실행 규칙 요약 |
 | \`docs/WORKFLOW-MANUAL.md\` | 워크플로우 전체 가이드 |
 | \`docs/AGENT-WORKFLOW.md\` | 공통 운영 규칙 |
+| \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 | \`.claude/commands/\` | \`/start\`, \`/pick\`, \`/register\`, \`/work\`, \`/done\` 등 |
 | \`prompts/\` | 세션 시작 및 태스크 프롬프트 라이브러리 |
 
 ### 첫 세션
 
+**Claude Code:**
 \`\`\`bash
 claude        # Claude Code 열기
 /start        # 하네스 로딩 확인 및 현재 상태 요약
 \`\`\`
+
+**Codex:** \`prompts/codex-session-start.md\` 내용을 세션 시작 시 붙여넣는다.
+
+**Cursor:** \`prompts/cursor-session-start.md\` 내용을 세션 시작 시 붙여넣는다.
 
 ## 사전 작업
 
@@ -463,6 +471,7 @@ claude        # Claude Code 열기
 1. \`docs/STATUS.md\` — 프로젝트 목표와 Phase 설명
 2. \`docs/PLAN-SUMMARY.md\` — 기술 스택, 포트, 패키지 구조
 3. \`docs/backlog/PHASE1.md\` — 초기 작업 항목 \`P1-001~\`
+4. \`docs/AGENT-WORKFLOW.md\` — Project Constants와 Verification Defaults
 
 ---
 
@@ -484,12 +493,8 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 
 ## Active Work
 
-| ID | Scope | Status | Branch | Done Criteria |
-| --- | --- | --- | --- | --- |
-
-## Checkpoints
-
-*(없음)*
+| ID | Status | Work File |
+| --- | --- | --- |
 
 ## Blockers And Open Questions
 
@@ -504,7 +509,8 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 
 1. 이 파일과 \`docs/PLAN-SUMMARY.md\`를 프로젝트 정보로 업데이트
 2. \`docs/backlog/PHASE1.md\`에 초기 작업 항목 등록
-3. Claude Code에서 \`/start\`로 첫 세션 시작
+3. \`docs/AGENT-WORKFLOW.md\` Project Constants와 Verification Defaults 채우기
+4. Claude Code: \`/start\`로 첫 세션 시작 | Codex: \`prompts/codex-session-start.md\` 사용 | Cursor: \`prompts/cursor-session-start.md\` 사용
 "
 
 write_text "${TARGET_ROOT}/docs/PLAN-SUMMARY.md" "# PLAN-SUMMARY.md — ${PROJECT_NAME}
@@ -601,7 +607,23 @@ write_text "${TARGET_ROOT}/docs/backlog/HARNESS.md" "# Harness Backlog
 ## Done
 "
 
+write_text "${TARGET_ROOT}/docs/works/README.md" "# docs/works/
+
+Work 파일 디렉토리. 큰 작업 단위의 Single Source of Truth.
+
+카테고리 서브디렉토리와 그 안의 README.md는 첫 Work 파일 생성 시 함께 만든다.
+Work 파일 스펙: \`docs/harness-protocol/03-work-items-and-naming.md\`
+
+## 카테고리
+
+| 카테고리 | 경로 | 용도 |
+| --- | --- | --- |
+| phase1/ | docs/works/phase1/ | Phase 1 작업 |
+| harness/ | docs/works/harness/ | Harness 개선 작업 |
+"
+
 touch_file "${TARGET_ROOT}/docs/archive/.gitkeep"
+touch_file "${TARGET_ROOT}/docs/archive/docs/works/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/retrospectives/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/reports/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/presentations/.gitkeep"
