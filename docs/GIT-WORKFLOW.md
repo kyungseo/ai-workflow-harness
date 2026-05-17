@@ -92,10 +92,12 @@ PR merge 후:
 ```bash
 git checkout main
 git pull origin main
+git status                  # "up to date with 'origin/main'" 확인
 
 git checkout develop
 git merge origin/main       # develop을 main과 동기화
 git push origin develop
+git status                  # "up to date with 'origin/develop'" 확인
 ```
 
 ## 4. CI Trigger
