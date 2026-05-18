@@ -1,7 +1,7 @@
 ---
 id: HRN-021-S5
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: AI Workflow simplification S5 — WORKFLOW-MANUAL.md AI 로드 제외와 cascade 대상 유지 기준 명시
 appetite: 0.5d

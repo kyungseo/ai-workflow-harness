@@ -1,7 +1,7 @@
 ---
 id: HRN-019
 priority: P2
-status: Done
+status: Archived
 risk: Low
 scope: /done Work 완료 절차 분리 — /close 커맨드 신규 도입 (Work Done + 선택적 Archive), /done에서 Work Done 단계 제거 및 pause Discovery 체크 추가
 appetite: 1d

@@ -1,7 +1,7 @@
 ---
 id: HRN-021-S4
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: AI Workflow simplification S4 — Quick Mode 예외 조건 삭제, harness/workflow surface 기본 L2 명시
 appetite: 0.5d
