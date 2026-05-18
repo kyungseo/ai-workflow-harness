@@ -2,7 +2,7 @@
 
 AI Workflow Harness의 일상 실행 규칙이다.
 상세 설명은 `docs/HARNESS-PROTOCOL.md`를 따른다.
-이 문서는 세션 중 빠르게 확인하는 요약이다. 충돌하거나 상세 판단이 필요하면 `docs/harness-protocol/*.md`를 우선한다.
+이 문서는 세션 중 빠르게 확인하는 요약이다. 충돌하거나 상세 판단이 필요하면 `docs/HARNESS-PROTOCOL.md`를 우선한다.
 
 ## 1. Session Start
 
@@ -204,7 +204,7 @@ Low. STATUS.md dashboard 표현만 되돌리면 됩니다.
 | DR-worthy decision accepted | `docs/decisions/` 기록 제안 |
 | Structure change | `docs/ARCHITECTURE.md` 업데이트 제안 |
 | Development flow change | `docs/DEVELOPER-GUIDE.md` 업데이트 제안 |
-| Workflow rule/command change | `docs/HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/` 업데이트 |
+| Workflow rule/command change | `docs/HARNESS-PROTOCOL.md` 업데이트 |
 | Phase complete | STATUS archive 제안 |
 | Non-trivial issue resolved | `docs/troubleshooting/` 기록 제안 |
 | Presentation/report artifact created | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |

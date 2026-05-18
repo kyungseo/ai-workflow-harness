@@ -26,7 +26,7 @@ S5 manual 역할 재정의, S1 protocol 통합, S6 health checklist화, S3 Candi
 
 - [x] `docs/AGENT-WORKFLOW.md`가 Approval Matrix를 canonical gate로 설명한다.
 - [x] `docs/HARNESS-QUICK-REFERENCE.md`가 같은 기준을 짧게 반영한다.
-- [x] `docs/harness-protocol/01-session-state-machine.md`, `03-work-items-and-naming.md`, `06-recovery-and-validation.md`의 State Update/Commit 설명이 Approval Matrix와 충돌하지 않는다.
+- [x] `docs/HARNESS-PROTOCOL.md`의 State Update/Commit 설명이 Approval Matrix와 충돌하지 않는다.
 - [x] Claude/Codex/Cursor entrypoint, command, rule, prompt surface의 approval 문구가 충돌하지 않는다.
 - [x] `/work`, `/pick`, `/close`, scaffold Stop hook 흐름이 Approval Matrix와 충돌하지 않는다.
 - [x] Work 파일과 STATUS/Work index lifecycle pointer가 `HRN-021-S2` 상태를 반영한다.
@@ -38,9 +38,9 @@ S5 manual 역할 재정의, S1 protocol 통합, S6 health checklist화, S3 Candi
 rg -n "State Update Gate|Commit Gate|Scope And Commit Approval" \
   AGENTS.md CLAUDE.md README.md .claude .cursor prompts \
   docs/AGENT-WORKFLOW.md docs/HARNESS-PROTOCOL.md docs/HARNESS-QUICK-REFERENCE.md \
-  docs/WORKFLOW-MANUAL.md docs/harness-protocol scripts
+  docs/WORKFLOW-MANUAL.md docs/HARNESS-PROTOCOL.md scripts
 rg -n "Approval Matrix" \
-  docs/AGENT-WORKFLOW.md docs/HARNESS-QUICK-REFERENCE.md docs/harness-protocol \
+  docs/AGENT-WORKFLOW.md docs/HARNESS-QUICK-REFERENCE.md docs/HARNESS-PROTOCOL.md \
   docs/WORKFLOW-MANUAL.md AGENTS.md CLAUDE.md .claude .cursor prompts
 scripts/create-harness.sh --dry-run --profile generic harness-s2-review /private/tmp/harness-s2-review
 git diff --check

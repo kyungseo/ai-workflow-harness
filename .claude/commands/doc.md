@@ -46,7 +46,7 @@ disable-model-invocation: true
 | **Architecture / Stack Summary** | `docs/PLAN-SUMMARY.md` |
 | **Deep-Dive Evidence / L3 Specs** | `docs/PLAN.md` |
 | **Governance Records** | 관련 의사결정 기록: `docs/decisions/DR-*.md` |
-| **Harness / Protocol Specifics** | `docs/HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/*.md` |
+| **Harness / Protocol Specifics** | `docs/HARNESS-PROTOCOL.md` |
 | **Retrospective Reflection** | `docs/retrospectives/` 내 관련 파일 1개 |
 | **Root Cause / Incident Resolution** | 관련 `docs/troubleshooting/` 에셋 |
 

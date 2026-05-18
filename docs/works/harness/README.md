@@ -19,9 +19,10 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Hold Reason |
 |----|-------|------------|-------------|
-| HRN-021-S5 | WORKFLOW-MANUAL.md AI 로드 제외와 cascade 대상 유지 기준 명시 | 2026-05-19 | HRN-021 series 후속 S1 진행 전 참조 대기 |
-| HRN-021-S2 | Approval Matrix 통합 — 승인 gate 3종 단일화 | 2026-05-19 | HRN-021 series 후속 S1 진행 전 참조 대기 |
-| HRN-021-S4 | Quick Mode 예외 조건 삭제 — harness/workflow surface 기본 L2 | 2026-05-18 | HRN-021 series 후속 S1 진행 전 참조 대기 |
+| HRN-021-S1 | 6개 상세 protocol 문서 → HARNESS-PROTOCOL.md 단일 통합 | 2026-05-19 | HRN-021 series 후속 S6 진행 전 참조 대기 |
+| HRN-021-S5 | WORKFLOW-MANUAL.md AI 로드 제외와 cascade 대상 유지 기준 명시 | 2026-05-19 | HRN-021 series 후속 S6 진행 전 참조 대기 |
+| HRN-021-S2 | Approval Matrix 통합 — 승인 gate 3종 단일화 | 2026-05-19 | HRN-021 series 후속 S6 진행 전 참조 대기 |
+| HRN-021-S4 | Quick Mode 예외 조건 삭제 — harness/workflow surface 기본 L2 | 2026-05-18 | HRN-021 series 후속 S6 진행 전 참조 대기 |
 | HRN-019 | /close 커맨드 신규 도입 — /done Work 완료 절차 분리 | 2026-05-18 | cascade 감사 결과 포함, 참조 대기 |
 
 ## Archived

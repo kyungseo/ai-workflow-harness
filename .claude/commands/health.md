@@ -35,7 +35,7 @@ ls .claude/rules/       # 파일 수·이름 확인
 → `docs/PLAN-SUMMARY.md` (기술 스택 테이블만)
 
 (조건부) Validation, Approval Matrix, Commit Approval 정합성 확인이 필요하면
-`docs/harness-protocol/06-recovery-and-validation.md`의 해당 섹션만 읽는다.
+`docs/HARNESS-PROTOCOL.md`의 Recovery And Validation 섹션만 읽는다.
 
 **Phase 4 — Alignment Check (--full only)**
 `.cursor/rules/*.mdc` (frontmatter paths만) → `prompts/README.md` (인덱스만, 개별 파일 금지)
@@ -67,7 +67,7 @@ git diff --cached --name-only
 
 | Layer | 확인 대상 |
 | --- | --- |
-| Canonical | `docs/AGENT-WORKFLOW.md`, `docs/harness-protocol/05-triggers-and-cascade.md`, 관련 `docs/harness-protocol/*.md`, 관련 DR |
+| Canonical | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, 관련 DR |
 | Tool-specific | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/*.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `prompts/*` |
 | User-facing | `docs/WORKFLOW-MANUAL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `README.md` |
 | Scaffold | `scripts/create-harness.sh`, dry-run 또는 temp scaffold 산출물 |
@@ -82,7 +82,7 @@ git diff --cached --name-only
 - 각 `.claude/rules/*.md`: `paths` glob이 실제 디렉토리 구조와 일치하는가
 - `docs/AGENT-WORKFLOW.md` 워크플로우 기술 ↔ 실제 command 구현 사이 gap
   (이미 컨텍스트에 있는 docs/AGENT-WORKFLOW.md 기준으로 확인)
-- command/prompt 종료 요약 ↔ `docs/harness-protocol/06-recovery-and-validation.md`의 Validation Checklist, Approval Matrix, Commit Approval 정합성
+- command/prompt 종료 요약 ↔ `docs/HARNESS-PROTOCOL.md`의 Validation Checklist, Approval Matrix, Commit Approval 정합성
 - STATUS.md Active Work pointer가 가리키는 Work 파일에 Done Criteria + Verification이 존재하는가
 - STATUS.md Active Work pointer ↔ Work 파일 frontmatter `status: Active` 정합성
 - `docs/works/*/*.md` 중 `status: Done`인 Work가 STATUS Active Work에 남아 있지 않은가
@@ -92,7 +92,7 @@ git diff --cached --name-only
 
 ### B. Document Cross-Consistency
 
-- HARNESS-PROTOCOL.md와 `docs/harness-protocol/` 상세 문서 링크 ↔ 실제 파일 목록 일치
+- HARNESS-PROTOCOL.md 단일 상세 protocol 구조 ↔ 실제 파일 목록 일치
 - README.md 프로젝트 구조 블록 ↔ 실제 디렉토리 구조
   ```bash
   ls -d */ .github .claude .cursor .devcontainer 2>/dev/null
@@ -108,7 +108,7 @@ git diff --cached --name-only
   rg -l '```mermaid' docs/ README.md 2>/dev/null
   ```
   발견된 파일별로 다이어그램 노드·라벨·경로가 현재 프로젝트 상태와 일치하는지 확인한다.
-  - `docs/AGENT-WORKFLOW.md` state machine — `INIT→PLAN→APPROVAL→EXECUTE→VALIDATE→CHECKPOINT→END` 순서와 RECOVER/FAIL 분기가 `.claude/commands/` 구현 및 `docs/harness-protocol/06-recovery-and-validation.md`와 일치하는가
+  - `docs/AGENT-WORKFLOW.md` state machine — `INIT→PLAN→APPROVAL→EXECUTE→VALIDATE→CHECKPOINT→END` 순서와 RECOVER/FAIL 분기가 `.claude/commands/` 구현 및 `docs/HARNESS-PROTOCOL.md`와 일치하는가
   - 노드 라벨이 실제 존재하지 않는 파일 경로·서비스명·상태를 참조하면 drift로 보고
   - 렌더링 없이 구문 유효성(syntax)을 확인할 수 없는 항목은 "수동 검토 권고"로 보고
 
@@ -161,7 +161,7 @@ Phase 5의 git log 결과를 기준으로, 변경된 구현 파일 유형별로 
 | `*.java`, `*.kts` (새 모듈·레이어) | `README.md` 기술 스택, `PLAN-SUMMARY.md` |
 | `Dockerfile`, `docker-compose.yml` | `DOCKERFILE-GUIDE.md`, `README.md` 셋업 |
 | `.github/workflows/*.yml` | `README.md` CI 항목, `DEVELOPER-GUIDE.md` CI 섹션 |
-| `.claude/commands/*.md` (신규) | `HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/`, `README.md` AI workflow 섹션 |
+| `.claude/commands/*.md` (신규) | `HARNESS-PROTOCOL.md`, `README.md` AI workflow 섹션 |
 | `config/checkstyle/**`, `.editorconfig` | `DEVELOPER-GUIDE.md` 코드 컨벤션 섹션 |
 | `docs/decisions/DR-*.md` (신규 Accepted) | STATUS.md Recent Decisions, 연관 backlog Done Criteria |
 | `docs/*.md` (신규 개발자 문서) | 참조하는 config·yml 파일과 기술 내용 대조 (예: ci.yml ↔ CI trigger 설명, checkstyle.xml ↔ 컨벤션 설명) |
@@ -181,7 +181,7 @@ rg -n "^## |^### " docs/PLAN.md
 ### G. Cascade/Trigger Completeness (--cascade)
 
 문서를 하나 고쳤을 때 어디까지 같이 봐야 하는지 점검한다.
-기준은 `docs/harness-protocol/05-triggers-and-cascade.md`이며, 실제 command/rule/prompt/manual/scaffold 표면이 이 기준을 필요한 만큼 반영하는지 확인한다.
+기준은 `docs/HARNESS-PROTOCOL.md`이며, 실제 command/rule/prompt/manual/scaffold 표면이 이 기준을 필요한 만큼 반영하는지 확인한다.
 
 - 변경된 파일을 canonical / tool-specific / user-facing / scaffold / historical layer로 분류한다.
 - canonical 문서가 바뀌었으면 tool-specific surface와 user-facing guide에 필요한 mirror가 있는지 확인한다.

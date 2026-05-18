@@ -5,7 +5,7 @@ Work 파일 디렉토리다.
 `docs/STATUS.md`는 현재 Active Work pointer를 보여주는 dashboard다.
 
 Work 파일 스펙: `docs/decisions/DR-013-work-file-spec.md`
-공통 운영 규칙: `docs/harness-protocol/03-work-items-and-naming.md` Work File Rules
+공통 운영 규칙: `docs/HARNESS-PROTOCOL.md` Work File Rules
 
 ## Categories
 

@@ -31,8 +31,8 @@ S2 Approval Matrix 통합, S5 manual 역할 재정의, S1 protocol 통합, S6 he
 
 - [x] `docs/AGENT-WORKFLOW.md`가 harness/workflow surface 기본 L2와 product surface L1 Quick Mode 가능성을 명시한다.
 - [x] `docs/HARNESS-QUICK-REFERENCE.md`가 같은 기준을 짧게 반영한다.
-- [x] `docs/harness-protocol/03-work-items-and-naming.md` Quick Mode 기준에서 기존 cascade 예외 대신 surface 기준을 반영한다.
-- [x] `docs/harness-protocol/05-triggers-and-cascade.md` T13/T14가 product L1 Quick Mode와 harness L2 기준을 구분한다.
+- [x] `docs/HARNESS-PROTOCOL.md` Quick Mode 기준에서 기존 cascade 예외 대신 surface 기준을 반영한다.
+- [x] `docs/HARNESS-PROTOCOL.md` T13/T14가 product L1 Quick Mode와 harness L2 기준을 구분한다.
 - [x] Claude/Codex/Cursor prompt/rule surface의 Quick Mode 문구가 충돌하지 않는다.
 - [x] User-facing `docs/WORKFLOW-MANUAL.md`의 Quick Mode/T13 설명이 새 기준과 충돌하지 않는다.
 - [x] S2 이후 simplification candidates는 후속 항목으로 남아 있다.
@@ -43,8 +43,8 @@ S2 Approval Matrix 통합, S5 manual 역할 재정의, S1 protocol 통합, S6 he
 ```bash
 rg -n "Quick Mode|L1 Quick|harness/workflow|workflow/protocol/command/rule/prompt/scaffold/status|cascade check|기본 L2" \
   docs/AGENT-WORKFLOW.md docs/HARNESS-QUICK-REFERENCE.md \
-  docs/harness-protocol/03-work-items-and-naming.md \
-  docs/harness-protocol/05-triggers-and-cascade.md \
+  docs/HARNESS-PROTOCOL.md \
+  docs/HARNESS-PROTOCOL.md \
   docs/WORKFLOW-MANUAL.md \
   .claude/commands/work.md .claude/commands/health.md \
   .cursor/rules/workflow.mdc .cursor/rules/coding.mdc \

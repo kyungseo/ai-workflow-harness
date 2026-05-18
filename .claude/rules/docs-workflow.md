@@ -23,7 +23,7 @@ MUST:
 - Follow `docs/AGENT-WORKFLOW.md` Approval Matrix before execution, scope expansion, state changes, or committing.
 - Request explicit user approval before editing `docs/STATUS.md`; report the Approval Matrix state-change proposal first.
 - Keep `Done` work immutable. If follow-up correction is needed, propose a new work item.
-- Check `docs/harness-protocol/05-triggers-and-cascade.md` when workflow rules, commands, DRs, or document structure change.
+- Check `docs/HARNESS-PROTOCOL.md` when workflow rules, commands, DRs, or document structure change.
 
 ## Command Intent Recognition
 

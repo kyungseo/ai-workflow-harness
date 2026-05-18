@@ -9,7 +9,7 @@ Claude Code, Codex, Cursor의 공통 프로젝트 운영 규칙이다.
 Claude Code는 세션 시작 시 `CLAUDE.md`를 통해 이 파일을 로드한다.
 Codex는 세션 시작 시 `AGENTS.md`를 통해 이 파일을 참조한다.
 Cursor는 session prompt와 `.cursor/rules/`를 통해 이 파일을 참조한다.
-세션 시작 시 harness protocol 전체를 읽지 않는다. 필요한 조건이 생길 때만 `docs/HARNESS-PROTOCOL.md` 또는 상세 문서를 로드한다.
+세션 시작 시 harness protocol 전체를 읽지 않는다. 필요한 조건이 생길 때만 `docs/HARNESS-PROTOCOL.md`를 로드한다.
 세션 시작 시 `.claude/commands/*.md` 전체를 읽지 않는다. slash command가 명시적으로 호출되었거나 해당 workflow가 분명히 필요할 때만 관련 command 파일을 로드한다.
 
 MUST:
@@ -95,7 +95,7 @@ MUST NOT:
 
 새 작업 항목 등록은 `/register`로 수행한다. 긴급도와 성격에 따라 위 위치 중 적절한 곳에 라우팅된다.
 
-상세 기준: `docs/harness-protocol/03-work-items-and-naming.md`
+상세 기준: `docs/HARNESS-PROTOCOL.md`
 
 ## Risk Levels
 
@@ -155,7 +155,7 @@ Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 
 | DR-worthy decision accepted | `docs/decisions/` 기록 제안 |
 | 구조 변경 | `docs/ARCHITECTURE.md` 업데이트 제안 |
 | 개발 절차 변경 | `docs/DEVELOPER-GUIDE.md` 업데이트 제안 |
-| workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/` 업데이트 |
+| workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 업데이트 |
 | 발표/보고 산출물 생성 | 목적, audience, source, format, output path, 품질 검증 기준 확인 |
 | Phase 완료 또는 새 Phase 시작 | STATUS/archive 재편 제안 |
 | 큰 작업 조건 충족 | Work 파일 분해 제안 |
@@ -169,8 +169,7 @@ Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 
 
 상세 기준:
 
-- `docs/harness-protocol/04-document-lifecycle.md`
-- `docs/harness-protocol/05-triggers-and-cascade.md`
+- `docs/HARNESS-PROTOCOL.md`
 
 ## Naming Summary
 
@@ -189,7 +188,7 @@ ID를 다른 의미로 재사용하지 않는다.
 파일명 상세 기준:
 
 - `docs/decisions/DR-008-docs-filename-standard.md`
-- `docs/harness-protocol/03-work-items-and-naming.md`
+- `docs/HARNESS-PROTOCOL.md`
 
 ## Project Constants
 

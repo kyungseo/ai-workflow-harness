@@ -155,7 +155,6 @@ echo ""
 for dir in \
   "${TARGET_ROOT}/docs/backlog" \
   "${TARGET_ROOT}/docs/decisions" \
-  "${TARGET_ROOT}/docs/harness-protocol" \
   "${TARGET_ROOT}/docs/works" \
   "${TARGET_ROOT}/docs/archive" \
   "${TARGET_ROOT}/docs/archive/docs/works" \
@@ -187,10 +186,6 @@ fi
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-PROTOCOL.md"        "${TARGET_ROOT}/docs/HARNESS-PROTOCOL.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md" "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
 adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL.md"         "${TARGET_ROOT}/docs/WORKFLOW-MANUAL.md"
-
-for f in "${TEMPLATE_ROOT}"/docs/harness-protocol/*.md; do
-  adapt "$f" "${TARGET_ROOT}/docs/harness-protocol/$(basename "$f")"
-done
 
 adapt "${TEMPLATE_ROOT}/docs/decisions/DECISION-TEMPLATE.md" \
       "${TARGET_ROOT}/docs/decisions/DECISION-TEMPLATE.md"
@@ -492,7 +487,7 @@ Work 파일 디렉토리. 큰 작업 단위의 Single Source of Truth.
 
 카테고리 서브디렉토리와 그 안의 README.md는 첫 Work 파일 생성 시 함께 만든다.
 Work 파일 스펙: \`docs/decisions/DR-013-work-file-spec.md\`
-공통 운영 규칙: \`docs/harness-protocol/03-work-items-and-naming.md\` Work File Rules
+공통 운영 규칙: \`docs/HARNESS-PROTOCOL.md\` Work File Rules
 
 ## 카테고리
 

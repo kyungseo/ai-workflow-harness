@@ -96,7 +96,7 @@ Done과 Archived를 분리하면 두 상태를 구분해 처리할 수 있고,
 ## Consequences
 
 - `done.md` item 11을 Done 즉시 처리 항목과 Archive 트리거 항목으로 분리한다.
-- `docs/harness-protocol/03-work-items-and-naming.md` Work File Rules에 Done→Archived 트리거 추가한다.
+- `docs/HARNESS-PROTOCOL.md` Work File Rules에 Done→Archived 트리거 추가한다.
 - `docs/works/{category}/README.md` 템플릿에 Active / Done / Archived 3개 테이블 구조를 반영한다.
 - `/resume`, `/start` 명령에 Done 항목 발견 시 archive 제안 안내를 추가한다 (별도 HRN으로 추적).
 - 갱신은 별도 HRN 항목으로 추적한다.

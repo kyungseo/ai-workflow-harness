@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-19 (HRN-021-S5 완료 — WORKFLOW-MANUAL.md load boundary 정리)
+Last updated: 2026-05-19 (HRN-021-S1 완료 — HARNESS-PROTOCOL.md 단일 통합)
 
 ## Current State
 
@@ -60,4 +60,4 @@ Last updated: 2026-05-19 (HRN-021-S5 완료 — WORKFLOW-MANUAL.md load boundary
 
 1. PRE-B: 개발환경 전략 결정
 2. PRE-C2: Phase 2 요건 정의 확정 (PRE-B + PRE-C1 완료 후)
-3. HRN-021: 다음 simplification step으로 S1 protocol 통합 검토/착수
+3. HRN-021: 다음 simplification step으로 S6 `/health --cascade` checklist화 검토/착수

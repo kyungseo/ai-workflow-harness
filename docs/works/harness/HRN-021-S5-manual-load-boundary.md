@@ -18,7 +18,7 @@ related_troubleshooting: []
 `docs/retrospectives/ai-workflow-complexity-review-20260518.md`의 Simplification Candidates S5를 실행한다.
 
 `docs/WORKFLOW-MANUAL.md`는 사용자용 레퍼런스다.
-AI 실행 규칙의 canonical source는 `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/harness-protocol/`, tool-specific command/rule/prompt surface다.
+AI 실행 규칙의 canonical source는 `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-PROTOCOL.md`, tool-specific command/rule/prompt surface다.
 
 이번 작업은 두 기준을 분리한다.
 
@@ -30,7 +30,7 @@ S1 protocol 통합, S6 health checklist화, S3 Candidate 제거는 이번 범위
 ## Done Criteria
 
 - [x] `docs/AGENT-WORKFLOW.md` Context Routing이 `docs/WORKFLOW-MANUAL.md`의 평시 AI 로드 제외 기준을 명시한다.
-- [x] `docs/harness-protocol/02-context-loading.md`가 같은 기준을 반영한다.
+- [x] `docs/HARNESS-PROTOCOL.md`가 같은 기준을 반영한다.
 - [x] `.claude/commands/health.md`가 `--cascade` user-facing layer에서 manual 확인 역할을 유지하되 일반 로드 대상이 아님을 명시한다.
 - [x] `docs/WORKFLOW-MANUAL.md`가 사용자 매뉴얼 역할과 cascade 대상 유지 기준을 과장 없이 설명한다.
 - [x] Work 파일과 STATUS/Work index lifecycle pointer가 `HRN-021-S5` 상태를 반영한다.
@@ -40,7 +40,7 @@ S1 protocol 통합, S6 health checklist화, S3 Candidate 제거는 이번 범위
 
 ```bash
 rg -n "WORKFLOW-MANUAL|user-facing|사용자 매뉴얼|context loading|로드 제외|평시" \
-  docs/AGENT-WORKFLOW.md docs/harness-protocol/02-context-loading.md \
+  docs/AGENT-WORKFLOW.md docs/HARNESS-PROTOCOL.md \
   .claude/commands/health.md docs/WORKFLOW-MANUAL.md
 git diff --check
 ```

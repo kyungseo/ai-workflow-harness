@@ -29,7 +29,7 @@ New work items are always routed based on urgency and type:
 | Product / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
 
-When starting a task (`/work`): check `docs/works/{category}/` for an existing Work file. If none exists, evaluate Quick Mode and Work File Decomposition criteria (spec: `docs/harness-protocol/03-work-items-and-naming.md`). Product-surface L1 Quick Mode may proceed without a Work file; harness/workflow surface changes default to L2, and Work file creation should be considered by default when decomposition criteria apply.
+When starting a task (`/work`): check `docs/works/{category}/` for an existing Work file. If none exists, evaluate Quick Mode and Work File Decomposition criteria (spec: `docs/HARNESS-PROTOCOL.md`). Product-surface L1 Quick Mode may proceed without a Work file; harness/workflow surface changes default to L2, and Work file creation should be considered by default when decomposition criteria apply.
 
 Quick Mode: small product-surface L1 changes with narrow scope, one-session completion, no checkpoint handoff, no STATUS change, and no harness/workflow surface change can close with final summary + validation + commit history only. If entrypoint/workflow/protocol/command/rule/prompt/scaffold/status files change, treat the task as L2 and check the relevant cascade surface.
 
