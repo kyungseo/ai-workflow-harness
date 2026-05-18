@@ -51,7 +51,7 @@ Last updated: 2026-05-19 (HRN-021-S3 완료 — Work lifecycle Candidate 제거)
 | --- | --- | --- | --- |
 | 2026-05-17 | Scope And Commit Approval 명확화: L1 변경은 빠르게 진행, scope 확장과 commit 전에는 사용자 승인 gate 명시 | scope drift 재발 방지 | Low |
 | 2026-05-17 | Testcontainers Docker 환경 설정을 `build.gradle.kts`로 이관 — 개발자별 홈 파일 설정 불필요 | P2-006 회피 조치 정정, 신규 개발자 수동 설정 제거 | Low |
-| 2026-05-18 | DR-013: Work 파일 기반 작업 단위 체계 도입 — `docs/works/` 구조, frontmatter 스펙, Candidate→Active→Done→Archived lifecycle | STATUS.md 비대화 방지, 세션 간 이력 완전 보존 | Medium |
+| 2026-05-18 | DR-013: Work 파일 기반 작업 단위 체계 도입 — `docs/works/` 구조, frontmatter 스펙, Candidate→Active→Done→Archived lifecycle (HRN-021-S3에서 Candidate 제거됨) | STATUS.md 비대화 방지, 세션 간 이력 완전 보존 | Medium |
 | 2026-05-18 | DR-014: Archive 구조 정책 — `docs/archive/` 하위 경로 미러링, `-v{N}` / `-{YYYYMMDD}` 접미사 규칙 | 어느 파일이든 아카이빙 가능, 원본 위치 추적 직관적 | Low |
 | 2026-05-18 | DR-015: State Update Proposal 2계층 게이트 재설계 — Work 파일 변경(Layer 1)은 저마찰, STATUS.md 변경(Layer 2)은 차등 게이트 | Work 파일 SSoT 전환 이후 게이트 비용이 실질 위험과 역전된 구조 해소 | Low |
 | 2026-05-18 | DR-016: Work Done과 Archived 상태 분리 — `/close`는 Done 처리, `/done`은 세션 요약 전용; archive는 명시 승인 또는 start/resume trigger로 수행 (HRN-019로 역할 변경) | 리뷰 대기·외부 참조 유지 중 Work 파일 조기 이동 방지 | Low |
