@@ -377,8 +377,8 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 
 ## Blockers And Open Questions
 
-| ID | Question | Status |
-| --- | --- | --- |
+| ID | Status | Question | Decision Needed |
+| --- | --- | --- | --- |
 
 ## Recent Decisions
 

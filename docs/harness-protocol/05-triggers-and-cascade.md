@@ -55,6 +55,7 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 | `scripts/create-harness.sh` | generic/spring-boot dry-run, temp scaffold 생성 결과, scaffold 내부 stale phrase 검색 |
 | `docs/decisions/DR-*.md` Accepted | `docs/STATUS.md` Recent Decisions 필요 여부, 관련 backlog/Work 파일, PLAN 영향 여부 |
 | developer-facing docs (`README.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`) | 실제 config/script/source와 기술 내용 대조 |
+| `docs/` 하위 디렉토리 신규 추가 또는 삭제 | T5(PLAN 영향 여부), T7(harness protocol 업데이트 필요 여부), Context Routing 갱신 여부, `scripts/create-harness.sh` 동기화 여부 확인 |
 
 ## STATUS.md Section Deletion Cascade Checklist
 
