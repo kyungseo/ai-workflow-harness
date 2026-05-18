@@ -12,7 +12,6 @@ Last updated: 2026-05-18 (HRF-002 후속 정합성 정리 — Work lifecycle/gat
 | Current phase | Phase 2 pre-entry |
 | Current focus | Phase 2 pre-entry workflow stabilization |
 | Phase 1 | Complete |
-| Active plan | — |
 | Product backlog | `docs/backlog/PHASE2.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
