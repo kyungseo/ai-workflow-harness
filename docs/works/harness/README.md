@@ -13,12 +13,13 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Priority | Start | Work File |
 |----|-------|----------|-------|-----------|
-| HRN-021-S4 | Quick Mode 예외 조건 삭제 — harness/workflow surface 기본 L2 | P1 | 2026-05-18 | `docs/works/harness/HRN-021-S4-quick-mode-l2-surface.md` |
+| (없음) | | | | |
 
 ## Done (archive pending)
 
 | ID | Title | actual_end | Hold Reason |
 |----|-------|------------|-------------|
+| HRN-021-S4 | Quick Mode 예외 조건 삭제 — harness/workflow surface 기본 L2 | 2026-05-18 | HRN-021 series 후속 S2 진행 전 참조 대기 |
 | HRN-019 | /close 커맨드 신규 도입 — /done Work 완료 절차 분리 | 2026-05-18 | cascade 감사 결과 포함, 참조 대기 |
 
 ## Archived

@@ -1,13 +1,13 @@
 ---
 id: HRN-021-S4
 priority: P1
-status: Active
+status: Done
 risk: L2
 scope: AI Workflow simplification S4 — Quick Mode 예외 조건 삭제, harness/workflow surface 기본 L2 명시
 appetite: 0.5d
 planned_start: 2026-05-18
 planned_end:
-actual_end:
+actual_end: 2026-05-18
 related_dr: []
 related_commits: []
 related_troubleshooting: []
@@ -59,7 +59,7 @@ git diff --check
 | 1 | Work 파일 생성 및 backlog 후속 항목 정리 | Done |
 | 2 | Canonical/quick reference/protocol Quick Mode 문구 수정 | Done |
 | 3 | Claude/Codex/Cursor prompt/rule surface 정렬 | Done |
-| 4 | Verification 및 사용자 최종 리뷰 | Todo |
+| 4 | Verification 및 사용자 최종 리뷰 | Done |
 
 ## Discovery
 

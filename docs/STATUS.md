@@ -38,7 +38,6 @@ Last updated: 2026-05-18 (HRF-002 후속 정합성 정리 — Work lifecycle/gat
 | ID | Priority | Status | Work File |
 | --- | --- | --- | --- |
 | PRE-B | P0 | Active | `docs/works/phase2/PRE-B-env-strategy.md` |
-| HRN-021-S4 | P1 | Active | `docs/works/harness/HRN-021-S4-quick-mode-l2-surface.md` |
 
 ## Blockers And Open Questions
 
@@ -61,3 +60,4 @@ Last updated: 2026-05-18 (HRF-002 후속 정합성 정리 — Work lifecycle/gat
 
 1. PRE-B: 개발환경 전략 결정
 2. PRE-C2: Phase 2 요건 정의 확정 (PRE-B + PRE-C1 완료 후)
+3. HRN-021: S4 완료 후 다음 simplification step으로 S2 Approval Matrix 통합 검토/착수
