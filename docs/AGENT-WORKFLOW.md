@@ -139,11 +139,12 @@ Work 파일이 작업 단위의 SSoT이고, `docs/STATUS.md`는 dashboard다.
 
 | Status | Location | Meaning |
 | --- | --- | --- |
-| Candidate | `docs/works/{category}/` 또는 backlog only | 착수 전 후보. 큰 작업은 Work 파일 초안을 가질 수 있다 |
 | Active | `docs/works/{category}/` | `docs/STATUS.md` Active Work에 pointer 존재 |
 | Done | `docs/works/{category}/` | 완료 기준과 검증 통과. 리뷰·참조 때문에 archive 대기 가능 |
 | Archived | `docs/archive/docs/works/{category}/` | 완전 종결. 더 이상 active 참조 불필요 |
 
+Backlog의 `Candidate` 항목은 후보 pool이다.
+착수 전 분해나 메모는 backlog 항목에 남기고, Work 파일은 착수 승인 후 `Active` 상태로 생성한다.
 Done과 Archived는 분리한다.
 Work Done 처리(status: Done, actual_end, README Active→Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다. `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
 Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에만 수행한다.

@@ -3,12 +3,6 @@
 AI Workflow Harness 관련 작업 인덱스다.
 Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
-## Candidate
-
-| ID | Title | Priority | Appetite | Work File |
-|----|-------|----------|----------|-----------|
-| (없음) | | | | |
-
 ## Active
 
 | ID | Title | Priority | Start | Work File |
@@ -19,6 +13,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Hold Reason |
 |----|-------|------------|-------------|
+| HRN-021-S3 | Work lifecycle Candidate 상태 제거 | 2026-05-19 | HRN-021 series 전체 정리 전 참조 대기 |
 | HRN-021-S6 | /health --cascade coverage-preserving checklist화 | 2026-05-19 | HRN-021 series 후속 S3 진행 전 참조 대기 |
 | HRN-021-S1 | 6개 상세 protocol 문서 → HARNESS-PROTOCOL.md 단일 통합 | 2026-05-19 | HRN-021 series 후속 S3 진행 전 참조 대기 |
 | HRN-021-S5 | WORKFLOW-MANUAL.md AI 로드 제외와 cascade 대상 유지 기준 명시 | 2026-05-19 | HRN-021 series 후속 S3 진행 전 참조 대기 |

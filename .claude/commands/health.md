@@ -137,7 +137,7 @@ Historical matches are not automatically drift. Report them separately as snapsh
 - STATUS.md Active Work pointer가 가리키는 Work 파일에 Done Criteria + Verification이 존재하는가
 - STATUS.md Active Work pointer ↔ Work 파일 frontmatter `status: Active` 정합성
 - `docs/works/*/*.md` 중 `status: Done`인 Work가 STATUS Active Work에 남아 있지 않은가
-- `docs/works/*/README.md` index가 Work 파일 상태(Candidate/Active/Done/Archived)와 일치하는가
+- `docs/works/*/README.md` index가 Work 파일 상태(Active/Done/Archived)와 일치하는가
 - archive 위치의 Work 파일은 `status: Archived`인가
 - DR 생애주기 양방향: STATUS.md Recent Decisions ↔ `rg` 결과의 DR Status 일치
 

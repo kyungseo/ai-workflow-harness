@@ -292,11 +292,13 @@ Work 파일 frontmatter의 `related_commits`는 best-effort reference다.
 
 | Status | Location | Meaning |
 | --- | --- | --- |
-| Candidate | `docs/works/{category}/` 또는 backlog only | 착수 전 후보. 큰 작업은 Work 파일 초안을 가질 수 있다 |
 | Active | `docs/works/{category}/` | `docs/STATUS.md` Active Work에 pointer 존재 |
 | Done | `docs/works/{category}/` | Done Criteria와 Verification 통과. 리뷰·참조 때문에 archive 대기 가능 |
 | Archived | `docs/archive/docs/works/{category}/` | 완전 종결. 더 이상 active 참조 불필요 |
 
+Backlog의 `Candidate` 항목은 후보 pool이다.
+착수 전 분해, 조사 메모, Work 파일 필요성 판단은 backlog 항목이나 계획 제안에 남긴다.
+Work 파일은 착수 승인 후 `Active` 상태로 생성한다.
 `Done`과 `Archived`는 분리한다.
 Work Done 처리(status: Done, actual_end, README Active->Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다.
 `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
@@ -305,9 +307,8 @@ Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 
 ### Index Rules
 
 각 `docs/works/{category}/README.md`는 category별 inventory다.
-권장 섹션은 Candidate, Active, Done (archive pending), Archived다.
+권장 섹션은 Active, Done (archive pending), Archived다.
 
-- Candidate Work 파일은 STATUS Active Work에 올리지 않는다.
 - Active Work 파일은 STATUS Active Work pointer와 category index Active 섹션에 모두 나타나야 한다.
 - Done Work 파일은 STATUS Active Work에서 제거하고 category index Done 섹션에 둔다.
 - Archived Work 파일은 `docs/archive/docs/works/{category}/`로 이동하고 category index Archived 섹션에 archive 경로를 남긴다.

@@ -19,7 +19,8 @@ Work 파일 스펙: `docs/decisions/DR-013-work-file-spec.md`
 
 | Status | Location | Meaning |
 | --- | --- | --- |
-| Candidate | `docs/works/{category}/` 또는 backlog only | 착수 전 후보. 큰 작업은 Work 파일 초안을 가질 수 있다 |
 | Active | `docs/works/{category}/` | `docs/STATUS.md` Active Work에 pointer 존재 |
 | Done | `docs/works/{category}/` | 완료 검증 통과, archive 대기 가능 |
 | Archived | `docs/archive/docs/works/{category}/` | 완전 종결 |
+
+Backlog `Candidate`는 후보 pool이다. Work 파일은 착수 승인 후 `Active` 상태로 생성한다.

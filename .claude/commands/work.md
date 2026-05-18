@@ -19,9 +19,9 @@ docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾
 - **Work 파일이 없으면**: `docs/HARNESS-PROTOCOL.md` Work File Decomposition과 Quick Mode 기준을 확인해줘. Product surface의 L1 Quick Mode에 해당하면 Work 파일 없이 진행하고, harness/workflow surface 변경 또는 Quick Mode 비대상이면 Work 파일 생성을 기본값으로 검토해 계획에 포함할지 판단해줘 (승인 후 생성).
 
 Work 파일 생성 시 함께 수행할 것:
-1. `docs/works/{category}/README.md`가 없으면 먼저 생성 (Candidate/Active/Done/Archived 테이블 포함)
-2. Work 파일을 계획/분해 목적으로만 생성하면 README Candidate 테이블에 행 추가
-3. 사용자가 해당 Work 착수를 승인하면 Work 파일 frontmatter를 `status: Active`로 두고 README Active 테이블에 행 추가/이동
+1. `docs/works/{category}/README.md`가 없으면 먼저 생성 (Active/Done/Archived 테이블 포함)
+2. 착수 전 분해나 메모는 backlog 항목 또는 계획 제안에 남기고, Work 파일은 생성하지 않음
+3. 사용자가 해당 Work 착수를 승인하면 Work 파일 frontmatter를 `status: Active`로 두고 README Active 테이블에 행 추가
 4. State update: 대상 Work ID를 명시하고 STATUS.md Active Work에 포인터 추가 제안
 
 ## Pre-check (Before Planning)

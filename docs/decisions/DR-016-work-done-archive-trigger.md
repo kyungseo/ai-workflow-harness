@@ -5,7 +5,7 @@ Status: Accepted
 
 ## Question
 
-DR-013이 Work 파일 lifecycle을 `Candidate → Active → Done → Archived`로 정의했으나,
+당시 DR-013이 Work 파일 lifecycle을 네 단계로 정의했으나,
 Done과 Archived 사이의 전환 시점과 트리거가 명시되지 않았다.
 `/done` 명령이 Done 처리와 Archive 이동을 한 스텝으로 묶고 있어,
 리뷰 대기·외부 참조 유지 등의 이유로 Archive 시점을 미뤄야 할 때 규칙이 없다.
