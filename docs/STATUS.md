@@ -38,7 +38,6 @@ Last updated: 2026-05-18 (HRF-002 후속 정합성 정리 — Work lifecycle/gat
 
 | ID | Priority | Status | Work File |
 | --- | --- | --- | --- |
-| PRE-C1 | P0 | Active | `docs/works/phase2/PRE-C1-arch-analysis.md` |
 
 ## Blockers And Open Questions
 
@@ -59,6 +58,5 @@ Last updated: 2026-05-18 (HRF-002 후속 정합성 정리 — Work lifecycle/gat
 
 ## Next Actions
 
-1. PRE-C1: Phase 1 아키텍처 현황 분석 (`docs/works/phase2/PRE-C1-arch-analysis.md` 착수)
-2. PRE-B: 개발환경 전략 결정
-3. PRE-C2: Phase 2 요건 정의 확정
+1. PRE-B: 개발환경 전략 결정
+2. PRE-C2: Phase 2 요건 정의 확정 (PRE-B + PRE-C1 완료 후)

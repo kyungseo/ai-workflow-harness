@@ -1,13 +1,13 @@
 ---
 id: PRE-C1
 priority: P0
-status: Active
+status: Done
 risk: Low
 scope: Phase 1 아키텍처 현황 분석 + 실무 적용 가능 수준 완성도 갭 발굴 — 레이어 일관성, common-core, gateway, 보안, 관찰가능성, 복원력, 개발경험, 테스트 전략
 appetite: 5d
 planned_start: 2026-05-18
 planned_end:
-actual_end:
+actual_end: 2026-05-18
 related_dr: []
 related_commits: []
 related_troubleshooting: []
