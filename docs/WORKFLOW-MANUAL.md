@@ -133,7 +133,7 @@ graph TD
     GRP_HARNESS --> HD["📁 harness-protocol/<br/><i>01~06 상세 규칙</i>"]
     GRP_HARNESS --> WM["📄 WORKFLOW-MANUAL.md<br/><i>사용자 매뉴얼</i>"]
 
-    GRP_STATE --> ST["📄 STATUS.md<br/><i>라이브 상태판 (SSoT)</i>"]
+    GRP_STATE --> ST["📄 STATUS.md<br/><i>라이브 상태판 (dashboard)</i>"]
     GRP_STATE --> BL["📁 backlog/<br/><i>PHASE{n}.md · HARNESS.md</i>"]
     GRP_STATE --> DR["📁 decisions/<br/><i>DR-*.md</i>"]
     GRP_STATE --> ARC["📁 archive/<br/><i>완료 Phase 이력</i>"]
@@ -226,7 +226,7 @@ graph TD
     end
 
     subgraph LIVE ["상태·작업 관리"]
-        ST["📄 STATUS.md (SSoT)"]
+        ST["📄 STATUS.md (dashboard)"]
         BL["📄 backlog/PHASE{n}.md"]
         HB["📄 backlog/HARNESS.md"]
         DR_N["📄 decisions/DR-*.md"]
