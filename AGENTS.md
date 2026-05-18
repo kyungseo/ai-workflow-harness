@@ -30,8 +30,11 @@ NEVER:
 | `/register [description]` | Register a new work item; route to STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md based on urgency and type; propose STATUS Update if needed |
 | `/work <ID>` | Find the backlog item; check `docs/works/{category}/` for an existing Work file; if none and decomposition criteria met, include Work file creation in the plan; declare risk level, propose scope/files/verification/risk, then wait for approval |
 | `/resume <ID>` | Compare `docs/STATUS.md` and Work file Checkpoints with actual files, report drift, and propose recovery before editing; if the Work is Done, do not resume it and propose archive or follow-up work |
+| `/debug` | Analyze failures from code, logs, tests, or user-provided symptoms; identify root cause and propose the smallest safe fix before editing |
 | `/doc [brief]` | Create high-quality presentation/report artifacts; confirm brief, route sources, choose output format/tool, verify quality |
+| `/record-decision` | Draft a DR for an accepted technical/workflow decision; include status, context, decision, consequences, alternatives, and linked work items |
 | `/done` | Report completed work, changed files, validation, residual risk, STATUS update need, decision need, state, commit status; if Active Work has a Work file, handle Done processing (`status: Done`, `actual_end`, README Active→Done, STATUS pointer removal proposal). Archive only after explicit approval or a later `/start`/`/resume` archive trigger |
+| `/health [--full] [--cascade]` | Inspect workflow/document health. Use default for quick structure hygiene, `--full` for deeper structure/implementation sync, `--cascade` for canonical → tool-specific → user-facing → scaffold drift and loop-risk audit |
 
 ## Command Intent Recognition
 
@@ -43,7 +46,10 @@ When the user's intent matches a workflow operation without an explicit slash co
 | Record a decision as DR | `/record-decision` — DR format, file naming, OQ linkage |
 | Start / plan a specific task | `/work` — pre-checks: PLAN.md force-load conditions, troubleshooting check, risk level declaration |
 | Resume an interrupted task | `/resume` — drift check: compare actual file state vs `docs/STATUS.md` before editing |
+| Debug / investigate a failure | `/debug` — symptom, logs, failing test, recent diff, root cause, minimal fix plan |
 | Create presentation/report/review document material | `/doc` — use for PPT, deck, report, review package, decision brief, or polished shareable document artifacts; brief-first workflow, source routing, quality verification |
+| Finish or close out current work | `/done` — validation, changed files, residual risk, State Update need, Work Done processing, commit status |
+| Audit workflow/document consistency | `/health` — quick hygiene by default; use `--full` for deep sync, `--cascade` for document/workflow cascade completeness |
 
 ## State Update Gate
 

@@ -27,25 +27,21 @@ MUST:
 
 ## Command Intent Recognition
 
-When the user's intent matches a workflow command without an explicit `/command` invocation, follow the corresponding command procedure by reading the command file:
+When the user's intent matches a workflow command without an explicit `/command` invocation, follow the corresponding command procedure.
+Load only the matching command file; do not read `.claude/commands/*.md` as a group.
 
-| Intent | Command file to follow |
+| Intent | Command file |
 | --- | --- |
-| 작업 항목 등록·추가 | `.claude/commands/register.md` |
-| DR·의사결정 기록 | `.claude/commands/record-decision.md` |
-| 특정 작업 시작·계획 | `.claude/commands/work.md` (사전 체크 3가지 포함) |
-| 중단된 작업 재개 | `.claude/commands/resume.md` (drift 체크 포함) |
+| Register or add a work item | `.claude/commands/register.md` |
+| Record an accepted decision as a DR | `.claude/commands/record-decision.md` |
+| Start or plan a specific task | `.claude/commands/work.md` |
+| Resume interrupted work | `.claude/commands/resume.md` |
+| Debug or investigate a failure | `.claude/commands/debug.md` |
+| Create presentation, report, review package, or polished document artifact | `.claude/commands/doc.md` |
+| Finish or close out current work | `.claude/commands/done.md` |
+| Audit workflow or document consistency | `.claude/commands/health.md` |
 
-**등록 기준 — 이 테이블에 추가하는 조건:**
-
-| 기준 | 등록 대상 (O) | 등록 제외 (X) |
-| --- | --- | --- |
-| 사용 빈도 | 세션마다 반복적으로 사용 | 단발성 또는 가끔 사용 |
-| Command 파일 크기 | 경량 — 단일 절차, 좁은 범위 | 다단계 workflow, 상세 생산 규칙 포함 |
-| 오탐(false positive) 위험 | 의도 감지가 명확하고 낮음 | 문맥이 넓어 잘못 트리거될 수 있음 |
-| 호출 방식 | 자동 감지가 더 자연스러움 | 명시적 `/command` 입력이 더 예측 가능 |
-
-예시: `/doc`은 단발성·대용량 커맨드이므로 이 테이블에 추가하지 않는다. 명시적 `/doc` 입력 또는 사용자 요청 시에만 `doc.md`를 로드한다.
+Use `/health --cascade` intent when the user asks whether a workflow/document change requires canonical, tool-specific, user-facing, scaffold, or historical follow-up checks.
 
 NEVER:
 
