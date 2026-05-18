@@ -22,5 +22,5 @@ docs/STATUS.md를 확인해줘.
 
 검증 실패 또는 같은 오류 2회 반복 시 `FAIL -> RECOVER -> PLAN`으로 전환해줘.
 
-docs/STATUS.md 변경이 필요하면 즉시 수정하지 말고 `STATUS Update Proposal`로 먼저 보고해줘.
+docs/STATUS.md 변경이 필요하면 즉시 수정하지 말고 State Update Gate에 맞게 먼저 보고해줘.
 사용자가 명시적으로 승인한 뒤에만 STATUS.md를 수정해줘.

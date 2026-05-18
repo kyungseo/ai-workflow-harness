@@ -124,11 +124,13 @@ base-msa-template/
 │   │   ├── PHASE2.md                    # Phase 2 product backlog
 │   │   └── HARNESS.md                   # Harness improvement backlog
 │   ├── archive/
-│   │   ├── phase1-status.md             # Phase 1 completed work history
-│   │   └── phase1-plan.md               # Phase 1 plan snapshot
-│   ├── TODO/
-│   │   ├── PHASE1/                      # Legacy Phase 1 TODOs; archive/migration target (see HRN-006)
-│   │   └── PHASE2/                      # Phase 2 detailed task plans, if required
+│   │   ├── docs/works/                  # Archived Work files (path mirrored)
+│   │   └── snapshots/                   # Phase/refactor snapshots
+│   ├── works/
+│   │   ├── README.md                    # Work category and lifecycle guide
+│   │   ├── harness/                     # Harness Work files
+│   │   ├── phase1/                      # Legacy Phase 1 Work/TODO records
+│   │   └── phase2/                      # Phase 2 preparation/product Work files
 │   ├── retrospectives/              # 시점별 harness 평가 및 워크플로우 회고 (분기별)
 │   └── decisions/
 │       ├── DECISION-TEMPLATE.md         # DR 작성 템플릿

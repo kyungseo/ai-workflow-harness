@@ -4,6 +4,20 @@ docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾
 - `HRF-*`, `HRN-*`: docs/backlog/HARNESS.md
 - 항목 위치가 불명확하면 두 backlog에서 ID만 검색하고, 관련 없는 상세는 읽지 마.
 
+## Work File Check
+
+작업 착수 전 `docs/works/{category}/` 에 해당 ID의 Work 파일이 있는지 확인해줘.
+
+- **디렉토리 자체가 없으면**: 생성 계획에 `mkdir -p docs/works/{category}/` 포함.
+- **Work 파일이 있으면**: 파일을 로드해 Plan, Done Criteria, Checkpoints를 계획에 반영해줘.
+- **Work 파일이 없으면**: `docs/harness-protocol/03-work-items-and-naming.md` Work File Decomposition과 Quick Mode 기준을 확인해줘. L1 Quick Mode에 해당하면 Work 파일 없이 진행하고, 해당하지 않으면 Work 파일 생성을 계획에 포함해줘 (승인 후 생성).
+
+Work 파일 생성 시 함께 수행할 것:
+1. `docs/works/{category}/README.md`가 없으면 먼저 생성 (Candidate/Active/Done/Archived 테이블 포함)
+2. Work 파일을 계획/분해 목적으로만 생성하면 README Candidate 테이블에 행 추가
+3. 사용자가 해당 Work 착수를 승인하면 Work 파일 frontmatter를 `status: Active`로 두고 README Active 테이블에 행 추가/이동
+4. State update: 대상 Work ID를 명시하고 STATUS.md Active Work에 포인터 추가 제안
+
 ## Pre-check (Before Planning)
 
 **1. PLAN.md 강제 로드 조건 확인**
@@ -32,18 +46,20 @@ Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROT
 계획에는 반드시 아래 내용을 포함해줘.
 
 1. 위험도: L1 / L2 / L3
-2. 현재 코드/문서에서 확인해야 할 파일
-3. 구현 또는 문서 변경 범위
-4. Done Criteria
-5. Verification
-6. 리스크와 되돌리기 비용
-7. docs/STATUS.md에 반영해야 할 상태 변경 제안
-8. 상태 머신 단계: INIT / PLAN / APPROVAL / EXECUTE / VALIDATE / CHECKPOINT / END / FAIL / RECOVER
+2. 실행 모드: Quick Mode / Standard Work / Full Work
+3. 현재 코드/문서에서 확인해야 할 파일
+4. 구현 또는 문서 변경 범위
+5. Done Criteria
+6. Verification
+7. 리스크와 되돌리기 비용
+8. docs/STATUS.md에 반영해야 할 상태 변경 제안
+9. 상태 머신 단계: INIT / PLAN / APPROVAL / EXECUTE / VALIDATE / CHECKPOINT / END / FAIL / RECOVER
 
 계획을 보고한 뒤 "진행할까요?"로 끝내고 승인 대기해줘.
 
-docs/STATUS.md 변경은 즉시 수행하지 말고 `STATUS Update Proposal`로 먼저 보고해줘.
-Proposal에는 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 포함해야 한다.
+docs/STATUS.md 변경은 즉시 수행하지 말고 State Update Gate에 맞게 먼저 제안해줘.
+Active Work pointer 추가/제거는 대상 Work ID를 명시한 1줄 제안으로 충분하다.
+Phase completion criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 보고하고 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 포함해야 한다.
 사용자가 명시적으로 승인한 뒤에만 STATUS.md를 수정해줘.
 
 계획에 도구·아키텍처·정책 결정이 포함된 경우, 승인 후 구현 시작 전에 DR-worthy 결정 목록을 제시하고 기록 여부를 물어봐.
