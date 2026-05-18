@@ -1,7 +1,7 @@
 ---
 id: HRN-017
 priority: P1
-status: Done
+status: Archived
 risk: Low
 scope: DR-015 2계층 State Update Gate를 canonical workflow와 tool surface에 반영
 appetite: 1d
@@ -44,3 +44,5 @@ rg "State Update Gate|Layer 1|Layer 2" docs/AGENT-WORKFLOW.md docs/harness-proto
 
 - `STATUS Update Proposal` 문구는 Phase/focus/Recent Decisions 같은 고영향 `STATUS.md` 변경에는 계속 유효하다.
 - Active Work pointer 추가/제거는 대상 Work ID를 명시한 1줄 State Update 제안으로 낮춘다.
+- DR-015 2계층 State Update Gate를 commands/AGENTS.md/workflow.mdc/harness-protocol 모든 실행 표면에 반영 완료.
+  HRF-002 심층 검증 과정에서 추가 누락 없음 확인. 2026-05-18 archive.

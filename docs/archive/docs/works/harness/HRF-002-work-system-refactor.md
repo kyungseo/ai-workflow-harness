@@ -1,7 +1,7 @@
 ---
 id: HRF-002
 priority: P0
-status: Done
+status: Archived
 risk: High
 scope: Work 파일 체계 도입, docs/works/ 구조 정비, STATUS 전환, AI 도구 정렬, 시뮬레이션 검증
 appetite: 2w
@@ -80,3 +80,5 @@ wc -l docs/STATUS.md  # 60줄 이내 목표
   DR-013이 해당 섹션을 권위 문서로 참조하도록 업데이트함.
 - HRF-002 완료 후 리뷰 결과 작성과 후속 정합성 작업을 위해 archive를 보류함.
   Done 상태는 유지하되, `docs/works/harness/README.md`의 Done (archive pending) 섹션에서 추적함.
+- 리뷰 결과(hrf-002-work-file-system-review-result-20260518.md) 및 심층 검증 통과 확인 완료.
+  I1~I4 이슈 보완, HRN-005/007 backlog 정리, cascade matrix 업데이트 완료. 2026-05-18 archive.

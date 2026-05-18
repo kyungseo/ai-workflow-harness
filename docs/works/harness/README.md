@@ -19,12 +19,12 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Hold Reason |
 |----|-------|------------|-------------|
-| HRF-002 | Work 파일 기반 운영 체계 도입 | 2026-05-18 | 리뷰 결과 반영 및 후속 정합성 작업 완료 후 archive |
-| HRN-017 | DR-015 2계층 State Update Gate 구현 | 2026-05-18 | 후속 종합 검증 결과 append 후 archive 가능 |
-| HRN-018 | DR-016 Done→Archived 전환 트리거 구현 | 2026-05-18 | 후속 종합 검증 결과 append 후 archive 가능 |
+| (없음) | | | |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
-| (없음) | | | |
+| HRF-002 | Work 파일 기반 운영 체계 도입 | 2026-05-18 | `docs/archive/docs/works/harness/HRF-002-work-system-refactor.md` |
+| HRN-017 | DR-015 2계층 State Update Gate 구현 | 2026-05-18 | `docs/archive/docs/works/harness/HRN-017-state-update-gate.md` |
+| HRN-018 | DR-016 Done→Archived 전환 트리거 구현 | 2026-05-18 | `docs/archive/docs/works/harness/HRN-018-done-archive-trigger.md` |

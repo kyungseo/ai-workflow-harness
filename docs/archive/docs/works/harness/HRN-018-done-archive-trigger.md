@@ -1,7 +1,7 @@
 ---
 id: HRN-018
 priority: P1
-status: Done
+status: Archived
 risk: Low
 scope: DR-016 Done/Archived 분리와 archive trigger를 command/rule/manual/index에 반영
 appetite: 1d
@@ -46,3 +46,5 @@ rg "archive 대기|Archive 처리|status: Archived|Done \\(archive pending\\)" .
 
 - HRF-002 Work 파일은 리뷰 결과 append와 후속 확인이 끝날 때까지 archive하지 않고 Done (archive pending)으로 둔다.
 - Archive 수행 시에는 `status: Archived`를 먼저 기록한 뒤 `git mv`해야 archive 위치의 파일 상태가 올바르게 남는다.
+- DR-016 Done/Archived 분리를 done.md/resume.md/start.md/harness-protocol/README 모든 표면에 반영 완료.
+  HRF-002 심층 검증 과정에서 추가 누락 없음 확인. 2026-05-18 archive.
