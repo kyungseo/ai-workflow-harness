@@ -3,16 +3,16 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-18 (HRF-002 완료 — Phase I /health, G3 시뮬레이션)
+Last updated: 2026-05-18 (HRF-002 후속 정합성 정리 — Work lifecycle/gate 반영)
 
 ## Current State
 
 | Field | Value |
 | --- | --- |
 | Current phase | Phase 2 pre-entry |
-| Current focus | HRF-002: Work 파일 기반 운영 체계 도입 |
+| Current focus | Phase 2 pre-entry workflow stabilization |
 | Phase 1 | Complete |
-| Active plan | HRF-002 (`docs/works/harness/HRF-002-work-system-refactor.md`) |
+| Active plan | — |
 | Product backlog | `docs/backlog/PHASE2.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
@@ -36,8 +36,8 @@ Last updated: 2026-05-18 (HRF-002 완료 — Phase I /health, G3 시뮬레이션
 
 ## Active Work
 
-| ID | Status | Work File |
-| --- | --- | --- |
+| ID | Priority | Status | Work File |
+| --- | --- | --- | --- |
 
 ## Blockers And Open Questions
 
@@ -54,10 +54,10 @@ Last updated: 2026-05-18 (HRF-002 완료 — Phase I /health, G3 시뮬레이션
 | 2026-05-18 | DR-013: Work 파일 기반 작업 단위 체계 도입 — `docs/works/` 구조, frontmatter 스펙, Candidate→Active→Done→Archived lifecycle | STATUS.md 비대화 방지, 세션 간 이력 완전 보존 | Medium |
 | 2026-05-18 | DR-014: Archive 구조 정책 — `docs/archive/` 하위 경로 미러링, `-v{N}` / `-{YYYYMMDD}` 접미사 규칙 | 어느 파일이든 아카이빙 가능, 원본 위치 추적 직관적 | Low |
 | 2026-05-18 | DR-015: State Update Proposal 2계층 게이트 재설계 — Work 파일 변경(Layer 1)은 저마찰, STATUS.md 변경(Layer 2)은 차등 게이트 | Work 파일 SSoT 전환 이후 게이트 비용이 실질 위험과 역전된 구조 해소 | Low |
+| 2026-05-18 | DR-016: Work Done과 Archived 상태 분리 — `/done`은 Done 처리, archive는 명시 승인 또는 start/resume trigger로 수행 | 리뷰 대기·외부 참조 유지 중 Work 파일 조기 이동 방지 | Low |
 
 ## Next Actions
 
-1. HRN-018: DR-016 구현 — `done.md` Done/Archive 단계 분리, Done→Archived 트리거 규칙 반영 (HRF-002 아카이빙 선행 필요)
-2. HRN-017: DR-015 구현 — commands/AGENTS.md/workflow.mdc 2계층 게이트 반영
-3. PRE-C1: Phase 1 아키텍처 현황 분석 (`docs/works/phase2/PRE-C1-arch-analysis.md` 착수)
-4. PRE-B: 개발환경 전략 결정
+1. PRE-C1: Phase 1 아키텍처 현황 분석 (`docs/works/phase2/PRE-C1-arch-analysis.md` 착수)
+2. PRE-B: 개발환경 전략 결정
+3. PRE-C2: Phase 2 요건 정의 확정

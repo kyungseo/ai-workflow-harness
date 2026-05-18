@@ -8,7 +8,7 @@ appetite: 2w
 planned_start: 2026-05-18
 planned_end: 2026-05-31
 actual_end: 2026-05-18
-related_dr: [DR-013, DR-014]
+related_dr: [DR-013, DR-014, DR-015, DR-016]
 related_commits: [3288155, 4ebb5c9, 44202d1, ad9ed2f, 3955806, 89b22bb, 604e4b9, 2779ba9, e24fe5e, 6da7fe5, 8561c3b]
 related_troubleshooting: []
 ---
@@ -78,3 +78,5 @@ wc -l docs/STATUS.md  # 60줄 이내 목표
 - Work 파일 공통 규칙(실제 저장소 상태 우선 원칙)은 개별 Work 파일이 아닌
   docs/harness-protocol/03-work-items-and-naming.md Work File Rules 섹션에 위치.
   DR-013이 해당 섹션을 권위 문서로 참조하도록 업데이트함.
+- HRF-002 완료 후 리뷰 결과 작성과 후속 정합성 작업을 위해 archive를 보류함.
+  Done 상태는 유지하되, `docs/works/harness/README.md`의 Done (archive pending) 섹션에서 추적함.

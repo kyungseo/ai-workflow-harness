@@ -54,7 +54,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 
 Plan에는 Scope, Files, Verification, Risk, Reversal Cost를 포함한다.
 `VALIDATE` 실패 상태에서는 checkpoint 또는 commit을 만들지 않는다.
-`docs/STATUS.md` 변경은 `STATUS Update Proposal` 보고와 사용자 승인 후에만 수행한다.
+상태 변경은 `State Update Gate`를 따른다.
 
 ## Scope And Commit Approval
 
@@ -95,16 +95,48 @@ MUST NOT:
 | L2 | 기능 구현, 설정 변경, hook 추가 | 상세 plan 후 승인 |
 | L3 | 아키텍처, 인증/보안, 인프라, DB schema, harness 구조 | `docs/PLAN.md` 또는 관련 계획 확인, AS-IS/TO-BE와 rollback 포함 |
 
+L1 Quick Mode는 Work 파일 없이 완료할 수 있다.
+단, workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 cascade check를 수행한다.
+
 ## STATUS Rules
 
 MUST:
 
 - `docs/STATUS.md` 수정 전 최신 내용을 다시 확인한다.
-- `docs/STATUS.md` 변경 전 `STATUS Update Proposal`을 먼저 보고하고 사용자 승인을 받는다.
+- `docs/STATUS.md` 변경 전 State Update Gate에 맞는 제안을 먼저 보고하고 사용자 승인을 받는다.
+- `docs/STATUS.md` Active Work는 현재 진행 중인 Work 파일의 dashboard pointer로만 유지한다.
 - 전체 overwrite를 피하고 관련 섹션만 수정한다.
 - 문서와 실제 파일 상태가 충돌하면 실제 파일 상태를 우선한다.
 - 불일치 발견 시 먼저 보고하고 수정 제안을 낸다.
 - `Done` 상태의 작업은 계속 수정하지 않고, 후속 보정은 신규 작업으로 분리 제안한다.
+
+## State Update Gate
+
+Work 파일이 작업 단위의 SSoT이고, `docs/STATUS.md`는 dashboard다.
+상태 변경은 위험도와 대상에 따라 아래 gate를 적용한다.
+
+| Layer | 변경 유형 | Gate |
+| --- | --- | --- |
+| Layer 1 — Work 파일 | Checkpoint 상태 업데이트, Discovery 추가 | 승인 불필요. 실행 후 대상 Work ID와 변경 내용을 보고 |
+| Layer 1 — Work 파일 | Done Criteria 전체 충족 확인, `status: Done`, `actual_end` 기입 | 대상 Work ID를 명시하고 사용자 확인 후 처리 |
+| Layer 2 — STATUS.md | Active Work pointer 추가/제거 | 대상 Work ID를 명시한 1줄 제안 후 승인 |
+| Layer 2 — STATUS.md | Phase completion criteria, Current phase/focus, Recent Decisions | 기존 `STATUS Update Proposal` 유지 |
+
+멀티 Active Work 환경에서는 모든 state update 제안에 대상 Work ID를 포함한다.
+각 Work는 독립 gate를 가진다. Work A의 Done/Archive 처리가 Work B의 상태를 자동 변경하지 않는다.
+
+## Work File Lifecycle
+
+| Status | Location | Meaning |
+| --- | --- | --- |
+| Candidate | `docs/works/{category}/` 또는 backlog only | 착수 전 후보. 큰 작업은 Work 파일 초안을 가질 수 있다 |
+| Active | `docs/works/{category}/` | `docs/STATUS.md` Active Work에 pointer 존재 |
+| Done | `docs/works/{category}/` | 완료 기준과 검증 통과. 리뷰·참조 때문에 archive 대기 가능 |
+| Archived | `docs/archive/docs/works/{category}/` | 완전 종결. 더 이상 active 참조 불필요 |
+
+Done과 Archived는 분리한다.
+`/done`은 Done 처리와 STATUS pointer 제거 제안을 수행한다.
+Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에만 수행한다.
 
 ## Documentation Triggers
 
@@ -116,8 +148,11 @@ MUST:
 | workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/` 업데이트 |
 | 발표/보고 산출물 생성 | 목적, audience, source, format, output path, 품질 검증 기준 확인 |
 | Phase 완료 또는 새 Phase 시작 | STATUS/archive 재편 제안 |
-| 큰 작업 조건 충족 | TODO 분해 제안 |
+| 큰 작업 조건 충족 | Work 파일 분해 제안 |
 | 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |
+| tool surface 변경 | Claude/Codex/Cursor/prompts/scaffold 정렬 확인 |
+| scaffold 또는 canonical workflow 변경 | dry-run과 temp scaffold 검증 |
+| Quick Mode L1 변경 | no Work/no STATUS 기본, cascade-sensitive file 예외 확인 |
 
 문서, prompt, command, rule, Cursor rule, hook 메시지를 수정할 때는 `docs/decisions/DR-007-language-policy.md`의 언어 정책을 확인한다.
 

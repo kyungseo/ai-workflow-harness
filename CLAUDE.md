@@ -18,4 +18,4 @@ MUST:
 NEVER:
 
 - Duplicate shared rules here.
-- Bypass `docs/STATUS.md` or the STATUS Update Proposal gate.
+- Bypass `docs/STATUS.md` or the State Update Gate.

@@ -3,7 +3,7 @@
 ## Execution Principles
 
 - **구현 금지**: 보고와 제안만 한다. 수정·생성·커밋은 사용자 승인 후에만 진행한다.
-- **STATUS 보호**: `docs/STATUS.md` 변경 필요가 발견되면 즉시 수정하지 말고 `STATUS Update Proposal`로 보고한다.
+- **STATUS 보호**: `docs/STATUS.md` 변경 필요가 발견되면 즉시 수정하지 말고 State Update Gate에 맞게 보고한다.
 - **컨텍스트 절약**: `CLAUDE.md`와 `docs/AGENT-WORKFLOW.md`는 세션 시작 시 자동 로드됨 — 재읽기 금지.
   파일 목록·상태 확인은 full read 대신 `ls`, `rg` 명령을 우선 사용한다.
 - **모드**:
@@ -26,7 +26,7 @@ ls .claude/rules/       # 파일 수·이름 확인
 `docs/HARNESS-PROTOCOL.md` (문서 지도·아이템 위치 결정표만) → `README.md` (구조 블록·AI workflow 섹션만)
 → `docs/PLAN-SUMMARY.md` (기술 스택 테이블만)
 
-(조건부) Validation, STATUS Update Proposal, Commit Gate 정합성 확인이 필요하면
+(조건부) Validation, State Update Gate, Commit Gate 정합성 확인이 필요하면
 `docs/harness-protocol/06-recovery-and-validation.md`의 해당 섹션만 읽는다.
 
 **Phase 4 — Alignment Check (--full only)**
@@ -53,8 +53,12 @@ rg -n "^# |^Status:" docs/decisions
 - 각 `.claude/rules/*.md`: `paths` glob이 실제 디렉토리 구조와 일치하는가
 - `docs/AGENT-WORKFLOW.md` 워크플로우 기술 ↔ 실제 command 구현 사이 gap
   (이미 컨텍스트에 있는 docs/AGENT-WORKFLOW.md 기준으로 확인)
-- command/prompt 종료 요약 ↔ `docs/harness-protocol/06-recovery-and-validation.md`의 Validation Checklist, STATUS Update Proposal, Commit Gate 정합성
-- STATUS.md Active Work 항목: Done Criteria + Verification 모두 존재하는가
+- command/prompt 종료 요약 ↔ `docs/harness-protocol/06-recovery-and-validation.md`의 Validation Checklist, State Update Gate, Commit Gate 정합성
+- STATUS.md Active Work pointer가 가리키는 Work 파일에 Done Criteria + Verification이 존재하는가
+- STATUS.md Active Work pointer ↔ Work 파일 frontmatter `status: Active` 정합성
+- `docs/works/*/*.md` 중 `status: Done`인 Work가 STATUS Active Work에 남아 있지 않은가
+- `docs/works/*/README.md` index가 Work 파일 상태(Candidate/Active/Done/Archived)와 일치하는가
+- archive 위치의 Work 파일은 `status: Archived`인가
 - DR 생애주기 양방향: STATUS.md Recent Decisions ↔ `rg` 결과의 DR Status 일치
 
 ### B. Document Cross-Consistency
@@ -89,7 +93,8 @@ rg -n "^# |^Status:" docs/decisions
 
 ### E. Backlog/DR Hygiene
 
-- STATUS.md Active Work: Verification 완료되었으나 Done 처리가 지연된 항목
+- Work 파일: Verification 완료되었으나 Done 처리가 지연된 Active 항목
+- Work 파일: `status: Done`인데 archive 대기 상태로 2세션 이상 남은 항목
 - `docs/backlog/PHASE{n}.md`: product/preparation 항목 중 선행 조건이 이미 충족된 항목, 범위·우선순위 재검토 필요 항목
   ```bash
   # 상태 확인 예시 — alternation은 | 사용 (\| 아님)
@@ -160,5 +165,5 @@ P1 (계획 필요):
 P2 (선택적 개선):
 ```
 
-STATUS.md 변경이 필요한 발견 항목은 `STATUS Update Proposal` 섹션으로 별도 제안한다.
+STATUS.md 변경이 필요한 발견 항목은 State Update Gate에 맞는 제안 섹션으로 별도 제안한다.
 보고 후 "승인하신 항목부터 진행할까요?"로 끝낸다.

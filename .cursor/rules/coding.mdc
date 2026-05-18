@@ -15,16 +15,18 @@ Instruction priority:
 MUST:
 
 - Read the relevant project context before editing.
-- Use `docs/STATUS.md` as the active work index.
+- Use `docs/STATUS.md` as the dashboard pointer view for active work.
 - Follow the workflow state machine: `INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END`.
-- Request explicit user approval before editing `docs/STATUS.md`; report a `STATUS Update Proposal` first.
+- Request explicit user approval before editing `docs/STATUS.md`; report the State Update Gate proposal first.
 - Use `docs/backlog/PHASE{n}.md` for product and Phase{n} preparation candidate work.
 - Use `docs/backlog/HARNESS.md` for harness, command/rule, and workflow hardening candidate work.
 - Include scope, files, verification, risk, and reversal cost before implementation.
 - Before expanding approved scope to additional files, docs, or settings, report the added scope, reason, and verification plan, then wait for approval.
 - Use Work files for large tasks: `docs/works/{category}/{ID}-{lowercase-topic}.md` (spec: DR-013).
+- Treat Work files as the task SSoT and `docs/STATUS.md` as the dashboard pointer view.
+- Use Quick Mode for small L1 changes that do not need Work file tracking; close with final summary, validation, and commit history.
 - Do not reuse task IDs for different meanings.
-- Use `docs/archive/*.md` only for historical detail.
+- Use path-mirrored locations under `docs/archive/` only for historical detail.
 - State assumptions before implementation when the task is ambiguous.
 - Keep every change SURGICAL, MINIMAL, and REVERSIBLE.
 - Follow the existing package structure, naming, formatting, and coding conventions.

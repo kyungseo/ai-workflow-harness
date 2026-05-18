@@ -14,8 +14,8 @@ When the user's intent matches a workflow operation without an explicit slash co
 | --- | --- |
 | Register / add a work item | `/register` — route based on urgency and type (see below) |
 | Record a decision as DR | `/record-decision` — DR format, file naming, OQ linkage |
-| Start / plan a specific task | `/work` — pre-checks: PLAN.md force-load conditions, troubleshooting check, risk level declaration |
-| Resume an interrupted task | `/resume` — drift check: compare actual file state vs `docs/STATUS.md` before editing |
+| Start / plan a specific task | `/work` — pre-checks: PLAN.md force-load conditions, troubleshooting check, risk level and execution mode declaration |
+| Resume an interrupted task | `/resume` — drift check: compare actual file state against `docs/STATUS.md` pointers and Work file Checkpoints before editing |
 | Create presentation/report/review document material | `/doc` — use for PPT, deck, report, review package, decision brief, or polished shareable document artifacts; brief-first workflow, source routing, quality verification |
 
 ## Work Item Routing
@@ -29,8 +29,19 @@ New work items are always routed based on urgency and type:
 | Product / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
 
-When starting a task (`/work`): check `docs/works/{category}/` for an existing Work file. If none exists and decomposition criteria are met (spec: `docs/decisions/DR-013-work-file-spec.md`), include Work file creation in the plan.
+When starting a task (`/work`): check `docs/works/{category}/` for an existing Work file. If none exists, evaluate Quick Mode and Work File Decomposition criteria (spec: `docs/harness-protocol/03-work-items-and-naming.md`). L1 Quick Mode may proceed without a Work file; otherwise include Work file creation in the plan.
 
-When completing a task (`/done`): if the Active Work has a Work file, execute the Done→Archive flow — set `status: Done`, fill `actual_end`, move file to `docs/archive/docs/works/{category}/` via git mv, update README, propose STATUS pointer removal.
+Quick Mode: small L1 changes with narrow scope, one-session completion, no checkpoint handoff, and no STATUS change can close with final summary + validation + commit history only. If workflow/protocol/command/rule/prompt/scaffold/status files change, run cascade checks even for L1.
 
-Any change to `docs/STATUS.md` requires a STATUS Update Proposal before editing.
+When completing a task (`/done`): if the Active Work has a Work file, execute Done processing only — set `status: Done`, fill `actual_end`, move the README row from Active to Done (archive pending), and propose STATUS pointer removal. Do not archive or `git mv` the Work file unless the user explicitly approves archive or a later `/start`/`/resume` archive trigger is approved.
+
+State Update Gate:
+
+| Layer | Change | Gate |
+| --- | --- | --- |
+| Layer 1 — Work file | Checkpoint status update, Discovery note | No prior approval required; report target Work ID after execution |
+| Layer 1 — Work file | Done Criteria met, `status: Done`, `actual_end` | Confirm with the user and name the target Work ID |
+| Layer 2 — `docs/STATUS.md` | Active Work pointer add/remove | One-line proposal naming the target Work ID, then wait for approval |
+| Layer 2 — `docs/STATUS.md` | Phase criteria, Current phase/focus, Recent Decisions | Full STATUS Update Proposal |
+
+When starting or resuming, report any `status: Done` Work files still under `docs/works/{category}/` as archive-pending. Do not archive before approval.

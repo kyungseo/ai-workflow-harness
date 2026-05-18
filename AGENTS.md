@@ -13,11 +13,12 @@ MUST:
 - Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands.
 - When a Claude command is relevant, follow the same procedure manually.
 - Follow `docs/AGENT-WORKFLOW.md` Scope And Commit Approval before scope expansion and every commit.
+- Follow the State Update Gate: Work checkpoint/discovery updates may be reported after execution, Work Done/archive and all `docs/STATUS.md` changes require the appropriate user confirmation.
 
 NEVER:
 
 - Duplicate shared rules here.
-- Bypass `docs/STATUS.md` or the STATUS Update Proposal gate.
+- Bypass `docs/STATUS.md` or the State Update Gate.
 
 ## Codex Command Mapping
 
@@ -27,9 +28,9 @@ NEVER:
 | `/pick` | Route to `docs/backlog/PHASE{n}.md` or `docs/backlog/HARNESS.md`, compare candidates, recommend one |
 | `/register [description]` | Register a new work item; route to STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md based on urgency and type; propose STATUS Update if needed |
 | `/work <ID>` | Find the backlog item; check `docs/works/{category}/` for an existing Work file; if none and decomposition criteria met, include Work file creation in the plan; declare risk level, propose scope/files/verification/risk, then wait for approval |
-| `/resume <ID>` | Compare `docs/STATUS.md` and Work file Checkpoints with actual files, report drift, and propose recovery before editing |
+| `/resume <ID>` | Compare `docs/STATUS.md` and Work file Checkpoints with actual files, report drift, and propose recovery before editing; if the Work is Done, do not resume it and propose archive or follow-up work |
 | `/doc [brief]` | Create high-quality presentation/report artifacts; confirm brief, route sources, choose output format/tool, verify quality |
-| `/done` | Report completed work, changed files, validation, residual risk, STATUS update need, decision need, state, commit status; if Active Work has a Work file, handle Done→Archive flow (status: Done, actual_end, git mv to `docs/archive/docs/works/{category}/`) |
+| `/done` | Report completed work, changed files, validation, residual risk, STATUS update need, decision need, state, commit status; if Active Work has a Work file, handle Done processing (`status: Done`, `actual_end`, README Active→Done, STATUS pointer removal proposal). Archive only after explicit approval or a later `/start`/`/resume` archive trigger |
 
 ## Command Intent Recognition
 
@@ -42,6 +43,15 @@ When the user's intent matches a workflow operation without an explicit slash co
 | Start / plan a specific task | `/work` — pre-checks: PLAN.md force-load conditions, troubleshooting check, risk level declaration |
 | Resume an interrupted task | `/resume` — drift check: compare actual file state vs `docs/STATUS.md` before editing |
 | Create presentation/report/review document material | `/doc` — use for PPT, deck, report, review package, decision brief, or polished shareable document artifacts; brief-first workflow, source routing, quality verification |
+
+## State Update Gate
+
+| Layer | Change | Gate |
+| --- | --- | --- |
+| Layer 1 — Work file | Checkpoint status update, Discovery note | No prior approval required; report the target Work ID and change after execution |
+| Layer 1 — Work file | Done Criteria all met, `status: Done`, `actual_end` | Confirm with the user and name the target Work ID |
+| Layer 2 — `docs/STATUS.md` | Active Work pointer add/remove | One-line proposal naming the target Work ID, then wait for approval |
+| Layer 2 — `docs/STATUS.md` | Phase criteria, Current phase/focus, Recent Decisions | Full STATUS Update Proposal |
 
 Work item routing:
 
