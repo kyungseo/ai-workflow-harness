@@ -1,13 +1,13 @@
 ---
 id: HRN-019
 priority: P2
-status: Active
+status: Done
 risk: Low
 scope: /done Work 완료 절차 분리 — /close 커맨드 신규 도입 (Work Done + 선택적 Archive), /done에서 Work Done 단계 제거 및 pause Discovery 체크 추가
 appetite: 1d
 planned_start: 2026-05-18
 planned_end:
-actual_end:
+actual_end: 2026-05-18
 related_dr: []
 related_commits: []
 related_troubleshooting: []
@@ -31,15 +31,15 @@ related_troubleshooting: []
 
 ## Done Criteria
 
-- [ ] `close.md` 생성: Work Done 처리 + 선택적 Archive, 세션 계속 흐름 명시
-- [ ] `done.md` 수정: items 11-12 제거, `/close` 안내 + pause Discovery 체크 추가
-- [ ] `AGENTS.md`: `/close` → Work Done+Archive, `/done` → session summary only 반영
-- [ ] `workflow.mdc`: 동일
-- [ ] `HARNESS-QUICK-REFERENCE.md`: `/close` 추가, END 설명 갱신
-- [ ] `WORKFLOW-MANUAL.md`: 완료 절차 재작성
-- [ ] `prompts/claude-session-start.md`, `prompts/README.md`, `prompts/codex-session-start.md` 반영
-- [ ] `scripts/create-harness.sh` scaffold 반영 확인
-- [ ] Verification 통과 (`git diff --check`, `bash -n create-harness.sh`, 시나리오 확인)
+- [x] `close.md` 생성: Work Done 처리 + 선택적 Archive, 세션 계속 흐름 명시
+- [x] `done.md` 수정: items 11-12 제거, `/close` 안내 + pause Discovery 체크 추가
+- [x] `AGENTS.md`: `/close` → Work Done+Archive, `/done` → session summary only 반영
+- [x] `workflow.mdc`: 동일
+- [x] `HARNESS-QUICK-REFERENCE.md`: `/close` 추가, END 설명 갱신
+- [x] `WORKFLOW-MANUAL.md`: 완료 절차 재작성
+- [x] `prompts/claude-session-start.md`, `prompts/README.md`, `prompts/codex-session-start.md` 반영
+- [x] `scripts/create-harness.sh` scaffold 반영 확인
+- [x] Verification 통과 (`git diff --check`, `bash -n create-harness.sh`, 시나리오 확인)
 
 ## Verification
 

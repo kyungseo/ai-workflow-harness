@@ -19,7 +19,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Hold Reason |
 |----|-------|------------|-------------|
-| (없음) | | | |
+| HRN-019 | /close 커맨드 신규 도입 — /done Work 완료 절차 분리 | 2026-05-18 | cascade 감사 결과 포함, 참조 대기 |
 
 ## Archived
 
