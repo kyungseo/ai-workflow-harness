@@ -11,6 +11,7 @@ MUST:
 - Read and follow `docs/AGENT-WORKFLOW.md` at session start for common workflow, context routing, status rules, and validation defaults.
 - Read `docs/STATUS.md` current sections before choosing or continuing work.
 - Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands.
+- Do not read `.claude/commands/*.md` at session start; load a command file only when that workflow is explicitly invoked or clearly relevant.
 - When a Claude command is relevant, follow the same procedure manually.
 - Follow `docs/AGENT-WORKFLOW.md` Scope And Commit Approval before scope expansion and every commit.
 - Follow the State Update Gate: Work checkpoint/discovery updates may be reported after execution, Work Done/archive and all `docs/STATUS.md` changes require the appropriate user confirmation.

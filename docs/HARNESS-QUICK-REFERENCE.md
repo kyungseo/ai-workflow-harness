@@ -203,6 +203,8 @@ Low. STATUS.md dashboard 표현만 되돌리면 됩니다.
 
 ## 8. Documentation Triggers
 
+문서/워크플로우 변경 후 연쇄 영향이 불명확하면 `/health --cascade`로 canonical → tool-specific → user-facing → scaffold layer를 점검한다.
+
 | Trigger | Action |
 | --- | --- |
 | DR-worthy decision accepted | `docs/decisions/` 기록 제안 |

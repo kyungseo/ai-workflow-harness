@@ -794,7 +794,7 @@ Claude Code에서 `/명령명`으로 호출. 파일 위치: `.claude/commands/*.
 | `/doc [brief]` | 발표·보고·리뷰 패키지·외부 공유용 문서 산출물을 만들 때 | 목적·audience·format·source brief 확정 → outline 승인 → presentation/document 도구 또는 fallback으로 산출물 생성 → 품질 검증 |
 | `/done` | 세션 종료 시 | 완료 작업, 변경 파일, 검증 결과, 리스크, Work Done 처리, State Update 필요 여부, 다음 세션 primer 요약, DR 검토 |
 | `/record-decision` | 기술 결정을 DR로 기록할 때 | 현재 대화의 확정 결정을 DR 초안으로 작성, 승인 후 파일 생성 |
-| `/health` | 워크플로우·문서 점검 시 | 구조 정합성, 문서 현행화, 백로그/DR 위생 전체 점검 후 보고. `--full`로 Claude Code 기능 정렬·PE 개선 포인트 포함 |
+| `/health` | 워크플로우·문서 점검 시 | 구조 정합성, 문서 현행화, 백로그/DR 위생 전체 점검 후 보고. `--full`은 전체 심화 점검, `--cascade`는 문서/워크플로우 변경의 연쇄 영향 감사 |
 
 ### Scope And Commit Approval
 
@@ -866,6 +866,8 @@ flowchart TD
 # 워크플로우·문서 정합성 점검
 /health                   → 구조·위생 Quick 점검 (주 1~2회, 작업 블록 시작 전)
 /health --full            → 전체 심화 점검 (Phase 전환 전 또는 월 1회)
+/health --cascade         → 문서·workflow 변경 후 canonical/tool/user/scaffold cascade 점검
+/health --full --cascade  → 대형 harness 변경 또는 Phase 전환 전 최종 정밀 점검
 ```
 
 ### `/health` Recommended Cadence (Claude Pro)
@@ -874,6 +876,8 @@ flowchart TD
 | --- | --- | --- |
 | `/health` | 주 1~2회 | 작업 블록 시작 전, 매 세션마다 실행하지 않는다 |
 | `/health --full` | 월 1회 또는 Phase 전환 전 | 대규모 작업 착수 전, Phase 완료 시점 |
+| `/health --cascade` | workflow/process 문서 변경 후 | canonical 문서, command/rule/prompt, manual, scaffold 사이 drift 확인 |
+| `/health --full --cascade` | 대형 harness 변경 후 또는 Phase 전환 직전 | 전체 구조와 cascade/trigger 완전성 동시 감사 |
 
 ---
 

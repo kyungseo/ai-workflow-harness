@@ -13,6 +13,7 @@ MUST:
 - Follow `docs/AGENT-WORKFLOW.md` for common workflow, context routing, status rules, and validation defaults.
 - Read `docs/STATUS.md` current sections before choosing or continuing work.
 - Use `.claude/commands/` for repeated Claude Code workflows when available.
+- Do not read `.claude/commands/*.md` at session start; load a command file only when that workflow is explicitly invoked or clearly relevant.
 - Follow `docs/AGENT-WORKFLOW.md` Scope And Commit Approval before scope expansion and every commit.
 
 NEVER:

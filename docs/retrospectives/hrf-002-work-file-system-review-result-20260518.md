@@ -1118,3 +1118,35 @@ python3 -m json.tool /private/tmp/harness-sim-generic-20260518-D/.claude/setting
 - generic scaffold에도 Quick Mode, T11~T13, State Update Examples, best-effort commit reference 정책이 포함됐다.
 - generic scaffold에는 Java/Spring Boot identity가 다시 섞이지 않았다.
 - `git diff --check`, `bash -n scripts/create-harness.sh`, 현재 repo와 temp scaffold `.claude/settings.json` JSON 파싱이 통과했다.
+
+### 커밋 참조
+
+- Commit `0eef8f8` (`docs: work 파일 기반 하네스 흐름 정렬`)
+  - HRF-002 review 결과와 후속 제안 반영을 포함하는 mixed docs/workflow commit이다.
+  - 주요 범위: Work 파일 체계, State Update Gate, Done/Archive 절차, Quick Mode, trigger/cascade 확장, scaffold/profile 정렬, Claude/Codex/Cursor tool surface 동기화.
+  - 이 commit id는 작업 추적용 best-effort reference이며, Work 단위 무결성 경계가 아니라 여러 workflow follow-up을 함께 묶은 closeout commit으로 본다.
+
+---
+
+## 2026-05-18 `/health --cascade` 개선 반영
+
+문서 정합성/일관성/플로우 검토 요청 패턴을 `/health` 명령에 반영했다.
+
+### 반영 내용
+
+- `.claude/commands/health.md`
+  - `--cascade` 모드를 추가해 문서/워크플로우 변경 영향 감사를 별도 모드로 정의했다.
+  - canonical → tool-specific → user-facing → scaffold → historical layer 순서로 읽기/판단하도록 Phase 6을 추가했다.
+  - Area G `Cascade/Trigger Completeness`를 추가해 필요한 cascade, 누락 mirror, 과잉 반복, stale contradiction, loop risk를 분류하도록 했다.
+  - 변경 파일 기반 Simulation Pack을 추가했다.
+- `docs/WORKFLOW-MANUAL.md`
+  - `/health --cascade`, `/health --full --cascade` 사용 예시와 권장 시점을 추가했다.
+- `docs/HARNESS-QUICK-REFERENCE.md`
+  - 문서/워크플로우 변경 후 연쇄 영향이 불명확하면 `/health --cascade`를 사용하도록 요약했다.
+
+### 검증
+
+- `rg`로 현재 repo와 temp generic scaffold 모두에서 `--cascade`, Area G, Cascade Findings, Simulation Pack 문구 반영을 확인했다.
+- `git diff --check` 통과.
+- `./scripts/create-harness.sh --dry-run --profile generic ...` 통과.
+- temp generic scaffold 생성 후 `.claude/commands/health.md`, `docs/WORKFLOW-MANUAL.md`, `docs/HARNESS-QUICK-REFERENCE.md`에 `/health --cascade` 개선 내용이 포함됨을 확인했다.
