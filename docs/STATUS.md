@@ -38,6 +38,7 @@ Last updated: 2026-05-18 (HRF-002 후속 정합성 정리 — Work lifecycle/gat
 
 | ID | Priority | Status | Work File |
 | --- | --- | --- | --- |
+| PRE-C1 | P0 | Active | `docs/works/phase2/PRE-C1-arch-analysis.md` |
 
 ## Blockers And Open Questions
 
