@@ -78,7 +78,7 @@ Quick Mode 대상 예시:
 
 Quick Mode 비대상:
 
-- harness/workflow surface(`workflow/protocol/command/rule/prompt/scaffold/status`) 변경
+- harness/workflow surface(`entrypoint/workflow/protocol/command/rule/prompt/scaffold/status`) 변경
 
 Harness/workflow surface를 건드리면 기본 L2로 다룬다.
 
@@ -117,14 +117,14 @@ Work 파일 frontmatter의 `related_commits`는 best-effort reference다.
 Work Done 처리(status: Done, actual_end, README Active→Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다. `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
 Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에 수행한다.
 
-### State Update Gate
+### Approval Matrix State Detail
 
-| Layer | 변경 유형 | Gate |
+| 변경 대상 | 변경 유형 | Gate |
 | --- | --- | --- |
-| Layer 1 — Work 파일 | Checkpoint 상태 업데이트, Discovery 추가 | 승인 불필요. 실행 후 대상 Work ID와 변경 내용을 보고 |
-| Layer 1 — Work 파일 | Done Criteria 전체 충족 확인, `status: Done`, `actual_end` 기입 | 대상 Work ID를 명시하고 사용자 확인 후 처리 |
-| Layer 2 — STATUS.md | Active Work pointer 추가/제거 | 대상 Work ID를 명시한 1줄 제안 후 승인 |
-| Layer 2 — STATUS.md | Phase completion criteria, Current phase/focus, Recent Decisions | `STATUS Update Proposal` 유지 |
+| Work 파일 | Checkpoint 상태 업데이트, Discovery 추가 | 승인 불필요. 실행 후 대상 Work ID와 변경 내용을 보고 |
+| Work 파일 | Done Criteria 전체 충족 확인, `status: Done`, `actual_end` 기입 | 대상 Work ID를 명시하고 사용자 확인 후 처리 |
+| `docs/STATUS.md` | Active Work pointer 추가/제거 | 대상 Work ID를 명시한 1줄 제안 후 승인 |
+| `docs/STATUS.md` | Phase completion criteria, Current phase/focus, Recent Decisions | `STATUS Update Proposal` 승인 후 처리 |
 
 멀티 Active Work 환경에서는 모든 state update 제안에 대상 Work ID를 포함한다.
 각 Work는 독립 gate를 가진다.

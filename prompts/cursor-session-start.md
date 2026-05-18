@@ -82,7 +82,7 @@ CLAUDE.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 읽어줘.
 
 가장 먼저 진행할 작업 1개를 추천하고,
 docs/STATUS.md에 Active Work로 올릴 때 필요한 내용을 제안해줘.
-STATUS.md는 바로 수정하지 말고, 변경이 필요하면 State Update Gate에 맞게 먼저 보고해줘.
+STATUS.md는 바로 수정하지 말고, 변경이 필요하면 Approval Matrix state rules에 맞게 먼저 보고해줘.
 ```
 
 ---
@@ -102,9 +102,9 @@ STATUS.md는 바로 수정하지 말고, 변경이 필요하면 State Update Gat
 
 구현 후에는 검증을 실행하고,
 docs/STATUS.md 업데이트와 DR/Work 파일/문서 cascade가 필요한지 제안해줘.
-STATUS.md 변경이 필요하면 즉시 수정하지 말고 State Update Gate에 맞게 먼저 보고해줘.
+STATUS.md 변경이 필요하면 즉시 수정하지 말고 Approval Matrix state rules에 맞게 먼저 보고해줘.
 Product surface의 L1 Quick Mode에 해당하면 Work 파일 없이 final summary + validation + commit history로 닫을 수 있어.
-workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 harness/workflow surface 변경으로 보고 기본 L2로 다뤄줘.
+entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 harness/workflow surface 변경으로 보고 기본 L2로 다뤄줘.
 ```
 
 ---
@@ -183,7 +183,7 @@ STATUS.md 변경이 필요하면 변경 섹션, 변경 이유, 변경 후 상태
 3. 실행한 검증
 4. 남은 리스크
 5. docs/STATUS.md 업데이트 필요 여부
-   - 필요하면 즉시 수정하지 말고 State Update Gate에 맞게 제안해.
+   - 필요하면 즉시 수정하지 말고 Approval Matrix state rules에 맞게 제안해.
    - phase/focus/recent decision 변경은 STATUS Update Proposal로 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 제시해.
    - 사용자가 명시적으로 승인한 뒤에만 STATUS.md를 수정해.
 6. 의사결정 기록 필요 여부

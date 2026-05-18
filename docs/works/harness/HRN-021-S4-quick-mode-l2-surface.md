@@ -49,6 +49,7 @@ rg -n "Quick Mode|L1 Quick|harness/workflow|workflow/protocol/command/rule/promp
   .claude/commands/work.md .claude/commands/health.md \
   .cursor/rules/workflow.mdc .cursor/rules/coding.mdc \
   prompts/claude-session-start.md prompts/codex-session-start.md prompts/cursor-session-start.md
+scripts/create-harness.sh --dry-run --profile generic harness-s4-review /private/tmp/harness-s4-review
 git diff --check
 ```
 
@@ -68,3 +69,10 @@ git diff --check
 사용자 요청에 따라 HRN-021 simplification series 중 S4만 실행한다.
 사용자 최종 리뷰를 HRN-021-S4의 Done Criteria에 포함한다.
 전체 Work lifecycle에 사용자 리뷰 조건을 일반화하는 방안은 별도 backlog 후보로 분리한다.
+
+### 영향 검토 메모 (2026-05-19)
+
+S4 영향 재검토 결과 P0 없음.
+`entrypoint`를 harness/workflow surface 예시에 추가하고, `/work`의 Work 파일 생성 문구를 "기본값으로 검토"로 완화했다.
+사용자 매뉴얼 T13 조건도 product surface의 L1 작은 변경으로 명확화했다.
+임시 scaffold 생성물(`/private/tmp/harness-s2-review-real`) 기준 S4 Quick Mode/L2 surface 문구가 전파됨을 확인했다.

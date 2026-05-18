@@ -36,20 +36,20 @@ Report includes:
 - Work 파일 checkpoint/discovery 변경을 대상 Work ID와 함께 보고했는가
 - Work 파일 Done 처리 또는 archive 이동에 사용자 확인이 있었는가
 - `STATUS.md` 갱신이 필요한가
-- `STATUS.md` 갱신이 필요하면 State Update Gate에 맞는 제안과 사용자 승인이 있었는가
+- `STATUS.md` 갱신이 필요하면 Approval Matrix에 맞는 제안과 사용자 승인이 있었는가
 - DR/Work 파일/archive/cascade가 필요한가
 - 다음 세션이 `STATUS.md`만 보고 재개 가능한가
 
-## State Update Proposal
+## Approval Matrix State Detail
 
-상태 변경이 필요하면 변경 대상에 맞는 gate를 적용한다.
+상태 변경이 필요하면 Approval Matrix의 상태 변경 규칙을 적용한다.
 
-| Layer | 변경 유형 | Gate |
+| 변경 대상 | 변경 유형 | Gate |
 | --- | --- | --- |
-| Layer 1 — Work 파일 | Checkpoint 상태 업데이트, Discovery 추가 | 승인 불필요. 실행 후 대상 Work ID와 변경 내용을 보고 |
-| Layer 1 — Work 파일 | Done Criteria 전체 충족 확인, `status: Done`, `actual_end` 기입 | 대상 Work ID를 명시하고 사용자 확인 후 처리 |
-| Layer 2 — STATUS.md | Active Work pointer 추가/제거 | 대상 Work ID를 명시한 1줄 제안 후 승인 |
-| Layer 2 — STATUS.md | Phase completion criteria, Current phase/focus, Recent Decisions | `STATUS Update Proposal` 유지 |
+| Work 파일 | Checkpoint 상태 업데이트, Discovery 추가 | 승인 불필요. 실행 후 대상 Work ID와 변경 내용을 보고 |
+| Work 파일 | Done Criteria 전체 충족 확인, `status: Done`, `actual_end` 기입 | 대상 Work ID를 명시하고 사용자 확인 후 처리 |
+| `docs/STATUS.md` | Active Work pointer 추가/제거 | 대상 Work ID를 명시한 1줄 제안 후 승인 |
+| `docs/STATUS.md` | Phase completion criteria, Current phase/focus, Recent Decisions | `STATUS Update Proposal` 승인 후 처리 |
 
 `docs/STATUS.md`의 고영향 변경이 필요하면 파일을 수정하기 전에 아래 항목을 먼저 보고한다.
 
@@ -61,7 +61,7 @@ Report includes:
 
 승인 전에는 `docs/STATUS.md`를 수정하지 않는다.
 
-## Commit Gate
+## Commit Approval
 
 Commit 전:
 
@@ -71,6 +71,7 @@ Commit 전:
 4. `git diff --cached`
 
 `VALIDATE` 실패 상태에서는 commit하지 않는다.
+Commit 전 승인은 risk level과 무관하게 항상 별도로 받는다.
 
 L3 이상 작업은 논리 단계별 commit을 기본값으로 한다.
 

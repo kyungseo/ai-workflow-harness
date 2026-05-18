@@ -27,7 +27,7 @@
 4. Plan을 작성하고 승인을 받는다.
 5. 실행 후 가장 좁은 검증을 수행한다.
 6. Work 파일, `STATUS.md`, DR, archive, 문서 cascade 필요 여부를 확인한다.
-7. 상태 변경이 필요하면 State Update Gate에 맞는 제안을 먼저 보고하고 사용자 승인 후 수정한다.
+7. 상태 변경이 필요하면 Approval Matrix state rules에 맞는 제안을 먼저 보고하고 사용자 승인 후 수정한다.
 
 ## 3. State Machine
 

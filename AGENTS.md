@@ -13,13 +13,12 @@ MUST:
 - Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands.
 - Do not read `.claude/commands/*.md` at session start; load a command file only when that workflow is explicitly invoked or clearly relevant.
 - When a Claude command is relevant, follow the same procedure manually.
-- Follow `docs/AGENT-WORKFLOW.md` Scope And Commit Approval before scope expansion and every commit.
-- Follow the State Update Gate: Work checkpoint/discovery updates may be reported after execution, Work Done/archive and all `docs/STATUS.md` changes require the appropriate user confirmation.
+- Follow `docs/AGENT-WORKFLOW.md` Approval Matrix before execution, scope expansion, state changes, and every commit.
 
 NEVER:
 
 - Duplicate shared rules here.
-- Bypass `docs/STATUS.md` or the State Update Gate.
+- Bypass `docs/STATUS.md` or the Approval Matrix.
 
 ## Codex Command Mapping
 
@@ -48,14 +47,14 @@ When the user's intent matches a workflow operation without an explicit slash co
 | Start / plan a specific task | `/work` — pre-checks: PLAN.md force-load conditions, troubleshooting check, risk level declaration |
 | Resume an interrupted task | `/resume` — drift check: compare actual file state vs `docs/STATUS.md` before editing |
 
-## State Update Gate
+## Approval Matrix State Rules
 
-| Layer | Change | Gate |
+| Target | Change | Gate |
 | --- | --- | --- |
-| Layer 1 — Work file | Checkpoint status update, Discovery note | No prior approval required; report the target Work ID and change after execution |
-| Layer 1 — Work file | Done Criteria all met, `status: Done`, `actual_end` | Confirm with the user and name the target Work ID |
-| Layer 2 — `docs/STATUS.md` | Active Work pointer add/remove | One-line proposal naming the target Work ID, then wait for approval |
-| Layer 2 — `docs/STATUS.md` | Phase criteria, Current phase/focus, Recent Decisions | Full STATUS Update Proposal |
+| Work file | Checkpoint status update, Discovery note | No prior approval required; report the target Work ID and change after execution |
+| Work file | Done Criteria all met, `status: Done`, `actual_end` | Confirm with the user and name the target Work ID |
+| `docs/STATUS.md` | Active Work pointer add/remove | One-line proposal naming the target Work ID, then wait for approval |
+| `docs/STATUS.md` | Phase criteria, Current phase/focus, Recent Decisions | Full STATUS Update Proposal |
 
 Work item routing:
 

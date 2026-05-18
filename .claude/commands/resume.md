@@ -26,7 +26,7 @@ Done 상태의 Work 파일이 `docs/works/{category}/`에 남아 있으면 archi
 - 불일치 내용과 STATUS.md 수정 제안을 함께 보고하고, 승인 후 수정 진행
 - 실패 상태로 판단되면 `Failed`로 기록하고 재시도는 신규 작업으로 분리 제안
 
-docs/STATUS.md 변경은 즉시 수행하지 말고 State Update Gate에 맞게 먼저 제안해줘.
+docs/STATUS.md 변경은 즉시 수행하지 말고 Approval Matrix state rules에 맞게 먼저 제안해줘.
 Active Work pointer 추가/제거는 대상 Work ID를 명시한 1줄 제안으로 충분하다.
 Phase completion criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 보고해줘.
 사용자가 명시적으로 승인한 뒤에만 STATUS.md를 수정해줘.

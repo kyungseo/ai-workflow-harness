@@ -53,7 +53,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | Product / Phase{n} 작업 | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule 개선 | `docs/backlog/HARNESS.md` |
 
-STATUS.md 변경이 포함되면 State Update Gate → 승인 순서를 따른다.
+STATUS.md 변경이 포함되면 Approval Matrix의 상태 변경 규칙에 따라 먼저 제안하고 승인받는다.
 
 ## 4. Execution Gate
 
@@ -69,24 +69,16 @@ Plan must include:
 
 승인 없이 구현하지 않는다.
 
-### Scope And Commit Approval
-
-- 대상 파일과 scope가 명확한 작은 L1 변경은 승인된 계획 안에서 빠르게 편집할 수 있다.
-- 승인된 scope 밖의 파일, 문서, 설정으로 변경이 확장되면 추가 scope, 이유, 검증 방법을 보고하고 승인 대기한다.
-- `README.md`, `docs/STATUS.md`, workflow 문서, command, prompt, rule, developer-facing 문서로 확장되면 반드시 먼저 승인받는다.
-- commit 전에는 validation 결과, diff summary, 제안 commit message를 보고하고 승인 대기한다.
-
-### State Update Gate
+### Approval Matrix
 
 Work 파일은 작업 SSoT이고 `docs/STATUS.md`는 dashboard다.
-상태 변경은 대상과 위험도에 맞게 처리한다.
+실행 전 승인, 상태 변경, commit 전 승인을 같은 표로 판단한다.
 
-| Layer | 변경 유형 | Gate |
-| --- | --- | --- |
-| Layer 1 — Work 파일 | Checkpoint 상태 업데이트, Discovery 추가 | 승인 불필요. 실행 후 대상 Work ID와 변경 내용을 보고 |
-| Layer 1 — Work 파일 | Done Criteria 전체 충족 확인, `status: Done`, `actual_end` 기입 | 대상 Work ID를 명시하고 사용자 확인 후 처리 |
-| Layer 2 — STATUS.md | Active Work pointer 추가/제거 | 대상 Work ID를 명시한 1줄 제안 후 승인 |
-| Layer 2 — STATUS.md | Phase completion criteria, Current phase/focus, Recent Decisions | 기존 `STATUS Update Proposal` 유지 |
+| 변경 유형 | 실행 전 | 상태 변경 | commit 전 |
+| --- | --- | --- | --- |
+| L1 product surface | 간단 plan 승인 후 실행. Quick Mode 가능 | Work checkpoint/discovery는 실행 후 대상 Work ID와 변경 보고 | validation, diff summary, 제안 commit message 보고 후 승인 |
+| L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 기본 | Work Done과 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation, diff summary, 제안 commit message 보고 후 승인 |
+| L3 구조 변경 | AS-IS/TO-BE, rollback 포함 후 승인 | Phase/focus/criteria/Recent Decisions는 `STATUS Update Proposal` 승인 후 처리 | validation, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
 
 - 사용자가 명시적으로 승인한 뒤에만 `docs/STATUS.md`를 수정한다.
 - 이미 승인된 plan에 구체적인 `STATUS.md` 변경 범위가 포함되어 있으면 그 승인으로 갈음할 수 있다.
@@ -101,9 +93,9 @@ Work 파일은 작업 SSoT이고 `docs/STATUS.md`는 dashboard다.
 
 | Level | Examples | Rule |
 | --- | --- | --- |
-| L1 Safe | 문서 소폭 수정, 테스트, 국소 버그 수정 | 간단 plan 후 승인 |
-| L2 Normal | 기능 구현, 설정 변경, hook 추가 | 상세 plan 후 승인 |
-| L3 Critical | 아키텍처, 보안, 인프라, DB schema, harness 구조 | AS-IS/TO-BE와 rollback 포함 |
+| L1 Safe | product surface 문서 소폭 수정, 테스트, 국소 버그 수정 | Approval Matrix L1 |
+| L2 Normal | 기능 구현, 설정 변경, hook 추가, harness/workflow surface 변경 | Approval Matrix L2 |
+| L3 Critical | 아키텍처, 보안, 인프라, DB schema, harness 구조 | Approval Matrix L3 |
 
 ### Quick Mode
 
@@ -118,7 +110,7 @@ Quick Mode는 아래 조건에서 적합하다.
 - STATUS.md 변경 없음
 - harness/workflow surface 변경 없음
 
-Harness/workflow surface(`workflow/protocol/command/rule/prompt/scaffold/status`)를 건드리면 기본 L2로 다룬다.
+Harness/workflow surface(`entrypoint/workflow/protocol/command/rule/prompt/scaffold/status`)를 건드리면 기본 L2로 다룬다.
 
 ## 6. Validation
 
@@ -129,7 +121,7 @@ Harness/workflow surface(`workflow/protocol/command/rule/prompt/scaffold/status`
 - Verification 실행 또는 미실행 사유
 - 문서 링크 정합성
 - DR 필요 여부
-- State Update Proposal 필요 여부
+- Approval Matrix에 따른 STATUS update 필요 여부
 
 COMMIT 전 확인:
 
@@ -144,7 +136,7 @@ L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commi
 
 ## State Update Examples
 
-Layer 1 보고형:
+L1 Work checkpoint 보고형:
 
 ```md
 State Update 완료: PRE-C1
@@ -154,7 +146,7 @@ State Update 완료: PRE-C1
 - STATUS.md 변경: 없음
 ```
 
-Layer 2 Active Work pointer 제안:
+L2 Active Work pointer 제안:
 
 ```md
 State Update 제안: PRE-C1

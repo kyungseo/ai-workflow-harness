@@ -17,7 +17,7 @@ MUST:
 - Read the relevant project context before editing.
 - Use `docs/STATUS.md` as the dashboard pointer view for active work.
 - Follow the workflow state machine: `INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END`.
-- Request explicit user approval before editing `docs/STATUS.md`; report the State Update Gate proposal first.
+- Request explicit user approval before editing `docs/STATUS.md`; report the Approval Matrix state-change proposal first.
 - Use `docs/backlog/PHASE{n}.md` for product and Phase{n} preparation candidate work.
 - Use `docs/backlog/HARNESS.md` for harness, command/rule, and workflow hardening candidate work.
 - Include scope, files, verification, risk, and reversal cost before implementation.

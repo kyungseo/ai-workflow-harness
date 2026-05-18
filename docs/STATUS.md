@@ -38,6 +38,7 @@ Last updated: 2026-05-18 (HRF-002 후속 정합성 정리 — Work lifecycle/gat
 | ID | Priority | Status | Work File |
 | --- | --- | --- | --- |
 | PRE-B | P0 | Active | `docs/works/phase2/PRE-B-env-strategy.md` |
+| HRN-021-S2 | P1 | Active | `docs/works/harness/HRN-021-S2-approval-matrix.md` |
 
 ## Blockers And Open Questions
 

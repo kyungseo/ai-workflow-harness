@@ -250,7 +250,7 @@ write_text "${TARGET_ROOT}/.claude/settings.json" '{
         "hooks": [
           {
             "type": "command",
-            "command": "python3 -c \"print('\''[hook] 세션 종료 전 확인: Work가 완료됐다면 /close를 먼저 실행하고, 그다음 /done으로 validation, State Update 필요 여부, DR-worthy 결정, commit 상태를 보고하세요.'\'')\""
+            "command": "python3 -c \"print('\''[hook] 세션 종료 전 확인: Work가 완료됐다면 /close를 먼저 실행하고, 그다음 /done으로 validation, Approval Matrix에 따른 상태 변경 필요 여부, DR-worthy 결정, commit 상태를 보고하세요.'\'')\""
           }
         ]
       }

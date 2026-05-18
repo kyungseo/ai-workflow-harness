@@ -32,7 +32,7 @@
 - T11은 관련 tool surface를 확인 대상으로 추가하지만 자동 수정하지 않는다. 발견 → 제안 → 승인 순서를 따른다.
 - T12는 temp target에서 검증하고 생성물을 live tree로 복사하지 않는다.
 - T13은 product surface의 작은 작업을 빠르게 닫기 위한 규칙이다.
-- T14는 workflow/protocol/command/rule/prompt/scaffold/status 변경을 기본 L2로 다루며, 관련 tool surface를 확인한다.
+- T14는 entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경을 기본 L2로 다루며, 관련 tool surface를 확인한다.
 
 ## Cascade Rule
 
@@ -62,7 +62,7 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 ## STATUS.md Section Deletion Cascade Checklist
 
 STATUS.md 항목 삭제 또는 이동 전 해당 섹션의 체크리스트를 확인한다.
-모든 STATUS.md 변경은 State Update Gate에 맞는 제안 → 사용자 승인 후 수행한다.
+모든 STATUS.md 변경은 Approval Matrix state rules에 맞는 제안 → 사용자 승인 후 수행한다.
 
 | 섹션 | 삭제/이동 전 확인 사항 |
 | --- | --- |

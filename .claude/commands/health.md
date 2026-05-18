@@ -9,7 +9,7 @@ disable-model-invocation: true
 ## Execution Principles
 
 - **구현 금지**: 보고와 제안만 한다. 수정·생성·커밋은 사용자 승인 후에만 진행한다.
-- **STATUS 보호**: `docs/STATUS.md` 변경 필요가 발견되면 즉시 수정하지 말고 State Update Gate에 맞게 보고한다.
+- **STATUS 보호**: `docs/STATUS.md` 변경 필요가 발견되면 즉시 수정하지 말고 Approval Matrix state rules에 맞게 보고한다.
 - **컨텍스트 절약**: `CLAUDE.md`와 `docs/AGENT-WORKFLOW.md`는 세션 시작 시 자동 로드됨 — 재읽기 금지.
   파일 목록·상태 확인은 full read 대신 `ls`, `rg` 명령을 우선 사용한다.
 - **모드**:
@@ -34,7 +34,7 @@ ls .claude/rules/       # 파일 수·이름 확인
 `docs/HARNESS-PROTOCOL.md` (문서 지도·아이템 위치 결정표만) → `README.md` (구조 블록·AI workflow 섹션만)
 → `docs/PLAN-SUMMARY.md` (기술 스택 테이블만)
 
-(조건부) Validation, State Update Gate, Commit Gate 정합성 확인이 필요하면
+(조건부) Validation, Approval Matrix, Commit Approval 정합성 확인이 필요하면
 `docs/harness-protocol/06-recovery-and-validation.md`의 해당 섹션만 읽는다.
 
 **Phase 4 — Alignment Check (--full only)**
@@ -80,7 +80,7 @@ git diff --cached --name-only
 - 각 `.claude/rules/*.md`: `paths` glob이 실제 디렉토리 구조와 일치하는가
 - `docs/AGENT-WORKFLOW.md` 워크플로우 기술 ↔ 실제 command 구현 사이 gap
   (이미 컨텍스트에 있는 docs/AGENT-WORKFLOW.md 기준으로 확인)
-- command/prompt 종료 요약 ↔ `docs/harness-protocol/06-recovery-and-validation.md`의 Validation Checklist, State Update Gate, Commit Gate 정합성
+- command/prompt 종료 요약 ↔ `docs/harness-protocol/06-recovery-and-validation.md`의 Validation Checklist, Approval Matrix, Commit Approval 정합성
 - STATUS.md Active Work pointer가 가리키는 Work 파일에 Done Criteria + Verification이 존재하는가
 - STATUS.md Active Work pointer ↔ Work 파일 frontmatter `status: Active` 정합성
 - `docs/works/*/*.md` 중 `status: Done`인 Work가 STATUS Active Work에 남아 있지 않은가
@@ -194,7 +194,7 @@ rg -n "^## |^### " docs/PLAN.md
   - Stale contradiction — canonical과 충돌하는 오래된 문구
 - trigger/cascade 변경 시 loop risk를 확인한다:
   - 같은 문서군을 서로 재발동시키는가
-  - State Update Gate를 우회하는가
+  - Approval Matrix state rules를 우회하는가
   - product surface Quick Mode와 harness/workflow surface 기본 L2 경계를 흐리게 만드는가
   - scaffold 검증이 자기 자신을 무한히 요구하는가
 
@@ -250,5 +250,5 @@ P2 — Hygiene:
 - 생략한 시나리오와 이유:
 ```
 
-STATUS.md 변경이 필요한 발견 항목은 State Update Gate에 맞는 제안 섹션으로 별도 제안한다.
+STATUS.md 변경이 필요한 발견 항목은 Approval Matrix state rules에 맞는 제안 섹션으로 별도 제안한다.
 보고 후 "승인하신 항목부터 진행할까요?"로 끝낸다.

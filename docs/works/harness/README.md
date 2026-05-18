@@ -13,7 +13,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Priority | Start | Work File |
 |----|-------|----------|-------|-----------|
-| (없음) | | | | |
+| HRN-021-S2 | Approval Matrix 통합 — 승인 gate 3종 단일화 | P1 | 2026-05-19 | `docs/works/harness/HRN-021-S2-approval-matrix.md` |
 
 ## Done (archive pending)
 
