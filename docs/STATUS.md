@@ -31,13 +31,14 @@ Last updated: 2026-05-18 (HRF-002 후속 정합성 정리 — Work lifecycle/gat
 
 - [x] HRF-002 완료: Work 파일 체계 + Archive 정책 + STATUS 전환 + AI 도구 정렬 + 시뮬레이션 통과 + `/health` 통과
 - [ ] PRE-B: 개발환경 전략 결정
-- [ ] PRE-C1: Phase 1 아키텍처 현황 분석
+- [x] PRE-C1: Phase 1 아키텍처 현황 분석
 - [ ] PRE-C2: Phase 2 요건 정의 확정
 
 ## Active Work
 
 | ID | Priority | Status | Work File |
 | --- | --- | --- | --- |
+| PRE-B | P0 | Active | `docs/works/phase2/PRE-B-env-strategy.md` |
 
 ## Blockers And Open Questions
 
