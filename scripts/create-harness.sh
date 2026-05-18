@@ -250,7 +250,7 @@ write_text "${TARGET_ROOT}/.claude/settings.json" '{
         "hooks": [
           {
             "type": "command",
-            "command": "python3 -c \"print('\''[hook] 세션 종료 전 확인: /done 절차로 validation, State Update 필요 여부, DR-worthy 결정, commit 상태를 보고했는지 확인하세요.'\'')\""
+            "command": "python3 -c \"print('\''[hook] 세션 종료 전 확인: Work가 완료됐다면 /close를 먼저 실행하고, 그다음 /done으로 validation, State Update 필요 여부, DR-worthy 결정, commit 상태를 보고하세요.'\'')\""
           }
         ]
       }
@@ -328,7 +328,7 @@ write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 | \`docs/WORKFLOW-MANUAL.md\` | 워크플로우 전체 가이드 |
 | \`docs/AGENT-WORKFLOW.md\` | 공통 운영 규칙 |
 | \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
-| \`.claude/commands/\` | \`/start\`, \`/pick\`, \`/register\`, \`/work\`, \`/done\` 등 |
+| \`.claude/commands/\` | \`/start\`, \`/pick\`, \`/register\`, \`/work\`, \`/close\`, \`/done\` 등 |
 | \`prompts/\` | 세션 시작 및 태스크 프롬프트 라이브러리 |
 
 ### 첫 세션

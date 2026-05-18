@@ -1150,3 +1150,77 @@ python3 -m json.tool /private/tmp/harness-sim-generic-20260518-D/.claude/setting
 - `git diff --check` 통과.
 - `./scripts/create-harness.sh --dry-run --profile generic ...` 통과.
 - temp generic scaffold 생성 후 `.claude/commands/health.md`, `docs/WORKFLOW-MANUAL.md`, `docs/HARNESS-QUICK-REFERENCE.md`에 `/health --cascade` 개선 내용이 포함됨을 확인했다.
+
+---
+
+## 2026-05-18 HRN-019 `/close` 도입 후 cascade 감사 및 수정
+
+### 변경 개요 (HRN-019)
+
+HRN-019는 `/done`에서 Work Done 처리를 분리하여 `/close` 커맨드를 신규 도입했다.
+
+| 명령 | 역할 |
+|------|------|
+| `/close` | Work Done 처리 전용 (status: Done, actual_end, README Active→Done, STATUS pointer 제거 제안, 선택적 archive). 세션 계속 |
+| `/done` | 세션 요약만. Work Done 처리 없음. pause 시 Active Work Discovery 미기록 확인 포함 |
+
+### HRN-019 1차 수정 대상 (이전 섹션)
+
+- `.claude/commands/close.md` 신규 생성
+- `.claude/commands/done.md` items 11-12 제거, pause Discovery 체크 추가
+- `AGENTS.md`, `.cursor/rules/workflow.mdc`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/WORKFLOW-MANUAL.md`, `prompts/`, `scripts/create-harness.sh`, `.claude/settings.json`
+
+### Cascade 감사 결과 (P0×1, P1×11, P2×5)
+
+1차 수정 후 workflow 전반의 cascade 영향을 시뮬레이션 기반으로 감사했다.
+
+**발견한 주요 문제:**
+
+| 우선순위 | 파일 | 문제 |
+|---------|------|------|
+| P0 | `docs/AGENT-WORKFLOW.md` | Work File Lifecycle에 "`/done`은 Done 처리와 STATUS pointer 제거 제안을 수행한다" 잔류 — 모든 도구 세션 시작 시 로드되므로 AI 동작 불일치 유발 |
+| P1 | `.claude/commands/done.md` item 11 | `/close` 실행 후 다시 `/done`을 실행해야 한다는 안내 없음 — 세션 종료 흐름 미완성 |
+| P1 | `docs/WORKFLOW-MANUAL.md` | commands 개수 10개 고정, `close.md` Appendix 체크리스트 누락, Mermaid 다이어그램 `/close` 노드 없음, Usage 예시 구형, Appendix B hook 메시지 구형 |
+| P1 | `prompts/claude-session-start.md` section 7 | fallback prompt에 Discovery 체크 + `/close` 안내 없음 |
+| P1 | `prompts/codex-session-start.md` "AGENTS.md 없음" | Work Done 단계 없음 |
+| P1 | `.claude/commands/health.md` | simulation pack에 `/close` 시나리오 없음 |
+| P1 | `.claude/commands/start.md` | Done 상태 Work가 `/close`로 완료된 것임을 설명 없음 |
+| P2 | `docs/harness-protocol/01-session-state-machine.md` | CHECKPOINT/END 상태 정의에 `/close`/`/done` 역할 구분 없음 |
+| P2 | `.claude/commands/resume.md` | `/close` 발견가능성 낮음 |
+
+### 2차 수정 내역
+
+**Canonical:**
+- `docs/AGENT-WORKFLOW.md`: Work File Lifecycle에서 `/close`가 Work Done 처리 담당, `/done`은 세션 요약만임을 명시
+
+**Tool-specific:**
+- `.claude/commands/done.md` item 11: `/close` 후 다시 `/done` 재실행 안내 추가
+- `.claude/commands/health.md`: simulation pack에 `/close`, `/close`→`/done` 시나리오 추가
+- `.claude/commands/start.md`: Done 상태 Work의 `/close` 기원 맥락 설명 추가
+- `.claude/commands/resume.md`: `/close` 발견가능성 언급 추가
+- `docs/harness-protocol/01-session-state-machine.md`: CHECKPOINT/END 상태 정의 보완
+
+**User-facing:**
+- `docs/WORKFLOW-MANUAL.md`: HARNESS-QUICK-REFERENCE 설명에 `/close` 추가, commands 11개로 갱신, Full Session Lifecycle Mermaid에 `/close` 노드 추가, Usage 예시 Work 완료/미완료 분기, Appendix B hook 예시 + 체크리스트 갱신
+- `prompts/claude-session-start.md` section 7: item 10 (Discovery 체크 + `/close` 안내) 추가
+- `prompts/codex-session-start.md` section 10 "AGENTS.md 없음": item 0 (Work Done 처리 단계) 추가
+
+### 검증 내역
+
+```bash
+git diff --check                                  # PASS
+bash -n scripts/create-harness.sh                 # PASS
+python3 -m json.tool .claude/settings.json        # PASS
+rg -n "/close" docs/AGENT-WORKFLOW.md .claude/commands/done.md .claude/commands/start.md \
+  .claude/commands/resume.md .claude/commands/health.md \
+  docs/harness-protocol/01-session-state-machine.md \
+  docs/WORKFLOW-MANUAL.md prompts/claude-session-start.md prompts/codex-session-start.md
+```
+
+모든 수정 대상 파일에 `/close` 반영 확인 완료.
+
+### 남은 리스크
+
+1. `scripts/create-harness.sh`는 `.claude/commands/*.md` glob으로 복사하므로 `close.md` 자동 포함 확인 — 정상.
+2. Mermaid 렌더러 로컬 미설치로 다이어그램 실제 렌더링은 미확인. 노드 추가 문법은 기존 패턴과 동일.
+3. `cursor-session-start.md`는 `/close` 관련 내용 없음 — Cursor는 `.cursor/rules/workflow.mdc`가 실행 표면이므로 이미 반영됨. fallback prompt 불필요.

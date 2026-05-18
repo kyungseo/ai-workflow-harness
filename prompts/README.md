@@ -14,7 +14,7 @@ Claude Code에서는 기본적으로 `.claude/commands/`를 먼저 사용하고,
 
 | 구분 | 사용 위치 | 역할 |
 | --- | --- | --- |
-| `.claude/commands/` | Claude Code | `/start`, `/pick`, `/work`, `/done` 같은 반복 workflow 실행 |
+| `.claude/commands/` | Claude Code | `/start`, `/pick`, `/work`, `/close`, `/done` 같은 반복 workflow 실행 |
 | `prompts/*.prompt.md` | 여러 AI 도구 | 기능 구현, 디버깅, 리팩토링, 리뷰 같은 task template |
 | `claude-session-start.md` | Claude fallback | slash command를 사용할 수 없을 때 세션 시작 |
 | `cursor-session-start.md` | Cursor | `.cursor/rules`와 하네스 상태를 함께 로드 |
@@ -78,7 +78,8 @@ Claude Code에서는 slash command가 기준이다.
 | `/resume {ID}` | 중단된 작업 재개 |
 | `/debug` | 에러 분석 또는 리팩토링 진입 |
 | `/doc [brief]` | 발표/보고 자료 생성 — brief, source, format, quality 기준 먼저 확정 |
-| `/done` | 세션 종료 요약과 상태 갱신 점검 (세션 끝낼 때만 사용) |
+| `/close` | Work Done 처리 전용. 세션 계속 |
+| `/done` | 세션 종료 요약과 상태 갱신 점검 (세션 끝낼 때만 사용). Work Done 처리 없음 — 먼저 `/close` 실행 |
 | `/record-decision` | 확정된 결정을 DR로 기록 |
 | `/health` | command/rule/protocol/backlog 정합성 점검 |
 

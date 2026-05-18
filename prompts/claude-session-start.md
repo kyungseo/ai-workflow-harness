@@ -1,7 +1,7 @@
 # Claude Code 세션 시작 프롬프트
 
 이 문서는 Claude Code slash command를 사용할 수 없는 환경에서 복사해 쓰는 fallback prompt 모음이다.
-Claude Code 안에서는 `.claude/commands/`의 `/start`, `/pick`, `/work`, `/done`을 우선 사용한다.
+Claude Code 안에서는 `.claude/commands/`의 `/start`, `/pick`, `/work`, `/close`, `/done`을 우선 사용한다.
 
 핵심 기준:
 
@@ -142,7 +142,7 @@ STATUS.md 변경이 필요하면 State Update Gate에 맞게 먼저 보고하고
 - docs/WORKFLOW-MANUAL.md (선택, 사용자 매뉴얼)
 - .claude/settings.json (defaultMode=plan, 금지 명령 목록, 필요 시 hook)
 - .claude/rules/ (docs-workflow, git-workflow, infra, [언어]-[프레임워크], testing)
-- .claude/commands/ (start, pick, work, resume, debug, done, record-decision, health)
+- .claude/commands/ (start, pick, work, resume, debug, close, done, record-decision, health)
 - prompts/ (세션 fallback + 재사용 task prompt)
 
 구현이나 파일 생성은 내가 승인한 뒤 진행해줘.
@@ -194,6 +194,10 @@ CLAUDE.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 확인해줘.
 9. 상태 머신 종료 상태
    - VALIDATE 결과
    - CHECKPOINT, END, 또는 FAIL/RECOVER 필요 여부
+10. Active Work Discovery 확인 (Work가 미완료인 경우)
+   - Active Work가 있으면 Discovery에 현재 진행 상황이 기록되어 있는지 확인해.
+   - 미기록이면 기록할 내용을 제안하고 기록 여부를 물어봐.
+   - Work를 완료하고 싶다면 이 fallback prompt를 닫고 `/close`를 먼저 실행한 뒤 다시 이 프롬프트를 실행해.
 
 다음 세션의 시작 프롬프트로 바로 사용할 수 있는 짧은 문장도 마지막에 작성해줘.
 ```

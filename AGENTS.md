@@ -33,7 +33,8 @@ NEVER:
 | `/debug` | Analyze failures from code, logs, tests, or user-provided symptoms; identify root cause and propose the smallest safe fix before editing |
 | `/doc [brief]` | Create high-quality presentation/report artifacts; confirm brief, route sources, choose output format/tool, verify quality |
 | `/record-decision` | Draft a DR for an accepted technical/workflow decision; include status, context, decision, consequences, alternatives, and linked work items |
-| `/done` | Report completed work, changed files, validation, residual risk, STATUS update need, decision need, state, commit status; if Active Work has a Work file, handle Done processing (`status: Done`, `actual_end`, README Active→Done, STATUS pointer removal proposal). Archive only after explicit approval or a later `/start`/`/resume` archive trigger |
+| `/close` | Handle Work Done processing only — confirm Done Criteria, set `status: Done` and `actual_end`, move README row Active→Done (archive pending), propose STATUS pointer removal. Optionally archive immediately if the user approves; otherwise leave for `/start`/`/resume`. Session continues after completion |
+| `/done` | Report completed work, changed files, validation, residual risk, STATUS update need, decision need, state, commit status; if Active Work exists and Discovery is not up to date, propose content to record and ask whether to log it. Does not perform Work Done processing — run `/close` first if Work is complete |
 | `/health [--full] [--cascade]` | Inspect workflow/document health. Use default for quick structure hygiene, `--full` for deeper structure/implementation sync, `--cascade` for canonical → tool-specific → user-facing → scaffold drift and loop-risk audit |
 
 ## Command Intent Recognition
