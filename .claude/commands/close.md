@@ -1,3 +1,8 @@
+---
+description: "Work Done 처리 전용. Done Criteria 확인, status/actual_end 기입, README Active→Done, STATUS pointer 제거 제안. 세션 종료 없음"
+disable-model-invocation: true
+---
+
 **Work 완료 처리 명령이다. 세션을 종료하지 않는다.**
 
 Work Done 처리가 끝나면 다음 작업을 계속 진행하면 된다.

@@ -1,3 +1,9 @@
+---
+description: "backlog에서 지정 항목을 찾아 Work 파일 확인, Pre-check 3종, 계획 수립을 수행하고 승인 대기한다"
+argument-hint: "[work-id]"
+disable-model-invocation: true
+---
+
 docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾아 계획을 세워줘.
 
 - `P{n}-*`, `PRE-*`: docs/backlog/PHASE{n}.md

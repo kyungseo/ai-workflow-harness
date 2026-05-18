@@ -1,3 +1,9 @@
+---
+description: "프로젝트 워크플로우와 문서 건강 상태를 점검하고 보고한다. 옵션: --full, --cascade"
+argument-hint: "[--full] [--cascade]"
+disable-model-invocation: true
+---
+
 프로젝트 워크플로우와 문서의 건강 상태를 점검하고 보고한다.
 
 ## Execution Principles

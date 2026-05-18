@@ -1,3 +1,9 @@
+---
+description: "중단된 Active Work를 재개한다. drift 확인 후 남은 계획을 제안한다"
+argument-hint: "[work-id]"
+disable-model-invocation: true
+---
+
 docs/STATUS.md를 읽어줘.
 Active Work 중 $ARGUMENTS 을 이어서 진행하려고 해.
 

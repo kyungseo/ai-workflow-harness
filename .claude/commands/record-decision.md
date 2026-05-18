@@ -1,3 +1,9 @@
+---
+description: "확정된 기술적 의사결정을 DR 파일로 기록한다"
+argument-hint: "[decision-topic]"
+disable-model-invocation: true
+---
+
 $ARGUMENTS 또는 현재 대화에서 확정된 기술적 의사결정 사항을 DR로 기록해줘.
 
 1. `docs/decisions/` 디렉토리의 기존 DR 목록을 확인하고 다음 번호를 결정해.

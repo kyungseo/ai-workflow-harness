@@ -1,3 +1,8 @@
+---
+description: "세션 시작 시 STATUS.md 현재 섹션과 Done 미archive Work를 요약하고 다음 후보를 제안한다"
+disable-model-invocation: true
+---
+
 docs/STATUS.md의 Current State, Active Work, Blockers And Open Questions, Next Actions만 확인해줘.
 그다음 `docs/works/*/*.md` 중 `status: Done`이지만 archive되지 않은 Work 파일이 있는지 파일명과 frontmatter 수준으로만 확인해줘.
 Phase 1 또는 refactor 이전 상세가 필요한 경우에만 docs/archive/ 또는 docs/archive/harness-refactor-20260514/를 추가로 참고해줘.

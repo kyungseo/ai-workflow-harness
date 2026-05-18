@@ -1,3 +1,8 @@
+---
+description: "backlog에서 우선순위 후보를 비교하고 착수할 작업 1개를 추천한다"
+disable-model-invocation: true
+---
+
 docs/STATUS.md를 확인한 뒤, 작업 성격에 맞는 backlog를 선택해 우선순위가 높은 후보 작업을 검토해줘.
 
 - Product 작업: docs/backlog/PHASE{n}.md

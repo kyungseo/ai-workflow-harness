@@ -1,3 +1,9 @@
+---
+description: "새 작업 항목을 적절한 backlog 또는 STATUS.md에 등록한다"
+argument-hint: "[item-description]"
+disable-model-invocation: true
+---
+
 docs/STATUS.md와 관련 backlog를 확인한 뒤 $ARGUMENTS 작업 항목을 등록해줘.
 
 ## Registration Location

@@ -1,3 +1,9 @@
+---
+description: "지정 대상의 원인을 코드/로그 근거로 좁히고 최소 변경 계획을 보고한다"
+argument-hint: "[file-or-module-or-symptom]"
+disable-model-invocation: true
+---
+
 docs/STATUS.md를 확인해줘.
 
 작업 대상: $ARGUMENTS
