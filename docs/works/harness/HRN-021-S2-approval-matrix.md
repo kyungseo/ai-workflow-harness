@@ -1,13 +1,13 @@
 ---
 id: HRN-021-S2
 priority: P1
-status: Active
+status: Done
 risk: L2
 scope: AI Workflow simplification S2 — Scope Approval, State Update Gate, Commit Gate를 Approval Matrix로 통합
 appetite: 0.5d
 planned_start: 2026-05-19
 planned_end:
-actual_end:
+actual_end: 2026-05-19
 related_dr: []
 related_commits: []
 related_troubleshooting: []
@@ -29,7 +29,7 @@ S5 manual 역할 재정의, S1 protocol 통합, S6 health checklist화, S3 Candi
 - [x] `docs/harness-protocol/01-session-state-machine.md`, `03-work-items-and-naming.md`, `06-recovery-and-validation.md`의 State Update/Commit 설명이 Approval Matrix와 충돌하지 않는다.
 - [x] Claude/Codex/Cursor entrypoint, command, rule, prompt surface의 approval 문구가 충돌하지 않는다.
 - [x] `/work`, `/pick`, `/close`, scaffold Stop hook 흐름이 Approval Matrix와 충돌하지 않는다.
-- [x] Work 파일과 STATUS Active Work pointer가 `HRN-021-S2`를 가리킨다.
+- [x] Work 파일과 STATUS/Work index lifecycle pointer가 `HRN-021-S2` 상태를 반영한다.
 - [x] `git diff --check` 통과.
 
 ## Verification
@@ -72,3 +72,8 @@ STATUS Active Work에는 기존 PRE-B를 유지하고 `HRN-021-S2`를 병렬 Act
 사용자 요청으로 workflow/process 영향 리뷰 후 P1/P2 보정 반영.
 `/work` 위험도 표에 harness/workflow 기본 L2를 명시하고, `/close`의 Layer 용어를 Approval Matrix state detail로 정렬했다.
 `/pick`, 사용자 매뉴얼 표현, scaffold Stop hook 생성 문자열도 새 Matrix 기준으로 정리했다.
+
+### Close 메모 (2026-05-19)
+
+Done Criteria 충족 및 `git diff --check` 통과를 확인했다.
+STATUS Active Work pointer는 제거하고, Work index는 Done archive pending으로 이동한다.

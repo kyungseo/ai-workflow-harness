@@ -325,7 +325,7 @@ write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 | \`AGENTS.md\` | Codex 진입점 |
 | \`docs/STATUS.md\` | 현재 작업 상태 |
 | \`docs/HARNESS-QUICK-REFERENCE.md\` | 세션 실행 규칙 요약 |
-| \`docs/WORKFLOW-MANUAL.md\` | 워크플로우 전체 가이드 |
+| \`docs/WORKFLOW-MANUAL.md\` | 사용자용 워크플로우 가이드 |
 | \`docs/AGENT-WORKFLOW.md\` | 공통 운영 규칙 |
 | \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 | \`.claude/commands/\` | \`/start\`, \`/pick\`, \`/register\`, \`/work\`, \`/close\`, \`/done\` 등 |

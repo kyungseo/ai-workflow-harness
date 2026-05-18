@@ -62,6 +62,8 @@ git diff --cached --name-only
 ```
 
 변경 파일을 기준으로 필요한 layer만 선택적으로 읽는다. 전체 문서 일괄 로드는 금지한다.
+`docs/WORKFLOW-MANUAL.md`는 평시 AI 실행 규칙 로드 대상이 아니며, `--cascade`에서 user-facing workflow drift를 확인할 때만 필요한 섹션을 읽는다.
+예: slash command 설명, trigger reference, 사용자-visible workflow, scaffold 안내가 바뀐 경우.
 
 | Layer | 확인 대상 |
 | --- | --- |

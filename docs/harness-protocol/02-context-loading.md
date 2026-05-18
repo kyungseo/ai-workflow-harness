@@ -21,6 +21,10 @@
 | 큰 작업 세부 분해 | `docs/works/{category}/{ID}-{topic}.md` |
 | 작업 우선순위·아이디어·반복 리스크 검토 | `docs/retrospectives/` |
 | 과거 이력 | `docs/archive/` |
+| user-facing workflow 변경 또는 cascade 감사 | `docs/WORKFLOW-MANUAL.md` 관련 섹션 |
+
+`docs/WORKFLOW-MANUAL.md`는 평시 AI 실행 규칙 로드 대상이 아니다.
+사용자가 매뉴얼 검토를 요청했거나 user-facing workflow 변경/cascade 감사가 필요할 때만 확인한다.
 
 ## Anti-Patterns
 
@@ -28,6 +32,7 @@
 - 모든 회고를 먼저 읽지 않는다.
 - 과거 이력이 필요하지 않은데 archive를 열지 않는다.
 - PLAN-SUMMARY로 충분한데 PLAN 전체를 읽지 않는다.
+- 실행 규칙 확인만 필요한데 `docs/WORKFLOW-MANUAL.md` 전체를 읽지 않는다.
 - 동일 문서를 반복해서 읽지 않는다.
 
 ## Retrospective Loading
