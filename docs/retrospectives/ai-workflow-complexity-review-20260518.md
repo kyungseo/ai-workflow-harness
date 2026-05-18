@@ -115,43 +115,74 @@ work.md(77줄) → 03-work-items-and-naming.md → 관련 DR → retrospective 1
 
 우선순위는 되돌리기 비용과 기대 효과 기준이다.
 
-### S1 — `docs/harness-protocol/` 6개 파일 통합 [되돌리기 Low / 기대 효과 High]
+추천 실행 순서: **S4 → S2 → S5 → S1 → S3**. S6은 S1 이후 판단.
+
+### S4 — Quick Mode 예외 조건 삭제 → harness는 기본 L2 [되돌리기 Low / 기대 효과 High]
+
+현재 L1 Quick Mode의 예외 조항: "workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 cascade check를 수행한다". harness 작업에서는 이 예외가 항상 해당되므로 Quick Mode가 실질적으로 작동하지 않는다.
+
+예외 조항을 삭제하고 범위를 명시한다.
+
+- **harness·workflow surface**(command/rule/prompt/protocol/scaffold/status 파일): 기본 L2
+- **product surface**(코드·테스트·일반 문서): L1 Quick Mode 적용 가능
+
+규칙이 하나 줄고, "예외의 예외"가 사라진다. 즉시 실행 가능.
+
+### S2 — 승인 gate 3종 → Approval Matrix 통합 [되돌리기 Low / 기대 효과 Medium]
+
+현재 3개의 별도 승인 규칙이 "언제 멈춰서 확인받는가"를 규율한다.
+- Scope And Commit Approval
+- State Update Gate (Layer 1 / Layer 2)
+- Commit Gate
+
+이를 Risk gate와 정렬한 단일 Approval Matrix로 통합할 수 있다.
+
+| 변경 유형 | 실행 전 | commit 전 |
+|-----------|---------|-----------|
+| L1 (product surface) | 실행 후 보고 | diff 보고 → 승인 |
+| L2 (harness surface / STATUS.md) | 제안 → 승인 → 실행 | diff 보고 → 승인 |
+| L3 (아키텍처·인프라·DB schema) | 계획 → 승인 → 실행 → 검증 | diff 보고 → 승인 |
+
+Work 파일 변경(구 Layer 1)은 L1, STATUS.md 변경(구 Layer 2)은 L2로 매핑된다.
+commit 전 승인은 risk level과 무관하게 항상 별도 행으로 남긴다 — commit은 history를 남기는 행위라서 L1이어도 diff 확인 후 진행한다.
+
+### S5 — `docs/WORKFLOW-MANUAL.md` 역할 명시적 재정의 [되돌리기 Low / 기대 효과 Medium]
+
+1,735줄짜리 WORKFLOW-MANUAL.md는 사용자용 레퍼런스이지 AI 실행 규칙이 아니다.
+
+구분이 필요한 두 가지:
+- **평소 AI 로드 대상**: 제외. Context Routing에서 명시적으로 배제한다.
+- **user-facing workflow 변경 시 cascade 대상**: 유지. workflow 변경이 사용자 가이드와 어긋나면 안 되므로 `/health --cascade` 점검 대상은 그대로다.
+
+이 구분을 AGENT-WORKFLOW.md Context Routing 테이블과 `health.md` cascade layer 정의에 반영하면 "평소엔 읽지 않지만 변경 시엔 확인한다"는 기준이 명확해진다.
+
+### S1 — `docs/harness-protocol/` 6개 파일 → HARNESS-PROTOCOL.md 단일 통합 [되돌리기 Low / 기대 효과 High]
 
 현재 hub-and-spoke 구조:
 ```
 HARNESS-PROTOCOL.md (hub) → 01~06 detail docs (spoke)
 ```
 
-01~06을 모두 열어야 하는 경우가 드물고, AGENT-WORKFLOW.md가 이미 대부분을 요약한다. 6개 파일은 HARNESS-PROTOCOL.md 안의 섹션으로 합치거나 AGENT-WORKFLOW.md에 inline 통합하는 것이 탐색 비용을 줄인다.
+01~06 파일 전체를 열어야 하는 경우가 드물고, 개별 파일로 분리된 구조가 탐색 비용을 높인다.
 
-### S2 — 승인 gate 3종 → 1종 통합 [되돌리기 Low / 기대 효과 Medium]
+통합 방향: 6개 파일을 HARNESS-PROTOCOL.md의 섹션으로 흡수. AGENT-WORKFLOW.md에는 인라인 통합하지 않는다 — 세션 시작 문서가 다시 무거워지는 것을 막는다. AGENT-WORKFLOW.md는 계속 얇게 유지하고, 상세 레퍼런스는 HARNESS-PROTOCOL.md 하나로 수렴한다.
 
-현재 3개의 별도 승인 규칙이 "언제 승인받는가"를 규율한다.
-- Scope And Commit Approval
-- State Update Gate (Layer 1 / Layer 2)
-- Commit Gate
+### S6 — `/health --cascade` 판단 엔진 → checklist화 [되돌리기 Low / 기대 효과 Medium]
 
-이를 Risk gate와 정렬하여 단일 표로 통합할 수 있다.
+HRN-019에서 드러났듯 `/health --cascade`가 복잡한 판단 엔진으로 커지면 그 자체가 또 하나의 무거운 규칙 체계가 된다. 현재 health.md의 cascade 영역(247줄)은 AI에게 "판단"을 요청하는 구조다.
 
-```
-L1: 실행 후 보고
-L2: 제안 → 승인 → 실행
-L3: 계획 → 승인 → 실행 → 검증
+대안: "필수 grep + checklist + 발견 보고"로 낮춘다.
+
+```bash
+# 변경 파일 분류 후 아래 타깃만 확인
+rg -l "대상 키워드" [cascade 필수 파일 목록]
 ```
 
-Work 파일 변경(Layer 1)은 L1 규칙, STATUS.md 변경(Layer 2)은 L2 규칙으로 매핑하면 별도 명칭 없이 Risk gate 하나로 수렴된다.
+자동 판정보다 "이 파일들을 grep해서 있으면 보고한다" 수준이 실제 drift를 더 안정적으로 잡는다. S1 이후 harness-protocol 통합이 완료된 시점에 함께 검토한다.
 
-### S3 — Work lifecycle `Candidate` 상태 제거 [되돌리기 Low / 기대 효과 Low-Medium]
+### S3 — Work lifecycle `Candidate` 상태 제거 [되돌리기 Low / 기대 효과 Low]
 
-Candidate 상태는 backlog 항목과 역할이 중복된다. 큰 작업에 Work 파일 초안을 만드는 경우가 있지만, 이는 backlog 항목에 "Work 파일: 초안 있음" 메모로 충분하다. lifecycle을 Active → Done → Archived 3단계로 줄이면 개념이 단순해진다.
-
-### S4 — Quick Mode 예외 조건 삭제 [되돌리기 Low / 기대 효과 Medium]
-
-현재 L1 Quick Mode는 harness 관련 파일에서는 실질적으로 작동하지 않는다. 예외 조항을 삭제하고 "harness 파일을 건드리면 항상 L2"로 명시하는 것이 오히려 명확하다. Quick Mode는 product 코드·테스트·문서에만 적용한다고 범위를 제한하는 것이 낫다.
-
-### S5 — `docs/WORKFLOW-MANUAL.md` 역할 재정의 [되돌리기 Low / 기대 효과 Low]
-
-227줄짜리 manual은 AI가 읽는 문서가 아닌 사용자용 레퍼런스다. AI 로드 대상에서 명시적으로 제외하고, Mermaid 다이어그램 등 AI가 필요로 하지 않는 내용을 분리하면 컨텍스트 오염을 줄일 수 있다.
+Candidate 상태는 backlog 항목과 역할이 중복된다. 큰 작업의 Work 파일 초안을 미리 만들어두는 용도가 있지만, backlog 항목에 "Work 파일: 초안 있음" 메모로 대체 가능하다. lifecycle 단순화(Active → Done → Archived)보다 gate/quick mode 정리가 복잡도 감량 효과가 크므로 우선순위를 낮춘다.
 
 ### 보류 후보 (지금 건드리지 않는 것)
 
