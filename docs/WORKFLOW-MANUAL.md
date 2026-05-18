@@ -509,8 +509,8 @@ Work 파일 스펙: `docs/decisions/DR-013-work-file-spec.md`
 - 다른 Agent 또는 도구로 인계될 가능성이 있을 때
 - 사용자가 명시적으로 세부 분해를 요청할 때
 
-L1 Quick Mode에 해당하면 Work 파일 없이 완료할 수 있다.
-단, workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 cascade check는 수행한다.
+Product surface의 L1 Quick Mode에 해당하면 Work 파일 없이 완료할 수 있다.
+workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 harness/workflow surface 변경으로 보고 기본 L2로 다룬다.
 
 **착수 절차 (Candidate → Active):**
 
@@ -1076,7 +1076,7 @@ flowchart LR
 ```
 
 > **모든 트리거는 승인 없이 자동 실행되지 않는다.** Claude는 조건 감지 시 제안하고, 사용자 승인 후에만 실행한다.
-> T1~T9의 발동 조건·cascade 상세는 아래 개별 섹션을 참조한다. T10~T13은 요약 항목이며 상세 기준은 `docs/harness-protocol/05-triggers-and-cascade.md`를 따른다.
+> T1~T9의 발동 조건·cascade 상세는 아래 개별 섹션을 참조한다. T10~T14는 요약 항목이며 상세 기준은 `docs/harness-protocol/05-triggers-and-cascade.md`를 따른다.
 
 ---
 
@@ -1090,13 +1090,14 @@ flowchart LR
 | T4 | Work 파일 분해 생성 | 2개 이상 조건 충족: 3+ 서브태스크, 3+ 파일, 2+ 서비스·모듈, L3, 다중 checkpoint, 세션 초과, 인계 가능성 / 사용자 명시 요청 | Claude 능동 제안 | `docs/works/{category}/`, STATUS Active Work pointer |
 | T5 | PLAN.md 업데이트 | 아키텍처·스택·테스트·CI 영향 DR Accepted / 기술 스택 변경 | Claude 능동 제안 | PLAN-SUMMARY.md, rules, README.md, ARCHITECTURE.md 등 (§별 상이) |
 | T6 | ARCHITECTURE.md 업데이트 | 인증·토큰 흐름 변경 / 새 서비스 추가·제거 / 서비스 간 통신 방식 변경 / 인프라 토폴로지 변경 | Claude 능동 제안 | `docs/ARCHITECTURE.md` 해당 섹션, PLAN.md 및 DEVELOPER-GUIDE.md 참조 섹션 역확인 |
-| T7 | Harness protocol 업데이트 | docs/AGENT-WORKFLOW.md 워크플로우 규칙 변경 / `.claude/commands/*.md` 변경 / trigger set(T1~T13) 추가·변경 | Claude 능동 제안 | `HARNESS-PROTOCOL.md`, `docs/harness-protocol/`, 필요 시 `WORKFLOW-MANUAL.md` |
+| T7 | Harness protocol 업데이트 | docs/AGENT-WORKFLOW.md 워크플로우 규칙 변경 / `.claude/commands/*.md` 변경 / trigger set(T1~T14) 추가·변경 | Claude 능동 제안 | `HARNESS-PROTOCOL.md`, `docs/harness-protocol/`, 필요 시 `WORKFLOW-MANUAL.md` |
 | T8 | Troubleshooting 기록 | 비자명 이슈 해결 (환경 문제, 비직관적 원인, 도구 버전 비호환) | Claude 능동 제안 | `docs/troubleshooting/`, 필요 시 `docs/DEVELOPER-GUIDE.md` 링크 추가 |
 | T9 | 발표/보고 산출물 생성 | `/doc` 실행 또는 발표·보고·review package 생성 요청 | Claude 능동 제안 | `docs/presentations/`, `docs/reports/`, source traceability, STATUS/backlog 참조 필요 여부 |
 | T10 | Work archive 제안 | `status: Done` Work 파일이 `docs/works/{category}/`에 남아 있을 때 | Claude 능동 제안 | archive 승인 여부 제안, 승인 전 `git mv` 금지 |
 | T11 | Tool surface 정렬 | command/rule/prompt/entrypoint 변경 | Claude 능동 제안 | Claude/Codex/Cursor/prompts/scaffold 정합성 확인 |
 | T12 | Scaffold 검증 | `scripts/create-harness.sh` 또는 canonical workflow 변경 | Claude 능동 제안 | dry-run, temp scaffold 생성, stale phrase 검색 |
-| T13 | Quick Mode 확인 | L1 작은 변경 | Claude 판단 | no Work/no STATUS 기본, cascade-sensitive file 예외 확인 |
+| T13 | Product surface Quick Mode 확인 | L1 작은 변경 | Claude 판단 | no Work/no STATUS 기본 |
+| T14 | Harness/workflow surface 변경 | workflow/protocol/command/rule/prompt/scaffold/status 변경 | Claude 능동 제안 | 기본 L2로 scope/cascade 확인 |
 
 ---
 
@@ -1252,7 +1253,7 @@ T3 자체가 T5를 즉시 발동시키지는 않는다. 루프 없음.
 **발동 조건 (다음 중 하나):**
 - `docs/AGENT-WORKFLOW.md` 워크플로우 규칙 변경 (컨텍스트 로드 조건, DR 기준, STATUS 규칙, 실패 복구 규칙 등)
 - `.claude/commands/*.md` 내용 변경
-- trigger set(T1~T13) 추가·변경
+- trigger set(T1~T14) 추가·변경
 
 **cascade (섹션별):**
 

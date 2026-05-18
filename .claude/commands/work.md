@@ -16,7 +16,7 @@ docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾
 
 - **디렉토리 자체가 없으면**: 생성 계획에 `mkdir -p docs/works/{category}/` 포함.
 - **Work 파일이 있으면**: 파일을 로드해 Plan, Done Criteria, Checkpoints를 계획에 반영해줘.
-- **Work 파일이 없으면**: `docs/harness-protocol/03-work-items-and-naming.md` Work File Decomposition과 Quick Mode 기준을 확인해줘. L1 Quick Mode에 해당하면 Work 파일 없이 진행하고, 해당하지 않으면 Work 파일 생성을 계획에 포함해줘 (승인 후 생성).
+- **Work 파일이 없으면**: `docs/harness-protocol/03-work-items-and-naming.md` Work File Decomposition과 Quick Mode 기준을 확인해줘. Product surface의 L1 Quick Mode에 해당하면 Work 파일 없이 진행하고, harness/workflow surface 변경 또는 Quick Mode 비대상이면 Work 파일 생성을 계획에 포함해줘 (승인 후 생성).
 
 Work 파일 생성 시 함께 수행할 것:
 1. `docs/works/{category}/README.md`가 없으면 먼저 생성 (Candidate/Active/Done/Archived 테이블 포함)

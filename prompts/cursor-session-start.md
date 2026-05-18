@@ -103,8 +103,8 @@ STATUS.md는 바로 수정하지 말고, 변경이 필요하면 State Update Gat
 구현 후에는 검증을 실행하고,
 docs/STATUS.md 업데이트와 DR/Work 파일/문서 cascade가 필요한지 제안해줘.
 STATUS.md 변경이 필요하면 즉시 수정하지 말고 State Update Gate에 맞게 먼저 보고해줘.
-L1 Quick Mode에 해당하면 Work 파일 없이 final summary + validation + commit history로 닫을 수 있어.
-단 workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 cascade check는 수행해.
+Product surface의 L1 Quick Mode에 해당하면 Work 파일 없이 final summary + validation + commit history로 닫을 수 있어.
+workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 harness/workflow surface 변경으로 보고 기본 L2로 다뤄줘.
 ```
 
 ---

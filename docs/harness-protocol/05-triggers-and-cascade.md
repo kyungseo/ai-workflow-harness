@@ -18,7 +18,8 @@
 | T10 | Work 파일 Done 상태 발견 | archive 승인 여부 제안 |
 | T11 | tool surface 변경 | Claude/Codex/Cursor/prompts/README/scaffold 정렬 확인 |
 | T12 | scaffold source 또는 canonical workflow 변경 | dry-run + temp scaffold 검증 |
-| T13 | Quick Mode L1 변경 | no Work/no STATUS 기본, cascade-sensitive file 예외 확인 |
+| T13 | Product surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
+| T14 | Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
 
 ## Loop Safety
 
@@ -30,7 +31,8 @@
 - T10은 archive 제안만 수행한다. 사용자 승인 전 `git mv`를 실행하지 않는다.
 - T11은 관련 tool surface를 확인 대상으로 추가하지만 자동 수정하지 않는다. 발견 → 제안 → 승인 순서를 따른다.
 - T12는 temp target에서 검증하고 생성물을 live tree로 복사하지 않는다.
-- T13은 작은 작업의 빠른 종료를 보호한다. 단, workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 cascade check를 수행한다.
+- T13은 product surface의 작은 작업을 빠르게 닫기 위한 규칙이다.
+- T14는 workflow/protocol/command/rule/prompt/scaffold/status 변경을 기본 L2로 다루며, 관련 tool surface를 확인한다.
 
 ## Cascade Rule
 

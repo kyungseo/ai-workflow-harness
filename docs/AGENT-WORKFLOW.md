@@ -96,8 +96,8 @@ MUST NOT:
 | L2 | 기능 구현, 설정 변경, hook 추가 | 상세 plan 후 승인 |
 | L3 | 아키텍처, 인증/보안, 인프라, DB schema, harness 구조 | `docs/PLAN.md` 또는 관련 계획 확인, AS-IS/TO-BE와 rollback 포함 |
 
-L1 Quick Mode는 Work 파일 없이 완료할 수 있다.
-단, workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 cascade check를 수행한다.
+L1 Quick Mode는 product surface의 작고 명확한 변경에 한해 Work 파일 없이 완료할 수 있다.
+Harness/workflow surface(`workflow/protocol/command/rule/prompt/scaffold/status`)를 건드리면 기본 L2로 다룬다.
 
 ## STATUS Rules
 
@@ -153,7 +153,8 @@ Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 
 | 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |
 | tool surface 변경 | Claude/Codex/Cursor/prompts/scaffold 정렬 확인 |
 | scaffold 또는 canonical workflow 변경 | dry-run과 temp scaffold 검증 |
-| Quick Mode L1 변경 | no Work/no STATUS 기본, cascade-sensitive file 예외 확인 |
+| Product surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
+| Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
 
 문서, prompt, command, rule, Cursor rule, hook 메시지를 수정할 때는 `docs/decisions/DR-007-language-policy.md`의 언어 정책을 확인한다.
 

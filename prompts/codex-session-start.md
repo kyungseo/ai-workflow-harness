@@ -147,8 +147,8 @@ AGENTS.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 확인해줘.
 7. State Update 필요 여부
 8. DR/Work 파일/문서 cascade 필요 여부
 
-L1 Quick Mode에 해당하면 Work 파일 없이 final summary + validation + commit history로 닫을 수 있어.
-단 workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 cascade check는 수행해.
+Product surface의 L1 Quick Mode에 해당하면 Work 파일 없이 final summary + validation + commit history로 닫을 수 있어.
+workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 harness/workflow surface 변경으로 보고 기본 L2로 다뤄줘.
 
 계획을 보고한 뒤 "진행할까요?"로 끝내고 승인 대기해줘.
 STATUS.md 변경은 사용자가 명시적으로 승인한 뒤에만 수행해줘.

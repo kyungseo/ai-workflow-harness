@@ -82,8 +82,8 @@ HRN-*, PRE-*, DOC-* 또는 계획·아이디어 성격이 강한 작업이면 do
 7. docs/STATUS.md 반영 필요 여부
 8. DR/Work 파일/문서 cascade 필요 여부
 
-L1 Quick Mode에 해당하면 Work 파일 없이 final summary + validation + commit history로 닫을 수 있어.
-단 workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 cascade check는 수행해.
+Product surface의 L1 Quick Mode에 해당하면 Work 파일 없이 final summary + validation + commit history로 닫을 수 있어.
+workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 harness/workflow surface 변경으로 보고 기본 L2로 다뤄줘.
 
 계획을 보고한 뒤 "진행할까요?"로 끝내고 승인 대기해줘.
 STATUS.md 변경은 바로 수행하지 말고 State Update Gate에 맞게 먼저 보고해줘.

@@ -107,7 +107,7 @@ Work 파일은 작업 SSoT이고 `docs/STATUS.md`는 dashboard다.
 
 ### Quick Mode
 
-L1 작업은 기본적으로 Work 파일 없이 처리한다.
+Product surface의 작은 L1 작업은 기본적으로 Work 파일 없이 처리한다.
 최종 응답, validation 결과, commit history가 기록 역할을 한다.
 
 Quick Mode는 아래 조건에서 적합하다.
@@ -116,8 +116,9 @@ Quick Mode는 아래 조건에서 적합하다.
 - 한 세션 안에 완료 가능
 - 별도 checkpoint나 인계 필요 없음
 - STATUS.md 변경 없음
+- harness/workflow surface 변경 없음
 
-workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 L1이어도 cascade check를 수행한다.
+Harness/workflow surface(`workflow/protocol/command/rule/prompt/scaffold/status`)를 건드리면 기본 L2로 다룬다.
 
 ## 6. Validation
 
@@ -218,7 +219,8 @@ Low. STATUS.md dashboard 표현만 되돌리면 됩니다.
 | 문서/command/rule 신규 작성 또는 섹션 추가 | DR-007 Bilingual Rules 적용 확인 |
 | Tool surface 변경 | Claude/Codex/Cursor/prompts/scaffold 정렬 확인 |
 | Scaffold 또는 canonical workflow 변경 | `create-harness.sh --dry-run` + temp scaffold 검증 |
-| Quick Mode L1 변경 | no Work/no STATUS 기본, cascade-sensitive file 예외 확인 |
+| Product surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
+| Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
 
 ## 9. Work File Decomposition
 

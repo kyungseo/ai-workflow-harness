@@ -65,7 +65,7 @@ Work 파일 포맷 스펙: `docs/decisions/DR-013-work-file-spec.md`
 
 ## Quick Mode
 
-작은 L1 작업은 기본적으로 Work 파일을 만들지 않는다.
+Product surface의 작은 L1 작업은 기본적으로 Work 파일을 만들지 않는다.
 범위가 명확하고 한 세션 안에 끝나는 작업은 최종 응답, validation 결과, commit history로 충분하다.
 
 Quick Mode 대상 예시:
@@ -76,12 +76,17 @@ Quick Mode 대상 예시:
 - 단일 테스트 보강
 - 이미 범위가 명확하고 세션을 넘기지 않는 작은 수정
 
+Quick Mode 비대상:
+
+- harness/workflow surface(`workflow/protocol/command/rule/prompt/scaffold/status`) 변경
+
+Harness/workflow surface를 건드리면 기본 L2로 다룬다.
+
 다만 아래 조건 중 하나라도 있으면 L1이어도 Work 파일 생성을 고려한다.
 
 - 세션을 넘길 가능성이 있음
 - 상태 변경이 여러 단계임
 - 사용자나 agent가 나중에 맥락을 복구해야 함
-- 여러 파일·도구·문서 표면에 cascade가 있음
 - 사용자가 명시적으로 별도 추적을 요청함
 
 ## Work File Rules

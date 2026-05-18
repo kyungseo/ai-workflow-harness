@@ -195,7 +195,7 @@ rg -n "^## |^### " docs/PLAN.md
 - trigger/cascade 변경 시 loop risk를 확인한다:
   - 같은 문서군을 서로 재발동시키는가
   - State Update Gate를 우회하는가
-  - Quick Mode 예외를 너무 넓혀 작은 작업 흐름을 무겁게 만드는가
+  - product surface Quick Mode와 harness/workflow surface 기본 L2 경계를 흐리게 만드는가
   - scaffold 검증이 자기 자신을 무한히 요구하는가
 
 **Simulation Pack (--cascade):**
@@ -204,7 +204,8 @@ rg -n "^## |^### " docs/PLAN.md
 
 - 새 세션 `/start`
 - 작업 선택 `/pick`
-- L1 Quick Mode 작업
+- Product surface L1 Quick Mode 작업
+- Harness/workflow surface L2 작업
 - L2/L3 `/work`
 - 중단 후 `/resume`
 - `/close` (Work Done 처리 후 세션 계속)
