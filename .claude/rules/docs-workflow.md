@@ -14,14 +14,14 @@ MUST:
 - Use `docs/STATUS.md` for live work state.
 - Use `docs/backlog/PHASE{n}.md` for product and Phase{n} preparation candidate work.
 - Use `docs/backlog/HARNESS.md` for harness, command/rule, and workflow hardening candidate work.
-- Use `docs/archive/*.md` for completed historical detail.
+- Use path-mirrored locations under `docs/archive/` for completed historical detail.
 - Use `docs/HARNESS-QUICK-REFERENCE.md` for daily workflow execution rules.
 - Include done criteria and verification for actionable work items.
-- Use backlog ID based filenames for large task TODO files: `docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md`.
+- Use Work files for large tasks: `docs/works/{category}/{ID}-{lowercase-topic}.md` (spec: DR-013).
 - Do not reuse task IDs for different meanings.
 - Follow `docs/decisions/DR-007-language-policy.md` when editing docs, prompts, commands, rules, Cursor rules, or hook messages.
 - Follow `docs/AGENT-WORKFLOW.md` Scope And Commit Approval before expanding approved scope or committing.
-- Request explicit user approval before editing `docs/STATUS.md`; report a `STATUS Update Proposal` first.
+- Request explicit user approval before editing `docs/STATUS.md`; report the State Update Gate proposal first.
 - Keep `Done` work immutable. If follow-up correction is needed, propose a new work item.
 - Check `docs/harness-protocol/05-triggers-and-cascade.md` when workflow rules, commands, DRs, or document structure change.
 

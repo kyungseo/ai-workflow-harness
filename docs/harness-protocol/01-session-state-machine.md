@@ -28,11 +28,23 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 ## Hard Rules
 
 - 승인 없이 EXECUTE로 넘어가지 않는다.
-- `docs/STATUS.md` 변경은 `STATUS Update Proposal` 보고와 사용자 승인 후에만 수행한다.
+- 상태 변경은 변경 대상에 맞는 State Update Gate를 따른다.
 - VALIDATE 실패 상태에서는 CHECKPOINT 또는 commit을 만들지 않는다.
 - 작업 범위가 넓어지면 PLAN으로 돌아간다.
 - 동일 오류가 2회 반복되면 FAIL을 보고한다.
 - `Done` 상태의 작업을 계속 수정하지 않는다. 완료 후 보정은 신규 작업으로 분리한다.
+
+## State Update Gate
+
+| Layer | 변경 유형 | Gate |
+| --- | --- | --- |
+| Layer 1 — Work 파일 | Checkpoint 상태 업데이트, Discovery 추가 | 승인 불필요. 실행 후 대상 Work ID와 변경 내용을 보고 |
+| Layer 1 — Work 파일 | Done Criteria 전체 충족 확인, `status: Done`, `actual_end` 기입 | 대상 Work ID를 명시하고 사용자 확인 후 처리 |
+| Layer 2 — STATUS.md | Active Work pointer 추가/제거 | 대상 Work ID를 명시한 1줄 제안 후 승인 |
+| Layer 2 — STATUS.md | Phase completion criteria, Current phase/focus, Recent Decisions | `STATUS Update Proposal` 유지 |
+
+멀티 Active Work 환경에서는 모든 state update 제안에 대상 Work ID를 포함한다.
+각 Work는 독립 gate를 가진다.
 
 ## Checkpoint Rules
 
@@ -42,7 +54,8 @@ CHECKPOINT는 다음 세션이 재개할 수 있는 저장점이다.
 
 - 검증 결과 또는 미실행 사유를 보고한다.
 - `docs/STATUS.md` 변경 필요 여부를 판단한다.
-- `docs/STATUS.md` 변경이 필요하면 먼저 `STATUS Update Proposal`을 제시하고 승인받는다.
+- Work 파일 checkpoint/discovery 변경은 실행 후 대상 Work ID와 함께 보고한다.
+- `docs/STATUS.md` 변경이 필요하면 State Update Gate에 맞는 제안을 제시하고 승인받는다.
 
 Commit:
 

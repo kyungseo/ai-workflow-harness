@@ -1,4 +1,4 @@
-**이 명령은 세션을 종료할 때만 실행한다.** 작업 하나가 끝나면 커밋 + STATUS 업데이트(CHECKPOINT)만 수행하고 다음 작업으로 이어가면 된다. `/done`은 여러 작업을 마친 후 세션 전체를 정리할 때 쓴다.
+**이 명령은 세션을 종료할 때만 실행한다.** 작업 하나가 끝나면 Work 파일 checkpoint/Done 처리, 필요한 state update 제안, commit gate만 수행하고 다음 작업으로 이어가면 된다. `/done`은 여러 작업을 마친 후 세션 전체를 정리할 때 쓴다.
 
 이번 세션에서 진행한 내용을 다음 형식으로 요약해줘.
 
@@ -8,8 +8,10 @@
 4. 남은 리스크
 5. 다음 세션에서 먼저 볼 파일
 6. docs/STATUS.md 업데이트 필요 여부
-   - 필요하다면 즉시 수정하지 말고 `STATUS Update Proposal`로 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 제시해.
-   - Recent Decisions 변경 제안에는 후속 행동을 바꾸는 운영/기술 판단만 포함해. 단순 완료 사실은 Active Work, Checkpoints, commit history에 둬.
+   - 필요하다면 즉시 수정하지 말고 State Update Gate에 맞는 제안을 제시해.
+   - Active Work pointer 추가/제거는 대상 Work ID를 명시한 1줄 제안으로 충분하다.
+   - Phase completion criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 제시해.
+   - Recent Decisions 변경 제안에는 후속 행동을 바꾸는 운영/기술 판단만 포함해. 단순 완료 사실은 Active Work pointer, Work 파일 Checkpoints, commit history에 둬.
    - Recent Decisions는 최근 8개 rolling window를 유지하고, 초과분 제거 전 DR-worthy 항목이면 대응 DR 존재 여부를 확인해.
    - 사용자가 명시적으로 승인한 뒤에만 STATUS.md를 수정해.
 7. 의사결정 기록 필요 여부
@@ -25,5 +27,18 @@
    - commit 수행 여부
    - commit하지 않았다면 이유와 남은 risk
    - commit 전 필요한 경우 `git status -> git add <files> -> git status -> git diff --cached` 순서 확인
+
+11. Work 파일 Done 처리 (Active Work에 Work 파일이 있는 경우)
+   - Work 파일 frontmatter: `status: Done`, `actual_end: YYYY-MM-DD` 기입
+   - Done Criteria 전부 체크됐는지 확인
+   - `docs/works/{category}/README.md`: Active → Done (archive pending) 테이블 이동
+   - STATUS state update: 대상 Work ID를 명시하고 Active Work 포인터 제거 제안
+   - Work 파일을 즉시 archive로 이동하지 않는다.
+
+12. Work 파일 Archive 처리 필요 여부
+   - Archive는 사용자가 명시적으로 승인했거나 `/start`·`/resume`에서 Done 항목 발견 후 승인한 경우에만 진행한다.
+   - 승인되면 archive 대상 Work 파일에 `status: Archived`를 기입한 뒤 `git mv docs/works/{category}/{file}.md docs/archive/docs/works/{category}/` 를 수행한다.
+   - `docs/works/{category}/README.md`: Done → Archived 테이블 이동
+   - Archive 보류 시 보류 이유를 Discovery에 기록할지 제안한다.
 
 다음 세션의 시작 프롬프트로 바로 사용할 수 있는 짧은 문장도 마지막에 작성해줘.

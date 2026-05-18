@@ -102,7 +102,7 @@ Codex 사용 시:
 - 기존 동작이 깨지지 않는가?
 - 검증 방법이 구체적인가?
 - 리스크와 되돌리기 비용이 적혀 있는가?
-- `docs/STATUS.md`, DR, TODO, 문서 cascade 필요 여부를 확인했는가?
+- State Update, DR, Work 파일, 문서 cascade 필요 여부를 확인했는가?
 
 ## 6) 유지보수 규칙
 

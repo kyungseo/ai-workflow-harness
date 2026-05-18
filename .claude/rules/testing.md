@@ -18,12 +18,19 @@ paths:
 
 ## Integration Test Infrastructure
 
-Integration tests currently depend on externally running Docker containers (`application-test.yml` → `localhost:5432`).
-Testcontainers adoption is decided (DR-010 Accepted). P2-006 will migrate `@SpringBootTest` to Testcontainers.
+Integration tests use Testcontainers by default (DR-010 Accepted, P2-006 Done).
+Prefer `@ServiceConnection` with PostgreSQL + Redis containers for `@SpringBootTest` integration tests.
 
-MUST NOT add `@Testcontainers`, `@Container`, or `@ServiceConnection` outside of P2-006 scope.
-When working on P2-006: follow DR-010 — use `@ServiceConnection` with PostgreSQL + Redis containers,
-remove `application-test.yml` localhost overrides after migration is complete.
+MUST:
+
+- Keep Testcontainers environment settings in Gradle/test configuration, not per-test ad hoc system properties.
+- Reuse the established integration-test container pattern in existing service tests.
+- Follow `docs/decisions/DR-010-integration-test-infra.md` for integration-test infrastructure changes.
+
+NEVER:
+
+- Reintroduce `application-test.yml` localhost overrides for integration tests without an explicit DR/backlog decision.
+- Depend on a separately running Docker Compose stack for `@SpringBootTest` integration tests.
 
 ## Assertion and Mocking Style
 
@@ -49,4 +56,4 @@ NEVER:
 
 - Unit / module change: `./gradlew :services:{service-name}:test`
 - Full test suite: `./gradlew test`
-- Exclude `@SpringBootTest` integration tests when no external Docker is running: `./gradlew test --tests "*UnitTest*"`
+- If Docker/Testcontainers is unavailable, report the environment failure and propose a narrower unit-test command instead of silently weakening coverage.

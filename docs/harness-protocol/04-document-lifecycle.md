@@ -15,7 +15,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | `docs/STATUS.md` | 현재 상태 |
 | `docs/backlog/PHASE{n}.md` | Product 후보 작업 |
 | `docs/backlog/HARNESS.md` | Harness 후보 작업 |
-| `docs/TODO/PHASE{n}/` | 대형 작업 내부 계획 |
+| `docs/works/{category}/` | 큰 작업 단위 Work 파일 (DR-013) |
 | `docs/decisions/` | 결정 근거 |
 | `docs/reports/` | 보고서, review package, decision brief |
 | `docs/presentations/` | 발표자료, deck, slide source |

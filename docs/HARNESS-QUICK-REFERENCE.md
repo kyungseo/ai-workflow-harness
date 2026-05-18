@@ -12,9 +12,10 @@ AI Workflow Harness의 일상 실행 규칙이다.
 
 - Current State
 - Active Work
-- Checkpoints
 - Blockers And Open Questions
 - Next Actions
+
+`docs/works/*/*.md`에 `status: Done`인 archive 대기 Work가 있으면 보고하고 archive 승인 여부를 제안한다.
 
 추가 문서 로드 조건:
 
@@ -37,7 +38,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
               RECOVER <- FAIL <-+
 ```
 
-- **CHECKPOINT** = 작업 완료 후 커밋 + STATUS 업데이트. 다음 작업을 바로 이어갈 수 있다.
+- **CHECKPOINT** = 검증 결과, Work 파일 checkpoint/discovery, STATUS update 필요 여부를 보고하는 재개 지점.
 - **END (`/done`)** = 세션 종료 시에만 실행. 작업마다 호출하지 않는다.
 
 ## 3. Work Item Registration
@@ -51,7 +52,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | Product / Phase{n} 작업 | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule 개선 | `docs/backlog/HARNESS.md` |
 
-STATUS.md 변경이 포함되면 STATUS Update Proposal → 승인 순서를 따른다.
+STATUS.md 변경이 포함되면 State Update Gate → 승인 순서를 따른다.
 
 ## 4. Execution Gate
 
@@ -74,14 +75,18 @@ Plan must include:
 - `README.md`, `docs/STATUS.md`, workflow 문서, command, prompt, rule, developer-facing 문서로 확장되면 반드시 먼저 승인받는다.
 - commit 전에는 validation 결과, diff summary, 제안 commit message를 보고하고 승인 대기한다.
 
-### STATUS Update Gate
+### State Update Gate
 
-`docs/STATUS.md` 변경은 항상 사용자 승인 후에만 수행한다.
+Work 파일은 작업 SSoT이고 `docs/STATUS.md`는 dashboard다.
+상태 변경은 대상과 위험도에 맞게 처리한다.
 
-원칙:
+| Layer | 변경 유형 | Gate |
+| --- | --- | --- |
+| Layer 1 — Work 파일 | Checkpoint 상태 업데이트, Discovery 추가 | 승인 불필요. 실행 후 대상 Work ID와 변경 내용을 보고 |
+| Layer 1 — Work 파일 | Done Criteria 전체 충족 확인, `status: Done`, `actual_end` 기입 | 대상 Work ID를 명시하고 사용자 확인 후 처리 |
+| Layer 2 — STATUS.md | Active Work pointer 추가/제거 | 대상 Work ID를 명시한 1줄 제안 후 승인 |
+| Layer 2 — STATUS.md | Phase completion criteria, Current phase/focus, Recent Decisions | 기존 `STATUS Update Proposal` 유지 |
 
-- Agent는 먼저 `STATUS Update Proposal`을 보고한다.
-- Proposal에는 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 포함한다.
 - 사용자가 명시적으로 승인한 뒤에만 `docs/STATUS.md`를 수정한다.
 - 이미 승인된 plan에 구체적인 `STATUS.md` 변경 범위가 포함되어 있으면 그 승인으로 갈음할 수 있다.
 - 작업 중 예상 밖의 `STATUS.md` 변경 필요가 생기면 다시 승인받는다.
@@ -89,6 +94,7 @@ Plan must include:
 - Recent Decisions 초과분 제거 전 DR-worthy 항목이면 대응 DR 존재 여부를 확인한다.
 
 `Done` 상태의 작업은 다시 수정하지 않는다. 완료 후 보정이 필요하면 신규 작업으로 분리한다.
+`Done` Work 파일은 archive 승인 전까지 `docs/works/{category}/`에 남을 수 있다.
 
 ## 5. Risk Level
 
@@ -97,6 +103,20 @@ Plan must include:
 | L1 Safe | 문서 소폭 수정, 테스트, 국소 버그 수정 | 간단 plan 후 승인 |
 | L2 Normal | 기능 구현, 설정 변경, hook 추가 | 상세 plan 후 승인 |
 | L3 Critical | 아키텍처, 보안, 인프라, DB schema, harness 구조 | AS-IS/TO-BE와 rollback 포함 |
+
+### Quick Mode
+
+L1 작업은 기본적으로 Work 파일 없이 처리한다.
+최종 응답, validation 결과, commit history가 기록 역할을 한다.
+
+Quick Mode는 아래 조건에서 적합하다.
+
+- 단일 파일 또는 매우 좁은 범위
+- 한 세션 안에 완료 가능
+- 별도 checkpoint나 인계 필요 없음
+- STATUS.md 변경 없음
+
+workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 L1이어도 cascade check를 수행한다.
 
 ## 6. Validation
 
@@ -107,7 +127,7 @@ Plan must include:
 - Verification 실행 또는 미실행 사유
 - 문서 링크 정합성
 - DR 필요 여부
-- STATUS Update Proposal 필요 여부
+- State Update Proposal 필요 여부
 
 COMMIT 전 확인:
 
@@ -119,6 +139,50 @@ COMMIT 전 확인:
 - 사용자 승인
 
 L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commit에는 하나의 검증 가능한 목적을 담고, rollback plan은 commit 또는 단계 단위로 설명한다.
+
+## State Update Examples
+
+Layer 1 보고형:
+
+```md
+State Update 완료: PRE-C1
+
+- 대상 Work: PRE-C1
+- 변경: CP1 Todo → Done, Discovery 1건 추가
+- STATUS.md 변경: 없음
+```
+
+Layer 2 Active Work pointer 제안:
+
+```md
+State Update 제안: PRE-C1
+
+docs/STATUS.md Active Work에 PRE-C1 pointer를 추가하겠습니다:
+`PRE-C1 | P0 | Active | docs/works/phase2/PRE-C1-arch-analysis.md`
+
+승인하면 STATUS.md Active Work 행만 수정하겠습니다.
+```
+
+고영향 STATUS 변경:
+
+```md
+STATUS Update Proposal
+
+변경 섹션:
+- Current State
+- Recent Decisions
+- Next Actions
+
+변경 이유:
+PRE-C1 분석이 완료되어 다음 작업 우선순위를 PRE-C2로 이동해야 합니다.
+
+변경 후 상태:
+- Current focus: Phase 2 requirement finalization
+- Next Actions 1순위: PRE-C2
+
+되돌리기 비용:
+Low. STATUS.md dashboard 표현만 되돌리면 됩니다.
+```
 
 ## 7. Failure Rules
 
@@ -139,6 +203,8 @@ L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commi
 
 ## 8. Documentation Triggers
 
+문서/워크플로우 변경 후 연쇄 영향이 불명확하면 `/health --cascade`로 canonical → tool-specific → user-facing → scaffold layer를 점검한다.
+
 | Trigger | Action |
 | --- | --- |
 | DR-worthy decision accepted | `docs/decisions/` 기록 제안 |
@@ -149,10 +215,14 @@ L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commi
 | Non-trivial issue resolved | `docs/troubleshooting/` 기록 제안 |
 | Presentation/report artifact created | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |
 | 문서/command/rule 신규 작성 또는 섹션 추가 | DR-007 Bilingual Rules 적용 확인 |
+| Tool surface 변경 | Claude/Codex/Cursor/prompts/scaffold 정렬 확인 |
+| Scaffold 또는 canonical workflow 변경 | `create-harness.sh --dry-run` + temp scaffold 검증 |
+| Quick Mode L1 변경 | no Work/no STATUS 기본, cascade-sensitive file 예외 확인 |
 
-## 9. TODO Decomposition
+## 9. Work File Decomposition
 
-TODO 파일은 큰 작업 하나의 내부 실행 계획이다. backlog나 STATUS를 대체하지 않는다.
+Work 파일은 큰 작업 하나의 내부 실행 계획이자 작업 단위 SSoT다.
+backlog나 STATUS를 대체하지 않는다.
 
 생성 제안 조건:
 
@@ -171,13 +241,22 @@ TODO 파일은 큰 작업 하나의 내부 실행 계획이다. backlog나 STATU
 파일명:
 
 ```text
-docs/TODO/PHASE{n}/{BACKLOG-ID}-{lowercase-topic}.md
+docs/works/{category}/{ID}-{lowercase-topic}.md
 ```
 
 예시:
 
-- `docs/TODO/PHASE2/P2-006-testcontainers.md`
-- `docs/TODO/PHASE2/PRE-C1-architecture-audit.md`
+- `docs/works/phase1/P1-001-initial-feature.md`
+- `docs/works/phase2/PRE-C1-architecture-audit.md`
+
+Lifecycle:
+
+| Status | Location | Meaning |
+| --- | --- | --- |
+| Candidate | `docs/works/{category}/` 또는 backlog only | 착수 전 후보. 큰 작업은 Work 파일 초안을 가질 수 있다 |
+| Active | `docs/works/{category}/` | `docs/STATUS.md` Active Work에 pointer 존재 |
+| Done | `docs/works/{category}/` | 완료 검증 통과, archive 대기 가능 |
+| Archived | `docs/archive/docs/works/{category}/` | 완전 종결 |
 
 ## 10. Naming
 

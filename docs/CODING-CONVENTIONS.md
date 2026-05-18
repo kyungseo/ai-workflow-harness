@@ -156,10 +156,11 @@ ORDER BY ${validatedColumn}  <!-- whitelist: created_at | updated_at -->
 - `@MockitoSettings(strictness = Strictness.LENIENT)` — 프로젝트 표준, 임의 제거 금지
 - `@DisplayName`: 한국어 (`"로그인 성공 시 액세스 토큰을 반환한다"`)
 
-### 현재 제약
+### 통합 테스트 인프라
 
-통합 테스트는 현재 외부 Docker 컨테이너에 의존한다 (`application-test.yml` → `localhost:5432`).
-DR-010에서 Testcontainers 채택은 확정되었고, 실제 전환은 `docs/backlog/PHASE2.md`의 `P2-006`에서 수행한다.
+통합 테스트는 Testcontainers를 기본으로 사용한다 (DR-010 Accepted, P2-006 Done).
+`@SpringBootTest` 통합 테스트는 기존 서비스 테스트의 `@ServiceConnection` + PostgreSQL/Redis container 패턴을 따른다.
+Docker/Testcontainers 환경을 사용할 수 없으면 실패 원인을 보고하고, 필요한 경우 좁은 unit test 검증 범위를 별도로 제안한다.
 
 ### 탐색적 API 테스트 (*.http)
 
