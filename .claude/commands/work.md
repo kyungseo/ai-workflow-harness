@@ -1,3 +1,9 @@
+---
+description: "backlog에서 지정 항목을 찾아 Work 파일 확인, Pre-check 3종, 계획 수립을 수행하고 승인 대기한다"
+argument-hint: "[work-id]"
+disable-model-invocation: true
+---
+
 docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾아 계획을 세워줘.
 
 - `P{n}-*`, `PRE-*`: docs/backlog/PHASE{n}.md
@@ -19,6 +25,12 @@ Work 파일 생성 시 함께 수행할 것:
 4. State update: 대상 Work ID를 명시하고 STATUS.md Active Work에 포인터 추가 제안
 
 ## Pre-check (Before Planning)
+
+**0. 기존 Active Work Discovery 확인**
+STATUS.md에 이미 Active Work가 있으면:
+- 해당 Work 파일의 Discovery 섹션에 현재 진행 상황이 기록되어 있는지 확인해줘.
+- 미기록 상태(비어 있거나 "착수 후 기록" 상태)라면, 새 작업 계획 전에 사용자에게 기록을 요청해줘 (이때 기록 내용 제안 할 것).
+- 사용자가 기록 불필요 확인 시 그대로 진행해줘.
 
 **1. PLAN.md 강제 로드 조건 확인**
 다음 중 하나라도 해당하면 반드시 docs/PLAN.md를 로드하고 계획에 반영해줘:

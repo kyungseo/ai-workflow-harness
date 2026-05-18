@@ -327,7 +327,7 @@ STATUS.md 변경이 필요하면 변경 섹션, 변경 이유, 변경 후 상태
 **AGENTS.md 있음:**
 
 ```text
-AGENTS.md Codex Command Mapping의 /done 절차에 따라 세션을 마무리해줘.
+Work가 완료됐다면 AGENTS.md Codex Command Mapping의 /close 절차에 따라 Work Done 처리를 먼저 수행해줘. 그다음 /done 절차에 따라 세션을 마무리해줘.
 ```
 
 **AGENTS.md 없음:**
@@ -335,6 +335,13 @@ AGENTS.md Codex Command Mapping의 /done 절차에 따라 세션을 마무리해
 ```text
 이번 Codex 세션을 다음 형식으로 요약해줘.
 
+0. Work Done 처리 (Active Work가 완료된 경우)
+   - Done Criteria 전부 충족 확인
+   - Work 파일 frontmatter: status: Done, actual_end: 오늘 기입
+   - docs/works/{category}/README.md: Active → Done (archive pending) 이동
+   - docs/STATUS.md Active Work pointer 제거 제안 (승인 후 처리)
+   - archive 여부 선택 (지금 또는 다음 세션으로 보류)
+   - Work가 미완료라면 이 단계를 건너뛰고 아래 10번에서 Discovery를 확인해.
 1. 완료한 작업
 2. 변경된 파일
 3. 실행한 검증
@@ -355,7 +362,10 @@ AGENTS.md Codex Command Mapping의 /done 절차에 따라 세션을 마무리해
 9. Commit 상태
    - commit 수행 여부
    - commit하지 않았다면 이유와 남은 risk
-10. 다음 세션에서 이어갈 프롬프트
+10. Active Work Discovery 확인 (Work가 미완료인 경우)
+   - Active Work가 있으면 Discovery에 현재 진행 상황이 기록되어 있는지 확인해.
+   - 미기록이면 기록할 내용을 제안하고 기록 여부를 물어봐.
+11. 다음 세션에서 이어갈 프롬프트
 ```
 
 ---
