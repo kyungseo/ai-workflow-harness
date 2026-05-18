@@ -95,6 +95,14 @@ git diff --cached --name-only
   - `docs/*.md`가 영어 작성, `.claude/rules/*.md`가 한국어 작성된 경우
   - Bilingual Rules 위반: `docs/*.md`, `.claude/commands/*.md`에서 섹션 타이틀 한국어 표기, 기술 용어 음차, 성능 지표 한글화
 - STATUS.md Next Actions 순서 ↔ Active Work Priority/Status 논리 일관성
+- **Embedded Diagram 참조 유효성** (Mermaid 등):
+  ```bash
+  rg -l '```mermaid' docs/ README.md 2>/dev/null
+  ```
+  발견된 파일별로 다이어그램 노드·라벨·경로가 현재 프로젝트 상태와 일치하는지 확인한다.
+  - `docs/AGENT-WORKFLOW.md` state machine — `INIT→PLAN→APPROVAL→EXECUTE→VALIDATE→CHECKPOINT→END` 순서와 RECOVER/FAIL 분기가 `.claude/commands/` 구현 및 `docs/harness-protocol/06-recovery-and-validation.md`와 일치하는가
+  - 노드 라벨이 실제 존재하지 않는 파일 경로·서비스명·상태를 참조하면 drift로 보고
+  - 렌더링 없이 구문 유효성(syntax)을 확인할 수 없는 항목은 "수동 검토 권고"로 보고
 
 ### C. Claude Code Feature Alignment (--full)
 
