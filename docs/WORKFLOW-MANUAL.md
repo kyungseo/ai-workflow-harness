@@ -814,7 +814,7 @@ Claude Code에서 `/명령명`으로 호출. 파일 위치: `.claude/commands/*.
 | `/close` | Work를 완료할 때 (세션 계속) | Done Criteria 확인, status/actual_end 기입, README Active→Done, STATUS pointer 제거 제안, 선택적 archive |
 | `/done` | 세션 종료 시 | 완료 작업, 변경 파일, 검증 결과, 리스크, Active Work Discovery 미기록 확인, State Update 필요 여부, 다음 세션 primer 요약, DR 검토 (Work Done 처리 없음 — `/close` 먼저 실행) |
 | `/record-decision` | 기술 결정을 DR로 기록할 때 | 현재 대화의 확정 결정을 DR 초안으로 작성, 승인 후 파일 생성 |
-| `/health` | 워크플로우·문서 점검 시 | 구조 정합성, 문서 현행화, 백로그/DR 위생 전체 점검 후 보고. `--full`은 전체 심화 점검, `--cascade`는 문서/워크플로우 변경의 연쇄 영향 감사 |
+| `/health` | 워크플로우·문서 점검 시 | 구조 정합성, 문서 현행화, 백로그/DR 위생 전체 점검 후 보고. `--full`은 전체 심화 점검, `--cascade`는 문서/워크플로우 변경의 연쇄 영향을 required surface, grep, simulation checklist로 감사 |
 
 ### Approval Matrix
 
@@ -904,7 +904,7 @@ flowchart TD
 | --- | --- | --- |
 | `/health` | 주 1~2회 | 작업 블록 시작 전, 매 세션마다 실행하지 않는다 |
 | `/health --full` | 월 1회 또는 Phase 전환 전 | 대규모 작업 착수 전, Phase 완료 시점 |
-| `/health --cascade` | workflow/process 문서 변경 후 | canonical 문서, command/rule/prompt, manual, scaffold 사이 drift 확인 |
+| `/health --cascade` | workflow/process 문서 변경 후 | canonical 문서, command/rule/prompt, manual, scaffold 사이 drift를 checklist 기반으로 확인 |
 | `/health --full --cascade` | 대형 harness 변경 후 또는 Phase 전환 직전 | 전체 구조와 cascade/trigger 완전성 동시 감사 |
 
 ---

@@ -198,6 +198,7 @@ Low. STATUS.md dashboard 표현만 되돌리면 됩니다.
 ## 8. Documentation Triggers
 
 문서/워크플로우 변경 후 연쇄 영향이 불명확하면 `/health --cascade`로 canonical → tool-specific → user-facing → scaffold layer를 점검한다.
+`--cascade`는 범위를 줄이는 모드가 아니라 required surface, grep, simulation을 고정해 drift를 발견·보고하는 checklist runner다.
 
 | Trigger | Action |
 | --- | --- |

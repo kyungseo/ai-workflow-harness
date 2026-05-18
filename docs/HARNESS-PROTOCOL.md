@@ -407,6 +407,8 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 
 Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 파일 수정은 사용자 승인 또는 명시 요청 후 진행한다.
+`/health --cascade`는 coverage-preserving checklist runner로 사용한다.
+감사 범위는 canonical -> tool-specific -> user-facing -> scaffold 계층을 유지하고, 변경 파일 유형별 required surface, grep, simulation을 실행한 뒤 누락·불일치·과잉반복·불필요복잡성·사용자생산성저하를 P0/P1/P2로 보고한다.
 
 | Level | Action | Meaning |
 | --- | --- | --- |

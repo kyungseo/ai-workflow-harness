@@ -15,7 +15,7 @@ disable-model-invocation: true
 - **모드**:
   - (없음) → Quick 모드: A+B+E 영역, ~10개 타깃 읽기, 작업 블록 시작 전 사용
   - `--full` → 전체 모드: A+B+E+F+C+D 영역, 분기별·Phase 전환 전 사용
-  - `--cascade` → 문서/워크플로우 변경 영향 감사: canonical → tool-specific → user-facing → scaffold 계층을 대조하고 필요한 cascade, 누락 mirror, 과잉 반복, loop risk를 보고
+  - `--cascade` → coverage-preserving checklist runner: canonical → tool-specific → user-facing → scaffold 계층을 유지하고, 변경 파일 유형별 필수 surface/grep/simulation으로 drift를 발견·보고
   - `--full --cascade` → Phase 전환 전 또는 대형 harness 변경 후 전체 구조와 cascade를 함께 감사
 
 ## File Reading Order
@@ -52,7 +52,7 @@ rg -n "^# |^Status:" docs/decisions
 ```
 제목과 Status 필드만 추출. 내용 읽기는 통합 후보로 의심되는 쌍에만 한정.
 
-**Phase 6 — Cascade Layers (--cascade only)**
+**Phase 6 — Cascade Checklist (--cascade only)**
 
 변경된 파일 목록을 먼저 확인한다:
 
@@ -65,13 +65,64 @@ git diff --cached --name-only
 `docs/WORKFLOW-MANUAL.md`는 평시 AI 실행 규칙 로드 대상이 아니며, `--cascade`에서 user-facing workflow drift를 확인할 때만 필요한 섹션을 읽는다.
 예: slash command 설명, trigger reference, 사용자-visible workflow, scaffold 안내가 바뀐 경우.
 
-| Layer | 확인 대상 |
+`--cascade`는 감사 범위를 줄이지 않는다. AI가 즉흥적으로 판단하는 대신, 변경 파일 유형별 필수 확인 항목을 실행하고 누락·불일치·과잉반복·불필요복잡성·사용자생산성저하를 P0/P1/P2로 보고한다.
+
+### Required Surface Matrix
+
+| 변경 파일 유형 | Canonical | Tool-specific | User-facing | Scaffold | Historical |
+| --- | --- | --- | --- | --- | --- |
+| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 두 파일 모두 | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.cursor/rules/`, `prompts/*` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` 섹션, `README.md` | `scripts/create-harness.sh`, dry-run 또는 temp scaffold | 관련 retrospective는 snapshot 여부만 확인 |
+| `.claude/commands/*.md` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | `AGENTS.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` command 섹션 | command 복사 산출물 | 필요 시 관련 Work/retrospective |
+| `.claude/rules/*.md`, `.cursor/rules/*.mdc` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 반대 tool rule, prompts | 필요 시 manual/rules 설명 | rule 복사 산출물 | 필요 시 관련 Work/retrospective |
+| `prompts/*` | `docs/AGENT-WORKFLOW.md`, 필요 시 `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, command/rule | `prompts/README.md`, 필요 시 manual prompt 섹션 | prompt 복사 산출물 | 필요 시 관련 Work/retrospective |
+| `docs/WORKFLOW-MANUAL.md`, `README.md`, `docs/HARNESS-QUICK-REFERENCE.md` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 관련 command/rule/prompt | 변경된 user-facing 문서 상호 참조 | 필요 시 scaffold README/manual 산출물 | snapshot 덮어쓰기 금지 |
+| `scripts/create-harness.sh` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | commands/rules/prompts source | generated README/manual expectations | dry-run + temp scaffold + stale phrase search | 필요 시 related Work |
+| `docs/STATUS.md`, `docs/works/**`, `docs/backlog/**`, `docs/decisions/**` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | start/resume/close/done/record-decision commands | quick reference/manual state sections | work/index scaffold templates | 관련 Work/DR/retrospective |
+
+### Required Grep Pack
+
+변경 파일 유형에 맞는 키워드를 골라 실행하고, 결과가 없으면 "no matches"로 보고한다.
+기본 grep 대상은 live surface로 제한한다. `docs/archive/`, `docs/retrospectives/`, `docs/presentations/`, 과거 계획 snapshot은 변경 파일에 포함되었거나 사용자가 historical review를 요청한 경우에만 별도 검색한다.
+
+```bash
+# Live target set
+LIVE_TARGETS=(
+  AGENTS.md CLAUDE.md README.md
+  docs/AGENT-WORKFLOW.md docs/HARNESS-PROTOCOL.md docs/HARNESS-QUICK-REFERENCE.md docs/WORKFLOW-MANUAL.md docs/STATUS.md
+  docs/backlog docs/decisions docs/works
+  .claude .cursor prompts scripts
+)
+
+# Common stale path / old term check
+rg -n "State Update Gate|Commit Gate|Scope And Commit Approval|docs/harness-protocol|harness-protocol/" \
+  "${LIVE_TARGETS[@]}"
+
+# Command / rule / prompt alignment
+rg -n "Approval Matrix|Quick Mode|Active Work|Done|Archived|/close|/done|/health|--cascade" \
+  "${LIVE_TARGETS[@]}"
+
+# User-facing drift
+rg -n "/start|/pick|/work|/resume|/close|/done|/health|Quick Mode|Approval Matrix|cascade|scaffold" \
+  docs/WORKFLOW-MANUAL.md docs/HARNESS-QUICK-REFERENCE.md README.md
+
+# Scaffold drift
+rg -n "HARNESS-PROTOCOL|AGENT-WORKFLOW|WORKFLOW-MANUAL|Quick Mode|Approval Matrix|/health|--cascade" \
+  scripts/create-harness.sh
+```
+
+Historical matches are not automatically drift. Report them separately as snapshot references unless they appear in live execution, guide, or scaffold surfaces.
+
+### Required Simulation Matrix
+
+| 변경 파일 유형 | 반드시 시뮬레이션할 흐름 |
 | --- | --- |
-| Canonical | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, 관련 DR |
-| Tool-specific | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/*.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `prompts/*` |
-| User-facing | `docs/WORKFLOW-MANUAL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `README.md` |
-| Scaffold | `scripts/create-harness.sh`, dry-run 또는 temp scaffold 산출물 |
-| Historical | `docs/retrospectives/*` — snapshot이면 덮어쓰지 않고 append 필요 여부만 판단 |
+| Canonical workflow/protocol | `/start`, `/pick`, `/work`, `/resume`, `/close`, `/done`, archive trigger, state update, quick mode, scaffold |
+| Command/rule/prompt | 해당 command 흐름, `/work`, `/resume`, `/done`, state update, tool surface cascade, scaffold |
+| User-facing manual/quick reference/README | 사용자 설명과 실제 command/canonical 흐름 대조, quick mode, close/done, scaffold |
+| Scaffold source | 신규 프로젝트 scaffold, 기존 프로젝트 adoption, generated command/rule/prompt/manual 경로 검색 |
+| Work/status/backlog/DR | `/start`, `/pick`, `/work`, `/resume`, `/close`, archive trigger, STATUS update gate |
+
+선택하지 않은 시나리오는 `Skipped / Not Applicable`에 이유를 적는다.
 
 ## Inspection Areas
 
@@ -183,10 +234,10 @@ rg -n "^## |^### " docs/PLAN.md
 문서를 하나 고쳤을 때 어디까지 같이 봐야 하는지 점검한다.
 기준은 `docs/HARNESS-PROTOCOL.md`이며, 실제 command/rule/prompt/manual/scaffold 표면이 이 기준을 필요한 만큼 반영하는지 확인한다.
 
-- 변경된 파일을 canonical / tool-specific / user-facing / scaffold / historical layer로 분류한다.
-- canonical 문서가 바뀌었으면 tool-specific surface와 user-facing guide에 필요한 mirror가 있는지 확인한다.
-- tool-specific 문서가 바뀌었으면 반대 tool surface, canonical trigger/cascade 문서, scaffold 산출물 필요 여부를 확인한다.
-- user-facing 문서가 바뀌었으면 실제 command 동작과 canonical 규칙을 과장하거나 누락하지 않는지 확인한다.
+- 변경된 파일을 Required Surface Matrix의 파일 유형으로 분류한다.
+- 해당 행의 canonical / tool-specific / user-facing / scaffold / historical surface를 확인한다.
+- Required Grep Pack에서 관련 명령을 실행하거나, 실행하지 않은 이유를 기록한다.
+- Required Simulation Matrix에서 관련 흐름을 선택해 논리 시뮬레이션한다.
 - scaffold source가 바뀌었으면 `scripts/create-harness.sh --dry-run`과 필요 시 temp scaffold 생성으로 산출물 drift를 확인한다.
 - historical retrospective는 snapshot인지 live follow-up log인지 구분한다. snapshot이면 기존 내용을 덮어쓰지 않고 append 제안만 한다.
 - 반복 문구를 다음으로 분류한다:
@@ -200,23 +251,11 @@ rg -n "^## |^### " docs/PLAN.md
   - product surface Quick Mode와 harness/workflow surface 기본 L2 경계를 흐리게 만드는가
   - scaffold 검증이 자기 자신을 무한히 요구하는가
 
-**Simulation Pack (--cascade):**
+Coverage rule:
 
-변경 파일과 관련된 시나리오만 선택한다. 대형 harness 변경이거나 사용자가 명시하면 전체를 수행한다.
-
-- 새 세션 `/start`
-- 작업 선택 `/pick`
-- Product surface L1 Quick Mode 작업
-- Harness/workflow surface L2 작업
-- L2/L3 `/work`
-- 중단 후 `/resume`
-- `/close` (Work Done 처리 후 세션 계속)
-- `/done` (Work 미완료 상태, pause Discovery 체크)
-- `/close` → `/done` 연속 실행 (Work 완료 후 세션 종료)
-- Done → Archived
-- STATUS.md 변경 필요/불필요 분기
-- command/rule/prompt 변경 시 tool surface cascade
-- 신규 프로젝트 scaffold 적용
+- 범위를 임의로 줄이지 않는다.
+- 선택하지 않은 surface, grep, simulation은 반드시 `Skipped / Not Applicable`에 이유를 남긴다.
+- 판단이 애매하면 통과 처리하지 말고 `Requires manual judgment`로 보고한다.
 
 ## Report Format
 
@@ -237,19 +276,31 @@ rg -n "^## |^### " docs/PLAN.md
 ### [Area Name]
 - [✓ / ⚠ / ✗] 항목명: 세부 내용
 
-## Improvement Suggestions
-P0 (즉시 — 승인 후 적용 가능):
-P1 (계획 필요):
-P2 (선택적 개선):
+## P0/P1/P2 Findings
+- P0 — flow break / state corruption / scaffold unusable:
+- P1 — surface drift / missing mirror / productivity regression:
+- P2 — over-duplication / wording hygiene / optional simplification:
 
-## Cascade Findings (--cascade only)
-P0 — Flow Break:
-P1 — Surface Drift:
-P2 — Hygiene:
+## Checked Surfaces (--cascade only)
+- Canonical:
+- Tool-specific:
+- User-facing:
+- Scaffold:
+- Historical:
+
+## Required Grep Results (--cascade only)
+- Command:
+- Result summary:
 
 ## Simulation Notes (--cascade only)
-- 실행 또는 논리 검증한 시나리오:
-- 생략한 시나리오와 이유:
+- Executed / reasoned:
+- Skipped / Not Applicable:
+- Requires manual judgment:
+
+## Suggested Fixes
+- Fix now:
+- Split into separate Work/DR:
+- No action:
 ```
 
 STATUS.md 변경이 필요한 발견 항목은 Approval Matrix state rules에 맞는 제안 섹션으로 별도 제안한다.
