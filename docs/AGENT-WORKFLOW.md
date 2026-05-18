@@ -9,7 +9,7 @@ Claude Code, Codex, Cursor의 공통 프로젝트 운영 규칙이다.
 Claude Code는 세션 시작 시 `CLAUDE.md`를 통해 이 파일을 로드한다.
 Codex는 세션 시작 시 `AGENTS.md`를 통해 이 파일을 참조한다.
 Cursor는 session prompt와 `.cursor/rules/`를 통해 이 파일을 참조한다.
-세션 시작 시 harness protocol 전체를 읽지 않는다. 필요한 조건이 생길 때만 `docs/HARNESS-PROTOCOL.md` 또는 상세 문서를 로드한다.
+세션 시작 시 harness protocol 전체를 읽지 않는다. 필요한 조건이 생길 때만 `docs/HARNESS-PROTOCOL.md`를 로드한다.
 세션 시작 시 `.claude/commands/*.md` 전체를 읽지 않는다. slash command가 명시적으로 호출되었거나 해당 workflow가 분명히 필요할 때만 관련 command 파일을 로드한다.
 
 MUST:
@@ -43,6 +43,7 @@ MUST NOT:
 
 조건이 없으면 추가 문서를 로드하지 않는다.
 회고는 backlog를 대체하지 않는다. 작업 선택, 계획 수립, 아이디어 도출, 반복 리스크 확인이 필요할 때 최신 또는 관련 회고 1개만 선택적으로 확인한다.
+`docs/WORKFLOW-MANUAL.md`는 사용자용 레퍼런스다. 평시 AI 실행 규칙 로드 대상에서 제외하고, 사용자가 매뉴얼 검토를 요청했거나 user-facing workflow 변경/cascade 감사가 필요할 때만 확인한다.
 
 ## State Machine
 
@@ -55,17 +56,25 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 
 Plan에는 Scope, Files, Verification, Risk, Reversal Cost를 포함한다.
 `VALIDATE` 실패 상태에서는 checkpoint 또는 commit을 만들지 않는다.
-상태 변경은 `State Update Gate`를 따른다.
+실행 전 승인, 상태 변경, commit 전 승인은 `Approval Matrix`를 따른다.
 
-## Scope And Commit Approval
+## Approval Matrix
 
-작은 L1 변경은 대상 파일과 scope가 명확하고 사용자가 진행을 승인했다면 승인된 scope 안에서 빠르게 편집할 수 있다.
+Scope approval, state update, commit approval을 하나의 기준으로 판단한다.
+작업 시작 전에는 Scope, Files, Verification, Risk, Reversal Cost를 보고하고 승인받는다.
+
+| 변경 유형 | 실행 전 | 상태 변경 | commit 전 |
+| --- | --- | --- | --- |
+| L1 product surface | 간단 plan 승인 후 실행. Work 파일 없이 Quick Mode 가능 | Work checkpoint/discovery는 승인 불필요, 실행 후 대상 Work ID와 변경 보고 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
+| L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 사용을 기본값으로 둔다 | Work Done 처리와 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
+| L3 아키텍처·인프라·DB schema·보안 구조 | 관련 계획 또는 `docs/PLAN.md` 확인, AS-IS/TO-BE와 rollback 포함 후 승인 | Phase criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal` 승인 후 처리 | validation 결과, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
 
 MUST:
 
 - 승인된 scope 밖의 파일, 문서, 설정으로 변경이 확장되면 먼저 추가 scope, 이유, 검증 방법을 보고하고 승인 대기한다.
-- 특히 `README.md`, `docs/STATUS.md`, workflow 문서, command, prompt, rule, developer-facing 문서로 확장되면 승인 없이 수정하지 않는다.
-- commit 전에는 validation 결과, diff summary, 제안 commit message를 보고하고 승인 대기한다.
+- `docs/STATUS.md` 변경은 위 matrix의 상태 변경 규칙에 맞게 먼저 제안하고 승인받는다.
+- commit 전 승인은 risk level과 무관하게 항상 별도로 받는다.
+- 멀티 Active Work 환경에서는 모든 state update 제안에 대상 Work ID를 포함한다.
 
 MUST NOT:
 
@@ -86,42 +95,42 @@ MUST NOT:
 
 새 작업 항목 등록은 `/register`로 수행한다. 긴급도와 성격에 따라 위 위치 중 적절한 곳에 라우팅된다.
 
-상세 기준: `docs/harness-protocol/03-work-items-and-naming.md`
+상세 기준: `docs/HARNESS-PROTOCOL.md`
 
-## Risk Gate
+## Risk Levels
 
 | Level | Examples | Gate |
 | --- | --- | --- |
-| L1 | 문서 소폭 수정, 테스트, 국소 버그 수정 | 간단 plan 후 승인 |
-| L2 | 기능 구현, 설정 변경, hook 추가 | 상세 plan 후 승인 |
-| L3 | 아키텍처, 인증/보안, 인프라, DB schema, harness 구조 | `docs/PLAN.md` 또는 관련 계획 확인, AS-IS/TO-BE와 rollback 포함 |
+| L1 | product surface 문서 소폭 수정, 테스트, 국소 버그 수정 | Approval Matrix L1 |
+| L2 | 기능 구현, 설정 변경, hook 추가, harness/workflow surface 변경 | Approval Matrix L2 |
+| L3 | 아키텍처, 인증/보안, 인프라, DB schema, harness 구조 | Approval Matrix L3 |
 
-L1 Quick Mode는 Work 파일 없이 완료할 수 있다.
-단, workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 cascade check를 수행한다.
+L1 Quick Mode는 product surface의 작고 명확한 변경에 한해 Work 파일 없이 완료할 수 있다.
+Harness/workflow surface(`entrypoint/workflow/protocol/command/rule/prompt/scaffold/status`)를 건드리면 기본 L2로 다룬다.
 
 ## STATUS Rules
 
 MUST:
 
 - `docs/STATUS.md` 수정 전 최신 내용을 다시 확인한다.
-- `docs/STATUS.md` 변경 전 State Update Gate에 맞는 제안을 먼저 보고하고 사용자 승인을 받는다.
+- `docs/STATUS.md` 변경 전 Approval Matrix에 맞는 제안을 먼저 보고하고 사용자 승인을 받는다.
 - `docs/STATUS.md` Active Work는 현재 진행 중인 Work 파일의 dashboard pointer로만 유지한다.
 - 전체 overwrite를 피하고 관련 섹션만 수정한다.
 - 문서와 실제 파일 상태가 충돌하면 실제 파일 상태를 우선한다.
 - 불일치 발견 시 먼저 보고하고 수정 제안을 낸다.
 - `Done` 상태의 작업은 계속 수정하지 않고, 후속 보정은 신규 작업으로 분리 제안한다.
 
-## State Update Gate
+## Approval Matrix State Detail
 
 Work 파일이 작업 단위의 SSoT이고, `docs/STATUS.md`는 dashboard다.
-상태 변경은 위험도와 대상에 따라 아래 gate를 적용한다.
+상태 변경은 Approval Matrix의 상태 변경 열을 따른다.
 
-| Layer | 변경 유형 | Gate |
+| 변경 대상 | 변경 유형 | Gate |
 | --- | --- | --- |
-| Layer 1 — Work 파일 | Checkpoint 상태 업데이트, Discovery 추가 | 승인 불필요. 실행 후 대상 Work ID와 변경 내용을 보고 |
-| Layer 1 — Work 파일 | Done Criteria 전체 충족 확인, `status: Done`, `actual_end` 기입 | 대상 Work ID를 명시하고 사용자 확인 후 처리 |
-| Layer 2 — STATUS.md | Active Work pointer 추가/제거 | 대상 Work ID를 명시한 1줄 제안 후 승인 |
-| Layer 2 — STATUS.md | Phase completion criteria, Current phase/focus, Recent Decisions | 기존 `STATUS Update Proposal` 유지 |
+| Work 파일 | Checkpoint 상태 업데이트, Discovery 추가 | 승인 불필요. 실행 후 대상 Work ID와 변경 내용을 보고 |
+| Work 파일 | Done Criteria 전체 충족 확인, `status: Done`, `actual_end` 기입 | 대상 Work ID를 명시하고 사용자 확인 후 처리 |
+| `docs/STATUS.md` | Active Work pointer 추가/제거 | 대상 Work ID를 명시한 1줄 제안 후 승인 |
+| `docs/STATUS.md` | Phase completion criteria, Current phase/focus, Recent Decisions | `STATUS Update Proposal` 승인 후 처리 |
 
 멀티 Active Work 환경에서는 모든 state update 제안에 대상 Work ID를 포함한다.
 각 Work는 독립 gate를 가진다. Work A의 Done/Archive 처리가 Work B의 상태를 자동 변경하지 않는다.
@@ -130,11 +139,12 @@ Work 파일이 작업 단위의 SSoT이고, `docs/STATUS.md`는 dashboard다.
 
 | Status | Location | Meaning |
 | --- | --- | --- |
-| Candidate | `docs/works/{category}/` 또는 backlog only | 착수 전 후보. 큰 작업은 Work 파일 초안을 가질 수 있다 |
 | Active | `docs/works/{category}/` | `docs/STATUS.md` Active Work에 pointer 존재 |
 | Done | `docs/works/{category}/` | 완료 기준과 검증 통과. 리뷰·참조 때문에 archive 대기 가능 |
 | Archived | `docs/archive/docs/works/{category}/` | 완전 종결. 더 이상 active 참조 불필요 |
 
+Backlog의 `Candidate` 항목은 후보 pool이다.
+착수 전 분해나 메모는 backlog 항목에 남기고, Work 파일은 착수 승인 후 `Active` 상태로 생성한다.
 Done과 Archived는 분리한다.
 Work Done 처리(status: Done, actual_end, README Active→Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다. `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
 Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에만 수행한다.
@@ -146,21 +156,21 @@ Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 
 | DR-worthy decision accepted | `docs/decisions/` 기록 제안 |
 | 구조 변경 | `docs/ARCHITECTURE.md` 업데이트 제안 |
 | 개발 절차 변경 | `docs/DEVELOPER-GUIDE.md` 업데이트 제안 |
-| workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/` 업데이트 |
+| workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 업데이트 |
 | 발표/보고 산출물 생성 | 목적, audience, source, format, output path, 품질 검증 기준 확인 |
 | Phase 완료 또는 새 Phase 시작 | STATUS/archive 재편 제안 |
 | 큰 작업 조건 충족 | Work 파일 분해 제안 |
 | 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |
 | tool surface 변경 | Claude/Codex/Cursor/prompts/scaffold 정렬 확인 |
 | scaffold 또는 canonical workflow 변경 | dry-run과 temp scaffold 검증 |
-| Quick Mode L1 변경 | no Work/no STATUS 기본, cascade-sensitive file 예외 확인 |
+| Product surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
+| Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
 
 문서, prompt, command, rule, Cursor rule, hook 메시지를 수정할 때는 `docs/decisions/DR-007-language-policy.md`의 언어 정책을 확인한다.
 
 상세 기준:
 
-- `docs/harness-protocol/04-document-lifecycle.md`
-- `docs/harness-protocol/05-triggers-and-cascade.md`
+- `docs/HARNESS-PROTOCOL.md`
 
 ## Naming Summary
 
@@ -179,7 +189,7 @@ ID를 다른 의미로 재사용하지 않는다.
 파일명 상세 기준:
 
 - `docs/decisions/DR-008-docs-filename-standard.md`
-- `docs/harness-protocol/03-work-items-and-naming.md`
+- `docs/HARNESS-PROTOCOL.md`
 
 ## Project Constants
 

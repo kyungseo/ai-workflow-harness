@@ -155,7 +155,6 @@ echo ""
 for dir in \
   "${TARGET_ROOT}/docs/backlog" \
   "${TARGET_ROOT}/docs/decisions" \
-  "${TARGET_ROOT}/docs/harness-protocol" \
   "${TARGET_ROOT}/docs/works" \
   "${TARGET_ROOT}/docs/archive" \
   "${TARGET_ROOT}/docs/archive/docs/works" \
@@ -187,10 +186,6 @@ fi
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-PROTOCOL.md"        "${TARGET_ROOT}/docs/HARNESS-PROTOCOL.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md" "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
 adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL.md"         "${TARGET_ROOT}/docs/WORKFLOW-MANUAL.md"
-
-for f in "${TEMPLATE_ROOT}"/docs/harness-protocol/*.md; do
-  adapt "$f" "${TARGET_ROOT}/docs/harness-protocol/$(basename "$f")"
-done
 
 adapt "${TEMPLATE_ROOT}/docs/decisions/DECISION-TEMPLATE.md" \
       "${TARGET_ROOT}/docs/decisions/DECISION-TEMPLATE.md"
@@ -250,7 +245,7 @@ write_text "${TARGET_ROOT}/.claude/settings.json" '{
         "hooks": [
           {
             "type": "command",
-            "command": "python3 -c \"print('\''[hook] 세션 종료 전 확인: Work가 완료됐다면 /close를 먼저 실행하고, 그다음 /done으로 validation, State Update 필요 여부, DR-worthy 결정, commit 상태를 보고하세요.'\'')\""
+            "command": "python3 -c \"print('\''[hook] 세션 종료 전 확인: Work가 완료됐다면 /close를 먼저 실행하고, 그다음 /done으로 validation, Approval Matrix에 따른 상태 변경 필요 여부, DR-worthy 결정, commit 상태를 보고하세요.'\'')\""
           }
         ]
       }
@@ -325,7 +320,7 @@ write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 | \`AGENTS.md\` | Codex 진입점 |
 | \`docs/STATUS.md\` | 현재 작업 상태 |
 | \`docs/HARNESS-QUICK-REFERENCE.md\` | 세션 실행 규칙 요약 |
-| \`docs/WORKFLOW-MANUAL.md\` | 워크플로우 전체 가이드 |
+| \`docs/WORKFLOW-MANUAL.md\` | 사용자용 워크플로우 가이드 |
 | \`docs/AGENT-WORKFLOW.md\` | 공통 운영 규칙 |
 | \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 | \`.claude/commands/\` | \`/start\`, \`/pick\`, \`/register\`, \`/work\`, \`/close\`, \`/done\` 등 |
@@ -492,7 +487,7 @@ Work 파일 디렉토리. 큰 작업 단위의 Single Source of Truth.
 
 카테고리 서브디렉토리와 그 안의 README.md는 첫 Work 파일 생성 시 함께 만든다.
 Work 파일 스펙: \`docs/decisions/DR-013-work-file-spec.md\`
-공통 운영 규칙: \`docs/harness-protocol/03-work-items-and-naming.md\` Work File Rules
+공통 운영 규칙: \`docs/HARNESS-PROTOCOL.md\` Work File Rules
 
 ## 카테고리
 
@@ -506,10 +501,11 @@ Work 파일 스펙: \`docs/decisions/DR-013-work-file-spec.md\`
 
 | Status | Location | Meaning |
 | --- | --- | --- |
-| Candidate | \`docs/works/{category}/\` 또는 backlog only | 착수 전 후보. 큰 작업은 Work 파일 초안을 가질 수 있다 |
 | Active | \`docs/works/{category}/\` | \`docs/STATUS.md\` Active Work에 pointer 존재 |
 | Done | \`docs/works/{category}/\` | 완료 검증 통과, archive 대기 가능 |
 | Archived | \`docs/archive/docs/works/{category}/\` | 완전 종결 |
+
+Backlog \`Candidate\`는 후보 pool이다. Work 파일은 착수 승인 후 \`Active\` 상태로 생성한다.
 "
 
 touch_file "${TARGET_ROOT}/docs/archive/.gitkeep"

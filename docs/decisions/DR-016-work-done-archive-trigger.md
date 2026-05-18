@@ -5,7 +5,7 @@ Status: Accepted
 
 ## Question
 
-DR-013이 Work 파일 lifecycle을 `Candidate → Active → Done → Archived`로 정의했으나,
+당시 DR-013이 Work 파일 lifecycle을 네 단계로 정의했으나,
 Done과 Archived 사이의 전환 시점과 트리거가 명시되지 않았다.
 `/done` 명령이 Done 처리와 Archive 이동을 한 스텝으로 묶고 있어,
 리뷰 대기·외부 참조 유지 등의 이유로 Archive 시점을 미뤄야 할 때 규칙이 없다.
@@ -96,7 +96,7 @@ Done과 Archived를 분리하면 두 상태를 구분해 처리할 수 있고,
 ## Consequences
 
 - `done.md` item 11을 Done 즉시 처리 항목과 Archive 트리거 항목으로 분리한다.
-- `docs/harness-protocol/03-work-items-and-naming.md` Work File Rules에 Done→Archived 트리거 추가한다.
+- `docs/HARNESS-PROTOCOL.md` Work File Rules에 Done→Archived 트리거 추가한다.
 - `docs/works/{category}/README.md` 템플릿에 Active / Done / Archived 3개 테이블 구조를 반영한다.
 - `/resume`, `/start` 명령에 Done 항목 발견 시 archive 제안 안내를 추가한다 (별도 HRN으로 추적).
 - 갱신은 별도 HRN 항목으로 추적한다.

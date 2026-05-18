@@ -46,7 +46,7 @@ disable-model-invocation: true
 | **Architecture / Stack Summary** | `docs/PLAN-SUMMARY.md` |
 | **Deep-Dive Evidence / L3 Specs** | `docs/PLAN.md` |
 | **Governance Records** | 관련 의사결정 기록: `docs/decisions/DR-*.md` |
-| **Harness / Protocol Specifics** | `docs/HARNESS-PROTOCOL.md` 또는 `docs/harness-protocol/*.md` |
+| **Harness / Protocol Specifics** | `docs/HARNESS-PROTOCOL.md` |
 | **Retrospective Reflection** | `docs/retrospectives/` 내 관련 파일 1개 |
 | **Root Cause / Incident Resolution** | 관련 `docs/troubleshooting/` 에셋 |
 
@@ -129,7 +129,7 @@ Final Deck: docs/presentations/{name}-v{x.y}.pptx
 - **버전 동기화:** blueprint 버전과 최종본 버전은 항상 일치한다 (`v1.1-blueprint.md` → `v1.1.pptx`).
 - **diff 문서 금지:** "이전 버전 대비 변경 사항" 문서를 별도로 만들지 않는다. 변경 이력은 git history가 담당한다.
 
-**Mutation Constraint:** `STATUS.md`를 직접 수정하거나 임의로 참조를 주입하지 않는다. 상태 추적기에 영향을 주는 변경 사항은 반드시 State Update Gate에 맞는 제안 또는 지연 실행 계획 형태로 패키징하여 제안한다.
+**Mutation Constraint:** `STATUS.md`를 직접 수정하거나 임의로 참조를 주입하지 않는다. 상태 추적기에 영향을 주는 변경 사항은 반드시 Approval Matrix state rules에 맞는 제안 또는 지연 실행 계획 형태로 패키징하여 제안한다.
 
 ## Phase 4: Production & Composition Rules
 

@@ -29,21 +29,21 @@ New work items are always routed based on urgency and type:
 | Product / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
 
-When starting a task (`/work`): check `docs/works/{category}/` for an existing Work file. If none exists, evaluate Quick Mode and Work File Decomposition criteria (spec: `docs/harness-protocol/03-work-items-and-naming.md`). L1 Quick Mode may proceed without a Work file; otherwise include Work file creation in the plan.
+When starting a task (`/work`): check `docs/works/{category}/` for an existing Work file. If none exists, evaluate Quick Mode and Work File Decomposition criteria (spec: `docs/HARNESS-PROTOCOL.md`). Product-surface L1 Quick Mode may proceed without a Work file; harness/workflow surface changes default to L2, and Work file creation should be considered by default when decomposition criteria apply.
 
-Quick Mode: small L1 changes with narrow scope, one-session completion, no checkpoint handoff, and no STATUS change can close with final summary + validation + commit history only. If workflow/protocol/command/rule/prompt/scaffold/status files change, run cascade checks even for L1.
+Quick Mode: small product-surface L1 changes with narrow scope, one-session completion, no checkpoint handoff, no STATUS change, and no harness/workflow surface change can close with final summary + validation + commit history only. If entrypoint/workflow/protocol/command/rule/prompt/scaffold/status files change, treat the task as L2 and check the relevant cascade surface.
 
 When completing a Work item (`/close`): confirm Done Criteria, set `status: Done` and `actual_end`, move the README row from Active to Done (archive pending), and propose STATUS pointer removal. After Done processing, ask whether to archive immediately or defer to a later `/start`/`/resume` trigger. Session continues after `/close`.
 
 When ending a session (`/done`): report completed work, changed files, validation results, residual risk, STATUS update needs, decision needs, and commit status. If Active Work exists and Discovery is not up to date for the current progress, propose content to record and ask whether to log it. `/done` does not perform Work Done processing — tell the user to run `/close` first if the Work is complete.
 
-State Update Gate:
+Approval Matrix state rules:
 
-| Layer | Change | Gate |
+| Target | Change | Gate |
 | --- | --- | --- |
-| Layer 1 — Work file | Checkpoint status update, Discovery note | No prior approval required; report target Work ID after execution |
-| Layer 1 — Work file | Done Criteria met, `status: Done`, `actual_end` | Confirm with the user and name the target Work ID |
-| Layer 2 — `docs/STATUS.md` | Active Work pointer add/remove | One-line proposal naming the target Work ID, then wait for approval |
-| Layer 2 — `docs/STATUS.md` | Phase criteria, Current phase/focus, Recent Decisions | Full STATUS Update Proposal |
+| Work file | Checkpoint status update, Discovery note | No prior approval required; report target Work ID after execution |
+| Work file | Done Criteria met, `status: Done`, `actual_end` | Confirm with the user and name the target Work ID |
+| `docs/STATUS.md` | Active Work pointer add/remove | One-line proposal naming the target Work ID, then wait for approval |
+| `docs/STATUS.md` | Phase criteria, Current phase/focus, Recent Decisions | Full STATUS Update Proposal |
 
 When starting or resuming, report any `status: Done` Work files still under `docs/works/{category}/` as archive-pending. Do not archive before approval.

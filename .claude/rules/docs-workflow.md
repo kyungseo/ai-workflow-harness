@@ -20,10 +20,10 @@ MUST:
 - Use Work files for large tasks: `docs/works/{category}/{ID}-{lowercase-topic}.md` (spec: DR-013).
 - Do not reuse task IDs for different meanings.
 - Follow `docs/decisions/DR-007-language-policy.md` when editing docs, prompts, commands, rules, Cursor rules, or hook messages.
-- Follow `docs/AGENT-WORKFLOW.md` Scope And Commit Approval before expanding approved scope or committing.
-- Request explicit user approval before editing `docs/STATUS.md`; report the State Update Gate proposal first.
+- Follow `docs/AGENT-WORKFLOW.md` Approval Matrix before execution, scope expansion, state changes, or committing.
+- Request explicit user approval before editing `docs/STATUS.md`; report the Approval Matrix state-change proposal first.
 - Keep `Done` work immutable. If follow-up correction is needed, propose a new work item.
-- Check `docs/harness-protocol/05-triggers-and-cascade.md` when workflow rules, commands, DRs, or document structure change.
+- Check `docs/HARNESS-PROTOCOL.md` when workflow rules, commands, DRs, or document structure change.
 
 ## Command Intent Recognition
 
