@@ -921,14 +921,18 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    OQ["Open Question\ndocs/STATUS.md\nBlockers 섹션"] --> DRAFT["📄 Draft DR\ndocs/decisions/DR-{n}-{topic}.md"]
+    OQ["Open Question\ndocs/STATUS.md\nBlockers 섹션"]
+    DECISION["결정 확정\n대화·작업 중 /record-decision"]
+
+    OQ -->|"DR-worthy"| DRAFT["📄 Draft DR\ndocs/decisions/DR-{n}-{topic}.md"]
+    DECISION --> DRAFT
     DRAFT --> REVIEW["검토\n대안 비교\n되돌리기 비용 평가"]
     REVIEW --> ACCEPT["Accepted\n결정 확정"]
     ACCEPT --> ROUTE{영향 범위}
     ROUTE -- Product / Phase --> PBACKLOG["📄 docs/backlog/PHASE{n}.md\nDone Criteria 조정"]
     ROUTE -- Harness / Workflow --> HBACKLOG["📄 docs/backlog/HARNESS.md\n후속 작업 조정"]
     ROUTE -- Architecture / Stack --> PLAN["T5\nPLAN.md / PLAN-SUMMARY.md 확인"]
-    ACCEPT --> STATUS_PROPOSAL["STATUS Update Proposal\nOQ Closed 반영"]
+    ACCEPT -.->|"OQ 있던 경우만"| STATUS_PROPOSAL["STATUS Update Proposal\nOQ Closed 반영"]
     STATUS_PROPOSAL --> CLOSED["OQ Closed\nSTATUS.md 갱신"]
 
     ACCEPT --> SUPERSEDED["Superseded\n이후 결정으로 대체\n→ 후속 DR 번호 명시"]
@@ -940,6 +944,7 @@ flowchart LR
     MERGE --> CASCADE
 
     style ACCEPT fill:#d4edda,stroke:#28a745
+    style DECISION fill:#ffeeba,stroke:#ffc107
     style PLAN fill:#cce5ff,stroke:#004085
     style STATUS_PROPOSAL fill:#fff3cd,stroke:#ffc107
     style CASCADE fill:#fff3cd,stroke:#ffc107
