@@ -134,10 +134,9 @@ make create-service NAME=order-service
 | [AGENTS.md](AGENTS.md) | Codex 진입점 |
 | [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) | 공통 운영 규칙 |
 | [docs/STATUS.md](docs/STATUS.md) | 현재 프로젝트 상태 |
-| [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) | Harness protocol 허브 |
+| [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) | Harness 상세 protocol |
 | [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) | 일상 실행 빠른 참조 |
 | [docs/WORKFLOW-MANUAL.md](docs/WORKFLOW-MANUAL.md) | 사용자용 워크플로우 매뉴얼 |
-| [docs/harness-protocol/](docs/harness-protocol/) | 상세 protocol 모듈 |
 | [docs/works/](docs/works/) | 진행 중·완료된 Work 파일 (DR-013) |
 | [prompts/README.md](prompts/README.md) | 재사용 prompt 라이브러리 |
 

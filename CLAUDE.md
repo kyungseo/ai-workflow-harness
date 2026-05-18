@@ -14,9 +14,9 @@ MUST:
 - Read `docs/STATUS.md` current sections before choosing or continuing work.
 - Use `.claude/commands/` for repeated Claude Code workflows when available.
 - Do not read `.claude/commands/*.md` at session start; load a command file only when that workflow is explicitly invoked or clearly relevant.
-- Follow `docs/AGENT-WORKFLOW.md` Scope And Commit Approval before scope expansion and every commit.
+- Follow `docs/AGENT-WORKFLOW.md` Approval Matrix before execution, scope expansion, state changes, and every commit.
 
 NEVER:
 
 - Duplicate shared rules here.
-- Bypass `docs/STATUS.md` or the State Update Gate.
+- Bypass `docs/STATUS.md` or the Approval Matrix.

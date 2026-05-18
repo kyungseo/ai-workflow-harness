@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-18 (HRF-002 후속 정합성 정리 — Work lifecycle/gate 반영)
+Last updated: 2026-05-19 (HRN-021-S3 완료 — Work lifecycle Candidate 제거)
 
 ## Current State
 
@@ -60,3 +60,4 @@ Last updated: 2026-05-18 (HRF-002 후속 정합성 정리 — Work lifecycle/gat
 
 1. PRE-B: 개발환경 전략 결정
 2. PRE-C2: Phase 2 요건 정의 확정 (PRE-B + PRE-C1 완료 후)
+3. HRN-021: simplification series 전체 Done/archive 처리 검토

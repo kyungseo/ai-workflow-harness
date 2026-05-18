@@ -53,7 +53,7 @@ Phase1 종료 직후 백업본은 `docs/archive/harness-refactor-20260514/PHASE2
 | ID | Priority | Status | Task | Dependencies | Done Criteria | Verification |
 | --- | --- | --- | --- | --- | --- | --- |
 | PRE-B | P0 | Candidate | 개발환경 전략 결정 (로컬 실행 구조, Windows 지원, devcontainer, mono-repo) | Phase2 execution assumptions | B-1~B-4 결정 사항이 decision record 또는 planning 문서에 반영됨 | 결정 문서 리뷰 |
-| PRE-C1 | P0 | Active | Phase 1 아키텍처 현황 분석 + 실무 완성도 갭 발굴 | Phase1 implementation | 분석 결과와 개선 필요 항목 목록 작성 | backlog 또는 planning 문서 반영 확인 |
+| PRE-C1 | P0 | Done | Phase 1 아키텍처 현황 분석 + 실무 완성도 갭 발굴 | Phase1 implementation | 분석 결과와 개선 필요 항목 목록 작성 | backlog 또는 planning 문서 반영 확인 |
 | PRE-C2 | P0 | Candidate | Phase 2 요건 정의 확정 | PRE-B, PRE-C1, relevant DRs | backlog PHASE2.md 업데이트, security-first 우선순위 재검토 완료 | backlog + decision review |
 | PRE-C3 | P1 | Candidate | Dockerfile 개선 (Gradle 캐시 레이어, JAVA_OPTS 외부화, HEALTHCHECK) | Dockerfile strategy review | 각 서비스 Dockerfile 개선 적용, 재빌드 성공 | `make rebuild` 후 서비스 정상 기동 |
 
@@ -67,7 +67,7 @@ Phase1 종료 직후 백업본은 `docs/archive/harness-refactor-20260514/PHASE2
 | 항목 | 이유 |
 |---|---|
 | PRE-B | 개발환경 구조 미결정 시 Wave 1 이후 설정 충돌 가능 |
-| PRE-C1 | *(Active — 본 분석)* |
+| PRE-C1 | Done — 분석 결과를 PRE-C2에서 참조 |
 | PRE-C2 | PRE-B + PRE-C1 결과로 요건 확정 후 backlog 재정렬 |
 
 ### Wave 1 — Security Hardening (P0/P1 즉시)

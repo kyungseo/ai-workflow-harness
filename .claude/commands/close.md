@@ -19,18 +19,18 @@ Active Work가 여러 개면 대상 Work ID를 먼저 확인한다. 하나뿐이
 Work 파일의 Done Criteria를 전부 체크했는지 확인한다.
 미충족 항목이 있으면 사용자에게 보고하고 진행 여부를 묻는다.
 
-**3. Work 파일 Done 처리 (Layer 1 — 사용자 확인 후)**
+**3. Work 파일 Done 처리 (Approval Matrix state detail — 사용자 확인 후)**
 
 대상 Work ID를 명시하고 사용자 확인을 받은 뒤:
 
 - Work 파일 frontmatter: `status: Done`, `actual_end: YYYY-MM-DD` 기입
 - Done Criteria 항목을 전부 체크 표시로 업데이트
 
-**4. Work Index 업데이트 (Layer 1)**
+**4. Work Index 업데이트 (Work 파일 상태 변경)**
 
 `docs/works/{category}/README.md`에서 해당 Work를 Active → Done (archive pending) 테이블로 이동한다.
 
-**5. STATUS Active Work pointer 제거 제안 (Layer 2)**
+**5. STATUS Active Work pointer 제거 제안 (Approval Matrix state detail)**
 
 대상 Work ID를 명시한 1줄 제안 후 승인을 받은 뒤 `docs/STATUS.md` Active Work 행을 제거한다.
 

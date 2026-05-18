@@ -74,7 +74,7 @@ docs/archive/
 
 - `docs/archive/` 하위 구조가 프로젝트 디렉토리 구조를 반영한다.
 - 기존 스냅샷(`harness-refactor-20260514/` 등)은 `snapshots/` 하위로 이동하여 정리한다.
-- harness 프로토콜 문서(`docs/harness-protocol/04-document-lifecycle.md`)에 아카이빙 트리거 반영 필요.
+- harness 프로토콜 문서(`docs/HARNESS-PROTOCOL.md`)에 아카이빙 트리거 반영 필요.
 - Work 파일 완료 절차에 archive 이동 단계가 포함된다.
 
 ## Reversal Cost

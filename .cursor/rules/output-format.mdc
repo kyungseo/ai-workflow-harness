@@ -20,7 +20,7 @@ MUST:
 - Include reversal cost for technical decisions.
 - Mention verification commands, scenarios, or checks.
 - Mention State Update needs when Work state, checkpoints, blockers, or next actions change.
-- Do not edit `docs/STATUS.md` without explicit user approval; first provide the State Update Gate proposal. Active Work pointer changes may be one line naming the Work ID, while phase/focus/recent decision changes require a full `STATUS Update Proposal` with section, reason, resulting state, and reversal cost.
+- Do not edit `docs/STATUS.md` without explicit user approval; first provide the Approval Matrix state-change proposal. Active Work pointer changes may be one line naming the Work ID, while phase/focus/recent decision changes require a full `STATUS Update Proposal` with section, reason, resulting state, and reversal cost.
 - For planned work, include the current state machine phase and next transition.
 - For completed work, state whether the result is `CHECKPOINT`, `END`, or `FAIL/RECOVER`.
 
