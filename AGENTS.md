@@ -46,10 +46,6 @@ When the user's intent matches a workflow operation without an explicit slash co
 | Record a decision as DR | `/record-decision` — DR format, file naming, OQ linkage |
 | Start / plan a specific task | `/work` — pre-checks: PLAN.md force-load conditions, troubleshooting check, risk level declaration |
 | Resume an interrupted task | `/resume` — drift check: compare actual file state vs `docs/STATUS.md` before editing |
-| Debug / investigate a failure | `/debug` — symptom, logs, failing test, recent diff, root cause, minimal fix plan |
-| Create presentation/report/review document material | `/doc` — use for PPT, deck, report, review package, decision brief, or polished shareable document artifacts; brief-first workflow, source routing, quality verification |
-| Finish or close out current work | `/done` — validation, changed files, residual risk, State Update need, Work Done processing, commit status |
-| Audit workflow/document consistency | `/health` — quick hygiene by default; use `--full` for deep sync, `--cascade` for document/workflow cascade completeness |
 
 ## State Update Gate
 
