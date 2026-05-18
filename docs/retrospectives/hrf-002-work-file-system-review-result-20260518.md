@@ -1224,3 +1224,40 @@ rg -n "/close" docs/AGENT-WORKFLOW.md .claude/commands/done.md .claude/commands/
 1. `scripts/create-harness.sh`는 `.claude/commands/*.md` glob으로 복사하므로 `close.md` 자동 포함 확인 — 정상.
 2. Mermaid 렌더러 로컬 미설치로 다이어그램 실제 렌더링은 미확인. 노드 추가 문법은 기존 패턴과 동일.
 3. `cursor-session-start.md`는 `/close` 관련 내용 없음 — Cursor는 `.cursor/rules/workflow.mdc`가 실행 표면이므로 이미 반영됨. fallback prompt 불필요.
+
+### 2차 감사 보완 (2026-05-18 — 외부 검토 반영)
+
+위 cascade 감사에서 누락된 drift를 외부 검토를 통해 추가로 발견하였다.
+
+**추가 발견 항목:**
+
+| 우선순위 | 파일 | 문제 | 조치 |
+|---------|------|------|------|
+| P0 | `docs/harness-protocol/03-work-items-and-naming.md` (line 112) | "`/done`은 Done 처리와 STATUS pointer 제거 제안까지만 수행한다" 잔류 — canonical 상세 문서 | `/close` 역할 반영으로 수정 |
+| P1 | `docs/STATUS.md` Recent Decisions | DR-016 항목이 "`/done`은 Done 처리"로 기재 — 세션 시작마다 로드되는 실사용 drift | `/close`는 Done 처리, `/done`은 세션 요약 전용으로 갱신 |
+| P1 | `docs/backlog/HARNESS.md` (line 42) | HRN-019 상태가 Candidate — Work 파일/README는 Done 기재 | Candidate → Done 수정 |
+| P1 | `docs/decisions/DR-015-state-update-proposal-redesign.md` | HRN-019 이후 Done 처리 주체 변경 미반영 | Addendum 추가 |
+| P1 | `docs/decisions/DR-016-work-done-archive-trigger.md` | HRN-019 이후 `/done` → `/close` 역할 이관 미반영 | Addendum 추가 |
+
+**감사 수량 정정:**
+
+원문 "P0×1, P1×11, P2×5"는 실제 표(P0×1, P1×6, P2×2)와 불일치했다. 외부 검토 후 최종 집계:
+- P0×2 (AGENT-WORKFLOW.md + 03-work-items-and-naming.md)
+- P1×10 (기존 6개 + STATUS.md/HARNESS.md/DR-015/DR-016)
+- P2×2 (harness-protocol/01 + resume.md)
+
+**보완된 검증 명령:**
+
+```bash
+rg -n "/close|Work Done" \
+  docs/AGENT-WORKFLOW.md \
+  docs/harness-protocol/03-work-items-and-naming.md \
+  docs/STATUS.md \
+  docs/backlog/HARNESS.md \
+  docs/decisions/DR-015-state-update-proposal-redesign.md \
+  docs/decisions/DR-016-work-done-archive-trigger.md \
+  .claude/commands/done.md .claude/commands/close.md \
+  AGENTS.md .cursor/rules/workflow.mdc \
+  docs/HARNESS-QUICK-REFERENCE.md docs/WORKFLOW-MANUAL.md \
+  prompts/README.md prompts/claude-session-start.md prompts/codex-session-start.md
+```

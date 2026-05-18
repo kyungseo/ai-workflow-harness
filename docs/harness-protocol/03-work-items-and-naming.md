@@ -109,7 +109,7 @@ Work 파일 frontmatter의 `related_commits`는 best-effort reference다.
 | Archived | `docs/archive/docs/works/{category}/` | 완전 종결. 더 이상 active 참조 불필요 |
 
 `Done`과 `Archived`는 분리한다.
-`/done`은 Done 처리와 STATUS pointer 제거 제안까지만 수행한다.
+Work Done 처리(status: Done, actual_end, README Active→Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다. `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
 Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에 수행한다.
 
 ### State Update Gate

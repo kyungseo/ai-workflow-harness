@@ -83,3 +83,12 @@ Low — 게이트 규칙은 문서 변경만으로 원복 가능.
 ## Linked Backlog Items
 
 - HRN-002 (Hard enforcement 강화) — 이 DR과 연계 검토 필요
+
+## Addendum (2026-05-18 — HRN-019)
+
+HRN-019 도입으로 Done 처리의 실행 주체가 변경되었다.
+
+- **이전**: `/done`이 Work Done 처리(status: Done, STATUS pointer 제거 제안) 수행
+- **이후**: `/close`가 Work Done 처리 전용, `/done`은 세션 요약만 출력
+
+이 DR Consequences 항목 중 `.claude/commands/done.md` 게이트 설명 갱신은 HRN-019에서 완료되었다.

@@ -109,3 +109,12 @@ Low — 트리거 규칙은 문서 변경만으로 원복 가능.
 
 - HRN-017 (DR-015 구현) — 게이트 규칙 정비와 연계 검토
 - 신규 HRN: done.md 분리, README 템플릿 갱신, /resume·/start 안내 추가
+
+## Addendum (2026-05-18 — HRN-019)
+
+HRN-019 도입으로 이 DR에 명시된 `/done` 역할이 `/close`로 이관되었다.
+
+- **이전**: `/done` item 11이 Done 즉시 처리(status/actual_end/README/STATUS pointer)와 archive 트리거를 담당
+- **이후**: `/close`가 Work Done 처리와 선택적 archive를 전담, `/done`은 세션 요약만 출력
+
+이 DR Consequences 항목 중 `done.md` item 11 분리는 HRN-019에서 `/close` 신규 도입으로 완료되었다.
