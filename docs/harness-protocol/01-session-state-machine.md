@@ -20,8 +20,8 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | APPROVAL | 사용자 승인 대기 | "진행할까요?" |
 | EXECUTE | 승인된 범위만 수행 | minimal diff |
 | VALIDATE | 결과 확인 | command/result 또는 미실행 사유 |
-| CHECKPOINT | 재개 가능한 저장점 | approved STATUS update, commit decision |
-| END | 세션 종료 | summary, next files, residual risk |
+| CHECKPOINT | 재개 가능한 저장점. Work Done 처리(`/close`)도 이 단계에서 수행 | approved STATUS update, commit decision |
+| END | 세션 종료 (`/done`). Work Done 처리 없음 — Done 처리는 CHECKPOINT에서 `/close`로 수행 | summary, next files, residual risk |
 | FAIL | 규칙 위반 또는 검증 실패 | failure type, root cause |
 | RECOVER | 복구 경로 선택 | options, recommended path |
 

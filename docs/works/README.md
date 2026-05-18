@@ -12,7 +12,7 @@ Work 파일 스펙: `docs/decisions/DR-013-work-file-spec.md`
 | Category | Path | Purpose |
 | --- | --- | --- |
 | harness | `docs/works/harness/` | Harness, command, rule, workflow 개선 |
-| phase1 | `docs/works/phase1/` | Phase 1 legacy work records |
+| phase1 | `docs/archive/docs/works/phase1/` | Phase 1 legacy work records (archived) |
 | phase2 | `docs/works/phase2/` | Phase 2 product and preparation work |
 
 ## Lifecycle

@@ -1,4 +1,11 @@
+---
+description: "세션 전체 요약을 출력한다. Work Done 처리 없음 — Work 완료는 /close로 먼저 처리할 것"
+disable-model-invocation: true
+---
+
 **이 명령은 세션을 종료할 때만 실행한다.** 작업 하나가 끝나면 Work 파일 checkpoint/Done 처리, 필요한 state update 제안, commit gate만 수행하고 다음 작업으로 이어가면 된다. `/done`은 여러 작업을 마친 후 세션 전체를 정리할 때 쓴다.
+
+**Work를 완료하고 싶다면** `/close`를 먼저 실행해줘. `/close`는 Work Done 처리만 수행하고 세션은 계속된다. `/done`은 Work Done 처리 없이 세션 요약만 출력한다.
 
 이번 세션에서 진행한 내용을 다음 형식으로 요약해줘.
 
@@ -28,17 +35,10 @@
    - commit하지 않았다면 이유와 남은 risk
    - commit 전 필요한 경우 `git status -> git add <files> -> git status -> git diff --cached` 순서 확인
 
-11. Work 파일 Done 처리 (Active Work에 Work 파일이 있는 경우)
-   - Work 파일 frontmatter: `status: Done`, `actual_end: YYYY-MM-DD` 기입
-   - Done Criteria 전부 체크됐는지 확인
-   - `docs/works/{category}/README.md`: Active → Done (archive pending) 테이블 이동
-   - STATUS state update: 대상 Work ID를 명시하고 Active Work 포인터 제거 제안
-   - Work 파일을 즉시 archive로 이동하지 않는다.
-
-12. Work 파일 Archive 처리 필요 여부
-   - Archive는 사용자가 명시적으로 승인했거나 `/start`·`/resume`에서 Done 항목 발견 후 승인한 경우에만 진행한다.
-   - 승인되면 archive 대상 Work 파일에 `status: Archived`를 기입한 뒤 `git mv docs/works/{category}/{file}.md docs/archive/docs/works/{category}/` 를 수행한다.
-   - `docs/works/{category}/README.md`: Done → Archived 테이블 이동
-   - Archive 보류 시 보류 이유를 Discovery에 기록할지 제안한다.
+11. Active Work Pause Discovery 확인
+   - Active Work가 있으면 해당 Work 파일의 Discovery 섹션에 현재 진행 상황이 기록되어 있는지 확인한다.
+   - 미기록 상태(비어 있거나 마지막 기록 이후 진행된 내용이 있는 경우)라면 기록할 내용을 제안하고 기록 여부를 묻는다.
+   - 사용자가 기록 불필요 확인 시 그대로 진행한다.
+   - Work를 완료하고 싶다면: `/close`를 먼저 실행해 Work Done 처리를 완료한 뒤, 다시 `/done`을 실행해 세션 요약을 완성한다.
 
 다음 세션의 시작 프롬프트로 바로 사용할 수 있는 짧은 문장도 마지막에 작성해줘.

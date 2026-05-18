@@ -1,3 +1,9 @@
+---
+description: "프로젝트 워크플로우와 문서 건강 상태를 점검하고 보고한다. 옵션: --full, --cascade"
+argument-hint: "[--full] [--cascade]"
+disable-model-invocation: true
+---
+
 프로젝트 워크플로우와 문서의 건강 상태를 점검하고 보고한다.
 
 ## Execution Principles
@@ -201,7 +207,9 @@ rg -n "^## |^### " docs/PLAN.md
 - L1 Quick Mode 작업
 - L2/L3 `/work`
 - 중단 후 `/resume`
-- `/done`
+- `/close` (Work Done 처리 후 세션 계속)
+- `/done` (Work 미완료 상태, pause Discovery 체크)
+- `/close` → `/done` 연속 실행 (Work 완료 후 세션 종료)
 - Done → Archived
 - STATUS.md 변경 필요/불필요 분기
 - command/rule/prompt 변경 시 tool surface cascade

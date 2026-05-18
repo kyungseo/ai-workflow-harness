@@ -33,7 +33,9 @@ When starting a task (`/work`): check `docs/works/{category}/` for an existing W
 
 Quick Mode: small L1 changes with narrow scope, one-session completion, no checkpoint handoff, and no STATUS change can close with final summary + validation + commit history only. If workflow/protocol/command/rule/prompt/scaffold/status files change, run cascade checks even for L1.
 
-When completing a task (`/done`): if the Active Work has a Work file, execute Done processing only — set `status: Done`, fill `actual_end`, move the README row from Active to Done (archive pending), and propose STATUS pointer removal. Do not archive or `git mv` the Work file unless the user explicitly approves archive or a later `/start`/`/resume` archive trigger is approved.
+When completing a Work item (`/close`): confirm Done Criteria, set `status: Done` and `actual_end`, move the README row from Active to Done (archive pending), and propose STATUS pointer removal. After Done processing, ask whether to archive immediately or defer to a later `/start`/`/resume` trigger. Session continues after `/close`.
+
+When ending a session (`/done`): report completed work, changed files, validation results, residual risk, STATUS update needs, decision needs, and commit status. If Active Work exists and Discovery is not up to date for the current progress, propose content to record and ask whether to log it. `/done` does not perform Work Done processing — tell the user to run `/close` first if the Work is complete.
 
 State Update Gate:
 

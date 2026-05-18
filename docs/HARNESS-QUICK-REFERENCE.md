@@ -39,7 +39,8 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 ```
 
 - **CHECKPOINT** = 검증 결과, Work 파일 checkpoint/discovery, STATUS update 필요 여부를 보고하는 재개 지점.
-- **END (`/done`)** = 세션 종료 시에만 실행. 작업마다 호출하지 않는다.
+- **END (`/done`)** = 세션 종료 시에만 실행. 작업마다 호출하지 않는다. Work Done 처리는 포함하지 않는다 — Work를 완료하려면 `/close`를 먼저 실행한다.
+- **`/close`** = Work Done 처리 전용. 세션 종료 없이 Work 완료 처리(Done Criteria 확인 → status/actual_end 기입 → README Active→Done → STATUS pointer 제거 제안 → 선택적 archive). 실행 후 세션 계속.
 
 ## 3. Work Item Registration
 

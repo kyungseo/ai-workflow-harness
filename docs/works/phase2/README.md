@@ -8,19 +8,19 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Priority | Appetite | Work File |
 |----|-------|----------|----------|-----------|
-| PRE-C1 | Phase 1 아키텍처 현황 분석 | P0 | 3d | `docs/works/phase2/PRE-C1-arch-analysis.md` |
+| (없음) | | | | |
 
 ## Active
 
 | ID | Title | Priority | Start | Work File |
 |----|-------|----------|-------|-----------|
-| (없음) | | | | |
+| PRE-B | 개발환경 전략 결정 (B-1~B-4) | P0 | 2026-05-18 | `docs/works/phase2/PRE-B-env-strategy.md` |
 
 ## Done (archive pending)
 
 | ID | Title | actual_end | Hold Reason |
 |----|-------|------------|-------------|
-| (없음) | | | |
+| PRE-C1 | Phase 1 아키텍처 현황 분석 + 실무 완성도 갭 발굴 | 2026-05-18 | PRE-C2 참조 대기 |
 
 ## Archived
 
