@@ -177,6 +177,7 @@ adapt "${TEMPLATE_ROOT}/.cursorignore" "${TARGET_ROOT}/.cursorignore"
 adapt "${TEMPLATE_ROOT}/.gitignore"    "${TARGET_ROOT}/.gitignore"
 
 # ── Harness protocol docs ────────────────────────────────────────────────────
+adapt "${TEMPLATE_ROOT}/docs/BEHAVIOR-PRINCIPLES.md" "${TARGET_ROOT}/docs/BEHAVIOR-PRINCIPLES.md"
 adapt "${TEMPLATE_ROOT}/docs/AGENT-WORKFLOW.md" "${TARGET_ROOT}/docs/AGENT-WORKFLOW.md"
 
 if [[ "${DRY_RUN}" != true && "${PROFILE}" == "generic" ]]; then
@@ -257,7 +258,7 @@ write_text "${TARGET_ROOT}/.claude/settings.json" '{
 # ── Cursor config and rules ──────────────────────────────────────────────────
 adapt "${TEMPLATE_ROOT}/.cursor/config.json" "${TARGET_ROOT}/.cursor/config.json"
 
-for f in coding.mdc debugging.mdc execution.mdc git-commit.mdc output-format.mdc safety-critical.mdc workflow.mdc; do
+for f in behavior-principles.mdc coding.mdc debugging.mdc execution.mdc git-commit.mdc output-format.mdc safety-critical.mdc workflow.mdc; do
   adapt "${TEMPLATE_ROOT}/.cursor/rules/${f}" "${TARGET_ROOT}/.cursor/rules/${f}"
 done
 
@@ -318,6 +319,7 @@ write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 | --- | --- |
 | \`CLAUDE.md\` | Claude Code 진입점 |
 | \`AGENTS.md\` | Codex 진입점 |
+| \`docs/BEHAVIOR-PRINCIPLES.md\` | 전역 행동 원칙 |
 | \`docs/STATUS.md\` | 현재 작업 상태 |
 | \`docs/HARNESS-QUICK-REFERENCE.md\` | 세션 실행 규칙 요약 |
 | \`docs/WORKFLOW-MANUAL.md\` | 사용자용 워크플로우 가이드 |
@@ -345,7 +347,8 @@ claude        # Claude Code 열기
 1. \`docs/STATUS.md\` — 프로젝트 목표와 Phase 설명
 2. \`docs/PLAN-SUMMARY.md\` — 기술 스택, 포트, 패키지 구조
 3. \`docs/backlog/PHASE1.md\` — 초기 작업 항목 \`P1-001~\`
-4. \`docs/AGENT-WORKFLOW.md\` — Project Constants와 Verification Defaults
+4. \`docs/BEHAVIOR-PRINCIPLES.md\` — 전역 행동 원칙 확인
+5. \`docs/AGENT-WORKFLOW.md\` — Project Constants와 Verification Defaults
 
 ---
 

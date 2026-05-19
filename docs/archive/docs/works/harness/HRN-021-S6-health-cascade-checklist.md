@@ -1,7 +1,7 @@
 ---
 id: HRN-021-S6
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: AI Workflow simplification S6 — /health --cascade를 coverage-preserving checklist runner로 정리
 appetite: 0.5d

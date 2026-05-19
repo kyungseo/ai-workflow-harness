@@ -1,6 +1,7 @@
 # Harness Quick Reference
 
 AI Workflow Harness의 일상 실행 규칙이다.
+전역 행동 원칙은 `docs/BEHAVIOR-PRINCIPLES.md`를 따른다.
 상세 설명은 `docs/HARNESS-PROTOCOL.md`를 따른다.
 이 문서는 세션 중 빠르게 확인하는 요약이다. 충돌하거나 상세 판단이 필요하면 `docs/HARNESS-PROTOCOL.md`를 우선한다.
 

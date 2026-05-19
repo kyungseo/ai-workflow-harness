@@ -1,10 +1,11 @@
 # Harness Protocol
 
 이 문서는 AI Workflow Harness의 단일 상세 프로토콜이다.
+전역 행동 원칙은 `docs/BEHAVIOR-PRINCIPLES.md`를 따른다.
 세션 중 빠른 실행 규칙은 `docs/HARNESS-QUICK-REFERENCE.md`, 공통 운영 규칙은 `docs/AGENT-WORKFLOW.md`, 상세 판단은 이 문서를 따른다.
 
 `docs/WORKFLOW-MANUAL.md`는 사람이 읽는 사용자 매뉴얼이다.
-Agent 실행 규칙의 원본은 `docs/AGENT-WORKFLOW.md`와 이 문서다.
+Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, 이 문서다.
 
 ## 1. Purpose
 
@@ -35,6 +36,7 @@ Agent 실행 규칙의 원본은 `docs/AGENT-WORKFLOW.md`와 이 문서다.
 | --- | --- |
 | `CLAUDE.md` | Claude Code 진입점, 자동 로드 |
 | `AGENTS.md` | Codex 진입점 |
+| `docs/BEHAVIOR-PRINCIPLES.md` | 전역 행동 원칙 |
 | `docs/AGENT-WORKFLOW.md` | 도구 공통 운영 규칙 |
 | `docs/STATUS.md` | 현재 상태 live board |
 | `docs/HARNESS-QUICK-REFERENCE.md` | 일상 실행 카드 |

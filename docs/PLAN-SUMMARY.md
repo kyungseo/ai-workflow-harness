@@ -21,7 +21,7 @@
 | Infra | Docker Compose (로컬), K8s (Phase 2) |
 | CI | GitHub Actions — lint (Checkstyle) → test 체인, `.github/workflows/ci.yml` |
 | Code Quality | Checkstyle 10.21.0, Google Java Style + LineLength=120/Indentation=4 오버라이드 |
-| Test | Testcontainers — DR-010 Accepted, P2-006에서 실제 활성화 예정 (CI interim: GitHub Actions services 블록) |
+| Test | Testcontainers — DR-010 Accepted, P2-006 완료. Testcontainers 전환 완료, CI services 블록 제거 가능 |
 
 ## 서비스 포트
 

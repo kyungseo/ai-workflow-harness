@@ -1,7 +1,7 @@
 ---
 id: HRN-021-S3
 priority: P1
-status: Done
+status: Archived
 risk: Medium
 scope: Work lifecycle Candidate 상태 제거
 appetite: 1d
