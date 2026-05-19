@@ -187,6 +187,7 @@ fi
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-PROTOCOL.md"        "${TARGET_ROOT}/docs/HARNESS-PROTOCOL.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md" "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
 adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL.md"         "${TARGET_ROOT}/docs/WORKFLOW-MANUAL.md"
+adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL-SUMMARY.md" "${TARGET_ROOT}/docs/WORKFLOW-MANUAL-SUMMARY.md"
 
 adapt "${TEMPLATE_ROOT}/docs/decisions/DECISION-TEMPLATE.md" \
       "${TARGET_ROOT}/docs/decisions/DECISION-TEMPLATE.md"
@@ -323,6 +324,7 @@ write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 | \`docs/STATUS.md\` | 현재 작업 상태 |
 | \`docs/HARNESS-QUICK-REFERENCE.md\` | 세션 실행 규칙 요약 |
 | \`docs/WORKFLOW-MANUAL.md\` | 사용자용 워크플로우 가이드 |
+| \`docs/WORKFLOW-MANUAL-SUMMARY.md\` | 워크플로우 핵심 요약본 |
 | \`docs/AGENT-WORKFLOW.md\` | 공통 운영 규칙 |
 | \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 | \`.claude/commands/\` | \`/start\`, \`/pick\`, \`/register\`, \`/work\`, \`/close\`, \`/done\` 등 |
