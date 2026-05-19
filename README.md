@@ -132,6 +132,7 @@ make create-service NAME=order-service
 | --- | --- |
 | [CLAUDE.md](CLAUDE.md) | Claude Code 진입점 |
 | [AGENTS.md](AGENTS.md) | Codex 진입점 |
+| [docs/BEHAVIOR-PRINCIPLES.md](docs/BEHAVIOR-PRINCIPLES.md) | 전역 행동 원칙 |
 | [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) | 공통 운영 규칙 |
 | [docs/STATUS.md](docs/STATUS.md) | 현재 프로젝트 상태 |
 | [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) | Harness 상세 protocol |

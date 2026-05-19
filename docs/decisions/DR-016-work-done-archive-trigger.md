@@ -3,6 +3,8 @@
 Date: 2026-05-18
 Status: Accepted
 
+> **현재 기준**: 본문 하단 Addendum 참조 — HRN-019 이후 /done의 Work Done 처리 역할은 /close로 이관됨.
+
 ## Question
 
 당시 DR-013이 Work 파일 lifecycle을 네 단계로 정의했으나,

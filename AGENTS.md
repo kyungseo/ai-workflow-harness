@@ -1,13 +1,14 @@
 # AGENTS.md
 
 Codex entry point for this repository.
-Keep this file thin. Shared operating rules live in `docs/AGENT-WORKFLOW.md`.
+Keep this file thin. Global behavior principles live in `docs/BEHAVIOR-PRINCIPLES.md`. Shared operating rules live in `docs/AGENT-WORKFLOW.md`.
 
 ## Entry Contract
 
 MUST:
 
 - Treat this file and `CLAUDE.md` as equal tool-specific entry points.
+- Read and follow `docs/BEHAVIOR-PRINCIPLES.md` at session start for global behavioral principles that apply to all tasks.
 - Read and follow `docs/AGENT-WORKFLOW.md` at session start for common workflow, context routing, status rules, and validation defaults.
 - Read `docs/STATUS.md` current sections before choosing or continuing work.
 - Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands.

@@ -43,7 +43,7 @@
 | **Frontend** | Vanilla JS + Bootstrap CDN | 빌드 도구 없음, 가이드 샘플 목적 |
 | **Infra** | Docker Compose | 로컬 통합 실행 (PostgreSQL, Redis 포함) |
 | **Dev Env** | VS Code + DevContainer | Java 21 이미지, docker-in-docker |
-| **테스트** | Testcontainers | DR-010 Accepted — P2-006에서 `@SpringBootTest` 전환 예정. CI는 GitHub Actions services 블록 interim 유지 |
+| **테스트** | Testcontainers | DR-010 Accepted — P2-006 완료. Testcontainers 전환 완료, CI services 블록 제거 가능 |
 | **CI** | GitHub Actions | `develop` push → Checkstyle lint only / PR to main → 전체 테스트 (DR-009), `.github/workflows/ci.yml` |
 | **Code Quality** | Checkstyle 10.21.0 | Google Java Style + LineLength=120/Indentation=4 오버라이드, 파일 헤더 없음 정책 (DR-004, DR-005) |
 | **로그 포맷** | logstash-logback-encoder | stg/prd 환경 JSON 구조화 로그 (§10 참조). `runtimeOnly` 의존성으로 추가 |
@@ -470,10 +470,8 @@ TODO-0002: 본인 소유 아님 (권한 없음)
 | 통합 테스트 | `@SpringBootTest` + Testcontainers | 전체 흐름 | PostgreSQL + Redis 컨테이너 |
 | API 테스트 | `.http` 파일 | 각 엔드포인트 (Gateway 경유) | `tests/http/` 디렉토리 |
 
-> **Testcontainers 전환 계획 (DR-010 Accepted)**:
-> P2-006에서 `@SpringBootTest` 통합 테스트를 Testcontainers 기반으로 전환.
-> 전환 전까지 CI는 GitHub Actions `services` 블록(PostgreSQL/Redis)으로 interim 운영.
-> 전환 완료 후 `services` 블록 제거.
+> **Testcontainers 전환 완료 (DR-010 Accepted, P2-006 Done)**:
+> `@SpringBootTest` 통합 테스트가 Testcontainers 기반으로 전환됨. CI GitHub Actions `services` 블록 제거 가능.
 
 > **CI 단계별 테스트 실행 (DR-009)**:
 > `develop` push: Checkstyle lint만 실행 (`./gradlew checkstyleMain checkstyleTest`)

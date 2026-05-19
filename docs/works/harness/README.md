@@ -13,13 +13,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Hold Reason |
 |----|-------|------------|-------------|
-| HRN-021-S3 | Work lifecycle Candidate 상태 제거 | 2026-05-19 | HRN-021 series 전체 정리 전 참조 대기 |
-| HRN-021-S6 | /health --cascade coverage-preserving checklist화 | 2026-05-19 | HRN-021 series 후속 S3 진행 전 참조 대기 |
-| HRN-021-S1 | 6개 상세 protocol 문서 → HARNESS-PROTOCOL.md 단일 통합 | 2026-05-19 | HRN-021 series 후속 S3 진행 전 참조 대기 |
-| HRN-021-S5 | WORKFLOW-MANUAL.md AI 로드 제외와 cascade 대상 유지 기준 명시 | 2026-05-19 | HRN-021 series 후속 S3 진행 전 참조 대기 |
-| HRN-021-S2 | Approval Matrix 통합 — 승인 gate 3종 단일화 | 2026-05-19 | HRN-021 series 후속 S3 진행 전 참조 대기 |
-| HRN-021-S4 | Quick Mode 예외 조건 삭제 — harness/workflow surface 기본 L2 | 2026-05-18 | HRN-021 series 후속 S3 진행 전 참조 대기 |
-| HRN-019 | /close 커맨드 신규 도입 — /done Work 완료 절차 분리 | 2026-05-18 | cascade 감사 결과 포함, 참조 대기 |
+| HRN-023 | 유실된 최상위 전역 행동 원칙 복원 | 2026-05-19 | — |
 
 ## Archived
 
@@ -28,3 +22,10 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 | HRF-002 | Work 파일 기반 운영 체계 도입 | 2026-05-18 | `docs/archive/docs/works/harness/HRF-002-work-system-refactor.md` |
 | HRN-017 | DR-015 2계층 State Update Gate 구현 | 2026-05-18 | `docs/archive/docs/works/harness/HRN-017-state-update-gate.md` |
 | HRN-018 | DR-016 Done→Archived 전환 트리거 구현 | 2026-05-18 | `docs/archive/docs/works/harness/HRN-018-done-archive-trigger.md` |
+| HRN-019 | /close 커맨드 신규 도입 — /done Work 완료 절차 분리 | 2026-05-18 | `docs/archive/docs/works/harness/HRN-019-close-command.md` |
+| HRN-021-S4 | Quick Mode 예외 조건 삭제 — harness/workflow surface 기본 L2 | 2026-05-18 | `docs/archive/docs/works/harness/HRN-021-S4-quick-mode-l2-surface.md` |
+| HRN-021-S1 | 6개 상세 protocol 문서 → HARNESS-PROTOCOL.md 단일 통합 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S1-protocol-consolidation.md` |
+| HRN-021-S2 | Approval Matrix 통합 — 승인 gate 3종 단일화 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S2-approval-matrix.md` |
+| HRN-021-S3 | Work lifecycle Candidate 상태 제거 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S3-work-lifecycle-candidate-removal.md` |
+| HRN-021-S5 | WORKFLOW-MANUAL.md AI 로드 제외와 cascade 대상 유지 기준 명시 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S5-manual-load-boundary.md` |
+| HRN-021-S6 | /health --cascade coverage-preserving checklist화 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S6-health-cascade-checklist.md` |

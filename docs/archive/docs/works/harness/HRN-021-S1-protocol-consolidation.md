@@ -1,7 +1,7 @@
 ---
 id: HRN-021-S1
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: AI Workflow simplification S1 — 6개 상세 protocol 문서를 HARNESS-PROTOCOL.md로 단일 통합
 appetite: 0.5d

@@ -1,7 +1,7 @@
 ---
 id: HRN-021-S2
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: AI Workflow simplification S2 — Scope Approval, State Update Gate, Commit Gate를 Approval Matrix로 통합
 appetite: 0.5d
