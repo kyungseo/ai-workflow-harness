@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-19 (HRN-019/HRN-021-S1~S6/PRE-C1 archive 완료)
+Last updated: 2026-05-19 (HRN-023 Active 등록 — 전역 행동 원칙 복원)
 
 ## Current State
 
@@ -38,6 +38,7 @@ Last updated: 2026-05-19 (HRN-019/HRN-021-S1~S6/PRE-C1 archive 완료)
 | ID | Priority | Status | Work File |
 | --- | --- | --- | --- |
 | PRE-B | P0 | Active | `docs/works/phase2/PRE-B-env-strategy.md` |
+| HRN-023 | P1 | Active | `docs/works/harness/HRN-023-behavior-principles-restore.md` |
 
 ## Blockers And Open Questions
 

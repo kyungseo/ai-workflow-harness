@@ -1,8 +1,9 @@
 # CLAUDE.md
 
 Claude Code entry point for this repository.
-Keep this file thin. Shared operating rules live in `docs/AGENT-WORKFLOW.md`.
+Keep this file thin. Global behavior principles live in `docs/BEHAVIOR-PRINCIPLES.md`. Shared operating rules live in `docs/AGENT-WORKFLOW.md`.
 
+@docs/BEHAVIOR-PRINCIPLES.md
 @docs/AGENT-WORKFLOW.md
 
 ## Entry Contract

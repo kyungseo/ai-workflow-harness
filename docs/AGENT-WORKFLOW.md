@@ -2,6 +2,7 @@
 
 Claude Code, Codex, Cursor의 공통 프로젝트 운영 규칙이다.
 루트 `CLAUDE.md`와 `AGENTS.md`는 동등한 도구별 진입점이며, 공유 규칙은 이 파일과 상세 harness protocol 문서가 담당한다.
+전역 행동 원칙은 `docs/BEHAVIOR-PRINCIPLES.md`가 우선하며, 이 문서는 그 원칙을 실행 절차로 구체화한다.
 상세 레퍼런스는 `docs/HARNESS-PROTOCOL.md`를 따른다.
 
 ## Session Startup
