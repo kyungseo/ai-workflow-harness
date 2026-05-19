@@ -7,13 +7,13 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Priority | Start | Work File |
 |----|-------|----------|-------|-----------|
-| HRN-023 | 유실된 최상위 전역 행동 원칙 복원 | P1 | 2026-05-19 | `docs/works/harness/HRN-023-behavior-principles-restore.md` |
+| (없음) | | | | |
 
 ## Done (archive pending)
 
 | ID | Title | actual_end | Hold Reason |
 |----|-------|------------|-------------|
-| (없음) | | | |
+| HRN-023 | 유실된 최상위 전역 행동 원칙 복원 | 2026-05-19 | — |
 
 ## Archived
 

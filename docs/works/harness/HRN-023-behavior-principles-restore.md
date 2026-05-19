@@ -1,13 +1,13 @@
 ---
 id: HRN-023
 priority: P1
-status: Active
+status: Done
 risk: Low
 scope: 유실된 최상위 전역 행동 원칙 복원 — docs/BEHAVIOR-PRINCIPLES.md 신규 생성 + Claude/Codex/Cursor 3개 도구 정렬
 appetite: 1d
 planned_start: 2026-05-19
 planned_end:
-actual_end:
+actual_end: 2026-05-19
 ---
 
 # HRN-023: 유실된 최상위 전역 행동 원칙 복원
@@ -52,7 +52,7 @@ HRF-002(워크플로우 체계화) 과정에서 "CLAUDE.md는 얇게 유지, 상
 - [x] 우선순위 체계 선언이 현행 구조로 현행화 (`docs/CLAUDE.md` → `docs/AGENT-WORKFLOW.md`)
 - [x] cascade 확인 완료: AGENT-WORKFLOW.md, HARNESS-PROTOCOL.md, WORKFLOW-MANUAL.md 충돌 없음
 - [x] `docs/backlog/HARNESS.md` HRN-023 항목 등록
-- [ ] diff 확인 후 commit 승인
+- [x] diff 확인 후 commit 승인
 
 ## Checkpoints
 
@@ -88,4 +88,12 @@ HRF-002(워크플로우 체계화) 과정에서 "CLAUDE.md는 얇게 유지, 상
 - [x] CP-2: CLAUDE.md @include 추가 + AGENTS.md Entry Contract 참조 추가 (2026-05-19)
 - [x] CP-3: .cursor/rules/behavior-principles.mdc 신규 생성 (2026-05-19)
 - [x] CP-4: cascade 확인 완료 / backlog 등록 완료 (2026-05-19)
-- [ ] commit 승인 대기
+- [x] commit 완료 (98dd775, 2026-05-19)
+
+### 사용자 추가 보완 (2026-05-19)
+초기 커밋 이후 사용자가 아래 surface까지 확장하여 커밋:
+- **canonical**: HARNESS-PROTOCOL.md, HARNESS-QUICK-REFERENCE.md — BEHAVIOR-PRINCIPLES를 실행 원칙 계층으로 명시
+- **entrypoint**: CLAUDE.md Entry Contract — `Follow docs/BEHAVIOR-PRINCIPLES.md` MUST 항목 추가, fallback prompts 로드 경로 정렬
+- **user-facing**: README.md, WORKFLOW-MANUAL.md, prompts/README.md — 전역 원칙 문서 가시화
+- **scaffold**: scripts/create-harness.sh — 신규 harness 생성 시 docs/BEHAVIOR-PRINCIPLES.md, .cursor/rules/behavior-principles.mdc 자동 생성
+- **SSoT + Cursor rule**: 원칙 5에 "command·prompt·artifact output contract 우선, 가능 범위에서 결론·검증·리스크 노출" 조항 추가
