@@ -230,4 +230,4 @@ Final Deck: docs/presentations/{name}-v{x.y}.pptx
 3. **Format & Audience Matrix:** 최종 적용된 Format 및 Target Persona 파라미터
 4. **Validation Summary:** Phase 5 자가 검증 결과 요약
 5. **Residual Risks:** 잔존 모호성, 미검증 메트릭, 상위 의존성 리스크
-6. **Downstream Actions:** State Update 제안 필요 여부 확정
+6. **Downstream Actions:** state-change proposal 필요 여부 확정

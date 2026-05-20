@@ -93,7 +93,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 사용을 기본값으로 둔다 | Work Done과 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
 | L3 구조 변경 | 관련 계획 또는 `docs/PLAN.md` 확인, AS-IS/TO-BE와 rollback 포함 후 승인 | Phase criteria, Current phase/focus, Recent Decisions는 `STATUS Update Proposal` 승인 후 처리 | validation 결과, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
 
-멀티 Active Work 환경에서는 모든 state update 제안에 대상 Work ID를 포함한다.
+멀티 Active Work 환경에서는 모든 state-change proposal에 대상 Work ID를 포함한다.
 각 Work는 독립 gate를 가진다.
 
 ### Approval Matrix State Detail
@@ -233,7 +233,12 @@ ID를 다른 의미로 재사용하지 않는다.
 | `docs/backlog/` | UPPERCASE-HYPHENATED | `PHASE2.md` |
 | `docs/decisions/` | `DR-{NNN}-{topic}.md` | `DR-010-integration-test-infra.md` |
 | `docs/works/{category}/` | `{ID}-{lowercase-topic}.md` | `HRF-002-work-system-refactor.md` |
-| `docs/archive/` | lowercase-hyphenated | `phase1-status.md` |
+| `docs/archive/docs/` | 원본 상대 경로와 파일명 mirror | `docs/archive/docs/WORKFLOW-MANUAL-ai-workflow-v1.0.0.md` |
+| `docs/archive/snapshots/` | `{topic}-{YYYYMMDD}` | `harness-refactor-20260514/` |
+| `docs/retrospectives/` | `{topic}-{YYYYMMDD}.md` | `ai-workflow-complexity-review-20260518.md` |
+| `docs/presentations/` | artifact/deck version naming | `harness-v1-team-intro-v1.1.pptx` |
+
+기존 media asset은 의미 보존을 우선한다. 신규 media 파일은 가능하면 lowercase-hyphenated를 사용하되, 사용자 표시명이나 외부 산출물 이름을 보존해야 하면 예외로 둔다.
 
 ## 10. Work File Decomposition
 
@@ -303,8 +308,14 @@ Backlog의 `Candidate` 항목은 후보 pool이다.
 Work 파일은 착수 승인 후 `Active` 상태로 생성한다.
 `Done`과 `Archived`는 분리한다.
 Work Done 처리(status: Done, actual_end, README Active->Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다.
+`/close`는 Work Done 처리만 수행한다. commit/PR이 이어지면 별도 commit gate에서 STATUS Finalization과 Tracking Finalization을 보고한다.
 `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
 Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에 수행한다.
+
+Review-sensitive Work는 사용자 최종 리뷰를 Done Criteria에 선택적으로 포함한다.
+`/close`는 모든 Work에 사용자 리뷰를 강제하지 않는다. 그러나 Done Criteria에 사용자 최종 리뷰, final review, 검토 후 Done 같은 명시적 리뷰 조건이 있으면 그 조건을 충족하기 전 `status: Done`으로 전환하지 않는다.
+기본 포함 후보는 harness/workflow surface, user-facing manual, rule/command, policy/operational procedure 변경이다.
+Quick Mode, 단순 오타·링크·기계적 정합성 패치, 테스트·검증으로 닫히는 구현 작업은 기본 제외다.
 
 ### Index Rules
 
@@ -354,6 +365,21 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 | 비자명 이슈의 재현·원인·해결 내역 |
 | `docs/reports/`, `docs/presentations/` | 산출물 | 발표·보고·리뷰·의사결정 지원 자료 |
 
+### Information Architecture Rules
+
+`docs/`는 파일 위치보다 역할 경계가 먼저다. 이동은 참조 비용과 자동 로드 영향을 함께 검토한다.
+
+| 분류 | 위치 | 기준 |
+| --- | --- | --- |
+| Canonical AI operations | `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md` | Agent 실행 규칙의 현재 기준 |
+| Live state and trackers | `docs/STATUS.md`, `docs/backlog/`, `docs/works/`, `docs/decisions/` | 현재 상태, 후보, Work SSoT, 결정 근거 |
+| Product and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/ARCHITECTURE.md`, `docs/DEVELOPER-GUIDE.md`, `docs/CODING-CONVENTIONS.md`, `docs/DOCKERFILE-GUIDE.md`, `docs/GIT-WORKFLOW.md` | 제품/개발/운영 지식 |
+| User-facing workflow docs | `docs/WORKFLOW-MANUAL.md`, `docs/WORKFLOW-MANUAL-SUMMARY.md` | 사람이 읽는 매뉴얼과 condensed guide. 평시 Agent 자동 로드 대상 아님 |
+| Historical and evaluation docs | `docs/archive/`, `docs/retrospectives/`, reference-only plans | 완료 이력, snapshot, 시점별 평가, 완료된 계획의 참조 기록 |
+| Troubleshooting docs | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 패턴의 재사용 가능한 incident record |
+| Artifacts | `docs/reports/`, `docs/presentations/` | `/doc` 산출물. source traceability와 version naming 유지 |
+| Media assets | root 또는 관련 문서 인접 위치 | 기존 asset은 참조 안정성을 우선하고, 신규 asset은 관련 문서 옆에 둔다 |
+
 ### Update Rules
 
 - 현재 상태가 바뀌면 `STATUS.md` 갱신 여부를 확인한다.
@@ -392,6 +418,8 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | T12 | scaffold source 또는 canonical workflow 변경 | dry-run + temp scaffold 검증 |
 | T13 | Product surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
+| T15 | commit 또는 PR 생성 전 | `docs/STATUS.md` 최종본 반영 필요 여부 판정 |
+| T16 | commit 또는 PR 생성 전 | backlog/Work/DR tracker 최종 상태 반영 필요 여부 판정 |
 
 ### Loop Safety
 
@@ -405,13 +433,16 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 - T12는 temp target에서 검증하고 생성물을 live tree로 복사하지 않는다.
 - T13은 product surface의 작은 작업을 빠르게 닫기 위한 규칙이다.
 - T14는 entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경을 기본 L2로 다루며, 관련 tool surface를 확인한다.
+- T15는 자동 STATUS 수정을 허용하지 않는다. Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, Active Work Discovery 최신성을 확인한다. 필요하면 Approval Matrix에 맞는 state-change proposal 또는 `STATUS Update Proposal`을 먼저 제안하고, 불필요하면 commit/PR 전 summary에 이유를 남긴다.
+- T16은 backlog/Work/DR tracker를 실제 완료 상태와 맞추는 gate다. 연결된 backlog 항목의 Status/Done Criteria/Verification, Work 파일 frontmatter/status/Checkpoints/Discovery, Work index README 위치, 관련 DR의 Status/Supersedes/Linked Backlog Items, 완료된 Quick Mode 작업이 backlog Candidate로 남아 있는지 여부를 확인한다.
 
 ### Cascade Rule
 
 Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 파일 수정은 사용자 승인 또는 명시 요청 후 진행한다.
-`/health --cascade`는 coverage-preserving checklist runner로 사용한다.
-감사 범위는 canonical -> tool-specific -> user-facing -> scaffold 계층을 유지하고, 변경 파일 유형별 required surface, grep, simulation을 실행한 뒤 누락·불일치·과잉반복·불필요복잡성·사용자생산성저하를 P0/P1/P2로 보고한다.
+`/health --cascade`는 changed-surface cascade audit으로 사용한다.
+감사 범위는 변경 파일 유형에 맞는 canonical -> tool-specific -> user-facing -> scaffold 계층으로 제한하되, 선택된 계층의 required surface, grep, simulation은 생략하지 않는다. 전체 표면 감사가 필요하면 `/health --full --cascade`를 사용한다.
+변경 파일이 없으면 `/health --cascade`는 Quick health mode와 동일하게 동작한다.
 
 | Level | Action | Meaning |
 | --- | --- | --- |
@@ -429,7 +460,7 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 | `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc` | 반대 tool rule, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` |
 | `prompts/*session-start.md` | `prompts/README.md`, `AGENTS.md`, `CLAUDE.md`, relevant command/rule |
 | `scripts/create-harness.sh` | generic/spring-boot dry-run, temp scaffold 생성 결과, scaffold 내부 stale phrase 검색 |
-| `docs/decisions/DR-*.md` Accepted | `docs/STATUS.md` Recent Decisions 필요 여부, 관련 backlog/Work 파일, PLAN 영향 여부 |
+| `docs/decisions/DR-*.md` Accepted | `docs/STATUS.md` Recent Decisions 필요 여부 필수 판정, 관련 backlog/Work 파일, PLAN 영향 여부 |
 | developer-facing docs (`README.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`) | 실제 config/script/source와 기술 내용 대조 |
 | `docs/` 하위 디렉토리 신규 추가 또는 삭제 | T5(PLAN 영향 여부), T7(harness protocol 업데이트 필요 여부), Context Routing 갱신 여부, `scripts/create-harness.sh` 동기화 여부 확인 |
 
@@ -483,6 +514,8 @@ Report includes:
 - Work 파일 Done 처리 또는 archive 이동에 사용자 확인이 있었는가
 - `STATUS.md` 갱신이 필요한가
 - `STATUS.md` 갱신이 필요하면 Approval Matrix에 맞는 제안과 사용자 승인이 있었는가
+- commit/PR 전 STATUS Finalization 결과(`STATUS.md` 변경 필요 yes/no와 이유)를 보고했는가
+- commit/PR 전 Tracking Finalization 결과(backlog/Work/DR 변경 필요 yes/no와 이유)를 보고했는가
 - DR/Work 파일/archive/cascade가 필요한가
 - 다음 세션이 `STATUS.md`만 보고 재개 가능한가
 
