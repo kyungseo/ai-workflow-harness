@@ -28,7 +28,7 @@ AI Workflow Harness의 일상 실행 규칙이다.
 | L3 change or planning basis | `docs/PLAN.md` |
 | Priority tie, planning, idea generation, repeated risk | latest or relevant `docs/retrospectives/` |
 | Non-trivial issue resolution history | `docs/troubleshooting/` |
-| Past Phase1 detail | `docs/archive/harness-refactor-20260514/` or `docs/archive/` |
+| Past Phase1 detail | `docs/archive/snapshots/harness-refactor-20260514/` or `docs/archive/` |
 
 ## 2. State Machine
 
@@ -41,7 +41,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 
 - **CHECKPOINT** = 검증 결과, Work 파일 checkpoint/discovery, STATUS update 필요 여부를 보고하는 재개 지점.
 - **END (`/done`)** = 세션 종료 시에만 실행. 작업마다 호출하지 않는다. Work Done 처리는 포함하지 않는다 — Work를 완료하려면 `/close`를 먼저 실행한다.
-- **`/close`** = Work Done 처리 전용. 세션 종료 없이 Work 완료 처리(Done Criteria 확인 → status/actual_end 기입 → README Active→Done → STATUS pointer 제거 제안 → 선택적 archive). commit/PR 전 STATUS Finalization Gate를 대체하지 않는다. 실행 후 세션 계속.
+- **`/close`** = Work Done 처리 전용. 세션 종료 없이 Work 완료 처리(Done Criteria 확인 → status/actual_end 기입 → README Active→Done → STATUS pointer 제거 제안 → 선택적 archive). commit/PR이 이어지면 별도 commit gate에서 STATUS/Tracking Finalization을 보고한다. 실행 후 세션 계속.
 - Review-sensitive Work는 사용자 최종 리뷰를 Done Criteria에 선택 포함한다. `/close`는 전역 리뷰를 강제하지 않지만, Done Criteria에 명시된 리뷰 조건은 Done 처리 전 반드시 확인한다.
 
 ### Command Taxonomy
@@ -273,8 +273,7 @@ Backlog `Candidate`는 후보 pool이다. Work 파일은 착수 승인 후 `Acti
 
 ## 10. Naming
 
-빠른 ID prefix 요약은 `docs/AGENT-WORKFLOW.md` Naming Summary를 따른다.
-상세 file naming 기준은 `docs/HARNESS-PROTOCOL.md`와 `docs/decisions/DR-008-docs-filename-standard.md`를 따른다.
+ID prefix와 file naming 기준은 `docs/HARNESS-PROTOCOL.md`와 `docs/decisions/DR-008-docs-filename-standard.md`를 따른다.
 
 ## 11. Never
 

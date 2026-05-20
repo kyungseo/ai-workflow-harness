@@ -308,7 +308,7 @@ Backlog의 `Candidate` 항목은 후보 pool이다.
 Work 파일은 착수 승인 후 `Active` 상태로 생성한다.
 `Done`과 `Archived`는 분리한다.
 Work Done 처리(status: Done, actual_end, README Active->Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다.
-`/close`는 Work Done 처리이며 commit/PR 전 STATUS Finalization Gate를 대체하지 않는다.
+`/close`는 Work Done 처리만 수행한다. commit/PR이 이어지면 별도 commit gate에서 STATUS Finalization과 Tracking Finalization을 보고한다.
 `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
 Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에 수행한다.
 
