@@ -516,7 +516,7 @@ SPRING_PROFILES_ACTIVE=local ./gradlew :services:user-service:bootRun
 ./gradlew check            # Checkstyle + test 전부
 ```
 
-CI는 `develop` push에서 Checkstyle(lint)을 실행하고, `main` push 또는 `main` 대상 PR에서 `lint → test` 순서로 실행된다 (`.github/workflows/ci.yml`).
+CI는 Java/Gradle/`.github` workflow 변경이 포함된 `main` push 또는 `main` 대상 PR에서 lint와 test를 병렬 실행한다. `develop` push와 feature→develop PR은 CI를 실행하지 않으므로, Java/Gradle 변경은 PR 전 로컬 검증 결과를 남긴다 (`.github/workflows/ci.yml`, `docs/GIT-WORKFLOW.md`).
 lint 실패 시 Report: `build/reports/checkstyle/main.html` 또는 GitHub Actions 로그 확인.
 
 상세 컨벤션 규칙: [`docs/CODING-CONVENTIONS.md`](CODING-CONVENTIONS.md)

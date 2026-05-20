@@ -2,6 +2,7 @@
 
 Date: 2026-05-12
 Status: Accepted
+Superseded by: DR-018 (부분 — develop push Checkstyle trigger 제거)
 
 ## Question
 
