@@ -17,6 +17,7 @@ disable-model-invocation: true
   - `--full` → 전체 모드: A+B+E+F+C+D 영역, 분기별·Phase 전환 전 사용
   - `--cascade` → changed-surface cascade audit: 변경 파일 유형에 맞는 canonical → tool-specific → user-facing → scaffold 계층을 선택하고, 해당 계층의 필수 surface/grep/simulation으로 drift를 발견·보고
   - `--full --cascade` → Phase 전환 전 또는 대형 harness 변경 후 전체 surface와 cascade를 함께 감사
+  - `--cascade`에서 변경 파일이 없으면 Quick 모드(A+B+E)로 동작하고, 전체 cascade 감사가 필요하면 `--full --cascade`를 사용
 
 ## File Reading Order
 
@@ -66,6 +67,7 @@ git diff --cached --name-only
 예: slash command 설명, trigger reference, 사용자-visible workflow, scaffold 안내가 바뀐 경우.
 
 `--cascade`는 변경 파일 기준으로 감사 대상을 좁힌다. 단, 선택된 파일 유형의 required surface, grep, simulation은 생략하지 않고, 누락·불일치·과잉반복·불필요복잡성·사용자생산성저하를 P0/P1/P2로 보고한다.
+변경 파일이 없으면 Quick 모드(A+B+E)와 동일하게 동작한다.
 전체 surface를 모두 훑어야 하면 `--full --cascade`를 사용한다.
 
 ### Required Surface Matrix

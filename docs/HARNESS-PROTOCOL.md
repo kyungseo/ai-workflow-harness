@@ -442,6 +442,7 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 파일 수정은 사용자 승인 또는 명시 요청 후 진행한다.
 `/health --cascade`는 changed-surface cascade audit으로 사용한다.
 감사 범위는 변경 파일 유형에 맞는 canonical -> tool-specific -> user-facing -> scaffold 계층으로 제한하되, 선택된 계층의 required surface, grep, simulation은 생략하지 않는다. 전체 표면 감사가 필요하면 `/health --full --cascade`를 사용한다.
+변경 파일이 없으면 `/health --cascade`는 Quick health mode와 동일하게 동작한다.
 
 | Level | Action | Meaning |
 | --- | --- | --- |
