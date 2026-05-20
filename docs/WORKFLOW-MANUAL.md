@@ -670,7 +670,7 @@ flowchart TD
     PASS -- 실패 --> FAIL["FAIL\n원인 기록 · commit 금지"]
     FAIL --> RECOVER["RECOVER\n범위 축소 또는 계획 재작성"]
     RECOVER --> PLAN
-    PASS -- 통과 --> STATE_NEED{State Update 필요?}
+    PASS -- 통과 --> STATE_NEED{state-change 필요?}
     STATE_NEED -- "Work CP/Discovery" --> WORK_UPDATE["Layer 1\nWork 파일 업데이트 후 보고"]
     STATE_NEED -- "Work Done / STATUS pointer" --> STATE_PROPOSAL["Approval Matrix 상태 변경\n대상 Work ID 명시"]
     STATE_NEED -- 아니오 --> CHECKPOINT_CLEAN["CHECKPOINT\n검증 결과·문서 cascade 확인"]
@@ -726,7 +726,7 @@ sequenceDiagram
         U->>C: 복구 방향 승인
         C->>F: RECOVER - 계획 재작성 또는 범위 축소
     else 검증 통과
-        C->>U: State Update 제안<br/>(필요한 경우)
+        C->>U: state-change proposal<br/>(필요한 경우)
         U->>C: 상태 변경 승인 또는 생략 확인
         C->>F: CHECKPOINT - 승인된 경우 Work 파일 또는 docs/STATUS.md 갱신
         C->>F: 필요 시 DR/Work 파일/문서 cascade 반영
@@ -824,11 +824,11 @@ Claude Code에서 `/명령명`으로 호출. 파일 위치: `.claude/commands/*.
 | --- | --- | --- | --- |
 | Session lifecycle | `/start` | 세션 시작 시 | CLAUDE.md + STATUS.md 로드, 현재 상태 요약, 다음 작업 제안 |
 | Session lifecycle | `/pick` | 다음 작업을 선택할 때 | backlog 후보 비교, 우선순위 추천, 관련 DR 표시, 구현 전 승인 대기 |
-| Session lifecycle | `/done` | 세션 종료 시 | 완료 작업, 변경 파일, 검증 결과, 리스크, Active Work Discovery 미기록 확인, State Update 필요 여부, STATUS/Tracking Finalization 결과, 다음 세션 primer 요약, DR 검토. Work Done 처리 없음 — Work를 끝내려면 `/close` 먼저 실행 |
+| Session lifecycle | `/done` | 세션 종료 시 | 완료 작업, 변경 파일, 검증 결과, 리스크, Active Work Discovery 미기록 확인, state-change proposal 필요 여부, STATUS/Tracking Finalization 결과, 다음 세션 primer 요약, DR 검토. Work Done 처리 없음 — Work를 끝내려면 `/close` 먼저 실행 |
 | Work lifecycle | `/work {ID}` | 특정 작업을 시작할 때 | Work File Check → PLAN.md 강제 로드 조건 체크 → 위험도 판단(L1/L2/L3) → 계획 수립 → "진행할까요?" 후 대기 → DR-worthy 결정 목록 제안 |
 | Work lifecycle | `/resume {ID}` | 중단된 작업을 재개할 때 | 파일 상태 vs STATUS.md / Work 파일 비교 → Done이면 재개 금지 및 archive/후속 작업 제안 → 남은 계획 제안 |
 | Work lifecycle | `/close` | Work를 완료할 때 (세션 계속) | Done Criteria 확인, status/actual_end 기입, README Active→Done, STATUS pointer 제거 제안, 선택적 archive. 세션 종료나 commit/PR 전 STATUS Finalization 대체 아님 |
-| Utility / Analysis | `/register [설명]` | 새 작업 항목을 등록할 때 | 긴급도·성격 판단 → STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md 중 라우팅 → State Update 제안(필요 시) → 긴급 항목이면 /work 연결 제안 |
+| Utility / Analysis | `/register [설명]` | 새 작업 항목을 등록할 때 | 긴급도·성격 판단 → STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md 중 라우팅 → state-change proposal(필요 시) → 긴급 항목이면 /work 연결 제안 |
 | Utility / Analysis | `/debug` | 버그 분석/수정 시 | 코드·로그·테스트 근거로 원인 파악, 최소 변경 계획 |
 | Utility / Analysis | `/doc [brief]` | 발표·보고·리뷰 패키지·외부 공유용 문서 산출물을 만들 때 | 목적·audience·format·source brief 확정 → outline 승인 → presentation/document 도구 또는 fallback으로 산출물 생성 → 품질 검증 |
 | Utility / Analysis | `/record-decision` | 기술 결정을 DR로 기록할 때 | 현재 대화의 확정 결정을 DR 초안으로 작성, 승인 후 파일 생성, Accepted DR마다 Recent Decisions 반영 필요 여부 판정 |
@@ -1319,7 +1319,7 @@ T3 자체가 T5를 즉시 발동시키지는 않는다. 루프 없음.
 
 **cascade:**
 - 산출물이 현재 상태 추적에 필요하면 Approval Matrix의 상태 변경 규칙에 맞는 제안
-- 산출물 작성 중 source 문서 오류를 발견하면 즉시 수정하지 않고 별도 작업 또는 State Update 제안으로 분리
+- 산출물 작성 중 source 문서 오류를 발견하면 즉시 수정하지 않고 별도 작업 또는 state-change proposal로 분리
 
 **루프 안전:** T9 결과물은 source 문서를 직접 수정하지 않는다. source 변경이 필요하면 별도 작업으로 분리한다.
 
@@ -1503,7 +1503,7 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 읽어줘
 파일 수정은 내 승인 전까지 하지 마.
 ```
 
-Claude가 코드베이스를 파악하고 State Update 제안을 제시하면 승인한다. 이후 `/pick`으로 작업을 선택해 바로 이어갈 수 있다.
+Claude가 코드베이스를 파악하고 state-change proposal을 제시하면 승인한다. 이후 `/pick`으로 작업을 선택해 바로 이어갈 수 있다.
 
 ---
 

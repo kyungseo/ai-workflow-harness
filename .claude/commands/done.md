@@ -3,7 +3,7 @@ description: "세션 전체 요약을 출력한다. Work Done 처리 없음 — 
 disable-model-invocation: true
 ---
 
-**이 명령은 세션을 종료할 때만 실행한다.** 작업 하나가 끝나면 Work 파일 checkpoint/Done 처리, 필요한 state update 제안, commit gate만 수행하고 다음 작업으로 이어가면 된다. `/done`은 여러 작업을 마친 후 세션 전체를 정리할 때 쓴다.
+**이 명령은 세션을 종료할 때만 실행한다.** 작업 하나가 끝나면 Work 파일 checkpoint/Done 처리, 필요한 state-change proposal, commit gate만 수행하고 다음 작업으로 이어가면 된다. `/done`은 여러 작업을 마친 후 세션 전체를 정리할 때 쓴다.
 
 **Work를 완료하고 싶다면** `/close`를 먼저 실행해줘. `/close`는 Work Done 처리만 수행하고 세션은 계속된다. `/done`은 Work Done 처리 없이 세션 요약만 출력한다.
 

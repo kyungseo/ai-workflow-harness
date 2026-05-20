@@ -15,8 +15,8 @@ disable-model-invocation: true
 - **모드**:
   - (없음) → Quick 모드: A+B+E 영역, ~10개 타깃 읽기, 작업 블록 시작 전 사용
   - `--full` → 전체 모드: A+B+E+F+C+D 영역, 분기별·Phase 전환 전 사용
-  - `--cascade` → coverage-preserving checklist runner: canonical → tool-specific → user-facing → scaffold 계층을 유지하고, 변경 파일 유형별 필수 surface/grep/simulation으로 drift를 발견·보고
-  - `--full --cascade` → Phase 전환 전 또는 대형 harness 변경 후 전체 구조와 cascade를 함께 감사
+  - `--cascade` → changed-surface cascade audit: 변경 파일 유형에 맞는 canonical → tool-specific → user-facing → scaffold 계층을 선택하고, 해당 계층의 필수 surface/grep/simulation으로 drift를 발견·보고
+  - `--full --cascade` → Phase 전환 전 또는 대형 harness 변경 후 전체 surface와 cascade를 함께 감사
 
 ## File Reading Order
 
@@ -65,7 +65,8 @@ git diff --cached --name-only
 `docs/WORKFLOW-MANUAL.md`는 평시 AI 실행 규칙 로드 대상이 아니며, `--cascade`에서 user-facing workflow drift를 확인할 때만 필요한 섹션을 읽는다.
 예: slash command 설명, trigger reference, 사용자-visible workflow, scaffold 안내가 바뀐 경우.
 
-`--cascade`는 감사 범위를 줄이지 않는다. AI가 즉흥적으로 판단하는 대신, 변경 파일 유형별 필수 확인 항목을 실행하고 누락·불일치·과잉반복·불필요복잡성·사용자생산성저하를 P0/P1/P2로 보고한다.
+`--cascade`는 변경 파일 기준으로 감사 대상을 좁힌다. 단, 선택된 파일 유형의 required surface, grep, simulation은 생략하지 않고, 누락·불일치·과잉반복·불필요복잡성·사용자생산성저하를 P0/P1/P2로 보고한다.
+전체 surface를 모두 훑어야 하면 `--full --cascade`를 사용한다.
 
 ### Required Surface Matrix
 
@@ -116,8 +117,8 @@ Historical matches are not automatically drift. Report them separately as snapsh
 
 | 변경 파일 유형 | 반드시 시뮬레이션할 흐름 |
 | --- | --- |
-| Canonical workflow/protocol | `/start`, `/pick`, `/work`, `/resume`, `/close`, `/done`, archive trigger, state update, quick mode, scaffold |
-| Command/rule/prompt | 해당 command 흐름, `/work`, `/resume`, `/done`, state update, tool surface cascade, scaffold |
+| Canonical workflow/protocol | `/start`, `/pick`, `/work`, `/resume`, `/close`, `/done`, archive trigger, state-change proposal, quick mode, scaffold |
+| Command/rule/prompt | 해당 command 흐름, `/work`, `/resume`, `/done`, state-change proposal, tool surface cascade, scaffold |
 | User-facing manual/quick reference/README | 사용자 설명과 실제 command/canonical 흐름 대조, quick mode, close/done, scaffold |
 | Scaffold source | 신규 프로젝트 scaffold, 기존 프로젝트 adoption, generated command/rule/prompt/manual 경로 검색 |
 | Work/status/backlog/DR | `/start`, `/pick`, `/work`, `/resume`, `/close`, archive trigger, STATUS update gate |
@@ -253,7 +254,8 @@ rg -n "^## |^### " docs/PLAN.md
 
 Coverage rule:
 
-- 범위를 임의로 줄이지 않는다.
+- `--cascade`는 changed-surface 기준으로 범위를 줄일 수 있지만, 선택한 파일 유형의 layer coverage는 유지한다.
+- `--full --cascade`는 전체 surface 감사이며 범위를 임의로 줄이지 않는다.
 - 선택하지 않은 surface, grep, simulation은 반드시 `Skipped / Not Applicable`에 이유를 남긴다.
 - 판단이 애매하면 통과 처리하지 말고 `Requires manual judgment`로 보고한다.
 

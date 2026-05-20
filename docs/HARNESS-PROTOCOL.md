@@ -93,7 +93,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 사용을 기본값으로 둔다 | Work Done과 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
 | L3 구조 변경 | 관련 계획 또는 `docs/PLAN.md` 확인, AS-IS/TO-BE와 rollback 포함 후 승인 | Phase criteria, Current phase/focus, Recent Decisions는 `STATUS Update Proposal` 승인 후 처리 | validation 결과, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
 
-멀티 Active Work 환경에서는 모든 state update 제안에 대상 Work ID를 포함한다.
+멀티 Active Work 환경에서는 모든 state-change proposal에 대상 Work ID를 포함한다.
 각 Work는 독립 gate를 가진다.
 
 ### Approval Matrix State Detail
@@ -440,8 +440,8 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 
 Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 파일 수정은 사용자 승인 또는 명시 요청 후 진행한다.
-`/health --cascade`는 coverage-preserving checklist runner로 사용한다.
-감사 범위는 canonical -> tool-specific -> user-facing -> scaffold 계층을 유지하고, 변경 파일 유형별 required surface, grep, simulation을 실행한 뒤 누락·불일치·과잉반복·불필요복잡성·사용자생산성저하를 P0/P1/P2로 보고한다.
+`/health --cascade`는 changed-surface cascade audit으로 사용한다.
+감사 범위는 변경 파일 유형에 맞는 canonical -> tool-specific -> user-facing -> scaffold 계층으로 제한하되, 선택된 계층의 required surface, grep, simulation은 생략하지 않는다. 전체 표면 감사가 필요하면 `/health --full --cascade`를 사용한다.
 
 | Level | Action | Meaning |
 | --- | --- | --- |

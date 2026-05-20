@@ -61,7 +61,7 @@ Plan에는 Scope, Files, Verification, Risk, Reversal Cost를 포함한다.
 
 ## Approval Matrix
 
-Scope approval, state update, commit approval을 하나의 기준으로 판단한다.
+Scope approval, state-change approval, commit approval을 하나의 기준으로 판단한다.
 작업 시작 전에는 Scope, Files, Verification, Risk, Reversal Cost를 보고하고 승인받는다.
 
 | 변경 유형 | 실행 전 | 상태 변경 | commit 전 |
@@ -75,7 +75,7 @@ MUST:
 - 승인된 scope 밖의 파일, 문서, 설정으로 변경이 확장되면 먼저 추가 scope, 이유, 검증 방법을 보고하고 승인 대기한다.
 - `docs/STATUS.md` 변경은 위 matrix의 상태 변경 규칙에 맞게 먼저 제안하고 승인받는다.
 - commit 전 승인은 risk level과 무관하게 항상 별도로 받는다.
-- 멀티 Active Work 환경에서는 모든 state update 제안에 대상 Work ID를 포함한다.
+- 멀티 Active Work 환경에서는 모든 state-change proposal에 대상 Work ID를 포함한다.
 
 MUST NOT:
 

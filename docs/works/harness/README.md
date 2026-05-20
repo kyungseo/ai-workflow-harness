@@ -28,4 +28,4 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 | HRN-021-S2 | Approval Matrix 통합 — 승인 gate 3종 단일화 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S2-approval-matrix.md` |
 | HRN-021-S3 | Work lifecycle Candidate 상태 제거 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S3-work-lifecycle-candidate-removal.md` |
 | HRN-021-S5 | WORKFLOW-MANUAL.md AI 로드 제외와 cascade 대상 유지 기준 명시 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S5-manual-load-boundary.md` |
-| HRN-021-S6 | /health --cascade coverage-preserving checklist화 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S6-health-cascade-checklist.md` |
+| HRN-021-S6 | /health --cascade changed-surface audit 경량화 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S6-health-cascade-checklist.md` |
