@@ -15,13 +15,22 @@ Claude Code에서는 기본적으로 `.claude/commands/`를 먼저 사용하고,
 | 구분 | 사용 위치 | 역할 |
 | --- | --- | --- |
 | `.claude/commands/` | Claude Code | `/start`, `/pick`, `/work`, `/close`, `/done` 같은 반복 workflow 실행 |
-| `prompts/*.prompt.md` | 여러 AI 도구 | 기능 구현, 디버깅, 리팩토링, 리뷰 같은 task template |
+| `prompts/*.prompt.md` | 여러 AI 도구 | 기능 구현, 디버깅, 리팩토링, 리뷰 같은 portable task template |
 | `claude-session-start.md` | Claude fallback | slash command를 사용할 수 없을 때 세션 시작 |
 | `cursor-session-start.md` | Cursor | `.cursor/rules`와 하네스 상태를 함께 로드 |
 | `AGENTS.md` | Codex | repo-level entry point. 전역 원칙은 `docs/BEHAVIOR-PRINCIPLES.md`, 공통 규칙은 `docs/AGENT-WORKFLOW.md`로 위임 |
 | `codex-session-start.md` | Codex fallback | `.claude/commands`를 수동 절차로 해석해 세션 시작 |
 
-역할 경계가 애매한 prompt는 `docs/backlog/HARNESS.md`의 HRN-007에서 command 전환 여부를 판단한다.
+Command는 repo-local workflow를 실행하고, prompt는 tool-independent task brief를 전달한다.
+역할 경계가 애매한 항목은 HRN-004 기준에 따라 아래처럼 분류한다.
+
+| 분류 | 기준 | 현재 항목 |
+| --- | --- | --- |
+| Keep as command | STATUS/backlog/Work/DR 상태를 읽거나 바꾸는 반복 workflow | `.claude/commands/*.md` 전체 |
+| Keep as prompt | 다른 AI 도구로 넘겨도 의미가 유지되는 구현·리뷰·설계 task template | `00~22-*.prompt.md` 전체 |
+| Session fallback prompt | tool entrypoint가 없거나 slash command를 쓸 수 없는 환경에서 bootstrap 복원 | `claude-session-start.md`, `cursor-session-start.md`, `codex-session-start.md` |
+| Promote to command | 같은 prompt가 repo 상태 변경, Approval Matrix, Work lifecycle을 반복 실행하게 된 경우 | 현재 없음 |
+| Archive/delete | command와 기능이 완전히 중복되고 portable task value가 없는 경우 | 현재 없음 |
 
 ## 2) 빠른 사용 절차
 

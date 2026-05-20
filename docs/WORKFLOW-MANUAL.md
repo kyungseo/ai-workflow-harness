@@ -1359,7 +1359,7 @@ prompts/
 2. 해당 `.prompt.md` 파일을 열어 플레이스홀더(`[...]`)를 채운다
 3. Claude Code 프롬프트 입력창에 붙여넣는다
 
-> Slash Command vs 프롬프트: Slash Command는 반복적인 워크플로우 작업(start/close/done/debug)에, 프롬프트 라이브러리는 특정 구현 태스크(레이어 생성, 테스트 작성 등)에 사용한다.
+> Slash Command vs 프롬프트: Slash Command는 반복적인 repo-local workflow(start/close/done/debug)에, 프롬프트 라이브러리는 다른 AI 도구로도 옮길 수 있는 task brief(레이어 생성, 테스트 작성 등)에 사용한다. 경계가 애매한 항목은 `prompts/README.md`의 HRN-004 분류 기준을 따른다.
 
 ---
 
