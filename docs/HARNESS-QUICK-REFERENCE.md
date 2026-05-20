@@ -154,6 +154,13 @@ L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commi
 - STATUS Active Work pointer: 대상 Work ID를 명시한 one-line proposal 후 승인받는다.
 - Current phase/focus, Phase criteria, Recent Decisions: `STATUS Update Proposal`로 변경 섹션, 이유, 결과, 되돌리기 비용을 보고하고 승인받는다.
 
+Proposal shape:
+
+- 대상: Work ID 또는 STATUS section
+- 변경: 무엇을 바꾸는지 한 문장
+- 이유: 지금 반영해야 하는 이유
+- 승인 요청: 승인 후 수정 범위
+
 ## 7. Failure Rules
 
 다음은 실패 상태다.
@@ -180,9 +187,11 @@ L3 이상 작업은 논리 단계별 commit을 기본값으로 한다. 한 commi
 
 - DR-worthy accepted decision: `docs/decisions/` 기록 제안.
 - commit/PR 전: STATUS Finalization과 Tracking Finalization 판정.
+- structure/development flow 변경: `ARCHITECTURE` 또는 `DEVELOPER-GUIDE` 영향 확인.
 - workflow/tool/scaffold 변경: 관련 command/rule/prompt/manual/scaffold 정렬 확인.
 - scaffold 또는 canonical workflow 변경: `create-harness.sh --dry-run`과 필요 시 temp scaffold 검증.
 - non-trivial issue resolved: `docs/troubleshooting/` 기록 제안.
+- presentation/report artifact 생성: source traceability와 output path 확인.
 - phase complete 또는 Work complete: STATUS/archive/tracker 정합성 확인.
 
 ## 9. Work File Decomposition
