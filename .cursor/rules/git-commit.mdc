@@ -39,7 +39,7 @@ MUST use Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-l
 
 - Use Korean verbs and sentence endings.
 - Keep English for proper nouns, tool names, file paths, IDs (e.g., `DR-007`, `STATUS.md`).
-- Example: `docs: DR-007 Bilingual Rules 적용 — commands 섹션 타이틀 영문화`
+- Example: `docs: [Korean subject using DR-007 and Bilingual Rules identifiers]`
 
 **Body** — Korean primary with English technical terms inline; explain *why*, not *what*.
 
@@ -57,7 +57,7 @@ NEVER include metadata:
 When the user asks ONLY for a commit command, output ONLY:
 
 ```bash
-git commit -m "type: 한국어 주체 변경 내용"
+git commit -m "type: [Korean subject]"
 ```
 
 Do not include explanations, multiple commands, or metadata in that case.
