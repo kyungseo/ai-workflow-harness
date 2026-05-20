@@ -233,7 +233,12 @@ ID를 다른 의미로 재사용하지 않는다.
 | `docs/backlog/` | UPPERCASE-HYPHENATED | `PHASE2.md` |
 | `docs/decisions/` | `DR-{NNN}-{topic}.md` | `DR-010-integration-test-infra.md` |
 | `docs/works/{category}/` | `{ID}-{lowercase-topic}.md` | `HRF-002-work-system-refactor.md` |
-| `docs/archive/` | lowercase-hyphenated | `phase1-status.md` |
+| `docs/archive/docs/` | 원본 상대 경로와 파일명 mirror | `docs/archive/docs/WORKFLOW-MANUAL-ai-workflow-v1.0.0.md` |
+| `docs/archive/snapshots/` | `{topic}-{YYYYMMDD}` | `harness-refactor-20260514/` |
+| `docs/retrospectives/` | `{topic}-{YYYYMMDD}.md` | `ai-workflow-complexity-review-20260518.md` |
+| `docs/presentations/` | artifact/deck version naming | `harness-v1-team-intro-v1.1.pptx` |
+
+기존 media asset은 의미 보존을 우선한다. 신규 media 파일은 가능하면 lowercase-hyphenated를 사용하되, 사용자 표시명이나 외부 산출물 이름을 보존해야 하면 예외로 둔다.
 
 ## 10. Work File Decomposition
 
