@@ -17,6 +17,7 @@ When the user's intent matches a workflow operation without an explicit slash co
 | Start / plan a specific task | `/work` — pre-checks: PLAN.md force-load conditions, troubleshooting check, risk level and execution mode declaration |
 | Resume an interrupted task | `/resume` — drift check: compare actual file state against `docs/STATUS.md` pointers and Work file Checkpoints before editing |
 | Create presentation/report/review document material | `/doc` — use for PPT, deck, report, review package, decision brief, or polished shareable document artifacts; brief-first workflow, source routing, quality verification |
+| Merge / PR branch integration ("머지하자") | Follow Branch Flow procedure (see below) |
 
 ## Work Item Routing
 
@@ -47,3 +48,12 @@ Approval Matrix state rules:
 | `docs/STATUS.md` | Phase criteria, Current phase/focus, Recent Decisions | Full STATUS Update Proposal |
 
 When starting or resuming, report any `status: Done` Work files still under `docs/works/{category}/` as archive-pending. Do not archive before approval.
+
+## Branch Flow
+
+When the user expresses branch merge intent ("머지하자", "PR 올리자", "develop에 합치자", etc.),
+load `docs/GIT-WORKFLOW.md` and follow §2 (Feature 개발 사이클) and §3 (릴리즈 사이클).
+
+NEVER:
+- Directly local-merge a feature branch into develop. Always merge via PR.
+- Skip the develop sync step after a main PR merge (`git merge main && git push origin develop`).

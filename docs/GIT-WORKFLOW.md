@@ -56,6 +56,7 @@ git commit -m "..."
 ### 2-3. PR 생성 (feature → develop)
 
 > **feature PR의 base는 항상 `develop`이다. `main`으로 직접 PR하지 않는다.**
+> **feature 브랜치를 develop에 직접 local merge하지 않는다. 반드시 PR을 통해 머지한다.**
 
 ```bash
 gh pr create --base develop --title "..." --body "..."
@@ -63,6 +64,10 @@ gh pr create --base develop --title "..." --body "..."
 
 또는 GitHub UI에서 base를 `develop`으로 설정하여 PR 생성.
 `gh pr create` 기본 base는 저장소 default branch(`main`)이므로 `--base develop`을 반드시 명시한다.
+
+**머지 전략:**
+- Regular merge 기본 — feature 브랜치의 커밋 히스토리를 보존한다.
+- WIP 커밋이 많아 히스토리가 지저분할 때만 Squash merge를 선택한다.
 
 ### 2-4. Post-PR 정리 절차
 
@@ -76,14 +81,13 @@ git pull origin develop
 # feature 브랜치 삭제 (로컬)
 git branch -d feature/{name}
 
-# 리모트 ref 정리 (GitHub에서 "Delete branch" 클릭하거나)
-git remote prune origin
-
-# 다음 feature 브랜치 생성
-git checkout -b feature/{next}
+# 리모트 브랜치 삭제
+git push origin --delete feature/{name}
 ```
 
 > `gh pr merge --delete-branch` 사용 시 로컬·리모트 feature 브랜치 삭제가 자동 처리된다.
+
+마지막으로 다음 feature 브랜치명을 제안하고 생성 여부를 확인한다.
 
 ## 3. 릴리즈 사이클 (Develop → Main)
 
@@ -109,14 +113,15 @@ git status                  # "up to date with 'origin/develop'" 확인
 
 ## 4. CI Trigger
 
-| 이벤트 | 실행 Job |
-|---|---|
-| `push` to `develop` | lint (Checkstyle) |
-| `push` to `main` | lint → test |
-| `pull_request` targeting `main` | lint → test |
+| 이벤트 | 조건 | 실행 Job |
+|---|---|---|
+| `push` to `main` | Java/Gradle/`.github` 파일 변경 시 | lint, test (병렬) |
+| `pull_request` targeting `main` | Java/Gradle/`.github` 파일 변경 시 | lint, test (병렬) |
 
-> feature → develop PR은 CI가 자동 실행되지 않는다.
-> develop push 시 Checkstyle만 실행되고, main push 또는 main 대상 PR에서 전체 검증이 실행된다.
+**Path filter 대상:** `**/*.java`, `**/build.gradle*`, `**/settings.gradle*`, `**/gradle.properties`, `gradle/**`, `.github/workflows/**`
+
+> develop push는 CI 트리거 없음. feature 변경은 develop → main PR 단계에서 검증된다.
+> docs, `.claude` 등 Java/Gradle 무관 변경은 CI가 실행되지 않는다.
 
 ## 5. Commit Message Format
 
@@ -128,7 +133,7 @@ Conventional Commits 형식을 따르며, DR-007 Bilingual Rules를 적용한다
 <body>
 ```
 
-**Type prefix** (항상 영문): `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `style`, `ci`
+**Type prefix** (항상 영문): `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `style`, `ci`, `config`, `perf`, `build`, `revert`
 
 **Subject line**: 한국어 주체, 기술 용어·식별자는 영문 유지
 

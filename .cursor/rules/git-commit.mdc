@@ -31,7 +31,7 @@ MUST:
 
 MUST use Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-language-policy.md`):
 
-**Type prefix** — always in English: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `style`, `ci`, `perf`, `revert`
+**Type prefix** — always in English: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `style`, `ci`, `config`, `perf`, `build`, `revert`
 
 **Subject line** — Korean primary; English for technical terms and identifiers.
 
