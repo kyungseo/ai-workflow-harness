@@ -32,7 +32,7 @@ Follow Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-lan
 <body>
 ```
 
-**Type prefix** — always in English: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `style`, `ci`.
+**Type prefix** — always in English: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `style`, `ci`, `config`, `perf`, `build`, `revert`.
 
 **Subject line** — Korean primary; English for technical terms and identifiers.
 
@@ -47,3 +47,12 @@ Follow Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-lan
 - Example body line: `harness protocol 문서의 섹션 타이틀을 영문 Title Case로 통일하여 DR-007 정책과 일치시킴`
 
 **Co-author trailer** — always in English (system-generated, do not translate).
+
+## Branch Flow
+
+When the user expresses branch merge intent ("머지하자", "PR 올리자", "develop에 합치자", etc.),
+load `docs/GIT-WORKFLOW.md` and follow §2 (Feature 개발 사이클) and §3 (릴리즈 사이클).
+
+NEVER:
+- Directly local-merge a feature branch into develop. Always merge via PR.
+- Skip the develop sync step after a main PR merge (`git merge main && git push origin develop`).

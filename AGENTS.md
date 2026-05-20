@@ -70,9 +70,18 @@ Work item routing:
 
 Follow Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-language-policy.md`):
 
-- **Type prefix** — always in English: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `style`, `ci`
+- **Type prefix** — always in English: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `style`, `ci`, `config`, `perf`, `build`, `revert`
 - **Subject line** — Korean primary; English for technical terms, proper nouns, file paths, IDs (e.g., `DR-007`, `STATUS.md`)
 - **Body** — Korean primary with English technical terms inline; explain *why*, not *what*
+
+## Branch Flow
+
+When the user expresses branch merge intent ("머지하자", "PR 올리자", "develop에 합치자", etc.),
+load `docs/GIT-WORKFLOW.md` and follow §2 (Feature 개발 사이클) and §3 (릴리즈 사이클).
+
+NEVER:
+- Directly local-merge a feature branch into develop. Always merge via PR.
+- Skip the develop sync step after a main PR merge (`git merge main && git push origin develop`).
 
 ## Failure And Recovery
 
