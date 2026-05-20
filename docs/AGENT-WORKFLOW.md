@@ -61,7 +61,7 @@ Plan에는 Scope, Files, Verification, Risk, Reversal Cost를 포함한다.
 
 ## Approval Matrix
 
-Scope approval, state update, commit approval을 하나의 기준으로 판단한다.
+Scope approval, state-change approval, commit approval을 하나의 기준으로 판단한다.
 작업 시작 전에는 Scope, Files, Verification, Risk, Reversal Cost를 보고하고 승인받는다.
 
 | 변경 유형 | 실행 전 | 상태 변경 | commit 전 |
@@ -75,7 +75,7 @@ MUST:
 - 승인된 scope 밖의 파일, 문서, 설정으로 변경이 확장되면 먼저 추가 scope, 이유, 검증 방법을 보고하고 승인 대기한다.
 - `docs/STATUS.md` 변경은 위 matrix의 상태 변경 규칙에 맞게 먼저 제안하고 승인받는다.
 - commit 전 승인은 risk level과 무관하게 항상 별도로 받는다.
-- 멀티 Active Work 환경에서는 모든 state update 제안에 대상 Work ID를 포함한다.
+- 멀티 Active Work 환경에서는 모든 state-change proposal에 대상 Work ID를 포함한다.
 
 MUST NOT:
 
@@ -121,73 +121,31 @@ MUST:
 - 불일치 발견 시 먼저 보고하고 수정 제안을 낸다.
 - `Done` 상태의 작업은 계속 수정하지 않고, 후속 보정은 신규 작업으로 분리 제안한다.
 
-## Approval Matrix State Detail
+## State And Closeout Rules
 
-Work 파일이 작업 단위의 SSoT이고, `docs/STATUS.md`는 dashboard다.
-상태 변경은 Approval Matrix의 상태 변경 열을 따른다.
+Work 파일은 작업 단위 SSoT이고, `docs/STATUS.md`는 dashboard다.
+Work checkpoint/discovery, Work Done, STATUS 변경은 Approval Matrix를 따른다.
+멀티 Active Work 환경에서는 모든 state-change proposal에 대상 Work ID를 포함한다.
 
-| 변경 대상 | 변경 유형 | Gate |
-| --- | --- | --- |
-| Work 파일 | Checkpoint 상태 업데이트, Discovery 추가 | 승인 불필요. 실행 후 대상 Work ID와 변경 내용을 보고 |
-| Work 파일 | Done Criteria 전체 충족 확인, `status: Done`, `actual_end` 기입 | 대상 Work ID를 명시하고 사용자 확인 후 처리 |
-| `docs/STATUS.md` | Active Work pointer 추가/제거 | 대상 Work ID를 명시한 1줄 제안 후 승인 |
-| `docs/STATUS.md` | Phase completion criteria, Current phase/focus, Recent Decisions | `STATUS Update Proposal` 승인 후 처리 |
+commit 또는 PR 생성 전에는 반드시 두 가지를 보고한다.
 
-멀티 Active Work 환경에서는 모든 state update 제안에 대상 Work ID를 포함한다.
-각 Work는 독립 gate를 가진다. Work A의 Done/Archive 처리가 Work B의 상태를 자동 변경하지 않는다.
+- STATUS Finalization: `docs/STATUS.md` 최종본 반영 필요 여부와 이유
+- Tracking Finalization: backlog/Work/DR tracker 최종 상태 반영 필요 여부와 이유
 
-## Work File Lifecycle
+필요한 `docs/STATUS.md` 변경은 사용자 승인 없이 수행하지 않는다.
+상세 체크리스트는 `docs/HARNESS-PROTOCOL.md`의 Triggers, Validation Checklist, Work File Rules를 따른다.
 
-| Status | Location | Meaning |
-| --- | --- | --- |
-| Active | `docs/works/{category}/` | `docs/STATUS.md` Active Work에 pointer 존재 |
-| Done | `docs/works/{category}/` | 완료 기준과 검증 통과. 리뷰·참조 때문에 archive 대기 가능 |
-| Archived | `docs/archive/docs/works/{category}/` | 완전 종결. 더 이상 active 참조 불필요 |
+Work Done 처리와 선택적 archive는 `/close`로 수행한다. `/close`는 Work Done 처리이며 commit/PR finalization gate를 대체하지 않는다.
+`/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
+Done Criteria에 사용자 최종 리뷰, final review, 검토 후 Done 등 명시적 리뷰 조건이 있으면 `/close`에서 확인 완료 전 Done 처리하지 않는다.
 
-Backlog의 `Candidate` 항목은 후보 pool이다.
-착수 전 분해나 메모는 backlog 항목에 남기고, Work 파일은 착수 승인 후 `Active` 상태로 생성한다.
-Done과 Archived는 분리한다.
-Work Done 처리(status: Done, actual_end, README Active→Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다. `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
-Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에만 수행한다.
+## Trigger And Naming Pointers
 
-## Documentation Triggers
+문서, prompt, command, rule, Cursor rule, hook 메시지를 수정할 때는 DR-007 언어 정책을 확인한다.
+DR, STATUS/archive, Work decomposition, troubleshooting, tool surface, scaffold 검증 trigger의 상세 기준은 `docs/HARNESS-PROTOCOL.md`를 따른다.
+workflow/doc/tool/scaffold/status 표면을 변경할 때는 `docs/HARNESS-PROTOCOL.md`의 trigger/cascade section을 조건부 로드하고, 필요한 surface만 확인한다.
 
-| Trigger | Action |
-| --- | --- |
-| DR-worthy decision accepted | `docs/decisions/` 기록 제안 |
-| 구조 변경 | `docs/ARCHITECTURE.md` 업데이트 제안 |
-| 개발 절차 변경 | `docs/DEVELOPER-GUIDE.md` 업데이트 제안 |
-| workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 업데이트 |
-| 발표/보고 산출물 생성 | 목적, audience, source, format, output path, 품질 검증 기준 확인 |
-| Phase 완료 또는 새 Phase 시작 | STATUS/archive 재편 제안 |
-| 큰 작업 조건 충족 | Work 파일 분해 제안 |
-| 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |
-| tool surface 변경 | Claude/Codex/Cursor/prompts/scaffold 정렬 확인 |
-| scaffold 또는 canonical workflow 변경 | dry-run과 temp scaffold 검증 |
-| Product surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
-| Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
-
-문서, prompt, command, rule, Cursor rule, hook 메시지를 수정할 때는 `docs/decisions/DR-007-language-policy.md`의 언어 정책을 확인한다.
-
-상세 기준:
-
-- `docs/HARNESS-PROTOCOL.md`
-
-## Naming Summary
-
-| Prefix | Meaning |
-| --- | --- |
-| `P{n}-NNN` | Phase product backlog |
-| `PRE-*` | Phase entry prerequisite |
-| `HRF-*` | Harness refactor |
-| `HRN-*` | Harness hardening |
-| `DOC-*` | Documentation task |
-| `DR-NNN` | Decision record |
-| `OQ-*` | Open question |
-
-ID를 다른 의미로 재사용하지 않는다.
-
-파일명 상세 기준:
+ID prefix와 파일명 상세 기준:
 
 - `docs/decisions/DR-008-docs-filename-standard.md`
 - `docs/HARNESS-PROTOCOL.md`

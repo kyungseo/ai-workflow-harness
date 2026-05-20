@@ -158,6 +158,7 @@ for dir in \
   "${TARGET_ROOT}/docs/works" \
   "${TARGET_ROOT}/docs/archive" \
   "${TARGET_ROOT}/docs/archive/docs/works" \
+  "${TARGET_ROOT}/docs/archive/snapshots" \
   "${TARGET_ROOT}/docs/retrospectives" \
   "${TARGET_ROOT}/docs/reports" \
   "${TARGET_ROOT}/docs/presentations" \
@@ -247,7 +248,7 @@ write_text "${TARGET_ROOT}/.claude/settings.json" '{
         "hooks": [
           {
             "type": "command",
-            "command": "python3 -c \"print('\''[hook] 세션 종료 전 확인: Work가 완료됐다면 /close를 먼저 실행하고, 그다음 /done으로 validation, Approval Matrix에 따른 상태 변경 필요 여부, DR-worthy 결정, commit 상태를 보고하세요.'\'')\""
+            "command": "python3 -c \"print('\''[hook] 세션 종료 전 확인: Work가 완료됐다면 /close를 먼저 실행하고, 그다음 /done으로 validation, STATUS/Tracking Finalization, Approval Matrix에 따른 상태 변경 필요 여부, DR-worthy 결정, commit 상태를 보고하세요.'\'')\""
           }
         ]
       }
@@ -338,7 +339,7 @@ claude        # Claude Code 열기
 /start        # 하네스 로딩 확인 및 현재 상태 요약
 \`\`\`
 
-**Codex:** \`prompts/codex-session-start.md\` 내용을 세션 시작 시 붙여넣는다.
+**Codex:** repo root의 \`AGENTS.md\`를 기본 진입점으로 사용한다. \`prompts/codex-session-start.md\`는 수동 bootstrap이 필요한 fallback이다.
 
 **Cursor:** \`prompts/cursor-session-start.md\` 내용을 세션 시작 시 붙여넣는다.
 
@@ -389,7 +390,7 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 1. 이 파일과 \`docs/PLAN-SUMMARY.md\`를 프로젝트 정보로 업데이트
 2. \`docs/backlog/PHASE1.md\`에 초기 작업 항목 등록
 3. \`docs/AGENT-WORKFLOW.md\` Project Constants와 Verification Defaults 채우기
-4. Claude Code: \`/start\`로 첫 세션 시작 | Codex: \`prompts/codex-session-start.md\` 사용 | Cursor: \`prompts/cursor-session-start.md\` 사용
+4. Claude Code: \`/start\`로 첫 세션 시작 | Codex: \`AGENTS.md\` 확인 | Cursor: \`prompts/cursor-session-start.md\` 사용
 "
 
 write_text "${TARGET_ROOT}/docs/PLAN-SUMMARY.md" "# PLAN-SUMMARY.md — ${PROJECT_NAME}
@@ -515,6 +516,7 @@ Backlog \`Candidate\`는 후보 pool이다. Work 파일은 착수 승인 후 \`A
 
 touch_file "${TARGET_ROOT}/docs/archive/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/archive/docs/works/.gitkeep"
+touch_file "${TARGET_ROOT}/docs/archive/snapshots/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/retrospectives/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/reports/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/presentations/.gitkeep"

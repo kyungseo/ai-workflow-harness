@@ -13,7 +13,7 @@ When the user's intent matches a workflow operation without an explicit slash co
 | Intent | Procedure to follow |
 | --- | --- |
 | Register / add a work item | `/register` — route based on urgency and type (see below) |
-| Record a decision as DR | `/record-decision` — DR format, file naming, OQ linkage |
+| Record a decision as DR | `/record-decision` — DR format, file naming, OQ linkage, and Recent Decisions update need judgment for every Accepted DR |
 | Start / plan a specific task | `/work` — pre-checks: PLAN.md force-load conditions, troubleshooting check, risk level and execution mode declaration |
 | Resume an interrupted task | `/resume` — drift check: compare actual file state against `docs/STATUS.md` pointers and Work file Checkpoints before editing |
 | Create presentation/report/review document material | `/doc` — use for PPT, deck, report, review package, decision brief, or polished shareable document artifacts; brief-first workflow, source routing, quality verification |
@@ -34,9 +34,13 @@ When starting a task (`/work`): check `docs/works/{category}/` for an existing W
 
 Quick Mode: small product-surface L1 changes with narrow scope, one-session completion, no checkpoint handoff, no STATUS change, and no harness/workflow surface change can close with final summary + validation + commit history only. If entrypoint/workflow/protocol/command/rule/prompt/scaffold/status files change, treat the task as L2 and check the relevant cascade surface.
 
-When completing a Work item (`/close`): confirm Done Criteria, set `status: Done` and `actual_end`, move the README row from Active to Done (archive pending), and propose STATUS pointer removal. After Done processing, ask whether to archive immediately or defer to a later `/start`/`/resume` trigger. Session continues after `/close`.
+When completing a Work item (`/close`): confirm Done Criteria, set `status: Done` and `actual_end`, move the README row from Active to Done (archive pending), and propose STATUS pointer removal. If Done Criteria includes user final review, final review, or review-before-Done wording, confirm that review before marking Done. Do not force user review globally for every Work item. After Done processing, ask whether to archive immediately or defer to a later `/start`/`/resume` trigger. Session continues after `/close`.
 
 When ending a session (`/done`): report completed work, changed files, validation results, residual risk, STATUS update needs, decision needs, and commit status. If Active Work exists and Discovery is not up to date for the current progress, propose content to record and ask whether to log it. `/done` does not perform Work Done processing — tell the user to run `/close` first if the Work is complete.
+
+STATUS Finalization Gate: before commit or PR, report whether `docs/STATUS.md` needs a final update, why, and the required Approval Matrix proposal if needed. Check Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, and Active Work Discovery freshness. Do not edit `docs/STATUS.md` without explicit approval.
+
+Tracking Finalization Gate: before commit or PR, report whether backlog/Work/DR tracker updates are needed and why. Check linked backlog item Status/Done Criteria/Verification, Work file frontmatter/status/Checkpoints/Discovery, Work index README placement, related DR status/Supersedes/Linked Backlog Items, and completed Quick Mode work still left as Candidate.
 
 Approval Matrix state rules:
 

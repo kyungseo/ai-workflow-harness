@@ -5,7 +5,7 @@ disable-model-invocation: true
 
 docs/STATUS.md의 Current State, Active Work, Blockers And Open Questions, Next Actions만 확인해줘.
 그다음 `docs/works/*/*.md` 중 `status: Done`이지만 archive되지 않은 Work 파일이 있는지 파일명과 frontmatter 수준으로만 확인해줘.
-Phase 1 또는 refactor 이전 상세가 필요한 경우에만 docs/archive/ 또는 docs/archive/harness-refactor-20260514/를 추가로 참고해줘.
+Phase 1 또는 refactor 이전 상세가 필요한 경우에만 docs/archive/ 또는 docs/archive/snapshots/harness-refactor-20260514/를 추가로 참고해줘.
 
 아래 형식으로 현재 상태를 요약해줘.
 

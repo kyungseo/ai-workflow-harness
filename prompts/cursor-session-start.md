@@ -56,7 +56,7 @@ Active Work의 [작업 ID 또는 작업명]을 진행하려고 해.
 - Verification
 - 리스크
 - 되돌리기 비용
-- State Update/DR/Work 파일/문서 cascade 필요 여부
+- state-change proposal/DR/Work 파일/문서 cascade 필요 여부
 
 내가 승인하기 전에는 구현하지 마.
 ```

@@ -40,10 +40,28 @@ Status: Accepted
 - `docs/coding-conventions.md` → `docs/CODING-CONVENTIONS.md` 이름 변경 완료 (참조 8곳 업데이트).
 - `docs/decisions/PHASE2-BACKLOG.md` (pointer 파일, 참조 없음) 삭제 완료.
 
+## HRN-009 Audit Addendum (2026-05-20)
+
+2026-05-20 `find docs -maxdepth 3` 기준 재검토 결과, DR-008의 기본 방향은 유지한다.
+
+| 대상 | 판정 | 이유 |
+| --- | --- | --- |
+| `docs/` root markdown | UPPERCASE-HYPHENATED 유지 | 기존 root 문서와 context routing이 이미 이 규칙에 맞음 |
+| `docs/backlog/`, `docs/decisions/` | 현행 유지 | `PHASE2.md`, `HARNESS.md`, `DR-{NNN}-{topic}.md`가 명확함 |
+| `docs/works/{category}/` | 현행 유지 | DR-013의 `{ID}-{lowercase-topic}.md`가 Work ID 추적에 적합함 |
+| `docs/archive/docs/` | DR-014 mirror 예외 | archive mirror는 원본 상대 경로와 파일명을 보존해야 추적성이 높음 |
+| `docs/archive/snapshots/` | lowercase topic-date 유지 | snapshot bundle은 사람이 읽는 시점 기록이므로 root 문서 규칙과 분리함 |
+| `docs/retrospectives/` | lowercase topic-date 유지 | 회고 문서는 시계열 기록이며 대량 rename 이익이 낮음 |
+| `docs/presentations/` | 산출물 naming 유지 | generated artifact와 deck version 이름은 presentation workflow가 관리함 |
+| `docs/VSCode-DevContainer구조.png` | 기존 media 예외로 유지 | 비문서 이미지 asset이며 rename 대비 참조·의미 개선 효과가 낮음 |
+| `.DS_Store` | ignore 상태 확인 | git tracked 파일이 아니며 `.gitignore`가 제외함 |
+
+`harness` 용어도 유지한다. 이 저장소에서 harness는 테스트 도구가 아니라 AI-assisted workflow를 감싸는 lightweight operating harness를 뜻하며, `workflow harness` 또는 `AI workflow harness`로 함께 쓰면 의미 충돌이 낮다. 전면 rename은 context/rule/문서 참조 비용에 비해 이익이 낮다.
+
 ## Reversal Cost
 
 Low — 파일명 변경과 참조 업데이트만 필요. 기능·동작에 영향 없음.
 
 ## Linked Backlog Items
 
-없음 (운영 규칙 결정).
+- HRN-009
