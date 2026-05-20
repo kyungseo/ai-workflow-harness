@@ -365,6 +365,21 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 | 비자명 이슈의 재현·원인·해결 내역 |
 | `docs/reports/`, `docs/presentations/` | 산출물 | 발표·보고·리뷰·의사결정 지원 자료 |
 
+### Information Architecture Rules
+
+`docs/`는 파일 위치보다 역할 경계가 먼저다. 이동은 참조 비용과 자동 로드 영향을 함께 검토한다.
+
+| 분류 | 위치 | 기준 |
+| --- | --- | --- |
+| Canonical AI operations | `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md` | Agent 실행 규칙의 현재 기준 |
+| Live state and trackers | `docs/STATUS.md`, `docs/backlog/`, `docs/works/`, `docs/decisions/` | 현재 상태, 후보, Work SSoT, 결정 근거 |
+| Product and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/ARCHITECTURE.md`, `docs/DEVELOPER-GUIDE.md`, `docs/CODING-CONVENTIONS.md`, `docs/DOCKERFILE-GUIDE.md`, `docs/GIT-WORKFLOW.md` | 제품/개발/운영 지식 |
+| User-facing workflow docs | `docs/WORKFLOW-MANUAL.md`, `docs/WORKFLOW-MANUAL-SUMMARY.md` | 사람이 읽는 매뉴얼과 condensed guide. 평시 Agent 자동 로드 대상 아님 |
+| Historical and evaluation docs | `docs/archive/`, `docs/retrospectives/`, reference-only plans | 완료 이력, snapshot, 시점별 평가, 완료된 계획의 참조 기록 |
+| Troubleshooting docs | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 패턴의 재사용 가능한 incident record |
+| Artifacts | `docs/reports/`, `docs/presentations/` | `/doc` 산출물. source traceability와 version naming 유지 |
+| Media assets | root 또는 관련 문서 인접 위치 | 기존 asset은 참조 안정성을 우선하고, 신규 asset은 관련 문서 옆에 둔다 |
+
 ### Update Rules
 
 - 현재 상태가 바뀌면 `STATUS.md` 갱신 여부를 확인한다.

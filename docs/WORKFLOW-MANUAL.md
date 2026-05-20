@@ -189,6 +189,8 @@ graph TD
 | AI 운영 공통 | `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md` (Claude Code: `CLAUDE.md` → 자동 import / Codex: `AGENTS.md` → 위임 / Cursor: `.cursor/rules/*.mdc`) |
 | AI 운영 전용 | `STATUS.md`, `HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `works/`, `archive/` |
 | 개발자 + AI 겸용 | `PLAN-SUMMARY.md`, `GIT-WORKFLOW.md`, `PLAN.md` |
+| 발표·보고 산출물 | `docs/presentations/`, `docs/reports/` |
+| 역사·평가 | `docs/archive/`, `docs/retrospectives/`, reference-only plan |
 | User-facing cascade 확인 | `WORKFLOW-MANUAL.md` — 평시 AI 실행 규칙 로드 대상이 아니며, 사용자-visible workflow 변경 또는 cascade 감사 시 관련 섹션만 확인 |
 
 > 파일별 로드 조건(언제·어떤 조건에서 읽는가)은 [§4-3-B Context Load Decision](#4-3-b-context-load-decision)을 참조한다.
