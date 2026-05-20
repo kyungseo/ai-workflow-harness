@@ -158,6 +158,7 @@ for dir in \
   "${TARGET_ROOT}/docs/works" \
   "${TARGET_ROOT}/docs/archive" \
   "${TARGET_ROOT}/docs/archive/docs/works" \
+  "${TARGET_ROOT}/docs/archive/snapshots" \
   "${TARGET_ROOT}/docs/retrospectives" \
   "${TARGET_ROOT}/docs/reports" \
   "${TARGET_ROOT}/docs/presentations" \
@@ -515,6 +516,7 @@ Backlog \`Candidate\`는 후보 pool이다. Work 파일은 착수 승인 후 \`A
 
 touch_file "${TARGET_ROOT}/docs/archive/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/archive/docs/works/.gitkeep"
+touch_file "${TARGET_ROOT}/docs/archive/snapshots/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/retrospectives/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/reports/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/presentations/.gitkeep"
