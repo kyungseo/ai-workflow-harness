@@ -273,17 +273,8 @@ Backlog `Candidate`는 후보 pool이다. Work 파일은 착수 승인 후 `Acti
 
 ## 10. Naming
 
-| Prefix | Meaning |
-| --- | --- |
-| `P{n}-NNN` | Phase product backlog |
-| `PRE-*` | Phase entry prerequisite |
-| `HRF-*` | Harness refactor |
-| `HRN-*` | Harness hardening |
-| `DOC-*` | Documentation task |
-| `DR-NNN` | Decision record |
-| `OQ-*` | Open question |
-
-ID를 다른 의미로 재사용하지 않는다.
+빠른 ID prefix 요약은 `docs/AGENT-WORKFLOW.md` Naming Summary를 따른다.
+상세 file naming 기준은 `docs/HARNESS-PROTOCOL.md`와 `docs/decisions/DR-008-docs-filename-standard.md`를 따른다.
 
 ## 11. Never
 
