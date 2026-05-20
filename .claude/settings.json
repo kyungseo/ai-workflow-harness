@@ -1,6 +1,75 @@
 {
   "permissions": {
-    "defaultMode": "plan",
+    "allow": [
+      "Bash(./gradlew *)",
+
+      "Bash(git status)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git show*)",
+      "Bash(git branch*)",
+      "Bash(git add *)",
+      "Bash(git commit*)",
+      "Bash(git checkout*)",
+      "Bash(git switch*)",
+      "Bash(git fetch*)",
+      "Bash(git pull*)",
+      "Bash(git push)",
+      "Bash(git push *)",
+      "Bash(git stash*)",
+      "Bash(git merge*)",
+      "Bash(git rebase*)",
+      "Bash(git tag*)",
+      "Bash(git mv *)",
+
+      "Bash(java *)",
+      "Bash(javac *)",
+      "Bash(javap *)",
+
+      "Bash(python3 *)",
+      "Bash(pip3 *)",
+      "Bash(pip *)",
+
+      "Bash(curl *)",
+
+      "Bash(docker *)",
+      "Bash(docker-compose *)",
+      "Bash(docker compose *)",
+
+      "Bash(ls*)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(stat *)",
+
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(rm *)",
+
+      "Bash(echo *)",
+      "Bash(which *)",
+      "Bash(env)",
+      "Bash(export *)",
+      "Bash(jq *)",
+      "Bash(sort *)",
+      "Bash(uniq *)",
+      "Bash(sed *)",
+      "Bash(awk *)",
+      "Bash(xargs *)",
+      "Bash(lsof *)",
+      "Bash(ps *)",
+      "Bash(kill *)",
+      "Bash(gh *)",
+      "Bash(open *)",
+      "Bash(unzip *)",
+
+      "Bash(./scripts/*.sh *)"
+    ],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
@@ -12,8 +81,16 @@
       "Bash(sudo *)",
       "Bash(rm -rf*)",
       "Bash(rm -r *)",
+      "Bash(bash *)",
       "Bash(kubectl *)",
-      "Bash(terraform *)"
+      "Bash(terraform *)",
+      "Bash(git push --force*)",
+      "Bash(git push -f *)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean -f*)",
+      "Bash(chmod 777*)",
+      "Bash(git config --global*)",
+      "Bash(docker run --privileged*)"
     ]
   },
   "hooks": {
