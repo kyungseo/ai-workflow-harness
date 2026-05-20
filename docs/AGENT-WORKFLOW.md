@@ -136,6 +136,14 @@ Work 파일이 작업 단위의 SSoT이고, `docs/STATUS.md`는 dashboard다.
 멀티 Active Work 환경에서는 모든 state update 제안에 대상 Work ID를 포함한다.
 각 Work는 독립 gate를 가진다. Work A의 Done/Archive 처리가 Work B의 상태를 자동 변경하지 않는다.
 
+### STATUS Finalization Gate
+
+commit 또는 PR 생성 전, Agent는 이번 변경이 `docs/STATUS.md` 최종본에 반영되어야 하는지 반드시 판정한다.
+확인 대상은 Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions rolling digest, Active Work Discovery 최신성이다.
+필요하면 Approval Matrix에 맞는 state-change proposal 또는 `STATUS Update Proposal`을 먼저 제안한다.
+불필요하면 commit/PR 전 summary에 `STATUS.md` 변경 불필요와 이유를 명시한다.
+사용자 승인 없이 `docs/STATUS.md`를 수정하지 않는다.
+
 ## Work File Lifecycle
 
 | Status | Location | Meaning |
@@ -147,7 +155,7 @@ Work 파일이 작업 단위의 SSoT이고, `docs/STATUS.md`는 dashboard다.
 Backlog의 `Candidate` 항목은 후보 pool이다.
 착수 전 분해나 메모는 backlog 항목에 남기고, Work 파일은 착수 승인 후 `Active` 상태로 생성한다.
 Done과 Archived는 분리한다.
-Work Done 처리(status: Done, actual_end, README Active→Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다. `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
+Work Done 처리(status: Done, actual_end, README Active→Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다. `/close`는 Work Done 처리이며 commit/PR 전 STATUS Finalization Gate를 대체하지 않는다. `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
 Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에만 수행한다.
 
 ## Documentation Triggers
@@ -155,6 +163,7 @@ Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 
 | Trigger | Action |
 | --- | --- |
 | DR-worthy decision accepted | `docs/decisions/` 기록 제안 |
+| commit 또는 PR 생성 전 | `docs/STATUS.md` 최종본 반영 필요 여부 판정 및 필요 시 Approval Matrix state-change proposal 제안 |
 | 구조 변경 | `docs/ARCHITECTURE.md` 업데이트 제안 |
 | 개발 절차 변경 | `docs/DEVELOPER-GUIDE.md` 업데이트 제안 |
 | workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 업데이트 |

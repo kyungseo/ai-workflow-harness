@@ -34,6 +34,11 @@ Work 파일의 Done Criteria를 전부 체크했는지 확인한다.
 
 대상 Work ID를 명시한 1줄 제안 후 승인을 받은 뒤 `docs/STATUS.md` Active Work 행을 제거한다.
 
+**6. STATUS Finalization 관계 확인**
+
+`/close`는 Work Done 처리이며 commit/PR 전 STATUS Finalization Gate를 대체하지 않는다.
+이미 commit 또는 PR이 필요한 변경이 있으면 commit/PR 전에 별도로 STATUS Finalization 결과(`STATUS.md` 변경 필요 yes/no와 이유)를 보고한다.
+
 ---
 
 ## Archive 처리 (선택)
@@ -64,4 +69,5 @@ Work Done 완료: {Work ID}
 - Done 처리: status: Done, actual_end: {날짜}
 - Archive: {지금 처리 / 보류}
 - STATUS.md: Active Work {ID} pointer 제거 {승인 대기 / 완료}
+- STATUS Finalization: commit/PR 전 별도 확인 {필요 / 완료 / 해당 없음}
 ```

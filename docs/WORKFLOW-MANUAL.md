@@ -532,6 +532,7 @@ Work 파일은 착수 승인 후 `Active` 상태로 생성한다.
 **완료 절차 (Done) — `/close`:**
 
 Work를 완료하면 `/close`를 실행한다. 세션은 종료되지 않고 계속된다.
+`/close`는 Work Done 처리이며 commit/PR 전 STATUS Finalization Gate를 대체하지 않는다.
 
 1. Done Criteria 전부 체크됐는지 확인
 2. Work 파일 frontmatter: `status: Done`, `actual_end: YYYY-MM-DD` 기입
@@ -826,9 +827,9 @@ Claude Code에서 `/명령명`으로 호출. 파일 위치: `.claude/commands/*.
 | `/resume {ID}` | 중단된 작업을 재개할 때 | 파일 상태 vs STATUS.md / Work 파일 비교 → Done이면 재개 금지 및 archive/후속 작업 제안 → 남은 계획 제안 |
 | `/debug` | 버그 분석/수정 시 | 코드·로그·테스트 근거로 원인 파악, 최소 변경 계획 |
 | `/doc [brief]` | 발표·보고·리뷰 패키지·외부 공유용 문서 산출물을 만들 때 | 목적·audience·format·source brief 확정 → outline 승인 → presentation/document 도구 또는 fallback으로 산출물 생성 → 품질 검증 |
-| `/close` | Work를 완료할 때 (세션 계속) | Done Criteria 확인, status/actual_end 기입, README Active→Done, STATUS pointer 제거 제안, 선택적 archive |
-| `/done` | 세션 종료 시 | 완료 작업, 변경 파일, 검증 결과, 리스크, Active Work Discovery 미기록 확인, State Update 필요 여부, 다음 세션 primer 요약, DR 검토 (Work Done 처리 없음 — `/close` 먼저 실행) |
-| `/record-decision` | 기술 결정을 DR로 기록할 때 | 현재 대화의 확정 결정을 DR 초안으로 작성, 승인 후 파일 생성 |
+| `/close` | Work를 완료할 때 (세션 계속) | Done Criteria 확인, status/actual_end 기입, README Active→Done, STATUS pointer 제거 제안, 선택적 archive. commit/PR 전 STATUS Finalization 대체 아님 |
+| `/done` | 세션 종료 시 | 완료 작업, 변경 파일, 검증 결과, 리스크, Active Work Discovery 미기록 확인, State Update 필요 여부, STATUS Finalization 결과, 다음 세션 primer 요약, DR 검토 (Work Done 처리 없음 — `/close` 먼저 실행) |
+| `/record-decision` | 기술 결정을 DR로 기록할 때 | 현재 대화의 확정 결정을 DR 초안으로 작성, 승인 후 파일 생성, Accepted DR마다 Recent Decisions 반영 필요 여부 판정 |
 | `/health` | 워크플로우·문서 점검 시 | 구조 정합성, 문서 현행화, 백로그/DR 위생 전체 점검 후 보고. `--full`은 전체 심화 점검, `--cascade`는 문서/워크플로우 변경의 연쇄 영향을 required surface, grep, simulation checklist로 감사 |
 
 ### Approval Matrix
@@ -955,7 +956,9 @@ flowchart LR
     ROUTE -- Harness / Workflow --> HBACKLOG["📄 docs/backlog/HARNESS.md\n후속 작업 조정"]
     ROUTE -- Architecture / Stack --> PLAN["T5\nPLAN.md / PLAN-SUMMARY.md 확인"]
     ACCEPT -.->|"OQ 있던 경우만"| STATUS_PROPOSAL["STATUS Update Proposal\nOQ Closed 반영"]
+    ACCEPT -.->|"후속 행동 변경 시"| RECENT_DECISIONS["STATUS Update Proposal\nRecent Decisions 반영"]
     STATUS_PROPOSAL --> CLOSED["OQ Closed\nSTATUS.md 갱신"]
+    RECENT_DECISIONS --> DIGEST["Recent Decisions\nrolling digest 갱신"]
 
     ACCEPT --> SUPERSEDED["Superseded\n이후 결정으로 대체\n→ 후속 DR 번호 명시"]
     DRAFT --> DELETE["삭제\nOQ Closed + backlog 없음\n+ 결정 불필요해진 것"]
@@ -1097,7 +1100,7 @@ flowchart LR
 | T4 | Work 파일 분해 생성 | 2개 이상 조건 충족: 3+ 서브태스크, 3+ 파일, 2+ 서비스·모듈, L3, 다중 checkpoint, 세션 초과, 인계 가능성 / 사용자 명시 요청 | Claude 능동 제안 | `docs/works/{category}/`, STATUS Active Work pointer |
 | T5 | PLAN.md 업데이트 | 아키텍처·스택·테스트·CI 영향 DR Accepted / 기술 스택 변경 | Claude 능동 제안 | PLAN-SUMMARY.md, rules, README.md, ARCHITECTURE.md 등 (§별 상이) |
 | T6 | ARCHITECTURE.md 업데이트 | 인증·토큰 흐름 변경 / 새 서비스 추가·제거 / 서비스 간 통신 방식 변경 / 인프라 토폴로지 변경 | Claude 능동 제안 | `docs/ARCHITECTURE.md` 해당 섹션, PLAN.md 및 DEVELOPER-GUIDE.md 참조 섹션 역확인 |
-| T7 | Harness protocol 업데이트 | docs/AGENT-WORKFLOW.md 워크플로우 규칙 변경 / `.claude/commands/*.md` 변경 / trigger set(T1~T14) 추가·변경 | Claude 능동 제안 | `HARNESS-PROTOCOL.md`, 필요 시 `WORKFLOW-MANUAL.md` |
+| T7 | Harness protocol 업데이트 | docs/AGENT-WORKFLOW.md 워크플로우 규칙 변경 / `.claude/commands/*.md` 변경 / trigger set 변경 | Claude 능동 제안 | `HARNESS-PROTOCOL.md`, 필요 시 `WORKFLOW-MANUAL.md` |
 | T8 | Troubleshooting 기록 | 비자명 이슈 해결 (환경 문제, 비직관적 원인, 도구 버전 비호환) | Claude 능동 제안 | `docs/troubleshooting/`, 필요 시 `docs/DEVELOPER-GUIDE.md` 링크 추가 |
 | T9 | 발표/보고 산출물 생성 | `/doc` 실행 또는 발표·보고·review package 생성 요청 | Claude 능동 제안 | `docs/presentations/`, `docs/reports/`, source traceability, STATUS/backlog 참조 필요 여부 |
 | T10 | Work archive 제안 | `status: Done` Work 파일이 `docs/works/{category}/`에 남아 있을 때 | Claude 능동 제안 | archive 승인 여부 제안, 승인 전 `git mv` 금지 |
@@ -1105,6 +1108,7 @@ flowchart LR
 | T12 | Scaffold 검증 | `scripts/create-harness.sh` 또는 canonical workflow 변경 | Claude 능동 제안 | dry-run, temp scaffold 생성, stale phrase 검색 |
 | T13 | Product surface Quick Mode 확인 | product surface의 L1 작은 변경 | Claude 판단 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경 | Claude 능동 제안 | 기본 L2로 scope/cascade 확인 |
+| T15 | STATUS Finalization | commit 또는 PR 생성 전 | Claude/Codex/Cursor commit gate | `docs/STATUS.md` 최종본 반영 필요 여부, 필요 시 Approval Matrix proposal |
 
 ---
 
@@ -1260,7 +1264,7 @@ T3 자체가 T5를 즉시 발동시키지는 않는다. 루프 없음.
 **발동 조건 (다음 중 하나):**
 - `docs/AGENT-WORKFLOW.md` 워크플로우 규칙 변경 (컨텍스트 로드 조건, DR 기준, STATUS 규칙, 실패 복구 규칙 등)
 - `.claude/commands/*.md` 내용 변경
-- trigger set(T1~T14) 추가·변경
+- trigger set 추가·변경
 
 **cascade (섹션별):**
 

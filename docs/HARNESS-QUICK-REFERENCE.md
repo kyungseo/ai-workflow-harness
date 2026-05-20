@@ -41,7 +41,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 
 - **CHECKPOINT** = 검증 결과, Work 파일 checkpoint/discovery, STATUS update 필요 여부를 보고하는 재개 지점.
 - **END (`/done`)** = 세션 종료 시에만 실행. 작업마다 호출하지 않는다. Work Done 처리는 포함하지 않는다 — Work를 완료하려면 `/close`를 먼저 실행한다.
-- **`/close`** = Work Done 처리 전용. 세션 종료 없이 Work 완료 처리(Done Criteria 확인 → status/actual_end 기입 → README Active→Done → STATUS pointer 제거 제안 → 선택적 archive). 실행 후 세션 계속.
+- **`/close`** = Work Done 처리 전용. 세션 종료 없이 Work 완료 처리(Done Criteria 확인 → status/actual_end 기입 → README Active→Done → STATUS pointer 제거 제안 → 선택적 archive). commit/PR 전 STATUS Finalization Gate를 대체하지 않는다. 실행 후 세션 계속.
 
 ## 3. Work Item Registration
 
@@ -123,6 +123,7 @@ Harness/workflow surface(`entrypoint/workflow/protocol/command/rule/prompt/scaff
 - 문서 링크 정합성
 - DR 필요 여부
 - Approval Matrix에 따른 STATUS update 필요 여부
+- commit/PR 전 STATUS 최종본 반영 필요 여부
 
 COMMIT 전 확인:
 
@@ -130,6 +131,7 @@ COMMIT 전 확인:
 - `git add <files>`
 - `git status`
 - `git diff --cached`
+- STATUS Finalization: `docs/STATUS.md` update needed yes/no, 이유, 필요 시 Approval Matrix proposal
 - validation 결과, diff summary, 제안 commit message 보고
 - 사용자 승인
 
@@ -204,6 +206,7 @@ Low. STATUS.md dashboard 표현만 되돌리면 됩니다.
 | Trigger | Action |
 | --- | --- |
 | DR-worthy decision accepted | `docs/decisions/` 기록 제안 |
+| Before commit or PR creation | STATUS Finalization: `docs/STATUS.md` 최종본 반영 필요 여부 판정 및 필요 시 Approval Matrix proposal 제안 |
 | Structure change | `docs/ARCHITECTURE.md` 업데이트 제안 |
 | Development flow change | `docs/DEVELOPER-GUIDE.md` 업데이트 제안 |
 | Workflow rule/command change | `docs/HARNESS-PROTOCOL.md` 업데이트 |

@@ -18,6 +18,7 @@ disable-model-invocation: true
    - 필요하다면 즉시 수정하지 말고 Approval Matrix state rules에 맞는 제안을 제시해.
    - Active Work pointer 추가/제거는 대상 Work ID를 명시한 1줄 제안으로 충분하다.
    - Phase completion criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 제시해.
+   - commit/PR 전 STATUS Finalization이 완료되었는지 확인해. Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, Active Work Discovery 최신성을 기준으로 `STATUS.md` 변경 필요 yes/no와 이유를 보고해.
    - Recent Decisions 변경 제안에는 후속 행동을 바꾸는 운영/기술 판단만 포함해. 단순 완료 사실은 Active Work pointer, Work 파일 Checkpoints, commit history에 둬.
    - Recent Decisions는 최근 8개 rolling window를 유지하고, 초과분 제거 전 DR-worthy 항목이면 대응 DR 존재 여부를 확인해.
    - 사용자가 명시적으로 승인한 뒤에만 STATUS.md를 수정해.

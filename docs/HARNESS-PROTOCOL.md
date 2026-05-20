@@ -303,6 +303,7 @@ Backlog의 `Candidate` 항목은 후보 pool이다.
 Work 파일은 착수 승인 후 `Active` 상태로 생성한다.
 `Done`과 `Archived`는 분리한다.
 Work Done 처리(status: Done, actual_end, README Active->Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다.
+`/close`는 Work Done 처리이며 commit/PR 전 STATUS Finalization Gate를 대체하지 않는다.
 `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
 Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에 수행한다.
 
@@ -392,6 +393,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | T12 | scaffold source 또는 canonical workflow 변경 | dry-run + temp scaffold 검증 |
 | T13 | Product surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
+| T15 | commit 또는 PR 생성 전 | `docs/STATUS.md` 최종본 반영 필요 여부 판정 |
 
 ### Loop Safety
 
@@ -405,6 +407,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 - T12는 temp target에서 검증하고 생성물을 live tree로 복사하지 않는다.
 - T13은 product surface의 작은 작업을 빠르게 닫기 위한 규칙이다.
 - T14는 entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경을 기본 L2로 다루며, 관련 tool surface를 확인한다.
+- T15는 자동 STATUS 수정을 허용하지 않는다. Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, Active Work Discovery 최신성을 확인한다. 필요하면 Approval Matrix에 맞는 state-change proposal 또는 `STATUS Update Proposal`을 먼저 제안하고, 불필요하면 commit/PR 전 summary에 이유를 남긴다.
 
 ### Cascade Rule
 
@@ -429,7 +432,7 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 | `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc` | 반대 tool rule, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` |
 | `prompts/*session-start.md` | `prompts/README.md`, `AGENTS.md`, `CLAUDE.md`, relevant command/rule |
 | `scripts/create-harness.sh` | generic/spring-boot dry-run, temp scaffold 생성 결과, scaffold 내부 stale phrase 검색 |
-| `docs/decisions/DR-*.md` Accepted | `docs/STATUS.md` Recent Decisions 필요 여부, 관련 backlog/Work 파일, PLAN 영향 여부 |
+| `docs/decisions/DR-*.md` Accepted | `docs/STATUS.md` Recent Decisions 필요 여부 필수 판정, 관련 backlog/Work 파일, PLAN 영향 여부 |
 | developer-facing docs (`README.md`, `DEVELOPER-GUIDE.md`, `CODING-CONVENTIONS.md`) | 실제 config/script/source와 기술 내용 대조 |
 | `docs/` 하위 디렉토리 신규 추가 또는 삭제 | T5(PLAN 영향 여부), T7(harness protocol 업데이트 필요 여부), Context Routing 갱신 여부, `scripts/create-harness.sh` 동기화 여부 확인 |
 
@@ -483,6 +486,7 @@ Report includes:
 - Work 파일 Done 처리 또는 archive 이동에 사용자 확인이 있었는가
 - `STATUS.md` 갱신이 필요한가
 - `STATUS.md` 갱신이 필요하면 Approval Matrix에 맞는 제안과 사용자 승인이 있었는가
+- commit/PR 전 STATUS Finalization 결과(`STATUS.md` 변경 필요 yes/no와 이유)를 보고했는가
 - DR/Work 파일/archive/cascade가 필요한가
 - 다음 세션이 `STATUS.md`만 보고 재개 가능한가
 

@@ -3,7 +3,7 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-19 (HRN-023 Active 등록 — 전역 행동 원칙 복원)
+Last updated: 2026-05-20 (DR-017/DR-018 Recent Decisions 반영)
 
 ## Current State
 
@@ -55,6 +55,8 @@ Last updated: 2026-05-19 (HRN-023 Active 등록 — 전역 행동 원칙 복원)
 | 2026-05-18 | DR-014: Archive 구조 정책 — `docs/archive/` 하위 경로 미러링, `-v{N}` / `-{YYYYMMDD}` 접미사 규칙 | 어느 파일이든 아카이빙 가능, 원본 위치 추적 직관적 | Low |
 | 2026-05-18 | DR-015: State Update Proposal 2계층 게이트 재설계 — Work 파일 변경(Layer 1)은 저마찰, STATUS.md 변경(Layer 2)은 차등 게이트 | Work 파일 SSoT 전환 이후 게이트 비용이 실질 위험과 역전된 구조 해소 | Low |
 | 2026-05-18 | DR-016: Work Done과 Archived 상태 분리 — `/close`는 Done 처리, `/done`은 세션 요약 전용; archive는 명시 승인 또는 start/resume trigger로 수행 (HRN-019로 역할 변경) | 리뷰 대기·외부 참조 유지 중 Work 파일 조기 이동 방지 | Low |
+| 2026-05-20 | DR-017: Git 머지 전략 및 Branch Flow 규칙 — feature→develop은 Regular merge 기본, develop→main은 Merge commit 고정, 상세 절차는 `docs/GIT-WORKFLOW.md` SSoT | 직접 local merge 방지, 의미 있는 커밋 히스토리 보존, tool surface 중복 최소화 | Low |
+| 2026-05-20 | DR-018: CI trigger 최적화 — path filter, lint/test 병렬화, develop push CI 제거; DR-009 일부 supersede | 문서·설정 변경의 불필요한 CI 실행 감소, develop→main PR에 최종 검증 집중 | Low |
 
 ## Next Actions
 
