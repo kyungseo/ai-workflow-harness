@@ -69,6 +69,11 @@ gh pr create --base develop --title "..." --body "..."
 - Regular merge 기본 — feature 브랜치의 커밋 히스토리를 보존한다.
 - WIP 커밋이 많아 히스토리가 지저분할 때만 Squash merge를 선택한다.
 
+**검증 책임:**
+- feature→develop PR은 GitHub Actions CI를 실행하지 않는다.
+- Java/Gradle/`.github` 변경이 포함되면 PR 전 로컬 검증 결과(`./gradlew test` 또는 변경 범위에 맞는 더 좁은 검증)를 PR 본문이나 세션 요약에 남긴다.
+- 최종 CI 검증은 develop→main PR에서 수행한다.
+
 ### 2-4. Post-PR 정리 절차
 
 PR merge 후:
@@ -118,7 +123,7 @@ git status                  # "up to date with 'origin/develop'" 확인
 | `push` to `main` | Java/Gradle/`.github` 파일 변경 시 | lint, test (병렬) |
 | `pull_request` targeting `main` | Java/Gradle/`.github` 파일 변경 시 | lint, test (병렬) |
 
-**Path filter 대상:** `**/*.java`, `**/build.gradle*`, `**/settings.gradle*`, `**/gradle.properties`, `gradle/**`, `.github/workflows/**`
+**Path filter 대상:** `**/*.java`, `**/build.gradle*`, `**/settings.gradle*`, `**/gradle.properties`, `gradle/**`, `gradlew`, `gradlew.bat`, `.github/workflows/**`
 
 > develop push는 CI 트리거 없음. feature 변경은 develop → main PR 단계에서 검증된다.
 > docs, `.claude` 등 Java/Gradle 무관 변경은 CI가 실행되지 않는다.

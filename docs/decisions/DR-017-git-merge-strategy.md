@@ -16,7 +16,7 @@ feature→develop, develop→main 머지 전략을 어떻게 정하고, Branch F
 **Branch Flow 규칙 포함 방식 (AI 도구 instruction):**
 - `.claude/rules/git-workflow.md`, `AGENTS.md`, `.cursor/rules/workflow.mdc` 각각에 NEVER 가드레일만 인라인으로 유지.
 - 상세 절차(SSoT)는 `docs/GIT-WORKFLOW.md` §2·§3에만 정의하고 rules 파일은 포인터로 참조.
-- Flow 변경 시 `docs/GIT-WORKFLOW.md` 한 곳만 수정.
+- 상세 Flow 변경 시 `docs/GIT-WORKFLOW.md`를 수정한다. 단, NEVER 가드레일의 의미가 바뀌면 tool surface cascade(`AGENTS.md`, `.claude/rules/git-workflow.md`, `.cursor/rules/workflow.mdc`)도 함께 확인한다.
 
 ## Options Considered
 
@@ -37,7 +37,7 @@ feature→develop, develop→main 머지 전략을 어떻게 정하고, Branch F
 
 develop→main은 Merge commit으로 feature 단위 커밋이 main에도 보존되도록 한다.
 
-Branch Flow SSoT는 `docs/GIT-WORKFLOW.md`가 이미 상세 절차를 정의하고 있어 중복 없이 활용 가능하다. NEVER 가드레일만 rules 파일에 남겨 on-demand 로드 없이도 치명적 실수(직접 merge)를 방지한다.
+Branch Flow SSoT는 `docs/GIT-WORKFLOW.md`가 이미 상세 절차를 정의하고 있어 중복 없이 활용 가능하다. NEVER 가드레일만 rules 파일에 남겨 on-demand 로드 없이도 치명적 실수(직접 merge)를 방지한다. 다만 가드레일 자체가 바뀌는 경우에는 각 tool surface가 실행 표면이므로 cascade 확인 대상이다.
 
 ## Consequences
 
