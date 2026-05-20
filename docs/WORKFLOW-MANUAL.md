@@ -531,7 +531,8 @@ Work 파일은 착수 승인 후 `Active` 상태로 생성한다.
 **완료 절차 (Done) — `/close`:**
 
 Work를 완료하면 `/close`를 실행한다. 세션은 종료되지 않고 계속된다.
-`/close`는 Work Done 처리이며 commit/PR 전 STATUS Finalization Gate를 대체하지 않는다.
+`/close`는 Work Done 처리이며 commit/PR 전 STATUS Finalization Gate나 Tracking Finalization Gate를 대체하지 않는다.
+Review-sensitive Work는 사용자 최종 리뷰를 Done Criteria에 선택 포함한다. `/close`는 모든 Work에 사용자 리뷰를 강제하지 않지만, Done Criteria에 명시된 리뷰 조건은 Done 처리 전 반드시 확인한다.
 
 1. Done Criteria 전부 체크됐는지 확인
 2. Work 파일 frontmatter: `status: Done`, `actual_end: YYYY-MM-DD` 기입

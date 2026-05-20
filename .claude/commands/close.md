@@ -18,6 +18,8 @@ Active Work가 여러 개면 대상 Work ID를 먼저 확인한다. 하나뿐이
 
 Work 파일의 Done Criteria를 전부 체크했는지 확인한다.
 미충족 항목이 있으면 사용자에게 보고하고 진행 여부를 묻는다.
+Done Criteria에 사용자 최종 리뷰, final review, 검토 후 Done 같은 명시적 리뷰 조건이 있으면 해당 리뷰 확인을 완료하기 전 Done 처리하지 않는다.
+전역 사용자 리뷰를 모든 Work에 강제하지 않는다.
 
 **3. Work 파일 Done 처리 (Approval Matrix state detail — 사용자 확인 후)**
 
@@ -36,8 +38,8 @@ Work 파일의 Done Criteria를 전부 체크했는지 확인한다.
 
 **6. STATUS Finalization 관계 확인**
 
-`/close`는 Work Done 처리이며 commit/PR 전 STATUS Finalization Gate를 대체하지 않는다.
-이미 commit 또는 PR이 필요한 변경이 있으면 commit/PR 전에 별도로 STATUS Finalization 결과(`STATUS.md` 변경 필요 yes/no와 이유)를 보고한다.
+`/close`는 Work Done 처리이며 commit/PR 전 STATUS Finalization Gate 또는 Tracking Finalization Gate를 대체하지 않는다.
+이미 commit 또는 PR이 필요한 변경이 있으면 commit/PR 전에 별도로 STATUS Finalization 결과(`STATUS.md` 변경 필요 yes/no와 이유)와 Tracking Finalization 결과(backlog/Work/DR tracker 변경 필요 yes/no와 이유)를 보고한다.
 
 ---
 

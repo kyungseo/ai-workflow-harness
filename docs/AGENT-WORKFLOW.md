@@ -165,6 +165,11 @@ Done과 Archived는 분리한다.
 Work Done 처리(status: Done, actual_end, README Active→Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다. `/close`는 Work Done 처리이며 commit/PR 전 STATUS Finalization Gate를 대체하지 않는다. `/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
 Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에만 수행한다.
 
+Review-sensitive Work는 사용자 최종 리뷰를 Done Criteria에 명시할 수 있다.
+`/close`는 전역 사용자 리뷰를 강제하지 않는다. 다만 Work 파일 Done Criteria에 사용자 최종 리뷰, final review, 검토 후 Done 등 명시적 리뷰 조건이 있으면 해당 확인을 완료하기 전 Done 처리하지 않는다.
+기본 포함 후보는 harness/workflow surface, user-facing manual, rule/command, policy/operational procedure 변경이다.
+Quick Mode, 단순 오타·링크·기계적 정합성 패치, 테스트·검증으로 닫히는 구현 작업은 기본 제외다.
+
 ## Documentation Triggers
 
 | Trigger | Action |
