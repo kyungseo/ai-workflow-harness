@@ -394,6 +394,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | T13 | Product surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
 | T15 | commit 또는 PR 생성 전 | `docs/STATUS.md` 최종본 반영 필요 여부 판정 |
+| T16 | commit 또는 PR 생성 전 | backlog/Work/DR tracker 최종 상태 반영 필요 여부 판정 |
 
 ### Loop Safety
 
@@ -408,6 +409,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 - T13은 product surface의 작은 작업을 빠르게 닫기 위한 규칙이다.
 - T14는 entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경을 기본 L2로 다루며, 관련 tool surface를 확인한다.
 - T15는 자동 STATUS 수정을 허용하지 않는다. Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, Active Work Discovery 최신성을 확인한다. 필요하면 Approval Matrix에 맞는 state-change proposal 또는 `STATUS Update Proposal`을 먼저 제안하고, 불필요하면 commit/PR 전 summary에 이유를 남긴다.
+- T16은 backlog/Work/DR tracker를 실제 완료 상태와 맞추는 gate다. 연결된 backlog 항목의 Status/Done Criteria/Verification, Work 파일 frontmatter/status/Checkpoints/Discovery, Work index README 위치, 관련 DR의 Status/Supersedes/Linked Backlog Items, 완료된 Quick Mode 작업이 backlog Candidate로 남아 있는지 여부를 확인한다.
 
 ### Cascade Rule
 
@@ -487,6 +489,7 @@ Report includes:
 - `STATUS.md` 갱신이 필요한가
 - `STATUS.md` 갱신이 필요하면 Approval Matrix에 맞는 제안과 사용자 승인이 있었는가
 - commit/PR 전 STATUS Finalization 결과(`STATUS.md` 변경 필요 yes/no와 이유)를 보고했는가
+- commit/PR 전 Tracking Finalization 결과(backlog/Work/DR 변경 필요 yes/no와 이유)를 보고했는가
 - DR/Work 파일/archive/cascade가 필요한가
 - 다음 세션이 `STATUS.md`만 보고 재개 가능한가
 

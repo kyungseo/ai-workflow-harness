@@ -40,6 +40,8 @@ When ending a session (`/done`): report completed work, changed files, validatio
 
 STATUS Finalization Gate: before commit or PR, report whether `docs/STATUS.md` needs a final update, why, and the required Approval Matrix proposal if needed. Check Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, and Active Work Discovery freshness. Do not edit `docs/STATUS.md` without explicit approval.
 
+Tracking Finalization Gate: before commit or PR, report whether backlog/Work/DR tracker updates are needed and why. Check linked backlog item Status/Done Criteria/Verification, Work file frontmatter/status/Checkpoints/Discovery, Work index README placement, related DR status/Supersedes/Linked Backlog Items, and completed Quick Mode work still left as Candidate.
+
 Approval Matrix state rules:
 
 | Target | Change | Gate |

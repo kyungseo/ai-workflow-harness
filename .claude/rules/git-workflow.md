@@ -20,6 +20,7 @@ Commit Approval:
 - Commit only after validation is complete or the remaining risk is explicitly accepted.
 - Before committing, follow the Approval Matrix: report validation result, diff summary, and proposed commit message, then wait for user approval.
 - Before committing or opening a PR, report STATUS Finalization: whether `docs/STATUS.md` update is needed, why, and the required Approval Matrix proposal if needed.
+- Before committing or opening a PR, report Tracking Finalization: whether backlog/Work/DR tracker updates are needed, why, and which tracker files changed if any.
 - If `docs/STATUS.md` needs to change before commit, provide the Approval Matrix state-change proposal and wait for user approval before editing it.
 - If not committing after a completed task, record the reason and remaining risk in the session summary.
 

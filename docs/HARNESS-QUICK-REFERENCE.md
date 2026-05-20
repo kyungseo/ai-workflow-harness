@@ -43,6 +43,14 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 - **END (`/done`)** = 세션 종료 시에만 실행. 작업마다 호출하지 않는다. Work Done 처리는 포함하지 않는다 — Work를 완료하려면 `/close`를 먼저 실행한다.
 - **`/close`** = Work Done 처리 전용. 세션 종료 없이 Work 완료 처리(Done Criteria 확인 → status/actual_end 기입 → README Active→Done → STATUS pointer 제거 제안 → 선택적 archive). commit/PR 전 STATUS Finalization Gate를 대체하지 않는다. 실행 후 세션 계속.
 
+### Command Taxonomy
+
+| 범주 | 명령 | 끝내는 것 |
+| --- | --- | --- |
+| Session lifecycle | `/start`, `/pick`, `/done` | 세션 상태 파악, 다음 작업 선택, 세션 요약 |
+| Work lifecycle | `/work`, `/resume`, `/close` | Work 착수, Work 재개, Work Done 처리 |
+| Utility / Analysis | `/register`, `/debug`, `/doc`, `/record-decision`, `/health` | 항목 등록, 문제 분석, 산출물 생성, 결정 기록, 상태 점검 |
+
 ## 3. Work Item Registration
 
 새 작업 항목이 생기면 `/register`로 등록한다.
@@ -124,6 +132,7 @@ Harness/workflow surface(`entrypoint/workflow/protocol/command/rule/prompt/scaff
 - DR 필요 여부
 - Approval Matrix에 따른 STATUS update 필요 여부
 - commit/PR 전 STATUS 최종본 반영 필요 여부
+- commit/PR 전 backlog/Work/DR tracker 최종 상태 반영 필요 여부
 
 COMMIT 전 확인:
 
@@ -132,6 +141,7 @@ COMMIT 전 확인:
 - `git status`
 - `git diff --cached`
 - STATUS Finalization: `docs/STATUS.md` update needed yes/no, 이유, 필요 시 Approval Matrix proposal
+- Tracking Finalization: backlog/Work/DR update needed yes/no, 이유
 - validation 결과, diff summary, 제안 commit message 보고
 - 사용자 승인
 
@@ -207,6 +217,7 @@ Low. STATUS.md dashboard 표현만 되돌리면 됩니다.
 | --- | --- |
 | DR-worthy decision accepted | `docs/decisions/` 기록 제안 |
 | Before commit or PR creation | STATUS Finalization: `docs/STATUS.md` 최종본 반영 필요 여부 판정 및 필요 시 Approval Matrix proposal 제안 |
+| Before commit or PR creation | Tracking Finalization: backlog/Work/DR tracker 최종 상태 반영 필요 여부 판정 및 필요 시 tracker 파일 갱신 |
 | Structure change | `docs/ARCHITECTURE.md` 업데이트 제안 |
 | Development flow change | `docs/DEVELOPER-GUIDE.md` 업데이트 제안 |
 | Workflow rule/command change | `docs/HARNESS-PROTOCOL.md` 업데이트 |

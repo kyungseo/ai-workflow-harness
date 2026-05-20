@@ -172,10 +172,9 @@ graph TD
     RULES --> R4["📄 java-spring.md<br/><i>Spring Boot 전용</i>"]
     RULES --> R5["📄 testing.md<br/><i>테스트 전략</i>"]
 
-    COMMANDS --> CMD_A["/start · /pick · /register<br/><i>세션 시작·선택·등록</i>"]
-    COMMANDS --> CMD_B["/work · /resume · /debug<br/><i>계획·재개·분석</i>"]
-    COMMANDS --> CMD_C["/doc · /record-decision<br/><i>산출물·결정 기록</i>"]
-    COMMANDS --> CMD_D["/close · /done · /health<br/><i>Work 완료 · 세션 종료 · 점검</i>"]
+    COMMANDS --> CMD_A["Session lifecycle<br/>/start · /pick · /done"]
+    COMMANDS --> CMD_B["Work lifecycle<br/>/work · /resume · /close"]
+    COMMANDS --> CMD_C["Utility / Analysis<br/>/register · /debug · /doc<br/>/record-decision · /health"]
 
     style SETTINGS fill:#f8d7da,stroke:#721c24
 ```
@@ -818,19 +817,19 @@ flowchart TD
 
 Claude Code에서 `/명령명`으로 호출. 파일 위치: `.claude/commands/*.md`
 
-| 명령 | 언제 사용 | 주요 동작 |
-| --- | --- | --- |
-| `/start` | 세션 시작 시 | CLAUDE.md + STATUS.md 로드, 현재 상태 요약, 다음 작업 제안 |
-| `/pick` | 다음 작업을 선택할 때 | backlog 후보 비교, 우선순위 추천, 관련 DR 표시, 구현 전 승인 대기 |
-| `/register [설명]` | 새 작업 항목을 등록할 때 | 긴급도·성격 판단 → STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md 중 라우팅 → State Update 제안(필요 시) → 긴급 항목이면 /work 연결 제안 |
-| `/work {ID}` | 특정 작업을 시작할 때 | Work File Check → PLAN.md 강제 로드 조건 체크 → 위험도 판단(L1/L2/L3) → 계획 수립 → "진행할까요?" 후 대기 → DR-worthy 결정 목록 제안 |
-| `/resume {ID}` | 중단된 작업을 재개할 때 | 파일 상태 vs STATUS.md / Work 파일 비교 → Done이면 재개 금지 및 archive/후속 작업 제안 → 남은 계획 제안 |
-| `/debug` | 버그 분석/수정 시 | 코드·로그·테스트 근거로 원인 파악, 최소 변경 계획 |
-| `/doc [brief]` | 발표·보고·리뷰 패키지·외부 공유용 문서 산출물을 만들 때 | 목적·audience·format·source brief 확정 → outline 승인 → presentation/document 도구 또는 fallback으로 산출물 생성 → 품질 검증 |
-| `/close` | Work를 완료할 때 (세션 계속) | Done Criteria 확인, status/actual_end 기입, README Active→Done, STATUS pointer 제거 제안, 선택적 archive. commit/PR 전 STATUS Finalization 대체 아님 |
-| `/done` | 세션 종료 시 | 완료 작업, 변경 파일, 검증 결과, 리스크, Active Work Discovery 미기록 확인, State Update 필요 여부, STATUS Finalization 결과, 다음 세션 primer 요약, DR 검토 (Work Done 처리 없음 — `/close` 먼저 실행) |
-| `/record-decision` | 기술 결정을 DR로 기록할 때 | 현재 대화의 확정 결정을 DR 초안으로 작성, 승인 후 파일 생성, Accepted DR마다 Recent Decisions 반영 필요 여부 판정 |
-| `/health` | 워크플로우·문서 점검 시 | 구조 정합성, 문서 현행화, 백로그/DR 위생 전체 점검 후 보고. `--full`은 전체 심화 점검, `--cascade`는 문서/워크플로우 변경의 연쇄 영향을 required surface, grep, simulation checklist로 감사 |
+| 범주 | 명령 | 언제 사용 | 주요 동작 |
+| --- | --- | --- | --- |
+| Session lifecycle | `/start` | 세션 시작 시 | CLAUDE.md + STATUS.md 로드, 현재 상태 요약, 다음 작업 제안 |
+| Session lifecycle | `/pick` | 다음 작업을 선택할 때 | backlog 후보 비교, 우선순위 추천, 관련 DR 표시, 구현 전 승인 대기 |
+| Session lifecycle | `/done` | 세션 종료 시 | 완료 작업, 변경 파일, 검증 결과, 리스크, Active Work Discovery 미기록 확인, State Update 필요 여부, STATUS/Tracking Finalization 결과, 다음 세션 primer 요약, DR 검토. Work Done 처리 없음 — Work를 끝내려면 `/close` 먼저 실행 |
+| Work lifecycle | `/work {ID}` | 특정 작업을 시작할 때 | Work File Check → PLAN.md 강제 로드 조건 체크 → 위험도 판단(L1/L2/L3) → 계획 수립 → "진행할까요?" 후 대기 → DR-worthy 결정 목록 제안 |
+| Work lifecycle | `/resume {ID}` | 중단된 작업을 재개할 때 | 파일 상태 vs STATUS.md / Work 파일 비교 → Done이면 재개 금지 및 archive/후속 작업 제안 → 남은 계획 제안 |
+| Work lifecycle | `/close` | Work를 완료할 때 (세션 계속) | Done Criteria 확인, status/actual_end 기입, README Active→Done, STATUS pointer 제거 제안, 선택적 archive. 세션 종료나 commit/PR 전 STATUS Finalization 대체 아님 |
+| Utility / Analysis | `/register [설명]` | 새 작업 항목을 등록할 때 | 긴급도·성격 판단 → STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md 중 라우팅 → State Update 제안(필요 시) → 긴급 항목이면 /work 연결 제안 |
+| Utility / Analysis | `/debug` | 버그 분석/수정 시 | 코드·로그·테스트 근거로 원인 파악, 최소 변경 계획 |
+| Utility / Analysis | `/doc [brief]` | 발표·보고·리뷰 패키지·외부 공유용 문서 산출물을 만들 때 | 목적·audience·format·source brief 확정 → outline 승인 → presentation/document 도구 또는 fallback으로 산출물 생성 → 품질 검증 |
+| Utility / Analysis | `/record-decision` | 기술 결정을 DR로 기록할 때 | 현재 대화의 확정 결정을 DR 초안으로 작성, 승인 후 파일 생성, Accepted DR마다 Recent Decisions 반영 필요 여부 판정 |
+| Utility / Analysis | `/health` | 워크플로우·문서 점검 시 | 구조 정합성, 문서 현행화, 백로그/DR 위생 전체 점검 후 보고. `--full`은 전체 심화 점검, `--cascade`는 문서·워크플로우 변경의 연쇄 영향을 required surface, grep, simulation checklist로 감사 |
 
 ### Approval Matrix
 
@@ -1109,6 +1108,7 @@ flowchart LR
 | T13 | Product surface Quick Mode 확인 | product surface의 L1 작은 변경 | Claude 판단 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경 | Claude 능동 제안 | 기본 L2로 scope/cascade 확인 |
 | T15 | STATUS Finalization | commit 또는 PR 생성 전 | Claude/Codex/Cursor commit gate | `docs/STATUS.md` 최종본 반영 필요 여부, 필요 시 Approval Matrix proposal |
+| T16 | Tracking Finalization | commit 또는 PR 생성 전 | Claude/Codex/Cursor commit gate | backlog/Work/DR tracker 최종 상태 반영 필요 여부, 필요 시 tracker 파일 갱신 |
 
 ---
 
