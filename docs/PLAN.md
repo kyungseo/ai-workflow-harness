@@ -44,7 +44,7 @@
 | **Infra** | Docker Compose | 로컬 통합 실행 (PostgreSQL, Redis 포함) |
 | **Dev Env** | VS Code + DevContainer | Java 21 이미지, docker-in-docker |
 | **테스트** | Testcontainers | DR-010 Accepted — P2-006 완료. Testcontainers 전환 완료, CI services 블록 제거 가능 |
-| **CI** | GitHub Actions | `develop` push → Checkstyle lint only / PR to main → 전체 테스트 (DR-009), `.github/workflows/ci.yml` |
+| **CI** | GitHub Actions | Java/Gradle/`.github` 변경 시 `main` push / PR to main → lint + test 병렬 실행, develop push CI 없음 (DR-018), `.github/workflows/ci.yml` |
 | **Code Quality** | Checkstyle 10.21.0 | Google Java Style + LineLength=120/Indentation=4 오버라이드, 파일 헤더 없음 정책 (DR-004, DR-005) |
 | **로그 포맷** | logstash-logback-encoder | stg/prd 환경 JSON 구조화 로그 (§10 참조). `runtimeOnly` 의존성으로 추가 |
 
@@ -473,9 +473,9 @@ TODO-0002: 본인 소유 아님 (권한 없음)
 > **Testcontainers 전환 완료 (DR-010 Accepted, P2-006 Done)**:
 > `@SpringBootTest` 통합 테스트가 Testcontainers 기반으로 전환됨. CI GitHub Actions `services` 블록 제거 가능.
 
-> **CI 단계별 테스트 실행 (DR-009)**:
-> `develop` push: Checkstyle lint만 실행 (`./gradlew checkstyleMain checkstyleTest`)
-> PR to main: 전체 테스트 실행 (`./gradlew test`)
+> **CI 단계별 테스트 실행 (DR-018)**:
+> Java/Gradle/`.github` 변경 시 `main` push / PR to main에서 lint + test 병렬 실행
+> `develop` push와 feature→develop PR은 CI 미실행. Java/Gradle 변경은 PR 전 로컬 검증 결과를 남김
 
 > **Phase 2**: CI/CD 연동 자동화 테스트 필요 시 RestAssured 도입 검토 (Phase 2 백로그 참고)
 
@@ -660,8 +660,9 @@ Phase 2부터 Claude Code / Cursor 기반 AI workflow를 적극 활용한다.
 | DR-006 | CI job 분리 구조 | Accepted |
 | DR-007 | 파일 유형별 언어 원칙 | Accepted |
 | DR-008 | docs/ 파일명 대소문자 표준 | Accepted |
-| DR-009 | CI trigger 분리 (develop=lint, PR to main=전체) | Accepted |
+| DR-009 | CI trigger 분리 (develop=lint, PR to main=전체) | Partially superseded by DR-018 |
 | DR-010 | 통합 테스트 인프라 — Testcontainers 채택 | Accepted |
+| DR-018 | CI trigger 최적화 (path filter, lint/test 병렬화, develop push 제거) | Accepted |
 
 ---
 

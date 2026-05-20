@@ -32,10 +32,12 @@ Allowed checkpoint commands ONLY when required by active work verification:
 - `docker compose ...`
 - `psql ...`
 
-## CI Trigger Structure (DR-009)
+## CI Trigger Structure (DR-018)
 
-- `develop` branch push: Checkstyle lint only
-- `PR to main`: Full test suite
+- `push` to `main`: Checkstyle and unit tests, only for Java/Gradle/`.github` workflow changes
+- `pull_request` targeting `main`: Checkstyle and unit tests, only for Java/Gradle/`.github` workflow changes
+- `develop` branch push: no CI trigger
+- feature to develop PR: no CI trigger; for Java/Gradle changes, report local verification before PR or session closeout
 
 ## Code Quality Commands
 
