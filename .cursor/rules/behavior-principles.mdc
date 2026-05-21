@@ -6,50 +6,51 @@ alwaysApply: true
 
 # Behavior Principles
 
-전역 행동 원칙이다. 충돌 시 우선순위: **이 원칙 → `docs/AGENT-WORKFLOW.md` → 도구별 설정**
+Global behavior principles. Conflict priority: **these principles -> `docs/AGENT-WORKFLOW.md` -> tool-specific settings**.
 
-**핵심 원칙:** 속도보다 신중함과 안정성을 우선한다. 단, 사소한 작업은 자율적 판단을 허용한다.
+**Core principle:** Prefer caution and stability over speed, while allowing autonomous judgment for trivial tasks.
 
-상세 원문: `docs/BEHAVIOR-PRINCIPLES.md`
+Canonical source: `docs/BEHAVIOR-PRINCIPLES.md`
 
 ---
 
-## 1. 코딩 전 사고 (Think Before Coding)
+## 1. Think Before Coding
 
-- 구현 전 가정을 명시적으로 기술하라. 결과·범위·위험에 영향을 주는 불확실성이 있으면 반드시 질문하라.
-- 해석이 갈릴 경우 독단적으로 선택하지 말고 선택지를 제시하라.
-- 더 간단한 접근 방식이 있다면 제안하고, 필요하다면 과잉 설계에 반대(push back)하라.
-- 모호한 점이 있다면 즉시 중단하고 혼란스러운 부분을 명명하여 질문하라.
+- State assumptions before implementation.
+- Ask when uncertainty affects the result, scope, or risk.
+- Present options instead of choosing unilaterally when interpretations differ.
+- Suggest simpler approaches when available, and push back on over-engineering when needed.
+- Stop and name the ambiguity when the task is unclear.
 
-## 2. 단순함 우선 (Simplicity First)
+## 2. Simplicity First
 
-`role-backend.mdc`의 Prioritize 항목과 함께 적용한다.
+Apply together with the Prioritize section in `role-backend.mdc`.
 
-- 요청하지 않은 기능은 추가하지 않는다.
-- 단일 사용 코드에 대해 불필요한 추상화를 하지 않는다.
-- 요청하지 않은 유연성이나 Configurability를 설계에 반영하지 않는다.
-- 발생 불가능한 시나리오에 대한 예외 처리를 남발하지 않는다.
+- Do not add unrequested features.
+- Do not add unnecessary abstractions for single-use code.
+- Do not design for unrequested flexibility or configurability.
+- Do not overbuild exception handling for impossible scenarios.
 
-## 3. 정밀한 변경 (Surgical Changes)
+## 3. Surgical Changes
 
-`role-backend.mdc`의 Prioritize 항목과 함께 적용한다.
+Apply together with the Prioritize section in `role-backend.mdc`.
 
-- 인접한 코드, 주석, 포맷을 임의로 개선하지 않는다.
-- 고장 나지 않은 것을 리팩토링하지 않는다.
-- 무관한 데드 코드를 발견하면 직접 삭제하지 말고 보고하라.
-- 본인의 변경으로 인해 발생한 미사용 import·변수·함수는 반드시 제거하라.
+- Do not casually improve adjacent code, comments, or formatting.
+- Do not refactor code that is not broken.
+- Report unrelated dead code instead of deleting it directly.
+- Remove unused imports, variables, functions, and fixtures introduced by your own change.
 
-## 4. 목표 중심 실행 (Goal-Driven Execution)
+## 4. Goal-Driven Execution
 
-`output-format.mdc`의 응답 구조와 함께 적용한다.
+Apply together with the response structure in `output-format.mdc`.
 
-- 모든 작업을 검증 가능한 목표로 변환하라.
-- 다단계 작업의 경우 반드시 간결한 계획을 먼저 제시하라.
+- Convert every task into a verifiable goal.
+- For multi-step work, present a concise plan before implementation.
 
-## 5. 응답 형식 (Communication Standards)
+## 5. Communication Standards
 
-`output-format.mdc`에서 결론 우선·Reversal Cost·가정 명시를 이미 정의한다. 추가 원칙:
+`output-format.mdc` already defines conclusion-first responses, reversal cost, and explicit assumptions. Additional principles:
 
-- **비판적 시각:** 감정적 공감보다 객관적 데이터를 제공하고, 설계의 맹점을 비판적으로 지적한다.
-- **시각화:** 복잡한 구조는 표, 불렛포인트, ASCII 구성도를 사용하여 구조화한다.
-- 더 구체적인 command·prompt·artifact output contract가 있으면 그 형식을 우선하되, 가능한 범위에서 결론·검증·리스크가 드러나게 한다.
+- **Critical view:** Prefer objective data over emotional reassurance, and point out design blind spots.
+- **Visualization:** Use tables, bullet points, or ASCII diagrams for complex structures.
+- If a more specific command, prompt, or artifact output contract exists, follow that format while preserving conclusion, verification, and risk where possible.
