@@ -3,15 +3,15 @@
 AI Workflow Harness backlog다.
 
 이 파일은 Claude/Codex/Cursor 등 Agent workflow, 문서 상태 관리, command/rule 정합성, hook/CI enforcement 후보를 관리한다.
-Spring Boot MSA template의 product backlog는 `docs/backlog/PHASE2.md`에서 관리한다.
+프로젝트 기능 backlog가 필요한 경우 `docs/backlog/PHASE{n}.md`를 별도로 둔다.
 
-Phase1 종료 직후 백업본은 `docs/archive/snapshots/harness-refactor-20260514/PHASE2-backlog-before-refactor.md`에 보존되어 있다.
+기존 product-template backlog와 Work 기록은 history와 archive에 남아 있지만, 이 repository의 현재 active scope는 AI Workflow Harness다.
 
 ## Priority Guide
 
 | Priority | Meaning |
 | --- | --- |
-| P0 | Phase2 본격 착수 전에 처리해야 하는 운영 기반 |
+| P0 | public-ready migration 또는 harness 운영 전에 처리해야 하는 기반 |
 | P1 | 세션 안정성 또는 규칙 준수율을 크게 높이는 항목 |
 | P2 | 운영 부채를 줄이는 보완 항목 |
 | P3 | 선택적, 실험적, 또는 사용 빈도 확인 후 진행할 항목 |
@@ -20,7 +20,7 @@ Phase1 종료 직후 백업본은 `docs/archive/snapshots/harness-refactor-20260
 
 | ID | Priority | Status | Risk | Task | Done Criteria | Verification |
 | --- | --- | --- | --- | --- | --- | --- |
-| HRF-001 | P0 | Done | L3 | Phase1 이후 하네스를 경량 상태 머신 기반 운영 체계로 재편 | 백업 완료, STATUS 재정의, product/harness backlog 분리, Quick Reference 생성 | `docs/STATUS.md`, `docs/backlog/PHASE2.md`, `docs/backlog/HARNESS.md`, `docs/HARNESS-QUICK-REFERENCE.md` 확인 |
+| HRF-001 | P0 | Done | L3 | Phase1 이후 하네스를 경량 상태 머신 기반 운영 체계로 재편 | 백업 완료, STATUS 재정의, project/harness backlog 분리, Quick Reference 생성 | `docs/STATUS.md`, `docs/backlog/HARNESS.md`, `docs/HARNESS-QUICK-REFERENCE.md` 확인 |
 | HRF-002 | P0 | Done | L3 | Work 파일 기반 운영 체계 도입 — docs/works/ 구조, Archive 정책, STATUS.md 축소, AI 도구 정렬, 시뮬레이션 검증 | DR-013/014 확정, docs/works/ 구조 생성, STATUS.md 포인터 전환, 3개 AI 도구 시뮬레이션 통과, /health 통과 | `docs/works/harness/HRF-002-work-system-refactor.md` + `/health` |
 
 ## Backlog
@@ -28,7 +28,7 @@ Phase1 종료 직후 백업본은 `docs/archive/snapshots/harness-refactor-20260
 | ID | Priority | Status | Risk | Task | Dependencies | Done Criteria | Verification |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | HRN-001 | P0 | Done | L2 | Stop hook 추가 — `/done` 없이 세션 종료 시 reminder 출력 | `settings.json` Stop hooks | 세션 종료 시 `/done` reminder가 출력됨 | `.claude/settings.json` JSON 파싱, hook command 출력 확인 |
-| HRN-002 | P1 | Candidate | L2 | Hard enforcement 강화 — git hook + 검증 누락 감지 보강 | Manual protocol 안정화, HRN-001 | git pre-commit hook이 STATUS.md 최근 수정 여부를 체크; Java 파일 변경 후 검증 누락을 세션 종료 전 감지하는 enforcement chain 설계 | hook 트리거 확인 및 lint/validation 누락 감지 확인 |
+| HRN-002 | P1 | Candidate | L2 | Hard enforcement 강화 — git hook + 검증 누락 감지 보강 | Manual protocol 안정화, HRN-001 | git pre-commit hook이 STATUS.md 최근 수정 여부와 validation 누락을 세션 종료 전 감지하는 enforcement chain 설계 | hook 트리거 확인 및 lint/validation 누락 감지 확인 |
 | HRN-003 | P2 | Done | L1 | WORKFLOW-MANUAL Quick Reference 카드 분리 | HRF-001 | 일상 참조는 Quick Reference, 상세 참조는 HARNESS-PROTOCOL.md로 경로 명확화 | 문서 리뷰 및 HARNESS-PROTOCOL.md 링크 확인 |
 | HRN-004 | P2 | Done | L1 | prompts/ vs commands/ 역할 경계 결정 및 정리 — 역할 기준 문서화 후 중복 정리 실행 (HRN-007 흡수) | command/rule audit, Harness Protocol 안정화 | `prompts/` 파일을 command 승격/유지/archive-delete 후보로 분류하고 전환 기준을 `prompts/README.md`에 반영; slash command로 커버되는 prompt는 portable task value가 있으면 유지하고, repo-local workflow 실행이면 command로 유지한다 | `prompts/README.md`에 Keep as command / Keep as prompt / Session fallback / Promote / Archive 기준 반영; 현행 prompt 전체 유지, promote/archive 후보 없음 확인; `docs/WORKFLOW-MANUAL.md` Appendix A 정렬 |
 | HRN-005 | P2 | Done | L2 | 구조 변경 cascade 트리거 보완 — `docs/` 디렉토리 추가·삭제 자동 감지 | T5/T7 trigger review | `docs/` 하위 디렉토리 추가·삭제 시 cascade 대상이 명시적으로 정의됨 | 신규 디렉토리 추가 시 cascade 누락 없이 업데이트됨 확인 |
@@ -52,7 +52,7 @@ Phase1 종료 직후 백업본은 `docs/archive/snapshots/harness-refactor-20260
 | --- | --- | --- |
 | HRN-FUT-001 | `.harness/config.json` SSOT 도입 | Manual-first protocol이 1~2회 실제 작업에서 안정화된 후 |
 | HRN-FUT-004 | Gitflow vs GitHub Flow 전략 결정 — 현재 Gitflow(feature→develop→main) 유지 여부 | 충분한 논의 후 결정. trade-off: Gitflow는 릴리즈 단위 제어 유리, GitHub Flow는 1인 개발 절차 단순화. 결정 시 `docs/GIT-WORKFLOW.md`와 DR로 반영 |
-| HRN-FUT-005 | GitHub Branch protection rule 설정 — main 머지 게이트 강화 | Phase 2 Java 코드 변경 PR 본격화 전. AS-IS: protection 없음, CI 미통과 상태로 merge 가능. TO-BE: Required status checks(Checkstyle·Unit Tests) 활성화, CI 미통과 시 merge 차단. 설정 방법: GitHub Settings → Branches → Add rule 또는 `gh api` CLI |
+| HRN-FUT-005 | GitHub Branch protection rule 설정 — main 머지 게이트 강화 | public 전환 전 또는 외부 기여를 받기 전. AS-IS: protection 없음, CI 미통과 상태로 merge 가능. TO-BE: Required status checks 활성화, CI 미통과 시 merge 차단. 설정 방법: GitHub Settings → Branches → Add rule 또는 `gh api` CLI |
 | HRN-FUT-002 | `/health` 주간 자동 실행 설정 | 자동화 요청이 명확해지고 notification 경로가 확정된 후 |
 | HRN-FUT-003 | Claude/Codex/Cursor handover 문서 자동 생성 | 도구 간 전환이 실제로 반복될 때 |
 | HRN-FUT-006 | Work frontmatter `dependencies` / `related_work` 필드 도입 여부 — HRN-017/018 완료로 검토 조건 충족. 도입 시 DR-013, `docs/HARNESS-PROTOCOL.md`, scaffold, 기존 Work 파일 업데이트 필요 | HRN-017/018 Done 이후 (조건 충족) |

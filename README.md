@@ -1,172 +1,135 @@
-# base-msa-template
+# ai-workflow-harness
 
-Spring Boot 3.5 + Spring Cloud 2025 기반 MSA 스캐폴딩 템플릿입니다.
-API Gateway, JWT token rotation, Redis rate limiting, MyBatis, PostgreSQL, Vanilla JS frontend, Checkstyle, GitHub Actions CI, Claude/Cursor AI workflow harness를 포함합니다.
+Manual-first AI Workflow Harness for AI-assisted development.
 
-## 주요 기능
+This repository provides an operating structure for working with AI coding agents:
+entry contracts, state tracking, approval gates, Work files, decision records,
+tool-specific rule mirrors, prompt templates, validation defaults, and recovery flow.
 
-- Spring Boot 3.5, Java 21, Gradle Kotlin DSL multi-module
-- Spring Cloud Gateway 단일 진입점
-- JWT access/refresh token rotation, Redis blacklist
-- PostgreSQL 16 + MyBatis
-- Redis sliding-window rate limiting
-- Vanilla JS + Bootstrap frontend
-- Checkstyle + Git hooks + GitHub Actions CI
-- Claude Code / Cursor workflow harness
+It is not an AI workflow engine or task runner. The harness wraps AI sessions so
+humans and agents can keep scope, state, decisions, and verification aligned across
+repeated sessions and multiple tools.
 
-## 기술 스택
+## Origin
 
-| 영역 | 스택 |
+This repository was extracted from [`kyungseo/base-msa-template`](https://github.com/kyungseo/base-msa-template)
+with Git history preserved. The harness was originally developed while hardening a
+Spring Boot MSA template. The current project is now focused on the AI Workflow
+Harness itself.
+
+## What This Provides
+
+- Codex and Claude Code entry contracts
+- Shared behavior principles for AI tools
+- Common workflow rules and Approval Matrix
+- `STATUS.md` dashboard and Work file lifecycle
+- Decision Record and archive conventions
+- Claude Code command definitions
+- Cursor rule mirrors
+- Portable prompt templates
+- Generic scaffold script for applying the harness to another repository
+- Public workflow manual and quick reference
+
+## Core Documents
+
+| Document | Role |
 | --- | --- |
-| Runtime | Java 21, Spring Boot 3.5.0 |
-| Gateway | Spring Cloud Gateway 2025.0.0 |
-| Auth | Spring Security, JJWT 0.12.x, Redis |
-| Data | PostgreSQL 16, MyBatis 3 |
-| Build | Gradle 8, Kotlin DSL |
-| Quality | Checkstyle 10.21.0, EditorConfig, Git hooks |
-| CI | GitHub Actions |
-| Frontend | Vanilla JS, Bootstrap 5.3 |
+| [AGENTS.md](AGENTS.md) | Codex entrypoint |
+| [CLAUDE.md](CLAUDE.md) | Claude Code entrypoint |
+| [docs/BEHAVIOR-PRINCIPLES.md](docs/BEHAVIOR-PRINCIPLES.md) | Global behavior principles |
+| [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) | Common workflow, status rules, Approval Matrix |
+| [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) | Detailed protocol reference |
+| [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) | Short operational reference |
+| [docs/STATUS.md](docs/STATUS.md) | Current project dashboard |
+| [docs/PLAN.md](docs/PLAN.md) | Project direction and roadmap |
+| [docs/PLAN-SUMMARY.md](docs/PLAN-SUMMARY.md) | Session context summary |
+| [docs/WORKFLOW-MANUAL.md](docs/WORKFLOW-MANUAL.md) | User-facing workflow manual |
+| [docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md](docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md) | Public summary |
+| [docs/works/](docs/works/) | Work files and indexes |
+| [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) | Harness backlog |
+| [docs/decisions/](docs/decisions/) | Decision Records |
+| [prompts/README.md](prompts/README.md) | Prompt library guide |
 
-## 사전 요건
+## Repository Layout
 
-- Docker Desktop 4.x+
-- JDK 21+
-- GNU Make
-- Python 3 (frontend 로컬 서빙용)
-
-## 빠른 시작
-
-```bash
-cp .env.example .env
+```text
+.
+├── AGENTS.md
+├── CLAUDE.md
+├── .claude/
+│   ├── commands/
+│   └── rules/
+├── .cursor/
+│   └── rules/
+├── docs/
+│   ├── AGENT-WORKFLOW.md
+│   ├── HARNESS-PROTOCOL.md
+│   ├── HARNESS-QUICK-REFERENCE.md
+│   ├── STATUS.md
+│   ├── PLAN.md
+│   ├── PLAN-SUMMARY.md
+│   ├── WORKFLOW-MANUAL.md
+│   ├── backlog/
+│   ├── decisions/
+│   ├── retrospectives/
+│   └── works/
+├── prompts/
+├── scripts/
+│   └── create-harness.sh
+└── tools/
+    └── git-hooks/
 ```
 
-`.env`에 필수 값을 입력한다:
+## Quick Start
 
-```bash
-JWT_SECRET=<256-bit 랜덤 문자열>
-DB_USERNAME=<postgres 사용자명>
-DB_PASSWORD=<postgres 비밀번호>
-```
-
-Git hooks 설치 후 전체 스택 기동:
+Install local hooks:
 
 ```bash
 sh tools/git-hooks/install.sh
-
-cd scripts
-make run
-make ps
 ```
 
-동작 확인:
+Validate the scaffold script:
 
 ```bash
-curl -s http://localhost:8090/actuator/health
-curl -s http://localhost:8099/actuator/health | python3 -m json.tool
-curl -s http://localhost:8090/api/v1/auth/login \
-  -X POST -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin","deviceId":"test"}'
+bash -n scripts/create-harness.sh
+./scripts/create-harness.sh --dry-run --profile generic sample-harness /tmp/sample-harness
 ```
 
-Frontend 실행:
+Start a Codex session by reading [AGENTS.md](AGENTS.md). Start a Claude Code
+session by reading [CLAUDE.md](CLAUDE.md) or by using the command definitions in
+[.claude/commands/](.claude/commands/).
+
+## Scaffold
+
+Create a new generic harness scaffold:
 
 ```bash
-cd frontend/web-app
-python3 -m http.server 3000
+./scripts/create-harness.sh --profile generic my-project /path/to/my-project
 ```
 
-`http://localhost:3000/login.html`에 접속한다.
-초기 사용자는 `admin / admin`, `user / user`이다.
-
-## 서비스 구성
-
-| 서비스 | 포트 | 역할 |
-| --- | --- | --- |
-| api-gateway | 8090 | 라우팅, JWT 검증, rate limiting |
-| auth-service | 8091 | 로그인, refresh, logout, blacklist |
-| user-service | 8092 | 사용자 CRUD, RBAC 샘플 |
-| todo-service | 8093 | Todo CRUD 샘플 |
-| PostgreSQL | 5432 | Phase 1 공용 DB |
-| Redis | 6379 | Refresh token, blacklist, rate limit |
-| Actuator | 8099 | Management port |
-| Frontend | 3000 | 정적 웹 앱 |
-
-## 자주 쓰는 명령
+Apply the harness to an existing repository:
 
 ```bash
-cd scripts
-
-make help
-make run
-make run-local
-make rebuild
-make stop
-make logs
-make logs SERVICE=api-gateway
-make test
-make build
-make create-service NAME=order-service
+./scripts/create-harness.sh --existing --profile generic my-project /path/to/existing-repo
 ```
 
-## 문서
+## Current Status
 
-| 문서 | 역할 |
-| --- | --- |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 시스템 아키텍처 및 Mermaid 다이어그램 |
-| [docs/DEVELOPER-GUIDE.md](docs/DEVELOPER-GUIDE.md) | 로컬 설정, 서비스/API/테스트 절차 |
-| [docs/CODING-CONVENTIONS.md](docs/CODING-CONVENTIONS.md) | 코딩 컨벤션 SSOT |
-| [docs/GIT-WORKFLOW.md](docs/GIT-WORKFLOW.md) | 브랜치 전략·PR 흐름·CI 연동 |
-| [docs/DOCKERFILE-GUIDE.md](docs/DOCKERFILE-GUIDE.md) | Dockerfile 설명 및 개선 포인트 |
-| [docs/PLAN-SUMMARY.md](docs/PLAN-SUMMARY.md) | 스택 및 아키텍처 요약 |
-| [docs/PLAN.md](docs/PLAN.md) | 전체 기술 근거 |
-| [docs/backlog/PHASE2.md](docs/backlog/PHASE2.md) | Product 및 Phase 2 준비 backlog |
-| [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) | AI workflow harness backlog |
-| [docs/decisions/](docs/decisions/) | Decision Records |
-| [docs/troubleshooting/](docs/troubleshooting/) | 증상별 원인 분석 및 조치 기록 |
+This repository is in an initial public-ready migration. See:
 
-## AI Workflow Harness
+- [docs/STATUS.md](docs/STATUS.md)
+- [docs/works/harness/AWH-001-public-repo-migration.md](docs/works/harness/AWH-001-public-repo-migration.md)
 
-경량 상태 머신 기반 AI 개발 workflow가 포함되어 있다.
+## Validation
 
-| 문서 | 역할 |
-| --- | --- |
-| [CLAUDE.md](CLAUDE.md) | Claude Code 진입점 |
-| [AGENTS.md](AGENTS.md) | Codex 진입점 |
-| [docs/BEHAVIOR-PRINCIPLES.md](docs/BEHAVIOR-PRINCIPLES.md) | 전역 행동 원칙 |
-| [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) | 공통 운영 규칙 |
-| [docs/STATUS.md](docs/STATUS.md) | 현재 프로젝트 상태 |
-| [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) | Harness 상세 protocol |
-| [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) | 일상 실행 빠른 참조 |
-| [docs/WORKFLOW-MANUAL.md](docs/WORKFLOW-MANUAL.md) | 사용자용 워크플로우 매뉴얼 |
-| [docs/works/](docs/works/) | 진행 중·완료된 Work 파일 (DR-013) |
-| [prompts/README.md](prompts/README.md) | 재사용 prompt 라이브러리 |
-
-Claude Code slash command는 `.claude/commands/`에 있다.
-Cursor rules는 `.cursor/rules/`에 있다.
-
-## 테스트
-
-통합 테스트는 Testcontainers로 자급자족한다. `docker compose up` 없이 실행 가능하다.
+Default checks:
 
 ```bash
-./gradlew test
+git diff --check
+bash -n scripts/create-harness.sh
+./scripts/create-harness.sh --dry-run --profile generic sample /tmp/sample
 ```
 
-PostgreSQL, Redis 컨테이너를 테스트 실행 시 자동 기동한다.
+## License
 
-### Docker Desktop 4.73.0+ (macOS)
-
-`build.gradle.kts`에 Docker API 버전과 소켓 경로가 설정되어 있으므로 별도 로컬 설정 없이 `./gradlew test`가 동작한다.
-
-연결 오류가 발생하면 [docs/troubleshooting/testcontainers-docker-desktop-4.73.md](docs/troubleshooting/testcontainers-docker-desktop-4.73.md)를 참조한다.
-
-## CI
-
-`develop` push 시 Checkstyle을 실행한다.
-`main` push 또는 `main` 대상 PR에서 `lint → test` 순서로 실행된다.
-
-[.github/workflows/ci.yml](.github/workflows/ci.yml) 참조.
-
-## 라이선스
-
-[LICENSE.txt](LICENSE.txt) 참조.
+See [LICENSE.txt](LICENSE.txt).

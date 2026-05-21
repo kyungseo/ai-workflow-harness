@@ -63,7 +63,7 @@ Work item routing:
 | --- | --- |
 | Start immediately (urgent patch) | `docs/STATUS.md` Active Work → chain to `/work` |
 | Soon / next session | `docs/STATUS.md` Next Actions |
-| Product / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
+| Product track / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
 
 ## Git Commit Format

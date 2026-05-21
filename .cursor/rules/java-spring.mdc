@@ -1,20 +1,24 @@
 ---
-description: Java and Spring Boot coding rules for this repository. Apply when editing Java source or Gradle build files.
+description: Optional Spring Boot example-pack coding rules. Apply only when editing an adopted project or spring-boot profile output.
 globs: ["services/**/*.java", "gateway/**/*.java", "common/**/*.java", "**/build.gradle.kts", "settings.gradle.kts", "gradle/**/*.toml"]
 alwaysApply: false
 ---
 
-# Java and Spring Rules
+# Optional Spring Boot Example Rules
+
+These rules are not part of the generic AI Workflow Harness core. They are kept
+as an optional example/profile surface for projects that adopt the harness with
+Spring Boot backend code.
 
 MUST:
 
-- Use Java 21+ and Spring Boot 3.5.x conventions already present in the repository.
-- Keep packages under `io.kyungseo.msa`.
-- Use the Gradle wrapper for build and verification.
+- Follow the Java and Spring conventions already present in the adopted project.
+- Keep package names aligned with the adopted project's namespace.
+- Use the adopted project's declared build tool and verification commands.
 - Use MyBatis `#{}` parameters. Use `${}` only with whitelist validation and an explanatory comment.
 - Use Lombok intentionally: prefer `@Getter`, `@Builder`, `@RequiredArgsConstructor`, and `@Slf4j`; do not use `@Data`.
-- Keep MapStruct annotation processor order as Lombok before MapStruct.
-- Keep `common-core` as the single shared handler location for `BusinessException`.
+- Keep annotation processor order consistent with the adopted project.
+- Keep shared exception and response handling in the adopted project's established shared module.
 
 NEVER:
 

@@ -116,7 +116,7 @@ can_write() {
 adapt() {
   local src="$1" dst="$2"
   if can_write "${dst}"; then
-    sed "s/base-msa-template/${PROJECT_NAME}/g" "${src}" > "${dst}"
+    sed "s/ai-workflow-harness/${PROJECT_NAME}/g" "${src}" > "${dst}"
     echo "  create: $(rel "${dst}")"
   fi
 }
@@ -156,6 +156,8 @@ for dir in \
   "${TARGET_ROOT}/docs/backlog" \
   "${TARGET_ROOT}/docs/decisions" \
   "${TARGET_ROOT}/docs/works" \
+  "${TARGET_ROOT}/docs/works/phase1" \
+  "${TARGET_ROOT}/docs/works/harness" \
   "${TARGET_ROOT}/docs/archive" \
   "${TARGET_ROOT}/docs/archive/docs/works" \
   "${TARGET_ROOT}/docs/archive/snapshots" \
@@ -180,10 +182,6 @@ adapt "${TEMPLATE_ROOT}/.gitignore"    "${TARGET_ROOT}/.gitignore"
 # ── Harness protocol docs ────────────────────────────────────────────────────
 adapt "${TEMPLATE_ROOT}/docs/BEHAVIOR-PRINCIPLES.md" "${TARGET_ROOT}/docs/BEHAVIOR-PRINCIPLES.md"
 adapt "${TEMPLATE_ROOT}/docs/AGENT-WORKFLOW.md" "${TARGET_ROOT}/docs/AGENT-WORKFLOW.md"
-
-if [[ "${DRY_RUN}" != true && "${PROFILE}" == "generic" ]]; then
-  perl -0pi -e 's/## Project Constants\n\n- Runtime: Java 21\+\n- Framework: Spring Boot 3\.5\.x\n- Build: Gradle wrapper\n- Architecture: Spring Boot microservices template\n- Base package: `io\.kyungseo\.msa`\n- Active state file: `docs\/STATUS\.md`\n\n## Verification Defaults\n\n- Java unit\/module change: `\.\/gradlew test`\n- Build\/config change: `\.\/gradlew build`\n- Gateway 또는 integration flow: 관련 checkpoint에 정의된 검증\n- Documentation-only change: diff와 링크 확인/## Project Constants\n\n- Runtime: [fill in]\n- Framework: [fill in]\n- Build: [fill in]\n- Architecture: [fill in]\n- Base package\/module: [fill in]\n- Active state file: `docs\/STATUS.md`\n\n## Verification Defaults\n\n- Unit\/module change: [fill in]\n- Build\/config change: [fill in]\n- Integration flow: 관련 checkpoint에 정의된 검증\n- Documentation-only change: diff와 링크 확인/s' "${TARGET_ROOT}/docs/AGENT-WORKFLOW.md"
-fi
 
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-PROTOCOL.md"        "${TARGET_ROOT}/docs/HARNESS-PROTOCOL.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md" "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
@@ -316,6 +314,12 @@ write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 ## AI Workflow Harness
 
 이 프로젝트는 Claude Code / Codex / Cursor 공통 AI 워크플로우 하네스를 포함합니다.
+하네스는 Product track과 Harness track을 함께 운영하도록 설계되어 있습니다.
+
+| Track | 목적 | 주요 파일 |
+| --- | --- | --- |
+| Product track | 실제 제품/서비스/콘텐츠 작업과 Phase backlog | \`docs/backlog/PHASE1.md\`, \`docs/works/phase1/\` |
+| Harness track | AI workflow, command/rule, prompt, scaffold, process 개선 | \`docs/backlog/HARNESS.md\`, \`docs/works/harness/\` |
 
 | 파일 | 역할 |
 | --- | --- |
@@ -348,7 +352,7 @@ claude        # Claude Code 열기
 스캐폴딩 직후 아래 파일을 채운 뒤 첫 세션을 시작한다.
 
 1. \`docs/STATUS.md\` — 프로젝트 목표와 Phase 설명
-2. \`docs/PLAN-SUMMARY.md\` — 기술 스택, 포트, 패키지 구조
+2. \`docs/PLAN-SUMMARY.md\` — project summary, core architecture, validation defaults
 3. \`docs/backlog/PHASE1.md\` — 초기 작업 항목 \`P1-001~\`
 4. \`docs/BEHAVIOR-PRINCIPLES.md\` — 전역 행동 원칙 확인
 5. \`docs/AGENT-WORKFLOW.md\` — Project Constants와 Verification Defaults
@@ -367,7 +371,7 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 | --- | --- |
 | Phase | Phase 1 — [프로젝트 목표 한 줄] |
 | Active plan | — |
-| Product backlog | \`docs/backlog/PHASE1.md\` |
+| Project backlog | \`docs/backlog/PHASE1.md\` |
 | Harness backlog | \`docs/backlog/HARNESS.md\` |
 | Last updated | ${TODAY} |
 
@@ -397,26 +401,25 @@ write_text "${TARGET_ROOT}/docs/PLAN-SUMMARY.md" "# PLAN-SUMMARY.md — ${PROJEC
 
 > 전체 근거와 상세 아키텍처: \`docs/PLAN.md\`
 
-## 기술 스택
+## Project Summary
 
 | 항목 | 내용 |
 | --- | --- |
-| Runtime | — |
-| Framework | — |
-| Build | — |
-| DB | — |
-| 주요 라이브러리 | — |
+| Project goal | — |
+| Primary users | — |
+| Main workflow | — |
+| Supported tools | — |
+| Key constraints | — |
 
-## 서비스 / 포트 매핑
+## Core Architecture
 
-| 서비스 | 포트 |
-| --- | --- |
+*(entrypoint, state files, backlog, decision records, validation flow를 채워야 함)*
 
-## 핵심 아키텍처 결정
+## Verification Defaults
 
 *(채워야 함)*
 
-## 패키지 구조
+## Active References
 
 *(채워야 함)*
 "
@@ -445,7 +448,7 @@ write_text "${TARGET_ROOT}/docs/PLAN.md" "# PLAN.md — ${PROJECT_NAME}
 - 범위:
 "
 
-write_text "${TARGET_ROOT}/docs/backlog/PHASE1.md" "# Product Backlog — Phase 1
+write_text "${TARGET_ROOT}/docs/backlog/PHASE1.md" "# Project Backlog — Phase 1
 
 ## 상태 요약
 
@@ -491,7 +494,6 @@ write_text "${TARGET_ROOT}/docs/works/README.md" "# docs/works/
 
 Work 파일 디렉토리. 큰 작업 단위의 Single Source of Truth.
 
-카테고리 서브디렉토리와 그 안의 README.md는 첫 Work 파일 생성 시 함께 만든다.
 Work 파일 스펙: \`docs/decisions/DR-013-work-file-spec.md\`
 공통 운영 규칙: \`docs/HARNESS-PROTOCOL.md\` Work File Rules
 
@@ -499,9 +501,8 @@ Work 파일 스펙: \`docs/decisions/DR-013-work-file-spec.md\`
 
 | 카테고리 | 경로 | 용도 |
 | --- | --- | --- |
-| phase1/ | docs/works/phase1/ | Phase 1 작업 |
-| phase2/ | docs/works/phase2/ | Phase 2 작업 |
-| harness/ | docs/works/harness/ | Harness 개선 작업 |
+| phase1/ | \`docs/works/phase1/\` | Product track Phase 1 작업 |
+| harness/ | \`docs/works/harness/\` | Harness track 개선 작업 |
 
 ## Lifecycle
 
@@ -512,6 +513,46 @@ Work 파일 스펙: \`docs/decisions/DR-013-work-file-spec.md\`
 | Archived | \`docs/archive/docs/works/{category}/\` | 완전 종결 |
 
 Backlog \`Candidate\`는 후보 pool이다. Work 파일은 착수 승인 후 \`Active\` 상태로 생성한다.
+"
+
+write_text "${TARGET_ROOT}/docs/works/phase1/README.md" "# Phase 1 Work Index
+
+Product track Phase 1 작업 인덱스다.
+
+## Active
+
+| ID | Title | Priority | Start | Work File |
+| --- | --- | --- | --- | --- |
+
+## Done (archive pending)
+
+| ID | Title | actual_end | Hold Reason |
+| --- | --- | --- | --- |
+
+## Archived
+
+| ID | Title | actual_end | Archive |
+| --- | --- | --- | --- |
+"
+
+write_text "${TARGET_ROOT}/docs/works/harness/README.md" "# Harness Work Index
+
+Harness track 작업 인덱스다.
+
+## Active
+
+| ID | Title | Priority | Start | Work File |
+| --- | --- | --- | --- | --- |
+
+## Done (archive pending)
+
+| ID | Title | actual_end | Hold Reason |
+| --- | --- | --- | --- |
+
+## Archived
+
+| ID | Title | actual_end | Archive |
+| --- | --- | --- | --- |
 "
 
 touch_file "${TARGET_ROOT}/docs/archive/.gitkeep"
@@ -532,7 +573,7 @@ fi
 echo ""
 echo "Required before first session (fill in):"
 echo "  docs/STATUS.md         — 프로젝트 목표와 Phase 설명"
-echo "  docs/PLAN-SUMMARY.md   — 기술 스택, 포트, 패키지 구조"
+echo "  docs/PLAN-SUMMARY.md   — project summary, core architecture, validation defaults"
 echo "  docs/backlog/PHASE1.md — 초기 작업 항목 P1-001~"
 echo "  docs/AGENT-WORKFLOW.md — Project Constants와 Verification Defaults"
 echo ""

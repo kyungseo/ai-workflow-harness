@@ -15,7 +15,7 @@ Cursor는 `.cursor/rules/*.mdc`를 함께 적용하되, 전역 행동 원칙은 
 
 작업 선택 기준:
 
-- Product 또는 Phase 준비 작업: `docs/backlog/PHASE{n}.md`
+- Product track 또는 Phase 준비 작업: `docs/backlog/PHASE{n}.md`
 - Harness, command/rule, workflow hardening: `docs/backlog/HARNESS.md`
 - 큰 작업 Work 파일: `docs/works/{category}/{ID}-{topic}.md` (spec: DR-013)
 
@@ -69,7 +69,7 @@ Active Work의 [작업 ID 또는 작업명]을 진행하려고 해.
 CLAUDE.md, docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 읽어줘.
 작업 성격에 따라 product backlog 또는 harness backlog를 선택해 다음 후보를 검토해줘.
 
-- product 또는 Phase 준비 작업: docs/backlog/PHASE{n}.md
+- Product track 또는 Phase 준비 작업: docs/backlog/PHASE{n}.md
 - harness, command/rule, workflow hardening: docs/backlog/HARNESS.md
 
 각 후보에 대해 아래 항목을 비교해줘.
@@ -104,7 +104,7 @@ STATUS.md는 바로 수정하지 말고, 변경이 필요하면 Approval Matrix 
 구현 후에는 검증을 실행하고,
 docs/STATUS.md 업데이트와 DR/Work 파일/문서 cascade가 필요한지 제안해줘.
 STATUS.md 변경이 필요하면 즉시 수정하지 말고 Approval Matrix state rules에 맞게 먼저 보고해줘.
-Product surface의 L1 Quick Mode에 해당하면 Work 파일 없이 final summary + validation + commit history로 닫을 수 있어.
+Product track surface의 L1 Quick Mode에 해당하면 Work 파일 없이 final summary + validation + commit history로 닫을 수 있어.
 entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 파일을 건드리면 harness/workflow surface 변경으로 보고 기본 L2로 다뤄줘.
 ```
 

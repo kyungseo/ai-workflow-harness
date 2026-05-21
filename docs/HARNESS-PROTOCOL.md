@@ -89,7 +89,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 
 | 변경 유형 | 실행 전 | 상태 변경 | commit 전 |
 | --- | --- | --- | --- |
-| L1 product surface | 간단 plan 승인 후 실행. Quick Mode 가능 | Work checkpoint/discovery는 승인 불필요. 실행 후 대상 Work ID와 변경 보고 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
+| L1 Product track surface | 간단 plan 승인 후 실행. Quick Mode 가능 | Work checkpoint/discovery는 승인 불필요. 실행 후 대상 Work ID와 변경 보고 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
 | L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 사용을 기본값으로 둔다 | Work Done과 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
 | L3 구조 변경 | 관련 계획 또는 `docs/PLAN.md` 확인, AS-IS/TO-BE와 rollback 포함 후 승인 | Phase criteria, Current phase/focus, Recent Decisions는 `STATUS Update Proposal` 승인 후 처리 | validation 결과, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
 
@@ -137,6 +137,15 @@ Commit:
 항상 `docs/STATUS.md`에서 시작한다.
 추가 문서는 조건이 충족될 때만 읽는다.
 
+### Operating Tracks
+
+AI Workflow Harness는 적용 대상 repository에 Product track과 Harness track을 함께 심는다.
+
+- Product track은 실제 제품/서비스/콘텐츠 프로젝트의 Phase backlog와 기능 work를 담당한다.
+- Harness track은 AI 작업 방식, tool surface, workflow rule, scaffold, status/process 개선을 담당한다.
+- 이 repository를 harness 자체 개발용 source로 운영하는 경우 Product track backlog가 없을 수 있다.
+- scaffold된 신규/기존 프로젝트는 기본적으로 `docs/backlog/PHASE1.md`와 `docs/backlog/HARNESS.md`를 함께 가진다.
+
 ### Load Map
 
 | Need | Load |
@@ -144,7 +153,7 @@ Commit:
 | 현재 상태 | `docs/STATUS.md` |
 | 실행 규칙 빠른 확인 | `docs/HARNESS-QUICK-REFERENCE.md` |
 | 상세 harness protocol 판단 | `docs/HARNESS-PROTOCOL.md` |
-| product/Phase{n} 후보 | `docs/backlog/PHASE{n}.md` |
+| Product track/Phase{n} 후보 | `docs/backlog/PHASE{n}.md` |
 | harness 후보 | `docs/backlog/HARNESS.md` |
 | 아키텍처 요약 | `docs/PLAN-SUMMARY.md` |
 | L3 또는 상세 근거 | `docs/PLAN.md` |
@@ -189,7 +198,7 @@ Commit:
 | 발생한 아이템 | 기록 위치 |
 | --- | --- |
 | 지금 진행 중인 작업 | `docs/STATUS.md` Active Work |
-| 다음에 할 product 후보 | `docs/backlog/PHASE{n}.md` |
+| 다음에 할 Product track 후보 | `docs/backlog/PHASE{n}.md` |
 | Phase 진입 전 선행 작업 | `docs/backlog/PHASE{n}.md` Preparation Candidates |
 | 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
 | 한 작업의 세부 실행 계획 | `docs/works/{category}/{ID}-{topic}.md` |
@@ -206,7 +215,7 @@ Commit:
 | --- | --- |
 | 지금 바로 착수 | `docs/STATUS.md` Active Work -> `/work` 연결 |
 | 곧 할 것 | `docs/STATUS.md` Next Actions |
-| Product 작업 | `docs/backlog/PHASE{n}.md` |
+| Product track 작업 | `docs/backlog/PHASE{n}.md` |
 | Harness 작업 | `docs/backlog/HARNESS.md` |
 
 ## 9. Naming Rules
@@ -215,7 +224,7 @@ Commit:
 
 | Prefix | Meaning | Home |
 | --- | --- | --- |
-| `P{n}-NNN` | Phase product backlog | `docs/backlog/PHASE{n}.md` |
+| `P{n}-NNN` | Phase Product track backlog | `docs/backlog/PHASE{n}.md` |
 | `PRE-*` | Phase entry prerequisite | `docs/backlog/PHASE{n}.md` |
 | `HRF-*` | Harness refactor | `docs/backlog/HARNESS.md` |
 | `HRN-*` | Harness hardening | `docs/backlog/HARNESS.md` |
@@ -256,7 +265,7 @@ Work 파일 포맷 스펙: `docs/decisions/DR-013-work-file-spec.md`
 
 ## 11. Quick Mode
 
-Product surface의 작은 L1 작업은 기본적으로 Work 파일을 만들지 않는다.
+Product track surface의 작은 L1 작업은 기본적으로 Work 파일을 만들지 않는다.
 범위가 명확하고 한 세션 안에 끝나는 작업은 최종 응답, validation 결과, commit history로 충분하다.
 
 Quick Mode 대상 예시:
@@ -340,7 +349,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | Document | Role |
 | --- | --- |
 | `docs/STATUS.md` | 현재 상태 |
-| `docs/backlog/PHASE{n}.md` | Product 후보 작업 |
+| `docs/backlog/PHASE{n}.md` | Product track 후보 작업 |
 | `docs/backlog/HARNESS.md` | Harness 후보 작업 |
 | `docs/works/{category}/` | 큰 작업 단위 Work 파일 (DR-013) |
 | `docs/decisions/` | 결정 근거 |
@@ -373,7 +382,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | --- | --- | --- |
 | Canonical AI operations | `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md` | Agent 실행 규칙의 현재 기준 |
 | Live state and trackers | `docs/STATUS.md`, `docs/backlog/`, `docs/works/`, `docs/decisions/` | 현재 상태, 후보, Work SSoT, 결정 근거 |
-| Product and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/ARCHITECTURE.md`, `docs/DEVELOPER-GUIDE.md`, `docs/CODING-CONVENTIONS.md`, `docs/DOCKERFILE-GUIDE.md`, `docs/GIT-WORKFLOW.md` | 제품/개발/운영 지식 |
+| Project and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/ARCHITECTURE.md`, `docs/DEVELOPER-GUIDE.md`, `docs/CODING-CONVENTIONS.md`, `docs/GIT-WORKFLOW.md` | project/product/harness 구조와 운영 지식 |
 | User-facing workflow docs | `docs/WORKFLOW-MANUAL.md`, `docs/WORKFLOW-MANUAL-SUMMARY.md` | 사람이 읽는 매뉴얼과 condensed guide. 평시 Agent 자동 로드 대상 아님 |
 | Historical and evaluation docs | `docs/archive/`, `docs/retrospectives/`, reference-only plans | 완료 이력, snapshot, 시점별 평가, 완료된 계획의 참조 기록 |
 | Troubleshooting docs | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 패턴의 재사용 가능한 incident record |
@@ -416,7 +425,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | T10 | Work 파일 Done 상태 발견 | archive 승인 여부 제안 |
 | T11 | tool surface 변경 | Claude/Codex/Cursor/prompts/README/scaffold 정렬 확인 |
 | T12 | scaffold source 또는 canonical workflow 변경 | dry-run + temp scaffold 검증 |
-| T13 | Product surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
+| T13 | Product track surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
 | T15 | commit 또는 PR 생성 전 | `docs/STATUS.md` 최종본 반영 필요 여부 판정 |
 | T16 | commit 또는 PR 생성 전 | backlog/Work/DR tracker 최종 상태 반영 필요 여부 판정 |
@@ -431,7 +440,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 - T10은 archive 제안만 수행한다. 사용자 승인 전 `git mv`를 실행하지 않는다.
 - T11은 관련 tool surface를 확인 대상으로 추가하지만 자동 수정하지 않는다. 발견 -> 제안 -> 승인 순서를 따른다.
 - T12는 temp target에서 검증하고 생성물을 live tree로 복사하지 않는다.
-- T13은 product surface의 작은 작업을 빠르게 닫기 위한 규칙이다.
+- T13은 Product track surface의 작은 작업을 빠르게 닫기 위한 규칙이다.
 - T14는 entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경을 기본 L2로 다루며, 관련 tool surface를 확인한다.
 - T15는 자동 STATUS 수정을 허용하지 않는다. Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, Active Work Discovery 최신성을 확인한다. 필요하면 Approval Matrix에 맞는 state-change proposal 또는 `STATUS Update Proposal`을 먼저 제안하고, 불필요하면 commit/PR 전 summary에 이유를 남긴다.
 - T16은 backlog/Work/DR tracker를 실제 완료 상태와 맞추는 gate다. 연결된 backlog 항목의 Status/Done Criteria/Verification, Work 파일 frontmatter/status/Checkpoints/Discovery, Work index README 위치, 관련 DR의 Status/Supersedes/Linked Backlog Items, 완료된 Quick Mode 작업이 backlog Candidate로 남아 있는지 여부를 확인한다.
