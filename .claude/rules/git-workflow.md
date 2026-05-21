@@ -40,21 +40,26 @@ Follow Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-lan
 
 - Use Korean verbs and sentence endings.
 - Keep English for proper nouns, tool names, file paths, IDs (e.g., `DR-007`, `STATUS.md`, `Bilingual Rules`).
-- Example: `docs: DR-007 Bilingual Rules 적용 — commands 및 harness protocol 섹션 타이틀 영문화`
+- Example: `docs: [Korean subject using DR-007 and Bilingual Rules identifiers]`
 
 **Body** — Korean primary with English technical terms inline; follow the same Bilingual Rules as the subject line.
 
 - Use blank line to separate subject from body.
 - Explain *why*, not *what*.
-- Example body line: `harness protocol 문서의 섹션 타이틀을 영문 Title Case로 통일하여 DR-007 정책과 일치시킴`
+- Example body line: `[Korean body explaining why the harness protocol section titles now follow DR-007]`
 
 **Co-author trailer** — always in English (system-generated, do not translate).
 
 ## Branch Flow
 
-When the user expresses branch merge intent ("머지하자", "PR 올리자", "develop에 합치자", etc.),
-load `docs/GIT-WORKFLOW.md` and follow §2 (Feature 개발 사이클) and §3 (릴리즈 사이클).
+When the user expresses branch merge intent, such as asking to merge, open a PR, or merge into `develop`,
+load `docs/GIT-WORKFLOW.md` and follow section 2 (feature development cycle) and section 3 (release cycle).
+
+PR Base Rule:
+- feature/* → `develop` (ALWAYS use `--base develop` when opening a PR from a feature branch)
+- develop → `main` (release PR only)
 
 NEVER:
+- Open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.
 - Directly local-merge a feature branch into develop. Always merge via PR.
 - Skip the develop sync step after a main PR merge (`git merge main && git push origin develop`).

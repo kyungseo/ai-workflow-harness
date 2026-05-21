@@ -3,14 +3,14 @@
 Claude Code를 위한 현재 프로젝트 상태 문서다.
 이 파일은 짧게 유지하고, 완료된 Phase의 상세 이력은 `docs/archive/`로 옮긴다.
 
-Last updated: 2026-05-20 (workflow closeout Recent Decisions 반영)
+Last updated: 2026-05-21 (harness stabilization 완료, focus PRE-B로 이동)
 
 ## Current State
 
 | Field | Value |
 | --- | --- |
 | Current phase | Phase 2 pre-entry |
-| Current focus | Phase 2 pre-entry workflow stabilization |
+| Current focus | PRE-B 개발환경 전략 결정 |
 | Phase 1 | Complete |
 | Product backlog | `docs/backlog/PHASE2.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
@@ -44,6 +44,7 @@ Last updated: 2026-05-20 (workflow closeout Recent Decisions 반영)
 | ID | Status | Question | Decision Needed |
 | --- | --- | --- | --- |
 | HRF-OQ-003 | Open | `.harness/config.json` 같은 SSOT config를 지금 도입할 것인가? | Manual-first 안정화 후 재검토 |
+| HRF-OQ-004 | Open | develop 브랜치 직접 커밋 허용 기준은 무엇인가? | 허용 기준 정의(파일 수·줄 수·risk level 등) 또는 "항상 feature branch" 원칙 고수 여부 |
 
 ## Recent Decisions
 

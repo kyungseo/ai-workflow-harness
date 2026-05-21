@@ -48,7 +48,7 @@ NEVER:
 ## Naming Conventions
 
 - Method name: `methodName_scenario_expectedBehavior` (English)
-- `@DisplayName`: Korean (e.g. `"로그인 성공 시 액세스 토큰을 반환한다"`) — Korean display names are intentional
+- `@DisplayName`: Korean display names are intentional. Do not translate existing display names to English.
 - Test class name: `{TargetClass}Test`
 
 ## Verification Command
