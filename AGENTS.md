@@ -76,8 +76,8 @@ Follow Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-lan
 
 ## Branch Flow
 
-When the user expresses branch merge intent ("머지하자", "PR 올리자", "develop에 합치자", etc.),
-load `docs/GIT-WORKFLOW.md` and follow §2 (Feature 개발 사이클) and §3 (릴리즈 사이클).
+When the user expresses branch merge intent (e.g., asking to merge, open a PR, or merge into develop),
+load `docs/GIT-WORKFLOW.md` and follow §2 (Feature Development Cycle) and §3 (Release Cycle).
 
 NEVER:
 - Directly local-merge a feature branch into develop. Always merge via PR.
