@@ -44,6 +44,7 @@ Last updated: 2026-05-21 (harness stabilization 완료, focus PRE-B로 이동)
 | ID | Status | Question | Decision Needed |
 | --- | --- | --- | --- |
 | HRF-OQ-003 | Open | `.harness/config.json` 같은 SSOT config를 지금 도입할 것인가? | Manual-first 안정화 후 재검토 |
+| HRF-OQ-004 | Open | develop 브랜치 직접 커밋 허용 기준은 무엇인가? | 허용 기준 정의(파일 수·줄 수·risk level 등) 또는 "항상 feature branch" 원칙 고수 여부 |
 
 ## Recent Decisions
 
