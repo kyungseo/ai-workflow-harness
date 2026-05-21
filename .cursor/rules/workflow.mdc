@@ -53,6 +53,20 @@ Approval Matrix state rules:
 
 When starting or resuming, report any `status: Done` Work files still under `docs/works/{category}/` as archive-pending. Do not archive before approval.
 
+## Document Language Policy
+
+When creating or editing any document, prompt, command, rule, or hook message:
+
+- **English Only:** `CLAUDE.md`, `AGENTS.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`
+- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `.claude/commands/*.md`
+
+Bilingual Rules (applies to Korean-primary files):
+- Section titles: English Title Case — never translate (e.g., `## Active Work`, `## Next Steps`)
+- Technical terms: English verbatim — no transliteration (e.g., Kubernetes, CI/CD, Refactoring)
+- Body text: Korean primary
+
+Full policy: `docs/decisions/DR-007-language-policy.md`
+
 ## Branch Flow
 
 When the user expresses branch merge intent, such as asking to merge, open a PR, or merge into `develop`,

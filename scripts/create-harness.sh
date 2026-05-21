@@ -256,8 +256,6 @@ write_text "${TARGET_ROOT}/.claude/settings.json" '{
 '
 
 # ── Cursor config and rules ──────────────────────────────────────────────────
-adapt "${TEMPLATE_ROOT}/.cursor/config.json" "${TARGET_ROOT}/.cursor/config.json"
-
 for f in behavior-principles.mdc coding.mdc debugging.mdc execution.mdc git-commit.mdc output-format.mdc safety-critical.mdc workflow.mdc; do
   adapt "${TEMPLATE_ROOT}/.cursor/rules/${f}" "${TARGET_ROOT}/.cursor/rules/${f}"
 done
