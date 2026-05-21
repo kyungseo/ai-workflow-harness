@@ -55,6 +55,11 @@ Follow Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-lan
 When the user expresses branch merge intent, such as asking to merge, open a PR, or merge into `develop`,
 load `docs/GIT-WORKFLOW.md` and follow section 2 (feature development cycle) and section 3 (release cycle).
 
+PR Base Rule:
+- feature/* → `develop` (ALWAYS use `--base develop` when opening a PR from a feature branch)
+- develop → `main` (release PR only)
+
 NEVER:
+- Open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.
 - Directly local-merge a feature branch into develop. Always merge via PR.
 - Skip the develop sync step after a main PR merge (`git merge main && git push origin develop`).
