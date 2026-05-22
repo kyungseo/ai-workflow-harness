@@ -9,12 +9,6 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 |----|-------|----------|-------|-----------|
 | AWH-001 | AI Workflow Harness public repo migration | P0 | 2026-05-22 | `docs/works/harness/AWH-001-public-repo-migration.md` |
 
-## Done (archive pending)
-
-| ID | Title | actual_end | Hold Reason |
-|----|-------|------------|-------------|
-| HRN-023 | 유실된 최상위 전역 행동 원칙 복원 | 2026-05-19 | — |
-
 ## Archived
 
 | ID | Title | actual_end | Archive |
@@ -29,3 +23,4 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 | HRN-021-S3 | Work lifecycle Candidate 상태 제거 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S3-work-lifecycle-candidate-removal.md` |
 | HRN-021-S5 | WORKFLOW-MANUAL.md AI 로드 제외와 cascade 대상 유지 기준 명시 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S5-manual-load-boundary.md` |
 | HRN-021-S6 | /health --cascade changed-surface audit 경량화 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-021-S6-health-cascade-checklist.md` |
+| HRN-023 | 유실된 최상위 전역 행동 원칙 복원 | 2026-05-19 | `docs/archive/docs/works/harness/HRN-023-behavior-principles-restore.md` |
