@@ -40,7 +40,7 @@ STATUS.md에 이미 Active Work가 있으면:
 - DB schema 변경
 
 Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROTOCOL.md`를 필요한 범위만 로드해줘.
-완료된 harness refactor의 배경 근거가 필요할 때만 `docs/HARNESS-REFACTOR-PLAN.md`를 참고해줘.
+완료된 harness refactor의 배경 근거가 필요할 때만 `docs/archive/docs/HARNESS-REFACTOR-PLAN.md`를 참고해줘.
 `HRN-*`, `PRE-*`, `DOC-*` 또는 계획·아이디어 성격이 강한 작업이면 `docs/retrospectives/`에서 최신/관련 회고 1개만 선택해 반복 리스크와 우선순위 근거를 확인해줘.
 
 **2. Troubleshooting 관련 이슈 확인**

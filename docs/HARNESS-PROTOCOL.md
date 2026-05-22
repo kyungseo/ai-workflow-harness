@@ -240,7 +240,7 @@ ID를 다른 의미로 재사용하지 않는다.
 | --- | --- | --- |
 | `docs/` root | UPPERCASE-HYPHENATED | `HARNESS-PROTOCOL.md` |
 | `docs/backlog/` | UPPERCASE-HYPHENATED | `PHASE2.md` |
-| `docs/decisions/` | `DR-{NNN}-{topic}.md` | `DR-010-integration-test-infra.md` |
+| `docs/decisions/` | `DR-{NNN}-{topic}.md` | `DR-011-status-recent-decisions-policy.md` |
 | `docs/works/{category}/` | `{ID}-{lowercase-topic}.md` | `HRF-002-work-system-refactor.md` |
 | `docs/archive/docs/` | 원본 상대 경로와 파일명 mirror | `docs/archive/docs/WORKFLOW-MANUAL-ai-workflow-v1.0.0.md` |
 | `docs/archive/snapshots/` | `{topic}-{YYYYMMDD}` | `harness-refactor-20260514/` |
