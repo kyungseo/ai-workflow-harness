@@ -213,19 +213,19 @@ Phase 5의 git log 결과를 기준으로, 변경된 구현 파일 유형별로 
 | 변경 파일 유형 | 확인 대상 문서 |
 |---------------|---------------|
 | `*.java`, `*.kts` (새 모듈·레이어) | `README.md` 기술 스택, `PLAN-SUMMARY.md` |
-| `Dockerfile`, `docker-compose.yml` | `README.md`, `docs/DEVELOPER-GUIDE.md`, project-specific setup docs |
-| `.github/workflows/*.yml` | `README.md` CI 항목, `DEVELOPER-GUIDE.md` CI 섹션 |
+| `Dockerfile`, `docker-compose.yml` | `README.md`, `docs/MAINTAINER-GUIDE.md`, project-specific setup docs |
+| `.github/workflows/*.yml` | `README.md` CI 항목, `MAINTAINER-GUIDE.md` Validation 섹션 |
 | `.claude/commands/*.md` (신규) | `HARNESS-PROTOCOL.md`, `README.md` AI workflow 섹션 |
-| `config/checkstyle/**`, `.editorconfig` | `DEVELOPER-GUIDE.md` 코드 컨벤션 섹션 |
+| `config/checkstyle/**`, `.editorconfig` | `MAINTAINER-GUIDE.md` Conventions 섹션 |
 | `docs/decisions/DR-*.md` (신규 Accepted) | STATUS.md Recent Decisions, 연관 backlog Done Criteria |
 | `docs/*.md` (신규 개발자 문서) | 참조하는 config·yml 파일과 기술 내용 대조 (예: ci.yml ↔ CI trigger 설명, checkstyle.xml ↔ 컨벤션 설명) |
 
 STATUS.md Recent Decisions는 **최근 8개 rolling window**, 항목 품질(후속 행동을 바꾸는 판단만), DR-worthy 항목의 대응 DR 존재 여부를 점검한다.
 전체 이력 점검은 명시적 요청 시에만 진행한다.
 
-`docs/DEVELOPER-GUIDE.md`는 아래 변경이 감지될 때만 읽는다:
-- 새 도구 도입 (git hooks, Checkstyle 등)
-- API 추가 절차 또는 코드 컨벤션 정책 변경
+`docs/MAINTAINER-GUIDE.md`는 아래 변경이 감지될 때만 읽는다:
+- 새 도구 도입 (git hooks 등)
+- scaffold 절차 또는 convention 정책 변경
 
 `docs/PLAN.md`는 제목·섹션 헤더 수준만 확인한다:
 ```bash

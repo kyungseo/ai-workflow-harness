@@ -86,12 +86,13 @@ Milestone 목표:
 - Optional Spring Boot example profile support
 - Java/Spring-specific prompt bundle as optional example pack
 - Java/Spring-specific Claude/Cursor rules as optional profile surface
-- `ARCHITECTURE.md`의 harness architecture 문서 전환
-- `DEVELOPER-GUIDE.md`의 harness adoption guide 전환
-- `CODING-CONVENTIONS.md`의 documentation/workflow convention 문서 전환
-- `DOCKERFILE-GUIDE.md` 같은 product-specific guide의 삭제 또는 historical 이동
 - historical snapshots and presentation drafts
 - product-template 시절의 troubleshooting record
+
+### Kept As Core (Previously Under Review)
+
+- `HARNESS-STRUCTURE.md` (구 `ARCHITECTURE.md`) — harness 구조 시각화 문서
+- `MAINTAINER-GUIDE.md` (구 `DEVELOPER-GUIDE.md` + `CODING-CONVENTIONS.md` 통합) — 유지보수·convention 가이드
 
 ### Remove Or Legacy-Isolate
 
