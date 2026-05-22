@@ -11,9 +11,9 @@ Work 파일 스펙: `docs/decisions/DR-013-work-file-spec.md`
 
 | Category | Path | Purpose |
 | --- | --- | --- |
-| harness | `docs/works/harness/` | Harness, command, rule, workflow 개선 |
-| phase1 | `docs/archive/docs/works/phase1/` | Phase 1 legacy work records (archived) |
-| phase2 | `docs/works/phase2/` | Phase 2 product and preparation work |
+| harness | `docs/works/harness/` | Harness, command, rule, workflow, public-readiness 작업 |
+
+새 category가 필요하면 Work 파일 생성 전에 `docs/STATUS.md`와 `docs/HARNESS-PROTOCOL.md` 영향 여부를 확인한다.
 
 ## Lifecycle
 

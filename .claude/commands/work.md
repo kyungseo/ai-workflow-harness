@@ -16,7 +16,7 @@ docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾
 
 - **디렉토리 자체가 없으면**: 생성 계획에 `mkdir -p docs/works/{category}/` 포함.
 - **Work 파일이 있으면**: 파일을 로드해 Plan, Done Criteria, Checkpoints를 계획에 반영해줘.
-- **Work 파일이 없으면**: `docs/HARNESS-PROTOCOL.md` Work File Decomposition과 Quick Mode 기준을 확인해줘. Product surface의 L1 Quick Mode에 해당하면 Work 파일 없이 진행하고, harness/workflow surface 변경 또는 Quick Mode 비대상이면 Work 파일 생성을 기본값으로 검토해 계획에 포함할지 판단해줘 (승인 후 생성).
+- **Work 파일이 없으면**: `docs/HARNESS-PROTOCOL.md` Work File Decomposition과 Quick Mode 기준을 확인해줘. Product track surface의 L1 Quick Mode에 해당하면 Work 파일 없이 진행하고, harness/workflow surface 변경 또는 Quick Mode 비대상이면 Work 파일 생성을 기본값으로 검토해 계획에 포함할지 판단해줘 (승인 후 생성).
 
 Work 파일 생성 시 함께 수행할 것:
 1. `docs/works/{category}/README.md`가 없으면 먼저 생성 (Active/Done/Archived 테이블 포함)
@@ -40,7 +40,7 @@ STATUS.md에 이미 Active Work가 있으면:
 - DB schema 변경
 
 Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROTOCOL.md`를 필요한 범위만 로드해줘.
-완료된 harness refactor의 배경 근거가 필요할 때만 `docs/HARNESS-REFACTOR-PLAN.md`를 참고해줘.
+완료된 harness refactor의 배경 근거가 필요할 때만 `docs/archive/docs/HARNESS-REFACTOR-PLAN.md`를 참고해줘.
 `HRN-*`, `PRE-*`, `DOC-*` 또는 계획·아이디어 성격이 강한 작업이면 `docs/retrospectives/`에서 최신/관련 회고 1개만 선택해 반복 리스크와 우선순위 근거를 확인해줘.
 
 **2. Troubleshooting 관련 이슈 확인**
@@ -49,7 +49,7 @@ Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROT
 
 **3. 위험도 판단**
 작업을 아래 기준으로 분류하고 계획 서두에 선언해줘:
-- **L1 (안전)**: product surface의 버그 수정, 테스트 코드, 문서 소폭 수정 → 계획 간소화, 승인 후 진행
+- **L1 (안전)**: Product track surface의 버그 수정, 테스트 코드, 문서 소폭 수정 → 계획 간소화, 승인 후 진행
 - **L2 (일반)**: 일반 기능 구현, 설정 변경, harness/workflow surface 변경 → 계획 상세화, 승인 후 진행
 - **L3 (구조 변경)**: 아키텍처·인증·인프라·DB schema 변경 → PLAN.md 로드 필수, 엄격 승인
 

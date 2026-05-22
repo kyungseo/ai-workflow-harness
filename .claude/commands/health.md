@@ -213,7 +213,7 @@ Phase 5의 git log 결과를 기준으로, 변경된 구현 파일 유형별로 
 | 변경 파일 유형 | 확인 대상 문서 |
 |---------------|---------------|
 | `*.java`, `*.kts` (새 모듈·레이어) | `README.md` 기술 스택, `PLAN-SUMMARY.md` |
-| `Dockerfile`, `docker-compose.yml` | `DOCKERFILE-GUIDE.md`, `README.md` 셋업 |
+| `Dockerfile`, `docker-compose.yml` | `README.md`, `docs/DEVELOPER-GUIDE.md`, project-specific setup docs |
 | `.github/workflows/*.yml` | `README.md` CI 항목, `DEVELOPER-GUIDE.md` CI 섹션 |
 | `.claude/commands/*.md` (신규) | `HARNESS-PROTOCOL.md`, `README.md` AI workflow 섹션 |
 | `config/checkstyle/**`, `.editorconfig` | `DEVELOPER-GUIDE.md` 코드 컨벤션 섹션 |
@@ -251,7 +251,7 @@ rg -n "^## |^### " docs/PLAN.md
 - trigger/cascade 변경 시 loop risk를 확인한다:
   - 같은 문서군을 서로 재발동시키는가
   - Approval Matrix state rules를 우회하는가
-  - product surface Quick Mode와 harness/workflow surface 기본 L2 경계를 흐리게 만드는가
+  - Product track Quick Mode와 harness/workflow surface 기본 L2 경계를 흐리게 만드는가
   - scaffold 검증이 자기 자신을 무한히 요구하는가
 
 Coverage rule:

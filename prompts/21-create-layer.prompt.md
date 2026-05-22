@@ -33,7 +33,7 @@ output_contract:
 공통 제약:
 
 - **이 레이어만 생성. 다른 레이어 코드 생성 금지.**
-- 패키지: `io.kyungseo.msa.{{domain | lowercase}}`
+- 패키지: `com.example.{{domain | lowercase}}`
 - Lombok: `@Getter`, `@Builder`, `@RequiredArgsConstructor`, `@Slf4j` (필요한 것만 선택)
 - `@Data` 사용 금지
 

@@ -1,75 +1,108 @@
-# PLAN-SUMMARY.md — base-msa-template
+# PLAN-SUMMARY.md - AI Workflow Harness
 
-> 전체 기술 근거는 `docs/PLAN.md` 참조. 이 파일은 세션 컨텍스트용 요약이다.
+> 전체 방향은 `docs/PLAN.md` 참조. 이 파일은 세션 context용 요약이다.
 
-## 기술 스택
+## Project Summary
 
-| 구분 | 기술 |
+`ai-workflow-harness`는 AI-assisted development workflow를 운영하기 위한
+manual-first harness다. 특정 application runtime보다 session entry, state tracking,
+approval gate, validation, recovery, tool-surface alignment를 다룬다.
+
+## Core Architecture
+
+```text
+Entry Points
+  AGENTS.md / CLAUDE.md
+        |
+        v
+Behavior + Workflow
+  docs/BEHAVIOR-PRINCIPLES.md
+  docs/AGENT-WORKFLOW.md
+  docs/HARNESS-PROTOCOL.md
+  docs/HARNESS-QUICK-REFERENCE.md
+        |
+        v
+State + Tracking
+  docs/STATUS.md
+  docs/works/**
+  docs/backlog/**
+  docs/decisions/**
+        |
+        v
+Tool Surfaces
+  .claude/commands/**
+  .claude/rules/**
+  .cursor/rules/**
+  prompts/**
+        |
+        v
+Scaffold + Adoption
+  scripts/create-harness.sh
+  docs/WORKFLOW-MANUAL.md
+  docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md
+```
+
+## Current Milestone
+
+| Field | Value |
 |------|------|
-| Runtime | JDK 21 (Virtual Threads 활성화) |
-| Framework | Spring Boot 3.5.x |
-| Build | Gradle 8.x (Kotlin DSL, libs.versions.toml) |
-| Gateway | Spring Cloud Gateway (WebFlux) 2025.0.0 |
-| Security | Spring Security 6.5 + JJWT 0.12.x |
-| Token Store | Redis (Refresh Token, Blacklist, Rate Limiting) |
-| ORM | MyBatis 3.x (XML Mapper) |
-| DB | PostgreSQL 16 (Phase 1 공유 DB) |
-| Validation | spring-boot-starter-validation + Bean Validation |
-| API Docs | springdoc-openapi 2.x |
-| Logging | SLF4J + Logback (JSON: stg/prd, 콘솔: local/dev) |
-| Tracing | Micrometer Tracing + MDC (X-Correlation-ID) |
-| Infra | Docker Compose (로컬), K8s (Phase 2) |
-| CI | GitHub Actions — lint (Checkstyle) → test 체인, `.github/workflows/ci.yml` |
-| Code Quality | Checkstyle 10.21.0, Google Java Style + LineLength=120/Indentation=4 오버라이드 |
-| Test | Testcontainers — DR-010 Accepted, P2-006 완료. Testcontainers 전환 완료, CI services 블록 제거 가능 |
+| Phase | Initial public-ready migration |
+| Active Work | `AWH-001` |
+| Work File | `docs/works/harness/AWH-001-public-repo-migration.md` |
+| Branch | `feature/ai-workflow-harness-migration` |
+| Visibility | Private until public-readiness review |
 
-## 서비스 포트
+## Key Operating Decisions
 
-| 서비스 | 포트 |
-|--------|------|
-| api-gateway | 8090 |
-| auth-service | 8091 |
-| user-service | 8092 |
-| todo-service | 8093 |
-| PostgreSQL | 5432 |
-| Redis | 6379 |
-| Actuator (관리 포트) | 8099 |
-| Frontend | 3000 |
+- Repository name: `ai-workflow-harness`
+- Full Git history from `base-msa-template` is intentionally preserved.
+- Current tree should become AI Workflow Harness focused.
+- `docs/PLAN.md` and `docs/STATUS.md` stay live after migration; migration details live in Work files.
+- `docs/PLAN-SUMMARY.md` is a core Context Routing surface and must be rewritten, not removed.
+- Public release happens only after product surface cleanup and private-info audit.
 
-서비스 디스커버리: Eureka 미사용. 로컬은 localhost URL, K8s는 서비스 DNS.
+## Core Files
 
-## 핵심 아키텍처 결정
-
-- **패키지**: `io.kyungseo.msa`
-- **DB**: Phase 1은 공유 PostgreSQL. DB per Service는 Phase 2 (P2-010).
-- **Redis key 스키마**:
-  - `rt:{userId}:{deviceId}` — Refresh Token (TTL 7일)
-  - `bl:{jti}` — Access Token Blacklist (TTL = 잔여 만료시간)
-  - `rl:{userId}` — Rate Limiting
-- **Gateway 필터 체인 순서**: -5 (Correlation ID) → -4 (JWT 검증) → -3 (Security Header) → -1 (MDC)
-- **인증 흐름**: Gateway에서 JWT 검증 → 서비스에 `X-User-Id`, `X-User-Role` 헤더 전달
-- **Error Code**: `COMMON-XXXX`, `AUTH-XXXX`, `USER-XXXX`, `TODO-XXXX` 형식 (ErrorCode interface)
-
-## Phase 1 완료 요약
-
-- Gradle 멀티 모듈 구조 (common-core, auth/user/todo-service, api-gateway)
-- JWT 발급/갱신/블랙리스트 + Refresh Token 로테이션
-- Gateway Rate Limiting + Security Headers + CORS
-- MyBatis 기반 CRUD (user, todo) + RBAC (ROLE_ADMIN / ROLE_USER)
-- Docker Compose 로컬 통합 실행 + Vanilla JS 프론트엔드
-
-## Phase 2 전략적 방향
-
-1. **Security hardening first** (P0): token storage, rate limiting IP, Redis session index — DR-003 참조
-2. **Deployment foundation** (P1): K8s manifests, CI/CD — DR-002 결정 후 착수
-3. **Operations & resilience** (P1-P2): Prometheus/Grafana, Resilience4j, Caffeine cache
-
-## 활성 참조 문서
-
-| 목적 | 파일 |
+| Purpose | File |
 |------|------|
-| 현재 작업 상태 | `docs/STATUS.md` |
-| Phase 2 backlog | `docs/backlog/PHASE2.md` |
-| 의사결정 기록 | `docs/decisions/DR-001~010.md` |
-| 코드 컨벤션 SSOT | `docs/CODING-CONVENTIONS.md` |
-| 전체 기술 근거 | `docs/PLAN.md` (필요시만 로드) |
+| Codex entrypoint | `AGENTS.md` |
+| Claude Code entrypoint | `CLAUDE.md` |
+| Global behavior principles | `docs/BEHAVIOR-PRINCIPLES.md` |
+| Common workflow rules | `docs/AGENT-WORKFLOW.md` |
+| Detailed protocol | `docs/HARNESS-PROTOCOL.md` |
+| Quick operational summary | `docs/HARNESS-QUICK-REFERENCE.md` |
+| Current dashboard | `docs/STATUS.md` |
+| Project plan | `docs/PLAN.md` |
+| Work item SSoT | `docs/works/**` |
+| Harness backlog | `docs/backlog/HARNESS.md` |
+| Public manual | `docs/WORKFLOW-MANUAL.md` |
+| Public summary | `docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md` |
+| Scaffold | `scripts/create-harness.sh` |
+
+## Current Cleanup Classification
+
+| Class | Examples |
+|------|------|
+| Keep as core | entrypoints, behavior/workflow/protocol docs, STATUS/PLAN/PLAN-SUMMARY, Work/backlog/DR structure, tool command/rule mirrors, generic prompts, scaffold |
+| Review before keeping | ARCHITECTURE, DEVELOPER-GUIDE, CODING-CONVENTIONS, troubleshooting, presentations, archive, Spring Boot profile, Java/Spring rules and prompts |
+| Remove or legacy-isolate | Spring Boot runtime code, Gradle build, common/gateway/services/frontend/tests, Docker/K8s/DB infra, generated build output |
+
+## Validation Defaults
+
+| Change | Validation |
+|------|------|
+| Documentation-only | `git diff --check`, targeted stale-term search |
+| Workflow/protocol/tool surface | canonical -> tool-specific -> user-facing -> scaffold cascade check |
+| Scaffold script | `bash -n scripts/create-harness.sh`, generic dry-run, optional temp actual generation |
+| Public release prep | secret/private-info scan, stale identity audit, GitHub visibility check |
+
+## Active References
+
+| Need | File |
+|------|------|
+| Current state | `docs/STATUS.md` |
+| Migration plan and discoveries | `docs/works/harness/AWH-001-public-repo-migration.md` |
+| Long-term project plan | `docs/PLAN.md` |
+| Workflow rules | `docs/AGENT-WORKFLOW.md` |
+| Detailed protocol | `docs/HARNESS-PROTOCOL.md` |
+| User-facing workflow guide | `docs/WORKFLOW-MANUAL.md` |

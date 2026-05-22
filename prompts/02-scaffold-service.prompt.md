@@ -38,7 +38,7 @@ output_contract:
 
 - 기존 서비스(auth-service, user-service, todo-service) 패턴을 따를 것.
 - Gateway 필터 체인 순서(-5 ~ -1)를 변경하지 말 것.
-- `io.kyungseo.msa.{{service_name}}` 패키지 기준으로 생성할 것.
+- `com.example.{{service_name}}` 패키지 기준으로 생성할 것.
 
 출력 형식:
 

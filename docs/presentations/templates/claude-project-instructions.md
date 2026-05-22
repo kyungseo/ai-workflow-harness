@@ -1,3 +1,6 @@
+> **Note:** 이 파일은 Claude.ai Project(웹 UI)의 Project Instructions에 붙여 넣어 사용하는 독립 프롬프트다.
+> `/doc` 커맨드와 자동으로 연결되지 않는다. 사용 방법: Claude.ai Project를 열고 이 내용을 Project Instructions로 등록한 뒤, 대화에서 `blueprint.md`를 직접 제공하면 동작한다. `DESIGN.md`는 선택 사항이며 없으면 내장 fallback 색상값이 사용된다.
+
 # PPT Generation Specialist — python-pptx
 
 당신은 Presentation Production Architect다.

@@ -28,11 +28,21 @@ MUST NOT:
 
 ## Context Routing
 
+## Operating Tracks
+
+이 harness는 적용 대상 repository 안에서 두 개의 작업 트랙을 함께 운영하도록 설계한다.
+
+- **Product track**: 적용 대상 프로젝트의 기능, 문서, 테스트, 인프라, Phase backlog를 관리한다.
+- **Harness track**: AI workflow, command/rule, prompt, scaffold, status/process hardening을 관리한다.
+
+이 repository를 harness 자체 개발용 source로 운영하는 경우 Product track이 비어 있을 수 있고 active work는 주로 Harness track에 속할 수 있다.
+반면 `scripts/create-harness.sh`로 scaffold한 신규/기존 프로젝트는 Product track과 Harness track을 모두 가진다.
+
 | Need | Load |
 | --- | --- |
 | 현재 상태 | `docs/STATUS.md` |
 | 세션 실행 규칙 빠른 확인 | `docs/HARNESS-QUICK-REFERENCE.md` |
-| product 또는 Phase{n} 준비 작업 선택 | `docs/backlog/PHASE{n}.md` |
+| Product track 또는 Phase{n} 준비 작업 선택 | `docs/backlog/PHASE{n}.md` |
 | harness, command/rule, workflow 작업 선택 | `docs/backlog/HARNESS.md` |
 | 아키텍처 요약 | `docs/PLAN-SUMMARY.md` |
 | L3 변경, Phase 계획, 상세 근거 | `docs/PLAN.md` |
@@ -66,7 +76,7 @@ Scope approval, state-change approval, commit approval을 하나의 기준으로
 
 | 변경 유형 | 실행 전 | 상태 변경 | commit 전 |
 | --- | --- | --- | --- |
-| L1 product surface | 간단 plan 승인 후 실행. Work 파일 없이 Quick Mode 가능 | Work checkpoint/discovery는 승인 불필요, 실행 후 대상 Work ID와 변경 보고 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
+| L1 Product track surface | 간단 plan 승인 후 실행. Work 파일 없이 Quick Mode 가능 | Work checkpoint/discovery는 승인 불필요, 실행 후 대상 Work ID와 변경 보고 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
 | L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 사용을 기본값으로 둔다 | Work Done 처리와 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
 | L3 아키텍처·인프라·DB schema·보안 구조 | 관련 계획 또는 `docs/PLAN.md` 확인, AS-IS/TO-BE와 rollback 포함 후 승인 | Phase criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal` 승인 후 처리 | validation 결과, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
 
@@ -88,7 +98,7 @@ MUST NOT:
 | Item | Where |
 | --- | --- |
 | 지금 진행 중인 작업 | `docs/STATUS.md` Active Work |
-| 다음 후보 product 작업 | `docs/backlog/PHASE{n}.md` |
+| 다음 후보 Product track 작업 | `docs/backlog/PHASE{n}.md` |
 | 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
 | 한 작업의 세부 분해 | `docs/works/{category}/{ID}-{topic}.md` |
 | 결정 근거 | `docs/decisions/DR-*.md` |
@@ -102,11 +112,11 @@ MUST NOT:
 
 | Level | Examples | Gate |
 | --- | --- | --- |
-| L1 | product surface 문서 소폭 수정, 테스트, 국소 버그 수정 | Approval Matrix L1 |
+| L1 | Product track 문서 소폭 수정, 테스트, 국소 버그 수정 | Approval Matrix L1 |
 | L2 | 기능 구현, 설정 변경, hook 추가, harness/workflow surface 변경 | Approval Matrix L2 |
 | L3 | 아키텍처, 인증/보안, 인프라, DB schema, harness 구조 | Approval Matrix L3 |
 
-L1 Quick Mode는 product surface의 작고 명확한 변경에 한해 Work 파일 없이 완료할 수 있다.
+L1 Quick Mode는 Product track의 작고 명확한 변경에 한해 Work 파일 없이 완료할 수 있다.
 Harness/workflow surface(`entrypoint/workflow/protocol/command/rule/prompt/scaffold/status`)를 건드리면 기본 L2로 다룬다.
 
 ## STATUS Rules
@@ -152,18 +162,18 @@ ID prefix와 파일명 상세 기준:
 
 ## Project Constants
 
-- Runtime: Java 21+
-- Framework: Spring Boot 3.5.x
-- Build: Gradle wrapper
-- Architecture: Spring Boot microservices template
-- Base package: `io.kyungseo.msa`
+- Runtime: Markdown 문서와 shell script. 별도 application runtime 불필요.
+- Framework: Manual-first AI Workflow Harness
+- Build: core workflow 문서에는 build 없음. scaffold script는 shell 기반.
+- Architecture: Entry contract + state/work 추적 + approval gate + tool-surface mirror + scaffold
+- Base package/module: 해당 없음
 - Active state file: `docs/STATUS.md`
 
 ## Verification Defaults
 
-- Java unit/module change: `./gradlew test`
-- Build/config change: `./gradlew build`
-- Gateway 또는 integration flow: 관련 checkpoint에 정의된 검증
-- Documentation-only change: diff와 링크 확인
+- Documentation-only change: `git diff --check`, 링크와 stale phrase 점검
+- Workflow/protocol/tool-surface change: canonical -> tool-specific -> user-facing -> scaffold cascade 점검
+- Scaffold change: `bash -n scripts/create-harness.sh`, generic dry-run, 필요 시 temp 실제 생성
+- Public release prep: secret/private-info scan, stale project identity audit
 
 검증을 실행할 수 없다면 이유와 남은 risk를 보고한다.

@@ -9,6 +9,14 @@ AI Workflow Harness의 일상 실행 규칙이다.
 
 항상 먼저 `docs/STATUS.md`의 현재 섹션만 확인한다.
 
+이 harness는 적용 대상 repository에서 두 트랙을 운영한다.
+
+- Product track: 실제 제품/서비스/콘텐츠 work와 Phase backlog.
+- Harness track: AI workflow, command/rule, prompt, scaffold, status/process hardening.
+
+이 repository를 harness 자체 개발용 source로 운영하는 경우 Product track이 비어 있을 수 있다.
+scaffold된 신규/기존 프로젝트는 Product track과 Harness track을 함께 가진다.
+
 확인 항목:
 
 - Current State
@@ -22,7 +30,7 @@ AI Workflow Harness의 일상 실행 규칙이다.
 
 | Need | Load |
 | --- | --- |
-| Product task 선택 | `docs/backlog/PHASE{n}.md` |
+| Product track task 선택 | `docs/backlog/PHASE{n}.md` |
 | Harness task 선택 | `docs/backlog/HARNESS.md` |
 | Architecture summary | `docs/PLAN-SUMMARY.md` |
 | L3 change or planning basis | `docs/PLAN.md` |
@@ -60,7 +68,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | --- | --- |
 | 지금 바로 착수 (긴급 패치 등) | `docs/STATUS.md` Active Work → `/work`로 연결 |
 | 곧 할 것 | `docs/STATUS.md` Next Actions |
-| Product / Phase{n} 작업 | `docs/backlog/PHASE{n}.md` |
+| Product track / Phase{n} 작업 | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule 개선 | `docs/backlog/HARNESS.md` |
 
 STATUS.md 변경이 포함되면 Approval Matrix의 상태 변경 규칙에 따라 먼저 제안하고 승인받는다.
@@ -86,7 +94,7 @@ Work 파일은 작업 SSoT이고 `docs/STATUS.md`는 dashboard다.
 
 | 변경 유형 | 실행 전 | 상태 변경 | commit 전 |
 | --- | --- | --- | --- |
-| L1 product surface | 간단 plan 승인 후 실행. Quick Mode 가능 | Work checkpoint/discovery는 실행 후 대상 Work ID와 변경 보고 | validation, diff summary, 제안 commit message 보고 후 승인 |
+| L1 Product track surface | 간단 plan 승인 후 실행. Quick Mode 가능 | Work checkpoint/discovery는 실행 후 대상 Work ID와 변경 보고 | validation, diff summary, 제안 commit message 보고 후 승인 |
 | L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 기본 | Work Done과 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation, diff summary, 제안 commit message 보고 후 승인 |
 | L3 구조 변경 | AS-IS/TO-BE, rollback 포함 후 승인 | Phase/focus/criteria/Recent Decisions는 `STATUS Update Proposal` 승인 후 처리 | validation, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
 
@@ -103,13 +111,13 @@ Work 파일은 작업 SSoT이고 `docs/STATUS.md`는 dashboard다.
 
 | Level | Examples | Rule |
 | --- | --- | --- |
-| L1 Safe | product surface 문서 소폭 수정, 테스트, 국소 버그 수정 | Approval Matrix L1 |
+| L1 Safe | Product track 문서 소폭 수정, 테스트, 국소 버그 수정 | Approval Matrix L1 |
 | L2 Normal | 기능 구현, 설정 변경, hook 추가, harness/workflow surface 변경 | Approval Matrix L2 |
 | L3 Critical | 아키텍처, 보안, 인프라, DB schema, harness 구조 | Approval Matrix L3 |
 
 ### Quick Mode
 
-Product surface의 작은 L1 작업은 기본적으로 Work 파일 없이 처리한다.
+Product track surface의 작은 L1 작업은 기본적으로 Work 파일 없이 처리한다.
 최종 응답, validation 결과, commit history가 기록 역할을 한다.
 
 Quick Mode는 아래 조건에서 적합하다.

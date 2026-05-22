@@ -1,39 +1,27 @@
 #!/usr/bin/env sh
-# Runs Checkstyle before commits that can affect Java/Kotlin/Gradle output.
-# Tests are intentionally excluded — they run in CI (see .github/workflows/ci.yml).
-#
-# First run may take 15-30s (Gradle cold start + Checkstyle download).
-# Subsequent runs: < 5s with Gradle daemon warm.
+# Runs lightweight repository checks before commit.
+
+set -eu
+
+echo "Running diff hygiene check..."
+git diff --cached --check
 
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR)
-RUN_CHECKSTYLE=false
 
 for FILE in $STAGED_FILES; do
     case "$FILE" in
-        *.java|*.kt|*.kts|*.gradle|*.gradle.kts|gradle.properties|*/gradle.properties|gradle/*|config/checkstyle/*|*/checkstyle.xml|*/checkstyle-suppressions.xml)
-            RUN_CHECKSTYLE=true
-            break
+        scripts/*.sh|scripts/*/*.sh|tools/git-hooks/*)
+            if [ -f "$FILE" ]; then
+                echo "Checking shell syntax: $FILE"
+                sh -n "$FILE"
+            fi
             ;;
     esac
 done
 
-if [ "$RUN_CHECKSTYLE" != "true" ]; then
-    echo "Skipping Checkstyle (no Java/Kotlin/Gradle changes staged)."
-    exit 0
+if echo "$STAGED_FILES" | grep -q '^scripts/create-harness\.sh$'; then
+    echo "Checking create-harness.sh syntax..."
+    bash -n scripts/create-harness.sh
 fi
 
-echo "Running Checkstyle..."
-
-./gradlew checkstyleMain --daemon -q
-STATUS=$?
-
-if [ $STATUS -ne 0 ]; then
-    echo ""
-    echo "  Checkstyle failed. Fix violations before committing."
-    echo "  Details: ./gradlew checkstyleMain"
-    echo "  Report : build/reports/checkstyle/"
-    echo ""
-    exit 1
-fi
-
-echo "Checkstyle passed."
+echo "Pre-commit checks passed."

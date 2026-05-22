@@ -27,12 +27,12 @@ New work items are always routed based on urgency and type:
 | --- | --- |
 | Start immediately (urgent patch) | `docs/STATUS.md` Active Work → chain to /work |
 | Soon / next session | `docs/STATUS.md` Next Actions |
-| Product / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
+| Product track / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
 
-When starting a task (`/work`): check `docs/works/{category}/` for an existing Work file. If none exists, evaluate Quick Mode and Work File Decomposition criteria (spec: `docs/HARNESS-PROTOCOL.md`). Product-surface L1 Quick Mode may proceed without a Work file; harness/workflow surface changes default to L2, and Work file creation should be considered by default when decomposition criteria apply.
+When starting a task (`/work`): check `docs/works/{category}/` for an existing Work file. If none exists, evaluate Quick Mode and Work File Decomposition criteria (spec: `docs/HARNESS-PROTOCOL.md`). Product track L1 Quick Mode may proceed without a Work file; harness/workflow surface changes default to L2, and Work file creation should be considered by default when decomposition criteria apply.
 
-Quick Mode: small product-surface L1 changes with narrow scope, one-session completion, no checkpoint handoff, no STATUS change, and no harness/workflow surface change can close with final summary + validation + commit history only. If entrypoint/workflow/protocol/command/rule/prompt/scaffold/status files change, treat the task as L2 and check the relevant cascade surface.
+Quick Mode: small Product track L1 changes with narrow scope, one-session completion, no checkpoint handoff, no STATUS change, and no harness/workflow surface change can close with final summary + validation + commit history only. If entrypoint/workflow/protocol/command/rule/prompt/scaffold/status files change, treat the task as L2 and check the relevant cascade surface.
 
 When completing a Work item (`/close`): confirm Done Criteria, set `status: Done` and `actual_end`, move the README row from Active to Done (archive pending), and propose STATUS pointer removal. If Done Criteria includes user final review, final review, or review-before-Done wording, confirm that review before marking Done. Do not force user review globally for every Work item. After Done processing, ask whether to archive immediately or defer to a later `/start`/`/resume` trigger. Session continues after `/close`.
 
@@ -52,6 +52,20 @@ Approval Matrix state rules:
 | `docs/STATUS.md` | Phase criteria, Current phase/focus, Recent Decisions | Full STATUS Update Proposal |
 
 When starting or resuming, report any `status: Done` Work files still under `docs/works/{category}/` as archive-pending. Do not archive before approval.
+
+## Document Language Policy
+
+When creating or editing any document, prompt, command, rule, or hook message:
+
+- **English Only:** `CLAUDE.md`, `AGENTS.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`
+- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `.claude/commands/*.md`
+
+Bilingual Rules (applies to Korean-primary files):
+- Section titles: English Title Case — never translate (e.g., `## Active Work`, `## Next Steps`)
+- Technical terms: English verbatim — no transliteration (e.g., Kubernetes, CI/CD, Refactoring)
+- Body text: Korean primary
+
+Full policy: `docs/decisions/DR-007-language-policy.md`
 
 ## Branch Flow
 
