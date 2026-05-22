@@ -4,7 +4,7 @@ description: Java 백엔드 성능 개선 (쿼리·JVM·스레드)
 agent: agent
 id: performance-fix.v2
 purpose: 병목을 식별하고 백엔드 서비스의 성능을 최소 변경으로 개선하기 위한 프롬프트
-portability: base-msa-template
+portability: spring-boot-example
 difficulty: advanced
 inputs:
   - symptom

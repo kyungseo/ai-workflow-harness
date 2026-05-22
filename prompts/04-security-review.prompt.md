@@ -4,7 +4,7 @@ description: 코드 변경의 auth/injection/SSRF/token 보안 검토
 agent: agent
 id: security-review.v1
 purpose: 구현 또는 변경된 코드에 보안 결함이 없는지 검토하기 위한 프롬프트
-portability: base-msa-template
+portability: spring-boot-example
 difficulty: intermediate
 inputs:
   - target

@@ -4,7 +4,7 @@ description: 기존 모듈/기능을 새 마이크로서비스로 분리
 agent: agent
 id: split-service.v1
 purpose: 하나의 서비스에 있는 기능을 독립 마이크로서비스로 안전하게 분리하기 위한 프롬프트
-portability: base-msa-template
+portability: spring-boot-example
 difficulty: advanced
 inputs:
   - source_service
@@ -24,7 +24,7 @@ output_contract:
 
 1. **의존성 분석**: `{{source_service}}`에서 `{{feature_to_extract}}`가 사용하는 도메인 모델, Repository, 공통 모듈 파악
 2. **DB 소유권 확인**: 분리할 기능이 사용하는 테이블과 그 소유권 결정 (Phase 1은 공유 DB)
-3. **신규 서비스 스캐폴딩**: `scripts/create-service.sh {{new_service_name}} <port>` 계획 수립
+3. **신규 서비스 스캐폴딩**: 현재 프로젝트의 service scaffold 방식으로 `{{new_service_name}}` 생성 계획 수립
 4. **코드 이전**: 최소한의 변경으로 기능 이전 (공통 모듈은 `common-core`로)
 5. **서비스 간 통신**: `{{source_service}}`에서 `{{new_service_name}}`으로의 RestClient 호출 추가
 6. **Gateway 라우팅**: 신규 서비스 경로 추가

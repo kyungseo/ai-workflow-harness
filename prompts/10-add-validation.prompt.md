@@ -4,7 +4,7 @@ description: 요청 DTO에 Bean Validation 추가 + 테스트
 agent: agent
 id: add-validation.v1
 purpose: 컨트롤러 요청 DTO에 입력 검증을 추가하고, GlobalExceptionHandler 연계와 단위 테스트까지 완성하기 위한 프롬프트
-portability: base-msa-template
+portability: spring-boot-example
 difficulty: beginner
 inputs:
   - dto_class
