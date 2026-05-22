@@ -166,6 +166,16 @@ secret/private-info review를 순서대로 진행한다.
   archived product Work category 경로는 active Work index에서 노출하지 않도록 정리했다.
 - 2026-05-22: public-risk scan에서 실제 credential은 확인되지 않았다.
   깨진 로컬 MCP 설정(`.mcp.json`)은 제거했고, active docs/retrospective의 로컬 절대경로 노출은 정리했다.
+- 2026-05-22: DR-007 언어 규정 준수 전수 검토 수행. 위반 발견 및 수정:
+  `AGENTS.md` Branch Flow 한국어 예시 제거, `.claude/commands/close.md` 섹션 헤더 3개 영문 Title Case 전환,
+  `prompts/codex-session-start.md` / `prompts/claude-session-start.md` 전체 섹션 헤더 영문 Title Case 전환,
+  `README.md` 본문 Korean primary 전환(섹션 헤더 English Title Case 유지).
+- 2026-05-22: `.cursor/config.json`이 Cursor 비동작 파일임을 확인하고 양쪽 레포(`ai-workflow-harness`, `base-msa-template`)에서 삭제.
+  `scripts/create-harness.sh`에서 해당 파일 `adapt` 라인도 제거.
+- 2026-05-22: Codex / Cursor가 문서 편집 시 DR-007 Bilingual Rules를 적용하지 않는 구조적 결함 발견.
+  `.claude/rules/docs-workflow.md`의 path-scoped 자동 로딩과 달리 `AGENTS.md`는 DR-007을 commit message 맥락에만
+  언급하고 문서 편집 trigger가 없었음. `AGENTS.md`와 `.cursor/rules/workflow.mdc`에 Document Language Policy 섹션 추가.
+  scaffold 전파는 `adapt` 직접 복사 방식으로 자동 적용됨.
 
 ### CP 진행 현황
 - [x] CP-1 시작: Work file 생성 (2026-05-22)

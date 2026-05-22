@@ -256,13 +256,12 @@ write_text "${TARGET_ROOT}/.claude/settings.json" '{
 '
 
 # ── Cursor config and rules ──────────────────────────────────────────────────
-for f in behavior-principles.mdc coding.mdc debugging.mdc execution.mdc git-commit.mdc output-format.mdc safety-critical.mdc workflow.mdc; do
+for f in behavior-principles.mdc coding.mdc debugging.mdc execution.mdc git-commit.mdc output-format.mdc role-harness-maintainer.mdc safety-critical.mdc workflow.mdc; do
   adapt "${TEMPLATE_ROOT}/.cursor/rules/${f}" "${TARGET_ROOT}/.cursor/rules/${f}"
 done
 
 if [[ "${PROFILE}" == "spring-boot" ]]; then
   adapt "${TEMPLATE_ROOT}/.cursor/rules/java-spring.mdc" "${TARGET_ROOT}/.cursor/rules/java-spring.mdc"
-  adapt "${TEMPLATE_ROOT}/.cursor/rules/role-backend.mdc" "${TARGET_ROOT}/.cursor/rules/role-backend.mdc"
   adapt "${TEMPLATE_ROOT}/.cursor/rules/testing.mdc" "${TARGET_ROOT}/.cursor/rules/testing.mdc"
 fi
 
