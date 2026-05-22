@@ -9,7 +9,7 @@
 | 문서 | 경로 |
 | --- | --- |
 | HRF-002 Work 파일 | [`docs/works/harness/HRF-002-work-system-refactor.md`](../works/harness/HRF-002-work-system-refactor.md) |
-| 실행 계획 (Plan) | `/Users/kyungseo/.claude/plans/soft-knitting-quill.md` |
+| 실행 계획 (Plan) | Claude Code Plan mode에서 생성된 local plan file |
 | DR-013: Work 파일 스펙 | [`docs/decisions/DR-013-work-file-spec.md`](../decisions/DR-013-work-file-spec.md) |
 | DR-014: Archive 정책 | [`docs/decisions/DR-014-archive-policy.md`](../decisions/DR-014-archive-policy.md) |
 | DR-015: State Update Proposal 재설계 | [`docs/decisions/DR-015-state-update-proposal-redesign.md`](../decisions/DR-015-state-update-proposal-redesign.md) |
@@ -83,7 +83,7 @@ HRF-001 완료 시점의 STATUS.md는 약 200줄이었다. Done 처리된 Active
 
 ## 3. 계획 수립: soft-knitting-quill 실행 계획
 
-2026-05-18에 Claude Code Plan 모드로 전체 실행 계획을 수립했다. 계획은 `/Users/kyungseo/.claude/plans/soft-knitting-quill.md`에 기록되어 있다.
+2026-05-18에 Claude Code Plan 모드로 전체 실행 계획을 수립했다. 계획은 local Claude Code plan file에 기록되어 있었다.
 
 ### 3.1 AS-IS / TO-BE
 

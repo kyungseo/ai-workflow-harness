@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# Installs git hooks for base-msa-template.
+# Installs git hooks for ai-workflow-harness.
 # Run once after cloning: sh tools/git-hooks/install.sh
 
 ROOT=$(git rev-parse --show-toplevel)
@@ -11,5 +11,5 @@ ln -sf "$SCRIPT_DIR/commit-msg" "$HOOKS_DIR/commit-msg"
 chmod +x "$HOOKS_DIR/pre-commit" "$HOOKS_DIR/commit-msg"
 
 echo "Git hooks installed:"
-echo "  pre-commit : Checkstyle"
+echo "  pre-commit : diff and scaffold syntax checks"
 echo "  commit-msg : Conventional Commits format"

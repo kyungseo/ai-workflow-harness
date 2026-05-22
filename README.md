@@ -1,172 +1,132 @@
-# base-msa-template
+# ai-workflow-harness
 
-Spring Boot 3.5 + Spring Cloud 2025 기반 MSA 스캐폴딩 템플릿입니다.
-API Gateway, JWT token rotation, Redis rate limiting, MyBatis, PostgreSQL, Vanilla JS frontend, Checkstyle, GitHub Actions CI, Claude/Cursor AI workflow harness를 포함합니다.
+AI 보조 개발을 위한 Manual-first AI Workflow Harness.
 
-## 주요 기능
+이 저장소는 AI 코딩 에이전트와 협업하기 위한 운영 구조를 제공한다:
+진입 계약, 상태 추적, 승인 게이트, Work 파일, 의사결정 기록,
+도구별 rule mirror, prompt 템플릿, 검증 기본값, 복구 흐름.
 
-- Spring Boot 3.5, Java 21, Gradle Kotlin DSL multi-module
-- Spring Cloud Gateway 단일 진입점
-- JWT access/refresh token rotation, Redis blacklist
-- PostgreSQL 16 + MyBatis
-- Redis sliding-window rate limiting
-- Vanilla JS + Bootstrap frontend
-- Checkstyle + Git hooks + GitHub Actions CI
-- Claude Code / Cursor workflow harness
+Workflow 엔진이나 task runner가 아니다. 하네스는 AI 세션을 감싸
+사람과 에이전트가 반복 세션과 다수 도구에 걸쳐 scope, 상태, 결정, 검증을 정렬할 수 있도록 한다.
 
-## 기술 스택
+## Origin
 
-| 영역 | 스택 |
+이 저장소는 [`kyungseo/base-msa-template`](https://github.com/kyungseo/base-msa-template)에서
+Git history를 보존한 채 추출되었다. 하네스는 원래 Spring Boot MSA template을 hardening하는 과정에서 개발되었다.
+현재 프로젝트는 AI Workflow Harness 자체에 집중한다.
+
+## What This Provides
+
+- Codex / Claude Code 진입 계약 (entry contract)
+- AI 도구 공통 행동 원칙
+- 공통 workflow 규칙과 Approval Matrix
+- `STATUS.md` dashboard와 Work 파일 lifecycle
+- Decision Record 및 archive 규칙
+- Claude Code command 정의
+- Cursor rule mirror
+- 이식 가능한 prompt 템플릿
+- 다른 저장소에 하네스를 적용하는 generic scaffold script
+- 공개용 workflow manual과 quick reference
+
+## Core Documents
+
+| 문서 | 역할 |
 | --- | --- |
-| Runtime | Java 21, Spring Boot 3.5.0 |
-| Gateway | Spring Cloud Gateway 2025.0.0 |
-| Auth | Spring Security, JJWT 0.12.x, Redis |
-| Data | PostgreSQL 16, MyBatis 3 |
-| Build | Gradle 8, Kotlin DSL |
-| Quality | Checkstyle 10.21.0, EditorConfig, Git hooks |
-| CI | GitHub Actions |
-| Frontend | Vanilla JS, Bootstrap 5.3 |
+| [AGENTS.md](AGENTS.md) | Codex 진입점 |
+| [CLAUDE.md](CLAUDE.md) | Claude Code 진입점 |
+| [docs/BEHAVIOR-PRINCIPLES.md](docs/BEHAVIOR-PRINCIPLES.md) | 전역 행동 원칙 |
+| [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) | 공통 workflow, 상태 규칙, Approval Matrix |
+| [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) | 상세 protocol 레퍼런스 |
+| [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) | 세션 실행 규칙 빠른 참조 |
+| [docs/STATUS.md](docs/STATUS.md) | 현재 프로젝트 dashboard |
+| [docs/PLAN.md](docs/PLAN.md) | 프로젝트 방향과 roadmap |
+| [docs/PLAN-SUMMARY.md](docs/PLAN-SUMMARY.md) | 세션 컨텍스트 요약 |
+| [docs/WORKFLOW-MANUAL.md](docs/WORKFLOW-MANUAL.md) | 사용자용 workflow manual |
+| [docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md](docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md) | 공개용 요약 |
+| [docs/works/](docs/works/) | Work 파일 및 인덱스 |
+| [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) | Harness backlog |
+| [docs/decisions/](docs/decisions/) | Decision Records |
+| [prompts/README.md](prompts/README.md) | Prompt 라이브러리 안내 |
 
-## 사전 요건
+## Repository Layout
 
-- Docker Desktop 4.x+
-- JDK 21+
-- GNU Make
-- Python 3 (frontend 로컬 서빙용)
-
-## 빠른 시작
-
-```bash
-cp .env.example .env
+```text
+.
+├── AGENTS.md
+├── CLAUDE.md
+├── .claude/
+│   ├── commands/
+│   └── rules/
+├── .cursor/
+│   └── rules/
+├── docs/
+│   ├── AGENT-WORKFLOW.md
+│   ├── HARNESS-PROTOCOL.md
+│   ├── HARNESS-QUICK-REFERENCE.md
+│   ├── STATUS.md
+│   ├── PLAN.md
+│   ├── PLAN-SUMMARY.md
+│   ├── WORKFLOW-MANUAL.md
+│   ├── backlog/
+│   ├── decisions/
+│   ├── retrospectives/
+│   └── works/
+├── prompts/
+├── scripts/
+│   └── create-harness.sh
+└── tools/
+    └── git-hooks/
 ```
 
-`.env`에 필수 값을 입력한다:
+## Quick Start
 
-```bash
-JWT_SECRET=<256-bit 랜덤 문자열>
-DB_USERNAME=<postgres 사용자명>
-DB_PASSWORD=<postgres 비밀번호>
-```
-
-Git hooks 설치 후 전체 스택 기동:
+로컬 hook 설치:
 
 ```bash
 sh tools/git-hooks/install.sh
-
-cd scripts
-make run
-make ps
 ```
 
-동작 확인:
+scaffold script 검증:
 
 ```bash
-curl -s http://localhost:8090/actuator/health
-curl -s http://localhost:8099/actuator/health | python3 -m json.tool
-curl -s http://localhost:8090/api/v1/auth/login \
-  -X POST -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin","deviceId":"test"}'
+bash -n scripts/create-harness.sh
+./scripts/create-harness.sh --dry-run --profile generic sample-harness /tmp/sample-harness
 ```
 
-Frontend 실행:
+Codex 세션은 [AGENTS.md](AGENTS.md)를 읽는 것으로 시작한다.
+Claude Code 세션은 [CLAUDE.md](CLAUDE.md)를 읽거나 [.claude/commands/](.claude/commands/)의 command 정의를 사용한다.
+
+## Scaffold
+
+새 generic harness scaffold 생성:
 
 ```bash
-cd frontend/web-app
-python3 -m http.server 3000
+./scripts/create-harness.sh --profile generic my-project /path/to/my-project
 ```
 
-`http://localhost:3000/login.html`에 접속한다.
-초기 사용자는 `admin / admin`, `user / user`이다.
-
-## 서비스 구성
-
-| 서비스 | 포트 | 역할 |
-| --- | --- | --- |
-| api-gateway | 8090 | 라우팅, JWT 검증, rate limiting |
-| auth-service | 8091 | 로그인, refresh, logout, blacklist |
-| user-service | 8092 | 사용자 CRUD, RBAC 샘플 |
-| todo-service | 8093 | Todo CRUD 샘플 |
-| PostgreSQL | 5432 | Phase 1 공용 DB |
-| Redis | 6379 | Refresh token, blacklist, rate limit |
-| Actuator | 8099 | Management port |
-| Frontend | 3000 | 정적 웹 앱 |
-
-## 자주 쓰는 명령
+기존 저장소에 하네스 적용:
 
 ```bash
-cd scripts
-
-make help
-make run
-make run-local
-make rebuild
-make stop
-make logs
-make logs SERVICE=api-gateway
-make test
-make build
-make create-service NAME=order-service
+./scripts/create-harness.sh --existing --profile generic my-project /path/to/existing-repo
 ```
 
-## 문서
+## Current Status
 
-| 문서 | 역할 |
-| --- | --- |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 시스템 아키텍처 및 Mermaid 다이어그램 |
-| [docs/DEVELOPER-GUIDE.md](docs/DEVELOPER-GUIDE.md) | 로컬 설정, 서비스/API/테스트 절차 |
-| [docs/CODING-CONVENTIONS.md](docs/CODING-CONVENTIONS.md) | 코딩 컨벤션 SSOT |
-| [docs/GIT-WORKFLOW.md](docs/GIT-WORKFLOW.md) | 브랜치 전략·PR 흐름·CI 연동 |
-| [docs/DOCKERFILE-GUIDE.md](docs/DOCKERFILE-GUIDE.md) | Dockerfile 설명 및 개선 포인트 |
-| [docs/PLAN-SUMMARY.md](docs/PLAN-SUMMARY.md) | 스택 및 아키텍처 요약 |
-| [docs/PLAN.md](docs/PLAN.md) | 전체 기술 근거 |
-| [docs/backlog/PHASE2.md](docs/backlog/PHASE2.md) | Product 및 Phase 2 준비 backlog |
-| [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) | AI workflow harness backlog |
-| [docs/decisions/](docs/decisions/) | Decision Records |
-| [docs/troubleshooting/](docs/troubleshooting/) | 증상별 원인 분석 및 조치 기록 |
+이 저장소는 초기 public-ready migration 상태다. 아래를 참조:
 
-## AI Workflow Harness
+- [docs/STATUS.md](docs/STATUS.md)
+- [docs/works/harness/AWH-001-public-repo-migration.md](docs/works/harness/AWH-001-public-repo-migration.md)
 
-경량 상태 머신 기반 AI 개발 workflow가 포함되어 있다.
+## Validation
 
-| 문서 | 역할 |
-| --- | --- |
-| [CLAUDE.md](CLAUDE.md) | Claude Code 진입점 |
-| [AGENTS.md](AGENTS.md) | Codex 진입점 |
-| [docs/BEHAVIOR-PRINCIPLES.md](docs/BEHAVIOR-PRINCIPLES.md) | 전역 행동 원칙 |
-| [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) | 공통 운영 규칙 |
-| [docs/STATUS.md](docs/STATUS.md) | 현재 프로젝트 상태 |
-| [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) | Harness 상세 protocol |
-| [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) | 일상 실행 빠른 참조 |
-| [docs/WORKFLOW-MANUAL.md](docs/WORKFLOW-MANUAL.md) | 사용자용 워크플로우 매뉴얼 |
-| [docs/works/](docs/works/) | 진행 중·완료된 Work 파일 (DR-013) |
-| [prompts/README.md](prompts/README.md) | 재사용 prompt 라이브러리 |
-
-Claude Code slash command는 `.claude/commands/`에 있다.
-Cursor rules는 `.cursor/rules/`에 있다.
-
-## 테스트
-
-통합 테스트는 Testcontainers로 자급자족한다. `docker compose up` 없이 실행 가능하다.
+기본 검증:
 
 ```bash
-./gradlew test
+git diff --check
+bash -n scripts/create-harness.sh
+./scripts/create-harness.sh --dry-run --profile generic sample /tmp/sample
 ```
 
-PostgreSQL, Redis 컨테이너를 테스트 실행 시 자동 기동한다.
+## License
 
-### Docker Desktop 4.73.0+ (macOS)
-
-`build.gradle.kts`에 Docker API 버전과 소켓 경로가 설정되어 있으므로 별도 로컬 설정 없이 `./gradlew test`가 동작한다.
-
-연결 오류가 발생하면 [docs/troubleshooting/testcontainers-docker-desktop-4.73.md](docs/troubleshooting/testcontainers-docker-desktop-4.73.md)를 참조한다.
-
-## CI
-
-`develop` push 시 Checkstyle을 실행한다.
-`main` push 또는 `main` 대상 PR에서 `lint → test` 순서로 실행된다.
-
-[.github/workflows/ci.yml](.github/workflows/ci.yml) 참조.
-
-## 라이선스
-
-[LICENSE.txt](LICENSE.txt) 참조.
+[LICENSE](LICENSE) 참조.

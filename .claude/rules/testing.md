@@ -5,7 +5,11 @@ paths:
   - "common/**/src/test/**/*.java"
 ---
 
-# Java Testing Rules
+# Optional Spring Boot Testing Rules
+
+These rules are not part of the generic AI Workflow Harness core. They are kept
+as an optional example/profile surface for projects that adopt the harness with
+Spring Boot backend tests.
 
 ## Test Layer Annotations
 
@@ -18,19 +22,18 @@ paths:
 
 ## Integration Test Infrastructure
 
-Integration tests use Testcontainers by default (DR-010 Accepted, P2-006 Done).
-Prefer `@ServiceConnection` with PostgreSQL + Redis containers for `@SpringBootTest` integration tests.
+Prefer the adopted project's established integration-test infrastructure.
 
 MUST:
 
-- Keep Testcontainers environment settings in Gradle/test configuration, not per-test ad hoc system properties.
-- Reuse the established integration-test container pattern in existing service tests.
-- Follow `docs/decisions/DR-010-integration-test-infra.md` for integration-test infrastructure changes.
+- Keep integration-test environment settings in shared test configuration, not per-test ad hoc system properties.
+- Reuse the established integration-test infrastructure pattern in existing service tests.
+- Record infrastructure changes through the adopted project's decision process.
 
 NEVER:
 
-- Reintroduce `application-test.yml` localhost overrides for integration tests without an explicit DR/backlog decision.
-- Depend on a separately running Docker Compose stack for `@SpringBootTest` integration tests.
+- Reintroduce local-only test overrides without an explicit decision.
+- Depend on separately running local services for integration tests unless the adopted project documents that requirement.
 
 ## Assertion and Mocking Style
 
@@ -54,6 +57,6 @@ NEVER:
 
 ## Verification Command
 
-- Unit / module change: `./gradlew :services:{service-name}:test`
-- Full test suite: `./gradlew test`
-- If Docker/Testcontainers is unavailable, report the environment failure and propose a narrower unit-test command instead of silently weakening coverage.
+- Unit / module change: use the adopted project's narrow test command.
+- Full test suite: use the adopted project's full verification command.
+- If required local infrastructure is unavailable, report the environment failure and propose a narrower unit-test command instead of silently weakening coverage.

@@ -13,7 +13,7 @@ if ! echo "$MSG" | grep -qE "^($TYPES)(\(.+\))?: .+"; then
     echo "  ERROR: Invalid commit message format."
     echo ""
     echo "  Expected : type(scope?): subject"
-    echo "  Example  : feat(auth): add refresh token rotation"
+    echo "  Example  : docs(workflow): update approval matrix"
     echo "  Types    : feat fix docs style refactor chore config test perf ci revert"
     echo ""
     exit 1

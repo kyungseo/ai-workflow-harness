@@ -20,12 +20,8 @@ outputs/
 .idea/
 *.iml
 *.code-workspace
-# [IMPORTANT] .vscode 제외 여부
-# .vscode/ 
-# 폴더 전체를 막기보다 settings.json과 extensions.json은 커밋에 포함시키는 것을 권장
-.vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
+# IDE: .vscode는 개인 환경 설정이므로 전체 ignore
+.vscode/
 
 # [ AI 정리 ]
 # commit 권장:
@@ -34,15 +30,9 @@ outputs/
 #   .claudeignore
 #   .cursorignore
 #   prompts/
-# 
-# 조건부:
-#   .claude/settings.json
-#   .cursor/config.json
-#   .vscode/settings.json
-#   .vscode/extensions.json
-# 
+#
 # ignore:
-#   .vscode 나머지
+#   .vscode/
 #   개인 설정
 #   secrets
 

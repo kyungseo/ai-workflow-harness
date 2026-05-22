@@ -1,7 +1,0 @@
-{
-  "mcpServers": {
-    "postgres": {
-      "command": "/Users/kyungseo/dev-home/vibe/base-msa-template/scripts/mcp-postgres.sh"
-    }
-  }
-}

@@ -4,7 +4,6 @@ paths:
   - ".devcontainer/**"
   - "**/Dockerfile"
   - "**/docker-compose*.yml"
-  - ".github/workflows/**"
 ---
 
 # Infrastructure Rules

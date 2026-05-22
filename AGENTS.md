@@ -63,7 +63,7 @@ Work item routing:
 | --- | --- |
 | Start immediately (urgent patch) | `docs/STATUS.md` Active Work → chain to `/work` |
 | Soon / next session | `docs/STATUS.md` Next Actions |
-| Product / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
+| Product track / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
 
 ## Git Commit Format
@@ -74,10 +74,24 @@ Follow Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-lan
 - **Subject line** — Korean primary; English for technical terms, proper nouns, file paths, IDs (e.g., `DR-007`, `STATUS.md`)
 - **Body** — Korean primary with English technical terms inline; explain *why*, not *what*
 
+## Document Language Policy
+
+When creating or editing any document, prompt, command, rule, or hook message:
+
+- **English Only:** `CLAUDE.md`, `AGENTS.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`
+- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `.claude/commands/*.md`
+
+Bilingual Rules (applies to Korean-primary files):
+- Section titles: English Title Case — never translate (e.g., `## Active Work`, `## Next Steps`)
+- Technical terms: English verbatim — no transliteration (e.g., Kubernetes, CI/CD, Refactoring)
+- Body text: Korean primary
+
+Full policy: `docs/decisions/DR-007-language-policy.md`
+
 ## Branch Flow
 
-When the user expresses branch merge intent ("머지하자", "PR 올리자", "develop에 합치자", etc.),
-load `docs/GIT-WORKFLOW.md` and follow §2 (Feature 개발 사이클) and §3 (릴리즈 사이클).
+When the user expresses branch merge intent (e.g., asking to merge, open a PR, or merge into develop),
+load `docs/GIT-WORKFLOW.md` and follow §2 (Feature Development Cycle) and §3 (Release Cycle).
 
 NEVER:
 - Directly local-merge a feature branch into develop. Always merge via PR.
