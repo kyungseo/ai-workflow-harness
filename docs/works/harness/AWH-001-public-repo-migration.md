@@ -195,3 +195,7 @@ secret/private-info review를 순서대로 진행한다.
 - [x] CP-4 완료: workflow manual/public summary/backlog residual stale surface 정리 (2026-05-22)
 - [x] CP-5 시작: validation, stale scan, public-risk scan 수행 (2026-05-22)
 - [ ] CP-5 완료: PR/merge/public visibility 전환 준비 보고
+
+## Retrospective
+
+- [awh-001-migration-review-20260522.md](../../retrospectives/awh-001-migration-review-20260522.md) — Codex 중간 리뷰. P0/P1 항목 수정 완료, R-06~R-09는 후속 개선 후보로 이관
