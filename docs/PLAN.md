@@ -92,7 +92,7 @@ Milestone 목표:
 ### Kept As Core (Previously Under Review)
 
 - `HARNESS-STRUCTURE.md` (구 `ARCHITECTURE.md`) — harness 구조 시각화 문서
-- `MAINTAINER-GUIDE.md` (구 `DEVELOPER-GUIDE.md` + `CODING-CONVENTIONS.md` 통합) — 유지보수·convention 가이드
+- `HARNESS-MAINTAINER-GUIDE.md` (구 `DEVELOPER-GUIDE.md` + `CODING-CONVENTIONS.md` 통합) — 유지보수·convention 가이드
 
 ### Remove Or Legacy-Isolate
 

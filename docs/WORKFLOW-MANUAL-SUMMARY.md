@@ -378,7 +378,7 @@ flowchart LR
         D1["docs/decisions/"]
         D2["docs/archive/"]
         D3["docs/works/ + STATUS pointer"]
-        D4["HARNESS-STRUCTURE.md\nMAINTAINER-GUIDE.md"]
+        D4["HARNESS-STRUCTURE.md\nHARNESS-MAINTAINER-GUIDE.md"]
         D5["HARNESS-PROTOCOL.md\nQUICK-REFERENCE\nWORKFLOW-MANUAL"]
         D6["docs/troubleshooting/"]
         D7["docs/reports/\ndocs/presentations/"]

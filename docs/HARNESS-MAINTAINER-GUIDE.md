@@ -1,4 +1,4 @@
-# MAINTAINER-GUIDE.md - AI Workflow Harness
+# HARNESS-MAINTAINER-GUIDE.md - AI Workflow Harness
 
 > 대상: 이 repository에서 AI Workflow Harness를 정비하거나 다른 repository에 적용하려는 maintainer.
 > 전체 구조 다이어그램의 기준 문서는 `docs/HARNESS-STRUCTURE.md`다.

@@ -171,4 +171,4 @@ bash tools/git-hooks/install.sh
 - `.claude/rules/git-workflow.md` — Claude Code용 커밋 gate 규칙
 - `docs/decisions/DR-007-language-policy.md` — Bilingual Rules
 - `.github/workflows/ci.yml` — CI 상세 설정
-- `docs/MAINTAINER-GUIDE.md` — 로컬 환경 설정 및 유지보수 절차
+- `docs/HARNESS-MAINTAINER-GUIDE.md` — 로컬 환경 설정 및 유지보수 절차
