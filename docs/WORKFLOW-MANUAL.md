@@ -1444,14 +1444,13 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 | `docs/troubleshooting/README.md` | 생성 | troubleshooting 작성 규칙 skeleton |
 | `.claude/settings.json` | 생성 | permission deny와 Stop hook reminder를 포함한 범용 버전 |
 | `.claude/rules/*.md`, `.claude/commands/*.md` | 복사 | 기본 profile은 generic rules만 포함 |
-| `.cursor/config.json`, `.cursor/rules/*.mdc` | 복사 | 기본 profile은 generic rules, `behavior-principles.mdc`, `safety-critical.mdc` 포함 |
+| `.cursor/rules/*.mdc` | 복사 | 기본 profile은 generic rules, `behavior-principles.mdc`, `safety-critical.mdc`, `role-harness-maintainer.mdc` 포함 |
 | `prompts/*.md` | 복사 | 기본 profile은 generic prompt만 포함 |
 
 `--profile spring-boot` 추가 포함:
 
 - `.claude/rules/java-spring.md`
 - `.cursor/rules/java-spring.mdc`
-- `.cursor/rules/role-backend.mdc`
 - Java/Spring example prompts (`02-scaffold-service`, `04-security-review`, `08-split-service`, `10-add-validation`, `11-add-resilience`, `12-performance-fix`, `13-add-metrics`, `14-write-migration`, `18-add-cache`, `21-create-layer`)
 
 스크립트가 복사하지 않는 것: 현재 Phase 데이터(`PHASE{n}.md`), 프로젝트 특화 DR(`DR-*.md`), 과거 이력(`docs/archive/`), 프로젝트 특화 troubleshooting 사례.

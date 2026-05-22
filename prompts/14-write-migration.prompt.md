@@ -3,8 +3,8 @@ name: write-migration
 description: PostgreSQL 스키마 변경 마이그레이션 작성 (롤백 포함)
 agent: agent
 id: write-migration.v1
-purpose: 현재 스키마(01-schema.sql)를 기반으로 안전한 DDL 마이그레이션을 작성하고 롤백 절차를 명시하기 위한 프롬프트
-portability: base-msa-template
+purpose: 현재 schema source를 기반으로 안전한 DDL 마이그레이션을 작성하고 롤백 절차를 명시하기 위한 프롬프트
+portability: spring-boot-example
 difficulty: intermediate
 inputs:
   - table_name
@@ -23,8 +23,8 @@ output_contract:
 
 작업 순서:
 
-1. `infra/docker/init-sql/01-schema.sql`에서 `{{table_name}}` 현재 스키마 확인
-2. `infra/docker/init-sql/02-data.sql`에서 기존 초기 데이터 영향 여부 확인
+1. 현재 프로젝트의 schema source에서 `{{table_name}}` 현재 스키마 확인
+2. seed 또는 초기 데이터 source에서 기존 데이터 영향 여부 확인
 3. 마이그레이션 DDL 작성 (PostgreSQL 16 방언 기준)
 4. 롤백 DDL 작성 (적용 전 상태로 복원)
 5. 기존 데이터 호환성 검토 (NOT NULL 추가 시 DEFAULT 필요 여부 등)

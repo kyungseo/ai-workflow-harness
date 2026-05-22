@@ -4,7 +4,7 @@ description: Micrometer counter/timer/gauge 추가
 agent: agent
 id: add-metrics.v1
 purpose: 서비스 메서드에 Micrometer 메트릭을 추가하고 Prometheus 수집 가능하도록 노출하기 위한 프롬프트
-portability: base-msa-template
+portability: spring-boot-example
 difficulty: beginner
 inputs:
   - target_class

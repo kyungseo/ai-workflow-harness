@@ -4,7 +4,7 @@ description: RestClient 호출에 Resilience4j circuit breaker/retry 추가
 agent: agent
 id: add-resilience.v1
 purpose: 서비스 간 RestClient 호출에 Resilience4j circuit breaker와 retry를 적용하여 장애 전파를 방지하기 위한 프롬프트
-portability: base-msa-template
+portability: spring-boot-example
 difficulty: intermediate
 inputs:
   - target_call

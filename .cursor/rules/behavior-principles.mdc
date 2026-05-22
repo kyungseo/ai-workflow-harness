@@ -24,7 +24,7 @@ Canonical source: `docs/BEHAVIOR-PRINCIPLES.md`
 
 ## 2. Simplicity First
 
-Apply together with the Prioritize section in `role-backend.mdc`.
+Apply together with the Prioritize section in `role-harness-maintainer.mdc`.
 
 - Do not add unrequested features.
 - Do not add unnecessary abstractions for single-use code.
@@ -33,7 +33,7 @@ Apply together with the Prioritize section in `role-backend.mdc`.
 
 ## 3. Surgical Changes
 
-Apply together with the Prioritize section in `role-backend.mdc`.
+Apply together with the Prioritize section in `role-harness-maintainer.mdc`.
 
 - Do not casually improve adjacent code, comments, or formatting.
 - Do not refactor code that is not broken.

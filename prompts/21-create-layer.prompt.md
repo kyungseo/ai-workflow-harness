@@ -4,7 +4,7 @@ description: Spring Boot 레이어별 코드 생성 (Controller / Service / Repo
 agent: agent
 id: create-layer.v1
 purpose: 지정한 레이어의 코드만 생성하고 다른 레이어는 건드리지 않기 위한 프롬프트
-portability: base-msa-template
+portability: spring-boot-example
 difficulty: beginner
 inputs:
   - layer

@@ -1,10 +1,10 @@
 ---
 name: scaffold-service
-description: create-service.sh 기반 신규 마이크로서비스 스캐폴딩
+description: Spring Boot example 신규 마이크로서비스 스캐폴딩 계획
 agent: agent
 id: scaffold-service.v1
-purpose: MSA 템플릿에 새로운 마이크로서비스를 골격부터 게이트웨이 연동까지 안전하게 추가하기 위한 프롬프트
-portability: base-msa-template
+purpose: Spring Boot example project에서 새로운 마이크로서비스를 골격부터 gateway 연동까지 안전하게 추가하기 위한 프롬프트
+portability: spring-boot-example
 difficulty: intermediate
 inputs:
   - service_name
@@ -18,7 +18,7 @@ output_contract:
 ---
 
 
-`scripts/create-service.sh`를 기반으로 `{{service_name}}` 서비스를 추가해 줘.
+현재 프로젝트의 Spring Boot service scaffold 규칙을 기준으로 `{{service_name}}` 서비스를 추가해 줘.
 
 서비스 정보:
 
@@ -28,9 +28,9 @@ output_contract:
 
 작업 범위:
 
-1. `scripts/create-service.sh {{service_name}} {{port}}` 실행 계획 수립
-2. `gateway/api-gateway/src/main/resources/application.yml`에 라우팅 추가
-3. `infra/docker/docker-compose.yml`에 서비스 추가
+1. 현재 프로젝트의 service scaffold 방식 확인
+2. gateway routing 설정에 신규 서비스 경로 추가
+3. local compose 또는 runtime 설정에 서비스 추가
 4. `settings.gradle.kts`에 모듈 등록
 5. `tests/http/{{service_name}}.http` 기본 테스트 파일 생성
 
