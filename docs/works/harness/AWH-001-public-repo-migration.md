@@ -176,6 +176,13 @@ secret/private-info review를 순서대로 진행한다.
   `.claude/rules/docs-workflow.md`의 path-scoped 자동 로딩과 달리 `AGENTS.md`는 DR-007을 commit message 맥락에만
   언급하고 문서 편집 trigger가 없었음. `AGENTS.md`와 `.cursor/rules/workflow.mdc`에 Document Language Policy 섹션 추가.
   scaffold 전파는 `adapt` 직접 복사 방식으로 자동 적용됨.
+- 2026-05-22: `.cursor/rules/role-backend.mdc` 파일명/내용 불일치 발견.
+  내용은 이미 Harness Maintainer Role로 교체되었으나 파일명은 Spring Boot 시절 이름을 유지하고 있었음.
+  `role-harness-maintainer.mdc`로 rename하고 scaffold 배치도 spring-boot 조건 블록에서 generic 루프로 이동.
+  `base-msa-template`의 동명 파일은 내용이 Spring Boot Backend Role 원본 그대로여서 소급 불필요.
+- 2026-05-22: `.vscode/settings.json`이 VS Code 비동작 파일임을 확인하고 양쪽 레포에서 삭제.
+  permissions 블록은 Claude Code 포맷으로 VS Code가 읽지 않으며, Spring Boot 잔재와 개인 임시 설정 포함.
+  양쪽 레포 `.gitignore`에서 `.vscode/*` + 예외 패턴을 `.vscode/` 전체 ignore로 단순화.
 
 ### CP 진행 현황
 - [x] CP-1 시작: Work file 생성 (2026-05-22)
