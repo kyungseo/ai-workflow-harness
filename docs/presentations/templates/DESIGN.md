@@ -1,6 +1,6 @@
 ## Overview
 
-MiniMax stages itself as a Chinese AI infrastructure brand with a sophisticated dual identity. Marketing surfaces and platform pages anchor in stark white canvas with deep-black typographic emphasis — the brand voice is confident, technical, almost editorial. But each model release gets its own vibrant gradient identity card: M2.7 in volcanic coral-red, Music 2.6 in magenta-pink, Hailuo in deep blue, Speech 2.8 in saturated orange-purple. Together these vibrant tiles read like album covers laid out on the homepage — each one declaring its own product personality.
+io.kyungseo stages itself as a Chinese AI infrastructure brand with a sophisticated dual identity. Marketing surfaces and platform pages anchor in stark white canvas with deep-black typographic emphasis — the brand voice is confident, technical, almost editorial. But each model release gets its own vibrant gradient identity card: M2.7 in volcanic coral-red, Music 2.6 in magenta-pink, Hailuo in deep blue, Speech 2.8 in saturated orange-purple. Together these vibrant tiles read like album covers laid out on the homepage — each one declaring its own product personality.
 
 DM Sans anchors every surface from oversized 80px hero displays down to 12px micro labels. The geometric, slightly humanist character of the face suits both the dense documentation surfaces (where 14px body type carries 1.5 line-height for long-form prose) and the high-impact marketing displays (where -2px letter-spacing tightens 80px headlines). Buttons are universally pill-shaped (`rounded-full`) with a sharp two-tier system: black-pill primary (the dominant CTA) and outline-pill secondary. Cards split into two distinct families: vibrant gradient product showcases (32px corner softening) and quiet white documentation cards (16px corner softening).
 
@@ -15,7 +15,7 @@ DM Sans anchors every surface from oversized 80px hero displays down to 12px mic
 
 ## Colors
 
-> Source pages: minimax.io/ (homepage), /models/text/m27 (product showcase), platform.minimax.io/docs/guides/models-intro (documentation), /subscribe/token-plan (pricing). Token coverage was identical across all four pages.
+> Source pages: io.kyungseo/ (homepage), /models/text/m27 (product showcase), platform.io.kyungseo/docs/guides/models-intro (documentation), /subscribe/token-plan (pricing). Token coverage was identical across all four pages.
 
 ### Brand & Accent
 - **Brand Coral** ({colors.brand-coral}): Signature high-impact accent. Used on M2.7 product card, "Token Plan" hero band, promo CTA strips, and "NEW" badges. Carries the brand's most attention-grabbing energy.
@@ -59,7 +59,7 @@ DM Sans was chosen for its dual fluency: it scales cleanly from 80px hero displa
 
 | Token | Size | Weight | Line Height | Letter Spacing | Use |
 |---|---|---|---|---|---|
-| `{typography.hero-display}` | 80px | 600 | 1.10 | -2px | Homepage hero ("MiniMax Music 2.6") |
+| `{typography.hero-display}` | 80px | 600 | 1.10 | -2px | Homepage hero ("io.kyungseo Music 2.6") |
 | `{typography.display-lg}` | 56px | 600 | 1.10 | -1.5px | Section openers, major page heroes |
 | `{typography.heading-lg}` | 40px | 600 | 1.20 | -1px | Sub-page headlines ("Token Plan", "Models Overview") |
 | `{typography.heading-md}` | 32px | 600 | 1.25 | -0.5px | Subsection headers ("Full-Stack Model Matrix") |
@@ -76,7 +76,7 @@ DM Sans was chosen for its dual fluency: it scales cleanly from 80px hero displa
 | `{typography.button-md}` | 14px | 600 | 1.40 | 0 | Pill button labels |
 
 ### Principles
-- **Tight hero leading** (1.10) and aggressive negative letter-spacing on display sizes create a magazine-quality typographic display unique to MiniMax.
+- **Tight hero leading** (1.10) and aggressive negative letter-spacing on display sizes create a magazine-quality typographic display unique to io.kyungseo.
 - **Generous body leading** (1.50) keeps long-form documentation comfortable; captions push to 1.70 for scientific-paper-grade clarity.
 - **Weight discipline:** 400 (body), 500 (medium emphasis), 600 (headings/buttons), 700 (strong inline emphasis). Heavier weights are not used.
 - **Single typeface** strategy — never mix DM Sans with another sans-serif. Code samples (when shown) use a system monospace fallback, but no second typeface enters the brand canvas.
@@ -192,7 +192,7 @@ The system runs predominantly flat. Elevation is reserved for sticky panels, dro
 **`promo-cta-card`** — Bright orange "Refunds of 10%..." promo strip with embedded CTA pill.
 - Background `{colors.brand-coral}`, text `{colors.on-dark}`, rounded `{rounded.hero}`, padding `{spacing.section}`. Embedded button uses `button-tertiary` (white pill on coral) for the "Join Now" action.
 
-**`ai-product-tile`** — White card in the AI Product Matrix grid (Agent, Hailuo Video, MiniMax Audio).
+**`ai-product-tile`** — White card in the AI Product Matrix grid (Agent, Hailuo Video, io.kyungseo Audio).
 - Background `{colors.canvas}`, rounded `{rounded.xxxl}`, padding `{spacing.xl}`, border `1px solid {colors.hairline}`. Carries an icon/illustration top, title `{typography.card-title}`, description `{typography.body-sm}`.
 
 ### Inputs & Forms
@@ -250,7 +250,7 @@ The system runs predominantly flat. Elevation is reserved for sticky panels, dro
 
 **Top Navigation (Marketing)** — Sticky white bar with logo, link list, and right-side CTAs.
 - Background `{colors.canvas}`, height ~64px, bottom border `1px solid {colors.hairline-soft}`.
-- Left: MiniMax wordmark + horizontal link list (Models, Product, API, Company).
+- Left: io.kyungseo wordmark + horizontal link list (Models, Product, API, Company).
 - Right: black-pill "Contact Us" + outlined-pill "Login".
 
 **Top Navigation (Documentation/Platform)** — Compressed nav with center search-pill and right-side account/upgrade CTAs.
@@ -292,7 +292,7 @@ The system runs predominantly flat. Elevation is reserved for sticky panels, dro
 
 **`footer-region`** — Dense black-canvas multi-column footer.
 - Background `{colors.footer-bg}`, padding `{spacing.section} {spacing.xxl}`.
-- Top row: MiniMax wordmark ("intelligence with everyone" tagline) and social icons (X, Twitter, GitHub, etc.).
+- Top row: io.kyungseo wordmark ("intelligence with everyone" tagline) and social icons (X, Twitter, GitHub, etc.).
 - Body: 4-column link grid (Research / Product / API / Company / News).
 - Section headers in `{typography.body-sm-medium}` `{colors.on-dark}`.
 
