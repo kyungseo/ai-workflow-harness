@@ -1,7 +1,7 @@
 # DR-002: K8s 배포 도구 선택 — Helm vs Kustomize
 
 Date: 2026-05-11
-Status: Draft
+Status: Superseded
 
 ## Question
 

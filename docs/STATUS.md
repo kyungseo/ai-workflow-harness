@@ -56,6 +56,9 @@ Last updated: 2026-05-22 (public-ready migration 시작)
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-05-22 | `AGENTS.md`와 `.cursor/rules/workflow.mdc`에 Document Language Policy 섹션 추가 | Codex/Cursor가 DR-007을 문서 편집 시 적용하지 않는 구조적 결함 수정 — path-scoped 자동 로딩이 없는 도구에 inline 규칙 삽입 | Medium |
+| 2026-05-22 | `.cursor/rules/role-backend.mdc` → `role-harness-maintainer.mdc` rename | 파일명이 Spring Boot 시절 이름을 유지하고 있었고 내용은 이미 Harness Maintainer Role로 교체된 상태 — 파일명/내용 불일치 수정 | Low |
+| 2026-05-22 | Spring Boot prompt bundle을 optional example pack으로 보존 | generic harness에서 제거하지 않고 stack-specific prompt 구성 방식을 보여주는 sample로 유지 | Low |
 | 2026-05-21 | Repository name은 `ai-workflow-harness`로 사용 | 현재 system은 AI workflow를 직접 실행하는 engine보다 session/status/gate/validation을 감싸는 harness에 가까움 | Low |
 | 2026-05-21 | `base-msa-template` history를 보존한 독립 repo로 분리 | AI Workflow Harness가 product template 개발 과정에서 형성된 이력을 공개 가치로 남김 | Low |
 | 2026-05-21 | public 전환 전까지 repository는 private 유지 | Spring Boot/MSA 흔적 정리와 private-info audit 후 공개하기 위함 | Low |

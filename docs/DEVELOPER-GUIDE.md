@@ -32,15 +32,15 @@ sh tools/git-hooks/install.sh
 
 ## 3. Editing Rules
 
-- Shared behavior belongs in `docs/BEHAVIOR-PRINCIPLES.md`.
-- Shared workflow belongs in `docs/AGENT-WORKFLOW.md` and `docs/HARNESS-PROTOCOL.md`.
-- Tool-specific files should mirror only actionable runtime rules.
-- Historical documents should not be rewritten unless the task explicitly targets them.
-- `docs/STATUS.md` is a dashboard; detailed task history belongs in Work files.
+- 공유 동작 원칙은 `docs/BEHAVIOR-PRINCIPLES.md`에 기록한다.
+- 공유 workflow는 `docs/AGENT-WORKFLOW.md`와 `docs/HARNESS-PROTOCOL.md`에 기록한다.
+- Tool-specific 파일은 actionable runtime rule만 mirror한다.
+- 해당 작업이 명시적으로 대상으로 삼지 않는 한 historical 문서를 재작성하지 않는다.
+- `docs/STATUS.md`는 dashboard이며, 작업 세부 히스토리는 Work 파일에 기록한다.
 
 ## 4. Validation
 
-Use the narrowest validation that proves the change.
+변경 사항을 검증하는 가장 좁은 방법을 사용한다.
 
 | Change | Validation |
 | --- | --- |
@@ -52,25 +52,25 @@ Use the narrowest validation that proves the change.
 
 ## 5. Scaffold Development
 
-Validate syntax first:
+먼저 syntax를 검증한다:
 
 ```bash
 bash -n scripts/create-harness.sh
 ```
 
-Validate generic dry-run:
+Generic dry-run을 검증한다:
 
 ```bash
 ./scripts/create-harness.sh --dry-run --profile generic sample /tmp/sample
 ```
 
-For actual scaffold verification, generate into a fresh temp path:
+실제 scaffold 검증이 필요하면 새 임시 경로에 생성한다:
 
 ```bash
 ./scripts/create-harness.sh --profile generic sample /tmp/sample-harness
 ```
 
-Then inspect:
+생성 후 다음을 확인한다:
 
 - generated `AGENTS.md` / `CLAUDE.md`
 - `docs/STATUS.md`
@@ -82,7 +82,7 @@ Then inspect:
 
 ## 6. Adding Or Changing Rules
 
-When a rule changes, check the cascade:
+rule이 변경되면 cascade를 확인한다:
 
 | Layer | Examples |
 | --- | --- |
@@ -92,21 +92,20 @@ When a rule changes, check the cascade:
 | Scaffold | `scripts/create-harness.sh`, generated skeleton files |
 | Historical | archives, retrospectives, old review packages |
 
-Historical files are normally checked for context, not edited.
+Historical 파일은 편집하지 않고 context 확인 용도로만 참조한다.
 
 ## 7. Prompt Library
 
-Generic prompts are core. Stack-specific prompts are optional example packs.
+Generic prompt는 core이며, stack-specific prompt는 optional example pack이다.
 
-Update `prompts/README.md` when adding a prompt, changing frontmatter fields, or
-moving a prompt between generic and optional sections.
+prompt를 추가하거나, frontmatter field를 변경하거나, generic과 optional section 간에 prompt를 이동할 때는 `prompts/README.md`를 업데이트한다.
 
 ## 8. Public Release Checks
 
-Before making the repository public:
+repository를 public으로 전환하기 전에:
 
-1. Confirm current tree no longer presents itself as an application runtime project.
-2. Run stale identity searches on live docs and tool surfaces.
-3. Scan for secrets, private URLs, and local-only paths.
-4. Validate generic scaffold dry-run.
-5. Confirm GitHub repository visibility remains private until review is complete.
+1. 현재 tree가 application runtime project로 표현되지 않는지 확인한다.
+2. live 문서와 tool surface에 대해 stale identity 검색을 수행한다.
+3. secret, private URL, local-only path를 스캔한다.
+4. generic scaffold dry-run을 검증한다.
+5. review가 완료될 때까지 GitHub repository visibility가 private 상태임을 확인한다.

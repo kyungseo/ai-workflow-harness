@@ -70,12 +70,12 @@ stateDiagram-v2
     APPROVAL --> PLAN: scope changes
 ```
 
-Core rule:
+핵심 규칙:
 
-- `STATUS.md` is the dashboard.
-- Work files are the task-level SSoT.
-- Approval Matrix gates execution, state changes, and commits.
-- Validation failure moves to FAIL/RECOVER before more work proceeds.
+- `STATUS.md`는 dashboard다.
+- Work 파일은 작업 단위 SSoT다.
+- Approval Matrix는 실행, 상태 변경, commit을 승인 게이트로 제어한다.
+- Validation 실패 시 FAIL/RECOVER로 전환한 뒤 다음 작업을 진행한다.
 
 ## 3. Context Routing
 
@@ -92,21 +92,21 @@ flowchart TD
     NEED -->|"No"| EXEC["Plan next action"]
 ```
 
-The routing rule is deliberately conditional. Agents should not bulk-load archive,
-manual, or historical documents unless the current task needs them.
+routing 규칙은 의도적으로 조건부로 설계되어 있다. 에이전트는 현재 작업에 필요하지 않은
+archive, manual, 과거 문서를 일괄 로드하지 않는다.
 
 ## 4. Document Roles
 
-| File | Role |
+| 파일 | 역할 |
 | --- | --- |
-| `docs/PLAN.md` | Long-term direction and roadmap |
-| `docs/PLAN-SUMMARY.md` | Lightweight project and architecture context |
-| `docs/STATUS.md` | Current dashboard and active work pointer |
-| `docs/works/**` | Task-level plan, checkpoints, discovery, Done Criteria |
-| `docs/backlog/HARNESS.md` | Candidate and deferred harness improvements |
-| `docs/decisions/**` | Accepted decisions and trade-offs |
-| `docs/retrospectives/**` | Review and learning artifacts |
-| `docs/archive/**` | Historical snapshots and closed records |
+| `docs/PLAN.md` | 장기 방향과 roadmap |
+| `docs/PLAN-SUMMARY.md` | 경량 프로젝트 및 아키텍처 컨텍스트 |
+| `docs/STATUS.md` | 현재 dashboard 및 Active Work pointer |
+| `docs/works/**` | 작업 단위 plan, checkpoint, discovery, Done Criteria |
+| `docs/backlog/HARNESS.md` | harness 개선 후보 및 보류 항목 |
+| `docs/decisions/**` | 확정된 결정과 tradeoff |
+| `docs/retrospectives/**` | 리뷰 및 학습 산출물 |
+| `docs/archive/**` | historical snapshot 및 완료 기록 |
 
 ## 5. Tool Surface Model
 
@@ -124,8 +124,7 @@ graph LR
     CANON --> SCAFFOLD
 ```
 
-Canonical docs define behavior. Tool-specific files mirror only the portions those
-tools actually need at runtime.
+Canonical 문서가 동작을 정의한다. Tool-specific 파일은 해당 도구가 runtime에 실제로 필요한 부분만 mirror한다.
 
 ## 6. Scaffold Flow
 
@@ -143,11 +142,10 @@ sequenceDiagram
     S-->>U: report required first-session fields
 ```
 
-The generic profile should not assume a programming language, framework, database,
-or application runtime.
+generic profile은 특정 프로그래밍 언어, framework, database, application runtime을 가정하지 않는다.
 
 ## 7. Current Migration Boundary
 
-`ai-workflow-harness` still preserves historical records from `base-msa-template`.
-Current live guidance should describe the harness project. Historical snapshots may
-keep product-template context when clearly marked as historical.
+`ai-workflow-harness`는 `base-msa-template`의 historical record를 보존하고 있다.
+현재 live 문서는 harness project를 기준으로 기술해야 한다. Historical snapshot은
+historical로 명확히 표시된 경우 product-template 맥락을 유지할 수 있다.

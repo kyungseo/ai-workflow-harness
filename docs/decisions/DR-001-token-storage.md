@@ -1,7 +1,7 @@
 # DR-001: Token Storage 전략 — localStorage vs HttpOnly Cookie
 
 Date: 2026-05-11
-Status: Draft
+Status: Superseded
 
 ## Question
 

@@ -162,11 +162,11 @@ ID prefix와 파일명 상세 기준:
 
 ## Project Constants
 
-- Runtime: Documentation and shell scripts; no application runtime required
+- Runtime: Markdown 문서와 shell script. 별도 application runtime 불필요.
 - Framework: Manual-first AI Workflow Harness
-- Build: None for core workflow docs; scaffold script is shell-based
-- Architecture: Entry contract + state/work tracking + approval gates + tool-surface mirrors + scaffold
-- Base package/module: Not applicable
+- Build: core workflow 문서에는 build 없음. scaffold script는 shell 기반.
+- Architecture: Entry contract + state/work 추적 + approval gate + tool-surface mirror + scaffold
+- Base package/module: 해당 없음
 - Active state file: `docs/STATUS.md`
 
 ## Verification Defaults
