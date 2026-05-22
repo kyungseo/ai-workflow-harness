@@ -7,7 +7,13 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Priority | Start | Work File |
 |----|-------|----------|-------|-----------|
-| AWH-001 | AI Workflow Harness public repo migration | P0 | 2026-05-22 | `docs/works/harness/AWH-001-public-repo-migration.md` |
+| HRN-024 | Document consistency alignment | P1 | 2026-05-22 | `docs/works/harness/HRN-024-doc-consistency-alignment.md` |
+
+## Done
+
+| ID | Title | actual_end | Work File |
+|----|-------|------------|-----------|
+| AWH-001 | AI Workflow Harness public repo migration | 2026-05-22 | `docs/works/harness/AWH-001-public-repo-migration.md` |
 
 ## Archived
 

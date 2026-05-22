@@ -13,12 +13,12 @@ Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORK
 
 핵심 목표:
 
-- Deterministic Execution: 같은 상태에서 같은 절차로 재개
-- Stateful Workflow: `docs/STATUS.md` 중심으로 현재 상태 유지
+- 결정적 실행: 같은 상태에서 같은 절차로 재개
+- 상태 기반 workflow: `docs/STATUS.md` 중심으로 현재 상태 유지
 - Work SSoT: 작업 세부 이력은 Work 파일에 보존하고 `docs/STATUS.md`는 dashboard로 유지
-- Controlled Execution: Plan -> Approval -> Execute -> Validate
-- Failure-first Design: 실패와 복구 경로 명시
-- Reversibility: 백업, checkpoint, rollback 비용 고려
+- 통제된 실행: Plan -> Approval -> Execute -> Validate
+- 실패 우선 설계: 실패와 복구 경로 명시
+- 되돌릴 수 있는 변경: 백업, checkpoint, rollback 비용 고려
 
 ## 2. Quick Start
 
@@ -39,6 +39,7 @@ Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORK
 | `docs/BEHAVIOR-PRINCIPLES.md` | 전역 행동 원칙 |
 | `docs/AGENT-WORKFLOW.md` | 도구 공통 운영 규칙 |
 | `docs/STATUS.md` | 현재 상태 live board |
+| `docs/BOOTSTRAP.md` | scaffold 직후 project identity, production 성격, backlog, example pack setup checklist |
 | `docs/HARNESS-QUICK-REFERENCE.md` | 일상 실행 카드 |
 | `docs/HARNESS-PROTOCOL.md` | Agent 실행 상세 프로토콜 |
 | `docs/backlog/PHASE{n}.md` | product/Phase{n} 후보 작업 |
@@ -64,7 +65,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 
 ### State Definitions
 
-| State | Meaning | Required Output |
+| 상태 | 의미 | 필수 출력 |
 | --- | --- | --- |
 | INIT | 현재 상태 확인 | current phase, active work, blockers |
 | PLAN | 작업 범위와 검증 정의 | scope, files, verification, risk, reversal cost |

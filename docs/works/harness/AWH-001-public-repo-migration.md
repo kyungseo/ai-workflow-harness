@@ -1,13 +1,13 @@
 ---
 id: AWH-001
 priority: P0
-status: Active
+status: Done
 risk: High
 scope: base-msa-template에서 분리된 repository를 AI Workflow Harness 전용 public-ready project로 전환
 appetite: 3-5d
 planned_start: 2026-05-22
 planned_end:
-actual_end:
+actual_end: 2026-05-22
 ---
 
 # AWH-001: AI Workflow Harness public repo migration
@@ -62,7 +62,7 @@ secret/private-info review를 순서대로 진행한다.
 - [x] stale identity term audit 완료
 - [x] secret/private-info audit 완료
 - [x] generic scaffold validation 완료
-- [ ] public 전환 전 review 완료
+- [x] public 전환 전 review 완료
 
 ## Checkpoints
 
@@ -195,6 +195,11 @@ secret/private-info review를 순서대로 진행한다.
 - [x] CP-4 완료: workflow manual/public summary/backlog residual stale surface 정리 (2026-05-22)
 - [x] CP-5 시작: validation, stale scan, public-risk scan 수행 (2026-05-22)
 - [x] CP-5 완료: PR/merge/public visibility 전환 준비 보고
+
+### Closeout
+
+- 2026-05-22: 사용자 최종 리뷰 완료 확인.
+- 2026-05-22: `/close` 절차에 따라 Work status를 Done으로 전환. Archive는 별도 승인 전까지 대기.
 
 ## Retrospective
 

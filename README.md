@@ -62,8 +62,10 @@ scope 확장, 상태 불일치, 승인 없는 실행, 결정 기록 소실.
 
 | 문서 | 역할 |
 | --- | --- |
+| [docs/BOOTSTRAP.md](docs/BOOTSTRAP.md) | scaffold 부팅 진입 안내 |
 | [docs/HARNESS-STRUCTURE.md](docs/HARNESS-STRUCTURE.md) | harness 구조와 정보 흐름 시각화 |
 | [docs/HARNESS-MAINTAINER-GUIDE.md](docs/HARNESS-MAINTAINER-GUIDE.md) | 유지보수·convention 가이드 |
+| [docs/SCAFFOLD-BOOTSTRAP.md](docs/SCAFFOLD-BOOTSTRAP.md) | scaffold 직후 프로젝트 boot sequence 설계 기준 |
 
 ## Quick Start
 
@@ -92,7 +94,10 @@ Codex 세션: [AGENTS.md](AGENTS.md)를 읽는 것으로 시작한다.
 ./scripts/create-harness.sh --existing --profile generic my-project /path/to/existing-repo
 ```
 
-Scaffold 후 첫 세션에서 [docs/PLAN-SUMMARY.md](docs/PLAN-SUMMARY.md)의 Project Constants를 프로젝트에 맞게 채운다.
+Scaffold 후 첫 세션에서는 생성된 `docs/BOOTSTRAP.md`를 기준으로 프로젝트 identity와 production 성격을 정리한다.
+그다음 제품 목표와 Phase 1 범위에서 Product track backlog를 만들고,
+AI workflow 자체의 개선 항목과 example pack 정비는 Harness track backlog로 분리한다.
+첫 세션 prompt는 scaffold된 프로젝트의 `docs/BOOTSTRAP.md` §6을 사용한다.
 
 ## Repository Layout
 
@@ -110,8 +115,10 @@ Scaffold 후 첫 세션에서 [docs/PLAN-SUMMARY.md](docs/PLAN-SUMMARY.md)의 Pr
 │   ├── AGENT-WORKFLOW.md             # 공통 workflow·Approval Matrix
 │   ├── HARNESS-PROTOCOL.md           # 상세 protocol 레퍼런스
 │   ├── HARNESS-QUICK-REFERENCE.md    # 세션 실행 규칙 빠른 참조
+│   ├── BOOTSTRAP.md                  # scaffold 부팅 진입 안내
 │   ├── HARNESS-STRUCTURE.md          # harness 구조 시각화
 │   ├── HARNESS-MAINTAINER-GUIDE.md   # 유지보수·convention 가이드
+│   ├── SCAFFOLD-BOOTSTRAP.md         # scaffold boot sequence 설계 기준
 │   ├── GIT-WORKFLOW.md               # Git 브랜치·커밋 전략
 │   ├── STATUS.md                     # 현재 dashboard
 │   ├── PLAN.md                       # 프로젝트 방향·roadmap
