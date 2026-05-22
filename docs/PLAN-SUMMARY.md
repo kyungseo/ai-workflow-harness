@@ -84,7 +84,8 @@ Scaffold + Adoption
 | Class | Examples |
 |------|------|
 | Keep as core | entrypoints, behavior/workflow/protocol docs, STATUS/PLAN/PLAN-SUMMARY, Work/backlog/DR structure, tool command/rule mirrors, generic prompts, scaffold |
-| Review before keeping | ARCHITECTURE, DEVELOPER-GUIDE, CODING-CONVENTIONS, troubleshooting, presentations, archive, Spring Boot profile, Java/Spring rules and prompts |
+| Keep as core (converted) | HARNESS-STRUCTURE (구 ARCHITECTURE), HARNESS-MAINTAINER-GUIDE (구 DEVELOPER-GUIDE + CODING-CONVENTIONS 통합) |
+| Review before keeping | troubleshooting, presentations, archive, Spring Boot profile, Java/Spring rules and prompts |
 | Remove or legacy-isolate | Spring Boot runtime code, Gradle build, common/gateway/services/frontend/tests, Docker/K8s/DB infra, generated build output |
 
 ## Validation Defaults

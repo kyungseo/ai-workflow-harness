@@ -183,10 +183,12 @@ adapt "${TEMPLATE_ROOT}/.gitignore"    "${TARGET_ROOT}/.gitignore"
 adapt "${TEMPLATE_ROOT}/docs/BEHAVIOR-PRINCIPLES.md" "${TARGET_ROOT}/docs/BEHAVIOR-PRINCIPLES.md"
 adapt "${TEMPLATE_ROOT}/docs/AGENT-WORKFLOW.md" "${TARGET_ROOT}/docs/AGENT-WORKFLOW.md"
 
-adapt "${TEMPLATE_ROOT}/docs/HARNESS-PROTOCOL.md"        "${TARGET_ROOT}/docs/HARNESS-PROTOCOL.md"
-adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md" "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
-adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL.md"         "${TARGET_ROOT}/docs/WORKFLOW-MANUAL.md"
-adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL-SUMMARY.md" "${TARGET_ROOT}/docs/WORKFLOW-MANUAL-SUMMARY.md"
+adapt "${TEMPLATE_ROOT}/docs/HARNESS-PROTOCOL.md"          "${TARGET_ROOT}/docs/HARNESS-PROTOCOL.md"
+adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"   "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
+adapt "${TEMPLATE_ROOT}/docs/HARNESS-STRUCTURE.md"         "${TARGET_ROOT}/docs/HARNESS-STRUCTURE.md"
+adapt "${TEMPLATE_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"  "${TARGET_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"
+adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL.md"           "${TARGET_ROOT}/docs/WORKFLOW-MANUAL.md"
+adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL-SUMMARY.md"   "${TARGET_ROOT}/docs/WORKFLOW-MANUAL-SUMMARY.md"
 
 adapt "${TEMPLATE_ROOT}/docs/decisions/DECISION-TEMPLATE.md" \
       "${TARGET_ROOT}/docs/decisions/DECISION-TEMPLATE.md"
@@ -325,6 +327,8 @@ write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 | \`docs/BEHAVIOR-PRINCIPLES.md\` | 전역 행동 원칙 |
 | \`docs/STATUS.md\` | 현재 작업 상태 |
 | \`docs/HARNESS-QUICK-REFERENCE.md\` | 세션 실행 규칙 요약 |
+| \`docs/HARNESS-STRUCTURE.md\` | harness 구조와 정보 흐름 시각화 |
+| \`docs/HARNESS-MAINTAINER-GUIDE.md\` | 유지보수·convention 가이드 |
 | \`docs/WORKFLOW-MANUAL.md\` | 사용자용 워크플로우 가이드 |
 | \`docs/WORKFLOW-MANUAL-SUMMARY.md\` | 워크플로우 핵심 요약본 |
 | \`docs/AGENT-WORKFLOW.md\` | 공통 운영 규칙 |
