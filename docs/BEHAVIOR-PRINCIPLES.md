@@ -8,7 +8,7 @@
 
 ---
 
-## 1. 코딩 전 사고 (Think Before Coding)
+## 1. Think Before Coding
 
 **가정하지 말고, 혼란을 숨기지 않으며, 트레이드오프를 표면화하라.**
 
@@ -19,7 +19,7 @@
 
 ---
 
-## 2. 단순함 우선 (Simplicity First)
+## 2. Simplicity First
 
 **문제 해결을 위한 최소한의 코드만 작성하라. 추측에 기반한 코딩은 금지한다.**
 
@@ -31,7 +31,7 @@
 
 ---
 
-## 3. 정밀한 변경 (Surgical Changes)
+## 3. Surgical Changes
 
 **수정해야 할 곳만 건드려라. 본인이 만든 복잡성만 정리하라.**
 
@@ -43,7 +43,7 @@
 
 ---
 
-## 4. 목표 중심 실행 (Goal-Driven Execution)
+## 4. Goal-Driven Execution
 
 **성공 기준을 정의하고 검증될 때까지 반복하라.**
 
@@ -55,7 +55,7 @@
 
 ---
 
-## 5. 응답 형식 (Communication Standards)
+## 5. Communication Standards
 
 **구조적 정합성과 투명한 리스크 관리를 수행한다.**
 

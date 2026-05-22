@@ -20,7 +20,7 @@ main
 | `develop` | 통합 브랜치. feature가 여기로 PR됨 | 금지 |
 | `feature/*` | 작업 단위 브랜치. `develop` 기준으로 생성 | 허용 |
 
-### 브랜치 Naming
+### Branch Naming
 
 | 패턴 | 용도 |
 |---|---|
@@ -29,9 +29,9 @@ main
 | `feature/hrn-{id}` | Harness 개선 작업 (예: `feature/hrn-009`) |
 | `hotfix/{topic}` | main 긴급 수정 (develop 우회, main → PR → main) |
 
-## 2. 일상 작업 사이클 (Feature 개발)
+## 2. Feature Development Cycle
 
-### 2-1. Feature 브랜치 생성
+### 2-1. Feature Branch Creation
 
 ```bash
 git checkout develop
@@ -39,7 +39,7 @@ git pull origin develop
 git checkout -b feature/{name}
 ```
 
-### 2-2. 작업 → 커밋
+### 2-2. Work And Commit
 
 커밋 전 체크 순서 (`.claude/rules/git-workflow.md` 참조):
 
@@ -53,7 +53,7 @@ git commit -m "..."
 
 커밋 메시지 형식은 [Commit Message Format](#5-commit-message-format) 참조.
 
-### 2-3. PR 생성 (feature → develop)
+### 2-3. PR Creation (feature → develop)
 
 > **feature PR의 base는 항상 `develop`이다. `main`으로 직접 PR하지 않는다.**
 > **feature 브랜치를 develop에 직접 local merge하지 않는다. 반드시 PR을 통해 머지한다.**
@@ -74,7 +74,7 @@ gh pr create --base develop --title "..." --body "..."
 - Java/Gradle/`.github` 변경이 포함되면 PR 전 로컬 검증 결과(`./gradlew test` 또는 변경 범위에 맞는 더 좁은 검증)를 PR 본문이나 세션 요약에 남긴다.
 - 최종 CI 검증은 develop→main PR에서 수행한다.
 
-### 2-4. Post-PR 정리 절차
+### 2-4. Post-PR Cleanup
 
 PR merge 후:
 
@@ -94,7 +94,7 @@ git push origin --delete feature/{name}
 
 마지막으로 다음 feature 브랜치명을 제안하고 생성 여부를 확인한다.
 
-## 3. 릴리즈 사이클 (Develop → Main)
+## 3. Release Cycle (Develop → Main)
 
 Phase 또는 마일스톤 단위로 develop을 main에 병합한다.
 
@@ -166,7 +166,7 @@ hook 설치:
 bash tools/git-hooks/install.sh
 ```
 
-## 7. 관련 문서
+## 7. Related Documents
 
 - `.claude/rules/git-workflow.md` — Claude Code용 커밋 gate 규칙
 - `docs/decisions/DR-007-language-policy.md` — Bilingual Rules
