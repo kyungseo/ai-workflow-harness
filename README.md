@@ -1,6 +1,7 @@
 # ai-workflow-harness
 
-AI 보조 개발을 위한 Manual-first AI Workflow Harness.
+A manual-first, approval-gated AI workflow harness for Claude Code, Codex, and Cursor.
+(계획·승인·검증·기록으로 이어지는 AI 개발 하네스)
 
 AI 코딩 에이전트(Claude Code, Codex, Cursor)와 반복 세션을 운영할 때 발생하는 핵심 문제를 해결한다:
 scope 확장, 상태 불일치, 승인 없는 실행, 결정 기록 소실.
