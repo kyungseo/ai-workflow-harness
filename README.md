@@ -129,4 +129,4 @@ bash -n scripts/create-harness.sh
 
 ## License
 
-[LICENSE.txt](LICENSE.txt) 참조.
+[LICENSE](LICENSE) 참조.
