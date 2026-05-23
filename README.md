@@ -448,12 +448,14 @@ flowchart LR
 ```mermaid
 stateDiagram-v2
     [*] --> Active: /work 승인 후 Work 파일 생성
-    Active --> Active: checkpoint / discovery
     Active --> Done: /close 승인
     Done --> Archived: archive 승인
     Archived --> [*]
+    Done --> [*]: 재개 금지 — 후속 작업으로 분리
 
-    Done --> [*]: 재개 금지\n후속 작업으로 분리
+    note right of Active
+        checkpoint / discovery
+    end note
 ```
 
 Backlog의 `Candidate`는 후보 pool이며 Work 파일 상태가 아니다.

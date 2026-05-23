@@ -95,9 +95,9 @@ Work 파일은 작업 SSoT이고 `docs/STATUS.md`는 dashboard다.
 
 | 변경 유형 | 실행 전 | 상태 변경 | commit 전 |
 | --- | --- | --- | --- |
-| L1 Product track surface | 간단 plan 승인 후 실행. Quick Mode 가능 | Work checkpoint/discovery는 실행 후 대상 Work ID와 변경 보고 | validation, diff summary, 제안 commit message 보고 후 승인 |
-| L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 기본 | Work Done과 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation, diff summary, 제안 commit message 보고 후 승인 |
-| L3 구조 변경 | AS-IS/TO-BE, rollback 포함 후 승인 | Phase/focus/criteria/Recent Decisions는 `STATUS Update Proposal` 승인 후 처리 | validation, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
+| L1 Product track surface | 간단 plan 승인 후 실행. Quick Mode 가능 | Work checkpoint/discovery는 승인 불필요. 실행 후 대상 Work ID와 변경 보고 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
+| L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 기본 | Work Done과 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
+| L3 구조 변경 | AS-IS/TO-BE, rollback 포함 후 승인 | Phase/focus/criteria/Recent Decisions는 `STATUS Update Proposal` 승인 후 처리 | validation 결과, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
 
 - 사용자가 명시적으로 승인한 뒤에만 `docs/STATUS.md`를 수정한다.
 - 이미 승인된 plan에 구체적인 `STATUS.md` 변경 범위가 포함되어 있으면 그 승인으로 갈음할 수 있다.
@@ -151,6 +151,7 @@ COMMIT 전 확인:
 - `git status`
 - `git diff --cached`
 - STATUS Finalization: `docs/STATUS.md` update needed yes/no, 이유, 필요 시 Approval Matrix proposal
+  - `STATUS.md` 변경이 확정되면 실질 변경과 **같은 commit**에 포함. 별도 follow-up commit 금지.
 - Tracking Finalization: backlog/Work/DR update needed yes/no, 이유
 - validation 결과, diff summary, 제안 commit message 보고
 - 사용자 승인

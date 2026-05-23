@@ -79,7 +79,7 @@ Scope approval, state-change approval, commit approval을 하나의 기준으로
 | 변경 유형 | 실행 전 | 상태 변경 | commit 전 |
 | --- | --- | --- | --- |
 | L1 Product track surface | 간단 plan 승인 후 실행. Work 파일 없이 Quick Mode 가능 | Work checkpoint/discovery는 승인 불필요, 실행 후 대상 Work ID와 변경 보고 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
-| L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 사용을 기본값으로 둔다 | Work Done 처리와 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
+| L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 사용을 기본값으로 둔다 | Work Done과 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
 | L3 아키텍처·인프라·DB schema·보안 구조 | 관련 계획 또는 `docs/PLAN.md` 확인, AS-IS/TO-BE와 rollback 포함 후 승인 | Phase criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal` 승인 후 처리 | validation 결과, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
 
 MUST:
@@ -146,6 +146,7 @@ commit 또는 PR 생성 전에는 반드시 두 가지를 보고한다.
 - Tracking Finalization: backlog/Work/DR tracker 최종 상태 반영 필요 여부와 이유
 
 필요한 `docs/STATUS.md` 변경은 사용자 승인 없이 수행하지 않는다.
+`docs/STATUS.md` 변경이 확정되면 실질 변경과 **같은 commit**에 포함한다. 실질 변경을 먼저 commit한 뒤 `STATUS.md`를 별도 commit으로 분리하지 않는다.
 상세 체크리스트는 `docs/HARNESS-PROTOCOL.md`의 Triggers, Validation Checklist, Work File Rules를 따른다.
 
 Work Done 처리와 선택적 archive는 `/close`로 수행한다. `/close`는 Work Done 처리이며 commit/PR finalization gate를 대체하지 않는다.

@@ -39,18 +39,8 @@ Tool Surfaces
 Scaffold + Adoption
   scripts/create-harness.sh
   docs/WORKFLOW-MANUAL.md
-  docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md
+  README.md
 ```
-
-## Current Milestone
-
-| Field | Value |
-|------|------|
-| Phase | Workflow hardening |
-| Active Work | `HRN-024` |
-| Work File | `docs/works/harness/HRN-024-doc-consistency-alignment.md` |
-| Branch | `feature/hrn-doc-consistency-alignment` |
-| Visibility | Private until public-readiness review |
 
 ## Key Operating Decisions
 
@@ -77,7 +67,6 @@ Scaffold + Adoption
 | Work item SSoT | `docs/works/**` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | 공개 manual | `docs/WORKFLOW-MANUAL.md` |
-| 공개 summary | `docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md` |
 | Scaffold script | `scripts/create-harness.sh` |
 
 ## Current Surface Policy
@@ -98,13 +87,11 @@ Scaffold + Adoption
 | Scaffold script 변경 | `bash -n scripts/create-harness.sh`, generic dry-run, 필요 시 temp actual generation |
 | Public release 준비 | secret/private-info scan, stale identity audit, GitHub visibility check |
 
-## Active References
+## Key References
 
 | 필요 상황 | 파일 |
 |------|------|
 | 현재 상태 확인 | `docs/STATUS.md` |
-| 진행 중인 hardening work | `docs/works/harness/HRN-024-doc-consistency-alignment.md` |
-| Migration 기록 | `docs/works/harness/AWH-001-public-repo-migration.md` |
 | 장기 project plan | `docs/PLAN.md` |
 | Workflow 규칙 | `docs/AGENT-WORKFLOW.md` |
 | 상세 protocol | `docs/HARNESS-PROTOCOL.md` |

@@ -41,7 +41,7 @@ When completing a Work item (`/close`): confirm Done Criteria, set `status: Done
 
 When ending a session (`/done`): report completed work, changed files, validation results, residual risk, STATUS update needs, decision needs, and commit status. If Active Work exists and Discovery is not up to date for the current progress, propose content to record and ask whether to log it. `/done` does not perform Work Done processing — tell the user to run `/close` first if the Work is complete.
 
-STATUS Finalization Gate: before commit or PR, report whether `docs/STATUS.md` needs a final update, why, and the required Approval Matrix proposal if needed. Check Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, and Active Work Discovery freshness. Do not edit `docs/STATUS.md` without explicit approval.
+STATUS Finalization Gate: before commit or PR, report whether `docs/STATUS.md` needs a final update, why, and the required Approval Matrix proposal if needed. Check Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, and Active Work Discovery freshness. Do not edit `docs/STATUS.md` without explicit approval. When `docs/STATUS.md` changes are approved, include them in the same commit as the substantive changes — never as a separate follow-up commit.
 
 Tracking Finalization Gate: before commit or PR, report whether backlog/Work/DR tracker updates are needed and why. Check linked backlog item Status/Done Criteria/Verification, Work file frontmatter/status/Checkpoints/Discovery, Work index README placement, related DR status/Supersedes/Linked Backlog Items, and completed Quick Mode work still left as Candidate.
 
