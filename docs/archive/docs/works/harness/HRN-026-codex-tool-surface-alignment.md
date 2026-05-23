@@ -1,13 +1,13 @@
 ---
 id: HRN-026
 priority: P1
-status: Active
+status: Archived
 risk: L2
 scope: Codex tool surface (.agents/skills, .codex/hooks), cascade/trigger 반영, AGENTS.md 재정비
 appetite: 1d
 planned_start: 2026-05-23
 planned_end:
-actual_end:
+actual_end: 2026-05-23
 ---
 
 # HRN-026: Codex tool surface 정렬 — skills 완성, cascade 반영, AGENTS.md 재정비
@@ -64,8 +64,9 @@ Reversal cost: Low — 파일 추가/편집이 대부분, scaffold는 신규 프
 - [x] AGENTS.md command table 재정비 완료
 - [x] PLAN-SUMMARY.md + HARNESS-PROTOCOL.md + HARNESS-QUICK-REFERENCE.md cascade 반영 완료
 - [x] create-harness.sh 수정 + bash -n 통과
-- [ ] 전체 커밋
+- [x] 전체 커밋
 
 ## Discovery
 
 - cascade audit에서 4개 파일 추가 누락 발견: HARNESS-STRUCTURE.md Tool Mirrors subgraph, HARNESS-MAINTAINER-GUIDE.md Tool-specific layer + scaffold checklist, WORKFLOW-MANUAL.md 도구 수(10→11) + T11 표, README.md Document Layers + Repository Layout — 모두 동일 commit에 포함.
+- 2026-05-23 archived: 모든 Done Criteria 충족, cascade 반영 완료.

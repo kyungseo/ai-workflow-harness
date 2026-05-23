@@ -36,7 +36,6 @@ Last updated: 2026-05-23 (HRN-026 완료 — Codex tool surface 정렬)
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| HRN-026 | Codex tool surface 정렬 — skills 완성, cascade 반영, AGENTS.md 재정비 | `docs/works/harness/HRN-026-codex-tool-surface-alignment.md` |
 
 ## Blockers And Open Questions
 
