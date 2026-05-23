@@ -18,7 +18,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
-| HRN-027 | Backlog pruning + DR archive 정책 정비 | 2026-05-24 | `docs/works/harness/HRN-027-backlog-dr-pruning-policy.md` |
+| HRN-027 | Backlog pruning + DR archive 정책 정비 | 2026-05-24 | `docs/archive/docs/works/harness/HRN-027-backlog-dr-pruning-policy.md` |
 | HRN-026 | Codex tool surface 정렬 — skills 완성, cascade 반영, AGENTS.md 재정비 | 2026-05-23 | `docs/archive/docs/works/harness/HRN-026-codex-tool-surface-alignment.md` |
 | HRN-024 | Document consistency alignment | 2026-05-23 | `docs/archive/docs/works/harness/HRN-024-doc-consistency-alignment.md` |
 | AWH-001 | AI Workflow Harness public repo migration | 2026-05-22 | `docs/archive/docs/works/harness/AWH-001-public-repo-migration.md` |

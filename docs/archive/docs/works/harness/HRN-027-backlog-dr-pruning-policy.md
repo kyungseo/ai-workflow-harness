@@ -1,7 +1,7 @@
 ---
 id: HRN-027
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: backlog pruning 정책 수립 + 실행, superseded DR archive 정책 수립
 appetite: 0.5d
@@ -67,3 +67,4 @@ Reversal cost: Low — git revert 한 커밋으로 복원
 ## Discovery
 
 - 완료 항목 탐색 경로 안내 필요성 발견 — HARNESS-PROTOCOL.md, WORKFLOW-MANUAL.md, HARNESS.md 3곳에 git log 경로 추가.
+- 2026-05-24 archived: 모든 Done Criteria 충족.
