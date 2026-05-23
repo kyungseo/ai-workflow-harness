@@ -15,6 +15,7 @@ MUST:
 - Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands.
 - Do not read `.claude/commands/*.md` at session start; load a command file only when that workflow is explicitly invoked or clearly relevant.
 - When a Claude command is relevant, follow the same procedure manually.
+- Treat `.claude/rules/*.md` as project-local rule references. Do not load them at session start; when editing files whose paths match a rule's `paths` frontmatter, read only the matching rule files and apply their guidance manually.
 - Follow `docs/AGENT-WORKFLOW.md` Approval Matrix before execution, scope expansion, state changes, and every commit.
 
 NEVER:

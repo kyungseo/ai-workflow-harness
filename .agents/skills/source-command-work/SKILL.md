@@ -52,7 +52,15 @@ Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROT
 작업이 기존에 발생한 비자명 이슈(오류, 환경 설정 문제 등)와 관련된 경우 `docs/troubleshooting/`에 관련 기록이 있는지 확인해줘.
 있으면 계획에 참조로 포함하고, 새로 해결된 이슈가 있으면 `/done` 시 기록을 제안해줘.
 
-**3. 위험도 판단**
+**3. Codex Rule Reference 확인**
+Codex에는 `.claude/rules/*.md`와 같은 path-scoped 자동 rule 체계가 없으므로, 코드·문서·테스트·infra 파일을 수정할 계획이면 관련 rule을 수동 reference로 확인해줘.
+
+- `.claude/rules/*.md`가 있으면 전체 내용을 일괄 로드하지 말고, 각 파일의 `paths` frontmatter 또는 제목만 보고 변경 대상 경로와 매칭되는 rule만 읽어.
+- 매칭된 rule은 Claude command가 아니라 project-local guidance로만 적용해.
+- 매칭 rule이 없으면 기존 코드 스타일과 `docs/AGENT-WORKFLOW.md` Verification Defaults를 기준으로 계획해.
+- L1 Quick Mode라도 실제 수정 대상이 rule path와 매칭되면 해당 rule 확인 여부를 계획에 한 줄로 명시해.
+
+**4. 위험도 판단**
 작업을 아래 기준으로 분류하고 계획 서두에 선언해줘:
 - **L1 (안전)**: Product track surface의 버그 수정, 테스트 코드, 문서 소폭 수정 → 계획 간소화, 승인 후 진행
 - **L2 (일반)**: 일반 기능 구현, 설정 변경, harness/workflow surface 변경 → 계획 상세화, 승인 후 진행
@@ -69,8 +77,9 @@ Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROT
 5. Done Criteria
 6. Verification
 7. 리스크와 되돌리기 비용
-8. docs/STATUS.md에 반영해야 할 상태 변경 제안
-9. 상태 머신 단계: INIT / PLAN / APPROVAL / EXECUTE / VALIDATE / CHECKPOINT / END / FAIL / RECOVER
+8. Codex rule reference 확인 결과: 매칭 rule 파일 또는 `Not Applicable`
+9. docs/STATUS.md에 반영해야 할 상태 변경 제안
+10. 상태 머신 단계: INIT / PLAN / APPROVAL / EXECUTE / VALIDATE / CHECKPOINT / END / FAIL / RECOVER
 
 계획을 보고한 뒤 "진행할까요?"로 끝내고 승인 대기해줘.
 
