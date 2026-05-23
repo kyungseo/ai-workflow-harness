@@ -41,7 +41,7 @@ graph TB
     subgraph ADOPT["Adoption"]
         SCRIPT["scripts/create-harness.sh"]
         MANUAL["docs/WORKFLOW-MANUAL.md"]
-        SUMMARY["docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md"]
+        README["README.md"]
     end
 
     USER --> AGENT

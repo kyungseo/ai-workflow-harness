@@ -39,7 +39,7 @@ Tool Surfaces
 Scaffold + Adoption
   scripts/create-harness.sh
   docs/WORKFLOW-MANUAL.md
-  docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md
+  README.md
 ```
 
 ## Key Operating Decisions
@@ -67,7 +67,6 @@ Scaffold + Adoption
 | Work item SSoT | `docs/works/**` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | 공개 manual | `docs/WORKFLOW-MANUAL.md` |
-| 공개 summary | `docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md` |
 | Scaffold script | `scripts/create-harness.sh` |
 
 ## Current Surface Policy
