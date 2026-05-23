@@ -461,7 +461,7 @@ STATUS.md가 실제 코드·파일 상태와 불일치할 경우:
 
 ### `docs/PLAN-SUMMARY.md`
 
-project summary, core architecture, validation defaults, active references를 한 페이지로 정리한 경량 요약본. 기본적으로 아키텍처 확인이 필요할 때 이 파일을 먼저 참조하고, 전체 근거가 필요할 때만 `docs/PLAN.md`를 로드한다.
+프로젝트 요약, 핵심 구조, 검증 기본값, active references를 한 페이지로 정리한 경량 요약본. 기본적으로 아키텍처 확인이 필요할 때 이 파일을 먼저 참조하고, 전체 근거가 필요할 때만 `docs/PLAN.md`를 로드한다.
 
 ### `docs/HARNESS-STRUCTURE.md`
 
@@ -1382,7 +1382,8 @@ prompts/
 
 ### Quick Start — Scaffolding Script
 
-`scripts/create-harness.sh`로 하네스 파일 구조를 자동 생성한다. 기본값은 언어·프레임워크를 가정하지 않는 `generic` profile이며, Java/Spring 보조 규칙과 prompt가 필요할 때만 `--profile spring-boot`를 사용한다. Codex는 `AGENTS.md`를 기본 진입점으로 쓰며, `codex-session-start.md`는 수동 bootstrap이 필요한 환경의 fallback이다.
+`scripts/create-harness.sh`로 하네스 파일 구조를 자동 생성한다. 기본값은 언어·프레임워크를 가정하지 않는 `generic` profile이며, Java/Spring example pack이 필요할 때만 `--profile spring-boot`를 사용한다. Codex는 `AGENTS.md`를 기본 진입점으로 쓰며, `codex-session-start.md`는 수동 bootstrap이 필요한 환경의 fallback이다.
+Source repository의 scaffold 부팅 설계 기준은 `docs/SCAFFOLD-BOOTSTRAP.md`이고, 생성된 프로젝트에는 project-local checklist인 `docs/BOOTSTRAP.md`가 만들어진다.
 
 #### 케이스 A — 신규 프로젝트
 
@@ -1398,16 +1399,17 @@ scripts/create-harness.sh my-app /path/to/my-app
 # 생성 파일 목록 미리 확인 (실제 생성 안 함)
 scripts/create-harness.sh --dry-run my-app
 
-# Java/Spring 보조 규칙과 prompt까지 포함
+# Java/Spring example pack까지 포함
 scripts/create-harness.sh --profile spring-boot my-app
 ```
 
 생성 후 필수 입력 파일:
 
 ```
+docs/BOOTSTRAP.md      ← 프로젝트 identity와 production 성격 기반 setup checklist
 docs/STATUS.md         ← 프로젝트 목표와 Phase 1 설명
-docs/PLAN-SUMMARY.md   ← project summary, core architecture, validation defaults
-docs/backlog/PHASE1.md ← 초기 작업 항목 P1-001~
+docs/PLAN-SUMMARY.md   ← 프로젝트 요약, 핵심 구조, 검증 기본값
+docs/backlog/PHASE1.md ← 제품 목표에서 도출한 초기 작업 항목 P1-001~
 ```
 
 #### 케이스 B — 기존 프로젝트
@@ -1421,11 +1423,11 @@ scripts/create-harness.sh --existing my-app /path/to/existing-project
 # 추가될 파일 목록 미리 확인
 scripts/create-harness.sh --dry-run --existing my-app /path/to/existing-project
 
-# 기존 Java/Spring 프로젝트에 보조 규칙과 prompt까지 추가
+# 기존 Java/Spring 프로젝트에 example pack까지 추가
 scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/existing-project
 ```
 
-기존 파일이 없으면 생성, 있으면 건너뜀. `--existing` 모드에서는 target path가 필수이며, `--dry-run`은 실제 target 기준으로 `create`/`skip` 계획을 출력한다. 실행 후 `docs/STATUS.md`, `docs/PLAN-SUMMARY.md`, `docs/backlog/PHASE1.md`, `docs/AGENT-WORKFLOW.md`의 Project Constants를 기존 프로젝트 상태에 맞게 채운다.
+기존 파일이 없으면 생성, 있으면 건너뜀. `--existing` 모드에서는 target path가 필수이며, `--dry-run`은 실제 target 기준으로 `create`/`skip` 계획을 출력한다. 실행 후 `docs/BOOTSTRAP.md`, `docs/STATUS.md`, `docs/PLAN-SUMMARY.md`, `docs/backlog/PHASE1.md`, `docs/AGENT-WORKFLOW.md`의 Project Constants를 기존 프로젝트 상태에 맞게 채운다.
 
 #### 스크립트 포함 파일
 
@@ -1434,6 +1436,7 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 | `CLAUDE.md`, `AGENTS.md` | 복사 | scaffold source project name → 프로젝트명 치환 |
 | `.claudeignore`, `.cursorignore`, `.gitignore` | 복사 | 범용 — 언어 무관 |
 | `README.md` | 생성 | 하네스 skeleton (프로젝트 설명 placeholder 포함) |
+| `docs/BOOTSTRAP.md` | 생성 | scaffold 직후 identity, production 성격, backlog, example pack boot checklist |
 | `docs/BEHAVIOR-PRINCIPLES.md` | 복사 | 전역 행동 원칙 |
 | `docs/AGENT-WORKFLOW.md` | 생성 | Project Constants와 Verification Defaults placeholder 포함 |
 | `docs/HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `WORKFLOW-MANUAL.md`, `WORKFLOW-MANUAL-SUMMARY.md` | 복사 | — |
@@ -1461,21 +1464,24 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 
 #### 케이스 A — 신규 프로젝트 첫 세션
 
-스캐폴딩 직후 `docs/STATUS.md`, `docs/PLAN-SUMMARY.md`, `docs/backlog/PHASE1.md`가 비어 있다. Claude에게 채워달라고 요청하는 것이 가장 빠르다.
+스캐폴딩 직후 `docs/BOOTSTRAP.md`, `docs/STATUS.md`, `docs/PLAN-SUMMARY.md`, `docs/backlog/PHASE1.md`를 채워야 한다. 첫 `/start`는 `docs/STATUS.md` Next Actions만 확인하고, 그 항목이 scaffold bootstrap/onboarding을 가리킬 때 `docs/BOOTSTRAP.md`를 후속으로 읽도록 제안한다. 첫 세션에서는 프로젝트 identity와 production 성격을 먼저 정리하고, 제품 목표와 Phase 1 범위에서 Product track backlog를 도출한다. AI workflow 자체의 개선 항목과 example pack 정비는 `docs/backlog/HARNESS.md`로 분리한다. Bootstrap onboarding을 진행할 때는 `docs/BOOTSTRAP.md` §6 prompt를 사용한다. 완료 후에는 `docs/STATUS.md` Next Actions에서 scaffold bootstrap/onboarding 항목을 제거하거나 다음 실제 작업으로 교체한다.
 
 ```text
-docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 읽어줘.
+docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTSTRAP.md를 읽어줘.
 
 새 프로젝트 정보:
 - 목표: [한 문장]
+- production 성격: [product / service / library / content / research / internal tool 등]
 - 기술 스택: [언어, 프레임워크, DB, 배포 환경]
 - Phase 1 초기 범위: [첫 단계에서 만들 것]
 - 제약 조건: [성능, 보안, 일정 등 있다면]
 
-이 정보를 바탕으로 아래 파일을 채울 내용을 Approval Matrix의 상태 변경 규칙에 맞게 제안해줘.
+이 정보를 바탕으로 Project identity, Product track backlog, Harness track backlog, example pack 정비 항목을 분리해서 아래 파일을 채울 내용을 Approval Matrix의 상태 변경 규칙에 맞게 제안해줘.
+- docs/BOOTSTRAP.md: identity, production 성격, setup checklist
 - docs/STATUS.md: Phase 목표, 첫 Active Work 항목
-- docs/PLAN-SUMMARY.md: project summary, core architecture, validation defaults 초안
-- docs/backlog/PHASE1.md: 초기 P1-001~ 항목
+- docs/PLAN-SUMMARY.md: 프로젝트 요약, 핵심 구조, 검증 기본값 초안
+- docs/backlog/PHASE1.md: 제품 목표에서 도출한 초기 P1-001~ 항목
+- docs/backlog/HARNESS.md: AI workflow와 example pack 정비 후보
 - docs/AGENT-WORKFLOW.md: Project Constants, Verification Defaults
 
 파일 수정은 내 승인 전까지 하지 마.
@@ -1494,19 +1500,21 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 읽어줘
 하네스가 설치되었지만 skeleton 문서는 비어 있다. 먼저 기존 코드베이스를 파악하고 현재 상태를 반영한 문서를 만든다.
 
 ```text
-docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 읽어줘.
+docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTSTRAP.md를 읽어줘.
 
 기존 프로젝트에 하네스를 새로 적용했어. 먼저 현황을 파악해야 해.
 
-아래 파일을 읽어서 프로젝트 구조를 파악해줘:
+아래 파일을 읽어서 프로젝트 구조와 현재 product backlog 후보를 파악해줘:
 - [기존 README 또는 기술 명세 파일]
 - [주요 설정 파일 — package.json / build.gradle.kts / pyproject.toml 등]
 - [소스 디렉토리 구조가 보이는 파일]
 
-파악한 내용을 바탕으로 아래를 Approval Matrix의 상태 변경 규칙에 맞게 제안해줘:
+파악한 내용을 바탕으로 Project identity, Product track, Harness track, example pack 정비 항목을 분리해서 아래를 Approval Matrix의 상태 변경 규칙에 맞게 제안해줘:
+- docs/BOOTSTRAP.md: 현재 identity, production 성격, setup checklist
 - docs/STATUS.md: 현재 Phase, 진행 상태, 남은 작업 요약
-- docs/PLAN-SUMMARY.md: 현재 project summary, core architecture, validation defaults
-- docs/backlog/PHASE1.md: 남은 작업 항목 P1-001~
+- docs/PLAN-SUMMARY.md: 현재 프로젝트 요약, 핵심 구조, 검증 기본값
+- docs/backlog/PHASE1.md: 남은 product 작업 항목 P1-001~
+- docs/backlog/HARNESS.md: AI workflow와 example pack 정비 후보
 - docs/AGENT-WORKFLOW.md: Project Constants, Verification Defaults
 
 파일 수정은 내 승인 전까지 하지 마.

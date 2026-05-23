@@ -33,7 +33,7 @@ ls .claude/rules/       # 파일 수·이름 확인
 
 **Phase 3 — Document Overview (section-level)**
 `docs/HARNESS-PROTOCOL.md` (문서 지도·아이템 위치 결정표만) → `README.md` (구조 블록·AI workflow 섹션만)
-→ `docs/PLAN-SUMMARY.md` (기술 스택 테이블만)
+→ `docs/PLAN-SUMMARY.md` (Project Summary, Core Files, Validation Defaults만)
 
 (조건부) Validation, Approval Matrix, Commit Approval 정합성 확인이 필요하면
 `docs/HARNESS-PROTOCOL.md`의 Recovery And Validation 섹션만 읽는다.
@@ -43,8 +43,8 @@ ls .claude/rules/       # 파일 수·이름 확인
 
 **Phase 5 — Implementation Sync (--full, Area F only)**
 ```bash
-# 최근 30일 변경된 구현 파일 목록
-git log --since="30 days ago" --name-only --format="" | sort -u | rg "\.(java|kts|yml|xml|sh)$"
+# 최근 30일 변경된 workflow/tool/scaffold 파일 목록
+git log --since="30 days ago" --name-only --format="" | sort -u | rg "^(AGENTS.md|CLAUDE.md|README.md|docs/|prompts/|scripts/|\\.claude/|\\.cursor/|\\.github/)"
 ```
 변경 파일 목록을 기반으로 관련 문서만 선택적 확인.
 `docs/decisions/DR-*.md` 상태 확인:
@@ -79,7 +79,8 @@ git diff --cached --name-only
 | `.claude/rules/*.md`, `.cursor/rules/*.mdc` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 반대 tool rule, prompts | 필요 시 manual/rules 설명 | rule 복사 산출물 | 필요 시 관련 Work/retrospective |
 | `prompts/*` | `docs/AGENT-WORKFLOW.md`, 필요 시 `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, command/rule | `prompts/README.md`, 필요 시 manual prompt 섹션 | prompt 복사 산출물 | 필요 시 관련 Work/retrospective |
 | `docs/WORKFLOW-MANUAL.md`, `README.md`, `docs/HARNESS-QUICK-REFERENCE.md` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 관련 command/rule/prompt | 변경된 user-facing 문서 상호 참조 | 필요 시 scaffold README/manual 산출물 | snapshot 덮어쓰기 금지 |
-| `scripts/create-harness.sh` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | commands/rules/prompts source | generated README/manual expectations | dry-run + temp scaffold + stale phrase search | 필요 시 related Work |
+| `scripts/create-harness.sh` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/SCAFFOLD-BOOTSTRAP.md` | commands/rules/prompts source | generated README/manual expectations | dry-run + temp scaffold + stale phrase search | 필요 시 related Work |
+| `docs/SCAFFOLD-BOOTSTRAP.md` | `docs/HARNESS-PROTOCOL.md` | — | — | `scripts/create-harness.sh` 생성 BOOTSTRAP.md 템플릿 (Boot Sequence, Completion Rule 동기화) | — |
 | `docs/STATUS.md`, `docs/works/**`, `docs/backlog/**`, `docs/decisions/**` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | start/resume/close/done/record-decision commands | quick reference/manual state sections | work/index scaffold templates | 관련 Work/DR/retrospective |
 
 ### Required Grep Pack
@@ -212,13 +213,16 @@ Phase 5의 git log 결과를 기준으로, 변경된 구현 파일 유형별로 
 
 | 변경 파일 유형 | 확인 대상 문서 |
 |---------------|---------------|
-| `*.java`, `*.kts` (새 모듈·레이어) | `README.md` 기술 스택, `PLAN-SUMMARY.md` |
-| `Dockerfile`, `docker-compose.yml` | `README.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`, project-specific setup docs |
-| `.github/workflows/*.yml` | `README.md` CI 항목, `HARNESS-MAINTAINER-GUIDE.md` Validation 섹션 |
-| `.claude/commands/*.md` (신규) | `HARNESS-PROTOCOL.md`, `README.md` AI workflow 섹션 |
-| `config/checkstyle/**`, `.editorconfig` | `HARNESS-MAINTAINER-GUIDE.md` Conventions 섹션 |
-| `docs/decisions/DR-*.md` (신규 Accepted) | STATUS.md Recent Decisions, 연관 backlog Done Criteria |
-| `docs/*.md` (신규 개발자 문서) | 참조하는 config·yml 파일과 기술 내용 대조 (예: ci.yml ↔ CI trigger 설명, checkstyle.xml ↔ 컨벤션 설명) |
+| `AGENTS.md`, `CLAUDE.md` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, 관련 session prompt |
+| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md` | `.claude/commands/*.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `prompts/*session-start.md` |
+| `docs/STATUS.md`, `docs/PLAN.md`, `docs/PLAN-SUMMARY.md` | Active Work 파일, `docs/works/*/README.md`, 관련 backlog |
+| `.github/workflows/*.yml` | `docs/GIT-WORKFLOW.md`, `.cursor/rules/execution.mdc`, `README.md` CI 항목 |
+| `.claude/commands/*.md` 또는 `.claude/rules/*.md` | `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, 대응 `.cursor/rules/*.mdc` |
+| `.cursor/rules/*.mdc` | `docs/AGENT-WORKFLOW.md`, 대응 `.claude/rules/*.md`, 관련 session prompt |
+| `scripts/create-harness.sh` | `README.md`, `docs/WORKFLOW-MANUAL.md`, `docs/WORKFLOW-MANUAL-SUMMARY*.md`, fresh scaffold 산출물 |
+| `prompts/*.md` | `prompts/README.md`, `docs/AGENT-WORKFLOW.md` context routing, scaffold profile 포함 여부 |
+| `docs/decisions/DR-*.md` (신규 Accepted) | `docs/STATUS.md` Recent Decisions, 연관 backlog Done Criteria |
+| `docs/*.md` (신규 사용자/운영 문서) | 해당 문서가 참조하는 command/rule/script/CI 파일과 실제 내용 대조 |
 
 STATUS.md Recent Decisions는 **최근 8개 rolling window**, 항목 품질(후속 행동을 바꾸는 판단만), DR-worthy 항목의 대응 DR 존재 여부를 점검한다.
 전체 이력 점검은 명시적 요청 시에만 진행한다.

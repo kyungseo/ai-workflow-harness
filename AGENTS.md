@@ -11,6 +11,7 @@ MUST:
 - Read and follow `docs/BEHAVIOR-PRINCIPLES.md` at session start for global behavioral principles that apply to all tasks.
 - Read and follow `docs/AGENT-WORKFLOW.md` at session start for common workflow, context routing, status rules, and validation defaults.
 - Read `docs/STATUS.md` current sections before choosing or continuing work.
+- Do not check `docs/BOOTSTRAP.md` just because it exists; use it only when `docs/STATUS.md` Next Actions explicitly points to scaffold bootstrap/onboarding work.
 - Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands.
 - Do not read `.claude/commands/*.md` at session start; load a command file only when that workflow is explicitly invoked or clearly relevant.
 - When a Claude command is relevant, follow the same procedure manually.
@@ -25,8 +26,8 @@ NEVER:
 
 | Claude workflow | Codex procedure |
 | --- | --- |
-| `/start` | Read `docs/STATUS.md` current sections and summarize current state, candidates, needed context, risks |
-| `/pick` | Route to `docs/backlog/PHASE{n}.md` or `docs/backlog/HARNESS.md`, compare candidates, recommend one |
+| `/start` | Read `docs/STATUS.md` current sections and summarize current state, candidates, needed context, risks. If Next Actions explicitly points to scaffold bootstrap/onboarding, report that `docs/BOOTSTRAP.md` should be loaded for that follow-up |
+| `/pick` | If `docs/STATUS.md` Next Actions points to scaffold bootstrap/onboarding, use `docs/BOOTSTRAP.md` first; otherwise route to `docs/backlog/PHASE{n}.md` or `docs/backlog/HARNESS.md`, compare candidates, recommend one |
 | `/register [description]` | Register a new work item; route to STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md based on urgency and type; propose STATUS Update if needed |
 | `/work <ID>` | Find the backlog item; check `docs/works/{category}/` for an existing Work file; if none and decomposition criteria met, include Work file creation in the plan; declare risk level, propose scope/files/verification/risk, then wait for approval |
 | `/resume <ID>` | Compare `docs/STATUS.md` and Work file Checkpoints with actual files, report drift, and propose recovery before editing; if the Work is Done, do not resume it and propose archive or follow-up work |
@@ -63,6 +64,7 @@ Work item routing:
 | --- | --- |
 | Start immediately (urgent patch) | `docs/STATUS.md` Active Work → chain to `/work` |
 | Soon / next session | `docs/STATUS.md` Next Actions |
+| Scaffold bootstrap / identity setup | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` → split Product backlog and Harness backlog proposals |
 | Product track / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
 

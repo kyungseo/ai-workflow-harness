@@ -70,9 +70,9 @@ gh pr create --base develop --title "..." --body "..."
 - WIP 커밋이 많아 히스토리가 지저분할 때만 Squash merge를 선택한다.
 
 **검증 책임:**
-- feature→develop PR은 GitHub Actions CI를 실행하지 않는다.
-- Java/Gradle/`.github` 변경이 포함되면 PR 전 로컬 검증 결과(`./gradlew test` 또는 변경 범위에 맞는 더 좁은 검증)를 PR 본문이나 세션 요약에 남긴다.
-- 최종 CI 검증은 develop→main PR에서 수행한다.
+- feature→develop PR은 `.github/workflows/ci.yml` path filter에 걸리는 문서, prompt, rule, scaffold 변경에서 GitHub Actions CI를 실행한다.
+- PR 전에는 변경 범위에 맞는 로컬 검증 결과(`git diff --check`, `bash -n scripts/create-harness.sh`, scaffold dry-run 등)를 PR 본문이나 세션 요약에 남긴다.
+- develop→main PR에서도 동일한 docs/scaffold CI를 최종 확인한다.
 
 ### 2-4. Post-PR Cleanup
 
@@ -120,13 +120,13 @@ git status                  # "up to date with 'origin/develop'" 확인
 
 | 이벤트 | 조건 | 실행 Job |
 |---|---|---|
-| `push` to `main` | Java/Gradle/`.github` 파일 변경 시 | lint, test (병렬) |
-| `pull_request` targeting `main` | Java/Gradle/`.github` 파일 변경 시 | lint, test (병렬) |
+| `push` to `main` | docs/prompts/tool surface/scaffold/root entrypoint 변경 시 | Docs and Scaffold Validation |
+| `pull_request` targeting `main` 또는 `develop` | docs/prompts/tool surface/scaffold/root entrypoint 변경 시 | Docs and Scaffold Validation |
 
-**Path filter 대상:** `**/*.java`, `**/build.gradle*`, `**/settings.gradle*`, `**/gradle.properties`, `gradle/**`, `gradlew`, `gradlew.bat`, `.github/workflows/**`
+**Path filter 대상:** `docs/**`, `prompts/**`, `.claude/**`, `.cursor/**`, `scripts/**`, `.github/workflows/**`, `AGENTS.md`, `CLAUDE.md`, `README.md`
 
-> develop push는 CI 트리거 없음. feature 변경은 develop → main PR 단계에서 검증된다.
-> docs, `.claude` 등 Java/Gradle 무관 변경은 CI가 실행되지 않는다.
+> develop push는 CI 트리거 없음. PR과 main push에서 docs/scaffold validation을 수행한다.
+> application runtime이 없으므로 Java/Gradle lint/test는 기본 CI 대상이 아니다.
 
 ## 5. Commit Message Format
 
@@ -157,8 +157,9 @@ fix: TokenRedisRepository SCAN 기반 invalidation 제거
 
 | staged 파일 | 동작 |
 |---|---|
-| `*.java`, `*.kt`, `*.kts`, `*.gradle`, `gradle.properties` 포함 | Checkstyle 실행 (`./gradlew checkstyleMain`) |
-| docs-only (위 파일 없음) | Checkstyle skip |
+| 전체 staged diff | `git diff --cached --check` |
+| `scripts/*.sh`, `scripts/*/*.sh`, `tools/git-hooks/*` | `sh -n` shell syntax check |
+| `scripts/create-harness.sh` | `bash -n scripts/create-harness.sh` |
 
 hook 설치:
 
