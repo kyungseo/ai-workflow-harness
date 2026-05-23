@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-23 (HRN-025 완료)
+Last updated: 2026-05-23 (HRN-024/025 완료, README 전면 개편)
 
 ## Current State
 
@@ -47,6 +47,7 @@ Last updated: 2026-05-23 (HRN-025 완료)
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-05-23 | README를 `WORKFLOW-MANUAL-SUMMARY-PUBLIC.md` 기반 단일 문서(경로 A)로 교체 | 파일 목록형 README에서 Prologue·원칙·흐름을 통합한 공개 front-door로 전환 — SUMMARY-PUBLIC drift 방지 | Low |
 | 2026-05-22 | `AGENTS.md`와 `.cursor/rules/workflow.mdc`에 Document Language Policy 섹션 추가 | Codex/Cursor가 DR-007을 문서 편집 시 적용하지 않는 구조적 결함 수정 — path-scoped 자동 로딩이 없는 도구에 inline 규칙 삽입 | Medium |
 | 2026-05-22 | AWH-001 이후 phase를 `Workflow hardening`으로 전환 | public-ready migration 이후 모든 후속 작업을 문서 현행화, scaffold 정합성, tool surface alignment 강화 단계로 묶기 위함 | Low |
 | 2026-05-22 | `.cursor/rules/role-backend.mdc` → `role-harness-maintainer.mdc` rename | 파일명이 Spring Boot 시절 이름을 유지하고 있었고 내용은 이미 Harness Maintainer Role로 교체된 상태 — 파일명/내용 불일치 수정 | Low |
@@ -57,5 +58,6 @@ Last updated: 2026-05-23 (HRN-025 완료)
 
 ## Next Actions
 
-1. HRN-024 disposition 결정: `/close` (완료 처리) 또는 남은 문서 정합성 범위 재개
-2. AWH-001 archive 승인 여부 결정 (Done since 2026-05-22, `docs/works/harness/`에 대기 중)
+1. `WORKFLOW-MANUAL-SUMMARY-PUBLIC.md` 삭제 여부 최종 결정 (삭제 보류 중)
+2. `HARNESS-STRUCTURE.md` 처리 결정 (README 통합 또는 standalone 유지)
+3. remote feature 브랜치 정리: `feature/hrn-doc-consistency-alignment`, `feature/ai-workflow-harness-migration`
