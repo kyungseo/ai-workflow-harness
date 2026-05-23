@@ -25,7 +25,7 @@ NEVER:
 
 ## Codex Command Mapping
 
-Full procedures live in `.agents/skills/harness-{name}/SKILL.md`.
+Full procedures live in `.agents/skills/workflow-{name}/SKILL.md`.
 Load the relevant skill when a command is invoked or its intent is matched.
 
 | Command | Intent |

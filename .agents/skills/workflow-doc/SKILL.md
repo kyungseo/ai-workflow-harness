@@ -1,11 +1,11 @@
 ---
-name: "harness-doc"
+name: "workflow-doc"
 description: "발표/보고 산출물 제작 workflow. Presentation, Report, Decision Brief 등 고품질 산출물을 생성한다"
 ---
 
-# harness-doc
+# workflow-doc
 
-Use this skill when the user asks to invoke the harness workflow `doc`.
+Use this skill when the user asks to invoke the workflow skill `doc`.
 
 ## Command Template
 

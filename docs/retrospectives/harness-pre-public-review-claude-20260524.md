@@ -2,7 +2,7 @@
 
 > 작성일: 2026-05-24  
 > 작성자: Claude Sonnet 4.6  
-> 범위: AI Workflow Harness v1.0.0 — HRN-028 완료 시점  
+> 범위: AI Workflow Harness v1.0.0 — HRN-029 완료 시점  
 > 목적: public release 전 harness 구조·완성도·공개 준비 상태 종합 평가
 
 ---
@@ -15,19 +15,20 @@
 
 1. `bash -n scripts/create-harness.sh` — Codex 검증 통과
 2. generic / spring-boot scaffold 실제 생성 검증 — Codex 검증 통과, `source-command-*` 재도입 없음 확인
-3. Codex 실환경 `harness-*` skill trigger — 현재 세션 기준 동작 확인. **새 Codex 세션에서의 fresh discovery만 미확인**
+3. Codex 실환경 `workflow-*` skill trigger — 현재 세션 기준 동작 확인. **새 Codex 세션에서의 fresh discovery만 미확인**
 
 남은 확인은 구조 문제가 아니라 runtime discovery 확인에 가깝다. public release에 구조적 장애물은 없다.
 
 ---
 
-## 1. 이번 라운드 완료 작업 (HRN-026 ~ HRN-028)
+## 1. 이번 라운드 완료 작업 (HRN-026 ~ HRN-029)
 
 | Work | 핵심 변경 | 결과 |
 | --- | --- | --- |
 | HRN-026 | `.agents/skills/`, `.codex/hooks.json` cascade 반영 | Codex tool surface가 처음으로 모든 문서 계층에 명시됨 |
 | HRN-027 | Backlog pruning 정책, DR/retrospective 인덱스, archive 정책 수립 | Done/Superseded 18개 항목 제거, 탐색 경로 명확화 |
 | HRN-028 | `.agents/skills/source-command-*` → `harness-*` rename | trigger ambiguity 제거, harness 소유권 명시, suffix mapping 규칙 추가 |
+| HRN-029 | `.agents/skills/harness-*` → `workflow-*` rename | product/harness track 양쪽 scope 명확화, harness-only 오해 제거 |
 
 ---
 
@@ -36,7 +37,7 @@
 | Surface | 파일 수 | 상태 |
 | --- | --- | --- |
 | `.claude/commands/` | 11 | 완료. slash command namespace, 변경 없음 |
-| `.agents/skills/harness-*/` | 11 | 완료. `harness-{name}` prefix, SKILL.md 내부 정렬 |
+| `.agents/skills/workflow-*/` | 11 | 완료. `workflow-{name}` prefix, SKILL.md 내부 정렬 |
 | `.cursor/rules/` | 8 | 완료. `workflow.mdc`, `role-harness-maintainer.mdc` 핵심 |
 | `.codex/hooks.json` | 1 | 완료. Stop hook reminder |
 | `prompts/` | 12 | 완료. Claude/Codex/Cursor fallback + task template |
@@ -54,7 +55,7 @@
 | Canonical | `BEHAVIOR-PRINCIPLES.md`, `AGENT-WORKFLOW.md`, `HARNESS-PROTOCOL.md` | 안정. 변경 비용 높음 |
 | Tool-specific | `CLAUDE.md`, `AGENTS.md`, `.claude/`, `.agents/`, `.cursor/`, `.codex/` | HRN-026~028 이후 정렬 완료 |
 | User-facing | `WORKFLOW-MANUAL.md`, `README.md`, `HARNESS-QUICK-REFERENCE.md` | 갱신 완료 |
-| Scaffold | `scripts/create-harness.sh` 산출물 | `harness-*` 동적 순회 확인 — Codex 검증 통과 |
+| Scaffold | `scripts/create-harness.sh` 산출물 | `workflow-*` 동적 순회 확인 — Codex 검증 통과 |
 
 ---
 
@@ -63,13 +64,13 @@
 | 항목 | 상태 | 비고 |
 | --- | --- | --- |
 | Tool surface 4방향 정렬 | ✅ | HRN-026/028 완료 |
-| Skill naming 일관성 | ✅ | `harness-{name}` 확정, suffix mapping 명시 |
+| Skill naming 일관성 | ✅ | `workflow-{name}` 확정, suffix mapping 명시 |
 | Backlog / DR / retrospective 정리 | ✅ | HRN-027 완료 |
 | Cascade 문서 정합성 | ✅ | grep `source-command` 결과 없음 |
 | Private-info 제거 | ✅ | AWH-001 migration 시 완료 |
 | `bash -n scripts/create-harness.sh` | ✅ | Codex 검증 통과 |
 | Scaffold 실제 생성 검증 (generic / spring-boot) | ✅ | Codex 검증 통과, `source-command-*` 재도입 없음 |
-| Codex 실환경 `harness-*` trigger 검증 | ⚠️ | 현재 세션 동작 확인. fresh 세션 discovery는 미확인 |
+| Codex 실환경 `workflow-*` trigger 검증 | ⚠️ | 현재 세션 동작 확인. fresh 세션 discovery는 미확인 |
 | README public front-door 품질 | ✅ | AWH-001 이후 단일 문서로 정비 |
 | `HARNESS-MAINTAINER-GUIDE.md` | ✅ | 신규 채택자용 가이드 완성 |
 
@@ -83,7 +84,7 @@
 
 **Multi-tool alignment**: Claude/Codex/Cursor/scaffold가 같은 원칙을 참조하도록 정렬됐다. 도구 전환 시 drift가 최소화된다.
 
-**Naming hygiene**: `harness-*` prefix로 Codex skill이 일반 프로젝트 skill과 명확히 구분된다. `source-command-*` 시절의 verbose함과 ambiguity가 제거됐다.
+**Naming hygiene**: `workflow-*` prefix로 Codex skill이 일반 프로젝트 skill과 명확히 구분된다. `source-command-*` 시절의 verbose함과 ambiguity가 제거됐고, product/harness track 양쪽 scope도 명확해졌다.
 
 **DR / backlog 인덱스**: cascade 감사 시 Accepted DR 10개만 확인하면 되고, 회고는 최신 1개 또는 주제 관련 1개만 참조한다. 불필요한 전체 스캔이 사라졌다.
 
@@ -106,7 +107,7 @@
 | 차원 | 2026-05-19 (최종 회고) | 2026-05-24 (현재) |
 | --- | --- | --- |
 | Tool surface 정렬 | Claude 중심, Codex 미완료 | 4방향 완전 정렬 |
-| Skill naming | `source-command-*` (verbose) | `harness-*` (명확, 안정적) |
+| Skill naming | `source-command-*` (verbose) | `workflow-*` (명확, scope 정확) |
 | Backlog 상태 | Done/Superseded 항목 혼재 | 정리 완료, 탐색 경로 명확 |
 | DR/retrospective 인덱스 | 없음 | 각 1개 README로 인덱싱 |
 | Cascade 감사 범위 | 불명확 | scope 규칙 문서화 완료 |
@@ -118,7 +119,7 @@
 
 **공개 전 남은 확인:**
 
-1. 새 Codex 세션을 시작해 `harness-start`, `harness-work`, `harness-health` skill이 skill list에 노출되는지 확인
+1. 새 Codex 세션을 시작해 `workflow-start`, `workflow-work`, `workflow-health` skill이 skill list에 노출되는지 확인
 
 **공개 후 운영 원칙 (이전 회고에서 유효했던 내용 재확인):**
 

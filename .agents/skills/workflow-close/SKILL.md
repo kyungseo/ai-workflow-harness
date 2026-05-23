@@ -1,11 +1,11 @@
 ---
-name: "harness-close"
+name: "workflow-close"
 description: "Work Done 처리 전용. Done Criteria 확인, status/actual_end 기입, README Active→Done, STATUS pointer 제거 제안. 세션 종료 없음"
 ---
 
-# harness-close
+# workflow-close
 
-Use this skill when the user asks to invoke the harness workflow `close`.
+Use this skill when the user asks to invoke the workflow skill `close`.
 
 ## Command Template
 

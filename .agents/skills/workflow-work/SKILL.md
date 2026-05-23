@@ -1,11 +1,11 @@
 ---
-name: "harness-work"
+name: "workflow-work"
 description: "backlog에서 지정 항목을 찾아 Work 파일 확인, Pre-check 3종, 계획 수립을 수행하고 승인 대기한다"
 ---
 
-# harness-work
+# workflow-work
 
-Use this skill when the user asks to invoke the harness workflow `work`.
+Use this skill when the user asks to invoke the workflow skill `work`.
 
 ## Command Template
 

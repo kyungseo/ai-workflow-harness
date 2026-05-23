@@ -1,11 +1,11 @@
 ---
-name: "harness-resume"
+name: "workflow-resume"
 description: "중단된 Active Work를 재개한다. drift 확인 후 남은 계획을 제안한다"
 ---
 
-# harness-resume
+# workflow-resume
 
-Use this skill when the user asks to invoke the harness workflow `resume`.
+Use this skill when the user asks to invoke the workflow skill `resume`.
 
 ## Command Template
 

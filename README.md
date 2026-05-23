@@ -152,7 +152,7 @@ ai-workflow-v1.0.0 — Lightweight Manual-First AI Workflow Harness v1
 
 - 전역 행동 원칙, 실행 규칙, 상세 protocol, 사용자 매뉴얼 등이 계층화되었다.
 - Claude, Codex, Cursor, prompts, scaffold 등이 같은 핵심 계약을 참조한다.
-- Codex는 `.agents/skills/harness-*`와 `.codex/hooks.json`을 통해 harness workflow를 수행한다.
+- Codex는 `.agents/skills/workflow-*`와 `.codex/hooks.json`을 통해 harness workflow를 수행한다.
 - `STATUS.md`는 dashboard, `Work 파일`은 작업 단위 SSoT로 분리하여 관리된다.
 - Approval Matrix로 scope, state update, commit gate 등이 하나의 기준으로 정리되었다.
 - `/health --cascade`와 scaffold 검증으로 workflow 변경의 전파 범위를 점검할 수 있다.
