@@ -1,11 +1,11 @@
 ---
-name: "source-command-pick"
+name: "harness-pick"
 description: "backlog에서 우선순위 후보를 비교하고 착수할 작업 1개를 추천한다"
 ---
 
-# source-command-pick
+# harness-pick
 
-Use this skill when the user asks to run the migrated source command `pick`.
+Use this skill when the user asks to invoke the harness workflow `pick`.
 
 ## Command Template
 

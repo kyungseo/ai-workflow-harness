@@ -1,11 +1,11 @@
 ---
-name: "source-command-done"
+name: "harness-done"
 description: "세션 전체 요약을 출력한다. Work Done 처리 없음 — Work 완료는 /close로 먼저 처리할 것"
 ---
 
-# source-command-done
+# harness-done
 
-Use this skill when the user asks to run the migrated source command `done`.
+Use this skill when the user asks to invoke the harness workflow `done`.
 
 ## Command Template
 

@@ -1,11 +1,11 @@
 ---
-name: "source-command-resume"
+name: "harness-resume"
 description: "중단된 Active Work를 재개한다. drift 확인 후 남은 계획을 제안한다"
 ---
 
-# source-command-resume
+# harness-resume
 
-Use this skill when the user asks to run the migrated source command `resume`.
+Use this skill when the user asks to invoke the harness workflow `resume`.
 
 ## Command Template
 
