@@ -1,11 +1,11 @@
 ---
-name: "source-command-work"
+name: "harness-work"
 description: "backlog에서 지정 항목을 찾아 Work 파일 확인, Pre-check 3종, 계획 수립을 수행하고 승인 대기한다"
 ---
 
-# source-command-work
+# harness-work
 
-Use this skill when the user asks to run the migrated source command `work`.
+Use this skill when the user asks to invoke the harness workflow `work`.
 
 ## Command Template
 

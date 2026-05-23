@@ -1,11 +1,11 @@
 ---
-name: "source-command-start"
+name: "harness-start"
 description: "세션 시작 시 STATUS.md 현재 섹션과 Done 미archive Work를 요약하고 다음 후보를 제안한다"
 ---
 
-# source-command-start
+# harness-start
 
-Use this skill when the user asks to run the migrated source command `start`.
+Use this skill when the user asks to invoke the harness workflow `start`.
 
 ## Command Template
 

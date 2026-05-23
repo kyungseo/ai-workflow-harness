@@ -1,11 +1,11 @@
 ---
-name: "source-command-doc"
+name: "harness-doc"
 description: "발표/보고 산출물 제작 workflow. Presentation, Report, Decision Brief 등 고품질 산출물을 생성한다"
 ---
 
-# source-command-doc
+# harness-doc
 
-Use this skill when the user asks to run the migrated source command `doc`.
+Use this skill when the user asks to invoke the harness workflow `doc`.
 
 ## Command Template
 

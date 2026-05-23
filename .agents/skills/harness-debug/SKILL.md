@@ -1,11 +1,11 @@
 ---
-name: "source-command-debug"
+name: "harness-debug"
 description: "지정 대상의 원인을 코드/로그 근거로 좁히고 최소 변경 계획을 보고한다"
 ---
 
-# source-command-debug
+# harness-debug
 
-Use this skill when the user asks to run the migrated source command `debug`.
+Use this skill when the user asks to invoke the harness workflow `debug`.
 
 ## Command Template
 

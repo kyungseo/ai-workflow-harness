@@ -78,7 +78,7 @@ git diff --cached --name-only
 | 변경 파일 유형 | Canonical | Tool-specific | User-facing | Scaffold | Historical |
 | --- | --- | --- | --- | --- | --- |
 | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 두 파일 모두 | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.agents/skills/`, `.codex/hooks.json`, `.cursor/rules/`, `prompts/*` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` 섹션, `README.md` | `scripts/create-harness.sh`가 있으면 dry-run 또는 temp scaffold, 없으면 scaffold source 검증 제외 | 관련 retrospective는 snapshot 여부만 확인 |
-| `.claude/commands/*.md` 또는 `.agents/skills/*/SKILL.md` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 대응 `.agents/skills/source-command-{name}/SKILL.md` 또는 `.claude/commands/{name}.md`, `AGENTS.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` command 섹션 | command/skill 복사 산출물 | 필요 시 관련 Work/retrospective |
+| `.claude/commands/*.md` 또는 `.agents/skills/*/SKILL.md` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 대응 `.agents/skills/harness-{name}/SKILL.md` 또는 `.claude/commands/{name}.md` (suffix mapping: `.claude/commands/{name}.md` ↔ `.agents/skills/harness-{name}/SKILL.md`), `AGENTS.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` command 섹션 | command/skill 복사 산출물 | 필요 시 관련 Work/retrospective |
 | `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.codex/hooks.json` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 반대 tool rule, hook, prompts | 필요 시 manual/rules 설명 | rule/hook 복사 산출물 | 필요 시 관련 Work/retrospective |
 | `prompts/*` | `docs/AGENT-WORKFLOW.md`, 필요 시 `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, command/skill/rule/hook | `prompts/README.md`, 필요 시 manual prompt 섹션 | prompt 복사 산출물 | 필요 시 관련 Work/retrospective |
 | `docs/WORKFLOW-MANUAL.md`, `README.md`, `docs/HARNESS-QUICK-REFERENCE.md` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 관련 command/rule/prompt | 변경된 user-facing 문서 상호 참조 | 필요 시 scaffold README/manual 산출물 | snapshot 덮어쓰기 금지 |
@@ -163,7 +163,7 @@ Historical matches are not automatically drift. Report them separately as snapsh
   ```
 - `.claude/rules/*.md` ↔ `.cursor/rules/*.mdc` 정렬 (DR-007 준수 여부)
   (파일 수·파일명 비교로 1차 확인, 내용 비교는 불일치 시에만)
-- `.claude/commands/*.md` ↔ `.agents/skills/source-command-*/SKILL.md` 정렬
+- `.claude/commands/{name}.md` ↔ `.agents/skills/harness-{name}/SKILL.md` 정렬 (suffix mapping 기준)
   (파일 수·파일명 비교 후, 의심 항목만 내용 비교)
 - Language Rules 위반 (DR-007):
   - `docs/*.md`가 영어 작성, `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc`가 한국어 작성된 경우
