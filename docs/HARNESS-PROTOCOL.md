@@ -414,6 +414,10 @@ backlog 항목의 Status가 Done 또는 Superseded가 되면 다음 기준으로
 
 삭제된 항목의 상세는 git history와 Work 파일(archive)에 남는다. backlog에 별도 archive를 만들지 않는다.
 
+삭제된 항목을 찾으려면:
+- Work 파일이 있는 항목 → `docs/works/harness/README.md` Archived 테이블 → `docs/archive/docs/works/harness/`
+- Work 파일이 없는 항목 (Quick Mode 완료) → `git log --grep="{ID}"`
+
 #### Decision Records (DR)
 
 | 상태 | 처리 |

@@ -7,6 +7,9 @@ AI Workflow Harness backlog다.
 
 기존 product-template backlog와 Work 기록은 history와 archive에 남아 있지만, 이 repository의 현재 active scope는 AI Workflow Harness다.
 
+> Done/Superseded 항목은 이 파일에서 제거된다.
+> 완료 이력: Work 파일이 있는 항목은 `docs/works/harness/README.md` Archived 테이블, Work 파일이 없는 항목(Quick Mode)은 `git log --grep="{ID}"`로 확인한다.
+
 ## Priority Guide
 
 | Priority | Meaning |

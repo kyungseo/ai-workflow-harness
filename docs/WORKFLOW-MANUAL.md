@@ -499,6 +499,8 @@ STATUS.md가 실제 코드·파일 상태와 불일치할 경우:
 
 AI workflow, command/rule, 문서 구조, hook/automation 후보를 관리하는 harness 전용 backlog. Product track backlog와 분리해 Phase{n} 기능 계획이 하네스 개선 작업에 묻히지 않도록 한다.
 
+Done/Superseded 항목은 backlog에서 제거된다. 완료 이력은 Work 파일(`docs/works/harness/README.md` Archived 테이블) 또는 `git log --grep="{ID}"`에서 확인한다.
+
 ### `docs/decisions/DR-*.md`
 
 아키텍처·전략 결정을 기록하는 Decision Record. 결정 이유, 검토된 대안, 되돌리기 비용을 포함한다. 결정이 필요한 상황에서 Open Question → DR 작성 → 결정 반영 → Closed 순서로 진행한다.
