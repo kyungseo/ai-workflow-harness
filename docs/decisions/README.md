@@ -18,3 +18,4 @@ Superseded DR은 `docs/archive/docs/decisions/`로 이동된다.
 | DR-016 | Work 파일 Done→Archived 전환 트리거 | 2026-05-18 | Accepted | `/close`로 Done 처리, archive는 선택적 후속 단계 |
 | DR-017 | Git 머지 전략 및 Branch Flow | 2026-05-20 | Accepted | feature→develop→main, PR 기반 머지 |
 | DR-018 | CI 트리거 최적화 | 2026-05-20 | Accepted | path filter + 병렬화, develop push CI 제거 |
+| DR-019 | Codex Skill Naming Standard | 2026-05-24 | Accepted | `.agents/skills/workflow-{name}/` prefix, suffix mapping 규칙 확정 |
