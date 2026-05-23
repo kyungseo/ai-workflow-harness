@@ -9,7 +9,7 @@ Claude Code 안에서는 `.claude/commands/`의 `/start`, `/pick`, `/work`, `/cl
 - 현재 상태는 `docs/STATUS.md`를 기준으로 해석한다.
 - 상세 하네스 규칙은 필요한 경우 `docs/HARNESS-PROTOCOL.md`만 읽는다.
 - Product track 또는 project 작업은 `docs/backlog/PHASE{n}.md`, harness 작업은 `docs/backlog/HARNESS.md`로 분기한다.
-- 하네스를 처음 적용한 프로젝트에서는 `docs/BOOTSTRAP.md`로 identity와 production 성격을 먼저 정리하고 Product track backlog를 만든다.
+- Bootstrap/onboarding은 `docs/STATUS.md` Next Actions가 명시할 때만 후속으로 다룬다.
 - AI workflow 자체의 개선 항목과 example pack 정비 항목은 Harness track backlog로 분리한다.
 - 구현 전에는 plan, verification, risk, reversal cost를 보고하고 승인 대기한다.
 
@@ -20,7 +20,6 @@ Claude Code 안에서는 `.claude/commands/`의 `/start`, `/pick`, `/work`, `/cl
 ```text
 CLAUDE.md, docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md를 읽어줘.
 그다음 docs/STATUS.md의 Current State, Active Work, Blockers And Open Questions, Next Actions만 확인해줘.
-docs/BOOTSTRAP.md가 있고 scaffold 직후 상태라면 identity와 setup checklist도 함께 확인해줘.
 
 아래 형식으로 현재 상태를 요약해줘.
 

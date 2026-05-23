@@ -79,7 +79,8 @@ git diff --cached --name-only
 | `.claude/rules/*.md`, `.cursor/rules/*.mdc` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 반대 tool rule, prompts | 필요 시 manual/rules 설명 | rule 복사 산출물 | 필요 시 관련 Work/retrospective |
 | `prompts/*` | `docs/AGENT-WORKFLOW.md`, 필요 시 `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, command/rule | `prompts/README.md`, 필요 시 manual prompt 섹션 | prompt 복사 산출물 | 필요 시 관련 Work/retrospective |
 | `docs/WORKFLOW-MANUAL.md`, `README.md`, `docs/HARNESS-QUICK-REFERENCE.md` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 관련 command/rule/prompt | 변경된 user-facing 문서 상호 참조 | 필요 시 scaffold README/manual 산출물 | snapshot 덮어쓰기 금지 |
-| `scripts/create-harness.sh` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | commands/rules/prompts source | generated README/manual expectations | dry-run + temp scaffold + stale phrase search | 필요 시 related Work |
+| `scripts/create-harness.sh` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/SCAFFOLD-BOOTSTRAP.md` | commands/rules/prompts source | generated README/manual expectations | dry-run + temp scaffold + stale phrase search | 필요 시 related Work |
+| `docs/SCAFFOLD-BOOTSTRAP.md` | `docs/HARNESS-PROTOCOL.md` | — | — | `scripts/create-harness.sh` 생성 BOOTSTRAP.md 템플릿 (Boot Sequence, Completion Rule 동기화) | — |
 | `docs/STATUS.md`, `docs/works/**`, `docs/backlog/**`, `docs/decisions/**` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | start/resume/close/done/record-decision commands | quick reference/manual state sections | work/index scaffold templates | 관련 Work/DR/retrospective |
 
 ### Required Grep Pack

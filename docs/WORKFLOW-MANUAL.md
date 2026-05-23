@@ -1464,7 +1464,7 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 
 #### 케이스 A — 신규 프로젝트 첫 세션
 
-스캐폴딩 직후 `docs/BOOTSTRAP.md`, `docs/STATUS.md`, `docs/PLAN-SUMMARY.md`, `docs/backlog/PHASE1.md`를 채워야 한다. 첫 세션에서는 프로젝트 identity와 production 성격을 먼저 정리하고, 제품 목표와 Phase 1 범위에서 Product track backlog를 도출한다. AI workflow 자체의 개선 항목과 example pack 정비는 `docs/backlog/HARNESS.md`로 분리한다. 첫 prompt는 `docs/BOOTSTRAP.md` §6을 사용한다.
+스캐폴딩 직후 `docs/BOOTSTRAP.md`, `docs/STATUS.md`, `docs/PLAN-SUMMARY.md`, `docs/backlog/PHASE1.md`를 채워야 한다. 첫 `/start`는 `docs/STATUS.md` Next Actions만 확인하고, 그 항목이 scaffold bootstrap/onboarding을 가리킬 때 `docs/BOOTSTRAP.md`를 후속으로 읽도록 제안한다. 첫 세션에서는 프로젝트 identity와 production 성격을 먼저 정리하고, 제품 목표와 Phase 1 범위에서 Product track backlog를 도출한다. AI workflow 자체의 개선 항목과 example pack 정비는 `docs/backlog/HARNESS.md`로 분리한다. Bootstrap onboarding을 진행할 때는 `docs/BOOTSTRAP.md` §6 prompt를 사용한다. 완료 후에는 `docs/STATUS.md` Next Actions에서 scaffold bootstrap/onboarding 항목을 제거하거나 다음 실제 작업으로 교체한다.
 
 ```text
 docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTSTRAP.md를 읽어줘.

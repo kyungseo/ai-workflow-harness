@@ -1,14 +1,18 @@
 # ai-workflow-harness
 
-A manual-first, approval-gated AI workflow harness for Claude Code, Codex, and Cursor.
+> A manual-first, approval-gated AI workflow harness for Claude Code, Codex, and Cursor.
 (계획·승인·검증·기록으로 이어지는 AI 개발 하네스)
 
-AI 코딩 에이전트(Claude Code, Codex, Cursor)와 반복 세션을 운영할 때 발생하는 핵심 문제를 해결한다:
-scope 확장, 상태 불일치, 승인 없는 실행, 결정 기록 소실.
+AI 코딩 에이전트(Claude Code, Codex, Cursor)와 반복 세션을 운영할 때 발생하는 다음의 핵심 문제를 해결한다:
+
+- 범위 확장, 상태 불일치, 승인 없는 실행, 결정 기록 소실.
+
 하네스는 이 문제들을 workflow 엔진 없이 — 문서와 명시적 gate만으로 — 제어한다.
 
-하네스는 AI session을 감싸는 운영 골격이다. Workflow 엔진이나 task runner가 아니다.
-사람과 에이전트가 반복 세션과 다수 도구에 걸쳐 scope, 상태, 결정, 검증을 정렬할 수 있도록 한다.
+**ai-workflow-harness**는 AI session을 감싸는 운영 골격으로써 사람과 에이전트가 반복 세션과 다수 도구에 걸쳐 범위, 상태, 결정, 검증을 정렬할 수 있도록 한다.
+
+> **Note** [docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md](docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md)
+문서를 반드시 읽기 바란다.
 
 ## What This Provides
 
@@ -70,17 +74,6 @@ scope 확장, 상태 불일치, 승인 없는 실행, 결정 기록 소실.
 
 ## Quick Start
 
-### 이 Repository에서 작업
-
-로컬 hook 설치:
-
-```bash
-sh tools/git-hooks/install.sh
-```
-
-Claude Code 세션: `/start` 실행 또는 [docs/STATUS.md](docs/STATUS.md) 확인.
-Codex 세션: [AGENTS.md](AGENTS.md)를 읽는 것으로 시작한다.
-
 ### 새 프로젝트에 하네스 적용
 
 새 repository에 generic harness scaffold 생성:
@@ -95,10 +88,24 @@ Codex 세션: [AGENTS.md](AGENTS.md)를 읽는 것으로 시작한다.
 ./scripts/create-harness.sh --existing --profile generic my-project /path/to/existing-repo
 ```
 
-Scaffold 후 첫 세션에서는 생성된 `docs/BOOTSTRAP.md`를 기준으로 프로젝트 identity와 production 성격을 정리한다.
+Scaffold 후 첫 세션에서는 `/start`로 `docs/STATUS.md` Next Actions를 확인한다.
+Next Actions가 scaffold bootstrap/onboarding을 가리키면 생성된 `docs/BOOTSTRAP.md`를 기준으로 프로젝트 identity와 production 성격을 정리한다.
 그다음 제품 목표와 Phase 1 범위에서 Product track backlog를 만들고,
 AI workflow 자체의 개선 항목과 example pack 정비는 Harness track backlog로 분리한다.
-첫 세션 prompt는 scaffold된 프로젝트의 `docs/BOOTSTRAP.md` §6을 사용한다.
+첫 세션에서 bootstrap onboarding을 진행할 때는 scaffold된 프로젝트의 `docs/BOOTSTRAP.md` §6 prompt를 사용한다.
+완료 후에는 `docs/STATUS.md` Next Actions에서 scaffold bootstrap/onboarding 항목을 제거하거나 다음 실제 작업으로 교체한다.
+
+### 이 Repository에서 작업
+
+Claude Code 세션: `/start` 실행 또는 [docs/STATUS.md](docs/STATUS.md) 확인.
+Codex 세션: [AGENTS.md](AGENTS.md)를 읽는 것으로 시작한다.
+
+Maintainer는 commit 전 기본 검사를 자동화하려면 local hook을 선택적으로 설치할 수 있다.
+일반 사용이나 scaffold 적용에는 필요하지 않다.
+
+```bash
+sh tools/git-hooks/install.sh
+```
 
 ## Repository Layout
 

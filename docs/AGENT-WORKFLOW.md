@@ -24,6 +24,7 @@ MUST:
 MUST NOT:
 
 - 과거 맥락이 필요하지 않은데 `docs/archive/`, `docs/works/`, `docs/PLAN.md`를 읽지 않는다.
+- `docs/BOOTSTRAP.md`가 존재한다는 이유만으로 매 세션 로드하지 않는다.
 - 승인 없이 넓은 변경, L3 변경, scope 확장을 실행하지 않는다.
 
 ## Context Routing
@@ -41,7 +42,7 @@ MUST NOT:
 | Need | Load |
 | --- | --- |
 | 현재 상태 | `docs/STATUS.md` |
-| Scaffold 직후 프로젝트 부팅 | `docs/BOOTSTRAP.md` |
+| Scaffold 직후 프로젝트 부팅 | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` |
 | 세션 실행 규칙 빠른 확인 | `docs/HARNESS-QUICK-REFERENCE.md` |
 | Product track 또는 Phase{n} 준비 작업 선택 | `docs/backlog/PHASE{n}.md` |
 | harness, command/rule, workflow 작업 선택 | `docs/backlog/HARNESS.md` |
@@ -101,7 +102,7 @@ MUST NOT:
 | 지금 진행 중인 작업 | `docs/STATUS.md` Active Work |
 | 다음 후보 Product track 작업 | `docs/backlog/PHASE{n}.md` |
 | 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
-| Scaffold bootstrapping checklist | `docs/BOOTSTRAP.md` |
+| Scaffold bootstrapping checklist | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` |
 | 한 작업의 세부 분해 | `docs/works/{category}/{ID}-{topic}.md` |
 | 결정 근거 | `docs/decisions/DR-*.md` |
 | 완료된 과거 상태 | `docs/archive/` |

@@ -54,7 +54,7 @@ Done 처리 완료 후 아래 질문을 한다:
 1. Work 파일 frontmatter `status: Archived` 기입
 2. Discovery에 archive 이유와 일자 기록
 3. `git mv docs/works/{category}/{file}.md docs/archive/docs/works/{category}/`
-4. `docs/works/{category}/README.md`: Done → Archived 테이블로 이동
+4. `docs/works/{category}/README.md`: Done → Archived 테이블로 이동하고 Work 파일 경로를 `docs/archive/docs/works/{category}/{file}.md`로 업데이트
 
 **사용자가 나중으로 미루면:** 그대로 둔다. `/start`·`/resume`에서 archive 대기로 보고된다.
 

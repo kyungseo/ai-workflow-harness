@@ -5,6 +5,8 @@
 
 Scaffold된 프로젝트에는 project-local checklist인 `docs/BOOTSTRAP.md`가 생성된다.
 이 source repository에서는 `docs/SCAFFOLD-BOOTSTRAP.md`가 그 산출물의 설계 기준이다.
+Daily `/start`는 `docs/BOOTSTRAP.md` 존재 여부를 확인하지 않는다.
+Scaffold 직후 generated `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 가리킬 때만 이 checklist를 후속으로 읽는다.
 
 ## Boot Sequence
 
@@ -14,6 +16,7 @@ Scaffold된 프로젝트에는 project-local checklist인 `docs/BOOTSTRAP.md`가
 4. Core 문서를 채운다: `STATUS.md`, `PLAN-SUMMARY.md`, `PLAN.md`, `AGENT-WORKFLOW.md`.
 5. Work 파일 필요 여부를 판단한다: 작은 L1 Product track 작업은 Quick Mode, 큰 작업은 `docs/works/{category}/`에 Work 파일을 만든다.
 6. Example pack을 검토한다: 선택한 stack-specific pack이 실제 프로젝트 path, role, package placeholder와 맞는지 확인한다.
+7. Bootstrap이 끝나면 `docs/STATUS.md` Next Actions에서 scaffold bootstrap/onboarding 항목을 제거하거나 다음 실제 작업으로 교체한다.
 
 ## Required Setup Items
 
@@ -49,7 +52,15 @@ Scaffold된 프로젝트에는 project-local checklist인 `docs/BOOTSTRAP.md`가
 - README/manual에서 해당 pack이 optional example임을 알 수 있는가.
 - 필요 없는 pack은 제거하거나 Harness backlog에 정리 작업으로 등록했는가.
 
+## Completion Rule
+
+Bootstrap onboarding은 `docs/STATUS.md` Next Actions의 pointer로만 재진입된다.
+따라서 checklist를 채우고 Product/Harness backlog 후보를 만든 뒤에는 반드시 `docs/STATUS.md` Next Actions에서 scaffold bootstrap/onboarding 항목을 제거하거나 다음 실제 작업으로 교체한다.
+이 항목이 남아 있으면 daily `/start`가 매 세션 bootstrap 후속 작업을 계속 제안한다.
+
 ## First Prompt
+
+`docs/STATUS.md` Next Actions가 scaffold bootstrap/onboarding을 가리킬 때 아래 prompt를 사용한다.
 
 ```text
 docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTSTRAP.md를 읽어줘.

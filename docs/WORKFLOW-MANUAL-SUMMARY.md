@@ -433,7 +433,9 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 | `docs/backlog/HARNESS.md` | workflow/harness 후보 작업, example pack 정비 항목 |
 | `docs/AGENT-WORKFLOW.md` | Project Constants, Verification Defaults |
 
-첫 세션 prompt는 `docs/BOOTSTRAP.md` §6을 사용한다.
+첫 `/start`는 `docs/STATUS.md` Next Actions를 확인한다.
+Next Actions가 scaffold bootstrap/onboarding을 가리킬 때 `docs/BOOTSTRAP.md` §6 prompt를 사용한다.
+완료 후에는 `docs/STATUS.md` Next Actions에서 scaffold bootstrap/onboarding 항목을 제거하거나 다음 실제 작업으로 교체한다.
 
 기존 프로젝트에 적용할 때는 먼저 코드베이스를 읽고, 위 파일의 내용을 **제안**하게 한다.
 승인 전 파일을 채우지 않는다.

@@ -13,6 +13,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| HRN-025 | Scaffold bootstrap flow tightening | 2026-05-23 | `docs/works/harness/HRN-025-starter-bootstrap-flow.md` |
 | AWH-001 | AI Workflow Harness public repo migration | 2026-05-22 | `docs/works/harness/AWH-001-public-repo-migration.md` |
 
 ## Archived

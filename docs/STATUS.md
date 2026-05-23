@@ -59,6 +59,5 @@ Last updated: 2026-05-22 (Workflow hardening 시작)
 
 ## Next Actions
 
-1. HRN-024 CP-2: canonical / tool-specific / user-facing / scaffold / historical 계층별 findings 작성
-2. HRN-024 CP-2: start, pick, work, resume, close/done, archive, quick mode, state update, cascade/trigger, scaffold flow 시뮬레이션
-3. HRN-024 CP-3: 승인된 P0/P1 정합성 패치 반영
+1. HRN-025 변경 리뷰 후 `/close` 여부 결정
+2. HRN-025 완료 처리 후 HRN-024를 `/close`할지 남은 문서 정합성 범위를 재개할지 판단
