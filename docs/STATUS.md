@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-23 (Approval Matrix 동기화, WORKFLOW-MANUAL-SUMMARY-PUBLIC.md 삭제)
+Last updated: 2026-05-23 (feature 브랜치 정리 완료)
 
 ## Current State
 
@@ -57,5 +57,4 @@ Last updated: 2026-05-23 (Approval Matrix 동기화, WORKFLOW-MANUAL-SUMMARY-PUB
 
 ## Next Actions
 
-1. `HARNESS-STRUCTURE.md` 처리 결정 (README 통합 또는 standalone 유지)
-2. remote feature 브랜치 정리: `feature/hrn-doc-consistency-alignment`, `feature/ai-workflow-harness-migration`
+(없음)
