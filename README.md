@@ -77,13 +77,13 @@ Repo를 다음과 같이 **Two-Track**으로 구성하여 출발하였다.
 - **AI Workflow** 구축: Harness 구축을 위한 메인 프로젝트
 - **적용 대상 프로젝트** 구축: AI Workflow의 적용과 운영을 테스트하기 위한 부가 프로젝트
 
-이 Workflow는 첫 commit 이후 한 번에 설계된 단순한 산출물이 아니다. 첫 commit 이후 현재까지 repository에는 **260여 개의 commit**이 쌓였다.
+이 Workflow는 첫 commit 이후 한 번에 설계된 단순한 산출물이 아니다. 첫 commit 이후 현재까지 repository에는 **326개의 commit**이 쌓였다.
 
 **여정 요약**
 
 ```mermaid
 timeline
-    title AI Workflow Harness Evolution — v1.0 baseline · 2026-05-21
+    title AI Workflow Harness Evolution — v1.0 baseline · 2026-05-24
 
     Project Kickoff : First commit
                     : 적용 대상 프로젝트 출발점 생성
@@ -129,9 +129,9 @@ timeline
                          : Claude/Codex/Cursor, scaffold 전역 원칙 정렬
                          : 최종 회고와 summary 문서화
 
-    v1.0 Baseline : ai-workflow-v1.0.0 (태그 2026-05-19)
+    v1.0 Baseline : ai-workflow-v1.0.0 (태그 2026-05-24)
                   : Lightweight Manual-First AI Workflow Harness v1
-                  : 개인(소규모 팀) 적용 가능한 첫 안정화 기준선 (이 문서 작성 2026-05-21)
+                  : 개인(소규모 팀) 적용 가능한 첫 안정화 기준선 (이 문서 작성 2026-05-24)
 ```
 
 대다수의 변경은 단순한 문서 정리가 아니다.
@@ -142,7 +142,7 @@ timeline
 ### 결과
 
 많은 고민을 투영하고 수정하는 과정을 반복적으로 거치며, 이제 Claude Code와 Codex가 어느 정도 내가 의도한 방향으로 반응하고 있다.
-애초에 가벼운 워크플로우를 목표로 하였기에 여기서 이 여정의 첫 안정화 기준선을 설정하면서 다음의 tag를 찍게 되었다.
+애초에 가벼운 워크플로우를 목표로 하였기에 2026-05-24에 첫 안정화 기준선으로 다음 tag를 정리했다.
 
 ```text
 ai-workflow-v1.0.0 — Lightweight Manual-First AI Workflow Harness v1
@@ -152,6 +152,7 @@ ai-workflow-v1.0.0 — Lightweight Manual-First AI Workflow Harness v1
 
 - 전역 행동 원칙, 실행 규칙, 상세 protocol, 사용자 매뉴얼 등이 계층화되었다.
 - Claude, Codex, Cursor, prompts, scaffold 등이 같은 핵심 계약을 참조한다.
+- Codex는 `.agents/skills/harness-*`와 `.codex/hooks.json`을 통해 harness workflow를 수행한다.
 - `STATUS.md`는 dashboard, `Work 파일`은 작업 단위 SSoT로 분리하여 관리된다.
 - Approval Matrix로 scope, state update, commit gate 등이 하나의 기준으로 정리되었다.
 - `/health --cascade`와 scaffold 검증으로 workflow 변경의 전파 범위를 점검할 수 있다.
