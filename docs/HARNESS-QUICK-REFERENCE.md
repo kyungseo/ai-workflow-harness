@@ -201,7 +201,7 @@ Proposal shape:
 - DR-worthy accepted decision: `docs/decisions/` 기록 제안.
 - commit/PR 전: STATUS Finalization(T15)과 Tracking Finalization(T16) 판정.
 - structure/development flow 변경: `HARNESS-STRUCTURE` 또는 `HARNESS-MAINTAINER-GUIDE` 영향 확인.
-- workflow/tool/scaffold 변경: 관련 command/rule/prompt/manual/scaffold 정렬 확인.
+- workflow/tool/scaffold 변경: 관련 command/rule/prompt/`.agents/skills/`/`.codex/hooks.json`/manual/scaffold 정렬 확인.
 - scaffold 또는 canonical workflow 변경: `create-harness.sh --dry-run`과 필요 시 temp scaffold 검증.
 - non-trivial issue resolved: `docs/troubleshooting/` 기록 제안.
 - presentation/report artifact 생성: source traceability와 output path 확인.

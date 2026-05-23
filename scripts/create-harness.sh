@@ -168,6 +168,8 @@ for dir in \
   "${TARGET_ROOT}/.claude/rules" \
   "${TARGET_ROOT}/.claude/commands" \
   "${TARGET_ROOT}/.cursor/rules" \
+  "${TARGET_ROOT}/.agents/skills" \
+  "${TARGET_ROOT}/.codex" \
   "${TARGET_ROOT}/prompts"; do
   ensure_dir "${dir}"
 done
@@ -223,6 +225,15 @@ fi
 for f in "${TEMPLATE_ROOT}"/.claude/commands/*.md; do
   adapt "$f" "${TARGET_ROOT}/.claude/commands/$(basename "$f")"
 done
+
+# ── Codex skills ─────────────────────────────────────────────────────────────
+for skill_dir in "${TEMPLATE_ROOT}"/.agents/skills/*/; do
+  skill_name="$(basename "${skill_dir}")"
+  ensure_dir "${TARGET_ROOT}/.agents/skills/${skill_name}"
+  adapt "${skill_dir}SKILL.md" "${TARGET_ROOT}/.agents/skills/${skill_name}/SKILL.md"
+done
+
+adapt "${TEMPLATE_ROOT}/.codex/hooks.json" "${TARGET_ROOT}/.codex/hooks.json"
 
 write_text "${TARGET_ROOT}/.claude/settings.json" '{
   "permissions": {

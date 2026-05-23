@@ -59,11 +59,11 @@ Reversal cost: Low — 파일 추가/편집이 대부분, scaffold는 신규 프
 
 ## Checkpoints
 
-- [ ] .codex/hooks.json 정리 완료
-- [ ] 누락 5개 skill 생성 완료
-- [ ] AGENTS.md command table 재정비 완료
-- [ ] PLAN-SUMMARY.md + HARNESS-PROTOCOL.md + HARNESS-QUICK-REFERENCE.md cascade 반영 완료
-- [ ] create-harness.sh 수정 + bash -n 통과
+- [x] .codex/hooks.json 정리 완료
+- [x] 누락 5개 skill 생성 완료
+- [x] AGENTS.md command table 재정비 완료
+- [x] PLAN-SUMMARY.md + HARNESS-PROTOCOL.md + HARNESS-QUICK-REFERENCE.md cascade 반영 완료
+- [x] create-harness.sh 수정 + bash -n 통과
 - [ ] 전체 커밋
 
 ## Discovery
