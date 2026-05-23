@@ -36,7 +36,6 @@ Last updated: 2026-05-23 (HRN-026 완료 — Codex tool surface 정렬)
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| HRN-028 | Command / Skill 네이밍 체계 정비 | `docs/works/harness/HRN-028-command-skill-naming-refactor.md` |
 
 ## Blockers And Open Questions
 

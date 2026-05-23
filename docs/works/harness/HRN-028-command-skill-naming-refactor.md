@@ -1,13 +1,13 @@
 ---
 id: HRN-028
 priority: P2
-status: Active
+status: Done
 risk: L2
 scope: .agents/skills/ source-command-{name} → harness-{name} rename, .claude/commands/ 현행 유지
 appetite: 1d
 planned_start: 2026-05-24
 planned_end:
-actual_end:
+actual_end: 2026-05-24
 ---
 
 # HRN-028: Command / Skill 네이밍 체계 정비
