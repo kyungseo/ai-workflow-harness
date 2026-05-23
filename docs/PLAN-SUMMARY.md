@@ -33,6 +33,8 @@ Tool Surfaces
   .claude/commands/**
   .claude/rules/**
   .cursor/rules/**
+  .agents/skills/**
+  .codex/hooks.json
   prompts/**
         |
         v

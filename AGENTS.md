@@ -24,19 +24,22 @@ NEVER:
 
 ## Codex Command Mapping
 
-| Claude workflow | Codex procedure |
+Full procedures live in `.agents/skills/source-command-{name}/SKILL.md`.
+Load the relevant skill when a command is invoked or its intent is matched.
+
+| Command | Intent |
 | --- | --- |
-| `/start` | Read `docs/STATUS.md` current sections and summarize current state, candidates, needed context, risks. If Next Actions explicitly points to scaffold bootstrap/onboarding, report that `docs/BOOTSTRAP.md` should be loaded for that follow-up |
-| `/pick` | If `docs/STATUS.md` Next Actions points to scaffold bootstrap/onboarding, use `docs/BOOTSTRAP.md` first; otherwise route to `docs/backlog/PHASE{n}.md` or `docs/backlog/HARNESS.md`, compare candidates, recommend one |
-| `/register [description]` | Register a new work item; route to STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md based on urgency and type; propose STATUS Update if needed |
-| `/work <ID>` | Find the backlog item; check `docs/works/{category}/` for an existing Work file; if none and decomposition criteria met, include Work file creation in the plan; declare risk level, propose scope/files/verification/risk, then wait for approval |
-| `/resume <ID>` | Compare `docs/STATUS.md` and Work file Checkpoints with actual files, report drift, and propose recovery before editing; if the Work is Done, do not resume it and propose archive or follow-up work |
-| `/debug` | Analyze failures from code, logs, tests, or user-provided symptoms; identify root cause and propose the smallest safe fix before editing |
-| `/doc [brief]` | Create high-quality presentation/report artifacts; confirm brief, route sources, choose output format/tool, verify quality |
-| `/record-decision` | Draft a DR for an accepted technical/workflow decision; include status, context, decision, consequences, alternatives, and linked work items |
-| `/close` | Handle Work Done processing only — confirm Done Criteria including any explicit user final review condition, set `status: Done` and `actual_end`, move README row Active→Done (archive pending), propose STATUS pointer removal. Optionally archive immediately if the user approves; otherwise leave for `/start`/`/resume`. Session continues after completion. `/close` does not replace commit/PR STATUS Finalization or Tracking Finalization |
-| `/done` | Report completed work, changed files, validation, residual risk, STATUS update need, decision need, state, commit status; if Active Work exists and Discovery is not up to date, propose content to record and ask whether to log it. Does not perform Work Done processing — run `/close` first if Work is complete |
-| `/health [--full] [--cascade]` | Inspect workflow/document health. Use default for quick structure hygiene, `--full` for deeper structure/implementation sync, `--cascade` for canonical → tool-specific → user-facing → scaffold drift and loop-risk audit |
+| `/start` | Summarize current STATUS, Done-not-archived Work, and next candidates |
+| `/pick` | Route to the appropriate backlog and recommend the next work item |
+| `/register [description]` | Register a new work item in the correct backlog or STATUS location |
+| `/work <ID>` | Plan a specific backlog item — pre-checks, Work file, risk, scope |
+| `/resume <ID>` | Reopen an Active Work item — drift check before editing |
+| `/debug` | Identify root cause from code/logs and propose the smallest fix |
+| `/doc [brief]` | Produce a presentation, report, or review artifact |
+| `/record-decision` | Draft and file a DR for an accepted technical/workflow decision |
+| `/close` | Work Done processing only — Done Criteria, status, README, STATUS pointer |
+| `/done` | Session summary — validation, risk, STATUS/Tracking Finalization, commit status |
+| `/health [--full] [--cascade]` | Workflow and document health inspection |
 
 ## Command Intent Recognition
 

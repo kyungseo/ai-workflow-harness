@@ -236,9 +236,11 @@ graph TD
     end
 
     subgraph TOOLS ["도구별 실행 표면"]
-        CMD["📁 .claude/commands/ 10개"]
+        CMD["📁 .claude/commands/ 11개"]
         RULE["📁 .claude/rules/ 5개"]
         CUR_R["📄 .cursor/rules/*.mdc"]
+        SKILLS["📁 .agents/skills/ 11개"]
+        HOOKS["📄 .codex/hooks.json"]
     end
 
     subgraph LIVE ["상태·작업 관리"]
@@ -1118,7 +1120,7 @@ flowchart LR
 | T8 | Troubleshooting 기록 | 비자명 이슈 해결 (환경 문제, 비직관적 원인, 도구 버전 비호환) | Claude 능동 제안 | `docs/troubleshooting/`, 필요 시 `docs/HARNESS-MAINTAINER-GUIDE.md` 링크 추가 |
 | T9 | 발표/보고 산출물 생성 | `/doc` 실행 또는 발표·보고·review package 생성 요청 | Claude 능동 제안 | `docs/presentations/`, `docs/reports/`, source traceability, STATUS/backlog 참조 필요 여부 |
 | T10 | Work archive 제안 | `status: Done` Work 파일이 `docs/works/{category}/`에 남아 있을 때 | Claude 능동 제안 | archive 승인 여부 제안, 승인 전 `git mv` 금지 |
-| T11 | Tool surface 정렬 | command/rule/prompt/entrypoint 변경 | Claude 능동 제안 | Claude/Codex/Cursor/prompts/scaffold 정합성 확인 |
+| T11 | Tool surface 정렬 | command/rule/prompt/entrypoint 변경 | Claude 능동 제안 | Claude(`.claude/commands/`, `.claude/rules/`)/Codex(`.agents/skills/`, `.codex/hooks.json`)/Cursor(`.cursor/rules/`)/prompts/scaffold 정합성 확인 |
 | T12 | Scaffold 검증 | `scripts/create-harness.sh` 또는 canonical workflow 변경 | Claude 능동 제안 | dry-run, temp scaffold 생성, stale phrase 검색 |
 | T13 | Product track Quick Mode 확인 | Product track surface의 L1 작은 변경 | Claude 판단 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경 | Claude 능동 제안 | 기본 L2로 scope/cascade 확인 |

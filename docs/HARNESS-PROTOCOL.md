@@ -424,7 +424,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | T8 | 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |
 | T9 | 발표/보고 산출물 생성 | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |
 | T10 | Work 파일 Done 상태 발견 | archive 승인 여부 제안 |
-| T11 | tool surface 변경 | Claude/Codex/Cursor/prompts/README/scaffold 정렬 확인 |
+| T11 | tool surface 변경 | Claude(`.claude/commands/`, `.claude/rules/`)/Codex(`.agents/skills/`, `.codex/hooks.json`)/Cursor(`.cursor/rules/`)/`prompts/`/README/scaffold 정렬 확인 |
 | T12 | scaffold source 또는 canonical workflow 변경 | dry-run + temp scaffold 검증 |
 | T13 | Product track surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
@@ -465,9 +465,11 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 
 | 변경 대상 | 반드시 확인할 표면 |
 | --- | --- |
-| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.cursor/rules/`, `prompts/`, `scripts/create-harness.sh` |
-| `.claude/commands/*.md` | `AGENTS.md` command mapping, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md`, `docs/HARNESS-QUICK-REFERENCE.md` |
+| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.cursor/rules/`, `.agents/skills/`, `.codex/hooks.json`, `prompts/`, `scripts/create-harness.sh` |
+| `.claude/commands/*.md` | `AGENTS.md` command index, `.agents/skills/source-command-{name}/SKILL.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md`, `docs/HARNESS-QUICK-REFERENCE.md` |
+| `.agents/skills/*/SKILL.md` | `.claude/commands/` 대응 파일, `AGENTS.md` command index |
 | `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc` | 반대 tool rule, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` |
+| `.codex/hooks.json` | `AGENTS.md`, `docs/HARNESS-PROTOCOL.md` hook 관련 섹션 |
 | `prompts/*session-start.md` | `prompts/README.md`, `AGENTS.md`, `CLAUDE.md`, relevant command/rule |
 | `scripts/create-harness.sh` | `docs/SCAFFOLD-BOOTSTRAP.md`와 Boot Sequence·Completion Rule 동기화 확인, generic/spring-boot dry-run, temp scaffold 생성 결과, scaffold 내부 stale phrase 검색 |
 | `docs/SCAFFOLD-BOOTSTRAP.md` | `scripts/create-harness.sh` 생성 BOOTSTRAP.md 템플릿과 Boot Sequence·Completion Rule 정합성 확인 |
