@@ -68,4 +68,4 @@ Reversal cost: Low — 파일 추가/편집이 대부분, scaffold는 신규 프
 
 ## Discovery
 
-(작업 중 발견 사항 기록)
+- cascade audit에서 4개 파일 추가 누락 발견: HARNESS-STRUCTURE.md Tool Mirrors subgraph, HARNESS-MAINTAINER-GUIDE.md Tool-specific layer + scaffold checklist, WORKFLOW-MANUAL.md 도구 수(10→11) + T11 표, README.md Document Layers + Repository Layout — 모두 동일 commit에 포함.

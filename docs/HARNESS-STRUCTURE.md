@@ -35,6 +35,8 @@ graph TB
         COMMANDS[".claude/commands/**"]
         CRULES[".claude/rules/**"]
         CURSOR[".cursor/rules/**"]
+        SKILLS[".agents/skills/**"]
+        HOOKS[".codex/hooks.json"]
         PROMPTS["prompts/**"]
     end
 

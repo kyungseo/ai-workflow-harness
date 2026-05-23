@@ -234,6 +234,8 @@ flowchart TD
         COMMANDS[".claude/commands/\nClaude workflows"]
         RULES[".claude/rules/\npath-scoped guardrails"]
         CURSOR_RULES[".cursor/rules/\nCursor rules"]
+        SKILLS[".agents/skills/\nCodex skills"]
+        HOOKS[".codex/hooks.json\nCodex hooks"]
         PROMPTS["prompts/\nfallback/task templates"]
         SCRIPT["scripts/create-harness.sh\nproject scaffold"]
     end
@@ -766,6 +768,10 @@ sh tools/git-hooks/install.sh
 │   ├── decisions/                    # Decision Records
 │   ├── retrospectives/               # 회고 기록
 │   └── works/                        # Work 파일 (작업 단위 SSoT)
+├── .agents/
+│   └── skills/                       # Codex skill 파일
+├── .codex/
+│   └── hooks.json                    # Codex hook 설정
 ├── prompts/                          # portable prompt 템플릿
 ├── scripts/
 │   └── create-harness.sh             # scaffold script

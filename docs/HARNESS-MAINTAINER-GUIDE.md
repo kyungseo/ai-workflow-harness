@@ -156,6 +156,8 @@ Generic dry-run을 검증한다:
 - `docs/AGENT-WORKFLOW.md` Project Constants
 - `.claude/rules/**`
 - `.cursor/rules/**`
+- `.agents/skills/**`
+- `.codex/hooks.json`
 - `prompts/README.md`
 
 ## 7. Tool Surface Alignment
@@ -165,7 +167,7 @@ rule이나 workflow 동작이 변경되면 다음 cascade를 확인한다:
 | Layer | Examples |
 | --- | --- |
 | Canonical | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` |
-| Tool-specific | `.claude/commands/**`, `.claude/rules/**`, `.cursor/rules/**` |
+| Tool-specific | `.claude/commands/**`, `.claude/rules/**`, `.cursor/rules/**`, `.agents/skills/**`, `.codex/hooks.json` |
 | User-facing | `README.md`, `docs/WORKFLOW-MANUAL.md`, public summary |
 | Scaffold | `scripts/create-harness.sh`, generated skeleton files |
 | Historical | archives, retrospectives, old review packages |
