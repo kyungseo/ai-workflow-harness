@@ -1121,7 +1121,7 @@ flowchart LR
 | T9 | 발표/보고 산출물 생성 | `/doc` 실행 또는 발표·보고·review package 생성 요청 | Claude 능동 제안 | `docs/presentations/`, `docs/reports/`, source traceability, STATUS/backlog 참조 필요 여부 |
 | T10 | Work archive 제안 | `status: Done` Work 파일이 `docs/works/{category}/`에 남아 있을 때 | Claude 능동 제안 | archive 승인 여부 제안, 승인 전 `git mv` 금지 |
 | T11 | Tool surface 정렬 | command/rule/prompt/entrypoint 변경 | Claude 능동 제안 | Claude(`.claude/commands/`, `.claude/rules/`)/Codex(`.agents/skills/`, `.codex/hooks.json`)/Cursor(`.cursor/rules/`)/prompts/scaffold 정합성 확인 |
-| T12 | Scaffold 검증 | `scripts/create-harness.sh` 또는 canonical workflow 변경 | Claude 능동 제안 | dry-run, temp scaffold 생성, stale phrase 검색 |
+| T12 | Scaffold 검증 | `scripts/create-harness.sh` 또는 canonical workflow 변경 | Claude 능동 제안 | `scripts/create-harness.sh`가 있으면 dry-run, temp scaffold 생성, stale phrase 검색. scaffold 적용 repository처럼 script가 없으면 Skipped / Not Applicable |
 | T13 | Product track Quick Mode 확인 | Product track surface의 L1 작은 변경 | Claude 판단 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경 | Claude 능동 제안 | 기본 L2로 scope/cascade 확인 |
 | T15 | STATUS Finalization | commit 또는 PR 생성 전 | Claude/Codex/Cursor commit gate | `docs/STATUS.md` 최종본 반영 필요 여부, 필요 시 Approval Matrix proposal |
@@ -1384,7 +1384,7 @@ prompts/
 
 ### Quick Start — Scaffolding Script
 
-`scripts/create-harness.sh`로 하네스 파일 구조를 자동 생성한다. 기본값은 언어·프레임워크를 가정하지 않는 `generic` profile이며, Java/Spring example pack이 필요할 때만 `--profile spring-boot`를 사용한다. Codex는 `AGENTS.md`를 기본 진입점으로 쓰며, `codex-session-start.md`는 수동 bootstrap이 필요한 환경의 fallback이다.
+`scripts/create-harness.sh`로 하네스 파일 구조를 자동 생성한다. 기본값은 언어·프레임워크를 가정하지 않는 `generic` profile이며, Java/Spring example pack이 필요할 때만 `--profile spring-boot`를 사용한다. Codex는 `AGENTS.md`를 기본 진입점으로 쓰고 첫 요청은 `/start` intent로 시작하며, `codex-session-start.md`는 수동 bootstrap이 필요한 환경의 fallback이다.
 Source repository의 scaffold 부팅 설계 기준은 `docs/SCAFFOLD-BOOTSTRAP.md`이고, 생성된 프로젝트에는 project-local checklist인 `docs/BOOTSTRAP.md`가 만들어진다.
 
 #### 케이스 A — 신규 프로젝트

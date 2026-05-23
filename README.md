@@ -573,7 +573,7 @@ flowchart LR
 
 - canonical workflow가 바뀌면 tool-specific, user-facing, scaffold surface를 함께 확인한다.
 - command/rule/prompt/entrypoint가 바뀌면 Claude/Codex/Cursor alignment를 확인한다.
-- `scripts/create-harness.sh` 또는 canonical workflow가 바뀌면 dry-run과 temp scaffold를 검증한다.
+- `scripts/create-harness.sh` 또는 canonical workflow가 바뀌면 script가 있는 source repository에서는 dry-run과 temp scaffold를 검증한다. scaffold 적용 repository처럼 script가 없으면 해당 검증은 Skipped / Not Applicable로 보고한다.
 - commit 또는 PR 생성 전에는 STATUS Finalization(T15)과 Tracking Finalization(T16)으로 `docs/STATUS.md`, backlog, Work, DR tracker의 최종 반영 필요 여부를 판정한다.
 - source 문서 오류를 `/doc` 산출물 작성 중 발견하면 즉시 섞어 고치지 말고 별도 작업으로 분리한다.
 
@@ -672,7 +672,7 @@ Next Actions가 scaffold bootstrap/onboarding을 가리킬 때 `docs/BOOTSTRAP.m
 이 repository 자체를 개선하는 maintainer는 scaffold 없이 바로 진입한다.
 
 Claude Code 세션: `/start` 실행 또는 [docs/STATUS.md](docs/STATUS.md) 확인.
-Codex 세션: [AGENTS.md](AGENTS.md)를 읽는 것으로 시작한다.
+Codex 세션: [AGENTS.md](AGENTS.md)를 읽고 `/start` intent로 현재 상태를 확인한다.
 
 commit 전 기본 검사를 자동화하려면 local hook을 선택적으로 설치할 수 있다.
 일반 사용이나 scaffold 적용에는 필요하지 않다.

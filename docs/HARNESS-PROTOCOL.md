@@ -425,7 +425,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | T9 | 발표/보고 산출물 생성 | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |
 | T10 | Work 파일 Done 상태 발견 | archive 승인 여부 제안 |
 | T11 | tool surface 변경 | Claude(`.claude/commands/`, `.claude/rules/`)/Codex(`.agents/skills/`, `.codex/hooks.json`)/Cursor(`.cursor/rules/`)/`prompts/`/README/scaffold 정렬 확인 |
-| T12 | scaffold source 또는 canonical workflow 변경 | dry-run + temp scaffold 검증 |
+| T12 | scaffold source 또는 canonical workflow 변경 | `scripts/create-harness.sh`가 있으면 dry-run + temp scaffold 검증, 없으면 source scaffold 검증 제외 |
 | T13 | Product track surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
 | T15 | commit 또는 PR 생성 전 | `docs/STATUS.md` 최종본 반영 필요 여부 판정 |
@@ -440,7 +440,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 - DR Draft는 Accepted 전까지 PLAN cascade를 발동하지 않는다.
 - T10은 archive 제안만 수행한다. 사용자 승인 전 `git mv`를 실행하지 않는다.
 - T11은 관련 tool surface를 확인 대상으로 추가하지만 자동 수정하지 않는다. 발견 -> 제안 -> 승인 순서를 따른다.
-- T12는 temp target에서 검증하고 생성물을 live tree로 복사하지 않는다.
+- T12는 `scripts/create-harness.sh`가 있는 source repository에서만 temp target 검증을 수행하고 생성물을 live tree로 복사하지 않는다. scaffold 적용 repository처럼 script가 없으면 Skipped / Not Applicable로 보고한다.
 - T13은 Product track surface의 작은 작업을 빠르게 닫기 위한 규칙이다.
 - T14는 entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경을 기본 L2로 다루며, 관련 tool surface를 확인한다.
 - T15는 자동 STATUS 수정을 허용하지 않는다. Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, Active Work Discovery 최신성을 확인한다. 필요하면 Approval Matrix에 맞는 state-change proposal 또는 `STATUS Update Proposal`을 먼저 제안하고, 불필요하면 commit/PR 전 summary에 이유를 남긴다.
@@ -465,17 +465,17 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 
 | 변경 대상 | 반드시 확인할 표면 |
 | --- | --- |
-| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.cursor/rules/`, `.agents/skills/`, `.codex/hooks.json`, `prompts/`, `scripts/create-harness.sh` |
+| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.cursor/rules/`, `.agents/skills/`, `.codex/hooks.json`, `prompts/`, `scripts/create-harness.sh`가 있으면 scaffold source |
 | `.claude/commands/*.md` | `AGENTS.md` command index, `.agents/skills/source-command-{name}/SKILL.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md`, `docs/HARNESS-QUICK-REFERENCE.md` |
 | `.agents/skills/*/SKILL.md` | `.claude/commands/` 대응 파일, `AGENTS.md` command index |
 | `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc` | 반대 tool rule, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` |
 | `.codex/hooks.json` | `AGENTS.md`, `docs/HARNESS-PROTOCOL.md` hook 관련 섹션 |
 | `prompts/*session-start.md` | `prompts/README.md`, `AGENTS.md`, `CLAUDE.md`, relevant command/rule |
-| `scripts/create-harness.sh` | `docs/SCAFFOLD-BOOTSTRAP.md`와 Boot Sequence·Completion Rule 동기화 확인, generic/spring-boot dry-run, temp scaffold 생성 결과, scaffold 내부 stale phrase 검색 |
-| `docs/SCAFFOLD-BOOTSTRAP.md` | `scripts/create-harness.sh` 생성 BOOTSTRAP.md 템플릿과 Boot Sequence·Completion Rule 정합성 확인 |
+| `scripts/create-harness.sh`가 존재할 때 | `docs/SCAFFOLD-BOOTSTRAP.md`와 Boot Sequence·Completion Rule 동기화 확인, generic/spring-boot dry-run, temp scaffold 생성 결과, scaffold 내부 stale phrase 검색 |
+| `docs/SCAFFOLD-BOOTSTRAP.md` | `scripts/create-harness.sh`가 있으면 생성 BOOTSTRAP.md 템플릿과 Boot Sequence·Completion Rule 정합성 확인, 없으면 source repo 전용 기준으로 표시 |
 | `docs/decisions/DR-*.md` Accepted | `docs/STATUS.md` Recent Decisions 필요 여부 필수 판정, 관련 backlog/Work 파일, PLAN 영향 여부 |
 | maintainer-facing docs (`README.md`, `HARNESS-MAINTAINER-GUIDE.md`) | 실제 config/script/source와 기술 내용 대조 |
-| `docs/` 하위 디렉토리 신규 추가 또는 삭제 | T5(PLAN 영향 여부), T7(harness protocol 업데이트 필요 여부), Context Routing 갱신 여부, `scripts/create-harness.sh` 동기화 여부 확인 |
+| `docs/` 하위 디렉토리 신규 추가 또는 삭제 | T5(PLAN 영향 여부), T7(harness protocol 업데이트 필요 여부), Context Routing 갱신 여부, `scripts/create-harness.sh`가 있으면 scaffold 동기화 여부 확인 |
 
 ### STATUS.md Section Deletion Cascade Checklist
 

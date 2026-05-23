@@ -31,8 +31,11 @@ Use this skill when the user asks to run the migrated source command `health`.
 
 **Phase 2 — Workflow Structure (listing first)**
 ```bash
-ls .Codex/commands/    # 파일 수·이름 확인
-ls .Codex/rules/       # 파일 수·이름 확인
+ls .agents/skills/     # Codex skill 수·이름 확인
+ls .claude/commands/   # 대응 Claude command 수·이름 확인
+ls .claude/rules/      # Claude rule 수·이름 확인
+ls .cursor/rules/      # Cursor rule 수·이름 확인
+ls .codex/             # Codex hook/config 파일 확인
 ```
 목록 이상 시에만 해당 파일 내용 확인. 정상이면 전체 로드하지 않는다.
 
@@ -49,7 +52,7 @@ ls .Codex/rules/       # 파일 수·이름 확인
 **Phase 5 — Implementation Sync (--full, Area F only)**
 ```bash
 # 최근 30일 변경된 workflow/tool/scaffold 파일 목록
-git log --since="30 days ago" --name-only --format="" | sort -u | rg "^(AGENTS.md|AGENTS.md|README.md|docs/|prompts/|scripts/|\\.Codex/|\\.cursor/|\\.github/)"
+git log --since="30 days ago" --name-only --format="" | sort -u | rg "^(AGENTS.md|CLAUDE.md|README.md|docs/|prompts/|scripts/|\\.agents/|\\.codex/|\\.claude/|\\.cursor/|\\.github/)"
 ```
 변경 파일 목록을 기반으로 관련 문서만 선택적 확인.
 `docs/decisions/DR-*.md` 상태 확인:
@@ -79,13 +82,13 @@ git diff --cached --name-only
 
 | 변경 파일 유형 | Canonical | Tool-specific | User-facing | Scaffold | Historical |
 | --- | --- | --- | --- | --- | --- |
-| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 두 파일 모두 | `AGENTS.md`, `AGENTS.md`, `.Codex/commands/`, `.Codex/rules/`, `.cursor/rules/`, `prompts/*` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` 섹션, `README.md` | `scripts/create-harness.sh`, dry-run 또는 temp scaffold | 관련 retrospective는 snapshot 여부만 확인 |
-| `.Codex/commands/*.md` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | `AGENTS.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` command 섹션 | command 복사 산출물 | 필요 시 관련 Work/retrospective |
-| `.Codex/rules/*.md`, `.cursor/rules/*.mdc` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 반대 tool rule, prompts | 필요 시 manual/rules 설명 | rule 복사 산출물 | 필요 시 관련 Work/retrospective |
-| `prompts/*` | `docs/AGENT-WORKFLOW.md`, 필요 시 `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `AGENTS.md`, command/rule | `prompts/README.md`, 필요 시 manual prompt 섹션 | prompt 복사 산출물 | 필요 시 관련 Work/retrospective |
+| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 두 파일 모두 | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.agents/skills/`, `.codex/hooks.json`, `.cursor/rules/`, `prompts/*` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` 섹션, `README.md` | `scripts/create-harness.sh`가 있으면 dry-run 또는 temp scaffold, 없으면 scaffold source 검증 제외 | 관련 retrospective는 snapshot 여부만 확인 |
+| `.claude/commands/*.md` 또는 `.agents/skills/*/SKILL.md` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 대응 `.agents/skills/source-command-{name}/SKILL.md` 또는 `.claude/commands/{name}.md`, `AGENTS.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` command 섹션 | command/skill 복사 산출물 | 필요 시 관련 Work/retrospective |
+| `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.codex/hooks.json` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 반대 tool rule, hook, prompts | 필요 시 manual/rules 설명 | rule/hook 복사 산출물 | 필요 시 관련 Work/retrospective |
+| `prompts/*` | `docs/AGENT-WORKFLOW.md`, 필요 시 `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, command/skill/rule/hook | `prompts/README.md`, 필요 시 manual prompt 섹션 | prompt 복사 산출물 | 필요 시 관련 Work/retrospective |
 | `docs/WORKFLOW-MANUAL.md`, `README.md`, `docs/HARNESS-QUICK-REFERENCE.md` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 관련 command/rule/prompt | 변경된 user-facing 문서 상호 참조 | 필요 시 scaffold README/manual 산출물 | snapshot 덮어쓰기 금지 |
-| `scripts/create-harness.sh` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/SCAFFOLD-BOOTSTRAP.md` | commands/rules/prompts source | generated README/manual expectations | dry-run + temp scaffold + stale phrase search | 필요 시 related Work |
-| `docs/SCAFFOLD-BOOTSTRAP.md` | `docs/HARNESS-PROTOCOL.md` | — | — | `scripts/create-harness.sh` 생성 BOOTSTRAP.md 템플릿 (Boot Sequence, Completion Rule 동기화) | — |
+| `scripts/create-harness.sh`가 존재할 때 | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/SCAFFOLD-BOOTSTRAP.md` | commands/rules/prompts source | generated README/manual expectations | dry-run + temp scaffold + stale phrase search | 필요 시 related Work |
+| `docs/SCAFFOLD-BOOTSTRAP.md` | `docs/HARNESS-PROTOCOL.md` | — | — | `scripts/create-harness.sh`가 있으면 생성 BOOTSTRAP.md 템플릿과 Boot Sequence·Completion Rule 동기화, 없으면 source repo 전용 기준으로 표시 | — |
 | `docs/STATUS.md`, `docs/works/**`, `docs/backlog/**`, `docs/decisions/**` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | start/resume/close/done/record-decision commands | quick reference/manual state sections | work/index scaffold templates | 관련 Work/DR/retrospective |
 
 ### Required Grep Pack
@@ -96,10 +99,10 @@ git diff --cached --name-only
 ```bash
 # Live target set
 LIVE_TARGETS=(
-  AGENTS.md AGENTS.md README.md
+  AGENTS.md CLAUDE.md README.md
   docs/AGENT-WORKFLOW.md docs/HARNESS-PROTOCOL.md docs/HARNESS-QUICK-REFERENCE.md docs/WORKFLOW-MANUAL.md docs/STATUS.md
   docs/backlog docs/decisions docs/works
-  .Codex .cursor prompts scripts
+  .agents .codex .claude .cursor prompts scripts
 )
 
 # Common stale path / old term check
@@ -115,8 +118,12 @@ rg -n "/start|/pick|/work|/resume|/close|/done|/health|Quick Mode|Approval Matri
   docs/WORKFLOW-MANUAL.md docs/HARNESS-QUICK-REFERENCE.md README.md
 
 # Scaffold drift
-rg -n "HARNESS-PROTOCOL|AGENT-WORKFLOW|WORKFLOW-MANUAL|Quick Mode|Approval Matrix|/health|--cascade" \
-  scripts/create-harness.sh
+if test -f scripts/create-harness.sh; then
+  rg -n "HARNESS-PROTOCOL|AGENT-WORKFLOW|WORKFLOW-MANUAL|Quick Mode|Approval Matrix|/health|--cascade" \
+    scripts/create-harness.sh
+else
+  echo "skip: scripts/create-harness.sh not present in this repository"
+fi
 ```
 
 Historical matches are not automatically drift. Report them separately as snapshot references unless they appear in live execution, guide, or scaffold surfaces.
@@ -139,7 +146,9 @@ Historical matches are not automatically drift. Report them separately as snapsh
 
 - 각 slash command: 트리거 조건 명확성, Done Criteria 존재, 승인 대기 명시 여부
   (Phase 2에서 목록 확인 후 의심 항목만 내용 확인)
-- 각 `.Codex/rules/*.md`: `paths` glob이 실제 디렉토리 구조와 일치하는가
+- 각 `.claude/rules/*.md`, `.cursor/rules/*.mdc`: `paths` glob이 실제 디렉토리 구조와 일치하는가
+- 각 `.agents/skills/*/SKILL.md`: 대응 `.claude/commands/*.md`와 의미상 정렬되는가
+- `.codex/hooks.json`: hook reminder가 `/close`/`/done` 분리와 STATUS/Tracking Finalization을 반영하는가
 - `docs/AGENT-WORKFLOW.md` 워크플로우 기술 ↔ 실제 command 구현 사이 gap
   (이미 컨텍스트에 있는 docs/AGENT-WORKFLOW.md 기준으로 확인)
 - command/prompt 종료 요약 ↔ `docs/HARNESS-PROTOCOL.md`의 Validation Checklist, Approval Matrix, Commit Approval 정합성
@@ -155,26 +164,29 @@ Historical matches are not automatically drift. Report them separately as snapsh
 - HARNESS-PROTOCOL.md 단일 상세 protocol 구조 ↔ 실제 파일 목록 일치
 - README.md 프로젝트 구조 블록 ↔ 실제 디렉토리 구조
   ```bash
-  ls -d */ .github .Codex .cursor .devcontainer 2>/dev/null
+  ls -d */ .github .agents .codex .claude .cursor .devcontainer 2>/dev/null
   ```
-- `.Codex/rules/*.md` ↔ `.cursor/rules/*.mdc` 정렬 (DR-007 준수 여부)
+- `.claude/rules/*.md` ↔ `.cursor/rules/*.mdc` 정렬 (DR-007 준수 여부)
   (파일 수·파일명 비교로 1차 확인, 내용 비교는 불일치 시에만)
+- `.claude/commands/*.md` ↔ `.agents/skills/source-command-*/SKILL.md` 정렬
+  (파일 수·파일명 비교 후, 의심 항목만 내용 비교)
 - Language Rules 위반 (DR-007):
-  - `docs/*.md`가 영어 작성, `.Codex/rules/*.md`가 한국어 작성된 경우
-  - Bilingual Rules 위반: `docs/*.md`, `.Codex/commands/*.md`에서 섹션 타이틀 한국어 표기, 기술 용어 음차, 성능 지표 한글화
+  - `docs/*.md`가 영어 작성, `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc`가 한국어 작성된 경우
+  - Bilingual Rules 위반: `docs/*.md`, `.claude/commands/*.md`, `.agents/skills/*/SKILL.md`에서 섹션 타이틀 한국어 표기, 기술 용어 음차, 성능 지표 한글화
 - STATUS.md Next Actions 순서 ↔ Active Work Priority/Status 논리 일관성
 - **Embedded Diagram 참조 유효성** (Mermaid 등):
   ```bash
   rg -l '```mermaid' docs/ README.md 2>/dev/null
   ```
   발견된 파일별로 다이어그램 노드·라벨·경로가 현재 프로젝트 상태와 일치하는지 확인한다.
-  - `docs/AGENT-WORKFLOW.md` state machine — `INIT→PLAN→APPROVAL→EXECUTE→VALIDATE→CHECKPOINT→END` 순서와 RECOVER/FAIL 분기가 `.Codex/commands/` 구현 및 `docs/HARNESS-PROTOCOL.md`와 일치하는가
+  - `docs/AGENT-WORKFLOW.md` state machine — `INIT→PLAN→APPROVAL→EXECUTE→VALIDATE→CHECKPOINT→END` 순서와 RECOVER/FAIL 분기가 `.claude/commands/`, `.agents/skills/` 구현 및 `docs/HARNESS-PROTOCOL.md`와 일치하는가
   - 노드 라벨이 실제 존재하지 않는 파일 경로·서비스명·상태를 참조하면 drift로 보고
   - 렌더링 없이 구문 유효성(syntax)을 확인할 수 없는 항목은 "수동 검토 권고"로 보고
 
 ### C. Codex Feature Alignment (--full)
 
-- `.Codex/settings.json`: `defaultMode`, `permissions.deny` 목록 현행성, hooks 설정
+- `.agents/skills/`: command skill frontmatter와 대응 command coverage
+- `.codex/hooks.json`: hook 설정 현행성
 - MCP 서버 설정 상태 및 실제 활용 가능성
 - Phase 2에서 읽은 rule/command 기반으로 중복 instruction·비효율 탐지
   (추가 파일 로드 없이 이미 확인한 내용에서 판단)
@@ -218,13 +230,13 @@ Phase 5의 git log 결과를 기준으로, 변경된 구현 파일 유형별로 
 
 | 변경 파일 유형 | 확인 대상 문서 |
 |---------------|---------------|
-| `AGENTS.md`, `AGENTS.md` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, 관련 session prompt |
-| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md` | `.Codex/commands/*.md`, `.Codex/rules/*.md`, `.cursor/rules/*.mdc`, `prompts/*session-start.md` |
+| `AGENTS.md`, `CLAUDE.md` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, 관련 session prompt |
+| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md` | `.claude/commands/*.md`, `.claude/rules/*.md`, `.agents/skills/*/SKILL.md`, `.codex/hooks.json`, `.cursor/rules/*.mdc`, `prompts/*session-start.md` |
 | `docs/STATUS.md`, `docs/PLAN.md`, `docs/PLAN-SUMMARY.md` | Active Work 파일, `docs/works/*/README.md`, 관련 backlog |
 | `.github/workflows/*.yml` | `docs/GIT-WORKFLOW.md`, `.cursor/rules/execution.mdc`, `README.md` CI 항목 |
-| `.Codex/commands/*.md` 또는 `.Codex/rules/*.md` | `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, 대응 `.cursor/rules/*.mdc` |
-| `.cursor/rules/*.mdc` | `docs/AGENT-WORKFLOW.md`, 대응 `.Codex/rules/*.md`, 관련 session prompt |
-| `scripts/create-harness.sh` | `README.md`, `docs/WORKFLOW-MANUAL.md`, `docs/WORKFLOW-MANUAL-SUMMARY*.md`, fresh scaffold 산출물 |
+| `.claude/commands/*.md`, `.agents/skills/*/SKILL.md`, `.claude/rules/*.md`, `.codex/hooks.json` | `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, 대응 `.agents/skills/` 또는 `.claude/commands/`, 대응 `.cursor/rules/*.mdc` |
+| `.cursor/rules/*.mdc` | `docs/AGENT-WORKFLOW.md`, 대응 `.claude/rules/*.md`, 관련 session prompt |
+| `scripts/create-harness.sh`가 존재할 때 | `README.md`, `docs/WORKFLOW-MANUAL.md`, `docs/WORKFLOW-MANUAL-SUMMARY*.md`, fresh scaffold 산출물 |
 | `prompts/*.md` | `prompts/README.md`, `docs/AGENT-WORKFLOW.md` context routing, scaffold profile 포함 여부 |
 | `docs/decisions/DR-*.md` (신규 Accepted) | `docs/STATUS.md` Recent Decisions, 연관 backlog Done Criteria |
 | `docs/*.md` (신규 사용자/운영 문서) | 해당 문서가 참조하는 command/rule/script/CI 파일과 실제 내용 대조 |
@@ -250,7 +262,7 @@ rg -n "^## |^### " docs/PLAN.md
 - 해당 행의 canonical / tool-specific / user-facing / scaffold / historical surface를 확인한다.
 - Required Grep Pack에서 관련 명령을 실행하거나, 실행하지 않은 이유를 기록한다.
 - Required Simulation Matrix에서 관련 흐름을 선택해 논리 시뮬레이션한다.
-- scaffold source가 바뀌었으면 `scripts/create-harness.sh --dry-run`과 필요 시 temp scaffold 생성으로 산출물 drift를 확인한다.
+- scaffold source가 있고 그 파일이 바뀌었으면 `scripts/create-harness.sh --dry-run`과 필요 시 temp scaffold 생성으로 산출물 drift를 확인한다. scaffold source가 없는 적용 repository에서는 이 항목을 Skipped / Not Applicable로 보고한다.
 - historical retrospective는 snapshot인지 live follow-up log인지 구분한다. snapshot이면 기존 내용을 덮어쓰지 않고 append 제안만 한다.
 - 반복 문구를 다음으로 분류한다:
   - Required mirror — 도구 진입점에서 반드시 보여야 하는 반복

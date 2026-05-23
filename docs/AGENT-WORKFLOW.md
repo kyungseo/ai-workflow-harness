@@ -177,7 +177,7 @@ ID prefix와 파일명 상세 기준:
 
 - Documentation-only change: `git diff --check`, 링크와 stale phrase 점검
 - Workflow/protocol/tool-surface change: canonical -> tool-specific -> user-facing -> scaffold cascade 점검
-- Scaffold change: `bash -n scripts/create-harness.sh`, generic dry-run, 필요 시 temp 실제 생성
+- Scaffold change: `scripts/create-harness.sh`가 있으면 `bash -n scripts/create-harness.sh`, generic dry-run, 필요 시 temp 실제 생성. scaffold 적용 repository처럼 script가 없으면 Skipped / Not Applicable로 보고
 - Public release prep: secret/private-info scan, stale project identity audit
 
 검증을 실행할 수 없다면 이유와 남은 risk를 보고한다.
