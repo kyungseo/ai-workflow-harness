@@ -42,12 +42,6 @@ Scaffold + Adoption
   docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md
 ```
 
-## Current Phase
-
-| Field | Value |
-|------|------|
-| Phase | Workflow hardening |
-
 ## Key Operating Decisions
 
 - Repository name은 `ai-workflow-harness`로 유지한다.
