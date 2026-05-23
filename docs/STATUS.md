@@ -3,14 +3,14 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-22 (public-ready migration 시작)
+Last updated: 2026-05-23 (HRN-025 완료)
 
 ## Current State
 
 | Field | Value |
 | --- | --- |
-| Current phase | Initial public-ready migration |
-| Current focus | AI Workflow Harness 전용 project identity 전환 |
+| Current phase | Workflow hardening |
+| Current focus | AI Workflow Harness 문서 현행화, scaffold 정합성, tool surface alignment |
 | Project plan | `docs/PLAN.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
@@ -27,36 +27,28 @@ Last updated: 2026-05-22 (public-ready migration 시작)
 
 ## Current Milestone Criteria
 
-- [x] `kyungseo/ai-workflow-harness` private repository 생성
-- [x] `base-msa-template` Git history / branch / tag 복제
-- [x] 새 working copy 생성
-- [x] migration feature branch 생성
-- [x] AI Workflow Harness 전용 `docs/PLAN.md` 확정
-- [x] current tree inventory and classification 완료
-- [x] Spring Boot MSA production surface 제거 또는 legacy-isolate
-- [x] public README / summary / workflow docs 정렬
-- [x] secret/private-info audit 완료
-- [ ] public 전환 전 final review 완료
+- [ ] canonical / tool-specific / user-facing / scaffold 문서 계층 정합성 확인
+- [ ] start, pick, work, resume, close/done, archive, quick mode, state update, cascade/trigger, scaffold flow 시뮬레이션 완료
+- [ ] stale rename, removed path, runtime identity scan 통과
+- [ ] fresh scaffold 생성 결과 검증
+- [ ] public/adoption readiness 기준으로 문서 보완 완료
 
 ## Active Work
 
-| ID | Priority | Status | Work File |
-| --- | --- | --- | --- |
-| AWH-001 | P0 | Active | `docs/works/harness/AWH-001-public-repo-migration.md` |
+(없음)
 
 ## Blockers And Open Questions
 
 | ID | Status | Question | Decision Needed |
 | --- | --- | --- | --- |
-| AWH-OQ-001 | Open | Spring Boot profile support를 public v1에 남길 것인가? | generic-only core 여부 결정 |
-| AWH-OQ-002 | Open | historical product docs를 `docs/archive/`에 얼마나 남길 것인가? | 현재 guidance와 혼동되지 않는 legacy 기준 결정 |
-| AWH-OQ-003 | Open | public positioning을 personal workflow, team workflow, reusable framework 중 어디에 둘 것인가? | README / summary wording 결정 |
+| AWH-OQ-001 | Open | historical product docs를 `docs/archive/`에 얼마나 남길 것인가? | 현재 guidance와 혼동되지 않는 legacy 기준 결정 |
 
 ## Recent Decisions
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
 | 2026-05-22 | `AGENTS.md`와 `.cursor/rules/workflow.mdc`에 Document Language Policy 섹션 추가 | Codex/Cursor가 DR-007을 문서 편집 시 적용하지 않는 구조적 결함 수정 — path-scoped 자동 로딩이 없는 도구에 inline 규칙 삽입 | Medium |
+| 2026-05-22 | AWH-001 이후 phase를 `Workflow hardening`으로 전환 | public-ready migration 이후 모든 후속 작업을 문서 현행화, scaffold 정합성, tool surface alignment 강화 단계로 묶기 위함 | Low |
 | 2026-05-22 | `.cursor/rules/role-backend.mdc` → `role-harness-maintainer.mdc` rename | 파일명이 Spring Boot 시절 이름을 유지하고 있었고 내용은 이미 Harness Maintainer Role로 교체된 상태 — 파일명/내용 불일치 수정 | Low |
 | 2026-05-22 | Spring Boot prompt bundle을 optional example pack으로 보존 | generic harness에서 제거하지 않고 stack-specific prompt 구성 방식을 보여주는 sample로 유지 | Low |
 | 2026-05-21 | Repository name은 `ai-workflow-harness`로 사용 | 현재 system은 AI workflow를 직접 실행하는 engine보다 session/status/gate/validation을 감싸는 harness에 가까움 | Low |
@@ -65,6 +57,5 @@ Last updated: 2026-05-22 (public-ready migration 시작)
 
 ## Next Actions
 
-1. AWH-001 CP-5: diff review and final public-readiness report
-2. AWH-001 CP-5: PR 준비 전 reviewer-facing summary 작성
-3. Public 전환은 PR merge 후 별도 final review에서 결정
+1. HRN-024 disposition 결정: `/close` (완료 처리) 또는 남은 문서 정합성 범위 재개
+2. AWH-001 archive 승인 여부 결정 (Done since 2026-05-22, `docs/works/harness/`에 대기 중)

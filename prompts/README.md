@@ -1,6 +1,6 @@
 # Prompt Library Guide
 
-이 디렉토리는 반복 사용 가능한 task prompt와 세션 bootstrap prompt를 보관한다.
+이 디렉토리는 반복 사용 가능한 task prompt와 세션 시작 prompt를 보관한다.
 Claude Code에서는 기본적으로 `.claude/commands/`를 먼저 사용하고, 이 prompt들은 command를 쓸 수 없거나 다른 도구로 작업을 넘길 때 사용한다.
 
 Prompt library는 두 층으로 나눈다.
@@ -59,12 +59,12 @@ Stack-specific prompt pack을 어떻게 구성할 수 있는지 보여주는 예
 | Redis cache | `18-add-cache.prompt.md` |
 | 레이어별 코드 생성 | `21-create-layer.prompt.md` |
 
-## 4) Session Bootstrap Prompts
+## 4) Session Start Prompts
 
 | 파일 | 역할 |
 | --- | --- |
 | `claude-session-start.md` | Claude Code slash command를 사용할 수 없는 환경의 fallback prompt |
-| `cursor-session-start.md` | Cursor에서 현재 하네스 상태를 복원하는 bootstrap prompt |
+| `cursor-session-start.md` | Cursor에서 현재 하네스 상태를 복원하는 session start prompt |
 | `codex-session-start.md` | `AGENTS.md`를 사용할 수 없거나 수동 복원이 필요한 환경의 fallback prompt |
 
 ## 5) 사용 절차

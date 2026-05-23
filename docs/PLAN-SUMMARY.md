@@ -46,64 +46,66 @@ Scaffold + Adoption
 
 | Field | Value |
 |------|------|
-| Phase | Initial public-ready migration |
-| Active Work | `AWH-001` |
-| Work File | `docs/works/harness/AWH-001-public-repo-migration.md` |
-| Branch | `feature/ai-workflow-harness-migration` |
+| Phase | Workflow hardening |
+| Active Work | `HRN-024` |
+| Work File | `docs/works/harness/HRN-024-doc-consistency-alignment.md` |
+| Branch | `feature/hrn-doc-consistency-alignment` |
 | Visibility | Private until public-readiness review |
 
 ## Key Operating Decisions
 
-- Repository name: `ai-workflow-harness`
-- Full Git history from `base-msa-template` is intentionally preserved.
-- Current tree should become AI Workflow Harness focused.
-- `docs/PLAN.md` and `docs/STATUS.md` stay live after migration; migration details live in Work files.
-- `docs/PLAN-SUMMARY.md` is a core Context Routing surface and must be rewritten, not removed.
-- Public release happens only after product surface cleanup and private-info audit.
+- Repository name은 `ai-workflow-harness`로 유지한다.
+- `base-msa-template`의 전체 Git history는 의도적으로 보존한다.
+- AWH-001 migration 이후 current tree는 AI Workflow Harness 중심으로 정리된 상태다.
+- `docs/PLAN.md`와 `docs/STATUS.md`는 migration 이후에도 live 문서로 유지하고, migration 세부 기록은 Work 파일에 둔다.
+- `docs/PLAN-SUMMARY.md`는 core Context Routing surface이므로 제거하지 않고 현재 상태에 맞게 유지한다.
+- Post-migration 작업은 Workflow hardening phase에 귀속하며, documentation alignment, scaffold consistency, tool-surface mirror, adoption readiness를 다룬다.
 
 ## Core Files
 
-| Purpose | File |
+| 용도 | 파일 |
 |------|------|
-| Codex entrypoint | `AGENTS.md` |
-| Claude Code entrypoint | `CLAUDE.md` |
-| Global behavior principles | `docs/BEHAVIOR-PRINCIPLES.md` |
-| Common workflow rules | `docs/AGENT-WORKFLOW.md` |
-| Detailed protocol | `docs/HARNESS-PROTOCOL.md` |
-| Quick operational summary | `docs/HARNESS-QUICK-REFERENCE.md` |
-| Current dashboard | `docs/STATUS.md` |
-| Project plan | `docs/PLAN.md` |
+| Codex 진입점 | `AGENTS.md` |
+| Claude Code 진입점 | `CLAUDE.md` |
+| 전역 행동 원칙 | `docs/BEHAVIOR-PRINCIPLES.md` |
+| 공통 workflow 규칙 | `docs/AGENT-WORKFLOW.md` |
+| 상세 protocol | `docs/HARNESS-PROTOCOL.md` |
+| 빠른 운영 요약 | `docs/HARNESS-QUICK-REFERENCE.md` |
+| Scaffold 부팅 guide | `docs/BOOTSTRAP.md`, `docs/SCAFFOLD-BOOTSTRAP.md` |
+| 현재 dashboard | `docs/STATUS.md` |
+| 프로젝트 plan | `docs/PLAN.md` |
 | Work item SSoT | `docs/works/**` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Public manual | `docs/WORKFLOW-MANUAL.md` |
-| Public summary | `docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md` |
-| Scaffold | `scripts/create-harness.sh` |
+| 공개 manual | `docs/WORKFLOW-MANUAL.md` |
+| 공개 summary | `docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md` |
+| Scaffold script | `scripts/create-harness.sh` |
 
-## Current Cleanup Classification
+## Current Surface Policy
 
 | Class | Examples |
 |------|------|
-| Keep as core | entrypoints, behavior/workflow/protocol docs, STATUS/PLAN/PLAN-SUMMARY, Work/backlog/DR structure, tool command/rule mirrors, generic prompts, scaffold |
-| Keep as core (converted) | HARNESS-STRUCTURE (구 ARCHITECTURE), HARNESS-MAINTAINER-GUIDE (구 DEVELOPER-GUIDE + CODING-CONVENTIONS 통합) |
-| Review before keeping | troubleshooting, presentations, archive, Spring Boot profile, Java/Spring rules and prompts |
-| Remove or legacy-isolate | Spring Boot runtime code, Gradle build, common/gateway/services/frontend/tests, Docker/K8s/DB infra, generated build output |
+| Core로 유지 | entrypoint, behavior/workflow/protocol docs, STATUS/PLAN/PLAN-SUMMARY, Work/backlog/DR structure, tool command/rule mirror, generic prompt, scaffold |
+| Core로 전환 완료 | HARNESS-STRUCTURE (구 ARCHITECTURE), HARNESS-MAINTAINER-GUIDE (구 DEVELOPER-GUIDE + CODING-CONVENTIONS 통합) |
+| 유지 여부 검토 | troubleshooting, presentations, archive, optional Spring Boot example profile and prompt pack |
+| 제거 또는 legacy 격리 완료 | Spring Boot runtime code, Gradle build, common/gateway/services/frontend/tests, Docker/K8s/DB infra, generated build output |
 
 ## Validation Defaults
 
-| Change | Validation |
+| 변경 | 검증 |
 |------|------|
-| Documentation-only | `git diff --check`, targeted stale-term search |
-| Workflow/protocol/tool surface | canonical -> tool-specific -> user-facing -> scaffold cascade check |
-| Scaffold script | `bash -n scripts/create-harness.sh`, generic dry-run, optional temp actual generation |
-| Public release prep | secret/private-info scan, stale identity audit, GitHub visibility check |
+| 문서 전용 변경 | `git diff --check`, 대상 stale-term search |
+| Workflow/protocol/tool surface 변경 | canonical -> tool-specific -> user-facing -> scaffold cascade check |
+| Scaffold script 변경 | `bash -n scripts/create-harness.sh`, generic dry-run, 필요 시 temp actual generation |
+| Public release 준비 | secret/private-info scan, stale identity audit, GitHub visibility check |
 
 ## Active References
 
-| Need | File |
+| 필요 상황 | 파일 |
 |------|------|
-| Current state | `docs/STATUS.md` |
-| Migration plan and discoveries | `docs/works/harness/AWH-001-public-repo-migration.md` |
-| Long-term project plan | `docs/PLAN.md` |
-| Workflow rules | `docs/AGENT-WORKFLOW.md` |
-| Detailed protocol | `docs/HARNESS-PROTOCOL.md` |
-| User-facing workflow guide | `docs/WORKFLOW-MANUAL.md` |
+| 현재 상태 확인 | `docs/STATUS.md` |
+| 진행 중인 hardening work | `docs/works/harness/HRN-024-doc-consistency-alignment.md` |
+| Migration 기록 | `docs/works/harness/AWH-001-public-repo-migration.md` |
+| 장기 project plan | `docs/PLAN.md` |
+| Workflow 규칙 | `docs/AGENT-WORKFLOW.md` |
+| 상세 protocol | `docs/HARNESS-PROTOCOL.md` |
+| 사용자용 workflow guide | `docs/WORKFLOW-MANUAL.md` |

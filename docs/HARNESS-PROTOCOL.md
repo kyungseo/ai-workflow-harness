@@ -13,12 +13,12 @@ Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORK
 
 핵심 목표:
 
-- Deterministic Execution: 같은 상태에서 같은 절차로 재개
-- Stateful Workflow: `docs/STATUS.md` 중심으로 현재 상태 유지
+- 결정적 실행: 같은 상태에서 같은 절차로 재개
+- 상태 기반 workflow: `docs/STATUS.md` 중심으로 현재 상태 유지
 - Work SSoT: 작업 세부 이력은 Work 파일에 보존하고 `docs/STATUS.md`는 dashboard로 유지
-- Controlled Execution: Plan -> Approval -> Execute -> Validate
-- Failure-first Design: 실패와 복구 경로 명시
-- Reversibility: 백업, checkpoint, rollback 비용 고려
+- 통제된 실행: Plan -> Approval -> Execute -> Validate
+- 실패 우선 설계: 실패와 복구 경로 명시
+- 되돌릴 수 있는 변경: 백업, checkpoint, rollback 비용 고려
 
 ## 2. Quick Start
 
@@ -39,6 +39,7 @@ Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORK
 | `docs/BEHAVIOR-PRINCIPLES.md` | 전역 행동 원칙 |
 | `docs/AGENT-WORKFLOW.md` | 도구 공통 운영 규칙 |
 | `docs/STATUS.md` | 현재 상태 live board |
+| `docs/BOOTSTRAP.md` | `STATUS.md` Next Actions가 scaffold bootstrap/onboarding을 명시할 때 사용하는 project identity, production 성격, backlog, example pack setup checklist |
 | `docs/HARNESS-QUICK-REFERENCE.md` | 일상 실행 카드 |
 | `docs/HARNESS-PROTOCOL.md` | Agent 실행 상세 프로토콜 |
 | `docs/backlog/PHASE{n}.md` | product/Phase{n} 후보 작업 |
@@ -64,7 +65,7 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 
 ### State Definitions
 
-| State | Meaning | Required Output |
+| 상태 | 의미 | 필수 출력 |
 | --- | --- | --- |
 | INIT | 현재 상태 확인 | current phase, active work, blockers |
 | PLAN | 작업 범위와 검증 정의 | scope, files, verification, risk, reversal cost |
@@ -468,7 +469,8 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 | `.claude/commands/*.md` | `AGENTS.md` command mapping, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md`, `docs/HARNESS-QUICK-REFERENCE.md` |
 | `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc` | 반대 tool rule, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` |
 | `prompts/*session-start.md` | `prompts/README.md`, `AGENTS.md`, `CLAUDE.md`, relevant command/rule |
-| `scripts/create-harness.sh` | generic/spring-boot dry-run, temp scaffold 생성 결과, scaffold 내부 stale phrase 검색 |
+| `scripts/create-harness.sh` | `docs/SCAFFOLD-BOOTSTRAP.md`와 Boot Sequence·Completion Rule 동기화 확인, generic/spring-boot dry-run, temp scaffold 생성 결과, scaffold 내부 stale phrase 검색 |
+| `docs/SCAFFOLD-BOOTSTRAP.md` | `scripts/create-harness.sh` 생성 BOOTSTRAP.md 템플릿과 Boot Sequence·Completion Rule 정합성 확인 |
 | `docs/decisions/DR-*.md` Accepted | `docs/STATUS.md` Recent Decisions 필요 여부 필수 판정, 관련 backlog/Work 파일, PLAN 영향 여부 |
 | maintainer-facing docs (`README.md`, `HARNESS-MAINTAINER-GUIDE.md`) | 실제 config/script/source와 기술 내용 대조 |
 | `docs/` 하위 디렉토리 신규 추가 또는 삭제 | T5(PLAN 영향 여부), T7(harness protocol 업데이트 필요 여부), Context Routing 갱신 여부, `scripts/create-harness.sh` 동기화 여부 확인 |

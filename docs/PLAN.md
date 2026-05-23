@@ -56,19 +56,20 @@ development workflow다.
 
 ## 4. Current Milestone
 
-현재 milestone은 `Public-ready repository migration`이다.
+현재 milestone은 `Workflow hardening`이다.
 
-이 milestone은 임시 project plan이 아니라, 본 project가 public으로 공개 가능한 형태가
-되기 위한 첫 정리 단계다. 완료 후에도 이 `PLAN.md`는 유지하며, `docs/STATUS.md`의
-current milestone과 active work만 다음 단계로 갱신한다.
+AWH-001에서 repository identity 전환과 Spring Boot MSA production surface 정리를 완료했다.
+이후 작업은 모두 Workflow hardening 단계에 귀속한다. 이 단계는 공개와 재사용을 앞두고
+문서, scaffold, command/rule mirror, 상태 관리, CI 검증을 실제 운영 흐름에 맞게 단단하게
+정렬하는 것을 목표로 한다.
 
 Milestone 목표:
 
-- repository identity를 AI Workflow Harness로 전환한다.
-- Spring Boot MSA production surface를 현재 tree에서 제거하거나 historical context로 격리한다.
-- generic harness core를 보존한다.
-- public README와 summary를 정렬한다.
-- secret, private URL, internal-only note를 점검한다.
+- canonical / tool-specific / user-facing / scaffold 문서 계층을 현재 model에 맞춘다.
+- start, pick, work, resume, close/done, archive, quick mode, state update, cascade/trigger, scaffold flow를 실제 사용 흐름으로 검증한다.
+- stale rename, removed path, runtime identity가 live surface에 재도입되지 않도록 점검한다.
+- generic scaffold와 optional example profile의 경계를 명확히 유지한다.
+- adoption readiness와 public-facing guide 품질을 보완한다.
 
 ## 5. Scope Policy
 
@@ -116,7 +117,7 @@ Milestone 목표:
 | Stage | Focus | Output |
 | --- | --- | --- |
 | AWH-001 | Public-ready migration | 현재 tree 정리, public docs, release readiness |
-| AWH-002 | Generic scaffold hardening | `create-harness.sh` generic flow 검증과 문서 정렬 |
+| AWH-002 | Workflow hardening | 문서 정합성, scaffold 검증, tool surface alignment, adoption readiness |
 | AWH-003 | Adoption guide | 기존 repository에 harness를 적용하는 guide 정리 |
 | AWH-004 | Review package | 외부 reviewer가 검토할 수 있는 architecture / workflow package |
 
@@ -135,6 +136,4 @@ Milestone 목표:
 
 | ID | Question | Default |
 | --- | --- | --- |
-| AWH-OQ-001 | Spring Boot profile support를 public v1에 남길 것인가? | generic-only core를 우선 검토한다 |
-| AWH-OQ-002 | historical product docs를 어느 범위까지 남길 것인가? | 현재 guidance와 혼동되지 않는 문서만 historical로 유지한다 |
-| AWH-OQ-003 | README positioning을 개인 workflow, team workflow, reusable framework 중 어디에 둘 것인가? | reusable manual-first operating harness로 설명한다 |
+| AWH-OQ-001 | historical product docs를 어느 범위까지 남길 것인가? | 현재 guidance와 혼동되지 않는 문서만 historical로 유지한다 |

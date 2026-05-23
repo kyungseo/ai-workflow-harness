@@ -314,6 +314,8 @@ write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 
 이 프로젝트는 Claude Code / Codex / Cursor 공통 AI 워크플로우 하네스를 포함합니다.
 하네스는 Product track과 Harness track을 함께 운영하도록 설계되어 있습니다.
+첫 세션에서는 프로젝트 identity와 production 성격을 먼저 정리해 Product track backlog를 만들고,
+AI workflow 자체의 개선과 example pack 정비는 Harness track으로 분리합니다.
 
 | Track | 목적 | 주요 파일 |
 | --- | --- | --- |
@@ -329,6 +331,7 @@ write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 | \`docs/HARNESS-QUICK-REFERENCE.md\` | 세션 실행 규칙 요약 |
 | \`docs/HARNESS-STRUCTURE.md\` | harness 구조와 정보 흐름 시각화 |
 | \`docs/HARNESS-MAINTAINER-GUIDE.md\` | 유지보수·convention 가이드 |
+| \`docs/BOOTSTRAP.md\` | scaffold 직후 프로젝트 부팅 checklist |
 | \`docs/WORKFLOW-MANUAL.md\` | 사용자용 워크플로우 가이드 |
 | \`docs/WORKFLOW-MANUAL-SUMMARY.md\` | 워크플로우 핵심 요약본 |
 | \`docs/AGENT-WORKFLOW.md\` | 공통 운영 규칙 |
@@ -350,11 +353,13 @@ claude        # Claude Code 열기
 
 ## 사전 작업
 
-스캐폴딩 직후 아래 파일을 채운 뒤 첫 세션을 시작한다.
+스캐폴딩 직후 첫 \`/start\`에서는 \`docs/STATUS.md\` Next Actions를 확인한다.
+Next Actions가 scaffold bootstrap/onboarding을 가리키면 \`docs/BOOTSTRAP.md\`를 기준으로 아래 파일을 채운다.
+Bootstrap onboarding에 사용할 prompt는 \`docs/BOOTSTRAP.md\` §6에 있다.
 
 1. \`docs/STATUS.md\` — 프로젝트 목표와 Phase 설명
-2. \`docs/PLAN-SUMMARY.md\` — project summary, core architecture, validation defaults
-3. \`docs/backlog/PHASE1.md\` — 초기 작업 항목 \`P1-001~\`
+2. \`docs/PLAN-SUMMARY.md\` — 프로젝트 요약, 핵심 구조, 검증 기본값
+3. \`docs/backlog/PHASE1.md\` — 제품 목표에서 도출한 초기 작업 항목 \`P1-001~\`
 4. \`docs/BEHAVIOR-PRINCIPLES.md\` — 전역 행동 원칙 확인
 5. \`docs/AGENT-WORKFLOW.md\` — Project Constants와 Verification Defaults
 
@@ -372,6 +377,7 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 | --- | --- |
 | Phase | Phase 1 — [프로젝트 목표 한 줄] |
 | Active plan | — |
+| Bootstrap checklist | \`docs/BOOTSTRAP.md\` |
 | Project backlog | \`docs/backlog/PHASE1.md\` |
 | Harness backlog | \`docs/backlog/HARNESS.md\` |
 | Last updated | ${TODAY} |
@@ -392,10 +398,91 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 
 ## Next Actions
 
-1. 이 파일과 \`docs/PLAN-SUMMARY.md\`를 프로젝트 정보로 업데이트
-2. \`docs/backlog/PHASE1.md\`에 초기 작업 항목 등록
-3. \`docs/AGENT-WORKFLOW.md\` Project Constants와 Verification Defaults 채우기
-4. Claude Code: \`/start\`로 첫 세션 시작 | Codex: \`AGENTS.md\` 확인 | Cursor: \`prompts/cursor-session-start.md\` 사용
+1. 제품 목표, 사용자, Phase 1 범위를 한 문단으로 정리
+2. Scaffold bootstrap onboarding: \`docs/BOOTSTRAP.md\` checklist를 프로젝트 성격에 맞게 채우기
+3. 이 파일과 \`docs/PLAN-SUMMARY.md\`를 프로젝트 정보로 업데이트
+4. \`docs/backlog/PHASE1.md\`에 제품 backlog 후보 \`P1-001~\` 등록
+5. \`docs/AGENT-WORKFLOW.md\` Project Constants와 Verification Defaults 채우기
+6. AI workflow 개선 항목은 \`docs/backlog/HARNESS.md\`로 분리
+7. Claude Code: \`/start\`로 첫 세션 시작 | Codex: \`AGENTS.md\` 확인 | Cursor: \`prompts/cursor-session-start.md\` 사용
+"
+
+write_text "${TARGET_ROOT}/docs/BOOTSTRAP.md" "# BOOTSTRAP.md — ${PROJECT_NAME}
+
+Scaffold 직후 이 파일을 먼저 채운다. 목표는 빈 harness를 프로젝트 identity와 production 성격에 맞게 부팅하는 것이다.
+
+## 1. Project Identity
+
+| 항목 | 내용 |
+| --- | --- |
+| 프로젝트 이름 | ${PROJECT_NAME} |
+| 한 줄 설명 | — |
+| 주요 사용자 | — |
+| production 성격 | product / service / library / content / research / internal tool / other |
+| 배포 또는 공개 방식 | private / public / internal / hosted / package / other |
+| 핵심 성공 기준 | — |
+
+## 2. Product Track Setup
+
+제품 목표에서 Product track backlog를 만든다. Harness 개선 항목과 섞지 않는다.
+
+- [ ] Phase 1 목표를 한 문장으로 정리
+- [ ] 주요 사용자와 첫 사용 시나리오 정리
+- [ ] \`docs/backlog/PHASE1.md\`에 P1-001~ 후보 등록
+- [ ] 각 후보에 Done Criteria, Verification, Preconditions 작성
+- [ ] 즉시 착수할 항목이 있으면 \`docs/STATUS.md\` Active Work로 올릴 내용 제안
+- [ ] 큰 작업이면 \`docs/works/phase1/\`에 Work 파일 생성 여부 판단
+- [ ] 완료 후 \`docs/STATUS.md\` Next Actions에서 scaffold bootstrap onboarding 항목 제거 또는 다음 실제 작업으로 교체
+
+## 3. Harness Track Setup
+
+AI workflow 자체의 조정은 Harness track으로 분리한다.
+
+- [ ] tool entrypoint(\`AGENTS.md\`, \`CLAUDE.md\`)가 프로젝트에 맞는지 확인
+- [ ] \`docs/AGENT-WORKFLOW.md\` Project Constants 작성
+- [ ] \`docs/AGENT-WORKFLOW.md\` Verification Defaults 작성
+- [ ] \`README.md\`, \`docs/PLAN-SUMMARY.md\`, \`AGENTS.md\`, \`CLAUDE.md\`에 프로젝트 identity 보정이 필요한지 확인
+- [ ] \`.claude/rules/\`, \`.cursor/rules/\`, \`prompts/\`에 role/rule/prompt naming 보정이 필요한지 확인
+- [ ] command/rule/prompt 조정이 필요하면 \`docs/backlog/HARNESS.md\`에 HRN-001~ 후보 등록
+- [ ] \`docs/works/harness/\` Work 파일이 필요한 규모인지 판단
+
+## 4. Core Document Fill Order
+
+1. \`docs/BOOTSTRAP.md\` — identity, production 성격, setup checklist
+2. \`docs/STATUS.md\` — 현재 phase, Active Work, OQ, Next Actions
+3. \`docs/PLAN-SUMMARY.md\` — 프로젝트 요약, 핵심 구조, 검증 기본값
+4. \`docs/backlog/PHASE1.md\` — Product track backlog
+5. \`docs/backlog/HARNESS.md\` — Harness track backlog
+6. \`docs/AGENT-WORKFLOW.md\` — Project Constants, Verification Defaults
+
+## 5. Example Pack Review
+
+\`generic\` profile이면 아래 항목은 기본적으로 포함되지 않는다. \`spring-boot\` 또는 다른 stack-specific pack을 선택했다면 프로젝트 identity에 맞게 정비한다.
+
+- [ ] 포함된 example pack이 실제 production 성격과 맞는지 확인
+- [ ] stack-specific rule glob이 실제 source path와 맞는지 확인
+- [ ] role 파일명이 역할과 일치하는지 확인 (예: backend 전용이 아니면 \`role-backend\` 같은 이름을 쓰지 않음)
+- [ ] prompt description과 package/path placeholder가 프로젝트명이나 조직명으로 고정되어 있지 않은지 확인
+- [ ] README와 manual에 example pack이 optional임을 명시
+- [ ] 필요 없는 example pack은 제거하거나 \`docs/backlog/HARNESS.md\`에 정리 작업으로 등록
+
+## 6. First Session Prompt
+
+\`\`\`text
+docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTSTRAP.md를 읽어줘.
+
+이 프로젝트를 scaffold 직후 부팅하려고 해.
+먼저 프로젝트 identity, production 성격, Product track backlog, Harness track 정비 항목,
+example pack 정비 필요 여부를 분리해서 제안해줘.
+
+파일 수정은 내 승인 전까지 하지 마.
+\`\`\`
+
+## 7. Completion Rule
+
+Bootstrap onboarding은 \`docs/STATUS.md\` Next Actions의 pointer로만 다시 발견된다.
+이 checklist를 채우고 Product/Harness backlog 후보를 만든 뒤에는 \`docs/STATUS.md\` Next Actions에서 scaffold bootstrap onboarding 항목을 제거하거나 다음 실제 작업으로 교체한다.
+항목이 남아 있으면 daily \`/start\`가 매 세션 bootstrap 후속 작업을 계속 제안한다.
 "
 
 write_text "${TARGET_ROOT}/docs/PLAN-SUMMARY.md" "# PLAN-SUMMARY.md — ${PROJECT_NAME}
@@ -406,15 +493,17 @@ write_text "${TARGET_ROOT}/docs/PLAN-SUMMARY.md" "# PLAN-SUMMARY.md — ${PROJEC
 
 | 항목 | 내용 |
 | --- | --- |
-| Project goal | — |
-| Primary users | — |
-| Main workflow | — |
-| Supported tools | — |
-| Key constraints | — |
+| 프로젝트 목표 | — |
+| 주요 사용자 | — |
+| production 성격 | — |
+| 배포 또는 공개 방식 | — |
+| 제품 핵심 workflow | — |
+| AI 작업 도구 | Claude Code / Codex / Cursor |
+| 주요 제약 조건 | — |
 
 ## Core Architecture
 
-*(entrypoint, state files, backlog, decision records, validation flow를 채워야 함)*
+*(entrypoint, state files, product/harness backlog, decision records, validation flow를 채워야 함)*
 
 ## Verification Defaults
 
@@ -449,17 +538,22 @@ write_text "${TARGET_ROOT}/docs/PLAN.md" "# PLAN.md — ${PROJECT_NAME}
 - 범위:
 "
 
-write_text "${TARGET_ROOT}/docs/backlog/PHASE1.md" "# Project Backlog — Phase 1
+write_text "${TARGET_ROOT}/docs/backlog/PHASE1.md" "# Product Backlog — Phase 1
 
 ## 상태 요약
 
 | 항목 | 내용 |
 | --- | --- |
 | Phase | Phase 1 |
-| 목표 | — |
+| 제품 목표 | — |
+| 주요 사용자 | — |
+| Phase 1 범위 | — |
 | 상태 | In Progress |
 
 ## Active Candidates
+
+제품 목표에서 도출한 후보 작업을 우선 등록한다.
+AI workflow, command/rule, prompt, scaffold 개선은 \`docs/backlog/HARNESS.md\`로 분리한다.
 
 <!-- 작업 항목 형식:
 **P1-001** | Priority: P0 | Scope: 한 줄 설명
@@ -572,19 +666,20 @@ else
   echo "  Harness scaffolded at: ${TARGET_ROOT}"
 fi
 echo ""
-echo "Required before first session (fill in):"
+echo "Bootstrap onboarding targets (propose/fill during first session):"
+echo "  docs/BOOTSTRAP.md      — 프로젝트 identity와 production 성격 기반 setup checklist"
 echo "  docs/STATUS.md         — 프로젝트 목표와 Phase 설명"
-echo "  docs/PLAN-SUMMARY.md   — project summary, core architecture, validation defaults"
-echo "  docs/backlog/PHASE1.md — 초기 작업 항목 P1-001~"
+echo "  docs/PLAN-SUMMARY.md   — 프로젝트 요약, 핵심 구조, 검증 기본값"
+echo "  docs/backlog/PHASE1.md — 제품 목표에서 도출한 초기 작업 항목 P1-001~"
 echo "  docs/AGENT-WORKFLOW.md — Project Constants와 Verification Defaults"
 echo ""
 if [[ "${PROFILE}" == "generic" ]]; then
   echo "Profile: generic"
-  echo "  Spring Boot/MSA-specific rules and prompts were not included."
-  echo "  Use --profile spring-boot for this template's Java/Spring extras."
+  echo "  Spring Boot example-pack rules and prompts were not included."
+  echo "  Use --profile spring-boot only when Java/Spring examples are useful."
 else
   echo "Profile: spring-boot"
-  echo "  Included Java/Spring rules and Spring Boot prompt bundle."
+  echo "  Included Java/Spring example rules and Spring Boot prompt bundle."
 fi
 echo ""
 echo "First session:"
