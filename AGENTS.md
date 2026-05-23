@@ -58,6 +58,8 @@ When the user's intent matches a workflow operation without an explicit slash co
 | `docs/STATUS.md` | Active Work pointer add/remove | One-line proposal naming the target Work ID, then wait for approval |
 | `docs/STATUS.md` | Phase criteria, Current phase/focus, Recent Decisions | Full STATUS Update Proposal |
 
+When `docs/STATUS.md` changes are needed, approve and apply them **before** committing. Include them in the same commit as the substantive changes — never as a separate follow-up commit.
+
 Work item routing:
 
 | Urgency / Type | Target |

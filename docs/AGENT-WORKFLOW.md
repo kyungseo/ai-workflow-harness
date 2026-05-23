@@ -146,6 +146,7 @@ commit 또는 PR 생성 전에는 반드시 두 가지를 보고한다.
 - Tracking Finalization: backlog/Work/DR tracker 최종 상태 반영 필요 여부와 이유
 
 필요한 `docs/STATUS.md` 변경은 사용자 승인 없이 수행하지 않는다.
+`docs/STATUS.md` 변경이 확정되면 실질 변경과 **같은 commit**에 포함한다. 실질 변경을 먼저 commit한 뒤 `STATUS.md`를 별도 commit으로 분리하지 않는다.
 상세 체크리스트는 `docs/HARNESS-PROTOCOL.md`의 Triggers, Validation Checklist, Work File Rules를 따른다.
 
 Work Done 처리와 선택적 archive는 `/close`로 수행한다. `/close`는 Work Done 처리이며 commit/PR finalization gate를 대체하지 않는다.

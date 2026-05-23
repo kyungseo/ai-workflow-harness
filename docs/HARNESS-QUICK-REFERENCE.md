@@ -151,6 +151,7 @@ COMMIT 전 확인:
 - `git status`
 - `git diff --cached`
 - STATUS Finalization: `docs/STATUS.md` update needed yes/no, 이유, 필요 시 Approval Matrix proposal
+  - `STATUS.md` 변경이 확정되면 실질 변경과 **같은 commit**에 포함. 별도 follow-up commit 금지.
 - Tracking Finalization: backlog/Work/DR update needed yes/no, 이유
 - validation 결과, diff summary, 제안 commit message 보고
 - 사용자 승인
