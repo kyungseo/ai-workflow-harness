@@ -1,11 +1,11 @@
 ---
-name: "harness-pick"
+name: "workflow-pick"
 description: "backlog에서 우선순위 후보를 비교하고 착수할 작업 1개를 추천한다"
 ---
 
-# harness-pick
+# workflow-pick
 
-Use this skill when the user asks to invoke the harness workflow `pick`.
+Use this skill when the user asks to invoke the workflow skill `pick`.
 
 ## Command Template
 

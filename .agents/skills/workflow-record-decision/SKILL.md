@@ -1,11 +1,11 @@
 ---
-name: "harness-record-decision"
+name: "workflow-record-decision"
 description: "확정된 기술적 의사결정을 DR 파일로 기록한다"
 ---
 
-# harness-record-decision
+# workflow-record-decision
 
-Use this skill when the user asks to invoke the harness workflow `record-decision`.
+Use this skill when the user asks to invoke the workflow skill `record-decision`.
 
 ## Command Template
 

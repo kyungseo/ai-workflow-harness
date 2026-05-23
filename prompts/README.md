@@ -16,7 +16,7 @@ Prompt library는 두 층으로 나눈다.
 | `prompts/*.prompt.md` | 여러 AI 도구 | 기능 구현, 디버깅, 리팩토링, 리뷰 같은 portable task template |
 | `claude-session-start.md` | Claude fallback | slash command를 사용할 수 없을 때 세션 시작 |
 | `cursor-session-start.md` | Cursor | `.cursor/rules`와 하네스 상태를 함께 로드 |
-| `AGENTS.md`, `.agents/skills/harness-*` | Codex | repo-level entry point와 harness workflow skill. 전역 원칙은 `docs/BEHAVIOR-PRINCIPLES.md`, 공통 규칙은 `docs/AGENT-WORKFLOW.md`로 위임 |
+| `AGENTS.md`, `.agents/skills/workflow-*` | Codex | repo-level entry point와 harness workflow skill. 전역 원칙은 `docs/BEHAVIOR-PRINCIPLES.md`, 공통 규칙은 `docs/AGENT-WORKFLOW.md`로 위임 |
 | `codex-session-start.md` | Codex fallback | `.claude/commands`를 수동 절차로 해석해 세션 시작 |
 
 Command는 repo-local workflow를 실행하고, prompt는 tool-independent task brief를 전달한다.

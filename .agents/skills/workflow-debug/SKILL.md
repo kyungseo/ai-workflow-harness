@@ -1,11 +1,11 @@
 ---
-name: "harness-debug"
+name: "workflow-debug"
 description: "지정 대상의 원인을 코드/로그 근거로 좁히고 최소 변경 계획을 보고한다"
 ---
 
-# harness-debug
+# workflow-debug
 
-Use this skill when the user asks to invoke the harness workflow `debug`.
+Use this skill when the user asks to invoke the workflow skill `debug`.
 
 ## Command Template
 
