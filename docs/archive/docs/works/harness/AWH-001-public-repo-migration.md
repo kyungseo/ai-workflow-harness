@@ -1,7 +1,7 @@
 ---
 id: AWH-001
 priority: P0
-status: Done
+status: Archived
 risk: High
 scope: base-msa-template에서 분리된 repository를 AI Workflow Harness 전용 public-ready project로 전환
 appetite: 3-5d

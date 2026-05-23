@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-22 (Workflow hardening 시작)
+Last updated: 2026-05-23 (HRN-025 완료)
 
 ## Current State
 
@@ -35,9 +35,7 @@ Last updated: 2026-05-22 (Workflow hardening 시작)
 
 ## Active Work
 
-| ID | Priority | Status | Work File |
-| --- | --- | --- | --- |
-| HRN-024 | P1 | Active | `docs/works/harness/HRN-024-doc-consistency-alignment.md` |
+(없음)
 
 ## Blockers And Open Questions
 
@@ -59,5 +57,5 @@ Last updated: 2026-05-22 (Workflow hardening 시작)
 
 ## Next Actions
 
-1. HRN-025 변경 리뷰 후 `/close` 여부 결정
-2. HRN-025 완료 처리 후 HRN-024를 `/close`할지 남은 문서 정합성 범위를 재개할지 판단
+1. HRN-024 disposition 결정: `/close` (완료 처리) 또는 남은 문서 정합성 범위 재개
+2. AWH-001 archive 승인 여부 결정 (Done since 2026-05-22, `docs/works/harness/`에 대기 중)

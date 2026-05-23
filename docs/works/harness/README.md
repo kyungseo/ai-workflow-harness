@@ -5,21 +5,20 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 ## Active
 
-| ID | Title | Priority | Start | Work File |
-|----|-------|----------|-------|-----------|
-| HRN-024 | Document consistency alignment | P1 | 2026-05-22 | `docs/works/harness/HRN-024-doc-consistency-alignment.md` |
+(없음)
 
 ## Done
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
 | HRN-025 | Scaffold bootstrap flow tightening | 2026-05-23 | `docs/works/harness/HRN-025-starter-bootstrap-flow.md` |
-| AWH-001 | AI Workflow Harness public repo migration | 2026-05-22 | `docs/works/harness/AWH-001-public-repo-migration.md` |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| HRN-024 | Document consistency alignment | 2026-05-23 | `docs/archive/docs/works/harness/HRN-024-doc-consistency-alignment.md` |
+| AWH-001 | AI Workflow Harness public repo migration | 2026-05-22 | `docs/archive/docs/works/harness/AWH-001-public-repo-migration.md` |
 | HRF-002 | Work 파일 기반 운영 체계 도입 | 2026-05-18 | `docs/archive/docs/works/harness/HRF-002-work-system-refactor.md` |
 | HRN-017 | DR-015 2계층 State Update Gate 구현 | 2026-05-18 | `docs/archive/docs/works/harness/HRN-017-state-update-gate.md` |
 | HRN-018 | DR-016 Done→Archived 전환 트리거 구현 | 2026-05-18 | `docs/archive/docs/works/harness/HRN-018-done-archive-trigger.md` |
