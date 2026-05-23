@@ -1451,6 +1451,8 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 | `docs/troubleshooting/README.md` | 생성 | troubleshooting 작성 규칙 skeleton |
 | `.claude/settings.json` | 생성 | permission deny와 Stop hook reminder를 포함한 범용 버전 |
 | `.claude/rules/*.md`, `.claude/commands/*.md` | 복사 | 기본 profile은 generic rules만 포함 |
+| `.agents/skills/harness-*/SKILL.md` | 복사 | Codex harness workflow skills |
+| `.codex/hooks.json` | 복사 | Codex Stop hook reminder |
 | `.cursor/rules/*.mdc` | 복사 | 기본 profile은 generic rules, `behavior-principles.mdc`, `safety-critical.mdc`, `role-harness-maintainer.mdc` 포함 |
 | `prompts/*.md` | 복사 | 기본 profile은 generic prompt만 포함 |
 
