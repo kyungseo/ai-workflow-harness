@@ -400,6 +400,38 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 - 비자명 이슈(환경 문제, 비직관적 원인)가 해결되면 `docs/troubleshooting/`에 기록을 제안한다.
 - 발표/보고 산출물을 만들 때는 목적, audience, source, format, 검증 기준을 먼저 확정한다.
 
+### Pruning and Archive Policies
+
+#### Backlog Items
+
+backlog 항목의 Status가 Done 또는 Superseded가 되면 다음 기준으로 제거한다.
+
+| 조건 | 처리 |
+| --- | --- |
+| Done — 연관 Work 파일이 archived | backlog 파일에서 해당 행 삭제 |
+| Done — Work 파일 없음 (Quick Mode) | Phase 완료 또는 다음 harness review 시 삭제 |
+| Superseded | 즉시 삭제 가능 |
+
+삭제된 항목의 상세는 git history와 Work 파일(archive)에 남는다. backlog에 별도 archive를 만들지 않는다.
+
+#### Decision Records (DR)
+
+| 상태 | 처리 |
+| --- | --- |
+| Accepted | `docs/decisions/`에 유지 |
+| Superseded / Deprecated | `docs/archive/docs/decisions/`로 `git mv` |
+
+cascade 감사 시 `docs/decisions/README.md` 인덱스의 Accepted DR만 확인한다. archive로 이동된 DR은 감사 대상에서 제외한다.
+
+#### Retrospectives
+
+| 조건 | 처리 |
+| --- | --- |
+| 연관 Work/Phase가 archive되고 insights가 canonical 문서에 반영됨 | `docs/archive/docs/retrospectives/`로 `git mv` (사용자 승인 후) |
+| 활성 작업 또는 미결 OQ와 연관 있음 | live 유지 |
+
+cascade 감사 시 `docs/retrospectives/README.md` 인덱스를 참조하여 최신 1개 또는 해당 topic 관련 1개만 확인한다. 전체 목록 스캔은 하지 않는다.
+
 ### Validation
 
 - 새 문서는 `STATUS.md`, harness protocol, 또는 관련 backlog에서 참조되어야 한다.

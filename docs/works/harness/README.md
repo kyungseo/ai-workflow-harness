@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| HRN-027 | Backlog pruning + DR archive 정책 정비 | `docs/works/harness/HRN-027-backlog-dr-pruning-policy.md` |
 
 ## Done
 

@@ -36,6 +36,7 @@ Last updated: 2026-05-23 (HRN-026 완료 — Codex tool surface 정렬)
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| HRN-027 | Backlog pruning + DR archive 정책 정비 | `docs/works/harness/HRN-027-backlog-dr-pruning-policy.md` |
 
 ## Blockers And Open Questions
 
