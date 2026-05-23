@@ -499,6 +499,8 @@ STATUS.md가 실제 코드·파일 상태와 불일치할 경우:
 
 AI workflow, command/rule, 문서 구조, hook/automation 후보를 관리하는 harness 전용 backlog. Product track backlog와 분리해 Phase{n} 기능 계획이 하네스 개선 작업에 묻히지 않도록 한다.
 
+Done/Superseded 항목은 backlog에서 제거된다. 완료 이력은 Work 파일(`docs/works/harness/README.md` Archived 테이블) 또는 `git log --grep="{ID}"`에서 확인한다.
+
 ### `docs/decisions/DR-*.md`
 
 아키텍처·전략 결정을 기록하는 Decision Record. 결정 이유, 검토된 대안, 되돌리기 비용을 포함한다. 결정이 필요한 상황에서 Open Question → DR 작성 → 결정 반영 → Closed 순서로 진행한다.
@@ -1121,7 +1123,7 @@ flowchart LR
 | T9 | 발표/보고 산출물 생성 | `/doc` 실행 또는 발표·보고·review package 생성 요청 | Claude 능동 제안 | `docs/presentations/`, `docs/reports/`, source traceability, STATUS/backlog 참조 필요 여부 |
 | T10 | Work archive 제안 | `status: Done` Work 파일이 `docs/works/{category}/`에 남아 있을 때 | Claude 능동 제안 | archive 승인 여부 제안, 승인 전 `git mv` 금지 |
 | T11 | Tool surface 정렬 | command/rule/prompt/entrypoint 변경 | Claude 능동 제안 | Claude(`.claude/commands/`, `.claude/rules/`)/Codex(`.agents/skills/`, `.codex/hooks.json`)/Cursor(`.cursor/rules/`)/prompts/scaffold 정합성 확인 |
-| T12 | Scaffold 검증 | `scripts/create-harness.sh` 또는 canonical workflow 변경 | Claude 능동 제안 | dry-run, temp scaffold 생성, stale phrase 검색 |
+| T12 | Scaffold 검증 | `scripts/create-harness.sh` 또는 canonical workflow 변경 | Claude 능동 제안 | `scripts/create-harness.sh`가 있으면 dry-run, temp scaffold 생성, stale phrase 검색. scaffold 적용 repository처럼 script가 없으면 Skipped / Not Applicable |
 | T13 | Product track Quick Mode 확인 | Product track surface의 L1 작은 변경 | Claude 판단 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경 | Claude 능동 제안 | 기본 L2로 scope/cascade 확인 |
 | T15 | STATUS Finalization | commit 또는 PR 생성 전 | Claude/Codex/Cursor commit gate | `docs/STATUS.md` 최종본 반영 필요 여부, 필요 시 Approval Matrix proposal |
@@ -1384,7 +1386,7 @@ prompts/
 
 ### Quick Start — Scaffolding Script
 
-`scripts/create-harness.sh`로 하네스 파일 구조를 자동 생성한다. 기본값은 언어·프레임워크를 가정하지 않는 `generic` profile이며, Java/Spring example pack이 필요할 때만 `--profile spring-boot`를 사용한다. Codex는 `AGENTS.md`를 기본 진입점으로 쓰며, `codex-session-start.md`는 수동 bootstrap이 필요한 환경의 fallback이다.
+`scripts/create-harness.sh`로 하네스 파일 구조를 자동 생성한다. 기본값은 언어·프레임워크를 가정하지 않는 `generic` profile이며, Java/Spring example pack이 필요할 때만 `--profile spring-boot`를 사용한다. Codex는 `AGENTS.md`를 기본 진입점으로 쓰고 첫 요청은 `/start` intent로 시작하며, `codex-session-start.md`는 수동 bootstrap이 필요한 환경의 fallback이다.
 Source repository의 scaffold 부팅 설계 기준은 `docs/SCAFFOLD-BOOTSTRAP.md`이고, 생성된 프로젝트에는 project-local checklist인 `docs/BOOTSTRAP.md`가 만들어진다.
 
 #### 케이스 A — 신규 프로젝트

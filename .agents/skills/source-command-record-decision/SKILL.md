@@ -43,3 +43,7 @@ DR Draft는 Accepted 전까지 PLAN cascade를 발동하지 않는다.
 - 도구·프레임워크 선택 (예: Checkstyle vs Spotless, Helm vs Kustomize)
 - 아키텍처 경계·정책 결정 (예: CI job 분리, 파일 헤더 없음 정책)
 - 되돌리기 비용 Medium 이상
+- 두 개 이상 컴포넌트 또는 개발자에 영향
+
+## DR Not Required
+- 구현 세부사항, 버그 수정, 마이너 config 조정
