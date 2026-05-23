@@ -1,11 +1,11 @@
 ---
-name: "source-command-record-decision"
+name: "harness-record-decision"
 description: "확정된 기술적 의사결정을 DR 파일로 기록한다"
 ---
 
-# source-command-record-decision
+# harness-record-decision
 
-Use this skill when the user asks to run the migrated source command `record-decision`.
+Use this skill when the user asks to invoke the harness workflow `record-decision`.
 
 ## Command Template
 

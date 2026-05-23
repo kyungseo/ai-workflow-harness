@@ -1,11 +1,11 @@
 ---
-name: "source-command-register"
+name: "harness-register"
 description: "새 작업 항목을 적절한 backlog 또는 STATUS.md에 등록한다"
 ---
 
-# source-command-register
+# harness-register
 
-Use this skill when the user asks to run the migrated source command `register`.
+Use this skill when the user asks to invoke the harness workflow `register`.
 
 ## Command Template
 
