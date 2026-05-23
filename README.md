@@ -615,6 +615,36 @@ scripts/create-harness.sh --profile spring-boot my-app
 scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/existing-project
 ```
 
+```mermaid
+flowchart TD
+    A(["Adoption 시작"]) --> B{"신규 / 기존?"}
+
+    B -- "신규 repo" --> C["create-harness.sh my-app /path"]
+    B -- "기존 repo" --> D["create-harness.sh --existing my-app /path"]
+
+    C --> E["scaffold 생성\nSTATUS.md · BOOTSTRAP.md\nbacklog · decisions · works\ncommands · rules · prompts"]
+    D --> F["AI: 코드베이스 읽기\n파일 내용 제안 → 사용자 승인"]
+    F --> E
+
+    E --> G["/start 첫 세션"]
+
+    G --> H{"STATUS.md Next Actions에\nbootstrap pointer 있음?"}
+
+    H -- "없음" --> I["일반 세션 시작\n/pick → /work → /close"]
+    H -- "있음" --> J["BOOTSTRAP.md 로드\n§6 First Prompt 사용"]
+
+    J --> K["Bootstrap Onboarding\n아래 파일 표 참조"]
+
+    K --> L["STATUS.md Next Actions에서\nbootstrap pointer 제거\n다음 실제 작업으로 교체"]
+
+    L --> I
+
+    style J fill:#fff3cd,stroke:#ffc107
+    style K fill:#cce5ff,stroke:#004085
+    style L fill:#d4edda,stroke:#28a745
+    style I fill:#d4edda,stroke:#28a745
+```
+
 초기 세션에서 반드시 채워야 하는 파일:
 
 | 파일 | 채울 내용 |
