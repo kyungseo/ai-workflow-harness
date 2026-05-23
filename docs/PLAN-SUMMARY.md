@@ -47,10 +47,8 @@ Scaffold + Adoption
 | Field | Value |
 |------|------|
 | Phase | Workflow hardening |
-| Active Work | `HRN-024` |
-| Work File | `docs/works/harness/HRN-024-doc-consistency-alignment.md` |
-| Branch | `feature/hrn-doc-consistency-alignment` |
-| Visibility | Private until public-readiness review |
+| Active Work | (없음) |
+| Visibility | Private until public-readiness review (audit 진행 중) |
 
 ## Key Operating Decisions
 
@@ -103,8 +101,8 @@ Scaffold + Adoption
 | 필요 상황 | 파일 |
 |------|------|
 | 현재 상태 확인 | `docs/STATUS.md` |
-| 진행 중인 hardening work | `docs/works/harness/HRN-024-doc-consistency-alignment.md` |
-| Migration 기록 | `docs/works/harness/AWH-001-public-repo-migration.md` |
+| 완료된 hardening work | `docs/archive/docs/works/harness/HRN-024-doc-consistency-alignment.md` |
+| Migration 기록 | `docs/archive/docs/works/harness/AWH-001-public-repo-migration.md` |
 | 장기 project plan | `docs/PLAN.md` |
 | Workflow 규칙 | `docs/AGENT-WORKFLOW.md` |
 | 상세 protocol | `docs/HARNESS-PROTOCOL.md` |
