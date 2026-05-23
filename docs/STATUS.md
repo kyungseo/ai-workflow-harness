@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-23 (HRN-026 완료 — Codex tool surface 정렬)
+Last updated: 2026-05-24 (HRN-029 완료 — workflow-* skill rename, 공개 전 최종 리뷰 완료)
 
 ## Current State
 
@@ -16,7 +16,7 @@ Last updated: 2026-05-23 (HRN-026 완료 — Codex tool surface 정렬)
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
 | Harness protocol | `docs/HARNESS-PROTOCOL.md` |
 | User workflow manual | `docs/WORKFLOW-MANUAL.md` |
-| Repository visibility | Private until public-readiness review |
+| Repository visibility | Public release ready |
 
 ## Work Context Rule
 
