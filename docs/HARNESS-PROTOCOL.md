@@ -527,6 +527,7 @@ Report includes:
 - `STATUS.md` 갱신이 필요하면 Approval Matrix에 맞는 제안과 사용자 승인이 있었는가
 - commit/PR 전 STATUS Finalization 결과(`STATUS.md` 변경 필요 yes/no와 이유)를 보고했는가
 - commit/PR 전 Tracking Finalization 결과(backlog/Work/DR 변경 필요 yes/no와 이유)를 보고했는가
+  - `docs/PLAN-SUMMARY.md`는 상태 필드를 갖지 않는다 — Tracking Finalization 확인 대상에서 제외.
 - DR/Work 파일/archive/cascade가 필요한가
 - 다음 세션이 `STATUS.md`만 보고 재개 가능한가
 
