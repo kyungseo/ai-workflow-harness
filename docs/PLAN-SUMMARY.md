@@ -42,13 +42,11 @@ Scaffold + Adoption
   docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md
 ```
 
-## Current Milestone
+## Current Phase
 
 | Field | Value |
 |------|------|
 | Phase | Workflow hardening |
-| Active Work | (없음) |
-| Visibility | Private until public-readiness review (audit 진행 중) |
 
 ## Key Operating Decisions
 
@@ -96,13 +94,11 @@ Scaffold + Adoption
 | Scaffold script 변경 | `bash -n scripts/create-harness.sh`, generic dry-run, 필요 시 temp actual generation |
 | Public release 준비 | secret/private-info scan, stale identity audit, GitHub visibility check |
 
-## Active References
+## Key References
 
 | 필요 상황 | 파일 |
 |------|------|
 | 현재 상태 확인 | `docs/STATUS.md` |
-| 완료된 hardening work | `docs/archive/docs/works/harness/HRN-024-doc-consistency-alignment.md` |
-| Migration 기록 | `docs/archive/docs/works/harness/AWH-001-public-repo-migration.md` |
 | 장기 project plan | `docs/PLAN.md` |
 | Workflow 규칙 | `docs/AGENT-WORKFLOW.md` |
 | 상세 protocol | `docs/HARNESS-PROTOCOL.md` |
