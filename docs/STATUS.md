@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-23 (STATUS commit bundling 규칙 — 6개 surface 정렬)
+Last updated: 2026-05-23 (HRN-026 등록 — Codex tool surface 정렬)
 
 ## Current State
 
@@ -34,7 +34,9 @@ Last updated: 2026-05-23 (STATUS commit bundling 규칙 — 6개 surface 정렬)
 
 ## Active Work
 
-(없음)
+| ID | Title | Work File |
+| --- | --- | --- |
+| HRN-026 | Codex tool surface 정렬 — skills 완성, cascade 반영, AGENTS.md 재정비 | `docs/works/harness/HRN-026-codex-tool-surface-alignment.md` |
 
 ## Blockers And Open Questions
 

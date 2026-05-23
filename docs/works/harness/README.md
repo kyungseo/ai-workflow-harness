@@ -5,7 +5,9 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 ## Active
 
-(없음)
+| ID | Title | Work File |
+|----|-------|-----------|
+| HRN-026 | Codex tool surface 정렬 — skills 완성, cascade 반영, AGENTS.md 재정비 | `docs/works/harness/HRN-026-codex-tool-surface-alignment.md` |
 
 ## Done
 
