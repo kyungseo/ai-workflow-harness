@@ -4,7 +4,7 @@
 
 Claude에게 직접 전달되는 instruction은 `CLAUDE.md`, `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`를 따른다. 하네스 실행 규칙의 활성 기준은 `docs/HARNESS-PROTOCOL.md`이다.
 이 문서는 그 규칙을 사용자가 이해하고 운영할 수 있도록 설명하는 **Lightweight Manual-First AI Workflow Harness 종합 가이드(사용자 매뉴얼)** 이다.
-핵심만 빠르게 확인하려면 `docs/WORKFLOW-MANUAL-SUMMARY.md`를 먼저 본다.
+핵심만 빠르게 확인하려면 `README.md`를 먼저 본다.
 
 **안내**
 
@@ -1443,7 +1443,7 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 | `docs/BOOTSTRAP.md` | 생성 | scaffold 직후 identity, production 성격, backlog, example pack boot checklist |
 | `docs/BEHAVIOR-PRINCIPLES.md` | 복사 | 전역 행동 원칙 |
 | `docs/AGENT-WORKFLOW.md` | 생성 | Project Constants와 Verification Defaults placeholder 포함 |
-| `docs/HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `WORKFLOW-MANUAL.md`, `WORKFLOW-MANUAL-SUMMARY.md` | 복사 | — |
+| `docs/HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `WORKFLOW-MANUAL.md` | 복사 | — |
 | `docs/STATUS.md`, `PLAN.md`, `PLAN-SUMMARY.md` | 생성 | 빈 skeleton |
 | `docs/backlog/PHASE1.md`, `HARNESS.md` | 생성 | 빈 skeleton |
 | `docs/decisions/DECISION-TEMPLATE.md` | 복사 | DR 템플릿만 (기존 DR은 제외) |

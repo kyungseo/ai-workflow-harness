@@ -76,7 +76,7 @@ Milestone 목표:
 ### Keep As Core
 
 - AI tool entrypoint와 공통 workflow 문서
-- behavior principles, protocol, quick reference, manual, public summary
+- behavior principles, protocol, quick reference, manual
 - `PLAN-SUMMARY.md`처럼 Context Routing에 연결된 project summary 문서
 - Work / backlog / decision / retrospective 체계
 - generic prompt와 generic scaffold

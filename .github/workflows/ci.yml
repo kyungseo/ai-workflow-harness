@@ -46,7 +46,7 @@ jobs:
             AGENTS.md CLAUDE.md README.md
             docs/AGENT-WORKFLOW.md docs/HARNESS-PROTOCOL.md docs/HARNESS-QUICK-REFERENCE.md
             docs/PLAN.md docs/PLAN-SUMMARY.md docs/STATUS.md
-            docs/WORKFLOW-MANUAL.md docs/WORKFLOW-MANUAL-SUMMARY.md
+            docs/WORKFLOW-MANUAL.md
             prompts
           )
           for f in "${FILES[@]}"; do
