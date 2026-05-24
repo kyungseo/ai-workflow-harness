@@ -39,6 +39,7 @@ disable-model-invocation: true
 10. Commit 상태
    - commit 수행 여부
    - commit하지 않았다면 이유와 남은 risk
+   - git repository가 없는 bootstrap 초기 상태에서는 이 단계를 `Not Applicable`로 보고한다.
    - commit 전 필요한 경우 `git status -> git add <files> -> git status -> git diff --cached` 순서 확인
 
 11. Active Work Pause Discovery 확인

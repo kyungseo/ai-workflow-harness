@@ -22,6 +22,17 @@ AI 코딩 에이전트(Claude Code, Codex, Cursor)와 반복 세션을 운영할
 | Tool Mirrors | Claude Code command, Cursor rule, portable prompt template |
 | Scaffold | 다른 repository에 하네스를 적용하는 generic scaffold script |
 
+## Environment Support
+
+현재 `ai-workflow-harness`는 macOS 및 Unix-like shell 환경을 우선 기준으로 검증한다.
+
+- Primary: macOS
+- Expected compatible: Linux, WSL, Git Bash
+- Planned: Windows native PowerShell/CMD support
+
+`/start` 같은 문서 기반 workflow는 OS 의존성이 낮지만, scaffold script와 일부 validation 예시는 `bash`, Unix-style path, `python3` 명령을 전제로 한다.
+Windows native 환경 지원은 `HRN-032`에서 별도 확장 항목으로 추적한다.
+
 ## Table of Contents
 
 - [Prologue. How This Workflow Was Built](#prologue-how-this-workflow-was-built)

@@ -8,6 +8,8 @@ alwaysApply: false
 
 ## Pre-Commit Process
 
+If the current directory is not a git repository (bootstrap initial state), report the steps below as `Not Applicable` and proceed with document/file validation only.
+
 Before committing, always run in this order:
 
 1. `git status` — confirm full working tree state (unstaged + untracked)
