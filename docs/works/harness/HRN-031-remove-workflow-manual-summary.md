@@ -1,15 +1,15 @@
 ---
 id: HRN-031
 priority: P2
-status: Active
+status: Done
 risk: Medium
 scope: docs/WORKFLOW-MANUAL-SUMMARY.md removal, README/manual/protocol/CI/scaffold/cascade reference cleanup
 appetite: 0.5d
 planned_start: 2026-05-24
-planned_end:
-actual_end:
+planned_end: 2026-05-24
+actual_end: 2026-05-24
 related_dr: [DR-013]
-related_commits: []
+related_commits: [05cb316]
 related_troubleshooting: []
 ---
 
@@ -90,15 +90,15 @@ live repository에는 `WORKFLOW-MANUAL-SUMMARY-PUBLIC.md`가 존재하지 않는
 
 ## Done Criteria
 
-- [ ] `docs/WORKFLOW-MANUAL-SUMMARY.md`가 live docs에서 제거된다.
-- [ ] `README.md`, `docs/WORKFLOW-MANUAL.md`, `docs/HARNESS-PROTOCOL.md`가 삭제 후 문서 계층을 일관되게 설명한다.
-- [ ] `.github/workflows/ci.yml`이 삭제된 summary 파일을 expected path로 검사하지 않는다.
-- [ ] `scripts/create-harness.sh`가 삭제된 summary 파일을 복사하지 않고, generated README에도 안내하지 않는다.
-- [ ] `.claude/commands/health.md`와 `.agents/skills/workflow-health/SKILL.md` cascade 대상이 삭제 후 surface와 일치한다.
-- [ ] `docs/HARNESS-MAINTAINER-GUIDE.md`의 `public summary` 표현이 README 역할과 충돌하지 않는다.
-- [ ] `docs/archive/`의 historical summary snapshot은 보존된다.
-- [ ] `rg` 확인 결과 live surface에 `WORKFLOW-MANUAL-SUMMARY` dead reference가 남지 않는다.
-- [ ] 사용자 리뷰 후 `/close` 전 최종 검증 결과가 Work 파일에 반영된다.
+- [x] `docs/WORKFLOW-MANUAL-SUMMARY.md`가 live docs에서 제거된다.
+- [x] `README.md`, `docs/WORKFLOW-MANUAL.md`, `docs/HARNESS-PROTOCOL.md`가 삭제 후 문서 계층을 일관되게 설명한다.
+- [x] `.github/workflows/ci.yml`이 삭제된 summary 파일을 expected path로 검사하지 않는다.
+- [x] `scripts/create-harness.sh`가 삭제된 summary 파일을 복사하지 않고, generated README에도 안내하지 않는다.
+- [x] `.claude/commands/health.md`와 `.agents/skills/workflow-health/SKILL.md` cascade 대상이 삭제 후 surface와 일치한다.
+- [x] `docs/HARNESS-MAINTAINER-GUIDE.md`의 `public summary` 표현이 README 역할과 충돌하지 않는다.
+- [x] `docs/archive/`의 historical summary snapshot은 보존된다.
+- [x] `rg` 확인 결과 live surface에 `WORKFLOW-MANUAL-SUMMARY` dead reference가 남지 않는다.
+- [x] 사용자 리뷰 후 `/close` 전 최종 검증 결과가 Work 파일에 반영된다.
 
 ## Verification
 
@@ -162,10 +162,10 @@ Reversal cost: Low to Medium.
 | CP | Description | Status |
 | --- | --- | --- |
 | CP-1 | Impact review 및 Work plan 작성 | Done |
-| CP-2 | 사용자 리뷰 및 scope 승인 | Todo |
-| CP-3 | CI/scaffold/health cascade 정렬 | Todo |
-| CP-4 | Summary 삭제 및 live reference 정리 | Todo |
-| CP-5 | Verification 및 최종 검토 | Todo |
+| CP-2 | 사용자 리뷰 및 scope 승인 | Done |
+| CP-3 | CI/scaffold/health cascade 정렬 | Done |
+| CP-4 | Summary 삭제 및 live reference 정리 | Done |
+| CP-5 | Verification 및 최종 검토 | Done |
 
 ## Discovery
 
@@ -175,6 +175,7 @@ Reversal cost: Low to Medium.
 - `docs/archive/docs/WORKFLOW-MANUAL-SUMMARY-ai-workflow-v1.0.0.md`가 v1.0.0 historical 버전을 보존하므로, live 삭제가 traceability를 제거하지 않는다.
 - `.agents/skills/workflow-health/SKILL.md`도 `.claude/commands/health.md`와 같은 cascade 대상 문구를 갖고 있어 함께 정리해야 한다.
 - `WORKFLOW-MANUAL-SUMMARY` dead path 검증과 `summary` 일반 단어 검토를 분리해야 false positive 없이 삭제 영향을 검증할 수 있다.
+- **최종 검증 결과 (2026-05-24):** scaffold dry-run 정상 완료, `WORKFLOW-MANUAL-SUMMARY` dead reference rg 검사 0건(`docs/archive/**`, `docs/works/**` 제외), `public summary` wording rg 검사 0건, `git diff --check` 통과. 커밋 `05cb316`.
 
 ---
 
