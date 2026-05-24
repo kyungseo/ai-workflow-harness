@@ -41,12 +41,18 @@ jobs:
 
       - name: Check for stale runtime identity in live core docs
         run: |
-          ! grep -RInE 'Spring Boot 3\.5|io\.kyungseo\.msa|Gradle wrapper' \
-            AGENTS.md CLAUDE.md \
-            docs/AGENT-WORKFLOW.md docs/HARNESS-PROTOCOL.md docs/HARNESS-QUICK-REFERENCE.md \
-            docs/PLAN.md docs/PLAN-SUMMARY.md docs/STATUS.md \
-            docs/WORKFLOW-MANUAL.md docs/WORKFLOW-MANUAL-SUMMARY.md docs/WORKFLOW-MANUAL-SUMMARY-PUBLIC.md \
-            prompts || {
-              echo "Stale runtime identity found in live core docs."
-              exit 1
-            }
+          set -euo pipefail
+          FILES=(
+            AGENTS.md CLAUDE.md README.md
+            docs/AGENT-WORKFLOW.md docs/HARNESS-PROTOCOL.md docs/HARNESS-QUICK-REFERENCE.md
+            docs/PLAN.md docs/PLAN-SUMMARY.md docs/STATUS.md
+            docs/WORKFLOW-MANUAL.md docs/WORKFLOW-MANUAL-SUMMARY.md
+            prompts
+          )
+          for f in "${FILES[@]}"; do
+            [[ -e "$f" ]] || { echo "ERROR: expected path not found: $f"; exit 1; }
+          done
+          if grep -RInE 'Spring Boot 3\.5|io\.kyungseo\.msa|Gradle wrapper' "${FILES[@]}"; then
+            echo "Stale runtime identity found in live core docs."
+            exit 1
+          fi
