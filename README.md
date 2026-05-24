@@ -279,7 +279,6 @@ User-facing docs는 실행 surface가 아니라 설명, 회고, 이슈 복구를
 | Surface | Role | When To Check |
 | --- | --- | --- |
 | `docs/WORKFLOW-MANUAL.md` | 전체 사용자 매뉴얼 | 사용자-visible workflow 설명이 바뀔 때 |
-| `docs/WORKFLOW-MANUAL-SUMMARY.md` | 핵심 요약본 | onboarding, release baseline, 핵심 설명이 바뀔 때 |
 | `docs/retrospectives/` | 회고와 평가 이력 | workflow 개선 방향이나 반복 리스크를 검토할 때 |
 | `docs/troubleshooting/` | 증상 → 원인 → 조치 기록 | 비자명 이슈를 해결했거나 과거 해결책을 찾을 때 |
 

@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| HRN-031 | Remove Redundant Workflow Manual Summary | 2026-05-24 | `docs/works/harness/HRN-031-remove-workflow-manual-summary.md` |
 | HRN-029 | Codex Skill Prefix `harness-*` → `workflow-*` Rename | 2026-05-24 | `docs/works/harness/HRN-029-workflow-skill-rename.md` |
 | HRN-028 | Command / Skill 네이밍 체계 정비 | 2026-05-24 | `docs/works/harness/HRN-028-command-skill-naming-refactor.md` |
 | HRN-025 | Scaffold bootstrap flow tightening | 2026-05-23 | `docs/works/harness/HRN-025-starter-bootstrap-flow.md` |

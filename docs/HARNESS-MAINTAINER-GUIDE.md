@@ -168,7 +168,7 @@ rule이나 workflow 동작이 변경되면 다음 cascade를 확인한다:
 | --- | --- |
 | Canonical | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` |
 | Tool-specific | `.claude/commands/**`, `.claude/rules/**`, `.cursor/rules/**`, `.agents/skills/**`, `.codex/hooks.json` |
-| User-facing | `README.md`, `docs/WORKFLOW-MANUAL.md`, public summary |
+| User-facing | `README.md`, `docs/WORKFLOW-MANUAL.md` |
 | Scaffold | `scripts/create-harness.sh`, generated skeleton files |
 | Historical | archives, retrospectives, old review packages |
 

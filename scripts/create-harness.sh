@@ -190,7 +190,6 @@ adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"   "${TARGET_ROOT}/docs/
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-STRUCTURE.md"         "${TARGET_ROOT}/docs/HARNESS-STRUCTURE.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"  "${TARGET_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"
 adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL.md"           "${TARGET_ROOT}/docs/WORKFLOW-MANUAL.md"
-adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL-SUMMARY.md"   "${TARGET_ROOT}/docs/WORKFLOW-MANUAL-SUMMARY.md"
 
 adapt "${TEMPLATE_ROOT}/docs/decisions/DECISION-TEMPLATE.md" \
       "${TARGET_ROOT}/docs/decisions/DECISION-TEMPLATE.md"
@@ -344,7 +343,6 @@ AI workflow 자체의 개선과 example pack 정비는 Harness track으로 분�
 | \`docs/HARNESS-MAINTAINER-GUIDE.md\` | 유지보수·convention 가이드 |
 | \`docs/BOOTSTRAP.md\` | scaffold 직후 프로젝트 부팅 checklist |
 | \`docs/WORKFLOW-MANUAL.md\` | 사용자용 워크플로우 가이드 |
-| \`docs/WORKFLOW-MANUAL-SUMMARY.md\` | 워크플로우 핵심 요약본 |
 | \`docs/AGENT-WORKFLOW.md\` | 공통 운영 규칙 |
 | \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 | \`.claude/commands/\` | \`/start\`, \`/pick\`, \`/register\`, \`/work\`, \`/close\`, \`/done\` 등 |

@@ -236,7 +236,7 @@ Phase 5의 git log 결과를 기준으로, 변경된 구현 파일 유형별로 
 | `.github/workflows/*.yml` | `docs/GIT-WORKFLOW.md`, `.cursor/rules/execution.mdc`, `README.md` CI 항목 |
 | `.claude/commands/*.md`, `.agents/skills/*/SKILL.md`, `.claude/rules/*.md`, `.codex/hooks.json` | `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, 대응 `.agents/skills/` 또는 `.claude/commands/`, 대응 `.cursor/rules/*.mdc` |
 | `.cursor/rules/*.mdc` | `docs/AGENT-WORKFLOW.md`, 대응 `.claude/rules/*.md`, 관련 session prompt |
-| `scripts/create-harness.sh`가 존재할 때 | `README.md`, `docs/WORKFLOW-MANUAL.md`, `docs/WORKFLOW-MANUAL-SUMMARY*.md`, fresh scaffold 산출물 |
+| `scripts/create-harness.sh`가 존재할 때 | `README.md`, `docs/WORKFLOW-MANUAL.md`, fresh scaffold 산출물 |
 | `prompts/*.md` | `prompts/README.md`, `docs/AGENT-WORKFLOW.md` context routing, scaffold profile 포함 여부 |
 | `docs/decisions/DR-*.md` (신규 Accepted) | `docs/STATUS.md` Recent Decisions, 연관 backlog Done Criteria |
 | `docs/*.md` (신규 사용자/운영 문서) | 해당 문서가 참조하는 command/rule/script/CI 파일과 실제 내용 대조 |

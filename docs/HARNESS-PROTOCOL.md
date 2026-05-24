@@ -384,7 +384,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | Canonical AI operations | `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md` | Agent 실행 규칙의 현재 기준 |
 | Live state and trackers | `docs/STATUS.md`, `docs/backlog/`, `docs/works/`, `docs/decisions/` | 현재 상태, 후보, Work SSoT, 결정 근거 |
 | Project and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/HARNESS-STRUCTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/GIT-WORKFLOW.md` | project/harness 구조와 유지보수 지식 |
-| User-facing workflow docs | `docs/WORKFLOW-MANUAL.md`, `docs/WORKFLOW-MANUAL-SUMMARY.md` | 사람이 읽는 매뉴얼과 condensed guide. 평시 Agent 자동 로드 대상 아님 |
+| User-facing workflow docs | `docs/WORKFLOW-MANUAL.md` | 사람이 읽는 매뉴얼. 평시 Agent 자동 로드 대상 아님 |
 | Historical and evaluation docs | `docs/archive/`, `docs/retrospectives/`, reference-only plans | 완료 이력, snapshot, 시점별 평가, 완료된 계획의 참조 기록 |
 | Troubleshooting docs | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 패턴의 재사용 가능한 incident record |
 | Artifacts | `docs/reports/`, `docs/presentations/` | `/doc` 산출물. source traceability와 version naming 유지 |

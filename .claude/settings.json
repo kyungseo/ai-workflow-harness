@@ -94,17 +94,6 @@
     ]
   },
   "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 -c \"import sys,json; d=json.load(sys.stdin); f=d.get('tool_input',{}).get('file_path',''); print(f'[hook] Java 파일 수정됨: {f}\\n제안: ./gradlew test 또는 ./gradlew :<module>:test') if f and f.endswith('.java') else None\""
-          }
-        ]
-      }
-    ],
     "Stop": [
       {
         "hooks": [
