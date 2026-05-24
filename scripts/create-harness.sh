@@ -717,7 +717,7 @@ Product track Phase 1 작업 인덱스다.
 | ID | Title | Priority | Start | Work File |
 | --- | --- | --- | --- | --- |
 
-## Done (archive pending)
+## Done (Archive Pending)
 
 | ID | Title | actual_end | Hold Reason |
 | --- | --- | --- | --- |
@@ -737,7 +737,7 @@ Harness track 작업 인덱스다.
 | ID | Title | Priority | Start | Work File |
 | --- | --- | --- | --- | --- |
 
-## Done (archive pending)
+## Done (Archive Pending)
 
 | ID | Title | actual_end | Hold Reason |
 | --- | --- | --- | --- |

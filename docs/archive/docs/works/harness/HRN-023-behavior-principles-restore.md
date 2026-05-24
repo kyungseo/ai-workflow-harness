@@ -1,7 +1,7 @@
 ---
 id: HRN-023
 priority: P1
-status: Done
+status: Archived
 risk: Low
 scope: 유실된 최상위 전역 행동 원칙 복원 — docs/BEHAVIOR-PRINCIPLES.md 신규 생성 + Claude/Codex/Cursor 3개 도구 정렬
 appetite: 1d
