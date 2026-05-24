@@ -364,6 +364,8 @@ claude        # Claude Code 열기
 
 ## 사전 작업
 
+git repository는 자동으로 초기화되지 않는다. 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
+
 스캐폴딩 직후 첫 \`/start\`에서는 \`docs/STATUS.md\` Next Actions를 확인한다.
 Next Actions가 scaffold bootstrap/onboarding을 가리키면 \`docs/BOOTSTRAP.md\`를 기준으로 아래 파일을 채운다.
 Bootstrap onboarding에 사용할 prompt는 \`docs/BOOTSTRAP.md\` §6에 있다.
@@ -421,6 +423,13 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 write_text "${TARGET_ROOT}/docs/BOOTSTRAP.md" "# BOOTSTRAP.md — ${PROJECT_NAME}
 
 Scaffold 직후 이 파일을 먼저 채운다. 목표는 빈 harness를 프로젝트 identity와 production 성격에 맞게 부팅하는 것이다.
+
+## 0. Repository Setup
+
+- [ ] git repository 초기화 여부 확인: \`git status\` 또는 \`ls .git/\` 실행. \`git status\`가 not a git repository 메시지로 실패하면 no-git bootstrap 상태로 판단
+- [ ] git repository가 없으면 사용자 승인 후 \`git init\`, default branch 결정, initial commit 여부 결정
+- [ ] git repository가 없는 동안 commit/PR/branch workflow, \`related_commits\`, \`git diff\` 기반 검증은 \`Not Applicable\`로 처리
+- [ ] \`--existing\` overlay인 경우: 기존 branch/remote 정책을 먼저 확인하고, harness Gitflow를 무조건 강제하지 않는다
 
 ## 1. Project Identity
 
@@ -691,6 +700,10 @@ if [[ "${PROFILE}" == "generic" ]]; then
 else
   echo "Profile: spring-boot"
   echo "  Included Java/Spring example rules and Spring Boot prompt bundle."
+fi
+if [[ ! -d "${TARGET_ROOT}/.git" ]]; then
+  echo "Note: git repository is not initialized. Follow docs/BOOTSTRAP.md §0 to decide when to run git init."
+  echo "  Until then, commit/PR/branch workflow is Not Applicable."
 fi
 echo ""
 echo "First session:"
