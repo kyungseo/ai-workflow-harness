@@ -11,17 +11,17 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| HRN-033 | Scaffold Onboarding Git Repository Bootstrap | 2026-05-24 | `docs/works/harness/HRN-033-git-repository-bootstrap.md` |
-| HRN-031 | Remove Redundant Workflow Manual Summary | 2026-05-24 | `docs/works/harness/HRN-031-remove-workflow-manual-summary.md` |
-| HRN-029 | Codex Skill Prefix `harness-*` → `workflow-*` Rename | 2026-05-24 | `docs/works/harness/HRN-029-workflow-skill-rename.md` |
-| HRN-028 | Command / Skill 네이밍 체계 정비 | 2026-05-24 | `docs/works/harness/HRN-028-command-skill-naming-refactor.md` |
-| HRN-025 | Scaffold bootstrap flow tightening | 2026-05-23 | `docs/works/harness/HRN-025-starter-bootstrap-flow.md` |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
 | HRN-034 | Scaffold Product Definition / Project Initialization Gate | 2026-05-24 | `docs/archive/docs/works/harness/HRN-034-scaffold-product-initialization-gate.md` |
+| HRN-033 | Scaffold Onboarding Git Repository Bootstrap | 2026-05-24 | `docs/archive/docs/works/harness/HRN-033-git-repository-bootstrap.md` |
+| HRN-031 | Remove Redundant Workflow Manual Summary | 2026-05-24 | `docs/archive/docs/works/harness/HRN-031-remove-workflow-manual-summary.md` |
+| HRN-029 | Codex Skill Prefix `harness-*` → `workflow-*` Rename | 2026-05-24 | `docs/archive/docs/works/harness/HRN-029-workflow-skill-rename.md` |
+| HRN-028 | Command / Skill 네이밍 체계 정비 | 2026-05-24 | `docs/archive/docs/works/harness/HRN-028-command-skill-naming-refactor.md` |
+| HRN-025 | Scaffold bootstrap flow tightening | 2026-05-23 | `docs/archive/docs/works/harness/HRN-025-starter-bootstrap-flow.md` |
 | HRN-027 | Backlog pruning + DR archive 정책 정비 | 2026-05-24 | `docs/archive/docs/works/harness/HRN-027-backlog-dr-pruning-policy.md` |
 | HRN-026 | Codex tool surface 정렬 — skills 완성, cascade 반영, AGENTS.md 재정비 | 2026-05-23 | `docs/archive/docs/works/harness/HRN-026-codex-tool-surface-alignment.md` |
 | HRN-024 | Document consistency alignment | 2026-05-23 | `docs/archive/docs/works/harness/HRN-024-doc-consistency-alignment.md` |

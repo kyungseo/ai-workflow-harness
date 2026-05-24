@@ -1,7 +1,7 @@
 ---
 id: HRN-029
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: .agents/skills/harness-{name}/ → workflow-{name}/ rename, SKILL.md 내부 + cascade 문서 갱신
 appetite: 0.5d

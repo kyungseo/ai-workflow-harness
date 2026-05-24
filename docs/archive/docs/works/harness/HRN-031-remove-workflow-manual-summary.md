@@ -1,7 +1,7 @@
 ---
 id: HRN-031
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: docs/WORKFLOW-MANUAL-SUMMARY.md removal, README/manual/protocol/CI/scaffold/cascade reference cleanup
 appetite: 0.5d

@@ -1,7 +1,7 @@
 ---
 id: HRN-033
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: Scaffold onboarding git repository bootstrap and no-git workflow handling
 appetite: 0.5d

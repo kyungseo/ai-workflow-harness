@@ -1,7 +1,7 @@
 ---
 id: HRN-025
 priority: P1
-status: Done
+status: Archived
 risk: Medium
 scope: Scaffold bootstrap onboarding, /start condition tightening, command/tool surface alignment
 appetite: 0.5d
