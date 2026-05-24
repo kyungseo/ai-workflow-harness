@@ -7,9 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
-| HRN-034 | Scaffold Product Definition / Project Initialization Gate | `docs/works/harness/HRN-034-scaffold-product-initialization-gate.md` |
-
-## Done
+## Done (Archive Pending)
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
@@ -23,6 +21,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| HRN-034 | Scaffold Product Definition / Project Initialization Gate | 2026-05-24 | `docs/archive/docs/works/harness/HRN-034-scaffold-product-initialization-gate.md` |
 | HRN-027 | Backlog pruning + DR archive 정책 정비 | 2026-05-24 | `docs/archive/docs/works/harness/HRN-027-backlog-dr-pruning-policy.md` |
 | HRN-026 | Codex tool surface 정렬 — skills 완성, cascade 반영, AGENTS.md 재정비 | 2026-05-23 | `docs/archive/docs/works/harness/HRN-026-codex-tool-surface-alignment.md` |
 | HRN-024 | Document consistency alignment | 2026-05-23 | `docs/archive/docs/works/harness/HRN-024-doc-consistency-alignment.md` |

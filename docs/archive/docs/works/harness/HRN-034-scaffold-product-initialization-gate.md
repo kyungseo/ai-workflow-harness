@@ -1,13 +1,13 @@
 ---
 id: HRN-034
 priority: P1
-status: Active
+status: Archived
 risk: Medium
 scope: Scaffold onboarding product definition and project initialization gate
 appetite: 0.5d
 planned_start: 2026-05-24
-planned_end:
-actual_end:
+planned_end: 2026-05-24
+actual_end: 2026-05-24
 related_dr: []
 related_commits: []
 related_troubleshooting: []
@@ -237,14 +237,14 @@ generated `docs/backlog/PHASE1.md`에 아래 guard를 추가하는 방안을 검
 
 ## Done Criteria
 
-- [ ] scaffold bootstrap flow가 Product Definition → Project Initialization → PLAN/PLAN-SUMMARY 구체화 → Phase 1 backlog 순서를 명확히 설명한다.
-- [ ] generated `PLAN-SUMMARY.md`와 `PLAN.md`가 project initialization baseline을 채울 구조를 제공한다.
-- [ ] generated `PHASE1.md`가 baseline 이전의 기능 backlog 생성을 막는 guard를 가진다.
-- [ ] PoC/MVP project initialization checklist가 framework-neutral 기준으로 포함되고, Spring Boot는 stack-specific 예시로만 위치가 명확해진다.
-- [ ] example feature 또는 사용자 관리 구현이 baseline 이전에 바로 착수되지 않도록 prompt/tool surface가 정렬된다.
-- [ ] generic과 spring-boot scaffold 생성 결과가 일관된다.
-- [ ] HRN-033 no-git bootstrap guard와 충돌하지 않는다.
-- [ ] 사용자 리뷰 후 `/close` 전 최종 검증 결과가 Work 파일에 반영된다.
+- [x] scaffold bootstrap flow가 Product Definition → Project Initialization → PLAN/PLAN-SUMMARY 구체화 → Phase 1 backlog 순서를 명확히 설명한다.
+- [x] generated `PLAN-SUMMARY.md`와 `PLAN.md`가 project initialization baseline을 채울 구조를 제공한다.
+- [x] generated `PHASE1.md`가 baseline 이전의 기능 backlog 생성을 막는 guard를 가진다.
+- [x] PoC/MVP project initialization checklist가 framework-neutral 기준으로 포함되고, Spring Boot는 stack-specific 예시로만 위치가 명확해진다.
+- [x] example feature 또는 사용자 관리 구현이 baseline 이전에 바로 착수되지 않도록 prompt/tool surface가 정렬된다.
+- [x] generic과 spring-boot scaffold 생성 결과가 일관된다.
+- [x] HRN-033 no-git bootstrap guard와 충돌하지 않는다.
+- [x] 사용자 리뷰 후 `/close` 전 최종 검증 결과가 Work 파일에 반영된다.
 
 ## Verification
 
@@ -311,6 +311,12 @@ Proposed one-line state update if this Work is accepted for active execution:
 - prompt 현행화 보완으로 `prompts/README.md`에 scaffold 직후 Implementation Baseline이 비어 있으면 task prompt보다 `docs/BOOTSTRAP.md` §8 Project Initialization을 먼저 진행하라는 안내를 추가했다.
 - README 보완으로 root README `10. New Project Adoption`, generated README, `docs/WORKFLOW-MANUAL.md` Appendix B를 §8 prompt와 Product Definition / Implementation Baseline / Project Initialization flow 기준으로 정렬했다.
 - generic/spring-boot fresh scaffold r2에서 generated README, `BOOTSTRAP.md`, `PLAN-SUMMARY.md`, `PLAN.md`, `PHASE1.md`, prompt README, Spring Boot service prompt가 baseline gate를 일관되게 포함하는 것을 확인했다.
+- root README `10. New Project Adoption`에서 `target-dir` 생략 시 생성 위치가 `temp/<project-name>/`임을 명시하고, 원하는 위치에 생성하는 예시를 추가했다.
+
+### Archive
+
+- 이유: HRN-034 Done 처리 완료 후 정규 archive 절차에 따라 이관.
+- 일자: 2026-05-24
 
 ### Surface Audit 결과 (Step 1 완료)
 
