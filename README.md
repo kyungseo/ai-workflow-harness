@@ -76,6 +76,8 @@ AI Workflow Harness는 AI 세션을 감싸는 운영 구조다.
 - **Surgical Changes** — 요청된 최소 범위만 바꾼다.
 - **State Is Repo-Visible** — 다음 Agent가 기억 없이 이어받을 수 있어야 한다.
 
+워크플로우 엔진 없이 문서와 명시적 gate만으로 제어한다. AI 파이프라인 자동화보다 **AI와 협업하는 방식을 먼저 정립하는 단계**에 맞는 도구다.
+
 ---
 
 ## 2. Document Layers
