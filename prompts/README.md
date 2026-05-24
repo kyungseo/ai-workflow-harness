@@ -45,6 +45,7 @@ Command는 repo-local workflow를 실행하고, prompt는 tool-independent task 
 이 prompt들은 AI Workflow Harness core가 아니다.
 Stack-specific prompt pack을 어떻게 구성할 수 있는지 보여주는 예시로 유지한다.
 `scripts/create-harness.sh --profile spring-boot`를 사용할 때 참고하거나 복사해 조정한다.
+scaffold 직후 `docs/PLAN-SUMMARY.md` Implementation Baseline이 비어 있으면 아래 task prompt를 바로 실행하지 말고 `docs/BOOTSTRAP.md` §8 prompt로 Project Initialization을 먼저 진행한다.
 
 | 상황 | Prompt |
 | --- | --- |

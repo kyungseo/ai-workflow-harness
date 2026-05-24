@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| HRN-034 | Scaffold Product Definition / Project Initialization Gate | `docs/works/harness/HRN-034-scaffold-product-initialization-gate.md` |
 
 ## Done
 

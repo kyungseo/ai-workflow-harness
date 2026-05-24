@@ -646,7 +646,7 @@ flowchart TD
     G --> H{"STATUS.md Next Actions에\nbootstrap pointer 있음?"}
 
     H -- "없음" --> I["일반 세션 시작\n/pick → /work → /close"]
-    H -- "있음" --> J["BOOTSTRAP.md 로드\n§6 First Prompt 사용"]
+    H -- "있음" --> J["BOOTSTRAP.md 로드\n§8 First Prompt 사용"]
 
     J --> K["Bootstrap Onboarding\n아래 파일 표 참조"]
 
@@ -664,15 +664,18 @@ flowchart TD
 
 | 파일 | 채울 내용 |
 | --- | --- |
-| `docs/BOOTSTRAP.md` | 프로젝트 identity, production 성격, setup checklist |
+| `docs/BOOTSTRAP.md` | Repository Setup, Product Definition, Project Initialization checklist |
 | `docs/STATUS.md` | 현재 phase, Active Work, OQ, Next Actions |
-| `docs/PLAN-SUMMARY.md` | 프로젝트 요약, 핵심 구조, 검증 기본값 |
-| `docs/backlog/PHASE1.md` | 제품 목표에서 도출한 초기 Product track 작업 |
+| `docs/PLAN-SUMMARY.md` | Project Summary, Implementation Baseline, 검증 기본값 |
+| `docs/PLAN.md` | Project Initialization Plan, stack 선택 근거, 초기 구조 |
+| `docs/backlog/PHASE1.md` | Product Definition과 baseline 완료 후 도출한 초기 Product track 작업 |
 | `docs/backlog/HARNESS.md` | workflow/harness 후보 작업, example pack 정비 항목 |
 | `docs/AGENT-WORKFLOW.md` | Project Constants, Verification Defaults |
 
 첫 `/start`는 `docs/STATUS.md` Next Actions를 확인한다.
-Next Actions가 scaffold bootstrap/onboarding을 가리킬 때 `docs/BOOTSTRAP.md` §6 prompt를 사용한다.
+Next Actions가 scaffold bootstrap/onboarding을 가리킬 때 `docs/BOOTSTRAP.md` §8 prompt를 사용한다.
+Bootstrap onboarding은 Product Definition과 `docs/PLAN-SUMMARY.md` Implementation Baseline을 먼저 채운 뒤 Phase 1 backlog를 도출한다.
+Implementation Baseline이 비어 있으면 feature candidate은 Not Ready로 보고하고 Project Initialization을 첫 P1 후보로 제안한다.
 완료 후에는 `docs/STATUS.md` Next Actions에서 scaffold bootstrap/onboarding 항목을 제거하거나 다음 실제 작업으로 교체한다.
 
 기존 프로젝트에 적용할 때는 먼저 코드베이스를 읽고, 위 파일의 내용을 **제안**하게 한다.

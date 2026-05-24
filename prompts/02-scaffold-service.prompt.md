@@ -18,6 +18,8 @@ output_contract:
 ---
 
 
+> **사전 조건**: `docs/PLAN-SUMMARY.md` Implementation Baseline이 완료된 뒤 사용한다. baseline이 비어 있으면 이 prompt 대신 Project Initialization을 먼저 진행한다.
+
 현재 프로젝트의 Spring Boot service scaffold 규칙을 기준으로 `{{service_name}}` 서비스를 추가해 줘.
 
 서비스 정보:
