@@ -31,7 +31,7 @@ New work items are always routed based on urgency and type:
 | Product track / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
 
-If the Product backlog is empty after scaffold and `docs/STATUS.md` Next Actions point to scaffold bootstrap/onboarding, use `docs/BOOTSTRAP.md` to identify project identity and production type before proposing P1-001~ candidates. Route example pack, role/rule, and prompt cleanup to Harness backlog.
+If the Product backlog is empty after scaffold and `docs/STATUS.md` Next Actions point to scaffold bootstrap/onboarding, use `docs/BOOTSTRAP.md` to identify project identity and production type before proposing P1-001~ candidates. Verify that `docs/PLAN-SUMMARY.md` Implementation Baseline is filled before proposing feature candidates; if empty, propose Project Initialization as the first P1 candidate (for code development projects) or the appropriate baseline/setup task (for non-code projects). Route example pack, role/rule, and prompt cleanup to Harness backlog.
 
 When starting a task (`/work`): check `docs/works/{category}/` for an existing Work file. If none exists, evaluate Quick Mode and Work File Decomposition criteria (spec: `docs/HARNESS-PROTOCOL.md`). Product track L1 Quick Mode may proceed without a Work file; harness/workflow surface changes default to L2, and Work file creation should be considered by default when decomposition criteria apply.
 

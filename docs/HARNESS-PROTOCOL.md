@@ -40,6 +40,7 @@ Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORK
 | `docs/AGENT-WORKFLOW.md` | 도구 공통 운영 규칙 |
 | `docs/STATUS.md` | 현재 상태 live board |
 | `docs/BOOTSTRAP.md` | `STATUS.md` Next Actions가 scaffold bootstrap/onboarding을 명시할 때 사용하는 project identity, production 성격, backlog, example pack setup checklist |
+| `docs/SCAFFOLD-BOOTSTRAP.md` | source repository의 scaffold onboarding 설계 기준 |
 | `docs/HARNESS-QUICK-REFERENCE.md` | 일상 실행 카드 |
 | `docs/HARNESS-PROTOCOL.md` | Agent 실행 상세 프로토콜 |
 | `docs/backlog/PHASE{n}.md` | product/Phase{n} 후보 작업 |
@@ -330,7 +331,7 @@ Quick Mode, 단순 오타·링크·기계적 정합성 패치, 테스트·검증
 ### Index Rules
 
 각 `docs/works/{category}/README.md`는 category별 inventory다.
-권장 섹션은 Active, Done (archive pending), Archived다.
+권장 섹션은 Active, Done (Archive Pending), Archived다.
 
 - Active Work 파일은 STATUS Active Work pointer와 category index Active 섹션에 모두 나타나야 한다.
 - Done Work 파일은 STATUS Active Work에서 제거하고 category index Done 섹션에 둔다.

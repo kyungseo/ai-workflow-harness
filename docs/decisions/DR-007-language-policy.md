@@ -29,6 +29,7 @@ Status: Accepted (Amended)
 |-----------|------|
 | `docs/*.md`, `prompts/*.md`, `docs/decisions/DR-*.md` | 사람이 읽는 문서 |
 | `.claude/commands/*.md` | 사용자가 직접 읽고 수정하는 slash command |
+| `.agents/skills/*/SKILL.md` | Codex workflow skill. `.claude/commands/*.md`와 같은 절차 mirror |
 | `.claude/settings.json` hook 출력 메시지 | 사용자와 세션에 보이는 안내 메시지 |
 | Java 인라인 주석 | WHY는 한국어로, 기술 용어는 영어 원문 유지 |
 

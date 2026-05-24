@@ -1413,8 +1413,9 @@ scripts/create-harness.sh --profile spring-boot my-app
 ```
 docs/BOOTSTRAP.md      ← 프로젝트 identity와 production 성격 기반 setup checklist
 docs/STATUS.md         ← 프로젝트 목표와 Phase 1 설명
-docs/PLAN-SUMMARY.md   ← 프로젝트 요약, 핵심 구조, 검증 기본값
-docs/backlog/PHASE1.md ← 제품 목표에서 도출한 초기 작업 항목 P1-001~
+docs/PLAN-SUMMARY.md   ← Project Summary와 Implementation Baseline
+docs/PLAN.md           ← Project Initialization Plan
+docs/backlog/PHASE1.md ← baseline 완료 후 도출한 초기 작업 항목 P1-001~
 ```
 
 #### 케이스 B — 기존 프로젝트
@@ -1441,7 +1442,7 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 | `CLAUDE.md`, `AGENTS.md` | 복사 | scaffold source project name → 프로젝트명 치환 |
 | `.claudeignore`, `.cursorignore`, `.gitignore` | 복사 | 범용 — 언어 무관 |
 | `README.md` | 생성 | 하네스 skeleton (프로젝트 설명 placeholder 포함) |
-| `docs/BOOTSTRAP.md` | 생성 | scaffold 직후 identity, production 성격, backlog, example pack boot checklist |
+| `docs/BOOTSTRAP.md` | 생성 | scaffold 직후 Repository Setup, Product Definition, Project Initialization, backlog, example pack boot checklist |
 | `docs/BEHAVIOR-PRINCIPLES.md` | 복사 | 전역 행동 원칙 |
 | `docs/AGENT-WORKFLOW.md` | 생성 | Project Constants와 Verification Defaults placeholder 포함 |
 | `docs/HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `WORKFLOW-MANUAL.md` | 복사 | — |
@@ -1471,7 +1472,7 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 
 #### 케이스 A — 신규 프로젝트 첫 세션
 
-스캐폴딩 직후 `docs/BOOTSTRAP.md`, `docs/STATUS.md`, `docs/PLAN-SUMMARY.md`, `docs/backlog/PHASE1.md`를 채워야 한다. 첫 `/start`는 `docs/STATUS.md` Next Actions만 확인하고, 그 항목이 scaffold bootstrap/onboarding을 가리킬 때 `docs/BOOTSTRAP.md`를 후속으로 읽도록 제안한다. 첫 세션에서는 프로젝트 identity와 production 성격을 먼저 정리하고, 제품 목표와 Phase 1 범위에서 Product track backlog를 도출한다. AI workflow 자체의 개선 항목과 example pack 정비는 `docs/backlog/HARNESS.md`로 분리한다. Bootstrap onboarding을 진행할 때는 `docs/BOOTSTRAP.md` §6 prompt를 사용한다. 완료 후에는 `docs/STATUS.md` Next Actions에서 scaffold bootstrap/onboarding 항목을 제거하거나 다음 실제 작업으로 교체한다.
+스캐폴딩 직후 `docs/BOOTSTRAP.md`, `docs/STATUS.md`, `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/backlog/PHASE1.md`를 채워야 한다. 첫 `/start`는 `docs/STATUS.md` Next Actions만 확인하고, 그 항목이 scaffold bootstrap/onboarding을 가리킬 때 `docs/BOOTSTRAP.md`를 후속으로 읽도록 제안한다. 첫 세션에서는 Project identity, Product Definition, Project Initialization baseline을 먼저 정리하고, `docs/PLAN-SUMMARY.md` Implementation Baseline이 완료된 뒤 Product track backlog를 도출한다. AI workflow 자체의 개선 항목과 example pack 정비는 `docs/backlog/HARNESS.md`로 분리한다. Bootstrap onboarding을 진행할 때는 `docs/BOOTSTRAP.md` §8 prompt를 사용한다. 완료 후에는 `docs/STATUS.md` Next Actions에서 scaffold bootstrap/onboarding 항목을 제거하거나 다음 실제 작업으로 교체한다.
 
 ```text
 docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTSTRAP.md를 읽어줘.
@@ -1483,11 +1484,12 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 - Phase 1 초기 범위: [첫 단계에서 만들 것]
 - 제약 조건: [성능, 보안, 일정 등 있다면]
 
-이 정보를 바탕으로 Project identity, Product track backlog, Harness track backlog, example pack 정비 항목을 분리해서 아래 파일을 채울 내용을 Approval Matrix의 상태 변경 규칙에 맞게 제안해줘.
+이 정보를 바탕으로 Project identity, Product Definition, Project Initialization, Harness track 정비 항목, example pack 정비 항목을 분리해서 아래 파일을 채울 내용을 Approval Matrix의 상태 변경 규칙에 맞게 제안해줘.
 - docs/BOOTSTRAP.md: identity, production 성격, setup checklist
 - docs/STATUS.md: Phase 목표, 첫 Active Work 항목
-- docs/PLAN-SUMMARY.md: 프로젝트 요약, 핵심 구조, 검증 기본값 초안
-- docs/backlog/PHASE1.md: 제품 목표에서 도출한 초기 P1-001~ 항목
+- docs/PLAN-SUMMARY.md: Project Summary와 Implementation Baseline 초안
+- docs/PLAN.md: Project Initialization Plan 초안
+- docs/backlog/PHASE1.md: Implementation Baseline 완료 후 도출할 초기 P1-001~ 항목
 - docs/backlog/HARNESS.md: AI workflow와 example pack 정비 후보
 - docs/AGENT-WORKFLOW.md: Project Constants, Verification Defaults
 

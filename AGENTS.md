@@ -70,7 +70,7 @@ Work item routing:
 | --- | --- |
 | Start immediately (urgent patch) | `docs/STATUS.md` Active Work → chain to `/work` |
 | Soon / next session | `docs/STATUS.md` Next Actions |
-| Scaffold bootstrap / identity setup | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` → split Product backlog and Harness backlog proposals |
+| Scaffold bootstrap / identity setup | When `docs/STATUS.md` Next Actions explicitly point to bootstrap/onboarding, use `docs/BOOTSTRAP.md`; verify `docs/PLAN-SUMMARY.md` Implementation Baseline before proposing feature candidates |
 | Product track / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
 | Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
 
