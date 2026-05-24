@@ -91,6 +91,7 @@ flowchart TD
     NEED -->|"Active Work"| WORK["docs/works/{category}/{ID}.md"]
     NEED -->|"Decision context"| DR["docs/decisions/DR-*.md"]
     NEED -->|"Issue history"| TROUBLE["docs/troubleshooting/"]
+    NEED -->|"Scaffold onboarding 설계 기준"| SCAFFOLD_BS["docs/SCAFFOLD-BOOTSTRAP.md"]
     NEED -->|"No"| EXEC["Plan next action"]
 ```
 
@@ -107,6 +108,8 @@ archive, manual, 과거 문서를 일괄 로드하지 않는다.
 | `docs/works/**` | 작업 단위 plan, checkpoint, discovery, Done Criteria |
 | `docs/backlog/HARNESS.md` | harness 개선 후보 및 보류 항목 |
 | `docs/decisions/**` | 확정된 결정과 tradeoff |
+| `docs/SCAFFOLD-BOOTSTRAP.md` | scaffold onboarding 설계 기준 (source) |
+| `docs/HARNESS-MAINTAINER-GUIDE.md` | harness 유지보수 가이드 |
 | `docs/retrospectives/**` | 리뷰 및 학습 산출물 |
 | `docs/archive/**` | historical snapshot 및 완료 기록 |
 
@@ -115,14 +118,16 @@ archive, manual, 과거 문서를 일괄 로드하지 않는다.
 ```mermaid
 graph LR
     CANON["Canonical docs\nBEHAVIOR / AGENT-WORKFLOW / PROTOCOL"]
-    CLAUDE["Claude Code\ncommands + rules"]
-    CODEX["Codex\nAGENTS.md + prompts"]
+    CLAUDE["Claude Code\n.claude/commands + .claude/rules"]
+    CODEX["Codex\nAGENTS.md + .agents/skills + .codex/hooks.json"]
     CURSOR["Cursor\n.cursor/rules"]
+    PROMPTS["prompts/**\n(shared fallback)"]
     SCAFFOLD["create-harness.sh"]
 
     CANON --> CLAUDE
     CANON --> CODEX
     CANON --> CURSOR
+    CANON --> PROMPTS
     CANON --> SCAFFOLD
 ```
 
