@@ -24,6 +24,7 @@ AI Workflow Harness backlog다.
 | ID | Priority | Status | Risk | Task | Dependencies | Done Criteria | Verification |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | HRN-002 | P1 | Candidate | L2 | Hard enforcement 강화 — git hook + 검증 누락 감지 보강 | Manual protocol 안정화 | git pre-commit hook이 STATUS.md 최근 수정 여부와 validation 누락을 세션 종료 전 감지하는 enforcement chain 설계 | hook 트리거 확인 및 lint/validation 누락 감지 확인 |
+| HRN-030 | P1 | Candidate | L2 | Phase lifecycle 관리 기준 정립 — Current Milestone Criteria, phase transition trigger, Work Done Criteria 관계 명확화 | HRN-029 이후 공개 준비 상태 정리 | `STATUS.md`의 Current Milestone Criteria가 phase/milestone 단위 기준임을 명확히 하고, criteria 완료 시 phase 전환/새 milestone/maintenance 전환 중 어떤 절차를 따를지 protocol과 manual에 반영 | phase 완료 시나리오, milestone 교체 시나리오, Work Done과 phase criteria가 다른 시나리오를 문서 기준으로 시뮬레이션 |
 | HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 — Claude Code process-exit hook 지원 여부 모니터링 (소극적 감시; 지원 확인 전 action 없음) | — | Claude Code 릴리즈 노트에서 process-exit hook 지원 확인 시 `settings.json` 보완 및 문서 갱신 | 릴리즈 노트 확인 후 gap 해소 여부 검증 |
 
 ## Deferred Ideas
