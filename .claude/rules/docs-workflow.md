@@ -4,6 +4,7 @@ paths:
   - "CLAUDE.md"
   - "AGENTS.md"
   - ".claude/**/*.md"
+  - ".agents/**/*.md"
 ---
 
 # Documentation Workflow Rules
