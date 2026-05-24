@@ -1,7 +1,7 @@
 ---
 id: HRN-028
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: .agents/skills/ source-command-{name} → harness-{name} rename, .claude/commands/ 현행 유지
 appetite: 1d
