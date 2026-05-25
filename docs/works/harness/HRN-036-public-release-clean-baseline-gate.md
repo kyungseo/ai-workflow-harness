@@ -195,9 +195,10 @@ scripts/create-harness.sh --profile generic release-gate-smoke /private/tmp/rele
 
 | ID | Question | Decision Needed |
 | --- | --- | --- |
-| HRN-036-OQ-001 | Public Clean Baseline Gate 결과를 PR body에 필수로 남길 것인가, `/done` summary로 충분한가? | Step 2 |
-| HRN-036-OQ-002 | `docs/HARNESS-PROTOCOL.md`에 gate를 canonical rule로 추가할 것인가, `docs/GIT-WORKFLOW.md`에만 둘 것인가? | Step 2 |
-| HRN-036-OQ-003 | `main` PR 전 temp scaffold 생성까지 필수로 할 것인가, dry-run만 필수로 할 것인가? | Step 2 |
+| HRN-036-OQ-001 | ~~Public Clean Baseline Gate 결과를 PR body에 필수로 남길 것인가, `/done` summary로 충분한가?~~ **Decided (2026-05-25): PR body 필수.** `/done` summary는 휘발성이라 release 기록으로 부적합. main merge PR body에 gate 결과를 남긴다. | ~~Step 2~~ Done |
+| HRN-036-OQ-002 | ~~`docs/HARNESS-PROTOCOL.md`에 gate를 canonical rule로 추가할 것인가, `docs/GIT-WORKFLOW.md`에만 둘 것인가?~~ **Decided (2026-05-25): `docs/GIT-WORKFLOW.md` 주관, `docs/HARNESS-PROTOCOL.md`에 pointer만.** Gate는 release 정책이지 agent 실행 규칙이 아니므로 PROTOCOL에는 참조 링크만 추가. | ~~Step 2~~ Done |
+| HRN-036-OQ-003 | ~~`main` PR 전 temp scaffold 생성까지 필수로 할 것인가, dry-run만 필수로 할 것인가?~~ **Decided (2026-05-25): dry-run 필수, temp scaffold는 scaffold 파일 변경 시에만.** 매번 temp 생성은 과잉. | ~~Step 2~~ Done |
+| HRN-036-OQ-004 | Release 주기를 어떻게 정할 것인가? feature 작업이 끝날 때마다 release 하는가, 여러 feature를 묶어서 release 하는가? 최소 release 단위 기준이 있는가? | Step 2 |
 
 ## Checkpoints
 
@@ -215,3 +216,4 @@ scripts/create-harness.sh --profile generic release-gate-smoke /private/tmp/rele
 - 2026-05-25: 직전 public clean baseline 정리 근거와 `/start` first-run 시뮬레이션은 `docs/archive/docs/works/harness/HRN-035-public-clone-first-start-cleanup.md`를 참조한다.
 - 2026-05-25: main은 일반 작업 누적 브랜치가 아니라 public release snapshot으로 다뤄야 한다. feature 작업이 끝났다는 이유만으로 main PR을 만들면 public clean 상태가 깨질 수 있다.
 - 2026-05-25: release gate는 자동화보다 manual-first checklist로 먼저 정의하는 것이 현재 harness 철학과 맞다. CI/branch protection hardening은 후속 작업으로 분리 가능하다.
+- 2026-05-25: GitHub ruleset 및 보안 설정 완료 (DR-020 참조). `protect-main`과 `protect-develop` 모두 active 전환. pull_request rule 추가, Admin bypass, secret scanning, vulnerability alerts 활성화. Out of Scope로 분리했던 branch protection 실제 설정이 이 시점에 완료되어 Gate의 Git 레벨 강제 조건이 갖춰졌다. 미결: merge 방식 제한(DR-017 정합성 검토 필요), sha_pinning.
