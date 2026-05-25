@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+
 ## Done (Archive Pending)
 
 | ID | Title | actual_end | Work File |
@@ -16,6 +17,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| HRN-035 | Public Clone First-Start Cleanup | 2026-05-25 | `docs/archive/docs/works/harness/HRN-035-public-clone-first-start-cleanup.md` |
 | HRN-034 | Scaffold Product Definition / Project Initialization Gate | 2026-05-24 | `docs/archive/docs/works/harness/HRN-034-scaffold-product-initialization-gate.md` |
 | HRN-033 | Scaffold Onboarding Git Repository Bootstrap | 2026-05-24 | `docs/archive/docs/works/harness/HRN-033-git-repository-bootstrap.md` |
 | HRN-031 | Remove Redundant Workflow Manual Summary | 2026-05-24 | `docs/archive/docs/works/harness/HRN-031-remove-workflow-manual-summary.md` |

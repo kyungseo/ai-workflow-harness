@@ -715,6 +715,9 @@ flowchart TD
     style STATE_APPROVAL fill:#fff3cd,stroke:#ffc107
 ```
 
+Active Work와 Next Actions가 없고 archive 대기 Work도 없으면 `/start`는 repository를 clean idle 상태로 보고한다.
+이 상태에서는 과거 milestone checklist를 다음 작업 후보로 추론하지 않으며, 새 작업 선택은 `/pick`, 새 항목 등록은 `/register`로 시작한다.
+
 ### 4-2. Task Execution Flow (Plan → Approve → Implement)
 
 ```mermaid

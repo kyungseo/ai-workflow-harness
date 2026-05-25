@@ -27,6 +27,9 @@ MUST NOT:
 - `docs/BOOTSTRAP.md`가 존재한다는 이유만으로 매 세션 로드하지 않는다.
 - 승인 없이 넓은 변경, L3 변경, scope 확장을 실행하지 않는다.
 
+Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 없으면 clean idle 상태로 보고한다.
+이때 과거 milestone criteria나 archive 이력을 next candidate로 자동 확장하지 않고, `/pick` 또는 `/register`를 다음 진입로로 안내한다.
+
 ## Context Routing
 
 ## Operating Tracks

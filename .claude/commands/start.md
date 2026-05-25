@@ -8,6 +8,16 @@ docs/STATUS.md의 Current State, Active Work, Blockers And Open Questions, Next 
 그다음 `docs/works/*/*.md` 중 `status: Done`이지만 archive되지 않은 Work 파일이 있는지 파일명과 frontmatter 수준으로만 확인해줘.
 Phase 1 또는 refactor 이전 상세가 필요한 경우에만 docs/archive/ 또는 docs/archive/snapshots/harness-refactor-20260514/를 추가로 참고해줘.
 
+**Idle-State Rule:** Active Work 없음 + Next Actions 없음 + archive 대기 Work 없음인 경우,
+- Blockers And Open Questions에 Open 항목이 있으면 section 4에서 idle-state 안내보다 먼저 노출한다.
+- Open Blocker도 없으면 section 4를 아래 형식으로 출력한다. `Current Milestone Criteria` 미완료 항목을 next candidate로 자동 확장하지 않는다.
+  ```
+  현재 repository는 Active Work와 Next Actions가 없는 clean idle 상태입니다.
+  다음 작업을 고르려면: /pick
+  새 작업을 등록하려면: /register
+  다른 프로젝트에 harness를 적용하려는 source repo 작업이라면 README Section 10 New Project Adoption을 참고하세요.
+  ```
+
 아래 형식으로 현재 상태를 요약해줘.
 
 1. 결론
