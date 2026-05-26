@@ -12,12 +12,12 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| HRN-039 | Git/Branch Isolation Enforcement | 2026-05-26 | `docs/works/harness/HRN-039-branch-isolation-enforcement.md` |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| HRN-039 | Git/Branch Isolation Enforcement | 2026-05-26 | `docs/archive/docs/works/harness/HRN-039-branch-isolation-enforcement.md` |
 | HRN-038 | AGENTS.md Thin Entrypoint 정비 | 2026-05-27 | `docs/archive/docs/works/harness/HRN-038-agents-thin-entrypoint.md` |
 | HRN-037 | /close 번들 기본값 개선 | 2026-05-26 | `docs/archive/docs/works/harness/HRN-037-close-bundle-default.md` |
 | HRN-036 | Public Release Clean Baseline Gate | 2026-05-26 | `docs/archive/docs/works/harness/HRN-036-public-release-clean-baseline-gate.md` |

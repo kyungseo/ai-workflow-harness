@@ -1,7 +1,7 @@
 ---
 id: HRN-039
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Git/branch isolation enforcement — develop/main 직접 수정 방지, release promotion gate 강화
 appetite: 1d
@@ -243,6 +243,7 @@ bash -n scripts/create-harness.sh
 ## Discovery
 
 - 2026-05-27: HRN-036/037 변경이 의도보다 빠르게 main까지 반영되면서 branch isolation gate 부재가 명확히 드러남. `temp/02` 초안의 branch isolation enforcement 부분을 별도 HRN-039로 승격.
+- 2026-05-26: HRN-039 완료. Two-tier enforcement(AI FAIL + hook warning) 구현, tools/git-hooks/** protected files 추가, V1-V6 시나리오 temp repo 검증 완료. Archived.
 
 ## Codex Review Opinion
 
