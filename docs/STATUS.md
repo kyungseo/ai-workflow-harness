@@ -28,6 +28,7 @@ Last updated: 2026-05-26 (HRN-036 완료·archive — Public Release Clean Basel
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| HRN-037 | /close 번들 기본값 개선 | `docs/works/harness/HRN-037-close-bundle-default.md` |
 
 ## Blockers And Open Questions
 

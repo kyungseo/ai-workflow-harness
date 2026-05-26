@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| HRN-037 | /close 번들 기본값 개선 | `docs/works/harness/HRN-037-close-bundle-default.md` |
 
 ## Done (Archive Pending)
 
