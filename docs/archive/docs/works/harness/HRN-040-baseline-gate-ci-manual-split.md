@@ -1,7 +1,7 @@
 ---
 id: HRN-040
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Public Clean Baseline Gate 범위 명확화 — source/scaffold 분리, CI/manual split, hook applicability 정책
 appetite: 1.5d
@@ -226,3 +226,4 @@ sh -n scripts/create-harness.sh
 - 2026-05-26: HRN-039 완료 후 phrase leakage(scaffold 복사 파일 4개 — AGENTS.md 포함)와 hook applicability 미명시 문제 확인. CI paths `tools/git-hooks/**` 누락 병행 발견. OQ-1(GIT-WORKFLOW.md load 지시 조건부 변경)·OQ-3(phrase scan CI fail) 즉시 결정. HRN-040으로 등록.
 - 2026-05-26: HARNESS-MAINTAINER-GUIDE.md §10 hook policy wording을 product repo maintainer 관점으로 조정. source repo 운영 세부(자동 설치, branch isolation warning)를 제거하고 product-specific hook 정의 안내로 교체.
 - 2026-05-26: release 전 종합 검증에서 scaffold broken artifact reference와 substitution drift를 확인하고, GIT-WORKFLOW 조건부 참조·hook 설치 안내·migration boundary 문구·CI artifact scan을 보정.
+- 2026-05-26: develop→main release 전 archive 처리.
