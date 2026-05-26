@@ -26,6 +26,18 @@ Work 파일 생성 시 함께 수행할 것:
 
 ## Pre-check (Before Planning)
 
+**Branch Isolation Check**
+
+계획을 세우기 전 현재 branch를 확인한다:
+
+```bash
+git branch --show-current
+```
+
+- `feature/*` 또는 `hotfix/*` → 계속 진행한다.
+- `develop` 또는 `main` → FAIL. 작업 성격에 맞는 `feature/*` branch 생성을 먼저 제안한다. 계획은 branch 생성 후 진행한다.
+- git repository가 없는 초기 상태 → Not Applicable. 이 단계를 건너뛰고 진행한다.
+
 **0. 기존 Active Work Discovery 확인**
 STATUS.md에 이미 Active Work가 있으면:
 - 해당 Work 파일의 Discovery 섹션에 현재 진행 상황이 기록되어 있는지 확인해줘.

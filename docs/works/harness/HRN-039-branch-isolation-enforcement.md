@@ -236,7 +236,7 @@ bash -n scripts/create-harness.sh
 | CP | Description | Status |
 | --- | --- | --- |
 | CP-1 | Work 파일 작성 및 착수 등록 | Done |
-| CP-2 | Canonical + AI rule + skill/command 패치 (Step 1~4) | Pending |
+| CP-2 | Canonical + AI rule + skill/command 패치 (Step 1~4) | Done |
 | CP-3 | Hook 보강 + Validation (Step 5~6) | Pending |
 
 ## Discovery
