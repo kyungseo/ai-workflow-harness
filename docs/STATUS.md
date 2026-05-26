@@ -28,6 +28,7 @@ Last updated: 2026-05-26 (HRN-037 완료 — /close commit 전략 안내 3-state
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| HRN-038 | AGENTS.md Thin Entrypoint 정비 | `docs/works/harness/HRN-038-agents-thin-entrypoint.md` |
 
 ## Blockers And Open Questions
 
