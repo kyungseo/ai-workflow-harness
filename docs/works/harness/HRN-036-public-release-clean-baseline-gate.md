@@ -1,13 +1,13 @@
 ---
 id: HRN-036
 priority: P1
-status: Active
+status: Done
 risk: Medium
 scope: Public release clean baseline gate and develop-to-main release policy
 appetite: 0.5d
 planned_start: 2026-05-25
 planned_end: 2026-05-26
-actual_end:
+actual_end: 2026-05-26
 related_dr: []
 related_commits: []
 related_troubleshooting: []
@@ -182,14 +182,14 @@ scripts/create-harness.sh --profile generic release-gate-smoke /private/tmp/rele
 
 ## Done Criteria
 
-- [ ] develop -> main PR 전 Public Clean Baseline Gate가 문서화된다.
-- [ ] main PR은 release-ready snapshot일 때만 생성한다는 원칙이 명확해진다.
-- [ ] feature -> develop 작업과 develop -> main release가 혼동되지 않는다.
-- [ ] `docs/STATUS.md`, Work archive pending, README/onboarding/scaffold, `/start` 시뮬레이션이 release gate 항목에 포함된다.
-- [ ] main PR 금지 조건이 문서화된다.
-- [ ] main PR merge 후 develop sync 절차가 유지된다.
-- [ ] 필요한 canonical/tool/user-facing 문서 cascade가 최소 범위로 정렬된다.
-- [ ] validation 결과와 남은 리스크가 Work Discovery 또는 final report에 기록된다.
+- [x] develop -> main PR 전 Public Clean Baseline Gate가 문서화된다.
+- [x] main PR은 release-ready snapshot일 때만 생성한다는 원칙이 명확해진다.
+- [x] feature -> develop 작업과 develop -> main release가 혼동되지 않는다.
+- [x] `docs/STATUS.md`, Work archive pending, README/onboarding/scaffold, `/start` 시뮬레이션이 release gate 항목에 포함된다.
+- [x] main PR 금지 조건이 문서화된다.
+- [x] main PR merge 후 develop sync 절차가 유지된다.
+- [x] 필요한 canonical/tool/user-facing 문서 cascade가 최소 범위로 정렬된다.
+- [x] validation 결과와 남은 리스크가 Work Discovery 또는 final report에 기록된다.
 
 ## Open Questions
 

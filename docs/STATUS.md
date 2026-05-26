@@ -28,7 +28,6 @@ Last updated: 2026-05-25 (HRN-035 완료 — public clone first-start cleanup)
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| HRN-036 | Public Release Clean Baseline Gate | `docs/works/harness/HRN-036-public-release-clean-baseline-gate.md` |
 
 ## Blockers And Open Questions
 
