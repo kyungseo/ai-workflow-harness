@@ -75,7 +75,7 @@ Follow Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-lan
 ## Branch Flow
 
 When the user expresses branch merge intent, such as asking to merge, open a PR, or merge into `develop`,
-이 repo에 `docs/GIT-WORKFLOW.md`가 있으면 load하고 section 2 (feature development cycle)와 section 3 (release cycle)를 따른다. 없으면 project-specific branch/release policy를 먼저 확인한다.
+If this repository has `docs/GIT-WORKFLOW.md`, load it and follow section 2 (feature development cycle) and section 3 (release cycle). Otherwise, check the project-specific branch/release policy first.
 
 PR Base Rule:
 - feature/* → `develop` (ALWAYS use `--base develop` when opening a PR from a feature branch)

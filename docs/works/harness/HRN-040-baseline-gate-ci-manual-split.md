@@ -215,12 +215,13 @@ sh -n scripts/create-harness.sh
 
 | CP | Description | Status |
 | --- | --- | --- |
-| CP-1 | Phrase leakage 수정 + load 지시 조건부 변경 (scaffold 복사 파일 4개) | Pending |
-| CP-2 | Hook applicability 명시 | Pending |
-| CP-3 | CI 보강 | Pending |
-| CP-4 | HARNESS-PROTOCOL.md CI/manual/hook 경계 단락 | Pending |
-| CP-5 | Validation | Pending |
+| CP-1 | Phrase leakage 수정 + load 지시 조건부 변경 (scaffold 복사 파일 4개) | Done |
+| CP-2 | Hook applicability 명시 | Done |
+| CP-3 | CI 보강 | Done |
+| CP-4 | HARNESS-PROTOCOL.md CI/manual/hook 경계 단락 | Done |
+| CP-5 | Validation | Done |
 
 ## Discovery
 
 - 2026-05-26: HRN-039 완료 후 phrase leakage(scaffold 복사 파일 4개 — AGENTS.md 포함)와 hook applicability 미명시 문제 확인. CI paths `tools/git-hooks/**` 누락 병행 발견. OQ-1(GIT-WORKFLOW.md load 지시 조건부 변경)·OQ-3(phrase scan CI fail) 즉시 결정. HRN-040으로 등록.
+- 2026-05-26: HARNESS-MAINTAINER-GUIDE.md §10 hook policy wording을 product repo maintainer 관점으로 조정. source repo 운영 세부(자동 설치, branch isolation warning)를 제거하고 product-specific hook 정의 안내로 교체.
