@@ -99,7 +99,7 @@ Full policy: `docs/decisions/DR-007-language-policy.md`
 ## Branch Flow
 
 When the user expresses branch merge intent (e.g., asking to merge, open a PR, or merge into develop),
-load `docs/GIT-WORKFLOW.md` and follow §2 (Feature Development Cycle) and §3 (Release Cycle).
+load `docs/GIT-WORKFLOW.md` and follow §2 (Feature Development Cycle) and §3 (Release Cycle — develop→main PR 전 §3-1 Public Clean Baseline Gate 수행 포함).
 
 NEVER:
 - Directly local-merge a feature branch into develop. Always merge via PR.
