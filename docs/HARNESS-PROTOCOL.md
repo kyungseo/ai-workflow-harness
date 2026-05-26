@@ -575,7 +575,7 @@ Report includes:
 
 git repository가 없는 bootstrap 초기 상태에서는 아래 git 명령 대신 `Not Applicable`로 보고하고, 문서/파일 검증만 진행한다.
 
-develop → main release PR 생성 전에 `docs/GIT-WORKFLOW.md` §3-1 Public Clean Baseline Gate를 수행한다 (source repo 전용; scaffold product repo는 project-specific release criteria를 따른다).
+develop → main release PR 생성 전에 `docs/GIT-WORKFLOW.md` §3 release gate를 수행한다 (source repo 전용). scaffold product repo는 project-specific release criteria를 따른다.
 
 Commit 전:
 
@@ -605,7 +605,7 @@ enforcement는 세 층으로 분리한다.
 | Commit whitespace | `git diff-tree --check -r HEAD` |
 | Scaffold shell syntax | `bash -n scripts/create-harness.sh` |
 | Scaffold dry-run | `scripts/create-harness.sh --dry-run ...` |
-| Scaffold phrase scan | temp 생성 후 `rg "§3-1\|Public Clean Baseline"` — 발견 시 fail |
+| Scaffold phrase scan | temp 생성 후 source-only phrase 검출 시 fail — `.github/workflows/ci.yml` 참조 |
 | Stale runtime identity | `grep -RInE 'Spring Boot ...'` live docs scan |
 
 **Human Review Checklist — PR body 기재 (develop→main):**

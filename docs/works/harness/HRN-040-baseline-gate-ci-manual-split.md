@@ -198,10 +198,10 @@ sh -n scripts/create-harness.sh
 - [x] `.github/workflows/ci.yml` paths에 `tools/git-hooks/**` 추가.
 - [x] CI에 `git diff-tree --check -r HEAD` step 추가.
 - [x] CI에 scaffold output source-only phrase scan step 추가 (CI Required fail).
-- [ ] `rg "Public Clean Baseline|§3-1" AGENTS.md CLAUDE.md docs .claude .agents prompts scripts` 결과가 `docs/GIT-WORKFLOW.md`, `docs/STATUS.md`, archive 파일, `docs/works/harness/HRN-040-baseline-gate-ci-manual-split.md` 외에 없음 확인.
-- [ ] scaffold 실제 temp 생성 후 phrase 없음 확인. `scripts/create-harness.sh --profile generic ci-phrase-check /tmp/ci-phrase-check` 실행 후 `if rg "§3-1|Public Clean Baseline" /tmp/ci-phrase-check; then exit 1; fi` 통과.
-- [ ] Verification 시나리오 V1–V5 통과.
-- [ ] `git diff --check`, `sh -n scripts/create-harness.sh` 통과.
+- [x] `rg "Public Clean Baseline|§3-1" AGENTS.md CLAUDE.md docs .claude .agents prompts scripts` 결과가 `docs/GIT-WORKFLOW.md`, `docs/STATUS.md`, archive 파일, `docs/works/harness/HRN-040-baseline-gate-ci-manual-split.md` 외에 없음 확인.
+- [x] scaffold 실제 temp 생성 후 phrase 없음 확인. `rg "§3-1|Public Clean Baseline" /tmp/ci-phrase-check2` exit 1 (no match) 확인.
+- [x] Verification 시나리오 V1–V5 통과.
+- [x] `git diff --check`, `sh -n scripts/create-harness.sh` 통과.
 
 ## Open Questions
 
