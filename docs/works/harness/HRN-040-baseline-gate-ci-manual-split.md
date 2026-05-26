@@ -102,7 +102,7 @@ CI/manual/hook 책임 경계 기준 문서도 없다.
 
 ### CI Required (추가 — fail)
 
-- scaffold dry-run output에 source-only phrase 검출 scan (`§3-1`, `Public Clean Baseline` 검출 시 fail). scan 대상은 생성된 temp scaffold output이며 source docs 아님
+- generated temp scaffold content scan — `§3-1`, `Public Clean Baseline` 검출 시 CI fail. scan 대상은 실제 생성된 temp scaffold output이며 source docs 아님
 
 ### Human Review Checklist (PR body 기재)
 
@@ -154,7 +154,7 @@ CI/manual/hook 책임 경계 기준 문서도 없다.
 `.github/workflows/ci.yml`:
 - `paths:` 에 `tools/git-hooks/**` 추가
 - `git diff --check` step 추가
-- scaffold dry-run output phrase scan step 추가
+- generated temp scaffold content scan step 추가 (CI Required fail)
 
 ### CP-4 — HARNESS-PROTOCOL.md CI/manual/hook 책임 경계 단락
 
@@ -169,7 +169,8 @@ rg "Public Clean Baseline|§3-1" AGENTS.md CLAUDE.md docs .claude .agents prompt
 
 # scaffold 실제 생성 후 content scan (--dry-run은 파일을 쓰지 않아 불가)
 scripts/create-harness.sh --profile generic ci-phrase-check /tmp/ci-phrase-check
-rg "§3-1|Public Clean Baseline" /tmp/ci-phrase-check && echo "FAIL: phrase found" || echo "OK: no phrase"
+if rg "§3-1|Public Clean Baseline" /tmp/ci-phrase-check; then echo "FAIL: phrase found in scaffold output"; exit 1; fi
+echo "OK: no phrase found"
 rm -rf /tmp/ci-phrase-check
 
 git diff --check
@@ -182,7 +183,7 @@ sh -n scripts/create-harness.sh
 | --- | --- | --- |
 | V1 | source repo develop→main release | Public Clean Baseline Gate 전체 수행. CI Required 통과 + Human Review checklist 기재 |
 | V2 | scaffold 직후 no-git repo | branch isolation Not Applicable. hook 설치 안내 없음 |
-| V3 | scaffold dry-run output scan | "§3-1", "Public Clean Baseline" 없음 |
+| V3 | generated temp scaffold content scan | "§3-1", "Public Clean Baseline" 없음 |
 | V4 | CI path filter: `tools/git-hooks/pre-commit` 수정 | CI 트리거됨 |
 | V5 | product repo release | source-only gate 참조 없음. Project Baseline/Release Criteria 적용 |
 
@@ -214,7 +215,7 @@ sh -n scripts/create-harness.sh
 
 | CP | Description | Status |
 | --- | --- | --- |
-| CP-1 | Phrase leakage 수정 (scaffold 복사 파일 3개) | Pending |
+| CP-1 | Phrase leakage 수정 + load 지시 조건부 변경 (scaffold 복사 파일 4개) | Pending |
 | CP-2 | Hook applicability 명시 | Pending |
 | CP-3 | CI 보강 | Pending |
 | CP-4 | HARNESS-PROTOCOL.md CI/manual/hook 경계 단락 | Pending |
@@ -222,4 +223,4 @@ sh -n scripts/create-harness.sh
 
 ## Discovery
 
-- 2026-05-26: HRN-039 완료 후 phrase leakage(scaffold 복사 파일 3개)와 hook applicability 미명시 문제 확인. CI paths `tools/git-hooks/**` 누락 병행 발견. HRN-040으로 등록.
+- 2026-05-26: HRN-039 완료 후 phrase leakage(scaffold 복사 파일 4개 — AGENTS.md 포함)와 hook applicability 미명시 문제 확인. CI paths `tools/git-hooks/**` 누락 병행 발견. OQ-1(GIT-WORKFLOW.md load 지시 조건부 변경)·OQ-3(phrase scan CI fail) 즉시 결정. HRN-040으로 등록.
