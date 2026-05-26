@@ -22,6 +22,8 @@ Local hooks:
 sh tools/git-hooks/install.sh
 ```
 
+GitHub repository 설정 (ruleset, 보안, 기능 옵션)은 `docs/decisions/DR-020-github-repo-settings.md`를 기준으로 적용한다.
+
 ## 2. Daily Workflow
 
 1. `docs/STATUS.md`의 Current State, Active Work, Blockers, Next Actions를 확인한다.
@@ -190,3 +192,4 @@ repository를 public으로 전환하기 전에:
 3. secret, private URL, local-only path를 스캔한다.
 4. generic scaffold dry-run을 검증한다.
 5. review가 완료될 때까지 GitHub repository visibility가 private 상태임을 확인한다.
+6. GitHub repository ruleset, 보안 설정, 기능 옵션을 `docs/decisions/DR-020-github-repo-settings.md` 기준으로 구성한다.
