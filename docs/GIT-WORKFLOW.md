@@ -96,12 +96,56 @@ git push origin --delete feature/{name}
 
 ## 3. Release Cycle (Develop → Main)
 
-Phase 또는 마일스톤 단위로 develop을 main에 병합한다.
+`main`은 일반 통합 브랜치가 아니라 **public release snapshot**이다.
+feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
+의미 있는 패치(하나 또는 여러 feature 묶음)가 완료되어 release 준비가 됐을 때만 develop → main PR을 만든다.
+
+**머지 방식:** 항상 Regular merge (Merge commit) — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다. (DR-017)
+
+### 3-1. Public Clean Baseline Gate
+
+develop → main PR 생성 전 아래 항목을 모두 확인한다.
+확인 결과는 **PR body에 반드시 남긴다.**
+
+| Area | Clean Condition | Evidence |
+| --- | --- | --- |
+| Working tree | develop working tree가 clean | `git status --short --branch` |
+| STATUS Active Work | `docs/STATUS.md` Active Work 비어 있음 | file inspection |
+| STATUS Blockers/OQ | Open Blocker/OQ 없음. 남길 경우 public 사용자에게 보여도 되는 이유 기록 | file inspection |
+| STATUS Next Actions | 비어 있거나 public 사용자가 따라도 되는 항목만 존재 | file inspection |
+| Work lifecycle | `docs/works/*/*.md`에 `status: Done` archive pending 없음 | `rg -n "^status: Done" docs/works` |
+| Work active leakage | release 대상에 internal Active Work가 남지 않음 | `rg -n "^status: Active" docs/works` |
+| Archive state | `docs/archive/docs/works/**` 아래 Work는 모두 `status: Archived` | `rg -n "^status:" docs/archive/docs/works` |
+| `/start` output | public clone 첫 `/start`가 clean idle 또는 의도한 상태로 시뮬레이션됨 | STATUS 기준 문서 시뮬레이션 |
+| Adoption path | README → `docs/SCAFFOLD-ONBOARDING-GUIDE.md` → scaffold bootstrap 흐름 정합 | link/path inspection |
+| Scaffold | `bash -n scripts/create-harness.sh` + `--dry-run` 통과. 실제 temp scaffold 생성은 scaffold 파일 변경 시에만 | `bash -n scripts/create-harness.sh`, `scripts/create-harness.sh --dry-run ...` |
+| Docs cascade | release gate 관련 문서 변경 시 canonical/tool/user-facing/scaffold cascade 정렬 확인 | targeted cascade check |
+| Validation | `git diff --check` 통과 | `git diff --check` |
+
+### 3-2. Main Merge Gate
+
+아래 조건을 모두 만족할 때만 develop → main PR을 생성한다.
+
+- feature 작업은 먼저 feature → develop PR로 병합되어 있어야 한다.
+- Public Clean Baseline Gate를 모두 통과해야 한다.
+- Gate 결과를 PR body에 남긴다.
+- main PR은 `develop` → `main` 방향만 허용한다.
+
+**main PR 금지 조건:**
+
+- Active Work가 남아 있는 상태
+- Done archive pending Work가 남아 있는 상태
+- Open Blocker/OQ가 public 사용자에게 혼란을 줄 수 있는 상태
+- README 또는 onboarding/scaffold 경로가 stale한 상태
+- feature branch에서 직접 main으로 PR을 여는 경우
+
+### 3-3. PR Creation (Develop → Main)
 
 ```bash
-# GitHub UI 또는 CLI로 develop → main PR 생성
 gh pr create --base main --head develop --title "release: ..."
 ```
+
+### 3-4. Post-Merge Develop Sync
 
 PR merge 후:
 

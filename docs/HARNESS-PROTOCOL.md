@@ -575,6 +575,8 @@ Report includes:
 
 git repository가 없는 bootstrap 초기 상태에서는 아래 git 명령 대신 `Not Applicable`로 보고하고, 문서/파일 검증만 진행한다.
 
+develop → main release PR 생성 전에 `docs/GIT-WORKFLOW.md` §3-1 Public Clean Baseline Gate를 수행한다.
+
 Commit 전:
 
 1. `git status`

@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| HRN-036 | Public Release Clean Baseline Gate | 2026-05-26 | `docs/works/harness/HRN-036-public-release-clean-baseline-gate.md` |
 
 ## Archived
 
