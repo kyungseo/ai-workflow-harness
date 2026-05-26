@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-26 (HRN-037 완료 — /close commit 전략 안내 3-state 감지 개선)
+Last updated: 2026-05-27 (HRN-038 완료 — AGENTS.md thin entrypoint 정비)
 
 ## Current State
 
@@ -28,7 +28,6 @@ Last updated: 2026-05-26 (HRN-037 완료 — /close commit 전략 안내 3-state
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| HRN-038 | AGENTS.md Thin Entrypoint 정비 | `docs/works/harness/HRN-038-agents-thin-entrypoint.md` |
 
 ## Blockers And Open Questions
 

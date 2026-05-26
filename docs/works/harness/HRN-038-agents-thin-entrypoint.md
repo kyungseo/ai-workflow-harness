@@ -1,13 +1,13 @@
 ---
 id: HRN-038
 priority: P2
-status: Active
+status: Done
 risk: L2
 scope: AGENTS.md thin entrypoint 정비 — 중복 rule 제거 및 skill routing pointer로 교체
 appetite: 0.5d
 planned_start: 2026-05-27
 planned_end: 2026-05-27
-actual_end:
+actual_end: 2026-05-27
 related_dr: [DR-007]
 related_commits: []
 related_troubleshooting: []
@@ -134,26 +134,29 @@ scaffold 산출 AGENTS.md에 동일 thin 구조가 반영되는지 확인한다.
 ### Step 5 — Validation
 
 ```bash
-rg "Codex Command Mapping|AGENTS.md command index|Failure And Recovery 절차" \
+rg "Codex Command Mapping|AGENTS\.md command index" \
+  AGENTS.md docs prompts .agents .claude .cursor scripts
+# "Failure And Recovery 절차"는 docs/HARNESS-PROTOCOL.md pointer 표현으로 prompts에 남아 있는 것이 정상
+rg "AGENTS\.md Failure And Recovery 절차" \
   AGENTS.md docs prompts .agents .claude .cursor scripts
 git diff --check
 bash -n scripts/create-harness.sh
 ```
 
-잔여 참조가 없으면 통과.
+stale live references(운영 파일 내 구 표현)가 없으면 통과. Work 파일 내 이력 기록과 `docs/HARNESS-PROTOCOL.md`를 명시한 새 표현은 허용.
 
 ## Done Criteria
 
-- [ ] `AGENTS.md`에서 Command Intent Recognition, Approval Matrix State Rules, Git Commit Format 섹션 제거 완료.
-- [ ] `AGENTS.md` Codex Command Mapping이 skill routing pointer로 교체됨.
-- [ ] `AGENTS.md` Document Language Policy가 English Only rule + DR-007 pointer로 축약됨.
-- [ ] `AGENTS.md` Failure And Recovery가 1줄 pointer로 축약됨.
-- [ ] `prompts/codex-session-start.md`의 "AGENTS.md Codex Command Mapping의 /{command} 절차" 참조가 `AGENTS.md Codex Skill Routing` 참조 표현으로 갱신됨.
-- [ ] `docs/HARNESS-PROTOCOL.md` cascade 테이블 "AGENTS.md command index" 2곳 갱신됨.
-- [ ] scaffold 확인 완료 (변경 있으면 반영, 없으면 Not Applicable).
-- [ ] `rg` 잔여 참조 없음 확인.
-- [ ] `git diff --check` 통과.
-- [ ] 행동 gap 없음 시뮬레이션 통과 — `/start`, `/work`, `/close`, branch/PR intent, document edit intent에서 AGENTS.md 축소 후에도 Codex가 기존과 같은 판단을 한다.
+- [x] `AGENTS.md`에서 Command Intent Recognition, Approval Matrix State Rules, Git Commit Format 섹션 제거 완료.
+- [x] `AGENTS.md` Codex Command Mapping이 skill routing pointer로 교체됨.
+- [x] `AGENTS.md` Document Language Policy가 English Only rule + DR-007 pointer로 축약됨.
+- [x] `AGENTS.md` Failure And Recovery가 1줄 pointer로 축약됨.
+- [x] `prompts/codex-session-start.md`의 "AGENTS.md Codex Command Mapping의 /{command} 절차" 참조가 `AGENTS.md Codex Skill Routing` 참조 표현으로 갱신됨.
+- [x] `docs/HARNESS-PROTOCOL.md` cascade 테이블 "AGENTS.md command index" 2곳 갱신됨.
+- [x] scaffold 확인 완료 — `adapt "${TEMPLATE_ROOT}/AGENTS.md"` 패턴으로 source 직접 복사. stale phrase 없음. Not Applicable (별도 scaffold 변경 불필요).
+- [x] `rg` stale live references 없음 확인 — Work 파일 내 이력 기록 및 `prompts`의 의도된 새 표현(`docs/HARNESS-PROTOCOL.md의 Failure And Recovery 절차`)은 제외.
+- [x] `git diff --check` 통과.
+- [x] 행동 gap 없음 시뮬레이션 통과 — `/start`, `/work`, `/close`, branch/PR intent, document edit intent에서 AGENTS.md 축소 후에도 Codex가 기존과 같은 판단을 한다.
 
 ## Open Questions
 
@@ -165,8 +168,8 @@ bash -n scripts/create-harness.sh
 | CP | Description | Status |
 | --- | --- | --- |
 | CP-1 | Work 파일 작성 및 착수 등록 | Done |
-| CP-2 | AGENTS.md 축소 + cascade 3종 패치 | Pending |
-| CP-3 | Validation 및 잔여 참조 확인 | Pending |
+| CP-2 | AGENTS.md 축소 + cascade 3종 패치 | Done |
+| CP-3 | Validation 및 잔여 참조 확인 | Done |
 
 ## Discovery
 
