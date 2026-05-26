@@ -367,7 +367,7 @@ main
 ```
 
 - feature 작업은 `develop` 기준으로 branch를 만든다. feature → develop 병합은 PR로만 한다.
-- develop → main도 PR로 병합한다.
+- develop → main PR은 의미 있는 패치가 완료된 release-ready 상태일 때만 생성한다. PR 생성 전 [`docs/GIT-WORKFLOW.md`](docs/GIT-WORKFLOW.md) §3-1 Public Clean Baseline Gate를 수행하고 결과를 PR body에 남긴다.
 - main PR merge 후에는 `main`을 pull하고 `develop`에 `origin/main`을 merge한 뒤 push하여 동기화한다.
 - commit 전에는 validation 결과, diff summary, 제안 commit message를 보고하고 별도 승인을 받는다.
 
