@@ -28,6 +28,7 @@ Last updated: 2026-05-27 (HRN-038 완료 — AGENTS.md thin entrypoint 정비)
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| HRN-039 | Git/Branch Isolation Enforcement | `docs/works/harness/HRN-039-branch-isolation-enforcement.md` |
 
 ## Blockers And Open Questions
 
