@@ -151,7 +151,7 @@ Harness/workflow surface(`entrypoint/workflow/protocol/command/rule/prompt/scaff
 - Approval Matrix에 따른 STATUS state-change 필요 여부
 - commit/PR 전 STATUS 최종본 반영 필요 여부
 - commit/PR 전 backlog/Work/DR tracker 최종 상태 반영 필요 여부
-- develop → main PR이면 `docs/GIT-WORKFLOW.md` §3-1 Public Clean Baseline Gate 수행
+- develop → main PR이면: source repo는 `docs/GIT-WORKFLOW.md` §3 release gate 수행; scaffold product repo는 project-specific release criteria 적용
 
 COMMIT 전 확인:
 

@@ -16,13 +16,9 @@
 - `rg` for search
 - Claude Code, Codex, or Cursor when testing tool-specific surfaces
 
-Local hooks:
-
-```bash
-sh tools/git-hooks/install.sh
-```
-
 GitHub repository 설정 (ruleset, 보안, 기능 옵션)은 `docs/decisions/DR-020-github-repo-settings.md`를 기준으로 적용한다.
+
+pre-commit hook 설치는 `tools/git-hooks/`가 있는 경우에만 적용된다 — §10 참조.
 
 ## 2. Daily Workflow
 
@@ -193,3 +189,11 @@ repository를 public으로 전환하기 전에:
 4. generic scaffold dry-run을 검증한다.
 5. review가 완료될 때까지 GitHub repository visibility가 private 상태임을 확인한다.
 6. GitHub repository ruleset, 보안 설정, 기능 옵션을 `docs/decisions/DR-020-github-repo-settings.md` 기준으로 구성한다.
+
+## 10. Product Repo Hook Policy
+
+scaffold된 product repo에는 `tools/git-hooks/`가 기본 포함되지 않는다.
+
+product repo는 자체 lint/test/pre-commit stack을 우선한다. pre-commit hook이 필요하면 해당 repo의 branch policy, protected paths, validation commands에 맞게 project-specific hook으로 별도 정의한다.
+
+harness hook을 그대로 복사하지 않는다. source harness hook은 harness source repo의 protected files, branch naming, validation scope를 전제로 하므로 product repo에 그대로 적용하면 기존 hook stack과 충돌하거나 잘못된 branch/workflow 제약을 만들 수 있다.

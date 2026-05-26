@@ -44,7 +44,7 @@ Full policy: `docs/decisions/DR-007-language-policy.md`
 ## Branch Flow
 
 When the user expresses branch merge intent (e.g., asking to merge, open a PR, or merge into develop),
-load `docs/GIT-WORKFLOW.md` and follow §2 (Feature Development Cycle) and §3 (Release Cycle — develop→main PR 전 §3-1 Public Clean Baseline Gate 수행 포함).
-Commit format: `docs/GIT-WORKFLOW.md §5`.
+If this repository has `docs/GIT-WORKFLOW.md`, load it and follow §2 (Feature Development Cycle) and §3 (Release Cycle). Otherwise, check the project-specific branch/release policy first.
+If this repository has `docs/GIT-WORKFLOW.md`, follow §5 for commit format.
 
 NEVER open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.

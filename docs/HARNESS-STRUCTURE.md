@@ -173,8 +173,7 @@ flowchart TD
 
 Product Definition과 Project Initialization baseline이 비어 있으면 Phase 1 backlog를 도출하지 않는다.
 
-## 7. Current Migration Boundary
+## 7. Migration Boundary
 
-`ai-workflow-harness`는 `base-msa-template`의 historical record를 보존하고 있다.
-현재 live 문서는 harness project를 기준으로 기술해야 한다. Historical snapshot은
-historical로 명확히 표시된 경우 product-template 맥락을 유지할 수 있다.
+harness를 기존 프로젝트에 overlay 적용한 경우, live 문서와 historical snapshot 간 경계를 명확히 한다.
+현재 live 문서는 이 harness 기준으로 기술한다. Historical snapshot은 historical로 명확히 표시된 경우 이전 맥락을 유지할 수 있다.
