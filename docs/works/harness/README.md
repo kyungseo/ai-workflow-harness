@@ -12,12 +12,12 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| HRN-036 | Public Release Clean Baseline Gate | 2026-05-26 | `docs/works/harness/HRN-036-public-release-clean-baseline-gate.md` |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| HRN-036 | Public Release Clean Baseline Gate | 2026-05-26 | `docs/archive/docs/works/harness/HRN-036-public-release-clean-baseline-gate.md` |
 | HRN-035 | Public Clone First-Start Cleanup | 2026-05-25 | `docs/archive/docs/works/harness/HRN-035-public-clone-first-start-cleanup.md` |
 | HRN-034 | Scaffold Product Definition / Project Initialization Gate | 2026-05-24 | `docs/archive/docs/works/harness/HRN-034-scaffold-product-initialization-gate.md` |
 | HRN-033 | Scaffold Onboarding Git Repository Bootstrap | 2026-05-24 | `docs/archive/docs/works/harness/HRN-033-git-repository-bootstrap.md` |

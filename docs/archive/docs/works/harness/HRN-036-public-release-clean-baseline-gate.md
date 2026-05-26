@@ -1,7 +1,7 @@
 ---
 id: HRN-036
 priority: P1
-status: Done
+status: Archived
 risk: Medium
 scope: Public release clean baseline gate and develop-to-main release policy
 appetite: 0.5d
@@ -220,4 +220,5 @@ scripts/create-harness.sh --profile generic release-gate-smoke /private/tmp/rele
 - 2026-05-26: CP-2 Surface Audit 완료. 갭 확인: `docs/GIT-WORKFLOW.md` §3에 Gate 전무(최대 갭), `README.md` §9에 release-ready 조건 없음, `docs/HARNESS-PROTOCOL.md`에 pointer 없음, `docs/HARNESS-QUICK-REFERENCE.md`에 release gate load condition 없음.
 - 2026-05-26: OQ-004 결정 — release 주기: feature마다 main PR 금지, 의미 있는 패치 단위. 머지 방식: develop→main은 항상 Regular merge (DR-017). Squash 예외는 feature→develop에만.
 - 2026-05-26: 검토 피드백 반영 — DR-017 정합성 수정(develop→main 항상 Regular merge), Archive state gate 추가, Scaffold 검증 OQ-003 정합 수정(bash -n + dry-run 기본), Docs cascade gate 추가, PROTOCOL pointer 문구 개선, README 섹션 표기 §3-1로 정정.
+- 2026-05-26: Archived — PR #29 develop merge 완료 후 archive. 후속 개선은 HRN-037(/close 번들 기본값 개선)로 분리.
 - 2026-05-26: CP-4/CP-5 완료 — `docs/GIT-WORKFLOW.md` §3 전면 재작성(Public Clean Baseline Gate 12-item 체크리스트, Main Merge Gate, 금지 조건), `README.md` §9 보완, `docs/HARNESS-PROTOCOL.md`·`docs/HARNESS-QUICK-REFERENCE.md` pointer 추가. 검토 피드백 반영 후 validation 통과.
