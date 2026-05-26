@@ -1,13 +1,13 @@
 ---
 id: HRN-037
 priority: P2
-status: Active
+status: Done
 risk: Low
 scope: /close command bundle default improvement for feature branch pre-PR scenario
 appetite: 0.25d
 planned_start: 2026-05-26
 planned_end: 2026-05-26
-actual_end:
+actual_end: 2026-05-26
 related_dr: []
 related_commits: []
 related_troubleshooting: []
@@ -144,12 +144,12 @@ git diff --check
 
 ## Done Criteria
 
-- [ ] feature branch 미push 시 `/close`가 번들(amend)을 기본으로 안내한다.
-- [ ] feature branch push됨, PR 없음 시 사용자 선택을 유도한다 (amend 가능하나 신중 안내).
-- [ ] PR opened/shared branch/확인 불가 시 amend 대신 별도 close commit 또는 squash merge를 안내한다.
-- [ ] develop/main 직접 작업 시 별도 close commit을 안내한다 (현행 유지).
-- [ ] `.agents/skills/workflow-close/SKILL.md` mirror 정렬 완료.
-- [ ] 5개 케이스 시뮬레이션 통과 (미push / push+PR없음 / push+PR열림 / gh실패 / develop직접).
+- [x] feature branch 미push 시 `/close`가 번들(amend)을 기본으로 안내한다.
+- [x] feature branch push됨, PR 없음 시 사용자 선택을 유도한다 (amend 가능하나 신중 안내).
+- [x] PR opened/shared branch/확인 불가 시 amend 대신 별도 close commit 또는 squash merge를 안내한다.
+- [x] develop/main 직접 작업 시 별도 close commit을 안내한다 (현행 유지).
+- [x] `.agents/skills/workflow-close/SKILL.md` mirror 정렬 완료.
+- [x] 5개 케이스 시뮬레이션 통과 (미push / push+PR없음 / push+PR열림 / gh실패 / develop직접).
 
 ## Open Questions
 
