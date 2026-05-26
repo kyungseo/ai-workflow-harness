@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-27 (HRN-038 완료 — AGENTS.md thin entrypoint 정비)
+Last updated: 2026-05-26 (HRN-039 완료 — Git/Branch Isolation Enforcement)
 
 ## Current State
 

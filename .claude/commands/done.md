@@ -37,6 +37,7 @@ disable-model-invocation: true
    - VALIDATE 결과
    - CHECKPOINT 또는 FAIL/RECOVER 필요 여부
 10. Commit 상태
+   - commit 전 branch isolation check: `git branch --show-current` 확인. `develop` 또는 `main`에서 protected workflow 파일이 staged되어 있으면 FAIL — `feature/*` branch 생성을 제안한다. `.git/MERGE_HEAD` 존재 시(merge commit) 면제.
    - commit 수행 여부
    - commit하지 않았다면 이유와 남은 risk
    - git repository가 없는 bootstrap 초기 상태에서는 이 단계를 `Not Applicable`로 보고한다.

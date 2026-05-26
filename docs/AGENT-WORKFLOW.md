@@ -20,6 +20,7 @@ MUST:
 3. 구현 또는 문서 변경 전 plan을 제시한다.
 4. 승인 후 실행한다.
 5. 완료 전 validation과 `docs/STATUS.md` 갱신 필요 여부를 확인한다.
+6. 파일 수정·commit·PR 생성 전, 현재 branch가 의도한 작업 범위에 맞는지 확인한다. `develop` 또는 `main`에서 protected workflow 파일은 수정하지 않는다 — `docs/GIT-WORKFLOW.md` §0 참조.
 
 MUST NOT:
 
