@@ -9,6 +9,7 @@ on:
       - '.claude/**'
       - '.cursor/**'
       - 'scripts/**'
+      - 'tools/git-hooks/**'
       - '.github/workflows/**'
       - 'AGENTS.md'
       - 'CLAUDE.md'
@@ -21,6 +22,7 @@ on:
       - '.claude/**'
       - '.cursor/**'
       - 'scripts/**'
+      - 'tools/git-hooks/**'
       - '.github/workflows/**'
       - 'AGENTS.md'
       - 'CLAUDE.md'
@@ -33,11 +35,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check whitespace errors
+        run: git diff-tree --check -r HEAD
+
       - name: Check shell syntax
         run: bash -n scripts/create-harness.sh
 
       - name: Validate generic scaffold dry-run
         run: ./scripts/create-harness.sh --dry-run --profile generic ci-harness-check /tmp/ci-harness-check
+
+      - name: Check scaffold output for source-only phrases
+        run: |
+          set -euo pipefail
+          ./scripts/create-harness.sh --profile generic ci-phrase-check /tmp/ci-phrase-check
+          if rg "§3-1|Public Clean Baseline" /tmp/ci-phrase-check 2>/dev/null; then
+            echo "ERROR: source-only phrase found in scaffold output."
+            exit 1
+          fi
+          echo "OK: no source-only phrase in scaffold output."
 
       - name: Check for stale runtime identity in live core docs
         run: |
