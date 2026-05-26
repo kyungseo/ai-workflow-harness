@@ -7,12 +7,12 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
-| HRN-040 | Public Clean Baseline Gate 범위 명확화 및 CI/Manual/Hook 분리 | `docs/works/harness/HRN-040-baseline-gate-ci-manual-split.md` |
 
 ## Done (Archive Pending)
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| HRN-040 | Public Clean Baseline Gate 범위 명확화 및 CI/Manual/Hook 분리 | 2026-05-26 | `docs/works/harness/HRN-040-baseline-gate-ci-manual-split.md` |
 
 ## Archived
 

@@ -16,13 +16,9 @@
 - `rg` for search
 - Claude Code, Codex, or Cursor when testing tool-specific surfaces
 
-Local hooks:
-
-```bash
-sh tools/git-hooks/install.sh
-```
-
 GitHub repository 설정 (ruleset, 보안, 기능 옵션)은 `docs/decisions/DR-020-github-repo-settings.md`를 기준으로 적용한다.
+
+pre-commit hook 설치는 `tools/git-hooks/`가 있는 경우에만 적용된다 — §10 참조.
 
 ## 2. Daily Workflow
 

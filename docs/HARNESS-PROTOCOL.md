@@ -384,7 +384,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | --- | --- | --- |
 | Canonical AI operations | `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md` | Agent 실행 규칙의 현재 기준 |
 | Live state and trackers | `docs/STATUS.md`, `docs/backlog/`, `docs/works/`, `docs/decisions/` | 현재 상태, 후보, Work SSoT, 결정 근거 |
-| Project and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/HARNESS-STRUCTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/GIT-WORKFLOW.md` | project/harness 구조와 유지보수 지식 |
+| Project and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/HARNESS-STRUCTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/GIT-WORKFLOW.md` (source repo only) | project/harness 구조와 유지보수 지식 |
 | User-facing workflow docs | `docs/WORKFLOW-MANUAL.md` | 사람이 읽는 매뉴얼. 평시 Agent 자동 로드 대상 아님 |
 | Historical and evaluation docs | `docs/archive/`, `docs/retrospectives/`, reference-only plans | 완료 이력, snapshot, 시점별 평가, 완료된 계획의 참조 기록 |
 | Troubleshooting docs | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 패턴의 재사용 가능한 incident record |
@@ -617,7 +617,7 @@ enforcement는 세 층으로 분리한다.
 
 **Hook — local pre-commit warning (source repo 전용):**
 
-`tools/git-hooks/pre-commit`은 `ai-workflow-harness` source repo에서만 운영한다.
+`tools/git-hooks/pre-commit`은 harness source repo에서만 운영한다.
 develop/main에서 protected files 직접 staged 시 WARNING 출력 (exit 0).
 scaffold product repo에는 기본 미포함 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
 

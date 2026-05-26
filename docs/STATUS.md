@@ -28,7 +28,6 @@ Last updated: 2026-05-26 (HRN-040 등록 — Public Clean Baseline Gate 범위 �
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| HRN-040 | Public Clean Baseline Gate 범위 명확화 및 CI/Manual/Hook 분리 | `docs/works/harness/HRN-040-baseline-gate-ci-manual-split.md` |
 
 ## Blockers And Open Questions
 
