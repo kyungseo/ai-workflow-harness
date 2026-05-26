@@ -191,7 +191,7 @@ sh -n scripts/create-harness.sh
 
 - [x] `AGENTS.md`의 `docs/GIT-WORKFLOW.md` load 지시 + §3-1 참조가 조건부 표현으로 변경됨.
 - [x] `.claude/rules/git-workflow.md`의 `docs/GIT-WORKFLOW.md` load 지시 + §3-1 참조가 조건부 표현으로 변경됨.
-- [ ] `docs/HARNESS-PROTOCOL.md` §3-1 참조가 source-scope-qualified로 조정됨; CI/manual/hook 경계 단락 추가됨.
+- [x] `docs/HARNESS-PROTOCOL.md` §3-1 참조가 source-scope-qualified로 조정됨; CI/manual/hook 경계 단락 추가됨.
 - [x] `docs/HARNESS-QUICK-REFERENCE.md` §3-1 참조가 source-scope-qualified로 조정됨.
 - [x] `docs/GIT-WORKFLOW.md` §6 hook 안내에 source repo 전용 명시.
 - [x] `docs/HARNESS-MAINTAINER-GUIDE.md`에 scaffold product repo hook 정책(기본 미포함 + optional install 안내) 추가 (§10 신설).

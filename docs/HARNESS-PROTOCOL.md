@@ -594,6 +594,33 @@ L3 이상 작업은 논리 단계별 commit을 기본값으로 한다.
 - rollback plan은 파일 복구뿐 아니라 어떤 commit 또는 단계까지 되돌릴 수 있는지 설명한다.
 - 여러 축을 하나의 commit에 묶어야 한다면 이유와 부분 rollback 비용을 종료 요약에 남긴다.
 
+### CI / Manual / Hook 책임 경계
+
+enforcement는 세 층으로 분리한다.
+
+**CI Required — 기계 검증 (fail on violation):**
+
+| 항목 | 명령 |
+| --- | --- |
+| Commit whitespace | `git diff-tree --check -r HEAD` |
+| Scaffold shell syntax | `bash -n scripts/create-harness.sh` |
+| Scaffold dry-run | `scripts/create-harness.sh --dry-run ...` |
+| Scaffold phrase scan | temp 생성 후 `rg "§3-1\|Public Clean Baseline"` — 발견 시 fail |
+| Stale runtime identity | `grep -RInE 'Spring Boot ...'` live docs scan |
+
+**Human Review Checklist — PR body 기재 (develop→main):**
+
+- README 첫인상이 public user에게 자연스러운가
+- Active Work 없음, Open Blocker 없음 (`docs/STATUS.md` 확인)
+- scaffold output에 source-only gate 문구가 없는가
+- release에서 public baseline 선언 가능한가
+
+**Hook — local pre-commit warning (source repo 전용):**
+
+`tools/git-hooks/pre-commit`은 `ai-workflow-harness` source repo에서만 운영한다.
+develop/main에서 protected files 직접 staged 시 WARNING 출력 (exit 0).
+scaffold product repo에는 기본 미포함 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
+
 ## 16. Operating Principles
 
 - 자동 로드 문서는 작고 실행 중심으로 유지한다.
