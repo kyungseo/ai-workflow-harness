@@ -73,7 +73,7 @@ Full policy: `docs/decisions/DR-007-language-policy.md`
 ## Branch Flow
 
 When the user expresses branch merge intent, such as asking to merge, open a PR, or merge into `develop`,
-load `docs/GIT-WORKFLOW.md` and follow section 2 (feature development cycle) and section 3 (release cycle).
+if this repository has `docs/GIT-WORKFLOW.md`, load it and follow section 2 (feature development cycle) and section 3 (release cycle). Otherwise, check the project-specific branch/release policy first.
 
 NEVER:
 - Directly local-merge a feature branch into develop. Always merge via PR.

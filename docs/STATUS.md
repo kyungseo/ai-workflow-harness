@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-26 (HRN-039 완료 — Git/Branch Isolation Enforcement)
+Last updated: 2026-05-26 (HRN-040 등록 — Public Clean Baseline Gate 범위 명확화 및 CI/Manual/Hook 분리)
 
 ## Current State
 

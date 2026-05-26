@@ -9,6 +9,7 @@ on:
       - '.claude/**'
       - '.cursor/**'
       - 'scripts/**'
+      - 'tools/git-hooks/**'
       - '.github/workflows/**'
       - 'AGENTS.md'
       - 'CLAUDE.md'
@@ -21,6 +22,7 @@ on:
       - '.claude/**'
       - '.cursor/**'
       - 'scripts/**'
+      - 'tools/git-hooks/**'
       - '.github/workflows/**'
       - 'AGENTS.md'
       - 'CLAUDE.md'
@@ -33,11 +35,54 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check whitespace errors
+        # git diff-tree --check -r HEAD examines the HEAD commit diff.
+        # In pull_request events CI runs on each push, so all commits are covered individually.
+        # For a full PR range check use: git fetch --depth=1 origin <base> && git diff --check origin/<base>...HEAD
+        run: git diff-tree --check -r HEAD
+
       - name: Check shell syntax
         run: bash -n scripts/create-harness.sh
 
       - name: Validate generic scaffold dry-run
         run: ./scripts/create-harness.sh --dry-run --profile generic ci-harness-check /tmp/ci-harness-check
+
+      - name: Check scaffold output for source-only phrases
+        run: |
+          set -euo pipefail
+          ./scripts/create-harness.sh --profile generic ci-phrase-check /tmp/ci-phrase-check
+          ./scripts/create-harness.sh --profile spring-boot ci-phrase-check-sb /tmp/ci-phrase-check-sb
+          FAIL=0
+          for SCAFFOLD in /tmp/ci-phrase-check /tmp/ci-phrase-check-sb; do
+            if rg "§3-1|Public Clean Baseline" "$SCAFFOLD" 2>/dev/null; then
+              echo "ERROR: source-only phrase found in $SCAFFOLD."
+              FAIL=1
+            fi
+          done
+          [ "$FAIL" -eq 0 ] && echo "OK: no source-only phrase in scaffold output."
+          exit "$FAIL"
+
+      - name: Check scaffold output for broken artifact references
+        run: |
+          set -euo pipefail
+          FAIL=0
+          for SCAFFOLD in /tmp/ci-phrase-check /tmp/ci-phrase-check-sb; do
+            # tools/git-hooks/install.sh must not appear in scaffold output
+            if rg "tools/git-hooks/install\.sh" "$SCAFFOLD" 2>/dev/null; then
+              echo "ERROR: tools/git-hooks/install.sh reference in $SCAFFOLD (source repo only)."
+              FAIL=1
+            fi
+
+            # Unconditional GIT-WORKFLOW.md load instruction (without conditional guard) must not appear.
+            # Allowed: lines containing "If this repository has" or "source repo"
+            if rg "load \`docs/GIT-WORKFLOW\.md\`" "$SCAFFOLD" 2>/dev/null \
+               | grep -qv "If this repository has\|source repo"; then
+              echo "ERROR: unconditional docs/GIT-WORKFLOW.md load instruction in $SCAFFOLD."
+              FAIL=1
+            fi
+          done
+          [ "$FAIL" -eq 0 ] && echo "OK: no broken artifact references in scaffold output."
+          exit "$FAIL"
 
       - name: Check for stale runtime identity in live core docs
         run: |

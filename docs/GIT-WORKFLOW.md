@@ -233,6 +233,8 @@ fix: TokenRedisRepository SCAN 기반 invalidation 제거
 
 ## 6. Pre-commit Hook
 
+> **Source repo 전용.** `tools/git-hooks/pre-commit`은 `ai-workflow-harness` source repo에서만 설치·운영한다. scaffold된 product repo에는 기본 포함되지 않는다 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
+
 `tools/git-hooks/pre-commit`이 자동으로 실행된다.
 
 | staged 파일 | 동작 |
