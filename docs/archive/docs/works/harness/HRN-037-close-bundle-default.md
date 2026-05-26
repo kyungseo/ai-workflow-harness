@@ -1,7 +1,7 @@
 ---
 id: HRN-037
 priority: P2
-status: Done
+status: Archived
 risk: Low
 scope: /close command bundle default improvement for feature branch pre-PR scenario
 appetite: 0.25d
@@ -168,6 +168,7 @@ git diff --check
 
 - 2026-05-26: HRN-036 /close 실행 시 feature branch pre-PR에서 별도 close commit이 생성되어 PR에 노이즈 발생. STATUS.md 변경이 실질 변경 commit 이후 별도 분리 — HARNESS-PROTOCOL.md "STATUS.md는 실질 변경과 같은 commit" 규칙과 불일치.
 - 2026-05-26: --amend는 push 여부에 따라 위험할 수 있어 감지 조건에 push 여부도 포함해야 한다.
+- 2026-05-26: Work Done 처리 완료. develop → main release PR 전 gate 통과를 위해 archive 처리.
 
 ## Codex Review Opinion
 
