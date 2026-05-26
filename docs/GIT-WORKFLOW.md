@@ -21,6 +21,7 @@
 | Canonical workflow | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md` |
 | Tool surface | `.claude/commands/*.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.agents/skills/**`, `prompts/**` |
 | Scaffold | `scripts/create-harness.sh` |
+| Enforcement | `tools/git-hooks/**` |
 
 ### Allowed Exceptions
 

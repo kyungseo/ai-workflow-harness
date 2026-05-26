@@ -1,13 +1,13 @@
 ---
 id: HRN-039
 priority: P1
-status: Active
+status: Done
 risk: L2
 scope: Git/branch isolation enforcement — develop/main 직접 수정 방지, release promotion gate 강화
 appetite: 1d
 planned_start: 2026-05-28
 planned_end: 2026-05-28
-actual_end:
+actual_end: 2026-05-26
 related_dr: []
 related_commits: []
 related_troubleshooting: []
@@ -210,18 +210,19 @@ bash -n scripts/create-harness.sh
 
 ## Done Criteria
 
-- [ ] `docs/GIT-WORKFLOW.md` §0 Branch Isolation Rule 섹션 추가 — protected files, 예외, feature/hotfix 절차 명시.
-- [ ] `docs/AGENT-WORKFLOW.md` Session Startup에 branch isolation awareness 반영.
-- [ ] `.claude/rules/git-workflow.md` commit gate에 branch isolation MUST 추가.
-- [ ] `workflow-work/SKILL.md` + `work.md` Pre-check에 Branch Isolation Check 추가.
-- [ ] `workflow-done/SKILL.md` + `done.md` commit gate에 branch check 추가.
-- [ ] `workflow-close/SKILL.md` + `close.md` commit 전략 안내 전 branch check 추가.
-- [ ] `tools/git-hooks/pre-commit` develop/main warning 추가 (merge commit 면제 포함).
-- [ ] scaffold 영향 확인 완료.
-- [ ] Verification 시나리오 6종 통과.
-- [ ] `git diff --check`, `bash -n tools/git-hooks/pre-commit`, `bash -n scripts/create-harness.sh` 통과.
-- [ ] develop에서 protected files staged 시 hook warning 문구 실제 출력 확인.
-- [ ] git repository가 없는 scaffold/bootstrap 초기 상태에서 commit/branch workflow가 Not Applicable로 자연스럽게 빠짐 확인.
+- [x] `docs/GIT-WORKFLOW.md` §0 Branch Isolation Rule 섹션 추가 — protected files, 예외, feature/hotfix 절차 명시.
+- [x] `docs/AGENT-WORKFLOW.md` Session Startup에 branch isolation awareness 반영.
+- [x] `.claude/rules/git-workflow.md` commit gate에 branch isolation MUST 추가.
+- [x] `workflow-work/SKILL.md` + `work.md` Pre-check에 Branch Isolation Check 추가.
+- [x] `workflow-done/SKILL.md` + `done.md` commit gate에 branch check 추가.
+- [x] `workflow-close/SKILL.md` + `close.md` commit 전략 안내 전 branch check 추가.
+- [x] `tools/git-hooks/pre-commit` develop/main warning 추가 (merge commit 면제 포함).
+- [x] `tools/git-hooks/**` protected files에 추가 (GIT-WORKFLOW.md, git-workflow rule, hook case pattern 3곳 일치).
+- [x] scaffold 영향 확인 완료 (`sh -n scripts/create-harness.sh` 통과, adapt 패턴으로 자동 반영).
+- [x] Verification 시나리오 6종 통과 (V1-V6 code-inspection + temp repo 실행 확인).
+- [x] `git diff --check`, `sh -n tools/git-hooks/pre-commit`, `sh -n scripts/create-harness.sh` 통과.
+- [x] develop에서 protected files staged 시 hook warning 문구 실제 출력 확인 (temp repo 시뮬레이션 실행 — WARNING 출력, exit 0 확인).
+- [x] git repository가 없는 scaffold/bootstrap 초기 상태에서 commit/branch workflow가 Not Applicable로 자연스럽게 빠짐 확인 (BRANCH="" fallback + AI rule Not Applicable 텍스트 확인).
 
 ## Open Questions
 
@@ -237,7 +238,7 @@ bash -n scripts/create-harness.sh
 | --- | --- | --- |
 | CP-1 | Work 파일 작성 및 착수 등록 | Done |
 | CP-2 | Canonical + AI rule + skill/command 패치 (Step 1~4) | Done |
-| CP-3 | Hook 보강 + Validation (Step 5~6) | Pending |
+| CP-3 | Hook 보강 + Validation (Step 5~6) | Done |
 
 ## Discovery
 
