@@ -6,6 +6,41 @@
 > 전략 변경 검토 중: `docs/backlog/HARNESS.md` HRN-FUT-004 참조
 > 전략 변경 시 §1~§3 전체 재검토 필요
 
+## 0. Branch Isolation Rule
+
+`develop`과 `main`은 직접 수정하지 않는다. 모든 실질 작업은 `feature/*` 또는 `hotfix/*` branch에서 수행한다.
+
+### Protected Files
+
+아래 파일을 `develop` 또는 `main`에서 직접 staged하거나 commit하지 않는다.
+
+| 범주 | 경로 |
+|---|---|
+| Workflow/status tracking | `docs/STATUS.md`, `docs/backlog/**`, `docs/works/**`, `docs/decisions/**` |
+| AI entrypoint | `AGENTS.md`, `CLAUDE.md` |
+| Canonical workflow | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md` |
+| Tool surface | `.claude/commands/*.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.agents/skills/**`, `prompts/**` |
+| Scaffold | `scripts/create-harness.sh` |
+| Enforcement | `tools/git-hooks/**` |
+
+### Allowed Exceptions
+
+| 예외 유형 | 조건 |
+|---|---|
+| Release sync | merge commit 한정 (`.git/MERGE_HEAD` 존재). `git merge origin/main` 같은 자동 merge — 파일 직접 편집 아님 |
+| Emergency hotfix | `hotfix/*` branch에서 수행. `main` 직접 수정 금지 |
+| Read-only validation | staged 없음. inspection/rg/diff만 수행 |
+
+### Branch Types
+
+| 작업 유형 | Branch |
+|---|---|
+| 일반 작업 (기능·문서·rule·tracking 포함) | `feature/*` |
+| Release gate 전 보정 (`docs/STATUS.md` 포함) | `feature/release-prep-{YYYYMMDD}` |
+| 긴급 수정 (main 기준) | `hotfix/*` |
+
+Violation: AI tool은 `develop` 또는 `main`에서 protected files가 staged된 경우 FAIL로 전환하고 적절한 branch 생성을 제안한다.
+
 ## 1. Branch Strategy
 
 ```
@@ -27,6 +62,7 @@ main
 | `feature/p{n}-{topic}` | Phase{n} product 작업 (예: `feature/p2-auth`) |
 | `feature/p{n}-pre{nn}` | Phase{n} pre-entry 묶음 작업 (예: `feature/p2-pre01`) |
 | `feature/hrn-{id}` | Harness 개선 작업 (예: `feature/hrn-009`) |
+| `feature/release-prep-{YYYYMMDD}` | develop→main PR 전 release-prep 보정 (예: `feature/release-prep-20260528`) |
 | `hotfix/{topic}` | main 긴급 수정 (develop 우회, main → PR → main) |
 
 ## 2. Feature Development Cycle

@@ -17,6 +17,25 @@ Before committing, always run in this order:
 NEVER use `git diff --cached` alone as the only pre-commit check.
 It does not show unstaged modifications or untracked files.
 
+## Branch Isolation Check
+
+Before staging or committing, check the current branch:
+
+```bash
+git branch --show-current
+```
+
+If the branch is `develop` or `main` AND any of the following files are staged — move to FAIL:
+
+- `AGENTS.md`, `CLAUDE.md`, `docs/STATUS.md`, `docs/backlog/**`, `docs/works/**`, `docs/decisions/**`
+- `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md`
+- `.claude/commands/**`, `.claude/rules/**`, `.cursor/rules/**`, `.agents/skills/**`, `prompts/**`, `scripts/create-harness.sh`, `tools/git-hooks/**`
+
+FAIL response: report current branch and the staged protected files, then propose creating a `feature/*` or `hotfix/*` branch and moving the changes there.
+
+Exception: skip this check if `.git/MERGE_HEAD` exists (merge commit — release sync).
+Not Applicable: if the current directory is not a git repository.
+
 Commit Approval:
 
 - Commit only after validation is complete or the remaining risk is explicitly accepted.
