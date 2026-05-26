@@ -148,7 +148,7 @@ bash -n scripts/create-harness.sh
 - [ ] `AGENTS.md` Codex Command Mapping이 skill routing pointer로 교체됨.
 - [ ] `AGENTS.md` Document Language Policy가 English Only rule + DR-007 pointer로 축약됨.
 - [ ] `AGENTS.md` Failure And Recovery가 1줄 pointer로 축약됨.
-- [ ] `prompts/codex-session-start.md`의 "AGENTS.md Codex Command Mapping의 /{command} 절차" 참조가 skill 경로 직접 표현으로 갱신됨.
+- [ ] `prompts/codex-session-start.md`의 "AGENTS.md Codex Command Mapping의 /{command} 절차" 참조가 `AGENTS.md Codex Skill Routing` 참조 표현으로 갱신됨.
 - [ ] `docs/HARNESS-PROTOCOL.md` cascade 테이블 "AGENTS.md command index" 2곳 갱신됨.
 - [ ] scaffold 확인 완료 (변경 있으면 반영, 없으면 Not Applicable).
 - [ ] `rg` 잔여 참조 없음 확인.
