@@ -83,7 +83,7 @@ develop 또는 main에서 직접 staged 금지 대상:
 | Release sync | `develop` | merge commit 한정 (`.git/MERGE_HEAD` 존재). 파일 직접 편집 아님 |
 | Emergency hotfix | `hotfix/*` | 사용자 명시 승인 후. main 직접 수정 금지 — `hotfix/*` branch 먼저 생성 |
 | Read-only validation | any | staged 없음. inspection/rg/diff만 수행 |
-| Release prepare | `develop` | OQ-1 해소 전까지 별도 feature branch 권장 |
+| Release prepare | `feature/release-prep-{YYYYMMDD}` | develop 직접 수정 금지. `feature/release-prep-{YYYYMMDD}` branch → develop PR 후 develop→main PR 진행. PR body-only gate evidence는 파일 변경 아님 — 예외 |
 
 ## Proposed Design
 
@@ -129,15 +129,24 @@ BRANCH=$(git branch --show-current 2>/dev/null || echo "")
 if [ -f ".git/MERGE_HEAD" ]; then
   : # skip
 elif [ "$BRANCH" = "develop" ] || [ "$BRANCH" = "main" ]; then
-  # STAGED_FILES가 비어 있을 때 grep이 실패하지 않도록 || true 사용
-  PROTECTED=$(printf '%s\n' $STAGED_FILES | grep -E \
-    "^(AGENTS\.md|CLAUDE\.md|docs/STATUS\.md|docs/backlog/|docs/works/|docs/decisions/|docs/AGENT-WORKFLOW\.md|docs/HARNESS-PROTOCOL\.md|docs/HARNESS-QUICK-REFERENCE\.md|docs/GIT-WORKFLOW\.md|\.claude/commands/|\.claude/rules/|\.cursor/rules/|\.agents/skills/|prompts/|scripts/create-harness\.sh)" \
-    || true)
+  PROTECTED=""
+  for FILE in $STAGED_FILES; do
+    case "$FILE" in
+      AGENTS.md|CLAUDE.md|docs/STATUS.md|\
+      docs/backlog/*|docs/works/*|docs/decisions/*|\
+      docs/AGENT-WORKFLOW.md|docs/HARNESS-PROTOCOL.md|\
+      docs/HARNESS-QUICK-REFERENCE.md|docs/GIT-WORKFLOW.md|\
+      .claude/commands/*|.claude/rules/*|.cursor/rules/*|\
+      .agents/skills/*|prompts/*|scripts/create-harness.sh)
+        PROTECTED="$PROTECTED $FILE"
+        ;;
+    esac
+  done
   if [ -n "$PROTECTED" ]; then
     echo "WARNING: Committing protected workflow files directly on '$BRANCH'."
     echo "Consider using a feature/* or hotfix/* branch instead."
     echo "Affected files:"
-    printf '%s\n' $PROTECTED | sed 's/^/  /'
+    for F in $PROTECTED; do echo "  $F"; done
     # exit 0 intentional: warning only. Hard block은 OQ-2 해소 후 결정
   fi
 fi
@@ -209,7 +218,7 @@ bash -n scripts/create-harness.sh
 - [ ] `workflow-close/SKILL.md` + `close.md` commit 전략 안내 전 branch check 추가.
 - [ ] `tools/git-hooks/pre-commit` develop/main warning 추가 (merge commit 면제 포함).
 - [ ] scaffold 영향 확인 완료.
-- [ ] Verification 시나리오 5종 통과.
+- [ ] Verification 시나리오 6종 통과.
 - [ ] `git diff --check`, `bash -n tools/git-hooks/pre-commit`, `bash -n scripts/create-harness.sh` 통과.
 - [ ] develop에서 protected files staged 시 hook warning 문구 실제 출력 확인.
 - [ ] git repository가 없는 scaffold/bootstrap 초기 상태에서 commit/branch workflow가 Not Applicable로 자연스럽게 빠짐 확인.
@@ -218,7 +227,7 @@ bash -n scripts/create-harness.sh
 
 | ID | Question | Decision Needed |
 | --- | --- | --- |
-| OQ-1 | develop→main PR 직전 `docs/STATUS.md` Last Updated 수정을 develop 직접 허용할지, 별도 feature로 강제할지 — **CP-2 착수 전 결정 필요** (미결 시 release gate 수행 중 순환 발생) | 운영 편의 vs 원칙 일관성 |
+| OQ-1 | ~~develop→main PR 직전 `docs/STATUS.md` Last Updated 수정을 develop 직접 허용할지, 별도 feature로 강제할지~~ **Decided:** direct `develop` edits are not allowed for `docs/STATUS.md` release-prep changes. Use `feature/release-prep-{YYYYMMDD}` and merge to `develop` before develop→main PR. PR body-only gate evidence and main→develop sync merge commits are exceptions. `chore/*` / `patch/*` branch family는 후속 ID/branch policy 작업에서 다룸. | Closed |
 | OQ-2 | hook warning → hard block 전환 시점 기준 | 운영 안정화 후 결정 |
 | OQ-3 | scaffold 적용 repo의 protected branch 이름 오버라이드 필요 여부 | 비 Gitflow repo 도입 시 결정 |
 
