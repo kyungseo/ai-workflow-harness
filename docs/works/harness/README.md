@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| HRN-038 | AGENTS.md Thin Entrypoint 정비 | 2026-05-27 | `docs/works/harness/HRN-038-agents-thin-entrypoint.md` |
 
 ## Archived
 

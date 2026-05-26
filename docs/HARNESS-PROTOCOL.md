@@ -503,8 +503,8 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 | 변경 대상 | 반드시 확인할 표면 |
 | --- | --- |
 | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.cursor/rules/`, `.agents/skills/`, `.codex/hooks.json`, `prompts/`, `scripts/create-harness.sh`가 있으면 scaffold source |
-| `.claude/commands/*.md` | `AGENTS.md` command index, `.agents/skills/workflow-{name}/SKILL.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md`, `docs/HARNESS-QUICK-REFERENCE.md` |
-| `.agents/skills/*/SKILL.md` | `.claude/commands/` 대응 파일, `AGENTS.md` command index |
+| `.claude/commands/*.md` | `AGENTS.md` skill routing pointer, `.agents/skills/workflow-{name}/SKILL.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md`, `docs/HARNESS-QUICK-REFERENCE.md` |
+| `.agents/skills/*/SKILL.md` | `.claude/commands/` 대응 파일, `AGENTS.md` skill routing pointer |
 | `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc` | 반대 tool rule, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` |
 | `.codex/hooks.json` | `AGENTS.md`, `docs/HARNESS-PROTOCOL.md` hook 관련 섹션 |
 | `prompts/*session-start.md` | `prompts/README.md`, `AGENTS.md`, `CLAUDE.md`, relevant command/rule |
