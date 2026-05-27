@@ -20,7 +20,7 @@ Work 파일을 작업의 단일 진실 공급원(Single Source of Truth)으로 �
 
 ```yaml
 ---
-id: {ID}                      # e.g., HRF-002, PRE-C1, P2-001
+id: {ID}                      # e.g., CHORE-20260527-001, FEAT-20260601-001
 priority: {P0|P1|P2|P3}
 status: {Active|Done|Archived}
 risk: {Low|Medium|High}
@@ -83,9 +83,8 @@ Done과 Archived는 분리한다. Done 상태의 Work 파일은 리뷰·참조 �
 
 | 경로 | 대상 |
 |------|------|
-| `docs/works/harness/` | Harness 관련 작업 (HRF-*, HRN-*, DOC-*) |
-| `docs/works/phase2/` | Phase 2 product 작업 (P2-*, PRE-*) |
-| `docs/works/phase{n}/` | 향후 Phase 작업 |
+| `docs/works/harness/` | Harness track 작업 (CHORE-*; harness-track FEAT-*/PATCH-*/HOTFIX-*; historical: HRF-*, HRN-*, DOC-*) |
+| `docs/works/phase{n}/` | Product track 작업 (product-track FEAT-*/PATCH-*/HOTFIX-*; historical: P{n}-*, PRE-*) |
 
 ### 인덱스 파일
 

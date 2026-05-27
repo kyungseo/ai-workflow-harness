@@ -399,8 +399,8 @@ flowchart TD
 
     URGENT -- "NO — 판단 필요" --> TYPE{"성격 분류"}
 
-    TYPE -- "Product track / Phase 기능" --> PBL["backlog/PHASE{n}.md\n← P{n}-NNN"]
-    TYPE -- "Harness · Workflow 개선" --> HBL["backlog/HARNESS.md\n← HRN-* · HRF-*"]
+    TYPE -- "Product track / Phase 기능" --> PBL["backlog/PHASE{n}.md\n(Work ID: FEAT-YYYYMMDD-NNN, 착수 시 확정)"]
+    TYPE -- "Harness · Workflow 개선" --> HBL["backlog/HARNESS.md\n(Work ID: CHORE-YYYYMMDD-NNN, 착수 시 확정)"]
     TYPE -- "다음 세션 단기 예정" --> NA["Next Actions\n(STATUS.md)"]
     TYPE -- "결정이 필요한 질문" --> OQ["Blockers/OQ\n(STATUS.md)"]
 
@@ -1418,7 +1418,7 @@ docs/BOOTSTRAP.md      ← 프로젝트 identity와 production 성격 기반 set
 docs/STATUS.md         ← 프로젝트 목표와 Phase 1 설명
 docs/PLAN-SUMMARY.md   ← Project Summary와 Implementation Baseline
 docs/PLAN.md           ← Project Initialization Plan
-docs/backlog/PHASE1.md ← baseline 완료 후 도출한 초기 작업 항목 P1-001~
+docs/backlog/PHASE1.md ← baseline 완료 후 도출한 초기 작업 항목 (Work ID는 /work 착수 시 확정)
 ```
 
 #### 케이스 B — 기존 프로젝트
@@ -1492,7 +1492,7 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 - docs/STATUS.md: Phase 목표, 첫 Active Work 항목
 - docs/PLAN-SUMMARY.md: Project Summary와 Implementation Baseline 초안
 - docs/PLAN.md: Project Initialization Plan 초안
-- docs/backlog/PHASE1.md: Implementation Baseline 완료 후 도출할 초기 P1-001~ 항목
+- docs/backlog/PHASE1.md: Implementation Baseline 완료 후 도출할 초기 작업 후보 (Work ID는 /work 착수 시 확정)
 - docs/backlog/HARNESS.md: AI workflow와 example pack 정비 후보
 - docs/AGENT-WORKFLOW.md: Project Constants, Verification Defaults
 
@@ -1504,7 +1504,7 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 ```bash
 /start          # STATUS 확인 및 현재 상태 요약
 /pick           # 첫 작업 후보 추천
-/work P1-001    # 선택한 작업 계획 수립
+/work [title-or-slug]    # 선택한 작업 계획 수립 (Work ID는 착수 승인 시 확정)
 ```
 
 #### 케이스 B — 기존 프로젝트 첫 세션
@@ -1525,7 +1525,7 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 - docs/BOOTSTRAP.md: 현재 identity, production 성격, setup checklist
 - docs/STATUS.md: 현재 Phase, 진행 상태, 남은 작업 요약
 - docs/PLAN-SUMMARY.md: 현재 프로젝트 요약, 핵심 구조, 검증 기본값
-- docs/backlog/PHASE1.md: 남은 product 작업 항목 P1-001~
+- docs/backlog/PHASE1.md: 남은 product 작업 후보 (Work ID는 /work 착수 시 확정)
 - docs/backlog/HARNESS.md: AI workflow와 example pack 정비 후보
 - docs/AGENT-WORKFLOW.md: Project Constants, Verification Defaults
 
@@ -1609,7 +1609,7 @@ Claude가 코드베이스를 파악하고 state-change proposal을 제시하면 
 
 - [ ] **`docs/backlog/HARNESS.md`** 생성
   - AI workflow, command/rule, 문서 구조, hook/automation 후보 작업 목록
-  - `HRF-*`, `HRN-*` 같은 harness 전용 ID 체계 사용
+  - 작업 착수 시 `CHORE-YYYYMMDD-NNN` 형식의 Work ID 사용. backlog 후보는 제목/slug로만 관리 (ID는 착수 시 확정)
 
 - [ ] **`docs/decisions/`** 폴더 생성
   - `DECISION-TEMPLATE.md` 복사
