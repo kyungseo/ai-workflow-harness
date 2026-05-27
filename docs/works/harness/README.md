@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| FEAT-20260527-002 | Health Audit Hardening | `docs/works/harness/FEAT-20260527-002-health-audit-hardening.md` |
 
 ## Done (Archive Pending)
 
