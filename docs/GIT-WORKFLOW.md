@@ -59,11 +59,14 @@ main
 
 | 패턴 | 용도 |
 |---|---|
-| `feature/p{n}-{topic}` | Phase{n} product 작업 (예: `feature/p2-auth`) |
-| `feature/p{n}-pre{nn}` | Phase{n} pre-entry 묶음 작업 (예: `feature/p2-pre01`) |
-| `feature/hrn-{id}` | Harness 개선 작업 (예: `feature/hrn-009`) |
+| `feature/{work-id}-{slug}` | 신규 Work (FEAT/PATCH/CHORE). Work ID + slug 권장 (예: `feature/chore-20260527-001-id-tracker-rule`) |
+| `feature/p{n}-{topic}` | Phase{n} product 작업 단축 패턴 (예: `feature/p2-auth`) |
 | `feature/release-prep-{YYYYMMDD}` | develop→main PR 전 release-prep 보정 (예: `feature/release-prep-20260528`) |
-| `hotfix/{topic}` | main 긴급 수정 (develop 우회, main → PR → main) |
+| `hotfix/{topic}` | main 긴급 수정 — Work ID `HOTFIX-YYYYMMDD-NNN` (develop 우회, main → PR → main) |
+
+Work ID(`<TYPE>-<YYYYMMDD>-<NNN>`)와 branch name은 1:1 강제하지 않는다. Work ID를 branch 생성 전에 확정할 수 없는 경우 slug만 사용해도 된다. Work ID 형식 상세는 `docs/HARNESS-PROTOCOL.md` §9를 따른다.
+
+> **대소문자 규칙**: Work ID는 uppercase (`CHORE-20260527-001`), branch segment는 lowercase normalized (`chore-20260527-001`). 예: Work ID `CHORE-20260527-001` → branch `feature/chore-20260527-001-id-tracker-rule`.
 
 ## 2. Feature Development Cycle
 

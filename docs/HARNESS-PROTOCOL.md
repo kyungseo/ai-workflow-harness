@@ -222,19 +222,61 @@ AI Workflow Harness는 적용 대상 repository에 Product track과 Harness trac
 
 ## 9. Naming Rules
 
-### ID Prefixes
+### Work ID
 
-| Prefix | Meaning | Home |
+신규 Work ID 형식:
+
+```
+<TYPE>-<YYYYMMDD>-<NNN>
+```
+
+| TYPE | 대상 | branch guidance (default) |
 | --- | --- | --- |
-| `P{n}-NNN` | Phase Product track backlog | `docs/backlog/PHASE{n}.md` |
-| `PRE-*` | Phase entry prerequisite | `docs/backlog/PHASE{n}.md` |
-| `HRF-*` | Harness refactor | `docs/backlog/HARNESS.md` |
-| `HRN-*` | Harness hardening | `docs/backlog/HARNESS.md` |
-| `DOC-*` | Documentation task | context-dependent |
-| `DR-NNN` | Decision record | `docs/decisions/` |
-| `OQ-*` | Open question | `docs/STATUS.md` |
+| `FEAT` | product/user-visible feature work | 프로젝트 통합 branch 기준 `feature/*` |
+| `PATCH` | non-emergency correction, release-prep patch | 프로젝트 통합 branch 기준 `feature/*` 또는 `feature/release-prep-*` |
+| `HOTFIX` | urgent fix (security, data integrity, service outage) | 프로젝트 release branch 기준 `hotfix/*` (있는 경우) |
+| `CHORE` | harness/process/docs/tooling maintenance | 프로젝트 통합 branch 기준 `feature/*` |
 
-ID를 다른 의미로 재사용하지 않는다.
+> Branch guidance는 harness default다. source repository는 현재 Gitflow(`feature/* → develop → main`)를 사용하지만, scaffold product repository는 project-specific `docs/GIT-WORKFLOW.md`에서 branch/release 정책을 override할 수 있다.
+
+규칙:
+
+- AI는 현재 branch에서 보이는 Work 파일 기준으로 다음 NNN을 제안한다.
+- 병렬 branch 병합 시 같은 `<TYPE>-<YYYYMMDD>-<NNN>`이 충돌하면 NNN을 재배정한다. 날짜는 착수/등록일 의미를 보존하므로 변경하지 않는다.
+- 이미 리뷰 진행 중이거나 외부 참조가 있는 경우 변경 비용을 보고하고 사용자 승인 후 조정한다.
+- `feature/release-prep-*` branch Work: 기본 `CHORE`. non-emergency public release correction이면 `PATCH`. urgent main/release-line fix이면 `HOTFIX`.
+- ID를 다른 의미로 재사용하지 않는다.
+- scaffold/product repo가 Jira, Linear, GitHub Issues 등 external tracker를 사용하는 경우, project-specific tracker policy가 하네스 기본값보다 우선할 수 있다. 단, Work 파일과 STATUS.md에는 external ID와 harness Work ID 중 어느 것을 SSoT로 쓸지 명시해야 한다 (예: `JIRA-123` → harness Work ID `FEAT-20260601-001`로 매핑하거나 대체).
+
+### Backlog Candidate ID
+
+backlog 후보는 제목/slug만 유지한다. Work 파일 생성(착수 승인) 시 ID를 확정하고 backlog row를 갱신한다. 착수 전 ID 선점은 병렬 branch 충돌 가능성을 높이고 phantom ID를 만드므로 하지 않는다.
+
+### OQ ID
+
+| 범위 | 형식 | 비고 |
+| --- | --- | --- |
+| Work 파일 내부 | `OQ-1`, `OQ-2` | Work-local numbering |
+| 전역 참조 | `<WORK-ID>/OQ-1` | 필요 시에만 |
+| STATUS Blockers 또는 DR 승격 | 별도 ID 검토 | Global OQ registry 없음 |
+
+### DR ID
+
+`DR-NNN` 체계를 유지한다. DR은 repository-wide decision record로 Work ID와 다른 lifecycle을 가진다. Work frontmatter `related_dr` 또는 본문 링크로 연결한다.
+
+### Historical ID Prefixes
+
+신규 Work에는 사용하지 않는다.
+
+아래 prefix는 기존 archive/history에 보존되며 rewrite하지 않는다. 신규 Work는 위 Work ID 형식을 사용한다.
+
+| Prefix | 과거 의미 |
+| --- | --- |
+| `HRN-*` | Harness hardening |
+| `HRF-*` | Harness refactor |
+| `PRE-*` | Phase entry prerequisite |
+| `DOC-*` | Documentation task |
+| `P{n}-NNN` | Phase Product track backlog |
 
 ### File Naming
 
@@ -243,7 +285,7 @@ ID를 다른 의미로 재사용하지 않는다.
 | `docs/` root | UPPERCASE-HYPHENATED | `HARNESS-PROTOCOL.md` |
 | `docs/backlog/` | UPPERCASE-HYPHENATED | `PHASE2.md` |
 | `docs/decisions/` | `DR-{NNN}-{topic}.md` | `DR-011-status-recent-decisions-policy.md` |
-| `docs/works/{category}/` | `{ID}-{lowercase-topic}.md` | `HRF-002-work-system-refactor.md` |
+| `docs/works/{category}/` | `{ID}-{lowercase-topic}.md` | `CHORE-20260527-001-id-tracker-rule.md` |
 | `docs/archive/docs/` | 원본 상대 경로와 파일명 mirror | `docs/archive/docs/WORKFLOW-MANUAL-ai-workflow-v1.0.0.md` |
 | `docs/archive/snapshots/` | `{topic}-{YYYYMMDD}` | `harness-refactor-20260514/` |
 | `docs/retrospectives/` | `{topic}-{YYYYMMDD}.md` | `ai-workflow-complexity-review-20260518.md` |
@@ -568,6 +610,7 @@ Report includes:
 - `docs/STATUS.md` 변경이 확정되었다면 실질 변경과 같은 commit에 포함되었는가 (실질 변경 commit 후 별도 STATUS commit 금지)
 - commit/PR 전 Tracking Finalization 결과(backlog/Work/DR 변경 필요 yes/no와 이유)를 보고했는가
   - `docs/PLAN-SUMMARY.md`는 상태 필드를 갖지 않는다 — Tracking Finalization 확인 대상에서 제외.
+  - Work ID collision 확인: 신규 Work ID가 target branch(프로젝트 통합/release branch; source repo에서는 develop/main)의 `docs/works/` 파일과 충돌하지 않는지 확인한다 (병렬 branch NNN 충돌 방지).
 - DR/Work 파일/archive/cascade가 필요한가
 - 다음 세션이 `STATUS.md`만 보고 재개 가능한가
 
