@@ -84,4 +84,4 @@ PR Base Rule:
 NEVER:
 - Open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.
 - Directly local-merge a feature branch into develop. Always merge via PR.
-- Skip the develop sync step after a main PR merge (`git merge main && git push origin develop`).
+- Skip the develop sync step after a main PR merge (`git merge origin/main` into `develop`, then `git push origin develop`).
