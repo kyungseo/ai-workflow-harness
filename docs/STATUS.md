@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-27 (CHORE-20260527-004 완료 — Harness Protocol Remaining Slice Assessment, §15 Recovery/Validation slice 추천)
+Last updated: 2026-05-27 (CHORE-20260527-005 완료 — Harness Protocol §15 Recovery/Validation Slice Extraction)
 
 ## Current State
 

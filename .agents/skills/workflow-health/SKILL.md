@@ -70,7 +70,7 @@ ls .codex/             # Codex hook/config 파일 확인
 → `docs/PLAN-SUMMARY.md` (Project Summary, Core Files, Validation Defaults만)
 
 (조건부) Validation, Approval Matrix, Commit Approval 정합성 확인이 필요하면
-`docs/HARNESS-PROTOCOL.md`의 Recovery And Validation 섹션만 읽는다.
+`docs/HARNESS-RECOVERY-VALIDATION.md`를 읽는다.
 
 **Phase 4 — Alignment Check (--full only)**
 `.cursor/rules/*.mdc` (frontmatter paths만) → `prompts/README.md` (인덱스만, 개별 파일 금지)
@@ -203,7 +203,7 @@ Historical matches are not automatically drift. Report them separately as snapsh
 - `.codex/hooks.json`: hook reminder가 `/close`/`/done` 분리와 STATUS/Tracking Finalization을 반영하는가
 - `docs/AGENT-WORKFLOW.md` 워크플로우 기술 ↔ 실제 command 구현 사이 gap
   (이미 컨텍스트에 있는 docs/AGENT-WORKFLOW.md 기준으로 확인)
-- command/prompt 종료 요약 ↔ `docs/HARNESS-PROTOCOL.md`의 Validation Checklist, Approval Matrix, Commit Approval 정합성
+- command/prompt 종료 요약 ↔ `docs/HARNESS-RECOVERY-VALIDATION.md`의 Validation Checklist/Commit Approval 및 `docs/AGENT-WORKFLOW.md`의 Approval Matrix 정합성
 - STATUS.md Active Work pointer가 가리키는 Work 파일에 Done Criteria + Verification이 존재하는가
 - STATUS.md Active Work pointer ↔ Work 파일 frontmatter `status: Active` 정합성
 - `docs/works/*/*.md` 중 `status: Done`인 Work가 STATUS Active Work에 남아 있지 않은가
