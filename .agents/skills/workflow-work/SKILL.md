@@ -29,7 +29,7 @@ docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾
 Work 파일 생성 시 함께 수행할 것:
 1. `docs/works/{category}/README.md`가 없으면 먼저 생성 (Active/Done/Archived 테이블 포함)
 2. 착수 전 분해나 메모는 backlog 항목 또는 계획 제안에 남기고, Work 파일은 생성하지 않음
-2a. **Work ID 확정**: Work 파일이 없고 확정된 Work ID가 없으면, TYPE을 판단해 `<TYPE>-<YYYYMMDD>-<NNN>` 형식의 Work ID를 제안하고 사용자 확인을 받는다. NNN은 현재 branch `docs/works/` 파일 기준으로 제안한다. 확정 후 backlog row가 있으면 ID로 갱신한다.
+2a. **Work ID 확정**: Work 파일이 없고 확정된 Work ID가 없으면, TYPE을 판단해 `<TYPE>-<YYYYMMDD>-<NNN>` 형식의 Work ID를 제안하고 사용자 확인을 받는다. NNN은 현재 branch `docs/works/` 파일 기준으로 제안한다. 확정 후 backlog row가 있으면 ID로 갱신한다. (형식 상세: `docs/HARNESS-NAMING-RULES.md`)
 3. 사용자가 해당 Work 착수를 승인하면 Work 파일 frontmatter를 `status: Active`로 두고 README Active 테이블에 행 추가
 4. State update: 대상 Work ID를 명시하고 STATUS.md Active Work에 포인터 추가 제안
 

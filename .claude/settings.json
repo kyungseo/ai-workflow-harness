@@ -68,8 +68,7 @@
       "Bash(open *)",
       "Bash(unzip *)",
 
-      "Bash(./scripts/*.sh *)",
-      "Bash(bash -n scripts/create-harness.sh)"
+      "Bash(./scripts/*.sh *)"
     ],
     "deny": [
       "Read(./.env)",
@@ -82,7 +81,7 @@
       "Bash(sudo *)",
       "Bash(rm -rf*)",
       "Bash(rm -r *)",
-      "Bash(bash *)",
+      "Bash(bash -c*)",
       "Bash(kubectl *)",
       "Bash(terraform *)",
       "Bash(git push --force*)",
