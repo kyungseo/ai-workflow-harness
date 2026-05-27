@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260527-008
 priority: P2
-status: Done
+status: Archived
 risk: Low
 scope: CHORE-20260527-003~007 series develop merge 이후 release gate 점검. archive cleanup, 영향도 체크, scaffold 검증, develop → main PR 준비.
 appetite: 1d
