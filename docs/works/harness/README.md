@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260527-004 | Harness Protocol Remaining Slice Assessment | 2026-05-27 | `docs/works/harness/CHORE-20260527-004-protocol-slice-assessment.md` |
 | CHORE-20260527-003 | Protocol Context Budget Optimization — Naming Rules First Slice | 2026-05-27 | `docs/works/harness/CHORE-20260527-003-protocol-naming-slice.md` |
 
 ## Archived
