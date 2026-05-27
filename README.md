@@ -329,7 +329,7 @@ Claude slash command는 Codex 역시 같은 의도로 수행한다.
 | `/record-decision` | 결정 기록 | DR 초안 작성 |
 | `/close` | Work 완료 | Done 처리와 선택적 archive |
 | `/done` | 세션 마무리 | 변경·검증·리스크·다음 prompt 요약 |
-| `/health` | workflow 점검 | 구조 위생, full 점검, cascade 감사 |
+| `/health` | workflow 점검 | 구조 위생, full 점검(Area H: 일상 workflow가 불필요하게 무거운 문서 로드 경로로 변했는지 감지), cascade 감사(Workflow Context Weight 감지) |
 
 Health 체크 권장 cadence:
 

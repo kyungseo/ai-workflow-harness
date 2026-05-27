@@ -852,7 +852,7 @@ Claude Code에서 `/명령명`으로 호출. 파일 위치: `.claude/commands/*.
 | Utility / Analysis | `/debug` | 버그 분석/수정 시 | 코드·로그·테스트 근거로 원인 파악, 최소 변경 계획 |
 | Utility / Analysis | `/doc [brief]` | 발표·보고·리뷰 패키지·외부 공유용 문서 산출물을 만들 때 | 목적·audience·format·source brief 확정 → outline 승인 → presentation/document 도구 또는 fallback으로 산출물 생성 → 품질 검증 |
 | Utility / Analysis | `/record-decision` | 기술 결정을 DR로 기록할 때 | 현재 대화의 확정 결정을 DR 초안으로 작성, 승인 후 파일 생성, Accepted DR마다 Recent Decisions 반영 필요 여부 판정 |
-| Utility / Analysis | `/health` | 워크플로우·문서 점검 시 | 구조 정합성, 문서 현행화, 백로그/DR 위생 전체 점검 후 보고. `--full`은 전체 심화 점검, `--cascade`는 문서·워크플로우 변경의 연쇄 영향을 required surface, grep, simulation checklist로 감사 |
+| Utility / Analysis | `/health` | 워크플로우·문서 점검 시 | 구조 정합성, 문서 현행화, 백로그/DR 위생 전체 점검 후 7섹션 Output Contract(Summary/Findings/Surface Coverage/Skipped/Context Budget/Verification/Follow-Ups)로 보고. `--full`은 전체 심화 점검 + Area H(Workflow Context Weight — 일상 workflow가 heavy docs를 불필요하게 로드하는지 감지), `--cascade`는 문서·워크플로우 변경의 연쇄 영향을 required surface, grep, simulation checklist로 감사 |
 
 ### Approval Matrix
 
