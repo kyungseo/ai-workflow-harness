@@ -1,15 +1,15 @@
 ---
 id: CHORE-20260527-001
 priority: P2
-status: Active
+status: Done
 risk: Medium
 scope: Work ID·OQ ID·DR ID 책임과 범위 정의, 병렬 feature 충돌 규칙, /register·/work workflow 반영, cascade 확인
 appetite: 1w
 planned_start: 2026-05-27
 planned_end: 2026-06-03
-actual_end:
+actual_end: 2026-05-27
 related_dr: [DR-013]
-related_commits: []
+related_commits: [89bb0e4]
 related_troubleshooting: []
 ---
 
@@ -210,7 +210,7 @@ git diff --check
 | 15 | 1차 리뷰 반영 (P1 TYPE routing, P1 scaffold ID-less, P2 HRN 잔존 + rg flags, P3 branch naming) | Done |
 | 15b | 2차 리뷰 반영 (P1 ONBOARDING-GUIDE + WORKFLOW-MANUAL + pick + prompts ID-less, P1 DR-013 track mapping, P2 external tracker override, P2 collision check) | Done |
 | 15c | 3차 리뷰 반영 (P1 Gitflow decoupling — PROTOCOL/register TYPE table, P2 잔존 P1-004/P1-010 제거, P2 Work file 검증 결과 갱신) | Done |
-| 16 | Commit 전 STATUS Finalization + Tracking Finalization 보고 | Todo |
+| 16 | Commit 전 STATUS Finalization + Tracking Finalization 보고 | Done |
 
 ## Deferred Ideas
 

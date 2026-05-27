@@ -7,12 +7,12 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
-| CHORE-20260527-001 | Work/OQ/Tracker ID Rule And Registration Policy | `docs/works/harness/CHORE-20260527-001-id-tracker-rule.md` |
 
 ## Done (Archive Pending)
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260527-001 | Work/OQ/Tracker ID Rule And Registration Policy | 2026-05-27 | `docs/works/harness/CHORE-20260527-001-id-tracker-rule.md` |
 
 ## Archived
 
