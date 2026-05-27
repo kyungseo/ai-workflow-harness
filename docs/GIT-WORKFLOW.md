@@ -115,10 +115,10 @@ gh pr create --base develop --title "..." --body "..."
 
 ### 2-4. Post-PR Cleanup
 
-PR merge 후:
+feature → develop PR merge 후, 방금 merge된 최신 develop을 로컬에 반영한다.
 
 ```bash
-# develop 동기화
+# feature PR merge 결과를 develop에 동기화
 git checkout develop
 git pull origin develop
 
@@ -134,6 +134,10 @@ git push origin --delete feature/{name}
 마지막으로 다음 feature 브랜치명을 제안하고 생성 여부를 확인한다.
 
 ## 3. Release Cycle (Develop → Main)
+
+> 이 release cycle과 Public Clean Baseline Gate는 `ai-workflow-harness` source repo의 기본 정책이다.
+> scaffold product repo에서는 project-specific `docs/GIT-WORKFLOW.md` 또는 선택한 workflow mode에 따라 적용 여부를 결정한다.
+> source-style workflow profile을 opt-in한 repo에서는 동일 gate를 적용한다.
 
 `main`은 일반 통합 브랜치가 아니라 **public release snapshot**이다.
 feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
@@ -162,6 +166,8 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 | Validation | `git diff --check` 통과 | `git diff --check` |
 
 ### 3-2. Main Merge Gate
+
+> 적용 범위는 §3 Release Cycle note를 따른다. 일반 scaffold product repo에는 기본 강제하지 않는다.
 
 아래 조건을 모두 만족할 때만 develop → main PR을 생성한다.
 

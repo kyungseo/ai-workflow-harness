@@ -140,7 +140,7 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 1. 프로젝트 identity와 production 성격 확인 (§1)
 2. Product Definition: 제품 목표, 주요 사용자, 성공 기준 (§2)
 3. Project Initialization: PLAN-SUMMARY.md Implementation Baseline 결정 (§3, 코드 개발 프로젝트만)
-4. Implementation Baseline이 비어 있으면 feature candidate 대신 Project Initialization을 첫 P1 후보로 제안
+4. Implementation Baseline이 비어 있으면 feature candidate 대신 Project Initialization을 첫 후보로 제안
 5. Harness track 정비 항목, example pack 정비 필요 여부 (§5, §7)
 
 파일 수정은 내 승인 전까지 하지 마.
@@ -554,7 +554,7 @@ AI : 요건을 분석해 backlog 후보를 도출합니다.
 ### 시나리오 B — §2 목표가 없는 경우
 
 AI는 Product Definition 보완 항목을 먼저 제안한다.
-코드 개발 baseline도 비어 있으면 `Project Initialization`을 첫 P1 후보로 제안하고, 기능 후보는 사용자가 목표를 정한 뒤 `/register`로 추가한다.
+코드 개발 baseline도 비어 있으면 `Project Initialization`을 첫 후보로 제안하고, 기능 후보는 사용자가 목표를 정한 뒤 `/register`로 추가한다.
 
 ```
 AI : §2 목표가 확정되지 않아 기능 후보는 아직 Not Ready입니다.
@@ -725,7 +725,7 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 1. 프로젝트 identity와 production 성격 확인 (§1)
 2. Product Definition: 제품 목표, 주요 사용자, 성공 기준 (§2)
 3. Project Initialization: PLAN-SUMMARY.md Implementation Baseline 결정 (§3, 코드 개발 프로젝트만)
-4. Implementation Baseline이 비어 있으면 feature candidate 대신 Project Initialization을 첫 P1 후보로 제안
+4. Implementation Baseline이 비어 있으면 feature candidate 대신 Project Initialization을 첫 후보로 제안
 5. Harness track 정비 항목, example pack 정비 필요 여부 (§5, §7)
 
 파일 수정은 내 승인 전까지 하지 마.
