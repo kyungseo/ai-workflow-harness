@@ -200,6 +200,8 @@ Proposal shape:
 3. Recovery options 제시
 4. 사용자 승인 후 재계획
 
+상세 기준: `docs/HARNESS-RECOVERY-VALIDATION.md`
+
 ## 8. Cascade And Tracking
 
 문서/워크플로우 변경 후 연쇄 영향이 불명확하면 `/health --cascade`로 변경 파일 유형에 맞는 canonical → tool-specific → user-facing → scaffold layer를 점검한다.
@@ -237,7 +239,7 @@ archive 승인 후에는 `docs/archive/docs/works/{category}/`로 이동한다.
 
 ## 10. Naming
 
-ID prefix와 file naming 기준은 `docs/HARNESS-PROTOCOL.md`와 `docs/decisions/DR-008-docs-filename-standard.md`를 따른다.
+ID prefix와 file naming 기준은 `docs/HARNESS-NAMING-RULES.md`와 `docs/decisions/DR-008-docs-filename-standard.md`를 따른다.
 
 ## 11. Never
 
