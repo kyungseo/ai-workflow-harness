@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260527-001
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: Work ID·OQ ID·DR ID 책임과 범위 정의, 병렬 feature 충돌 규칙, /register·/work workflow 반영, cascade 확인
 appetite: 1w
