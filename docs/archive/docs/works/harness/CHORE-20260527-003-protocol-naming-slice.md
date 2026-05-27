@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260527-003
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: HARNESS-PROTOCOL.md §9 Naming Rules를 HARNESS-NAMING-RULES.md로 추출하고, 조건부 routing model을 AGENT-WORKFLOW.md에 정의하여 agent가 /start, /pick 등 일반 흐름에서 전체 protocol을 로드하지 않도록 한다.
 appetite: 1d

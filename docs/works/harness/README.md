@@ -12,16 +12,17 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260527-007 | Cascade Checks Slice Scope Assessment | 2026-05-27 | `docs/works/harness/CHORE-20260527-007-cascade-checks-scope-assessment.md` |
-| CHORE-20260527-006 | Post-slice Context Routing Audit | 2026-05-27 | `docs/works/harness/CHORE-20260527-006-post-slice-routing-audit.md` |
-| CHORE-20260527-005 | Harness Protocol §15 Recovery/Validation Slice Extraction | 2026-05-27 | `docs/works/harness/CHORE-20260527-005-protocol-recovery-validation-slice.md` |
-| CHORE-20260527-004 | Harness Protocol Remaining Slice Assessment | 2026-05-27 | `docs/works/harness/CHORE-20260527-004-protocol-slice-assessment.md` |
-| CHORE-20260527-003 | Protocol Context Budget Optimization — Naming Rules First Slice | 2026-05-27 | `docs/works/harness/CHORE-20260527-003-protocol-naming-slice.md` |
+| CHORE-20260527-008 | Context Budget Optimization Series Release Prep | 2026-05-27 | `docs/works/harness/CHORE-20260527-008-series-release-prep.md` |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260527-007 | Cascade Checks Slice Scope Assessment | 2026-05-27 | `docs/archive/docs/works/harness/CHORE-20260527-007-cascade-checks-scope-assessment.md` |
+| CHORE-20260527-006 | Post-slice Context Routing Audit | 2026-05-27 | `docs/archive/docs/works/harness/CHORE-20260527-006-post-slice-routing-audit.md` |
+| CHORE-20260527-005 | Harness Protocol §15 Recovery/Validation Slice Extraction | 2026-05-27 | `docs/archive/docs/works/harness/CHORE-20260527-005-protocol-recovery-validation-slice.md` |
+| CHORE-20260527-004 | Harness Protocol Remaining Slice Assessment | 2026-05-27 | `docs/archive/docs/works/harness/CHORE-20260527-004-protocol-slice-assessment.md` |
+| CHORE-20260527-003 | Protocol Context Budget Optimization — Naming Rules First Slice | 2026-05-27 | `docs/archive/docs/works/harness/CHORE-20260527-003-protocol-naming-slice.md` |
 | FEAT-20260527-002 | Health Audit Hardening | 2026-05-27 | `docs/archive/docs/works/harness/FEAT-20260527-002-health-audit-hardening.md` |
 | FEAT-20260527-001 | Source-style Scaffold Workflow Profile | 2026-05-27 | `docs/archive/docs/works/harness/FEAT-20260527-001-source-style-scaffold-workflow.md` |
 | CHORE-20260527-001 | Work/OQ/Tracker ID Rule And Registration Policy | 2026-05-27 | `docs/archive/docs/works/harness/CHORE-20260527-001-id-tracker-rule.md` |
