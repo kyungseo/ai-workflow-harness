@@ -1,13 +1,13 @@
 ---
 id: FEAT-20260527-002
 priority: P1
-status: Active
+status: Done
 risk: L2
 scope: /health mode contract 명확화, Output Contract 추가, Workflow Context Weight 검증 관점, command/skill mirror 정렬, Required Surface/Grep/Simulation Matrix 보강
 appetite: 1w
 planned_start: 2026-05-27
 planned_end: 2026-06-03
-actual_end:
+actual_end: 2026-05-27
 related_dr: []
 related_commits: []
 related_troubleshooting: []
