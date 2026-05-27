@@ -509,6 +509,7 @@ cascade 감사 시 `docs/retrospectives/README.md` 인덱스를 참조하여 최
 | T14 | Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
 | T15 | commit 또는 PR 생성 전 | `docs/STATUS.md` 최종본 반영 필요 여부 판정 |
 | T16 | commit 또는 PR 생성 전 | backlog/Work/DR tracker 최종 상태 반영 필요 여부 판정 |
+| T17 | commit 또는 PR 생성 전, Active Work의 Done Criteria 전 항목 `[x]` 확인 | `/close` 선제 제안 — 상태 변경(Work Done, Work Index, STATUS pointer)을 같은 commit에 번들하기 위함 |
 
 ### Loop Safety
 
@@ -524,6 +525,7 @@ cascade 감사 시 `docs/retrospectives/README.md` 인덱스를 참조하여 최
 - T14는 entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경을 기본 L2로 다루며, 관련 tool surface를 확인한다.
 - T15는 자동 STATUS 수정을 허용하지 않는다. Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, Active Work Discovery 최신성을 확인한다. 필요하면 Approval Matrix에 맞는 state-change proposal 또는 `STATUS Update Proposal`을 먼저 제안하고, 불필요하면 commit/PR 전 summary에 이유를 남긴다.
 - T16은 backlog/Work/DR tracker를 실제 완료 상태와 맞추는 gate다. 연결된 backlog 항목의 Status/Done Criteria/Verification, Work 파일 frontmatter/status/Checkpoints/Discovery, Work index README 위치, 관련 DR의 Status/Supersedes/Linked Backlog Items, 완료된 Quick Mode 작업이 backlog Candidate로 남아 있는지 여부를 확인한다.
+- T17은 `/close` 제안만 수행한다. 사용자가 거부하거나 분리를 원하면 기존 commit 흐름대로 진행한다.
 
 ### Cascade Rule
 
@@ -532,6 +534,7 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 `/health --cascade`는 changed-surface cascade audit으로 사용한다.
 감사 범위는 변경 파일 유형에 맞는 canonical -> tool-specific -> user-facing -> scaffold 계층으로 제한하되, 선택된 계층의 required surface, grep, simulation은 생략하지 않는다. 전체 표면 감사가 필요하면 `/health --full --cascade`를 사용한다.
 변경 파일이 없으면 `/health --cascade`는 Quick health mode와 동일하게 동작한다.
+`--cascade` 대상이 workflow context/load path 관련 파일이면 Area H (Workflow Context Weight)도 활성화한다.
 
 | Level | Action | Meaning |
 | --- | --- | --- |

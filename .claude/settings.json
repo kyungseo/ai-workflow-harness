@@ -68,7 +68,8 @@
       "Bash(open *)",
       "Bash(unzip *)",
 
-      "Bash(./scripts/*.sh *)"
+      "Bash(./scripts/*.sh *)",
+      "Bash(bash -n scripts/create-harness.sh)"
     ],
     "deny": [
       "Read(./.env)",

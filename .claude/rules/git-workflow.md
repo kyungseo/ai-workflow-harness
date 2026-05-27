@@ -44,6 +44,7 @@ Commit Approval:
 - Before committing or opening a PR, report Tracking Finalization: whether backlog/Work/DR tracker updates are needed, why, and which tracker files changed if any.
 - If `docs/STATUS.md` needs to change before commit, provide the Approval Matrix state-change proposal and wait for user approval before editing it.
 - When `docs/STATUS.md` changes are approved, include them in the **same commit** as the substantive changes. Never commit substantive changes first and update `docs/STATUS.md` in a separate follow-up commit.
+- If an Active Work file exists and all Done Criteria are checked ([x]), propose running `/close` before the commit so state changes (Work Done, Work Index, STATUS pointer) are bundled in the same commit rather than generated as a separate close commit later.
 - If not committing after a completed task, record the reason and remaining risk in the session summary.
 
 ## Commit Message Format
