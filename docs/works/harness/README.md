@@ -12,12 +12,12 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260527-001 | Work/OQ/Tracker ID Rule And Registration Policy | 2026-05-27 | `docs/works/harness/CHORE-20260527-001-id-tracker-rule.md` |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260527-001 | Work/OQ/Tracker ID Rule And Registration Policy | 2026-05-27 | `docs/archive/docs/works/harness/CHORE-20260527-001-id-tracker-rule.md` |
 | HRN-040 | Public Clean Baseline Gate 범위 명확화 및 CI/Manual/Hook 분리 | 2026-05-26 | `docs/archive/docs/works/harness/HRN-040-baseline-gate-ci-manual-split.md` |
 | HRN-039 | Git/Branch Isolation Enforcement | 2026-05-26 | `docs/archive/docs/works/harness/HRN-039-branch-isolation-enforcement.md` |
 | HRN-038 | AGENTS.md Thin Entrypoint 정비 | 2026-05-27 | `docs/archive/docs/works/harness/HRN-038-agents-thin-entrypoint.md` |
