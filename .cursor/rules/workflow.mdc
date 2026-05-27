@@ -43,7 +43,7 @@ When ending a session (`/done`): report completed work, changed files, validatio
 
 STATUS Finalization Gate: before commit or PR, report whether `docs/STATUS.md` needs a final update, why, and the required Approval Matrix proposal if needed. Check Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, and Active Work Discovery freshness. Do not edit `docs/STATUS.md` without explicit approval. When `docs/STATUS.md` changes are approved, include them in the same commit as the substantive changes — never as a separate follow-up commit.
 
-Tracking Finalization Gate: before commit or PR, report whether backlog/Work/DR tracker updates are needed and why. Check linked backlog item Status/Done Criteria/Verification, Work file frontmatter/status/Checkpoints/Discovery, Work index README placement, related DR status/Supersedes/Linked Backlog Items, and completed Quick Mode work still left as Candidate.
+Tracking Finalization Gate: before commit or PR, report whether backlog/Work/DR tracker updates are needed and why. Check linked backlog item Status/Done Criteria/Verification, Work file frontmatter/status/Checkpoints/Discovery, Work index README placement, related DR status/Supersedes/Linked Backlog Items, and completed Quick Mode work still left as Candidate. If an Active Work file exists and all Done Criteria are checked ([x]), propose running `/close` before the commit so state changes (Work Done, Work Index, STATUS pointer) are bundled in the same commit rather than generated as a separate close commit later.
 
 Approval Matrix state rules:
 

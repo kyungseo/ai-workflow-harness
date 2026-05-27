@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260527-001
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: create-harness.sh --workflow source-gitflow opt-in 추가, default scaffold branch isolation drift 수정, command/skill/rule surface 분리
 appetite: 1-2w

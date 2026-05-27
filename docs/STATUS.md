@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-27 (FEAT-20260527-001 완료 — Source-style Scaffold Workflow Profile)
+Last updated: 2026-05-27 (FEAT-20260527-002 완료 및 /health follow-up 정리 — Health Audit Hardening, close-bundle trigger, Work archive)
 
 ## Current State
 
