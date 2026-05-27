@@ -188,7 +188,7 @@ graph TD
 | 개발자 | `WORKFLOW-MANUAL.md`, `HARNESS-STRUCTURE.md`, `HARNESS-MAINTAINER-GUIDE.md` |
 | AI 운영 공통 | `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md` (Claude Code: `CLAUDE.md` → 자동 import / Codex: `AGENTS.md` → 위임 / Cursor: `.cursor/rules/*.mdc`) |
 | AI 운영 전용 | `STATUS.md`, `HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `works/`, `archive/` |
-| 개발자 + AI 겸용 | `PLAN-SUMMARY.md`, `GIT-WORKFLOW.md` (source repo only), `PLAN.md` |
+| 개발자 + AI 겸용 | `PLAN-SUMMARY.md`, `GIT-WORKFLOW.md` (source repo / source-gitflow scaffold only), `PLAN.md` |
 | 발표·보고 산출물 | `docs/presentations/`, `docs/reports/` |
 | 역사·평가 | `docs/archive/`, `docs/retrospectives/`, reference-only plan |
 | User-facing cascade 확인 | `WORKFLOW-MANUAL.md` — 평시 AI 실행 규칙 로드 대상이 아니며, 사용자-visible workflow 변경 또는 cascade 감사 시 관련 섹션만 확인 |
@@ -255,7 +255,7 @@ graph TD
         PL["📄 PLAN.md"]
         AR["📄 HARNESS-STRUCTURE.md"]
         DG["📄 HARNESS-MAINTAINER-GUIDE.md"]
-        GW["📄 GIT-WORKFLOW.md (source repo)"]
+        GW["📄 GIT-WORKFLOW.md (source repo / source-gitflow scaffold)"]
     end
 
     ARC2["📁 archive/"]
@@ -1390,7 +1390,12 @@ prompts/
 
 ### Quick Start — Scaffolding Script
 
-`scripts/create-harness.sh`로 하네스 파일 구조를 자동 생성한다. 기본값은 언어·프레임워크를 가정하지 않는 `generic` profile이며, Java/Spring example pack이 필요할 때만 `--profile spring-boot`를 사용한다. Codex는 `AGENTS.md`를 기본 진입점으로 쓰고 첫 요청은 `/start` intent로 시작하며, `codex-session-start.md`는 수동 bootstrap이 필요한 환경의 fallback이다.
+`scripts/create-harness.sh`로 하네스 파일 구조를 자동 생성한다. 두 개의 독립 옵션으로 출력을 조정한다:
+
+- `--profile`: project template 선택. 기본값 `generic`은 언어·프레임워크를 가정하지 않으며, Java/Spring example pack이 필요할 때만 `--profile spring-boot`를 추가한다.
+- `--workflow`: workflow policy mode 선택. 기본값 `generic`은 project-specific branch/release policy를 유지하고, `--workflow source-gitflow`는 `docs/GIT-WORKFLOW.md`(Gitflow 브랜치 정책, Branch Isolation Gate 포함)를 추가 생성한다. 새 repo에서도 feature→develop→main 운영 모델을 그대로 적용하고 싶을 때 선택한다.
+
+Codex는 `AGENTS.md`를 기본 진입점으로 쓰고 첫 요청은 `/start` intent로 시작하며, `codex-session-start.md`는 수동 bootstrap이 필요한 환경의 fallback이다.
 Source repository의 scaffold 부팅 설계 기준은 `docs/SCAFFOLD-BOOTSTRAP.md`이고, 생성된 프로젝트에는 project-local checklist인 `docs/BOOTSTRAP.md`가 만들어진다.
 
 #### 케이스 A — 신규 프로젝트
@@ -1409,6 +1414,9 @@ scripts/create-harness.sh --dry-run my-app
 
 # Java/Spring example pack까지 포함
 scripts/create-harness.sh --profile spring-boot my-app
+
+# Gitflow 브랜치 정책 포함 (docs/GIT-WORKFLOW.md + Branch Isolation Gate)
+scripts/create-harness.sh --workflow source-gitflow my-app /path/to/my-app
 ```
 
 생성 후 필수 입력 파일:
@@ -1460,6 +1468,11 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 | `.codex/hooks.json` | 복사 | Codex Stop hook reminder |
 | `.cursor/rules/*.mdc` | 복사 | 기본 profile은 generic rules, `behavior-principles.mdc`, `safety-critical.mdc`, `role-harness-maintainer.mdc` 포함 |
 | `prompts/*.md` | 복사 | 기본 profile은 generic prompt만 포함 |
+| `docs/GIT-WORKFLOW.md` | 생성 | **`--workflow source-gitflow` 전용.** `policy_type: source-gitflow` marker 포함. Branch Isolation Gate 활성화 및 Gitflow 브랜치 정책 정의 |
+
+`--workflow source-gitflow` 추가 포함:
+
+- `docs/GIT-WORKFLOW.md` — Gitflow 브랜치 전략, Branch Isolation Rule, Release Cycle 정의 (`policy_type: source-gitflow` marker로 `/work`, `/close` Branch Isolation Gate 활성화)
 
 `--profile spring-boot` 추가 포함:
 

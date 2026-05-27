@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| FEAT-20260527-001 | Source-style Scaffold Workflow Profile | 2026-05-27 | `docs/works/harness/FEAT-20260527-001-source-style-scaffold-workflow.md` |
 
 ## Archived
 

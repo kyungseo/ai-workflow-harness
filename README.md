@@ -394,9 +394,16 @@ scripts/create-harness.sh --existing my-app /path/to/existing-project
 # Spring Boot example pack 포함
 scripts/create-harness.sh --profile spring-boot my-app /path/to/my-app
 
+# Gitflow 브랜치 정책 포함 (feature→develop→main, Branch Isolation Gate)
+scripts/create-harness.sh --workflow source-gitflow my-app /path/to/my-app
+
 # dry-run (파일 생성 없이 확인)
 scripts/create-harness.sh --dry-run my-app
 ```
+
+**`--profile`과 `--workflow` 역할 구분:**
+- `--profile`: project template 선택 (언어·프레임워크 예시 rule/prompt 포함 여부)
+- `--workflow`: workflow policy mode 선택. `generic`(기본)은 project-specific branch/release policy를 유지하고, `source-gitflow`는 `docs/GIT-WORKFLOW.md`와 feature→develop→main Branch Isolation Gate를 추가한다. 새 repo에서도 feature→develop→main 운영 모델을 그대로 적용하고 싶을 때 선택한다.
 
 `target-dir` 생략 시 `temp/<project-name>/`에 생성된다.
 

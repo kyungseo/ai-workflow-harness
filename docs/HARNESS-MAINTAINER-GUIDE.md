@@ -123,6 +123,7 @@ Generic prompt는 특정 framework를 가정하지 않는다. Stack-specific pro
 | Documentation-only | `git diff --check` |
 | Scaffold script | `bash -n scripts/create-harness.sh` |
 | Generic scaffold behavior | `./scripts/create-harness.sh --dry-run --profile generic sample /tmp/sample` |
+| Source-gitflow scaffold behavior | `./scripts/create-harness.sh --dry-run --workflow source-gitflow sample /tmp/sample` |
 | Tool-surface alignment | targeted `rg` across canonical, tool-specific, user-facing, scaffold surfaces |
 | Public readiness | stale identity audit and secret/private-info scan |
 
@@ -138,6 +139,12 @@ Generic dry-run을 검증한다:
 
 ```bash
 ./scripts/create-harness.sh --dry-run --profile generic sample /tmp/sample
+```
+
+Source-gitflow mode dry-run을 검증한다 (`docs/GIT-WORKFLOW.md` 생성 포함):
+
+```bash
+./scripts/create-harness.sh --dry-run --workflow source-gitflow sample /tmp/sample
 ```
 
 실제 scaffold 검증이 필요하면 새 임시 경로에 생성한다:

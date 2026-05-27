@@ -9,6 +9,10 @@
 #   --existing, -e             Overlay mode for an existing project.
 #                              Existing files are not overwritten.
 #   --profile <name>           Optional extras: generic (default), spring-boot.
+#   --workflow <name>          Workflow mode: generic (default), source-gitflow.
+#                              source-gitflow adds docs/GIT-WORKFLOW.md with
+#                              policy_type: source-gitflow marker and full
+#                              Gitflow branch isolation rules.
 #
 # Defaults:
 #   New mode       — TARGET must not exist; creates everything fresh.
@@ -23,6 +27,7 @@ TEMPLATE_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 DRY_RUN=false
 MODE="new"
 PROFILE="generic"
+WORKFLOW_MODE="generic"
 
 while [[ "${1:-}" == --* || "${1:-}" == -* ]]; do
   case "${1}" in
@@ -42,6 +47,14 @@ while [[ "${1:-}" == --* || "${1:-}" == -* ]]; do
       PROFILE="${1#--profile=}"
       shift
       ;;
+    --workflow)
+      WORKFLOW_MODE="${2:?--workflow requires a value: generic or source-gitflow}"
+      shift 2
+      ;;
+    --workflow=*)
+      WORKFLOW_MODE="${1#--workflow=}"
+      shift
+      ;;
     *)
       echo "Unknown flag: $1" >&2
       exit 1
@@ -57,7 +70,15 @@ case "${PROFILE}" in
     ;;
 esac
 
-PROJECT_NAME="${1:?Usage: $0 [--dry-run] [--existing] [--profile generic|spring-boot] <project-name> [target-dir]}"
+case "${WORKFLOW_MODE}" in
+  generic|source-gitflow) ;;
+  *)
+    echo "ERROR: unsupported workflow '${WORKFLOW_MODE}'. Use generic or source-gitflow." >&2
+    exit 1
+    ;;
+esac
+
+PROJECT_NAME="${1:?Usage: $0 [--dry-run] [--existing] [--profile generic|spring-boot] [--workflow generic|source-gitflow] <project-name> [target-dir]}"
 
 if [[ "${MODE}" == "existing" ]]; then
   if [[ -z "${2:-}" ]]; then
@@ -143,9 +164,9 @@ copy_prompt() {
 }
 
 if [[ "${DRY_RUN}" == true ]]; then
-  echo "Dry-run [mode: ${MODE}, profile: ${PROFILE}] — target: ${TARGET_ROOT}"
+  echo "Dry-run [mode: ${MODE}, profile: ${PROFILE}, workflow: ${WORKFLOW_MODE}] — target: ${TARGET_ROOT}"
 else
-  echo "Scaffolding AI workflow harness [mode: ${MODE}, profile: ${PROFILE}]"
+  echo "Scaffolding AI workflow harness [mode: ${MODE}, profile: ${PROFILE}, workflow: ${WORKFLOW_MODE}]"
   echo "  Project : ${PROJECT_NAME}"
   echo "  Target  : ${TARGET_ROOT}"
 fi
@@ -212,9 +233,19 @@ write_text "${TARGET_ROOT}/docs/troubleshooting/README.md" "# Troubleshooting
 "
 
 # ── Claude Code config ───────────────────────────────────────────────────────
-for f in docs-workflow.md git-workflow.md infra.md; do
+for f in docs-workflow.md infra.md; do
   adapt "${TEMPLATE_ROOT}/.claude/rules/${f}" "${TARGET_ROOT}/.claude/rules/${f}"
 done
+
+# git-workflow.md: source-gitflow uses source repo (branch isolation included),
+# generic uses minimal template (commit naming/format only, no branch isolation).
+if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
+  adapt "${TEMPLATE_ROOT}/.claude/rules/git-workflow.md" \
+        "${TARGET_ROOT}/.claude/rules/git-workflow.md"
+else
+  adapt "${TEMPLATE_ROOT}/scripts/templates/default/.claude/rules/git-workflow.md" \
+        "${TARGET_ROOT}/.claude/rules/git-workflow.md"
+fi
 
 if [[ "${PROFILE}" == "spring-boot" ]]; then
   adapt "${TEMPLATE_ROOT}/.claude/rules/java-spring.md" "${TARGET_ROOT}/.claude/rules/java-spring.md"
@@ -224,6 +255,15 @@ fi
 for f in "${TEMPLATE_ROOT}"/.claude/commands/*.md; do
   adapt "$f" "${TARGET_ROOT}/.claude/commands/$(basename "$f")"
 done
+
+# ── Source-gitflow extras ────────────────────────────────────────────────────
+# Adds docs/GIT-WORKFLOW.md with policy_type: source-gitflow marker.
+# The marker activates Branch Isolation Check in work/close commands and skills.
+# Uses scaffold-safe template (no source-repo-only references).
+if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
+  adapt "${TEMPLATE_ROOT}/scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md" \
+        "${TARGET_ROOT}/docs/GIT-WORKFLOW.md"
+fi
 
 # ── Codex skills ─────────────────────────────────────────────────────────────
 for skill_dir in "${TEMPLATE_ROOT}"/.agents/skills/*/; do
@@ -759,7 +799,7 @@ echo ""
 if [[ "${DRY_RUN}" == true ]]; then
   echo "Dry-run complete. No files were written."
 else
-  echo "Done [mode: ${MODE}, profile: ${PROFILE}]"
+  echo "Done [mode: ${MODE}, profile: ${PROFILE}, workflow: ${WORKFLOW_MODE}]"
   echo ""
   echo "  Harness scaffolded at: ${TARGET_ROOT}"
 fi
