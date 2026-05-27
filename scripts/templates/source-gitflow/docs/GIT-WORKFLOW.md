@@ -7,7 +7,6 @@ policy_type: source-gitflow
 이 프로젝트의 Git 브랜치 전략, 일상 작업 사이클, CI 연동 방식을 정의한다.
 
 > **현재 채택 전략: Gitflow** (feature → develop → main)
-> 전략 변경 검토 중: `docs/backlog/HARNESS.md` HRN-FUT-004 참조
 > 전략 변경 시 §1~§3 전체 재검토 필요
 
 ## 0. Branch Isolation Rule
@@ -24,8 +23,6 @@ policy_type: source-gitflow
 | AI entrypoint | `AGENTS.md`, `CLAUDE.md` |
 | Canonical workflow | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md` |
 | Tool surface | `.claude/commands/*.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.agents/skills/**`, `prompts/**` |
-| Scaffold | `scripts/create-harness.sh` |
-| Enforcement | `tools/git-hooks/**` |
 
 ### Allowed Exceptions
 
@@ -113,9 +110,7 @@ gh pr create --base develop --title "..." --body "..."
 - WIP 커밋이 많아 히스토리가 지저분할 때만 Squash merge를 선택한다.
 
 **검증 책임:**
-- feature→develop PR은 `.github/workflows/ci.yml` path filter에 걸리는 문서, prompt, rule, scaffold 변경에서 GitHub Actions CI를 실행한다.
-- PR 전에는 변경 범위에 맞는 로컬 검증 결과(`git diff --check`, `bash -n scripts/create-harness.sh`, scaffold dry-run 등)를 PR 본문이나 세션 요약에 남긴다.
-- develop→main PR에서도 동일한 docs/scaffold CI를 최종 확인한다.
+- PR 전에는 변경 범위에 맞는 로컬 검증 결과(`git diff --check` 등)를 PR 본문이나 세션 요약에 남긴다.
 
 ### 2-4. Post-PR Cleanup
 
@@ -139,15 +134,14 @@ git push origin --delete feature/{name}
 
 ## 3. Release Cycle (Develop → Main)
 
-> 이 release cycle과 Public Clean Baseline Gate는 `ai-workflow-harness` source repo의 기본 정책이다.
-> scaffold product repo에서는 project-specific `docs/GIT-WORKFLOW.md` 또는 선택한 workflow mode에 따라 적용 여부를 결정한다.
-> source-style workflow profile을 opt-in한 repo에서는 동일 gate를 적용한다.
+> 이 release cycle과 Public Clean Baseline Gate는 이 프로젝트의 기본 정책이다.
+> project-specific 요구사항에 따라 gate 항목을 조정할 수 있다.
 
 `main`은 일반 통합 브랜치가 아니라 **public release snapshot**이다.
 feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
 의미 있는 패치(하나 또는 여러 feature 묶음)가 완료되어 release 준비가 됐을 때만 develop → main PR을 만든다.
 
-**머지 방식:** 항상 Regular merge (Merge commit) — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다. (DR-017)
+**머지 방식:** 항상 Regular merge (Merge commit) — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다.
 
 ### 3-1. Public Clean Baseline Gate
 
@@ -164,14 +158,11 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 | Work active leakage | release 대상에 internal Active Work가 남지 않음 | `rg -n "^status: Active" docs/works` |
 | Archive state | `docs/archive/docs/works/**` 아래 Work는 모두 `status: Archived` | `rg -n "^status:" docs/archive/docs/works` |
 | `/start` output | public clone 첫 `/start`가 clean idle 또는 의도한 상태로 시뮬레이션됨 | STATUS 기준 문서 시뮬레이션 |
-| Adoption path | README → `docs/SCAFFOLD-ONBOARDING-GUIDE.md` → scaffold bootstrap 흐름 정합 | link/path inspection |
-| Scaffold | `bash -n scripts/create-harness.sh` + `--dry-run` 통과. 실제 temp scaffold 생성은 scaffold 파일 변경 시에만 | `bash -n scripts/create-harness.sh`, `scripts/create-harness.sh --dry-run ...` |
-| Docs cascade | release gate 관련 문서 변경 시 canonical/tool/user-facing/scaffold cascade 정렬 확인 | targeted cascade check |
+| Adoption path | README → onboarding 흐름 정합 | link/path inspection |
+| Docs cascade | release gate 관련 문서 변경 시 canonical/tool/user-facing cascade 정렬 확인 | targeted cascade check |
 | Validation | `git diff --check` 통과 | `git diff --check` |
 
 ### 3-2. Main Merge Gate
-
-> 적용 범위는 §3 Release Cycle note를 따른다. 일반 scaffold product repo에는 기본 강제하지 않는다.
 
 아래 조건을 모두 만족할 때만 develop → main PR을 생성한다.
 
@@ -185,7 +176,7 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 - Active Work가 남아 있는 상태
 - Done archive pending Work가 남아 있는 상태
 - Open Blocker/OQ가 public 사용자에게 혼란을 줄 수 있는 상태
-- README 또는 onboarding/scaffold 경로가 stale한 상태
+- README 또는 onboarding 경로가 stale한 상태
 - feature branch에서 직접 main으로 PR을 여는 경우
 
 ### 3-3. PR Creation (Develop → Main)
@@ -211,15 +202,16 @@ git status                  # "up to date with 'origin/develop'" 확인
 
 ## 4. CI Trigger
 
+CI 설정은 project-specific이다. 아래는 참고 패턴이다.
+
 | 이벤트 | 조건 | 실행 Job |
 |---|---|---|
-| `push` to `main` | docs/prompts/tool surface/scaffold/root entrypoint 변경 시 | Docs and Scaffold Validation |
-| `pull_request` targeting `main` 또는 `develop` | docs/prompts/tool surface/scaffold/root entrypoint 변경 시 | Docs and Scaffold Validation |
+| `push` to `main` | docs/prompts/tool surface 변경 시 | Docs Validation |
+| `pull_request` targeting `main` 또는 `develop` | docs/prompts/tool surface 변경 시 | Docs Validation |
 
-**Path filter 대상:** `docs/**`, `prompts/**`, `.claude/**`, `.cursor/**`, `scripts/**`, `.github/workflows/**`, `AGENTS.md`, `CLAUDE.md`, `README.md`
+**Path filter 대상 (예시):** `docs/**`, `prompts/**`, `.claude/**`, `.cursor/**`, `AGENTS.md`, `CLAUDE.md`, `README.md`
 
-> develop push는 CI 트리거 없음. PR과 main push에서 docs/scaffold validation을 수행한다.
-> application runtime이 없으므로 Java/Gradle lint/test는 기본 CI 대상이 아니다.
+> CI 상세 설정은 프로젝트 CI 파일을 참조한다.
 
 ## 5. Commit Message Format
 
@@ -246,25 +238,9 @@ fix: TokenRedisRepository SCAN 기반 invalidation 제거
 
 ## 6. Pre-commit Hook
 
-> **Source repo 전용.** `tools/git-hooks/pre-commit`은 `ai-workflow-harness` source repo에서만 설치·운영한다. scaffold된 product repo에는 기본 포함되지 않는다 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
-
-`tools/git-hooks/pre-commit`이 자동으로 실행된다.
-
-| staged 파일 | 동작 |
-|---|---|
-| 전체 staged diff | `git diff --cached --check` |
-| `scripts/*.sh`, `scripts/*/*.sh`, `tools/git-hooks/*` | `sh -n` shell syntax check |
-| `scripts/create-harness.sh` | `bash -n scripts/create-harness.sh` |
-
-hook 설치:
-
-```bash
-bash tools/git-hooks/install.sh
-```
+hook은 자동 설치하지 않으며, 필요하면 project-specific hook으로 별도 정의한다.
 
 ## 7. Related Documents
 
 - `.claude/rules/git-workflow.md` — Claude Code용 커밋 gate 규칙
 - `docs/decisions/DR-007-language-policy.md` — Bilingual Rules
-- `.github/workflows/ci.yml` — CI 상세 설정
-- `docs/HARNESS-MAINTAINER-GUIDE.md` — 로컬 환경 설정 및 유지보수 절차
