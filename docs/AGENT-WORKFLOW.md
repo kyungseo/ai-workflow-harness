@@ -49,6 +49,7 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 | Scaffold 직후 프로젝트 부팅 | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` |
 | Scaffold source onboarding 기준 확인 | `docs/SCAFFOLD-BOOTSTRAP.md` |
 | 세션 실행 규칙 빠른 확인 | `docs/HARNESS-QUICK-REFERENCE.md` |
+| Work ID·OQ ID·DR ID 부여·검증, 파일명 규칙 | `docs/HARNESS-NAMING-RULES.md` — `/register`·`/work` Work ID 확정 시, branch/Work ID slug 대응 논의 시에만 로드. `/start`, `/pick`, 일반 status 확인, cascade 검증에서는 로드하지 않는다 |
 | Product track 또는 Phase{n} 준비 작업 선택 | `docs/backlog/PHASE{n}.md` |
 | harness, command/rule, workflow 작업 선택 | `docs/backlog/HARNESS.md` |
 | 아키텍처 요약 | `docs/PLAN-SUMMARY.md` |
@@ -114,7 +115,7 @@ MUST NOT:
 
 새 작업 항목 등록은 `/register`로 수행한다. 긴급도와 성격에 따라 TYPE(FEAT/PATCH/HOTFIX/CHORE)을 판단하고 위 위치 중 적절한 곳에 라우팅된다. backlog 후보는 제목/slug만 유지하고, Work ID는 `/work` 착수 승인 후 Work 파일 생성 시 확정한다.
 
-상세 기준: `docs/HARNESS-PROTOCOL.md` §9
+Work ID 형식 상세 기준: `docs/HARNESS-NAMING-RULES.md`
 
 ## Risk Levels
 
@@ -167,7 +168,7 @@ workflow/doc/tool/scaffold/status 표면을 변경할 때는 `docs/HARNESS-PROTO
 ID prefix와 파일명 상세 기준:
 
 - `docs/decisions/DR-008-docs-filename-standard.md`
-- `docs/HARNESS-PROTOCOL.md`
+- `docs/HARNESS-NAMING-RULES.md`
 
 ## Project Constants
 

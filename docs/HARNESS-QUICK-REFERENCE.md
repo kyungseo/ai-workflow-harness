@@ -237,7 +237,7 @@ archive 승인 후에는 `docs/archive/docs/works/{category}/`로 이동한다.
 
 ## 10. Naming
 
-ID prefix와 file naming 기준은 `docs/HARNESS-PROTOCOL.md`와 `docs/decisions/DR-008-docs-filename-standard.md`를 따른다.
+ID prefix와 file naming 기준은 `docs/HARNESS-NAMING-RULES.md`와 `docs/decisions/DR-008-docs-filename-standard.md`를 따른다.
 
 ## 11. Never
 
