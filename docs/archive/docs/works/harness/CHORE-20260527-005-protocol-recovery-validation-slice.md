@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260527-005
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: HARNESS-PROTOCOL.md §15(Failure And Recovery, Validation Checklist, Commit Approval, CI/Manual/Hook 책임 경계)를 docs/HARNESS-RECOVERY-VALIDATION.md로 추출하고, conditional routing model을 적용한다. 실제 변경 reversal cost는 Low.
 appetite: 1d

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260527-007
 priority: P2
-status: Done
+status: Archived
 risk: Low
 scope: HARNESS-PROTOCOL.md §14 Triggers and Cascade를 docs/HARNESS-CASCADE-CHECKS.md로 추출할지 scope를 확정한다. health.md inline cascade table과의 관계 정리가 핵심. policy/runtime surface 변경 없음.
 appetite: 0.5d

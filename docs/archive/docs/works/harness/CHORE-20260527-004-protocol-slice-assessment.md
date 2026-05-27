@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260527-004
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: HARNESS-PROTOCOL.md의 남은 heavy section(cascade, lifecycle, recovery)에서 실제 context budget 효과가 큰 다음 policy slice를 선정하고, 구현 scope를 제안한다. 실제 slice 추출은 이번 Work에서 수행하지 않는다.
 appetite: 1d

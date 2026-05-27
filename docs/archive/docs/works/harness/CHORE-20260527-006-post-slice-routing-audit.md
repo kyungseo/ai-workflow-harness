@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260527-006
 priority: P2
-status: Done
+status: Archived
 risk: Low
 scope: CHORE-20260527-003(Naming Rules)와 CHORE-20260527-005(Recovery/Validation) 이후 HARNESS-PROTOCOL.md context load 압력 재측정 및 live reference 분류. 신규 slice 생성 없음.
 appetite: 0.5d
