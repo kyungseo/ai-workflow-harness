@@ -200,6 +200,8 @@ Proposal shape:
 3. Recovery options 제시
 4. 사용자 승인 후 재계획
 
+상세 기준: `docs/HARNESS-RECOVERY-VALIDATION.md`
+
 ## 8. Cascade And Tracking
 
 문서/워크플로우 변경 후 연쇄 영향이 불명확하면 `/health --cascade`로 변경 파일 유형에 맞는 canonical → tool-specific → user-facing → scaffold layer를 점검한다.
