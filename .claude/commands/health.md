@@ -19,6 +19,32 @@ disable-model-invocation: true
   - `--full --cascade` → Phase 전환 전 또는 대형 harness 변경 후 전체 surface와 cascade를 함께 감사
   - `--cascade`에서 변경 파일이 없으면 Quick 모드(A+B+E)로 동작하고, 전체 cascade 감사가 필요하면 `--full --cascade`를 사용
 
+## Mode Contract
+
+| Mode | Required | Conditional | Must Report |
+|---|---|---|---|
+| Quick | STATUS current sections + tool surface listing (Phase 1-2) + A·B·E 영역 | suspicious mismatch 파일만 full read | current state, findings, skipped checks with reason |
+| `--full` | Quick + Phase 3-5 + A·B·C·D·E·F·H 영역 | 최근 변경 surface 기반 selected docs | findings by severity, Context Budget Notes |
+| `--cascade` | changed files → Required Surface Matrix → grep/simulation | user-facing·scaffold·historical은 선택된 유형에만 | selected surfaces, omitted surfaces with reason |
+| `--full --cascade` | full health + G 영역 cascade completeness | release/phase 전환, 대형 harness 변경 | blocking findings, residual risk, follow-up plan |
+
+Quick 모드는 가벼워야 한다. Area H(Workflow Context Weight) 활성 조건: `--full`에서 항상 활성화; `--cascade`에서는 변경 surface가 workflow context/load path와 관련될 때만 활성화; 변경 파일 없는 `--cascade`는 Quick 모드이므로 Area H skip.
+
+## Output Contract
+
+`/health` 결과는 아래 7개 섹션 순서로 보고한다.
+
+1. **Summary** — overall status (🟢/🟡/🔴) + 한 줄 결론
+2. **Findings (P0/P1/P2)** — P0: flow break/state corruption/scaffold unusable · P1: surface drift/missing mirror/productivity regression · P2: wording hygiene/optional simplification
+3. **Surface Coverage** — 확인한 파일 유형과 계층 목록
+4. **Skipped / Not Applicable** — 실행하지 않은 체크와 이유 (조용히 생략 금지)
+5. **Context Budget Notes** — (full/cascade) 읽은 파일 목록 요약, 의도적으로 읽지 않은 파일과 이유
+6. **Verification Run** — 실행한 rg/bash/simulation 명령 요약
+7. **Recommended Follow-Ups** — Scope/Files/Verification/Risk/Reversal Cost 포함 제안. state change는 제안만, 직접 수정 금지
+
+Findings가 없으면 "No blocking findings"를 명시한다.
+STATUS 변경이 필요한 항목은 Approval Matrix state rules에 맞는 제안 섹션으로 별도 제안한다.
+
 ## File Reading Order
 
 **Phase 1 — Current State (1 file)**
@@ -85,6 +111,10 @@ git diff --cached --name-only
 | `scripts/create-harness.sh`가 존재할 때 | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/SCAFFOLD-BOOTSTRAP.md` | commands/rules/prompts source | generated README/manual expectations | dry-run + temp scaffold + stale phrase search | 필요 시 related Work |
 | `docs/SCAFFOLD-BOOTSTRAP.md` | `docs/HARNESS-PROTOCOL.md` | — | — | `scripts/create-harness.sh`가 있으면 생성 BOOTSTRAP.md 템플릿과 Boot Sequence·Completion Rule 동기화, 없으면 source repo 전용 기준으로 표시 | — |
 | `docs/STATUS.md`, `docs/works/**`, `docs/backlog/**`, `docs/decisions/**` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | start/resume/close/done/record-decision commands | quick reference/manual state sections | work/index scaffold templates | 관련 Work/DR/retrospective |
+| `docs/GIT-WORKFLOW.md`, branch/release policy 변경 | `docs/AGENT-WORKFLOW.md` | `.claude/commands/work.md`, `close.md`, 대응 SKILL mirror | `docs/WORKFLOW-MANUAL.md` branch 섹션, `docs/HARNESS-QUICK-REFERENCE.md` | `scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md`, generated work/close command | 관련 Work |
+| `scripts/templates/**` 변경 | `docs/SCAFFOLD-BOOTSTRAP.md`, `docs/AGENT-WORKFLOW.md` | `scripts/create-harness.sh` | `docs/WORKFLOW-MANUAL.md` scaffold 섹션, `README.md` §10 | dry-run + fresh generation, generated command/skill/rule | 관련 Work |
+| `.claude/commands/{x}.md` ↔ `.agents/skills/workflow-{x}/SKILL.md` mirror pair 변경 | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 대응 pair 전체 | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` 섹션 | scaffold 복사 산출물 | 관련 Work/retrospective |
+| `.claude/commands/health.md` 또는 `.agents/skills/workflow-health/SKILL.md` 변경 | `docs/AGENT-WORKFLOW.md` | SKILL mirror (또는 command mirror) | `docs/HARNESS-QUICK-REFERENCE.md` `/health` 행, `docs/WORKFLOW-MANUAL.md` §5 `/health` 셀 | scaffold 복사 산출물 health command/skill | — |
 
 ### Required Grep Pack
 
@@ -119,6 +149,25 @@ if test -f scripts/create-harness.sh; then
 else
   echo "skip: scripts/create-harness.sh not present in this repository"
 fi
+
+# State / tracking finalization
+rg -n "STATUS Finalization|Tracking Finalization|Active Work|status: Done|status: Active" \
+  "${LIVE_TARGETS[@]}"
+
+# Branch / scaffold policy
+# source-gitflow 체크는 GIT-WORKFLOW.md 또는 scripts/templates/** 변경 시, 또는 --full/--cascade 실행 시 적용한다.
+# default scaffold 기준 점검에서는 이 결과가 guarded implementation surface(commands/skills/rules)에
+# 나타나는 것은 정상이며, user-facing policy 문서에 누출되는지만 확인한다.
+rg -n "source-gitflow|policy_type: source-gitflow|Public Clean Baseline Gate|pre-commit" \
+  docs/STATUS.md docs/BOOTSTRAP.md docs/PLAN-SUMMARY.md \
+  docs/WORKFLOW-MANUAL.md docs/HARNESS-QUICK-REFERENCE.md README.md 2>/dev/null \
+  && echo "WARN: check whether above are policy leakage or expected references" \
+  || echo "no matches in user-facing policy docs"
+
+# Context / load path — workflow context weight 점검
+# command/skill/prompt이 trigger 없이 heavy docs를 상시 로드하도록 지시하지 않는지 확인한다.
+rg -n "HARNESS-PROTOCOL|WORKFLOW-MANUAL|항상.*읽|전체.*로드|기본.*로드|always.*load" \
+  .claude/commands/ .agents/skills/ prompts/ 2>/dev/null
 ```
 
 Historical matches are not automatically drift. Report them separately as snapshot references unless they appear in live execution, guide, or scaffold surfaces.
@@ -132,6 +181,9 @@ Historical matches are not automatically drift. Report them separately as snapsh
 | User-facing manual/quick reference/README | 사용자 설명과 실제 command/canonical 흐름 대조, quick mode, close/done, scaffold |
 | Scaffold source | 신규 프로젝트 scaffold, 기존 프로젝트 adoption, generated command/rule/prompt/manual 경로 검색 |
 | Work/status/backlog/DR | `/start`, `/pick`, `/work`, `/resume`, `/close`, archive trigger, STATUS update gate |
+| `docs/GIT-WORKFLOW.md` 또는 branch policy 변경 | source repo `develop`에서 Branch Isolation FAIL, `feature/*`에서 PASS; default scaffold에서 marker 없음 → gate 비활성화 |
+| `scripts/create-harness.sh` 또는 `scripts/templates/**` 변경 | default scaffold 생성 — `docs/GIT-WORKFLOW.md` 미생성·source-gitflow marker 없음; source-gitflow scaffold 생성 — marker 있음·source-repo-only 참조 없음 |
+| Workflow Context Weight (--full / --cascade) | session startup clean idle → STATUS current만 읽고 archive/history 미확장; `/work` backlog candidate → Work ID 확정 필요 정보만; `/resume` → Work/STATUS/file state 우선, unrelated backlog·manual 기본 로드 없음; `/close` feature branch → Done 처리와 commit strategy 분리, release gate detail 불필요 시 skip; commit/PR finalization → STATUS/Tracking finalization 수행, 전체 protocol 반복 로드 없음; scaffold onboarding → STATUS Next Actions pointer 없이 BOOTSTRAP.md 자동 로드 없음 |
 
 선택하지 않은 시나리오는 `Skipped / Not Applicable`에 이유를 적는다.
 
@@ -178,7 +230,7 @@ Historical matches are not automatically drift. Report them separately as snapsh
   - 노드 라벨이 실제 존재하지 않는 파일 경로·서비스명·상태를 참조하면 drift로 보고
   - 렌더링 없이 구문 유효성(syntax)을 확인할 수 없는 항목은 "수동 검토 권고"로 보고
 
-### C. Claude Code Feature Alignment (--full)
+### C. Tool Feature Alignment (--full)
 
 - `.claude/settings.json`: `defaultMode`, `permissions.deny` 목록 현행성, hooks 설정
 - `.agents/skills/`: Codex command skill frontmatter와 대응 command coverage
@@ -278,48 +330,72 @@ Coverage rule:
 - 선택하지 않은 surface, grep, simulation은 반드시 `Skipped / Not Applicable`에 이유를 남긴다.
 - 판단이 애매하면 통과 처리하지 말고 `Requires manual judgment`로 보고한다.
 
+### H. Workflow Context Weight (--full / --cascade)
+
+활성 조건: `--full`에서 항상 실행. `--cascade`에서는 변경 surface가 command/skill/prompt 로드 지시, workflow load path, `AGENT-WORKFLOW` 등 context weight와 관련된 파일을 포함할 때만 실행. 변경 파일 없는 `--cascade`는 Quick 모드이므로 Area H skip.
+
+`/health` 자체의 token 사용량보다 더 중요한 목적은 **일상 workflow operating model이 시간이 지나며 불필요하게 무거워지는 현상을 감지**하는 것이다.
+각 workflow path가 필요한 표면만 읽고 있는지 점검한다. report-only — 자동 수정 없음.
+
+점검 방법: `CLAUDE.md`, `docs/AGENT-WORKFLOW.md`, 각 command/skill 파일의 로드 지시 문구를 listing + rg로 확인한다. 파일 전체 read 없이 pattern matching으로 판단한다.
+
+| Workflow path | 점검 질문 |
+|---|---|
+| Session startup / `/start` | `BEHAVIOR-PRINCIPLES`, `AGENT-WORKFLOW`, `STATUS` current sections를 넘어 archive/history/manual을 기본 로드하도록 지시하지 않는가 |
+| `/work` | Work ID 확정 및 계획 수립에 필요한 정보만 로드하는가. naming detail 전체, branch policy 전체를 trigger 없이 상시 읽지 않는가 |
+| `/resume` | Work/STATUS/file state를 우선하고, 무관한 backlog/manual/retrospective를 기본 로드하지 않는가 |
+| `/close` | Work Done 처리와 commit strategy를 분리하는가. release gate detail은 branch context가 필요할 때만 확인하는가 |
+| Commit/PR finalization | STATUS/Tracking finalization을 수행하되, 전체 protocol/manual을 반복 로드하지 않는가 |
+| Scaffold onboarding | `STATUS.md` Next Actions pointer 없이 `BOOTSTRAP.md`를 자동 로드하도록 지시하지 않는가 |
+| `/health` 자체 | Quick 모드가 Area H를 실행하지 않는가. command가 report-only를 유지하고 state change를 발생시키지 않는가 |
+
+finding category: **"Workflow Context Weight"** — 일상 workflow가 heavy해진 지점을 P1로 보고한다.
+heavy doc 기준: `HARNESS-PROTOCOL.md` 전체, `WORKFLOW-MANUAL.md`, archive/retrospectives/PLAN, session-start 없이 자동 로드 지시.
+
 ## Report Format
 
 ```
-## Overall Status: [🟢 Good / 🟡 Needs Attention / 🔴 Action Required]
+## 1. Summary
+Overall Status: [🟢 Good / 🟡 Needs Attention / 🔴 Action Required]
+한 줄 결론.
 
-## Area Summary
+## 2. Findings (P0/P1/P2)
+
+### Area Summary
 | Area | Status | Items Found |
 |------|--------|-------------|
-| A. Structure Consistency   | 🟢/🟡/🔴 | n건 |
-| B. Document Consistency    | 🟢/🟡/🔴 | n건 |
-| E. Backlog/DR Hygiene      | 🟢/🟡/🔴 | n건 |
-| (F. Implementation Sync)   | 🟢/🟡/🔴 | n건 |
-| (G. Cascade Completeness)  | 🟢/🟡/🔴 | n건 |
+| A. Structure Consistency        | 🟢/🟡/🔴 | n건 |
+| B. Document Consistency         | 🟢/🟡/🔴 | n건 |
+| E. Backlog/DR Hygiene           | 🟢/🟡/🔴 | n건 |
+| (F. Implementation Sync)        | 🟢/🟡/🔴 | n건 |
+| (G. Cascade Completeness)       | 🟢/🟡/🔴 | n건 |
+| (H. Workflow Context Weight)    | 🟢/🟡/🔴 | n건 |
 
-## Detailed Findings
-
-### [Area Name]
+### Detailed Findings
 - [✓ / ⚠ / ✗] 항목명: 세부 내용
 
-## P0/P1/P2 Findings
+### P0/P1/P2
 - P0 — flow break / state corruption / scaffold unusable:
-- P1 — surface drift / missing mirror / productivity regression:
+- P1 — surface drift / missing mirror / productivity regression / Workflow Context Weight heavy:
 - P2 — over-duplication / wording hygiene / optional simplification:
 
-## Checked Surfaces (--cascade only)
-- Canonical:
-- Tool-specific:
-- User-facing:
-- Scaffold:
-- Historical:
+Findings가 없으면 "No blocking findings"를 명시한다.
 
-## Required Grep Results (--cascade only)
-- Command:
-- Result summary:
+## 3. Surface Coverage
+- 확인한 파일 유형과 계층 목록
 
-## Simulation Notes (--cascade only)
-- Executed / reasoned:
-- Skipped / Not Applicable:
-- Requires manual judgment:
+## 4. Skipped / Not Applicable
+- 항목명: 이유 (조용히 생략 금지)
 
-## Suggested Fixes
-- Fix now:
+## 5. Context Budget Notes (--full / --cascade)
+- 읽은 파일 목록 (요약)
+- 의도적으로 읽지 않은 파일과 이유
+
+## 6. Verification Run
+- 실행한 rg / bash / simulation 명령 요약
+
+## 7. Recommended Follow-Ups
+- Fix now: [Scope / Files / Verification / Risk / Reversal Cost 포함]
 - Split into separate Work/DR:
 - No action:
 ```

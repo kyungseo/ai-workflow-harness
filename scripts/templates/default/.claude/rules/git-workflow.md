@@ -17,25 +17,6 @@ Before committing, always run in this order:
 NEVER use `git diff --cached` alone as the only pre-commit check.
 It does not show unstaged modifications or untracked files.
 
-## Branch Isolation Check
-
-Before staging or committing, check the current branch:
-
-```bash
-git branch --show-current
-```
-
-If the branch is `develop` or `main` AND any of the following files are staged — move to FAIL:
-
-- `AGENTS.md`, `CLAUDE.md`, `docs/STATUS.md`, `docs/backlog/**`, `docs/works/**`, `docs/decisions/**`
-- `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md`
-- `.claude/commands/**`, `.claude/rules/**`, `.cursor/rules/**`, `.agents/skills/**`, `prompts/**`, `scripts/create-harness.sh`, `tools/git-hooks/**`
-
-FAIL response: report current branch and the staged protected files, then propose creating a `feature/*` or `hotfix/*` branch and moving the changes there.
-
-Exception: skip this check if `.git/MERGE_HEAD` exists (merge commit — release sync).
-Not Applicable: if the current directory is not a git repository.
-
 Commit Approval:
 
 - Commit only after validation is complete or the remaining risk is explicitly accepted.
@@ -44,7 +25,6 @@ Commit Approval:
 - Before committing or opening a PR, report Tracking Finalization: whether backlog/Work/DR tracker updates are needed, why, and which tracker files changed if any.
 - If `docs/STATUS.md` needs to change before commit, provide the Approval Matrix state-change proposal and wait for user approval before editing it.
 - When `docs/STATUS.md` changes are approved, include them in the **same commit** as the substantive changes. Never commit substantive changes first and update `docs/STATUS.md` in a separate follow-up commit.
-- If an Active Work file exists and all Done Criteria are checked ([x]), propose running `/close` before the commit so state changes (Work Done, Work Index, STATUS pointer) are bundled in the same commit rather than generated as a separate close commit later.
 - If not committing after a completed task, record the reason and remaining risk in the session summary.
 
 ## Commit Message Format
@@ -75,14 +55,5 @@ Follow Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-lan
 
 ## Branch Flow
 
-When the user expresses branch merge intent, such as asking to merge, open a PR, or merge into `develop`,
-If this repository has `docs/GIT-WORKFLOW.md`, load it and follow section 2 (feature development cycle) and section 3 (release cycle). Otherwise, check the project-specific branch/release policy first.
-
-PR Base Rule:
-- feature/* → `develop` (ALWAYS use `--base develop` when opening a PR from a feature branch)
-- develop → `main` (release PR only)
-
-NEVER:
-- Open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.
-- Directly local-merge a feature branch into develop. Always merge via PR.
-- Skip the develop sync step after a main PR merge (`git merge origin/main` into `develop`, then `git push origin develop`).
+When the user expresses branch merge intent (merging, opening a PR),
+if this repository has `docs/GIT-WORKFLOW.md`, load it and follow its branch and PR guidance. Otherwise, follow the project-specific branch policy.

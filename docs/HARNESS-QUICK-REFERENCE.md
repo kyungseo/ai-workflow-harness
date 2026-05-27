@@ -205,6 +205,7 @@ Proposal shape:
 문서/워크플로우 변경 후 연쇄 영향이 불명확하면 `/health --cascade`로 변경 파일 유형에 맞는 canonical → tool-specific → user-facing → scaffold layer를 점검한다.
 변경 파일이 없으면 `/health --cascade`는 Quick 모드와 동일하게 동작한다.
 전체 표면 감사가 필요하면 `/health --full --cascade`를 사용한다.
+`--full`에서는 **Area H (Workflow Context Weight)**가 항상 활성화한다. `--cascade`에서는 변경 surface가 workflow context/load path와 관련될 때만 활성화하며, 변경 파일 없는 `--cascade`(= Quick 모드)에서는 skip한다. Area H는 일상 workflow path(startup, /work, /resume, /close, commit/PR, scaffold onboarding)가 불필요하게 heavy docs를 로드하도록 변했는지 감지한다.
 
 핵심 trigger:
 
