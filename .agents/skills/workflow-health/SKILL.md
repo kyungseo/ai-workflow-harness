@@ -210,6 +210,7 @@ Historical matches are not automatically drift. Report them separately as snapsh
 - `docs/works/*/README.md` index가 Work 파일 상태(Active/Done/Archived)와 일치하는가
 - archive 위치의 Work 파일은 `status: Archived`인가
 - DR 생애주기 양방향: STATUS.md Recent Decisions ↔ `rg` 결과의 DR Status 일치
+- workflow command 또는 skill을 수정한 Active Work의 CP/commit: `.claude/commands/{name}.md`와 `.agents/skills/workflow-{name}/SKILL.md`가 같은 CP/commit에 함께 반영됐는지 확인 (docs/HARNESS-PARALLEL-WORK-CONTROLS.md §Command/Skill Mirror Atomicity)
 
 ### B. Document Cross-Consistency
 

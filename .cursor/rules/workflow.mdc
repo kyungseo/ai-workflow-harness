@@ -70,6 +70,10 @@ Bilingual Rules (applies to Korean-primary files):
 
 Full policy: `docs/decisions/DR-007-language-policy.md`
 
+## Document Structure
+
+When detailed runbooks or checklists accumulate in core documents (e.g., `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md`), extract them to a separate slice file and replace the content with a conditional pointer: `Load \`docs/{slice-file}.md\` only when {condition}.`
+
 ## Branch Flow
 
 When the user expresses branch merge intent, such as asking to merge, open a PR, or merge into `develop`,
