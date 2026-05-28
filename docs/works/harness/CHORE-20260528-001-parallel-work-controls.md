@@ -1,13 +1,13 @@
 ---
 id: CHORE-20260528-001
 priority: P2
-status: Active
+status: Done
 risk: Medium
 scope: 병렬/동시 작업 환경에서 Work ID 충돌·STATUS/index 동시 수정·DR sequence·command/skill mirror·scaffold drift 등 10개 축의 현행 gap을 분석하고 manual-first conflict-resolution rule을 문서화
 appetite: 1w
 planned_start: 2026-05-28
 planned_end: 2026-06-04
-actual_end:
+actual_end: 2026-05-28
 related_dr: [DR-013, DR-016, DR-017, DR-019]
 related_commits: []
 related_troubleshooting: []
@@ -133,14 +133,14 @@ Manual-first. 자동화(CI/hook/script)는 Out of Scope.
 
 ## Done Criteria
 
-- [ ] 10개 검토 축 Gap 분석 완료, Discovery 섹션에 기록
-- [ ] Work ID NNN 재배정 절차 및 외부 참조 영향 처리 rule이 `docs/HARNESS-NAMING-RULES.md`에 반영됨
-- [ ] STATUS/index conflict 발생 시 Work frontmatter 기준 복구 절차가 `docs/HARNESS-PROTOCOL.md`에 추가됨
-- [ ] DR-### 번호 확인 절차가 `record-decision` command + `workflow-record-decision` skill 양쪽에 반영됨
-- [ ] command/skill mirror atomicity check row가 `health` command + `workflow-health` skill cascade checklist 양쪽에 추가됨
-- [ ] scaffold drift window guidance가 관련 문서에 추가됨 (또는 명시적 deferred 처리)
-- [ ] hard enforcement 및 자동화가 필요한 항목이 별도 L3 후보로 `docs/backlog/HARNESS.md`에 등록됨
-- [ ] cascade 영향 문서 점검 완료 (HARNESS-PROTOCOL.md, HARNESS-NAMING-RULES.md, health command/skill, record-decision command/skill)
+- [x] 10개 검토 축 Gap 분석 완료, Discovery 섹션에 기록
+- [x] Work ID NNN 재배정 절차 및 외부 참조 영향 처리 rule이 `docs/HARNESS-NAMING-RULES.md`에 반영됨
+- [x] STATUS/index conflict 발생 시 Work frontmatter 기준 복구 절차가 `docs/HARNESS-PROTOCOL.md`에 추가됨
+- [x] DR-### 번호 확인 절차가 `record-decision` command + `workflow-record-decision` skill 양쪽에 반영됨
+- [x] command/skill mirror atomicity check row가 `health` command + `workflow-health` skill cascade checklist 양쪽에 추가됨
+- [x] scaffold drift window guidance가 관련 문서에 추가됨 (또는 명시적 deferred 처리)
+- [x] hard enforcement 및 자동화가 필요한 항목이 별도 L3 후보로 `docs/backlog/HARNESS.md`에 등록됨
+- [x] cascade 영향 문서 점검 완료 (HARNESS-PROTOCOL.md, HARNESS-NAMING-RULES.md, health command/skill, record-decision command/skill)
 
 ## Verification
 

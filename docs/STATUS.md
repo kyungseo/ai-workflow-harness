@@ -28,8 +28,6 @@ Last updated: 2026-05-27 (v1.0.6 release gate cleanup — CHORE-20260527-008 arc
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| CHORE-20260528-001 | 병렬/동시 작업 제어 모델 검토 | `docs/works/harness/CHORE-20260528-001-parallel-work-controls.md` |
-| CHORE-20260528-002 | Slice & Pointer 전역 룰 추가 | `docs/works/harness/CHORE-20260528-002-slice-pointer-global-rule.md` |
 
 ## Blockers And Open Questions
 
