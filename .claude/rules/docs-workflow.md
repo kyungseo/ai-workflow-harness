@@ -25,6 +25,7 @@ MUST:
 - Request explicit user approval before editing `docs/STATUS.md`; report the Approval Matrix state-change proposal first.
 - Keep `Done` work immutable. If follow-up correction is needed, propose a new work item.
 - Check `docs/HARNESS-PROTOCOL.md` when workflow rules, commands, DRs, or document structure change.
+- When detailed runbooks or checklists accumulate in core documents, extract them to a separate slice file and replace the content with a conditional pointer: `Load \`docs/{slice-file}.md\` only when {condition}.`
 
 ## Command Intent Recognition
 

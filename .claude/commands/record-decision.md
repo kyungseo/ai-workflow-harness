@@ -7,6 +7,7 @@ disable-model-invocation: true
 $ARGUMENTS 또는 현재 대화에서 확정된 기술적 의사결정 사항을 DR로 기록해줘.
 
 1. `docs/decisions/` 디렉토리의 기존 DR 목록을 확인하고 다음 번호를 결정해.
+   - 병렬 branch 환경: Accepted 처리 또는 PR merge 직전에 `docs/decisions/` 목록을 재확인해. 번호 충돌이 발견되면 나중에 merge되는 DR이 번호를 재배정하고, DR 파일명·문서 내부 DR 번호/상태 표기·연결 Work/backlog reference를 새 번호로 업데이트해 (docs/HARNESS-PARALLEL-WORK-CONTROLS.md §DR Global Sequence 충돌 해소).
 2. 이번 대화에서 결정된 내용을 아래 형식으로 요약해:
    - 결정 제목과 DR 번호
    - 검토한 선택지

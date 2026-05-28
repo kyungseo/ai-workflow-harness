@@ -209,6 +209,8 @@ adapt "${TEMPLATE_ROOT}/docs/AGENT-WORKFLOW.md" "${TARGET_ROOT}/docs/AGENT-WORKF
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-PROTOCOL.md"          "${TARGET_ROOT}/docs/HARNESS-PROTOCOL.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-NAMING-RULES.md"         "${TARGET_ROOT}/docs/HARNESS-NAMING-RULES.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-RECOVERY-VALIDATION.md"  "${TARGET_ROOT}/docs/HARNESS-RECOVERY-VALIDATION.md"
+adapt "${TEMPLATE_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md" \
+      "${TARGET_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"      "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-STRUCTURE.md"         "${TARGET_ROOT}/docs/HARNESS-STRUCTURE.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"  "${TARGET_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"
@@ -216,6 +218,12 @@ adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL.md"           "${TARGET_ROOT}/docs/
 
 adapt "${TEMPLATE_ROOT}/docs/decisions/DECISION-TEMPLATE.md" \
       "${TARGET_ROOT}/docs/decisions/DECISION-TEMPLATE.md"
+adapt "${TEMPLATE_ROOT}/docs/decisions/DR-007-language-policy.md" \
+      "${TARGET_ROOT}/docs/decisions/DR-007-language-policy.md"
+adapt "${TEMPLATE_ROOT}/docs/decisions/DR-008-docs-filename-standard.md" \
+      "${TARGET_ROOT}/docs/decisions/DR-008-docs-filename-standard.md"
+adapt "${TEMPLATE_ROOT}/docs/decisions/DR-013-work-file-spec.md" \
+      "${TARGET_ROOT}/docs/decisions/DR-013-work-file-spec.md"
 
 write_text "${TARGET_ROOT}/docs/troubleshooting/README.md" "# Troubleshooting
 
@@ -430,7 +438,7 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 
 ## Current State
 
-| 항목 | 내용 |
+| Field | Value |
 | --- | --- |
 | Phase | Phase 1 — [프로젝트 목표 한 줄] |
 | Active plan | — |
@@ -439,10 +447,16 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 | Harness backlog | \`docs/backlog/HARNESS.md\` |
 | Last updated | ${TODAY} |
 
+## Work Context Rule
+
+이 파일은 현재 작업 상태의 dashboard다.
+세션 시작 시에는 \`Current State\`, \`Active Work\`, \`Blockers And Open Questions\`, \`Next Actions\`만 확인한다.
+상세 실행 흐름은 \`docs/AGENT-WORKFLOW.md\`를 따른다.
+
 ## Active Work
 
-| ID | Priority | Status | Work File |
-| --- | --- | --- | --- |
+| ID | Title | Work File |
+| --- | --- | --- |
 
 ## Blockers And Open Questions
 

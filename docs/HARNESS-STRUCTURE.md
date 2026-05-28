@@ -24,6 +24,12 @@ graph TB
         QR["docs/HARNESS-QUICK-REFERENCE.md"]
     end
 
+    subgraph SLICES["Conditional Policy Slices"]
+        NAMING["docs/HARNESS-NAMING-RULES.md"]
+        RECOVERY["docs/HARNESS-RECOVERY-VALIDATION.md"]
+        PARALLEL["docs/HARNESS-PARALLEL-WORK-CONTROLS.md"]
+    end
+
     subgraph STATE["State and Tracking"]
         STATUS["docs/STATUS.md"]
         WORKS["docs/works/**"]
@@ -31,17 +37,26 @@ graph TB
         DR["docs/decisions/**"]
     end
 
+    subgraph BRANCH["Branch and Release"]
+        GIT["docs/GIT-WORKFLOW.md"]
+        CI[".github/workflows/**"]
+        HOOKS["tools/git-hooks/**"]
+    end
+
     subgraph TOOLS["Tool Mirrors"]
         COMMANDS[".claude/commands/**"]
         CRULES[".claude/rules/**"]
         CURSOR[".cursor/rules/**"]
         SKILLS[".agents/skills/**"]
-        HOOKS[".codex/hooks.json"]
+        CODEXHOOKS[".codex/hooks.json"]
         PROMPTS["prompts/**"]
     end
 
     subgraph ADOPT["Adoption"]
         SCRIPT["scripts/create-harness.sh"]
+        BOOTSTRAP["docs/BOOTSTRAP.md"]
+        SCAFFOLD_BS["docs/SCAFFOLD-BOOTSTRAP.md"]
+        ONBOARD["docs/SCAFFOLD-ONBOARDING-GUIDE.md"]
         MANUAL["docs/WORKFLOW-MANUAL.md"]
         README["README.md"]
     end
@@ -49,9 +64,12 @@ graph TB
     USER --> AGENT
     AGENT --> ENTRY
     ENTRY --> CORE
+    CORE --> SLICES
     CORE --> STATE
+    CORE --> BRANCH
     CORE --> TOOLS
     STATE --> TOOLS
+    BRANCH --> TOOLS
     CORE --> ADOPT
 ```
 
@@ -91,7 +109,12 @@ flowchart TD
     NEED -->|"Active Work"| WORK["docs/works/{category}/{ID}.md"]
     NEED -->|"Decision context"| DR["docs/decisions/DR-*.md"]
     NEED -->|"Issue history"| TROUBLE["docs/troubleshooting/"]
+    NEED -->|"세션 실행 규칙 빠른 확인"| QR["docs/HARNESS-QUICK-REFERENCE.md"]
     NEED -->|"Scaffold onboarding 설계 기준"| SCAFFOLD_BS["docs/SCAFFOLD-BOOTSTRAP.md"]
+    NEED -->|"Work ID / OQ / DR ID / filename"| NAMING["docs/HARNESS-NAMING-RULES.md"]
+    NEED -->|"Validation failure / recovery / commit approval"| RECOVERY["docs/HARNESS-RECOVERY-VALIDATION.md"]
+    NEED -->|"Parallel branch / agent conflict"| PARALLEL["docs/HARNESS-PARALLEL-WORK-CONTROLS.md"]
+    NEED -->|"Branch / PR / release intent"| GIT["docs/GIT-WORKFLOW.md"]
     NEED -->|"No"| EXEC["Plan next action"]
 ```
 
@@ -108,8 +131,17 @@ archive, manual, 과거 문서를 일괄 로드하지 않는다.
 | `docs/works/**` | 작업 단위 plan, checkpoint, discovery, Done Criteria |
 | `docs/backlog/HARNESS.md` | harness 개선 후보 및 보류 항목 |
 | `docs/decisions/**` | 확정된 결정과 tradeoff |
+| `docs/HARNESS-QUICK-REFERENCE.md` | 세션 실행 규칙 빠른 확인용 요약 (daily workflow, state machine, commit checklist) |
+| `docs/HARNESS-NAMING-RULES.md` | Work/OQ/DR ID, 파일명, branch slug 관련 조건부 naming 기준 |
+| `docs/HARNESS-RECOVERY-VALIDATION.md` | failure, recovery, validation, commit approval 조건부 기준 |
+| `docs/HARNESS-PARALLEL-WORK-CONTROLS.md` | 병렬 branch/agent 충돌, Work ID/DR 번호, STATUS/index 복구 기준 |
+| `docs/GIT-WORKFLOW.md` | source repo Gitflow, release gate, commit format |
+| `docs/BOOTSTRAP.md` | scaffolded product repo 첫 세션 입력 gate |
 | `docs/SCAFFOLD-BOOTSTRAP.md` | scaffold onboarding 설계 기준 (source) |
+| `docs/SCAFFOLD-ONBOARDING-GUIDE.md` | scaffold 사용자의 초기 adoption guide |
 | `docs/HARNESS-MAINTAINER-GUIDE.md` | harness 유지보수 가이드 |
+| `docs/WORKFLOW-MANUAL.md` | 사람이 읽는 workflow manual |
+| `README.md` | public-facing quick start와 repo 소개 |
 | `docs/retrospectives/**` | 리뷰 및 학습 산출물 |
 | `docs/archive/**` | historical snapshot 및 완료 기록 |
 
@@ -118,20 +150,27 @@ archive, manual, 과거 문서를 일괄 로드하지 않는다.
 ```mermaid
 graph LR
     CANON["Canonical docs\nBEHAVIOR / AGENT-WORKFLOW / PROTOCOL"]
+    SLICES["Conditional slices\nNAMING / RECOVERY / PARALLEL"]
     CLAUDE["Claude Code\n.claude/commands + .claude/rules"]
     CODEX["Codex\nAGENTS.md + .agents/skills + .codex/hooks.json"]
     CURSOR["Cursor\n.cursor/rules"]
     PROMPTS["prompts/**\n(shared fallback)"]
-    SCAFFOLD["create-harness.sh"]
+    SCAFFOLD["create-harness.sh\n+ scripts/templates/**"]
 
     CANON --> CLAUDE
     CANON --> CODEX
     CANON --> CURSOR
     CANON --> PROMPTS
     CANON --> SCAFFOLD
+    CANON --> SLICES
+    SLICES --> CLAUDE
+    SLICES --> CODEX
+    CLAUDE <-->|"command/skill mirror"| CODEX
+    CURSOR -->|"rule mirror"| CANON
 ```
 
 Canonical 문서가 동작을 정의한다. Tool-specific 파일은 해당 도구가 runtime에 실제로 필요한 부분만 mirror한다.
+조건부 slice는 항상 로드되는 core 문서가 아니라, 해당 충돌·검증·naming 상황에서만 로드되는 policy surface다.
 
 ## 6. Scaffold Flow
 
@@ -147,12 +186,17 @@ sequenceDiagram
     S->>T: create entrypoints
     S->>T: create workflow docs
     S->>T: create tool rules and commands
+    S->>T: copy conditional slices
+    opt source-gitflow workflow
+        S->>T: add docs/GIT-WORKFLOW.md and source-gitflow marker
+    end
     S->>T: create skeleton STATUS / PLAN / backlog / works
     S-->>U: report required first-session fields
     Note over U,T: .git/ 없으면 git init + initial commit 안내<br/>git 기반 절차는 Not Applicable
 ```
 
-generic profile은 특정 프로그래밍 언어, framework, database, application runtime을 가정하지 않는다.
+generic profile은 특정 프로그래밍 언어, framework, database, application runtime, source repo Gitflow를 가정하지 않는다.
+source-gitflow workflow는 harness source repo와 동일한 feature -> develop -> main 운영 모델이 필요한 경우에만 선택한다.
 
 ### First Session Bootstrap Gate
 
@@ -173,7 +217,24 @@ flowchart TD
 
 Product Definition과 Project Initialization baseline이 비어 있으면 Phase 1 backlog를 도출하지 않는다.
 
-## 7. Migration Boundary
+## 7. Source Repo / Product Repo Boundary
+
+```mermaid
+flowchart LR
+    SOURCE["Harness source repo"]
+    DEFAULT["Default scaffold product repo"]
+    GITFLOW["Source-gitflow scaffold product repo"]
+
+    SOURCE -->|"maintains templates, slices, release gate"| DEFAULT
+    SOURCE -->|"optional workflow profile"| GITFLOW
+    DEFAULT -->|"project-specific branch/release policy"| PROJECT_POLICY["Project docs"]
+    GITFLOW -->|"docs/GIT-WORKFLOW.md marker"| SOURCE_STYLE["source-style Gitflow checks"]
+```
+
+source repo 규칙은 scaffold product repo에 무조건 적용되지 않는다. product repo는 기본적으로 project-specific branch/release policy를 따른다.
+`source-gitflow` marker가 있는 scaffold에만 source-style branch isolation과 release gate를 적용한다.
+
+## 8. Migration Boundary
 
 harness를 기존 프로젝트에 overlay 적용한 경우, live 문서와 historical snapshot 간 경계를 명확히 한다.
 현재 live 문서는 이 harness 기준으로 기술한다. Historical snapshot은 historical로 명확히 표시된 경우 이전 맥락을 유지할 수 있다.

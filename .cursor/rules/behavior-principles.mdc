@@ -30,6 +30,7 @@ Apply together with the Prioritize section in `role-harness-maintainer.mdc`.
 - Do not add unnecessary abstractions for single-use code.
 - Do not design for unrequested flexibility or configurability.
 - Do not overbuild exception handling for impossible scenarios.
+- Before adding a long conditional procedure or checklist to a core document, judge whether it is only needed in specific situations; if so, consider a separate document with a conditional pointer instead.
 
 ## 3. Surgical Changes
 
