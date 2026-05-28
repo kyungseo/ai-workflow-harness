@@ -63,6 +63,7 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 | 과거 Phase 맥락 | `docs/archive/` |
 
 조건이 없으면 추가 문서를 로드하지 않는다.
+core 문서에 조건부로만 실행되는 상세 절차·체크리스트가 축적될 경우, 별도 slice 파일로 분리하고 조건부 pointer로 교체한다.
 회고는 backlog를 대체하지 않는다. 작업 선택, 계획 수립, 아이디어 도출, 반복 리스크 확인이 필요할 때 최신 또는 관련 회고 1개만 선택적으로 확인한다.
 `docs/WORKFLOW-MANUAL.md`는 사용자용 레퍼런스다. 평시 AI 실행 규칙 로드 대상에서 제외하고, 사용자가 매뉴얼 검토를 요청했거나 user-facing workflow 변경/cascade 감사가 필요할 때만 확인한다.
 
