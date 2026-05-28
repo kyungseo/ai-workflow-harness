@@ -156,18 +156,27 @@ Manual-first. 자동화(CI/hook/script)는 Out of Scope.
 
 | CP | Description | Status |
 |----|-------------|--------|
-| 1  | 10개 검토 축 분석 및 Gap 정리 | Todo |
-| 2  | HARNESS-NAMING-RULES.md NNN 재배정·DR 번호 확인 절차 추가 | Todo |
-| 3  | HARNESS-PROTOCOL.md Parallel Work Conflict Resolution 섹션 추가 | Todo |
-| 4  | health command + workflow-health skill cascade checklist에 command/skill mirror atomicity row 추가 | Todo |
-| 5  | record-decision command + workflow-record-decision skill에 DR 번호 재확인 step 추가 | Todo |
-| 6  | scaffold drift window guidance 추가 또는 명시적 deferred 처리 | Todo |
-| 7  | L3 후보 항목 HARNESS.md 등록 | Todo |
-| 8  | cascade 점검 및 validation | Todo |
+| 1  | 10개 검토 축 분석 및 Gap 정리 | Done |
+| 2  | HARNESS-NAMING-RULES.md NNN 재배정·DR 번호 확인 절차 추가 | Done |
+| 3  | HARNESS-PARALLEL-WORK-CONTROLS.md 신규 생성 + HARNESS-PROTOCOL.md §17 조건부 pointer로 교체 | Done |
+| 4  | health command + workflow-health skill cascade checklist에 command/skill mirror atomicity row 추가 | Done |
+| 5  | record-decision command + workflow-record-decision skill에 DR 번호 재확인 step 추가 | Done |
+| 6  | scaffold drift window guidance 추가 또는 명시적 deferred 처리 | Done |
+| 7  | L3 후보 항목 HARNESS.md 등록 | Done |
+| 8  | cascade 점검 및 validation | Done |
 
 ## Discovery
 
-(실행 중 채워감)
+### CP-1 Cross-check 결과
+
+- **Axis 6 재평가**: record-decision command에 이미 "기존 DR 목록 확인" step이 있었음. Gap은 "감지 없음"이 아니라 "병렬 branch merge 직전 재확인 절차 없음"으로 좁혀짐.
+- **Axis 7 재평가**: health cascade에 이미 command/skill suffix mapping과 mirror pair check가 있었음. Codex 검토 의견 확인: gap은 "변경 중 atomic update 강제" rule 부재.
+- **Axis 8 (scaffold drift)**: HARNESS.md Deferred Ideas에 이미 등재됨. T12에 release timing guidance 한 줄 추가로 충분, 별도 문서 불필요.
+- **Axis 10 (release gate)**: HARNESS-PROTOCOL.md §14 T15·T16·T17에 PR/commit 전 finalization check 존재. gap은 충돌 유형 목록의 부재 → `docs/HARNESS-PARALLEL-WORK-CONTROLS.md`에서 해소.
+- **HARNESS.md Deferred Ideas**: CHORE-20260527-001 Discovery로 5개 항목이 이미 등재되어 있었음. CP-7은 신규 등록이 아니라 완료 참조 업데이트로 처리.
+- **command/skill 현황**: 11:11 완전 일치. `health` ↔ `workflow-health`, `record-decision` ↔ `workflow-record-decision` 양쪽 동일하게 수정함으로써 mirror drift 없음 확인.
+- **최신 DR 번호**: DR-020이 현재 최신. Work 파일 본문에 고정하지 않고 Verification에서 재확인하도록 처리함(Codex 검토 의견 반영).
+- **Branch naming vs Work ID 순서**: 이 Work 자체가 branch 먼저 생성 후 Work ID 확정 패턴으로 진행됨. HARNESS-NAMING-RULES.md §Branch Naming과 Work ID 확정 순서에 권장 순서와 예외 처리 추가.
 
 ---
 

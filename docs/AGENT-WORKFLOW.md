@@ -51,6 +51,7 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 | 세션 실행 규칙 빠른 확인 | `docs/HARNESS-QUICK-REFERENCE.md` |
 | Work ID·OQ ID·DR ID 부여·검증, 파일명 규칙 | `docs/HARNESS-NAMING-RULES.md` — `/register`·`/work` Work ID 확정 시, branch/Work ID slug 대응 논의 시에만 로드. `/start`, `/pick`, 일반 status 확인, cascade 검증에서는 로드하지 않는다 |
 | failure state 진입, Validation Checklist, Commit Approval 판단, `/health` 조건부 recovery 확인 | `docs/HARNESS-RECOVERY-VALIDATION.md` — `/start`, `/pick`, 일반 `/work`·`/close`·`/done` 흐름에서는 로드하지 않는다. validation failure·recovery·commit approval 판단이 필요한 경우에만 로드한다 |
+| 병렬 branch/agent 충돌, Work ID/DR 번호 충돌, STATUS/index merge conflict, command/skill mirror atomicity 판단 | `docs/HARNESS-PARALLEL-WORK-CONTROLS.md` — 해당 충돌이 실제 발생했거나 병렬 작업 중 충돌 위험이 감지될 때만 로드한다 |
 | Product track 또는 Phase{n} 준비 작업 선택 | `docs/backlog/PHASE{n}.md` |
 | harness, command/rule, workflow 작업 선택 | `docs/backlog/HARNESS.md` |
 | 아키텍처 요약 | `docs/PLAN-SUMMARY.md` |
