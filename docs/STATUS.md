@@ -28,6 +28,7 @@ Last updated: 2026-05-27 (v1.0.6 release gate cleanup — CHORE-20260527-008 arc
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| CHORE-20260528-001 | 병렬/동시 작업 제어 모델 검토 | `docs/works/harness/CHORE-20260528-001-parallel-work-controls.md` |
 
 ## Blockers And Open Questions
 

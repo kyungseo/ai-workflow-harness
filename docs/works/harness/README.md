@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| CHORE-20260528-001 | 병렬/동시 작업 제어 모델 검토 | `docs/works/harness/CHORE-20260528-001-parallel-work-controls.md` |
 
 ## Done (Archive Pending)
 
