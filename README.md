@@ -76,9 +76,9 @@ ai-workflow-v1.0.0 — Lightweight Manual-First AI Workflow Harness v1
 
 ```mermaid
 flowchart TD
-    USER(["User\n문제 정의 · 구조적 맹점 발견 · 개선 방향 수립\nAI 협업 조율 · 검토 · 승인"])
+    USER(["User\n개선 방향 수립 · 구조적 맹점 발견 · 문제 의식\nAI 협업 조율 · 검토 · 승인"])
 
-    USER -->|"문제 제기 · 방향 수립 · 작업 지시"| CODEX_DRAFT
+    USER -->|"방향 수립 · 문제 제기 · 작업 지시"| CODEX_DRAFT
 
     subgraph PLANNING ["Phase 1 — 계획 수립 (Work 파일)"]
         direction TB
@@ -95,7 +95,7 @@ flowchart TD
 
     subgraph IMPLEMENTATION ["Phase 2 — 구현"]
         direction TB
-        CLAUDE_IMPL["Claude Code\n구현 전담\nbranch · pre-check · commit gate"]
+        CLAUDE_IMPL["Claude Code\n구현 · 실행\nbranch · pre-check · commit gate"]
         IMPL_REVIEW{"Codex\nPR review\ncorrectness · gate 준수 확인"}
         CLAUDE_IMPL -->|"PR 생성"| IMPL_REVIEW
         IMPL_REVIEW -->|"수정 요청"| CLAUDE_IMPL
