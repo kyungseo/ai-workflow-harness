@@ -221,7 +221,7 @@ Historical matches are not automatically drift. Report them separately as snapsh
 - Language Rules 위반 (DR-007):
   - `docs/*.md`가 영어 작성, `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc`가 한국어 작성된 경우
   - Bilingual Rules 위반: `docs/*.md`, `.claude/commands/*.md`, `.agents/skills/*/SKILL.md`에서 섹션 타이틀 한국어 표기, 기술 용어 음차, 성능 지표 한글화
-- STATUS.md Next Actions 순서 ↔ Active Work Priority/Status 논리 일관성
+- STATUS.md Next Actions 순서 ↔ Active Work pointer / Work file frontmatter 논리 일관성
 - **Embedded Diagram 참조 유효성** (Mermaid 등):
   ```bash
   rg -l '```mermaid' docs/ README.md 2>/dev/null

@@ -50,7 +50,9 @@ DR-007을 따른다.
 
 ### Work File Convention
 
-Work 파일은 `docs/works/{category}/` 아래에 위치한다.
+Work 파일은 `docs/works/{category}/` 아래에 위치한다. 파일명 형식: `{ID}-{lowercase-topic}.md`.
+
+Work ID 형식: `<TYPE>-<YYYYMMDD>-<NNN>` (예: `CHORE-20260528-001`). 상세 기준은 `docs/HARNESS-NAMING-RULES.md`.
 
 필수 frontmatter:
 
@@ -65,14 +67,17 @@ appetite:
 planned_start:
 planned_end:
 actual_end:
+related_dr: []
+related_commits: []
+related_troubleshooting: []
 ---
 ```
 
-필수 섹션:
+필수 섹션 (DR-013 기준):
 
-- Context
 - Plan
 - Done Criteria
+- Verification
 - Checkpoints
 - Discovery
 
@@ -113,6 +118,7 @@ Generic prompt는 특정 framework를 가정하지 않는다. Stack-specific pro
 - Tool-specific 파일은 actionable runtime rule만 mirror한다.
 - 해당 작업이 명시적으로 대상으로 삼지 않는 한 historical 문서를 재작성하지 않는다.
 - `docs/STATUS.md`는 dashboard이며, 작업 세부 히스토리는 Work 파일에 기록한다.
+- 조건부 runbook이 core 문서에 축적되면 별도 slice 파일로 분리하고 조건부 pointer로 교체한다.
 
 ## 5. Validation
 

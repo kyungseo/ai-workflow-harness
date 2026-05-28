@@ -1456,10 +1456,13 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 | `docs/BOOTSTRAP.md` | 생성 | scaffold 직후 Repository Setup, Product Definition, Project Initialization, backlog, example pack boot checklist |
 | `docs/BEHAVIOR-PRINCIPLES.md` | 복사 | 전역 행동 원칙 |
 | `docs/AGENT-WORKFLOW.md` | 생성 | Project Constants와 Verification Defaults placeholder 포함 |
-| `docs/HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `WORKFLOW-MANUAL.md` | 복사 | — |
+| `docs/HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `WORKFLOW-MANUAL.md` | 복사 | core workflow docs |
+| `docs/HARNESS-NAMING-RULES.md`, `HARNESS-RECOVERY-VALIDATION.md`, `HARNESS-PARALLEL-WORK-CONTROLS.md` | 복사 | 조건부 policy slice |
+| `docs/HARNESS-STRUCTURE.md`, `HARNESS-MAINTAINER-GUIDE.md` | 복사 | 구조·유지보수 reference |
 | `docs/STATUS.md`, `PLAN.md`, `PLAN-SUMMARY.md` | 생성 | 빈 skeleton |
 | `docs/backlog/PHASE1.md`, `HARNESS.md` | 생성 | 빈 skeleton |
 | `docs/decisions/DECISION-TEMPLATE.md` | 복사 | DR 템플릿만 (기존 DR은 제외) |
+| `docs/decisions/DR-007-language-policy.md`, `DR-008-docs-filename-standard.md`, `DR-013-work-file-spec.md` | 복사 | 하네스 foundational DR. 생성 문서의 language/file/work spec 참조 무결성 보존용 |
 | `docs/reports/.gitkeep`, `docs/presentations/.gitkeep` | 생성 | `/doc` 산출물 기본 위치 |
 | `docs/troubleshooting/README.md` | 생성 | troubleshooting 작성 규칙 skeleton |
 | `.claude/settings.json` | 생성 | permission deny와 Stop hook reminder를 포함한 범용 버전 |
