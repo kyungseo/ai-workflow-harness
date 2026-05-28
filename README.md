@@ -519,6 +519,9 @@ sh tools/git-hooks/install.sh
 │   ├── AGENT-WORKFLOW.md             # 공통 workflow·Approval Matrix
 │   ├── HARNESS-PROTOCOL.md           # 상세 protocol 레퍼런스
 │   ├── HARNESS-QUICK-REFERENCE.md    # 세션 실행 규칙 빠른 참조
+│   ├── HARNESS-NAMING-RULES.md       # ID와 파일명 규칙
+│   ├── HARNESS-RECOVERY-VALIDATION.md # recovery·validation 기준
+│   ├── HARNESS-PARALLEL-WORK-CONTROLS.md # 병렬 작업 충돌 해소 기준
 │   ├── HARNESS-STRUCTURE.md          # harness 구조 시각화
 │   ├── HARNESS-MAINTAINER-GUIDE.md   # 유지보수·convention 가이드
 │   ├── SCAFFOLD-BOOTSTRAP.md         # scaffold boot sequence 설계 기준
