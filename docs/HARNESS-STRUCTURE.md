@@ -115,6 +115,7 @@ flowchart TD
     NEED -->|"Validation failure / recovery / commit approval"| RECOVERY["docs/HARNESS-RECOVERY-VALIDATION.md"]
     NEED -->|"Parallel branch / agent conflict"| PARALLEL["docs/HARNESS-PARALLEL-WORK-CONTROLS.md"]
     NEED -->|"Branch / PR / release intent"| GIT["docs/GIT-WORKFLOW.md"]
+    NEED -->|"우선순위 / 반복 risk 확인"| RETRO["docs/retrospectives/"]
     NEED -->|"No"| EXEC["Plan next action"]
 ```
 
@@ -131,7 +132,7 @@ archive, manual, 과거 문서를 일괄 로드하지 않는다.
 | `docs/works/**` | 작업 단위 plan, checkpoint, discovery, Done Criteria |
 | `docs/backlog/HARNESS.md` | harness 개선 후보 및 보류 항목 |
 | `docs/decisions/**` | 확정된 결정과 tradeoff |
-| `docs/HARNESS-QUICK-REFERENCE.md` | 세션 실행 규칙 빠른 확인용 요약 (daily workflow, state machine, commit checklist) |
+| `docs/HARNESS-QUICK-REFERENCE.md` | 세션 실행 규칙 빠른 확인용 요약 (session start, cascade triggers, commit checklist, command taxonomy) |
 | `docs/HARNESS-NAMING-RULES.md` | Work/OQ/DR ID, 파일명, branch slug 관련 조건부 naming 기준 |
 | `docs/HARNESS-RECOVERY-VALIDATION.md` | failure, recovery, validation, commit approval 조건부 기준 |
 | `docs/HARNESS-PARALLEL-WORK-CONTROLS.md` | 병렬 branch/agent 충돌, Work ID/DR 번호, STATUS/index 복구 기준 |
@@ -238,3 +239,42 @@ source repo 규칙은 scaffold product repo에 무조건 적용되지 않는다.
 
 harness를 기존 프로젝트에 overlay 적용한 경우, live 문서와 historical snapshot 간 경계를 명확히 한다.
 현재 live 문서는 이 harness 기준으로 기술한다. Historical snapshot은 historical로 명확히 표시된 경우 이전 맥락을 유지할 수 있다.
+
+## 9. Document Priority Hierarchy
+
+충돌 시 상위 계층이 하위 계층을 override한다.
+세션 시작 시 자동 로드되는 계층은 `BEHAVIOR-PRINCIPLES.md`와 `AGENT-WORKFLOW.md`다. 나머지는 조건부 로드다.
+
+```mermaid
+graph TD
+    BP["BEHAVIOR-PRINCIPLES.md\n전역 행동 원칙 — 최우선, 항상 적용"]
+    AW["AGENT-WORKFLOW.md\n공통 실행 규칙 — 세션 자동 로드"]
+    HP["HARNESS-PROTOCOL.md\n상세 프로토콜 — 조건부 로드"]
+    QR["HARNESS-QUICK-REFERENCE.md\n일상 실행 요약 — 조건부 로드"]
+    TOOLS["Tool-specific surfaces\n.claude/rules · .cursor/rules · .agents/skills\n도구 실행 시 적용"]
+
+    BP -->|"우선순위 ↓"| AW
+    AW --> HP
+    HP --> QR
+    QR --> TOOLS
+```
+
+## 10. Work File Lifecycle
+
+Work 파일은 `docs/works/{category}/`에서 생성·관리되고 완료 후 `docs/archive/docs/works/{category}/`로 이동한다.
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> Candidate : /register
+    Candidate --> Active : /work 착수 승인\n(Work 파일 생성)
+    Active --> Done : /close\n(Done Criteria 충족)
+    Done --> Archived : archive 승인\n(/start · /resume trigger)
+```
+
+| 상태 | 위치 | STATUS.md |
+| --- | --- | --- |
+| Candidate | `docs/backlog/**` | 없음 (ID 없음) |
+| Active | `docs/works/{category}/` | Active Work pointer 있음 |
+| Done | `docs/works/{category}/` | Active Work pointer 제거됨 |
+| Archived | `docs/archive/docs/works/{category}/` | 없음 |

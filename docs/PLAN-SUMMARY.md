@@ -51,7 +51,7 @@ Scaffold + Adoption
 - AWH-001 migration 이후 current tree는 AI Workflow Harness 중심으로 정리된 상태다.
 - `docs/PLAN.md`와 `docs/STATUS.md`는 migration 이후에도 live 문서로 유지하고, migration 세부 기록은 Work 파일에 둔다.
 - `docs/PLAN-SUMMARY.md`는 core Context Routing surface이므로 제거하지 않고 현재 상태에 맞게 유지한다.
-- Post-migration 작업은 Workflow hardening phase에 귀속하며, documentation alignment, scaffold consistency, tool-surface mirror, adoption readiness를 다룬다.
+- AWH-002(Workflow hardening) 완료 이후 current phase는 Public baseline / Maintenance로 전환됐다. 이후 작업은 public repository 유지·채택 지원·운영 부채 경감에 집중한다.
 
 ## Core Files
 
@@ -63,6 +63,7 @@ Scaffold + Adoption
 | 공통 workflow 규칙 | `docs/AGENT-WORKFLOW.md` |
 | 상세 protocol | `docs/HARNESS-PROTOCOL.md` |
 | 빠른 운영 요약 | `docs/HARNESS-QUICK-REFERENCE.md` |
+| Git 전략 / CI | `docs/GIT-WORKFLOW.md` |
 | Scaffold 부팅 guide | `docs/BOOTSTRAP.md`, `docs/SCAFFOLD-BOOTSTRAP.md` |
 | 현재 dashboard | `docs/STATUS.md` |
 | 프로젝트 plan | `docs/PLAN.md` |
@@ -70,6 +71,8 @@ Scaffold + Adoption
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | 공개 manual | `docs/WORKFLOW-MANUAL.md` |
 | Scaffold script | `scripts/create-harness.sh` |
+| Pre-commit enforcement | `tools/git-hooks/**` |
+| Conditional runbooks | `docs/HARNESS-NAMING-RULES.md`, `docs/HARNESS-RECOVERY-VALIDATION.md`, `docs/HARNESS-PARALLEL-WORK-CONTROLS.md` |
 
 ## Current Surface Policy
 
