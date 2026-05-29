@@ -12,8 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260528-002 | Slice & Pointer 전역 룰 추가 | 2026-05-28 | `docs/works/harness/CHORE-20260528-002-slice-pointer-global-rule.md` |
-| CHORE-20260528-001 | 병렬/동시 작업 제어 모델 검토 | 2026-05-28 | `docs/works/harness/CHORE-20260528-001-parallel-work-controls.md` |
+| CHORE-20260529-001 | 문서 정비 및 현행화 | 2026-05-29 | `docs/works/harness/CHORE-20260529-001-docs-maintenance.md` |
 
 ## Archived
 

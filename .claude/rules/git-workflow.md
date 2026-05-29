@@ -86,3 +86,17 @@ NEVER:
 - Open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.
 - Directly local-merge a feature branch into develop. Always merge via PR.
 - Skip the develop sync step after a main PR merge (`git merge origin/main` into `develop`, then `git push origin develop`).
+
+## Post-PR Merge Cleanup
+
+After `gh pr merge` completes, follow the appropriate cleanup for the merge type:
+
+**feature → develop PR:**
+If this repository has `docs/GIT-WORKFLOW.md`, execute §2-4 in full without waiting for a separate instruction:
+1. `git checkout develop && git pull origin develop`
+2. `git branch -d feature/{name}` — delete local branch. If remote was not auto-deleted, also run `git push origin --delete feature/{name}`.
+3. Suggest the next feature branch name based on upcoming work and ask whether to create it now.
+
+**develop → main PR:**
+If this repository has `docs/GIT-WORKFLOW.md`, execute §3-4 (Post-Merge Develop Sync) instead:
+`git checkout main && git pull origin main`, then `git checkout develop && git merge origin/main && git push origin develop`.

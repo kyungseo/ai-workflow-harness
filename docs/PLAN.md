@@ -56,20 +56,17 @@ development workflow다.
 
 ## 4. Current Milestone
 
-현재 milestone은 `Workflow hardening`이다.
+현재 milestone은 `Public baseline / Maintenance`다.
 
-AWH-001에서 repository identity 전환과 Spring Boot MSA production surface 정리를 완료했다.
-이후 작업은 모두 Workflow hardening 단계에 귀속한다. 이 단계는 공개와 재사용을 앞두고
-문서, scaffold, command/rule mirror, 상태 관리, CI 검증을 실제 운영 흐름에 맞게 단단하게
-정렬하는 것을 목표로 한다.
+AWH-001(public-ready migration)과 AWH-002(workflow hardening)가 완료됐다.
+현재는 public repository를 안정적으로 유지하고 외부 채택을 지원하는 단계다.
 
 Milestone 목표:
 
-- canonical / tool-specific / user-facing / scaffold 문서 계층을 현재 model에 맞춘다.
-- start, pick, work, resume, close/done, archive, quick mode, state update, cascade/trigger, scaffold flow를 실제 사용 흐름으로 검증한다.
-- stale rename, removed path, runtime identity가 live surface에 재도입되지 않도록 점검한다.
-- generic scaffold와 optional example profile의 경계를 명확히 유지한다.
-- adoption readiness와 public-facing guide 품질을 보완한다.
+- public repository 상태를 clean baseline으로 유지한다.
+- harness 채택 — 신규 프로젝트 온보딩과 scaffold 정합성을 지원한다.
+- 반복 운영에서 발생하는 운영 부채를 점진적으로 줄인다.
+- harness 외부 채택 사례에서 얻은 피드백을 반영한다.
 
 ## 5. Scope Policy
 
@@ -77,7 +74,7 @@ Milestone 목표:
 
 - AI tool entrypoint와 공통 workflow 문서
 - behavior principles, protocol, quick reference, manual
-- `PLAN-SUMMARY.md`처럼 Context Routing에 연결된 project summary 문서
+- `PLAN.md`(장기 project plan, L3 decisions 근거), `PLAN-SUMMARY.md`(Context Routing용 아키텍처 요약)
 - Work / backlog / decision / retrospective 체계
 - generic prompt와 generic scaffold
 - tool-specific rule mirror
@@ -114,12 +111,12 @@ Milestone 목표:
 
 ## 7. Roadmap
 
-| Stage | Focus | Output |
-| --- | --- | --- |
-| AWH-001 | Public-ready migration | 현재 tree 정리, public docs, release readiness |
-| AWH-002 | Workflow hardening | 문서 정합성, scaffold 검증, tool surface alignment, adoption readiness |
-| AWH-003 | Adoption guide | 기존 repository에 harness를 적용하는 guide 정리 |
-| AWH-004 | Review package | 외부 reviewer가 검토할 수 있는 architecture / workflow package |
+| Stage | Status | Focus | Output |
+| --- | --- | --- | --- |
+| AWH-001 | 완료 | Public-ready migration | 현재 tree 정리, public docs, release readiness |
+| AWH-002 | 완료 | Workflow hardening | 문서 정합성, scaffold 검증, tool surface alignment, adoption readiness |
+| AWH-003 | — | Adoption guide | 기존 repository에 harness를 적용하는 guide 정리 |
+| AWH-004 | — | Review package | 외부 reviewer가 검토할 수 있는 architecture / workflow package |
 
 ## 8. Validation Model
 
@@ -134,6 +131,6 @@ Milestone 목표:
 
 ## 9. Open Questions
 
-| ID | Question | Default |
+| ID | Question | Status |
 | --- | --- | --- |
-| AWH-OQ-001 | historical product docs를 어느 범위까지 남길 것인가? | 현재 guidance와 혼동되지 않는 문서만 historical로 유지한다 |
+| AWH-OQ-001 | historical product docs를 어느 범위까지 남길 것인가? | Deferred — archive policy가 실제로 필요해지는 시점에 신규 Work로 재등록. `docs/backlog/HARNESS.md` Deferred Ideas 참조 |
