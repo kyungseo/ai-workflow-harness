@@ -212,7 +212,7 @@ adapt "${TEMPLATE_ROOT}/docs/HARNESS-RECOVERY-VALIDATION.md"  "${TARGET_ROOT}/do
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md" \
       "${TARGET_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"      "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
-adapt "${TEMPLATE_ROOT}/docs/HARNESS-STRUCTURE.md"         "${TARGET_ROOT}/docs/HARNESS-STRUCTURE.md"
+adapt "${TEMPLATE_ROOT}/docs/HARNESS-ARCHITECTURE.md"         "${TARGET_ROOT}/docs/HARNESS-ARCHITECTURE.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"  "${TARGET_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"
 adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL.md"           "${TARGET_ROOT}/docs/WORKFLOW-MANUAL.md"
 
@@ -389,7 +389,7 @@ AI workflow 자체의 개선과 example pack 정비는 Harness track으로 분�
 | \`docs/BEHAVIOR-PRINCIPLES.md\` | 전역 행동 원칙 |
 | \`docs/STATUS.md\` | 현재 작업 상태 |
 | \`docs/HARNESS-QUICK-REFERENCE.md\` | 세션 실행 규칙 요약 |
-| \`docs/HARNESS-STRUCTURE.md\` | harness 구조와 정보 흐름 시각화 |
+| \`docs/HARNESS-ARCHITECTURE.md\` | harness 아키텍처와 정보 흐름 시각화 |
 | \`docs/HARNESS-MAINTAINER-GUIDE.md\` | 유지보수·convention 가이드 |
 | \`docs/BOOTSTRAP.md\` | scaffold 직후 프로젝트 부팅 checklist |
 | \`docs/WORKFLOW-MANUAL.md\` | 사용자용 워크플로우 가이드 |
