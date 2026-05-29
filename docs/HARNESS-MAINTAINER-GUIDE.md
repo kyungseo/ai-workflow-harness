@@ -18,7 +18,7 @@
 
 GitHub repository 설정 (ruleset, 보안, 기능 옵션)은 `docs/decisions/DR-020-github-repo-settings.md`를 기준으로 적용한다.
 
-pre-commit hook 설치는 `tools/git-hooks/`가 있는 경우에만 적용된다 — §10 참조.
+pre-commit / commit-msg hook 설치는 `tools/git-hooks/`가 있는 경우에만 적용된다 — §10 참조.
 
 ## 2. Daily Workflow
 
@@ -207,6 +207,6 @@ repository를 public으로 전환하기 전에:
 
 scaffold된 product repo에는 `tools/git-hooks/`가 기본 포함되지 않는다.
 
-product repo는 자체 lint/test/pre-commit stack을 우선한다. pre-commit hook이 필요하면 해당 repo의 branch policy, protected paths, validation commands에 맞게 project-specific hook으로 별도 정의한다.
+product repo는 자체 lint/test/pre-commit stack을 우선한다. pre-commit 또는 commit-msg hook이 필요하면 해당 repo의 branch policy, protected paths, validation commands, commit message 규칙에 맞게 project-specific hook으로 별도 정의한다.
 
-harness hook을 그대로 복사하지 않는다. source harness hook은 harness source repo의 protected files, branch naming, validation scope를 전제로 하므로 product repo에 그대로 적용하면 기존 hook stack과 충돌하거나 잘못된 branch/workflow 제약을 만들 수 있다.
+harness hook을 그대로 복사하지 않는다. source harness hook은 harness source repo의 protected files, branch naming, validation scope, commit type을 전제로 하므로 product repo에 그대로 적용하면 기존 hook stack과 충돌하거나 잘못된 branch/workflow 제약을 만들 수 있다.
