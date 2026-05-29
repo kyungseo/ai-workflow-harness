@@ -28,7 +28,6 @@ AI Workflow Harness backlog다.
 | HRN-032 | P2 | Candidate | L2 | Windows 지원 확장 — macOS 기준 workflow/scaffold 검증을 Windows/WSL/Git Bash까지 정렬 | HRN-031 이후 scaffold smoke test | `/start`와 scaffold 후 첫 세션이 Windows native, WSL, Git Bash 환경에서 어떤 명령·hook·경로 전제를 갖는지 정리하고, 필요한 문서/스크립트 보완안을 반영 | Windows/WSL/Git Bash별 `/start` 시뮬레이션, `create-harness.sh` 실행 경로, `python3` Stop hook, `/tmp` 검증 경로 대체안 확인 |
 | HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 — Claude Code process-exit hook 지원 여부 모니터링 (소극적 감시; 지원 확인 전 action 없음) | — | Claude Code 릴리즈 노트에서 process-exit hook 지원 확인 시 `settings.json` 보완 및 문서 갱신 | 릴리즈 노트 확인 후 gap 해소 여부 검증 |
 | — | P2 | Candidate | L2 | Pre-commit / commit-msg hook 검토·정비 및 설치 — `tools/git-hooks/pre-commit` 정확성 검토, commit-msg hook 필요 여부 판단, hard block 전환(HRN-039 OQ-2) 결정, 설치 절차 정비 및 실제 설치 | — | pre-commit hook 내용 검토 완료, hard block 정책 결정, 설치 확인(`ls .git/hooks/pre-commit`), GIT-WORKFLOW.md §6 설치 안내 현행화 | hook 설치 후 protect 대상 파일 staged 상태에서 경고(또는 hard block) 동작 확인 |
-| — | P2 | Candidate | L2 | `HARNESS-STRUCTURE.md` → `HARNESS-ARCHITECTURE.md` rename 및 cascade 정합성 — `git mv` rename, 9개 파일 35+ 참조 교체, PLAN.md·PLAN-SUMMARY.md "(구 ARCHITECTURE)" 주석 제거, scaffold dry-run 검증, scaffold 생성 후 사용자 workflow 시뮬레이션(`/start` → `/register` → `/work` 흐름) | — | 9개 파일 참조 전수 교체 완료, `bash -n scripts/create-harness.sh` 통과, scaffold dry-run 통과, scaffold 생성 repo 첫 세션 workflow 이상 없음 확인 | `bash -n scripts/create-harness.sh`, scaffold `--dry-run --profile generic`, scaffold 생성 후 `/start` 시뮬레이션, `/health --full --cascade` |
 
 ## Deferred Ideas
 

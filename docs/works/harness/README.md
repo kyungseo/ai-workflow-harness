@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260529-002 | HARNESS-STRUCTURE→ARCHITECTURE rename | 2026-05-29 | `docs/works/harness/CHORE-20260529-002-harness-architecture-rename.md` |
 | CHORE-20260529-001 | 문서 정비 및 현행화 | 2026-05-29 | `docs/works/harness/CHORE-20260529-001-docs-maintenance.md` |
 
 ## Archived

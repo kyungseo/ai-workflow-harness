@@ -1,7 +1,7 @@
-# HARNESS-STRUCTURE.md - AI Workflow Harness
+# HARNESS-ARCHITECTURE.md - AI Workflow Harness
 
 > 기준: `docs/PLAN.md`, `docs/PLAN-SUMMARY.md`
-> 목적: AI Workflow Harness의 현재 구조와 정보 흐름을 시각화한다.
+> 목적: AI Workflow Harness의 현재 아키텍처와 정보 흐름을 시각화한다.
 
 ---
 

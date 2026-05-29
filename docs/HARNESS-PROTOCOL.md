@@ -46,7 +46,7 @@ Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORK
 | `docs/backlog/PHASE{n}.md` | product/Phase{n} 후보 작업 |
 | `docs/backlog/HARNESS.md` | harness, command/rule, automation 후보 |
 | `docs/PLAN.md` | WHY, Phase/아키텍처 근거 |
-| `docs/HARNESS-STRUCTURE.md` | WHAT, 현재 구조 |
+| `docs/HARNESS-ARCHITECTURE.md` | WHAT, 현재 아키텍처 |
 | `docs/HARNESS-MAINTAINER-GUIDE.md` | HOW, 유지보수 절차 |
 | `docs/decisions/` | 결정 기록 |
 | `docs/reports/` | 보고서, review package, decision brief |
@@ -207,7 +207,7 @@ AI Workflow Harness는 적용 대상 repository에 Product track과 Harness trac
 | 확정된 기술 결정 | `docs/decisions/DR-*.md` |
 | 발표/보고 산출물 | `docs/presentations/` 또는 `docs/reports/` |
 | 미결 질문 | `docs/STATUS.md` Blockers/OQ |
-| 현재 시스템 구조 | `docs/HARNESS-STRUCTURE.md` |
+| 현재 시스템 구조 | `docs/HARNESS-ARCHITECTURE.md` |
 | 유지보수 절차 | `docs/HARNESS-MAINTAINER-GUIDE.md` |
 | 완료된 Phase 이력 | `docs/archive/` |
 
@@ -324,7 +324,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | `docs/HARNESS-PROTOCOL.md` | Agent 실행 상세 프로토콜 |
 | `docs/WORKFLOW-MANUAL.md` | 사용자용 워크플로우 매뉴얼 |
 | `docs/PLAN.md` | WHY |
-| `docs/HARNESS-STRUCTURE.md` | WHAT |
+| `docs/HARNESS-ARCHITECTURE.md` | WHAT |
 | `docs/HARNESS-MAINTAINER-GUIDE.md` | HOW |
 | `docs/GIT-WORKFLOW.md` | Git 브랜치 전략, release gate, commit format (source repo) |
 | `docs/archive/` | 완료된 이력 |
@@ -349,7 +349,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | --- | --- | --- |
 | Canonical AI operations | `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md` | Agent 실행 규칙의 현재 기준 |
 | Live state and trackers | `docs/STATUS.md`, `docs/backlog/`, `docs/works/`, `docs/decisions/` | 현재 상태, 후보, Work SSoT, 결정 근거 |
-| Project and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/HARNESS-STRUCTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/GIT-WORKFLOW.md` (source repo only) | project/harness 구조와 유지보수 지식 |
+| Project and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/HARNESS-ARCHITECTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/GIT-WORKFLOW.md` (source repo only) | project/harness 구조와 유지보수 지식 |
 | User-facing workflow docs | `docs/WORKFLOW-MANUAL.md` | 사람이 읽는 매뉴얼. 평시 Agent 자동 로드 대상 아님 |
 | Historical and evaluation docs | `docs/archive/`, `docs/retrospectives/`, reference-only plans | 완료 이력, snapshot, 시점별 평가, 완료된 계획의 참조 기록 |
 | Troubleshooting docs | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 패턴의 재사용 가능한 incident record |
@@ -359,7 +359,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 ### Update Rules
 
 - 현재 상태가 바뀌면 `STATUS.md` 갱신 여부를 확인한다.
-- 구조가 바뀌면 `HARNESS-STRUCTURE.md` 업데이트를 제안한다.
+- 구조가 바뀌면 `HARNESS-ARCHITECTURE.md` 업데이트를 제안한다.
 - 유지보수 절차가 바뀌면 `HARNESS-MAINTAINER-GUIDE.md` 업데이트를 제안한다.
 - 결정 근거가 생기면 DR 생성을 제안한다.
 - 완료된 Phase 상세는 archive로 이동한다.
@@ -421,7 +421,7 @@ cascade 감사 시 `docs/retrospectives/README.md` 인덱스를 참조하여 최
 | T3 | Phase 완료 또는 새 Phase 시작 | STATUS/PLAN archive |
 | T4 | 큰 작업 분해 필요 | Work 파일 생성 제안 |
 | T5 | PLAN 영향 결정 | PLAN/summary/rules 관련 문서 확인 |
-| T6 | 구조/흐름 구현 변경 | HARNESS-STRUCTURE/HARNESS-MAINTAINER-GUIDE 확인 |
+| T6 | 구조/흐름 구현 변경 | HARNESS-ARCHITECTURE/HARNESS-MAINTAINER-GUIDE 확인 |
 | T7 | workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 업데이트 |
 | T8 | 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |
 | T9 | 발표/보고 산출물 생성 | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |

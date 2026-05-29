@@ -143,7 +143,7 @@ graph TD
 
     GRP_ARCH --> PS["📄 PLAN-SUMMARY.md<br/><i>요약 · 세션 참조용</i>"]
     GRP_ARCH --> PL["📄 PLAN.md<br/><i>WHY — 결정 근거</i>"]
-    GRP_ARCH --> AR["📄 HARNESS-STRUCTURE.md<br/><i>WHAT — 현재 구조</i>"]
+    GRP_ARCH --> AR["📄 HARNESS-ARCHITECTURE.md<br/><i>WHAT — 현재 구조</i>"]
     GRP_ARCH --> DG["📄 HARNESS-MAINTAINER-GUIDE.md<br/><i>HOW — 유지보수 가이드</i>"]
 
     GRP_HIST --> RETRO["📁 retrospectives/<br/><i>시점별 회고·평가</i>"]
@@ -185,7 +185,7 @@ graph TD
 
 | 독자 | 주요 파일 |
 | --- | --- |
-| 개발자 | `WORKFLOW-MANUAL.md`, `HARNESS-STRUCTURE.md`, `HARNESS-MAINTAINER-GUIDE.md` |
+| 개발자 | `WORKFLOW-MANUAL.md`, `HARNESS-ARCHITECTURE.md`, `HARNESS-MAINTAINER-GUIDE.md` |
 | AI 운영 공통 | `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md` (Claude Code: `CLAUDE.md` → 자동 import / Codex: `AGENTS.md` → 위임 / Cursor: `.cursor/rules/*.mdc`) |
 | AI 운영 전용 | `STATUS.md`, `HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `PLAN-SUMMARY.md`, `backlog/`, `decisions/`, `works/`, `archive/` |
 | 개발자 + AI 겸용 | `PLAN-SUMMARY.md`, `GIT-WORKFLOW.md` (source repo / source-gitflow scaffold only), `PLAN.md` |
@@ -253,7 +253,7 @@ graph TD
     subgraph ADOCS ["아키텍처 문서 — WHY · WHAT · HOW"]
         PS["📄 PLAN-SUMMARY.md"]
         PL["📄 PLAN.md"]
-        AR["📄 HARNESS-STRUCTURE.md"]
+        AR["📄 HARNESS-ARCHITECTURE.md"]
         DG["📄 HARNESS-MAINTAINER-GUIDE.md"]
         GW["📄 GIT-WORKFLOW.md (source repo / source-gitflow scaffold)"]
     end
@@ -465,9 +465,9 @@ STATUS.md가 실제 코드·파일 상태와 불일치할 경우:
 
 프로젝트 요약, 핵심 구조, 검증 기본값, active references를 한 페이지로 정리한 경량 요약본. 기본적으로 아키텍처 확인이 필요할 때 이 파일을 먼저 참조하고, 전체 근거가 필요할 때만 `docs/PLAN.md`를 로드한다.
 
-### `docs/HARNESS-STRUCTURE.md`
+### `docs/HARNESS-ARCHITECTURE.md`
 
-시스템 전체 구조를 Mermaid 다이어그램 중심으로 기술하는 구조 문서. entrypoint, state flow, context routing, tool surface, scaffold flow 등 **다이어그램이 중심**인 내용을 담는다. PLAN.md가 WHY(결정 근거)를 담는다면, HARNESS-STRUCTURE.md는 WHAT(현재 구조)을 담는다.
+시스템 전체 구조를 Mermaid 다이어그램 중심으로 기술하는 구조 문서. entrypoint, state flow, context routing, tool surface, scaffold flow 등 **다이어그램이 중심**인 내용을 담는다. PLAN.md가 WHY(결정 근거)를 담는다면, HARNESS-ARCHITECTURE.md는 WHAT(현재 구조)을 담는다.
 
 **업데이트 시점:** T6(harness 구조·흐름 변경 시).
 
@@ -475,7 +475,7 @@ STATUS.md가 실제 코드·파일 상태와 불일치할 경우:
 
 ### `docs/HARNESS-MAINTAINER-GUIDE.md`
 
-이 repository를 정비하거나 다른 repository에 적용하려는 maintainer를 위한 실무 가이드. HARNESS-STRUCTURE.md가 "무엇인가(WHAT)"를 다룬다면 HARNESS-MAINTAINER-GUIDE.md는 "어떻게 하는가(HOW)"를 다룬다.
+이 repository를 정비하거나 다른 repository에 적용하려는 maintainer를 위한 실무 가이드. HARNESS-ARCHITECTURE.md가 "무엇인가(WHAT)"를 다룬다면 HARNESS-MAINTAINER-GUIDE.md는 "어떻게 하는가(HOW)"를 다룬다.
 
 **업데이트 시점:** 새 도구 도입, scaffold 절차 변경, convention 정책 변경 시. T6 절차에서 역확인 대상이다.
 
@@ -1058,7 +1058,7 @@ flowchart LR
         T3["T3 Phase Archive"]
         T4["T4 Work 파일 분해"]
         T5["T5 PLAN.md 업데이트"]
-        T6["T6 HARNESS-STRUCTURE 업데이트"]
+        T6["T6 HARNESS-ARCHITECTURE 업데이트"]
         T7["T7 Harness Protocol 업데이트"]
         T8["T8 Troubleshooting 기록"]
         T9["T9 산출물 생성"]
@@ -1070,7 +1070,7 @@ flowchart LR
         C3["📁 archive/\nSTATUS 재편"]
         C4["📁 works/\nSTATUS pointer"]
         C5["📄 PLAN · PLAN-SUMMARY\nrules · README"]
-        C6["📄 HARNESS-STRUCTURE.md\nHARNESS-MAINTAINER-GUIDE"]
+        C6["📄 HARNESS-ARCHITECTURE.md\nHARNESS-MAINTAINER-GUIDE"]
         C7["📄 HARNESS-PROTOCOL.md"]
         C8["📁 troubleshooting/"]
         C9["📁 presentations/\nreports/"]
@@ -1120,8 +1120,8 @@ flowchart LR
 | T2 | DR Superseded·삭제·통합 | DR 상태 변경 처리 시 | 사용자 요청 + Claude 절차 | STATUS.md, backlog, PLAN-SUMMARY.md, 연관 DR |
 | T3 | Phase Archive | Phase 모든 CP Done / 새 Phase 시작 전 | Claude 능동 제안 | archive/, STATUS.md 재편, PLAN.md 재편 |
 | T4 | Work 파일 분해 생성 | 2개 이상 조건 충족: 3+ 서브태스크, 3+ 파일, 2+ 서비스·모듈, L3, 다중 checkpoint, 세션 초과, 인계 가능성 / 사용자 명시 요청 | Claude 능동 제안 | `docs/works/{category}/`, STATUS Active Work pointer |
-| T5 | PLAN.md 업데이트 | 아키텍처·스택·테스트·CI 영향 DR Accepted / 기술 스택 변경 | Claude 능동 제안 | PLAN-SUMMARY.md, rules, README.md, HARNESS-STRUCTURE.md 등 (§별 상이) |
-| T6 | HARNESS-STRUCTURE.md 업데이트 | harness 구조·흐름 변경 / 새 tool surface 추가·제거 / scaffold flow 변경 | Claude 능동 제안 | `docs/HARNESS-STRUCTURE.md` 해당 섹션, PLAN.md 및 HARNESS-MAINTAINER-GUIDE.md 참조 섹션 역확인 |
+| T5 | PLAN.md 업데이트 | 아키텍처·스택·테스트·CI 영향 DR Accepted / 기술 스택 변경 | Claude 능동 제안 | PLAN-SUMMARY.md, rules, README.md, HARNESS-ARCHITECTURE.md 등 (§별 상이) |
+| T6 | HARNESS-ARCHITECTURE.md 업데이트 | harness 구조·흐름 변경 / 새 tool surface 추가·제거 / scaffold flow 변경 | Claude 능동 제안 | `docs/HARNESS-ARCHITECTURE.md` 해당 섹션, PLAN.md 및 HARNESS-MAINTAINER-GUIDE.md 참조 섹션 역확인 |
 | T7 | Harness protocol 업데이트 | docs/AGENT-WORKFLOW.md 워크플로우 규칙 변경 / `.claude/commands/*.md` 변경 / trigger set 변경 | Claude 능동 제안 | `HARNESS-PROTOCOL.md`, 필요 시 `WORKFLOW-MANUAL.md` |
 | T8 | Troubleshooting 기록 | 비자명 이슈 해결 (환경 문제, 비직관적 원인, 도구 버전 비호환) | Claude 능동 제안 | `docs/troubleshooting/`, 필요 시 `docs/HARNESS-MAINTAINER-GUIDE.md` 링크 추가 |
 | T9 | 발표/보고 산출물 생성 | `/doc` 실행 또는 발표·보고·review package 생성 요청 | Claude 능동 제안 | `docs/presentations/`, `docs/reports/`, source traceability, STATUS/backlog 참조 필요 여부 |
@@ -1239,26 +1239,26 @@ T3 자체가 T5를 즉시 발동시키지는 않는다. 루프 없음.
 | 변경 섹션 | 확인 대상 |
 |-----------|-----------|
 | §2 기술 스택 | `docs/PLAN-SUMMARY.md`, `.cursor/rules/execution.mdc`, `README.md` 기술 스택 테이블 |
-| §4 디렉토리 구조 | `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/HARNESS-STRUCTURE.md §2`, `README.md` 프로젝트 구조 섹션 |
-| §8 인증/인가 | `docs/HARNESS-STRUCTURE.md` 관련 섹션 |
-| §10 Logging | `docs/HARNESS-STRUCTURE.md` 관련 섹션 |
+| §4 디렉토리 구조 | `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/HARNESS-ARCHITECTURE.md §2`, `README.md` 프로젝트 구조 섹션 |
+| §8 인증/인가 | `docs/HARNESS-ARCHITECTURE.md` 관련 섹션 |
+| §10 Logging | `docs/HARNESS-ARCHITECTURE.md` 관련 섹션 |
 | §14 테스트 전략 | `.claude/rules/testing.md`, `.cursor/rules/testing.mdc` |
-| §15 K8s | `docs/HARNESS-STRUCTURE.md` 관련 섹션 |
-| §16 Secure Coding | `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/HARNESS-STRUCTURE.md` 관련 섹션 |
+| §15 K8s | `docs/HARNESS-ARCHITECTURE.md` 관련 섹션 |
+| §16 Secure Coding | `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/HARNESS-ARCHITECTURE.md` 관련 섹션 |
 | §19 Phase 계획 | `docs/backlog/PHASE{n}.md`, `docs/backlog/HARNESS.md`, `docs/STATUS.md` Next Actions |
 
-> T5 cascade에서 HARNESS-STRUCTURE.md가 확인 대상인 섹션은 T6와 중복 처리하지 않는다. 확인만 한다.
+> T5 cascade에서 HARNESS-ARCHITECTURE.md가 확인 대상인 섹션은 T6와 중복 처리하지 않는다. 확인만 한다.
 
 **중요:** PLAN.md 문서 현행화 작업 자체는 DR 기록 불필요 — 기존 DR 결정의 결과를 문서에 반영하는 것이므로 `/done` 시 DR 제안 대상에서 제외한다.
 
 **루프 안전:**
 - T5 완료 후 PLAN-SUMMARY.md 수정 → PLAN-SUMMARY.md 변경 자체는 T5를 재발동시키지 않는다
-- T5 cascade로 HARNESS-STRUCTURE.md를 수정해도 T6를 재발동시키지 않는다
+- T5 cascade로 HARNESS-ARCHITECTURE.md를 수정해도 T6를 재발동시키지 않는다
 - T5 발동원(DR Accepted)과 T5 결과(문서 현행화)는 서로 다른 레이어이므로 순환 없음
 
 ---
 
-### T6 — HARNESS-STRUCTURE.md · HARNESS-MAINTAINER-GUIDE.md Direct Update
+### T6 — HARNESS-ARCHITECTURE.md · HARNESS-MAINTAINER-GUIDE.md Direct Update
 
 **발동 조건 (다음 중 하나):**
 - harness 구조·흐름 변경 (entrypoint, state machine, context routing 다이어그램 영향)
@@ -1266,17 +1266,17 @@ T3 자체가 T5를 즉시 발동시키지는 않는다. 루프 없음.
 - scaffold flow 변경 (scaffold sequence 다이어그램 영향)
 
 > T5 cascade로 커버되지 않는 **구현 변경 주도** 업데이트가 대상.
-> T5가 먼저 발동되어 HARNESS-STRUCTURE.md를 확인·수정한 경우 T6는 발동하지 않는다.
+> T5가 먼저 발동되어 HARNESS-ARCHITECTURE.md를 확인·수정한 경우 T6는 발동하지 않는다.
 
 **결과 (승인 후 실행):**
-- `docs/HARNESS-STRUCTURE.md` 해당 섹션 수정 (Mermaid 다이어그램 포함)
+- `docs/HARNESS-ARCHITECTURE.md` 해당 섹션 수정 (Mermaid 다이어그램 포함)
 - `docs/HARNESS-MAINTAINER-GUIDE.md` 관련 섹션 역확인 (변경 필요 시 함께 수정)
 
 **절차:**
 1. 영향받는 섹션만 수정 (Mermaid 다이어그램 포함) — 전체 재작성 금지
 2. PLAN.md 및 HARNESS-MAINTAINER-GUIDE.md 참조 섹션 역확인
 
-**루프 안전:** T6 결과(HARNESS-STRUCTURE.md 수정)는 T5 또는 T1을 재발동시키지 않는다.
+**루프 안전:** T6 결과(HARNESS-ARCHITECTURE.md 수정)는 T5 또는 T1을 재발동시키지 않는다.
 
 ---
 
@@ -1458,7 +1458,7 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 | `docs/AGENT-WORKFLOW.md` | 생성 | Project Constants와 Verification Defaults placeholder 포함 |
 | `docs/HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `WORKFLOW-MANUAL.md` | 복사 | core workflow docs |
 | `docs/HARNESS-NAMING-RULES.md`, `HARNESS-RECOVERY-VALIDATION.md`, `HARNESS-PARALLEL-WORK-CONTROLS.md` | 복사 | 조건부 policy slice |
-| `docs/HARNESS-STRUCTURE.md`, `HARNESS-MAINTAINER-GUIDE.md` | 복사 | 구조·유지보수 reference |
+| `docs/HARNESS-ARCHITECTURE.md`, `HARNESS-MAINTAINER-GUIDE.md` | 복사 | 구조·유지보수 reference |
 | `docs/STATUS.md`, `PLAN.md`, `PLAN-SUMMARY.md` | 생성 | 빈 skeleton |
 | `docs/backlog/PHASE1.md`, `HARNESS.md` | 생성 | 빈 skeleton |
 | `docs/decisions/DECISION-TEMPLATE.md` | 복사 | DR 템플릿만 (기존 DR은 제외) |

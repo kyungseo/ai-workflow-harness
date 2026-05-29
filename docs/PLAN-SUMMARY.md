@@ -79,7 +79,7 @@ Scaffold + Adoption
 | Class | Examples |
 |------|------|
 | Core로 유지 | entrypoint, behavior/workflow/protocol docs, STATUS/PLAN/PLAN-SUMMARY, Work/backlog/DR structure, tool command/rule mirror, generic prompt, scaffold |
-| Core로 전환 완료 | HARNESS-STRUCTURE (구 ARCHITECTURE), HARNESS-MAINTAINER-GUIDE (구 DEVELOPER-GUIDE + CODING-CONVENTIONS 통합) |
+| Core로 전환 완료 | HARNESS-ARCHITECTURE, HARNESS-MAINTAINER-GUIDE (구 DEVELOPER-GUIDE + CODING-CONVENTIONS 통합) |
 | 유지 여부 검토 | troubleshooting, presentations, archive, optional Spring Boot example profile and prompt pack |
 | 제거 또는 legacy 격리 완료 | Spring Boot runtime code, Gradle build, common/gateway/services/frontend/tests, Docker/K8s/DB infra, generated build output |
 
