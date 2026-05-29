@@ -38,7 +38,7 @@ Last updated: 2026-05-29 (pre-commit/commit-msg hook 정비 — CHORE-20260529-0
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
-| 2026-05-29 | pre-commit hook warning → hard block(exit 1) 전환, commit-msg hook `build` type 추가, 양쪽 모두 설치 | 수개월 manual-first protocol 안정화 후 OQ-2 조건 충족. branch isolation 실질 강제 적용 — CHORE-20260529-003 | Low |
+| 2026-05-29 | pre-commit: main만 hard block, develop은 warning 유지. commit-msg build type 추가, 두 hook 설치 | GitHub ruleset이 develop direct push를 이미 차단. solo 프로젝트에서 housekeeping마다 PR 강제는 과도한 마찰 — CHORE-20260529-003 + fix | Low |
 | 2026-05-27 | Work/OQ/Tracker ID를 `<TYPE>-<YYYYMMDD>-<NNN>` 형식으로 전환, backlog candidate ID-less 정책 도입 | 전역 순번 HRN-*/P{n}-NNN 방식의 병렬 feature 충돌 및 scaffold 확장성 문제 해소 — CHORE-20260527-001 | Medium |
 | 2026-05-26 | feature branch pre-PR `/close`가 commit 전략을 3-state(미push/push+PR없음/push+PR열림·공유·확인불가)로 안내하도록 개선 | feature branch /close 시 별도 close commit이 PR history 노이즈를 만드는 패턴 해소 — HRN-037 | Low |
 | 2026-05-25 | `Current Milestone Criteria` 제거 및 `Current phase`를 `Public baseline / Maintenance`로 전환 | HRN-035: public clone 첫 `/start` 출력에서 maintainer 내부 milestone이 노출되지 않도록 baseline 정리. 이력은 HRN-035 Work에 보존 | Low |

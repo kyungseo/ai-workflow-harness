@@ -28,11 +28,18 @@ elif [ "$BRANCH" = "develop" ] || [ "$BRANCH" = "main" ]; then
         esac
     done
     if [ -n "$PROTECTED" ]; then
-        echo "ERROR: Committing protected workflow files directly on '$BRANCH' is not allowed."
-        echo "Create a feature/* or hotfix/* branch and commit there instead."
-        echo "Affected files:"
-        for F in $PROTECTED; do echo "  $F"; done
-        exit 1
+        if [ "$BRANCH" = "main" ]; then
+            echo "ERROR: Committing protected workflow files directly on 'main' is not allowed."
+            echo "Create a feature/* or hotfix/* branch and commit there instead."
+            echo "Affected files:"
+            for F in $PROTECTED; do echo "  $F"; done
+            exit 1
+        else
+            echo "WARNING: Committing protected workflow files directly on 'develop'."
+            echo "Consider using a feature/* or hotfix/* branch instead."
+            echo "Affected files:"
+            for F in $PROTECTED; do echo "  $F"; done
+        fi
     fi
 fi
 

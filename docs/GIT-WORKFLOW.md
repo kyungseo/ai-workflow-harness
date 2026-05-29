@@ -255,7 +255,8 @@ commit 전 자동 실행.
 | staged 파일 | 동작 |
 |---|---|
 | 전체 staged diff | `git diff --cached --check` |
-| `develop` 또는 `main`에 protected workflow 파일 staged | hard block (exit 1) — `feature/*` 또는 `hotfix/*` branch로 이동 필요 |
+| `main`에 protected workflow 파일 staged | hard block (exit 1) — `feature/*` 또는 `hotfix/*` branch로 이동 필요 |
+| `develop`에 protected workflow 파일 staged | warning only — GitHub ruleset이 실질 강제. feature branch 사용 권장 |
 | `scripts/*.sh`, `scripts/*/*.sh`, `tools/git-hooks/*` | `sh -n` shell syntax check |
 | `scripts/create-harness.sh` | `bash -n scripts/create-harness.sh` |
 
