@@ -651,7 +651,7 @@ sh tools/git-hooks/install.sh
 │           └── docs/
 │               └── GIT-WORKFLOW.md        # source-gitflow workflow용 Git 전략 문서
 └── tools/
-    └── git-hooks/                         # pre-commit hook
+    └── git-hooks/                         # pre-commit / commit-msg hooks (source repo 전용)
 ```
 
 ---

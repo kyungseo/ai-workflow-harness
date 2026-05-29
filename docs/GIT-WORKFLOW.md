@@ -244,19 +244,30 @@ fix: TokenRedisRepository SCAN 기반 invalidation 제거
 
 상세 규칙: `docs/decisions/DR-007-language-policy.md`
 
-## 6. Pre-commit Hook
+## 6. Git Hooks
 
-> **Source repo 전용.** `tools/git-hooks/pre-commit`은 `ai-workflow-harness` source repo에서만 설치·운영한다. scaffold된 product repo에는 기본 포함되지 않는다 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
+> **Source repo 전용.** `tools/git-hooks/`의 hook은 `ai-workflow-harness` source repo에서만 설치·운영한다. scaffold된 product repo에는 기본 포함되지 않는다 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
 
-`tools/git-hooks/pre-commit`이 자동으로 실행된다.
+### pre-commit
+
+commit 전 자동 실행.
 
 | staged 파일 | 동작 |
 |---|---|
 | 전체 staged diff | `git diff --cached --check` |
+| `develop` 또는 `main`에 protected workflow 파일 staged | hard block (exit 1) — `feature/*` 또는 `hotfix/*` branch로 이동 필요 |
 | `scripts/*.sh`, `scripts/*/*.sh`, `tools/git-hooks/*` | `sh -n` shell syntax check |
 | `scripts/create-harness.sh` | `bash -n scripts/create-harness.sh` |
 
-hook 설치:
+merge commit (`.git/MERGE_HEAD` 존재) 시 branch isolation check 면제.
+
+### commit-msg
+
+commit message 형식 검증. Conventional Commits 미준수 시 hard block (exit 1).
+
+유효 type: `feat` `fix` `docs` `style` `refactor` `chore` `config` `test` `perf` `ci` `build` `revert`
+
+### hook 설치
 
 ```bash
 bash tools/git-hooks/install.sh
