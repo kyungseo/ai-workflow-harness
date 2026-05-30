@@ -9,9 +9,11 @@ git diff --cached --check
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR)
 
 BRANCH=$(git branch --show-current 2>/dev/null || echo "")
-# merge commit (release sync 등) — branch isolation check 면제
-if [ -f ".git/MERGE_HEAD" ]; then
-    : # skip
+# initial commit, merge commit (release sync 등) — branch isolation check 면제
+if ! git rev-parse --verify HEAD >/dev/null 2>&1; then
+    : # skip — initial commit, no HEAD yet
+elif [ -f ".git/MERGE_HEAD" ]; then
+    : # skip — merge commit
 elif [ "$BRANCH" = "develop" ] || [ "$BRANCH" = "main" ]; then
     PROTECTED=""
     for FILE in $STAGED_FILES; do
