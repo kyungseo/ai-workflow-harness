@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260528-001
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: 병렬/동시 작업 환경에서 Work ID 충돌·STATUS/index 동시 수정·DR sequence·command/skill mirror·scaffold drift 등 10개 축의 현행 gap을 분석하고 manual-first conflict-resolution rule을 문서화
 appetite: 1w
