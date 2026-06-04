@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-29 (pre-commit/commit-msg hook 정비 — CHORE-20260529-003)
+Last updated: 2026-06-04 (Harness Phase 2 refactor planning active 등록 — CHORE-20260604-001)
 
 ## Current State
 
@@ -51,4 +51,5 @@ Last updated: 2026-05-29 (pre-commit/commit-msg hook 정비 — CHORE-20260529-0
 
 ## Next Actions
 
-(없음)
+1. **slice 0 실행 Work 시작** — Phase 2 방향 결정: A/B(framework/project-state) boundary + canonical+adapter 구조 + gate strictness taxonomy(2D) + PLAN lifecycle 배선. 산출은 DR 후보 확정. 근거/합의는 `docs/works/harness/CHORE-20260604-001-harness-phase2-refactor-planning.md` (Done) 참조.
+   - 이후 단계(slice 1~13)는 같은 Work file의 Follow-Up PR Slicing Draft 참조. slice 0 close 시점에 다음 Next Actions를 재평가해 갱신한다(자동 연쇄 아님).
