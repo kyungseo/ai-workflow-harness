@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260529-003
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: pre-commit/commit-msg hook 내용 검토·수정, hard block 전환, 설치, 관련 문서 현행화
 appetite: 0.5d

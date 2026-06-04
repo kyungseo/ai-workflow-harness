@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260529-001
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: Done Work 파일 2개 archive 처리 및 harness 핵심 문서 현행화 점검·수정
 appetite: 1d

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260529-002
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: docs/HARNESS-STRUCTURE.md → docs/HARNESS-ARCHITECTURE.md rename 및 11개 파일 38개 참조 cascade 정합성 + scaffold 검증 + 사용자 workflow 시뮬레이션
 appetite: 1d
