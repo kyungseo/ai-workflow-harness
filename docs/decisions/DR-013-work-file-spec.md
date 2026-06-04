@@ -30,7 +30,6 @@ planned_start: YYYY-MM-DD
 planned_end: YYYY-MM-DD
 actual_end:                   # 완료 후 기입
 related_dr: []                # 관련 Decision Records (e.g., [DR-013])
-related_commits: []           # best-effort 관련 커밋 short hash
 related_troubleshooting: []   # 관련 troubleshooting 문서 경로
 ---
 ```
@@ -38,7 +37,7 @@ related_troubleshooting: []   # 관련 troubleshooting 문서 경로
 ### Work 파일 운영 규칙
 
 공통 운영 규칙(실제 저장소 상태 우선 원칙 등)은 `docs/HARNESS-PROTOCOL.md` Work File Rules 섹션이 권위 문서다. 개별 Work 파일은 이를 반복하지 않는다.
-Quick Mode와 `related_commits` best-effort 정책도 같은 문서가 권위 문서다.
+Quick Mode 정책도 같은 문서가 권위 문서다.
 
 ### Work 파일 섹션 구성
 

@@ -48,3 +48,7 @@ If this repository has `docs/GIT-WORKFLOW.md`, load it and follow §2 (Feature D
 If this repository has `docs/GIT-WORKFLOW.md`, follow §5 for commit format.
 
 NEVER open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.
+
+After `gh pr merge` completes, follow the merge type:
+- feature→develop: execute §2-4 (sync develop, delete local feature branch, suggest next feature branch).
+- develop→main: execute §3-4 (Post-Merge Develop Sync: sync main, merge origin/main into develop, push develop).

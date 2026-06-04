@@ -244,23 +244,47 @@ fix: TokenRedisRepository SCAN 기반 invalidation 제거
 
 상세 규칙: `docs/decisions/DR-007-language-policy.md`
 
-## 6. Pre-commit Hook
+## 6. Git Hooks
 
-> **Source repo 전용.** `tools/git-hooks/pre-commit`은 `ai-workflow-harness` source repo에서만 설치·운영한다. scaffold된 product repo에는 기본 포함되지 않는다 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
+> **Source repo 전용.** `tools/git-hooks/`의 hook은 `ai-workflow-harness` source repo에서만 설치·운영한다. scaffold된 product repo에는 기본 포함되지 않는다 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
 
-`tools/git-hooks/pre-commit`이 자동으로 실행된다.
+### pre-commit
+
+commit 전 자동 실행.
 
 | staged 파일 | 동작 |
 |---|---|
 | 전체 staged diff | `git diff --cached --check` |
+| `main`에 protected workflow 파일 staged | hard block (exit 1) — `feature/*` 또는 `hotfix/*` branch로 이동 필요 |
+| `develop`에 protected workflow 파일 staged | warning only — GitHub ruleset이 실질 강제. feature branch 사용 권장 |
 | `scripts/*.sh`, `scripts/*/*.sh`, `tools/git-hooks/*` | `sh -n` shell syntax check |
 | `scripts/create-harness.sh` | `bash -n scripts/create-harness.sh` |
 
-hook 설치:
+merge commit (`.git/MERGE_HEAD` 존재) 시 branch isolation check 면제.
+
+### commit-msg
+
+commit message 형식 검증. Conventional Commits 미준수 시 hard block (exit 1).
+
+유효 type: `feat` `fix` `docs` `style` `refactor` `chore` `config` `test` `perf` `ci` `build` `revert`
+
+### hook 설치
 
 ```bash
 bash tools/git-hooks/install.sh
 ```
+
+### Enforcement 설계 원칙
+
+branch isolation은 세 계층으로 구성된다. 각 계층이 독립적으로 작동하므로 하나가 누락돼도 나머지가 보완한다.
+
+| Layer | 수단 | 역할 |
+|---|---|---|
+| 1 | AI rule (`.claude/rules/git-workflow.md`) | 즉각 FAIL 선언 — commit 시도 전에 feature branch 생성을 안내한다 |
+| 2 | pre-commit hook | 로컬 안전망 — AI가 규칙을 놓쳤을 때 commit 단계에서 포착한다 |
+| 3 | GitHub ruleset (`protect-develop`, `protect-main`) | 실질 강제 — push/PR 없이는 어떤 commit도 remote에 반영되지 않는다 |
+
+`main`은 공개 릴리즈 스냅샷이므로 layer 2에서 hard block. `develop`은 GitHub ruleset(layer 3)이 실질 강제를 담당하므로 layer 2는 warning으로 충분하다. solo 프로젝트에서 housekeeping 작업마다 PR을 강제하는 것은 불필요한 마찰이다.
 
 ## 7. Related Documents
 

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260528-002
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: slice & pointer 판단 기준을 전역/도구 공통 룰(BEHAVIOR-PRINCIPLES.md, behavior-principles.mdc, AGENT-WORKFLOW.md, HARNESS-PROTOCOL.md §16, .claude/rules/docs-workflow.md, .cursor/rules/workflow.mdc) 6개 surface에 추가하여 core 문서 runbook 축적을 방지
 appetite: 0.5d

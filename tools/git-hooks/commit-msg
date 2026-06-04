@@ -2,10 +2,10 @@
 # Validates commit message format: Conventional Commits
 # https://www.conventionalcommits.org
 #
-# Valid types: feat fix docs style refactor chore config test perf ci revert
+# Valid types: feat fix docs style refactor chore config test perf ci build revert
 # Format: type(optional-scope): subject
 
-TYPES="feat|fix|docs|style|refactor|chore|config|test|perf|ci|revert"
+TYPES="feat|fix|docs|style|refactor|chore|config|test|perf|ci|build|revert"
 MSG=$(cat "$1")
 
 if ! echo "$MSG" | grep -qE "^($TYPES)(\(.+\))?: .+"; then
@@ -14,7 +14,7 @@ if ! echo "$MSG" | grep -qE "^($TYPES)(\(.+\))?: .+"; then
     echo ""
     echo "  Expected : type(scope?): subject"
     echo "  Example  : docs(workflow): update approval matrix"
-    echo "  Types    : feat fix docs style refactor chore config test perf ci revert"
+    echo "  Types    : feat fix docs style refactor chore config test perf ci build revert"
     echo ""
     exit 1
 fi

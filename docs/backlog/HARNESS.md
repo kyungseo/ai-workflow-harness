@@ -27,6 +27,7 @@ AI Workflow Harness backlog다.
 | HRN-030 | P1 | Candidate | L2 | Phase lifecycle 관리 기준 정립 — Current Milestone Criteria, phase transition trigger, Work Done Criteria 관계 명확화 | HRN-029 이후 공개 준비 상태 정리 | `STATUS.md`의 Current Milestone Criteria가 phase/milestone 단위 기준임을 명확히 하고, criteria 완료 시 phase 전환/새 milestone/maintenance 전환 중 어떤 절차를 따를지 protocol과 manual에 반영 | phase 완료 시나리오, milestone 교체 시나리오, Work Done과 phase criteria가 다른 시나리오를 문서 기준으로 시뮬레이션 |
 | HRN-032 | P2 | Candidate | L2 | Windows 지원 확장 — macOS 기준 workflow/scaffold 검증을 Windows/WSL/Git Bash까지 정렬 | HRN-031 이후 scaffold smoke test | `/start`와 scaffold 후 첫 세션이 Windows native, WSL, Git Bash 환경에서 어떤 명령·hook·경로 전제를 갖는지 정리하고, 필요한 문서/스크립트 보완안을 반영 | Windows/WSL/Git Bash별 `/start` 시뮬레이션, `create-harness.sh` 실행 경로, `python3` Stop hook, `/tmp` 검증 경로 대체안 확인 |
 | HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 — Claude Code process-exit hook 지원 여부 모니터링 (소극적 감시; 지원 확인 전 action 없음) | — | Claude Code 릴리즈 노트에서 process-exit hook 지원 확인 시 `settings.json` 보완 및 문서 갱신 | 릴리즈 노트 확인 후 gap 해소 여부 검증 |
+| — | P2 | Candidate | L2 | Pre-commit / commit-msg hook 검토·정비 및 설치 — `tools/git-hooks/pre-commit` 정확성 검토, commit-msg hook 필요 여부 판단, hard block 전환(HRN-039 OQ-2) 결정, 설치 절차 정비 및 실제 설치 | — | pre-commit hook 내용 검토 완료, hard block 정책 결정, 설치 확인(`ls .git/hooks/pre-commit`), GIT-WORKFLOW.md §6 설치 안내 현행화 | hook 설치 후 protect 대상 파일 staged 상태에서 경고(또는 hard block) 동작 확인 |
 
 ## Deferred Ideas
 
@@ -34,7 +35,6 @@ AI Workflow Harness backlog다.
 | --- | --- | --- |
 | HRN-FUT-001 | `.harness/config.json` SSOT 도입 | Manual-first protocol이 1~2회 실제 작업에서 안정화된 후 |
 | HRN-FUT-004 | Gitflow vs GitHub Flow 전략 결정 — 현재 Gitflow(feature→develop→main) 유지 여부 | 충분한 논의 후 결정. trade-off: Gitflow는 릴리즈 단위 제어 유리, GitHub Flow는 1인 개발 절차 단순화. 결정 시 `docs/GIT-WORKFLOW.md`와 DR로 반영 |
-| HRN-FUT-005 | GitHub Merge 방식 제한 — ruleset에서 rebase merge 차단 여부 결정 | DR-020 Accepted (2026-05-25)로 protect-main/develop ruleset 및 Required status checks 활성화 완료. 잔여 결정: rebase merge를 ruleset에서 명시적으로 차단할지 여부 — DR-017 정합성 확인 후 결정. |
 | HRN-FUT-002 | `/health` 주간 자동 실행 설정 | 자동화 요청이 명확해지고 notification 경로가 확정된 후 |
 | HRN-FUT-003 | Claude/Codex/Cursor handover 문서 자동 생성 | 도구 간 전환이 실제로 반복될 때 |
 | HRN-FUT-006 | Work frontmatter `dependencies` / `related_work` 필드 도입 여부 — HRN-017/018 완료로 검토 조건 충족. 도입 시 DR-013, `docs/HARNESS-PROTOCOL.md`, scaffold, 기존 Work 파일 업데이트 필요 | HRN-017/018 Done 이후 (조건 충족) |

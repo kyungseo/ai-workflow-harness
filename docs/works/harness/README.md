@@ -12,13 +12,16 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260528-002 | Slice & Pointer 전역 룰 추가 | 2026-05-28 | `docs/works/harness/CHORE-20260528-002-slice-pointer-global-rule.md` |
-| CHORE-20260528-001 | 병렬/동시 작업 제어 모델 검토 | 2026-05-28 | `docs/works/harness/CHORE-20260528-001-parallel-work-controls.md` |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260529-003 | pre-commit/commit-msg hook 검토·정비·설치 | 2026-05-29 | `docs/archive/docs/works/harness/CHORE-20260529-003-pre-commit-hook.md` |
+| CHORE-20260529-002 | HARNESS-STRUCTURE→ARCHITECTURE rename | 2026-05-29 | `docs/archive/docs/works/harness/CHORE-20260529-002-harness-architecture-rename.md` |
+| CHORE-20260529-001 | 문서 정비 및 현행화 | 2026-05-29 | `docs/archive/docs/works/harness/CHORE-20260529-001-docs-maintenance.md` |
+| CHORE-20260528-002 | Slice & Pointer 전역 룰 추가 | 2026-05-28 | `docs/archive/docs/works/harness/CHORE-20260528-002-slice-pointer-global-rule.md` |
+| CHORE-20260528-001 | 병렬/동시 작업 제어 모델 검토 | 2026-05-28 | `docs/archive/docs/works/harness/CHORE-20260528-001-parallel-work-controls.md` |
 | CHORE-20260527-008 | Context Budget Optimization Series Release Prep | 2026-05-27 | `docs/archive/docs/works/harness/CHORE-20260527-008-series-release-prep.md` |
 | CHORE-20260527-007 | Cascade Checks Slice Scope Assessment | 2026-05-27 | `docs/archive/docs/works/harness/CHORE-20260527-007-cascade-checks-scope-assessment.md` |
 | CHORE-20260527-006 | Post-slice Context Routing Audit | 2026-05-27 | `docs/archive/docs/works/harness/CHORE-20260527-006-post-slice-routing-audit.md` |

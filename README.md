@@ -595,7 +595,7 @@ sh tools/git-hooks/install.sh
 | 문서 | 역할 |
 | --- | --- |
 | [docs/WORKFLOW-MANUAL.md](docs/WORKFLOW-MANUAL.md) | 사용자용 workflow manual |
-| [docs/HARNESS-STRUCTURE.md](docs/HARNESS-STRUCTURE.md) | harness 구조와 정보 흐름 시각화 |
+| [docs/HARNESS-ARCHITECTURE.md](docs/HARNESS-ARCHITECTURE.md) | harness 구조와 정보 흐름 시각화 |
 | [docs/HARNESS-MAINTAINER-GUIDE.md](docs/HARNESS-MAINTAINER-GUIDE.md) | 유지보수·convention 가이드 |
 | [docs/SCAFFOLD-BOOTSTRAP.md](docs/SCAFFOLD-BOOTSTRAP.md) | scaffold 직후 프로젝트 boot sequence 설계 기준 |
 | [docs/SCAFFOLD-ONBOARDING-GUIDE.md](docs/SCAFFOLD-ONBOARDING-GUIDE.md) | scaffold 직후 첫 온보딩 가이드 (신규 적용자용) |
@@ -626,7 +626,7 @@ sh tools/git-hooks/install.sh
 │   ├── HARNESS-NAMING-RULES.md            # ID와 파일명 규칙
 │   ├── HARNESS-RECOVERY-VALIDATION.md     # recovery·validation 기준
 │   ├── HARNESS-PARALLEL-WORK-CONTROLS.md  # 병렬 작업 충돌 해소 기준
-│   ├── HARNESS-STRUCTURE.md               # harness 구조 시각화
+│   ├── HARNESS-ARCHITECTURE.md               # harness 구조 시각화
 │   ├── HARNESS-MAINTAINER-GUIDE.md        # 유지보수·convention 가이드
 │   ├── BOOTSTRAP.md                       # scaffold 직후 첫 온보딩 체크리스트
 │   ├── SCAFFOLD-BOOTSTRAP.md              # scaffold boot sequence 설계 기준
@@ -651,7 +651,7 @@ sh tools/git-hooks/install.sh
 │           └── docs/
 │               └── GIT-WORKFLOW.md        # source-gitflow workflow용 Git 전략 문서
 └── tools/
-    └── git-hooks/                         # pre-commit hook
+    └── git-hooks/                         # pre-commit / commit-msg hooks (source repo 전용)
 ```
 
 ---
