@@ -183,15 +183,20 @@ Phase 2의 핵심 방향은 다음과 같다.
 
 - 사용자가 "작업 시작"을 말했을 때 AI가 어떤 순서로 무엇을 읽어야 하는가?
 - `/start`, `/pick`, `/work`, `/resume`, `/close`, `/done`, `/health`의 책임 경계가 명확한가?
+- command 이름만 보고 session 대상인지, Work 대상인지, repository state 대상인지 이해할 수 있는가?
 - session flow가 실제 사람의 생각 흐름과 맞는가, 아니면 문서 체계 때문에 돌아가는가?
 - "작업 중단 후 재개"와 "새 작업 시작"이 충분히 다르게 처리되는가?
+- Work plan의 scope 축소, 확장, split, follow-up 전환이 명시적으로 기록되는가?
 - Work가 끝난 뒤 PLAN/DR/backlog/STATUS에 무엇이 역류해야 하는가?
+- 작업 변경 commit, Work close state update commit, archive cleanup commit의 경계가 명확한가?
 
 검토 방향:
 
 - current flow를 sequence diagram으로 다시 그린다.
 - 실제 사용 intent 기준으로 command를 재분류한다.
 - `/close`와 `/done`의 역할 분리는 유지하되, finalization 중복은 줄인다.
+- Work lifecycle command와 session lifecycle command의 이름/alias를 재검토한다.
+- commit 전 finalization gate가 "close해야 할 상태 정리"와 "archive처럼 optional hygiene인 상태 정리"를 구분하게 한다.
 
 ### Axis 2. Process And Gate Model
 
@@ -201,11 +206,15 @@ Phase 2의 핵심 방향은 다음과 같다.
 - source repo 전용 gate가 target repo에 새는가?
 - target repo가 자체 build/test command를 쉽게 선언할 수 있는가?
 - hard block, warning, report-only의 기준이 일관적인가?
+- public release, clean baseline, archive cleanup, bootstrap completion처럼 특정 상황에서만 강제되는 gate가 평시 workflow에 과하게 새고 있지 않은가?
+- gate가 mandatory / conditional mandatory / recommended / optional hygiene 중 어디에 속하는가?
 
 검토 방향:
 
 - gate inventory를 만든다.
 - Universal / Project Runtime / Source Maintainer / Optional Strict Mode로 분류한다.
+- release/open/clean-baseline 전용 gate와 평시 Work lifecycle gate를 분리한다.
+- archive, public release, clean baseline, bootstrap cleanup 등 강제성 있는 항목은 조건과 owner를 명확히 다시 분류한다.
 - gate별 owner file과 tool enforcement 위치를 한 줄로 지정한다.
 
 ### Axis 3. Document Information Architecture
@@ -909,6 +918,8 @@ Codex 결론:
 | Default scaffold pack 축소 | Yes | downstream generated surface의 breaking change 가능 |
 | PLAN lifecycle gate 강화 | Yes | Work closeout, phase transition, bootstrap gate에 영향 |
 | Scaffold onboarding lifecycle 재설계 | Yes | generated repo의 첫 operational flow, bootstrap cleanup, PLAN/STATUS/backlog fill order에 영향 |
+| Work lifecycle and finalization semantics | Yes | scope 변경, commit/close/archive 경계, command naming에 광범위 영향 |
+| Gate strictness taxonomy | Yes | archive/public release/clean baseline/bootstrap 같은 조건부 강제 gate가 평시 workflow에 새는 문제를 조정 |
 | Git/release policy source-only boundary | Maybe | DR-017 / DR-020과 연결됨 |
 | `public-release-playbook` external reference policy | Maybe | repo 간 책임 경계 결정 |
 
@@ -920,6 +931,8 @@ Codex 결론:
 | 2026-06-04 | Source/target split | maintainer/manual 문서는 default scaffold에서 제외하고 source link 또는 optional pack으로 전환하는 방향에 잠정 합의. | beginner onboarding 설명 부족 가능성, OQ-1 최종 결정 필요 |
 | 2026-06-04 | Physical `docs/` split | 현 단계 물리 이동은 보류. pack 논리 분류로 먼저 해결. | logical tag만으로도 source/target 혼선이 남으면 후속 물리 분리 재검토 |
 | 2026-06-04 | PLAN lifecycle | `PLAN.md` hard gate 신설은 반대. 기존 T5를 `/close`, phase transition, commit finalization에 배선하고 archive drain으로 비대화를 막는 방향에 합의. | target-local harness customization 기록처 미정 |
+| 2026-06-04 | Work lifecycle finalization | Work scope 축소/확장/split, 작업 commit과 state cleanup commit의 경계, command 이름의 대상 명확성을 Phase 2에서 재검토한다. | `/close` alias 유지 여부, state-only follow-up commit 허용 조건 미정 |
+| 2026-06-04 | Gate strictness | archive뿐 아니라 public release, clean baseline, bootstrap completion 등 강제성 있는 gate를 mandatory / conditional mandatory / recommended / optional hygiene로 재분류한다. | release safety를 낮추지 않으면서 평시 workflow 마찰을 줄이는 기준 필요 |
 | 2026-06-04 | Canonical+Adapter | mirror 부피 해소책으로 채택 후보. 단 full thin pointer가 아니라 hard-stop을 adapter에 남기는 hybrid adapter 전제. | 자연어 로드 결정성, Cursor rule mechanism, scaffold breaking change |
 | 2026-06-04 | Scaffold lifecycle | one-shot fork에서 tracked install로 가는 방향에 합의. manifest와 `--check`는 선행 후보, `--upgrade` 3-way merge는 pain이 반복될 때까지 deferred. | manifest hash 기준과 framework/state file 경계 미정 |
 | 2026-06-04 | Scaffold onboarding lifecycle | scaffold 후 onboarding process를 Phase 2 리팩토링 대상에 포함한다. bootstrap fill order, cleanup/close, PLAN/STATUS/backlog 연결을 별도 slice에서 다룬다. | hard gate를 늘려 bootstrap 마찰을 키우지 않도록 soft/hard boundary 결정 필요 |
@@ -934,8 +947,10 @@ Codex 결론:
 2. Scaffold output contract: default/source-gitflow generated file matrix 정의
 3. PLAN lifecycle: PLAN impact gate와 bootstrap hardening 설계
 4. Scaffold onboarding lifecycle: bootstrap fill order, cleanup/close, PLAN/STATUS/backlog 연결 재설계
-5. Tool preflight: `/work`, `/close`, entrypoint Step 0 정렬
-6. Scaffold minimal output: prompt/docs/source-only exclusion 1차 적용
-7. Scaffold tests: generated file assertion과 leakage search 추가
-8. User-facing docs: README/onboarding guide를 새 output contract에 맞게 재작성
-9. Release/open boundary: `public-release-playbook` reference 반영
+5. Work lifecycle and finalization semantics: scope 변경, commit/close/archive 경계, command naming 재설계
+6. Gate strictness taxonomy: mandatory / conditional mandatory / recommended / optional hygiene 분류
+7. Tool preflight: `/work`, `/close`, entrypoint Step 0 정렬
+8. Scaffold minimal output: prompt/docs/source-only exclusion 1차 적용
+9. Scaffold tests: generated file assertion과 leakage search 추가
+10. User-facing docs: README/onboarding guide를 새 output contract에 맞게 재작성
+11. Release/open boundary: `public-release-playbook` reference 반영
