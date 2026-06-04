@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| CHORE-20260604-001 | Harness Phase 2 Refactor Planning | `docs/works/harness/CHORE-20260604-001-harness-phase2-refactor-planning.md` |
 
 ## Done (Archive Pending)
 
