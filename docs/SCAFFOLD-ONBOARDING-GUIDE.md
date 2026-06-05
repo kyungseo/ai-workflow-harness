@@ -32,7 +32,7 @@
 
 이 가이드는 `scripts/create-harness.sh`로 생성된 **target project**의 첫 온보딩을 다룬다.
 `ai-workflow-harness` repository 자체를 clone한 경우에는 이 clone을 직접 project-local workspace로 전환하지 말고,
-[README Section 10 New Project Adoption](../README.md#10-new-project-adoption)에 따라 별도 target directory에 scaffold를 생성한 뒤 그 프로젝트에서 온보딩을 진행한다.
+[README Apply The Harness To Your Project](../README.md#apply-the-harness-to-your-project)에 따라 별도 target directory에 scaffold를 생성한 뒤 그 프로젝트에서 온보딩을 진행한다.
 
 Source repo(`ai-workflow-harness`)는 scaffold script, canonical workflow, migration note, maintainer 문서를 소유한다.
 Target project는 생성된 `docs/BOOTSTRAP.md`, `docs/STATUS.md`, backlog, Work 파일을 채워 자기 프로젝트 상태를 소유한다.
