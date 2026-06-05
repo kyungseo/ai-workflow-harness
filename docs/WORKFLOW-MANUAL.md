@@ -191,7 +191,6 @@ graph TD
 | 개발자 + AI 겸용 | `PLAN-SUMMARY.md`, `GIT-WORKFLOW.md` (source repo / source-gitflow scaffold only), `PLAN.md` |
 | 발표·보고 산출물 | `docs/presentations/`, `docs/reports/` |
 | 역사·평가 | `docs/archive/`, `docs/retrospectives/`, reference-only plan |
-| User-facing cascade 확인 | `WORKFLOW-MANUAL.md` — 평시 AI 실행 규칙 로드 대상이 아니며, 사용자-visible workflow 변경 또는 cascade 감사 시 관련 섹션만 확인 |
 
 > 파일별 로드 조건(언제·어떤 조건에서 읽는가)은 [§4-3-B Context Load Decision](#4-3-b-context-load-decision)을 참조한다.
 
@@ -232,14 +231,17 @@ graph TD
     subgraph HARNESS ["하네스 프로토콜"]
         HP["📄 HARNESS-PROTOCOL.md"]
         HQ["📄 HARNESS-QUICK-REFERENCE.md"]
-        WM["📄 WORKFLOW-MANUAL.md"]
+    end
+
+    subgraph CANON ["Canonical workflow"]
+        CW["📁 skills/workflow/ 11개\ncommand별 상세 절차"]
     end
 
     subgraph TOOLS ["도구별 실행 표면"]
-        CMD["📁 .claude/commands/ 11개"]
+        CMD["📁 .claude/commands/ 11개\nClaude adapter"]
         RULE["📁 .claude/rules/ 5개"]
         CUR_R["📄 .cursor/rules/*.mdc"]
-        SKILLS["📁 .agents/skills/ 11개"]
+        SKILLS["📁 .agents/skills/ 11개\nCodex adapter"]
         HOOKS["📄 .codex/hooks.json"]
     end
 
@@ -269,11 +271,11 @@ graph TD
     CU --> CD
     CD --> HP
     HP --> HQ
-    HP --> HD
-    HP --> CMD
+    HP --> CW
+    CW --> CMD
+    CW --> SKILLS
+    CW --> CUR_R
     HP --> RULE
-    HP --> CUR_R
-    HP -.-> WM
 
     style CR fill:#ffeeba,stroke:#ffc107
     style AG fill:#ffeeba,stroke:#ffc107
@@ -282,6 +284,7 @@ graph TD
     style ST fill:#d4edda,stroke:#28a745
     style HP fill:#d4edda,stroke:#28a745
     style HQ fill:#d4edda,stroke:#28a745
+    style CW fill:#cce5ff,stroke:#004085
     style PS fill:#cce5ff,stroke:#004085
 ```
 
@@ -838,7 +841,7 @@ flowchart TD
 
 ## 5. Slash Commands Reference
 
-Claude Code에서 `/명령명`으로 호출. 파일 위치: `.claude/commands/*.md`
+Claude Code에서 `/명령명`으로 호출한다. 상세 절차는 `skills/workflow/{name}.md`가 canonical SSoT이며, `.claude/commands/*.md`, `.agents/skills/workflow-*/SKILL.md`, `.cursor/rules/workflow.mdc`는 tool-specific adapter다.
 
 | 범주 | 명령 | 언제 사용 | 주요 동작 |
 | --- | --- | --- | --- |
@@ -1456,21 +1459,23 @@ scripts/create-harness.sh --existing --profile spring-boot my-app /path/to/exist
 | `docs/BOOTSTRAP.md` | 생성 | scaffold 직후 Repository Setup, Product Definition, Project Initialization, backlog, example pack boot checklist |
 | `docs/BEHAVIOR-PRINCIPLES.md` | 복사 | 전역 행동 원칙 |
 | `docs/AGENT-WORKFLOW.md` | 생성 | Project Constants와 Verification Defaults placeholder 포함 |
-| `docs/HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md`, `WORKFLOW-MANUAL.md` | 복사 | core workflow docs |
+| `docs/HARNESS-PROTOCOL.md`, `HARNESS-QUICK-REFERENCE.md` | 복사 | core workflow docs |
+| `skills/workflow/*.md` | 복사 | command별 canonical workflow 절차 |
 | `docs/HARNESS-NAMING-RULES.md`, `HARNESS-RECOVERY-VALIDATION.md`, `HARNESS-PARALLEL-WORK-CONTROLS.md` | 복사 | 조건부 policy slice |
 | `docs/HARNESS-ARCHITECTURE.md`, `HARNESS-MAINTAINER-GUIDE.md` | 복사 | 구조·유지보수 reference |
 | `docs/STATUS.md`, `PLAN.md`, `PLAN-SUMMARY.md` | 생성 | 빈 skeleton |
 | `docs/backlog/PHASE1.md`, `HARNESS.md` | 생성 | 빈 skeleton |
 | `docs/decisions/DECISION-TEMPLATE.md` | 복사 | DR 템플릿만 (기존 DR은 제외) |
-| `docs/decisions/DR-007-language-policy.md`, `DR-008-docs-filename-standard.md`, `DR-013-work-file-spec.md` | 복사 | 하네스 foundational DR. 생성 문서의 language/file/work spec 참조 무결성 보존용 |
+| `docs/decisions/DR-007-language-policy.md`, `DR-008-docs-filename-standard.md`, `DR-013-work-file-spec.md` | 복사 | 하네스 foundational DR. 생성 문서의 language/file/Work file spec 참조 무결성 보존용 |
 | `docs/reports/.gitkeep`, `docs/presentations/.gitkeep` | 생성 | `/work-doc` 산출물 기본 위치 |
 | `docs/troubleshooting/README.md` | 생성 | troubleshooting 작성 규칙 skeleton |
 | `.claude/settings.json` | 생성 | permission deny와 Stop hook reminder를 포함한 범용 버전 |
-| `.claude/rules/*.md`, `.claude/commands/*.md` | 복사 | 기본 profile은 generic rules만 포함 |
-| `.agents/skills/workflow-*/SKILL.md` | 복사 | Codex workflow skills |
+| `.claude/rules/*.md`, `.claude/commands/*.md` | 복사 | 기본 profile은 generic rules만 포함. commands는 canonical workflow adapter |
+| `.agents/skills/workflow-*/SKILL.md` | 복사 | Codex workflow adapter |
 | `.codex/hooks.json` | 복사 | Codex Stop hook reminder |
 | `.cursor/rules/*.mdc` | 복사 | 기본 profile은 generic rules, `behavior-principles.mdc`, `safety-critical.mdc`, `role-harness-maintainer.mdc` 포함 |
 | `prompts/*.md` | 복사 | 기본 profile은 generic prompt만 포함 |
+| `docs/WORKFLOW-MANUAL.md` | optional | `--with-optional` 사용 시 포함되는 사용자용 deep reference |
 | `docs/GIT-WORKFLOW.md` | 생성 | **`--workflow source-gitflow` 전용.** `policy_type: source-gitflow` marker 포함. Branch Isolation Gate 활성화 및 Gitflow 브랜치 정책 정의 |
 
 `--workflow source-gitflow` 추가 포함:
@@ -1746,7 +1751,8 @@ Claude가 코드베이스를 파악하고 state-change proposal을 제시하면 
 - docs/WORKFLOW-MANUAL.md (선택, 사용자 매뉴얼)
 - .claude/settings.json (defaultMode=plan, 금지 명령 목록)
 - .claude/rules/ (docs-workflow, git-workflow, infra, [언어]-[프레임워크], testing)
-- .claude/commands/ (start, pick, work, resume, debug, done, record-decision, health)
+- .claude/commands/ (session-start, work-select, work-register, work-plan, work-resume, work-debug, work-doc, work-close, session-summary, repo-decision, repo-health)
+- skills/workflow/ (command별 canonical workflow 절차)
 - .cursor/rules/ (선택, Cursor를 사용할 경우)
 - prompts/ (필요한 태스크 프롬프트 라이브러리)
 

@@ -657,6 +657,15 @@ ${OPTIONAL_README_ROWS}| \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 | \`.codex/hooks.json\` | Codex hook 설정 |
 | \`prompts/\` | 세션 시작 및 태스크 프롬프트 라이브러리 |
 
+### Workflow 구조
+
+- \`skills/workflow/{name}.md\`: command별 canonical 절차
+- \`.claude/commands/{name}.md\`: Claude Code slash command adapter
+- \`.agents/skills/workflow-{name}/SKILL.md\`: Codex adapter
+- \`.cursor/rules/workflow.mdc\`: Cursor intent routing
+
+사용자는 command 이름으로 진입하고, 상세 절차는 canonical workflow가 소유한다.
+
 ### 첫 세션
 
 **Claude Code:**
@@ -672,6 +681,7 @@ claude        # Claude Code 열기
 ## 사전 작업
 
 git repository는 자동으로 초기화되지 않는다. 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
+\`--workflow source-gitflow\`를 선택하지 않았다면 branch/release policy는 이 target project가 직접 정한다.
 
 스캐폴딩 직후 첫 \`/session-start\`에서는 \`docs/STATUS.md\` Next Actions를 확인한다.
 Next Actions가 scaffold bootstrap/onboarding을 가리키면 \`docs/BOOTSTRAP.md\`를 §0부터 순서대로 채운다.

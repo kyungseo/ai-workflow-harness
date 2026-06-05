@@ -4,10 +4,10 @@
 전역 행동 원칙은 `docs/BEHAVIOR-PRINCIPLES.md`를 따른다.
 세션 중 빠른 실행 규칙은 `docs/HARNESS-QUICK-REFERENCE.md`, 공통 운영 규칙은 `docs/AGENT-WORKFLOW.md`, 상세 판단은 이 문서를 따른다.
 
-`docs/WORKFLOW-MANUAL.md`는 사람이 읽는 사용자 매뉴얼이다.
 Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, 이 문서다.
+사용자가 읽는 설명 문서는 실행 규칙을 재서술하지 않고 필요한 지점에서 canonical 문서로 단방향 위임한다.
 
-> **Optional pack 참조 주의:** `docs/HARNESS-ARCHITECTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/WORKFLOW-MANUAL.md`는 Optional source pack이라 minimal scaffold에는 존재하지 않을 수 있다. 이 문서가 이 셋을 가리키는 cascade·참조 항목은 해당 문서가 없으면 N/A로 처리하고, 필요하면 `scripts/create-harness.sh --with-optional`로 재생성하거나 source repo 문서를 참조한다.
+> **Optional pack 참조 주의:** `docs/HARNESS-ARCHITECTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`는 Optional source pack이라 minimal scaffold에는 존재하지 않을 수 있다. 이 문서가 이 둘을 가리키는 참조 항목은 해당 문서가 없으면 N/A로 처리하고, 필요하면 `scripts/create-harness.sh --with-optional`로 재생성하거나 source repo 문서를 참조한다.
 
 ## 1. Purpose
 
@@ -165,10 +165,6 @@ AI Workflow Harness는 적용 대상 repository에 Product track과 Harness trac
 | 큰 작업 세부 분해 | `docs/works/{category}/{ID}-{topic}.md` |
 | 작업 우선순위·아이디어·반복 리스크 검토 | `docs/retrospectives/` |
 | 과거 이력 | `docs/archive/` |
-| user-facing workflow 변경 또는 cascade 감사 | `docs/WORKFLOW-MANUAL.md` 관련 섹션 |
-
-`docs/WORKFLOW-MANUAL.md`는 평시 AI 실행 규칙 로드 대상이 아니다.
-사용자가 매뉴얼 검토를 요청했거나 user-facing workflow 변경/cascade 감사가 필요할 때만 확인한다.
 
 ### Anti-Patterns
 
@@ -176,7 +172,6 @@ AI Workflow Harness는 적용 대상 repository에 Product track과 Harness trac
 - 모든 회고를 먼저 읽지 않는다.
 - 과거 이력이 필요하지 않은데 archive를 열지 않는다.
 - PLAN-SUMMARY로 충분한데 PLAN 전체를 읽지 않는다.
-- 실행 규칙 확인만 필요한데 `docs/WORKFLOW-MANUAL.md` 전체를 읽지 않는다.
 - 동일 문서를 반복해서 읽지 않는다.
 
 ### Retrospective Loading
@@ -291,7 +286,7 @@ Archive 이동은 사용자 명시 승인 또는 `/session-start`·`/work-resume
 
 Review-sensitive Work는 사용자 최종 리뷰를 Done Criteria에 선택적으로 포함한다.
 `/work-close`는 모든 Work에 사용자 리뷰를 강제하지 않는다. 그러나 Done Criteria에 사용자 최종 리뷰, final review, 검토 후 Done 같은 명시적 리뷰 조건이 있으면 그 조건을 충족하기 전 `status: Done`으로 전환하지 않는다.
-기본 포함 후보는 harness/workflow surface, user-facing manual, rule/command, policy/operational procedure 변경이다.
+기본 포함 후보는 harness/workflow surface, user-facing docs, rule/command, policy/operational procedure 변경이다.
 Quick Mode, 단순 오타·링크·기계적 정합성 패치, 테스트·검증으로 닫히는 구현 작업은 기본 제외다.
 
 ### Index Rules
@@ -324,7 +319,6 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | `docs/reports/` | 보고서, review package, decision brief |
 | `docs/presentations/` | 발표자료, deck, slide source |
 | `docs/HARNESS-PROTOCOL.md` | Agent 실행 상세 프로토콜 |
-| `docs/WORKFLOW-MANUAL.md` | 사용자용 워크플로우 매뉴얼 |
 | `docs/PLAN.md` | WHY |
 | `docs/HARNESS-ARCHITECTURE.md` | WHAT |
 | `docs/HARNESS-MAINTAINER-GUIDE.md` | HOW |
@@ -352,7 +346,6 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | Canonical AI operations | `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md` | Agent 실행 규칙의 현재 기준 |
 | Live state and trackers | `docs/STATUS.md`, `docs/backlog/`, `docs/works/`, `docs/decisions/` | 현재 상태, 후보, Work SSoT, 결정 근거 |
 | Project and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/HARNESS-ARCHITECTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/GIT-WORKFLOW.md` (source repo only) | project/harness 구조와 유지보수 지식 |
-| User-facing workflow docs | `docs/WORKFLOW-MANUAL.md` | 사람이 읽는 매뉴얼. 평시 Agent 자동 로드 대상 아님 |
 | Historical and evaluation docs | `docs/archive/`, `docs/retrospectives/`, reference-only plans | 완료 이력, snapshot, 시점별 평가, 완료된 계획의 참조 기록 |
 | Troubleshooting docs | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 패턴의 재사용 가능한 incident record |
 | Artifacts | `docs/reports/`, `docs/presentations/` | `/work-doc` 산출물. source traceability와 version naming 유지 |
