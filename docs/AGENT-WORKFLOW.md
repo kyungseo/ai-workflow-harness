@@ -29,7 +29,7 @@ MUST NOT:
 - 승인 없이 넓은 변경, L3 변경, scope 확장을 실행하지 않는다.
 
 Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 없으면 clean idle 상태로 보고한다.
-이때 과거 milestone criteria나 archive 이력을 next candidate로 자동 확장하지 않고, `/pick` 또는 `/register`를 다음 진입로로 안내한다.
+이때 과거 milestone criteria나 archive 이력을 next candidate로 자동 확장하지 않고, `/work-select` 또는 `/work-register`를 다음 진입로로 안내한다.
 
 ## Context Routing
 
@@ -51,8 +51,8 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 | Scaffold 직후 프로젝트 부팅 | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` |
 | Scaffold source onboarding 기준 확인 | `docs/SCAFFOLD-BOOTSTRAP.md` |
 | 세션 실행 규칙 빠른 확인 | `docs/HARNESS-QUICK-REFERENCE.md` |
-| Work ID·OQ ID·DR ID 부여·검증, 파일명 규칙 | `docs/HARNESS-NAMING-RULES.md` — `/register`·`/work` Work ID 확정 시, branch/Work ID slug 대응 논의 시에만 로드. `/start`, `/pick`, 일반 status 확인, cascade 검증에서는 로드하지 않는다 |
-| failure state 진입, Validation Checklist, Commit Approval 판단, `/health` 조건부 recovery 확인 | `docs/HARNESS-RECOVERY-VALIDATION.md` — `/start`, `/pick`, 일반 `/work`·`/close`·`/done` 흐름에서는 로드하지 않는다. validation failure·recovery·commit approval 판단이 필요한 경우에만 로드한다 |
+| Work ID·OQ ID·DR ID 부여·검증, 파일명 규칙 | `docs/HARNESS-NAMING-RULES.md` — `/work-register`·`/work-plan` Work ID 확정 시, branch/Work ID slug 대응 논의 시에만 로드. `/session-start`, `/work-select`, 일반 status 확인, cascade 검증에서는 로드하지 않는다 |
+| failure state 진입, Validation Checklist, Commit Approval 판단, `/repo-health` 조건부 recovery 확인 | `docs/HARNESS-RECOVERY-VALIDATION.md` — `/session-start`, `/work-select`, 일반 `/work-plan`·`/work-close`·`/session-summary` 흐름에서는 로드하지 않는다. validation failure·recovery·commit approval 판단이 필요한 경우에만 로드한다 |
 | 병렬 branch/agent 충돌, Work ID/DR 번호 충돌, STATUS/index merge conflict, command/skill mirror atomicity 판단 | `docs/HARNESS-PARALLEL-WORK-CONTROLS.md` — 해당 충돌이 실제 발생했거나 병렬 작업 중 충돌 위험이 감지될 때만 로드한다 |
 | Product track 또는 Phase{n} 준비 작업 선택 | `docs/backlog/PHASE{n}.md` |
 | harness, command/rule, workflow 작업 선택 | `docs/backlog/HARNESS.md` |
@@ -118,7 +118,7 @@ MUST NOT:
 | 결정 근거 | `docs/decisions/DR-*.md` |
 | 완료된 과거 상태 | `docs/archive/` |
 
-새 작업 항목 등록은 `/register`로 수행한다. 긴급도와 성격에 따라 TYPE(FEAT/PATCH/HOTFIX/CHORE)을 판단하고 위 위치 중 적절한 곳에 라우팅된다. backlog 후보는 제목/slug만 유지하고, Work ID는 `/work` 착수 승인 후 Work 파일 생성 시 확정한다.
+새 작업 항목 등록은 `/work-register`로 수행한다. 긴급도와 성격에 따라 TYPE(FEAT/PATCH/HOTFIX/CHORE)을 판단하고 위 위치 중 적절한 곳에 라우팅된다. backlog 후보는 제목/slug만 유지하고, Work ID는 `/work-plan` 착수 승인 후 Work 파일 생성 시 확정한다.
 
 Work ID 형식 상세 기준: `docs/HARNESS-NAMING-RULES.md`
 
@@ -160,15 +160,15 @@ commit 또는 PR 생성 전에는 반드시 두 가지를 보고한다.
 `docs/STATUS.md` 변경이 확정되면 실질 변경과 **같은 commit**에 포함한다. 실질 변경을 먼저 commit한 뒤 `STATUS.md`를 별도 commit으로 분리하지 않는다.
 상세 체크리스트는 `docs/HARNESS-RECOVERY-VALIDATION.md` (Validation Checklist, Commit Approval)와 `docs/HARNESS-PROTOCOL.md` (Triggers, Work File Rules)를 따른다.
 
-Work Done 처리와 선택적 archive는 `/close`로 수행한다. `/close`는 Work Done 처리이며 commit/PR finalization gate를 대체하지 않는다.
-`/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
-Done Criteria에 사용자 최종 리뷰, final review, 검토 후 Done 등 명시적 리뷰 조건이 있으면 `/close`에서 확인 완료 전 Done 처리하지 않는다.
+Work Done 처리와 선택적 archive는 `/work-close`로 수행한다. `/work-close`는 Work Done 처리이며 commit/PR finalization gate를 대체하지 않는다.
+`/session-summary`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
+Done Criteria에 사용자 최종 리뷰, final review, 검토 후 Done 등 명시적 리뷰 조건이 있으면 `/work-close`에서 확인 완료 전 Done 처리하지 않는다.
 
 ## Trigger And Naming Pointers
 
 문서, prompt, command, rule, Cursor rule, hook 메시지를 수정할 때는 DR-007 언어 정책을 확인한다.
 DR, STATUS/archive, Work decomposition, troubleshooting, tool surface, scaffold 검증 trigger의 상세 기준은 `docs/HARNESS-PROTOCOL.md`를 따른다.
-workflow/doc/tool/scaffold/status 표면을 변경할 때는 `docs/HARNESS-PROTOCOL.md`의 trigger/cascade section을 조건부 로드하고, 필요한 surface만 확인한다.
+workflow, document, tool, scaffold, status 표면을 변경할 때는 `docs/HARNESS-PROTOCOL.md`의 trigger/cascade section을 조건부 로드하고, 필요한 surface만 확인한다.
 
 ID prefix와 파일명 상세 기준:
 
@@ -180,7 +180,7 @@ ID prefix와 파일명 상세 기준:
 - Runtime: Markdown 문서와 shell script. 별도 application runtime 불필요.
 - Framework: Manual-first AI Workflow Harness
 - Build: core workflow 문서에는 build 없음. scaffold script는 shell 기반.
-- Architecture: Entry contract + state/work 추적 + approval gate + tool-surface mirror + scaffold
+- Architecture: Entry contract + state and work tracking + approval gate + tool-surface mirror + scaffold
 - Base package/module: 해당 없음
 - Active state file: `docs/STATUS.md`
 

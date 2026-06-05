@@ -1,98 +1,44 @@
 ---
-description: Workflow command intent recognition and work item routing rules.
+description: Workflow canonical adapter and intent routing rules.
 globs:
 alwaysApply: true
 ---
 
 # Workflow Rules
 
-## Command Intent Recognition
+This file is the Cursor adapter for workflow procedures.
+Detailed procedures live in `skills/workflow/*.md`.
 
-When the user's intent matches a workflow operation without an explicit slash command, follow the corresponding procedure. Read the referenced command file or follow the equivalent procedure from `docs/AGENT-WORKFLOW.md`.
+## Step 0
 
-| Intent | Procedure to follow |
+When the user's intent matches a workflow operation, first load the matching canonical file:
+
+| Intent | Canonical procedure |
 | --- | --- |
-| Register / add a work item | `/register` — route based on urgency and type (see below) |
-| Record a decision as DR | `/record-decision` — DR format, file naming, OQ linkage, and Recent Decisions update need judgment for every Accepted DR |
-| Start / plan a specific task | `/work` — pre-checks: PLAN.md force-load conditions, troubleshooting check, risk level and execution mode declaration |
-| Resume an interrupted task | `/resume` — drift check: compare actual file state against `docs/STATUS.md` pointers and Work file Checkpoints before editing |
-| Create presentation/report/review document material | `/doc` — use for PPT, deck, report, review package, decision brief, or polished shareable document artifacts; brief-first workflow, source routing, quality verification |
-| Merge / PR branch integration | Follow Branch Flow procedure (see below) |
+| Session start / current state summary | `skills/workflow/session-start.md` |
+| Session summary / handoff | `skills/workflow/session-summary.md` |
+| Select next work | `skills/workflow/work-select.md` |
+| Register / add a work item | `skills/workflow/work-register.md` |
+| Start / plan a specific task | `skills/workflow/work-plan.md` |
+| Resume interrupted work | `skills/workflow/work-resume.md` |
+| Close Work as Done | `skills/workflow/work-close.md` |
+| Debug a scoped issue | `skills/workflow/work-debug.md` |
+| Create presentation/report/review material | `skills/workflow/work-doc.md` |
+| Repository health / cascade audit | `skills/workflow/repo-health.md` |
+| Record a decision as DR | `skills/workflow/repo-decision.md` |
+| Merge / PR branch integration | Follow `docs/GIT-WORKFLOW.md` when present |
 
-## Work Item Routing
+## Hard Stops
 
-New work items are always routed based on urgency and type:
+- If the required `skills/workflow/{command}.md` file is missing or unreadable, stop before editing files, changing state, committing, opening a PR, or merging. Report the missing canonical file and ask the user how to proceed.
+- Before any file edit, state change, commit, PR creation, or merge, enforce branch isolation, the Approval Matrix, and validation-before-commit/PR gates.
+- Do not duplicate detailed checklists or cascade matrices in this adapter. Use the canonical workflow file for detailed procedure.
 
-| Urgency / Type | Target |
-| --- | --- |
-| Start immediately (urgent patch) | `docs/STATUS.md` Active Work → chain to /work |
-| Soon / next session | `docs/STATUS.md` Next Actions |
-| Scaffold bootstrapping | `docs/STATUS.md` Next Actions first; load `docs/BOOTSTRAP.md` only when those actions point to scaffold bootstrap/onboarding |
-| Product track / Phase{n} feature | `docs/backlog/PHASE{n}.md` |
-| Harness / workflow / rule improvement | `docs/backlog/HARNESS.md` |
+## Entry Mechanism
 
-If the Product backlog is empty after scaffold and `docs/STATUS.md` Next Actions point to scaffold bootstrap/onboarding, use `docs/BOOTSTRAP.md` to identify project identity and production type before proposing initial work candidates. Verify that `docs/PLAN-SUMMARY.md` Implementation Baseline is filled before proposing feature candidates; if empty, propose Project Initialization as the first P1 candidate (for code development projects) or the appropriate baseline/setup task (for non-code projects). Route example pack, role/rule, and prompt cleanup to Harness backlog.
+Cursor has no Claude slash command file and no Codex skill directory. This rule maps natural-language intent to the canonical workflow file.
 
-When starting a task (`/work`): check `docs/works/{category}/` for an existing Work file. If none exists, evaluate Quick Mode and Work File Decomposition criteria (spec: `docs/HARNESS-PROTOCOL.md`). Product track L1 Quick Mode may proceed without a Work file; harness/workflow surface changes default to L2, and Work file creation should be considered by default when decomposition criteria apply.
+## Language Policy
 
-Quick Mode: small Product track L1 changes with narrow scope, one-session completion, no checkpoint handoff, no STATUS change, and no harness/workflow surface change can close with final summary + validation + commit history only. If entrypoint/workflow/protocol/command/rule/prompt/scaffold/status files change, treat the task as L2 and check the relevant cascade surface.
-
-When completing a Work item (`/close`): confirm Done Criteria, set `status: Done` and `actual_end`, move the README row from Active to Done (archive pending), and propose STATUS pointer removal. Also check PLAN impact (T5): judge whether the Work outcome affects `docs/PLAN.md` roadmap/milestone — if so, propose a PLAN update or follow-up via the Approval Matrix; otherwise just report. This is a recommended/warning soft check, not a hard-stop; follow the Roadmap Lifecycle rule in `docs/PLAN.md` if present. If Done Criteria includes user final review, final review, or review-before-Done wording, confirm that review before marking Done. Do not force user review globally for every Work item. After Done processing, ask whether to archive immediately or defer to a later `/start`/`/resume` trigger. Session continues after `/close`.
-
-When ending a session (`/done`): report completed work, changed files, validation results, residual risk, STATUS update needs, decision needs, and commit status. If Active Work exists and Discovery is not up to date for the current progress, propose content to record and ask whether to log it. `/done` does not perform Work Done processing — tell the user to run `/close` first if the Work is complete.
-
-STATUS Finalization Gate: before commit or PR, report whether `docs/STATUS.md` needs a final update, why, and the required Approval Matrix proposal if needed. Check Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, and Active Work Discovery freshness. Do not edit `docs/STATUS.md` without explicit approval. When `docs/STATUS.md` changes are approved, include them in the same commit as the substantive changes — never as a separate follow-up commit.
-
-Tracking Finalization Gate: before commit or PR, report whether backlog/Work/DR tracker updates are needed and why. Check linked backlog item Status/Done Criteria/Verification, Work file frontmatter/status/Checkpoints/Discovery, Work index README placement, related DR status/Supersedes/Linked Backlog Items, and completed Quick Mode work still left as Candidate. If an Active Work file exists and all Done Criteria are checked ([x]), propose running `/close` before the commit so state changes (Work Done, Work Index, STATUS pointer) are bundled in the same commit rather than generated as a separate close commit later.
-
-Approval Matrix state rules:
-
-| Target | Change | Gate |
-| --- | --- | --- |
-| Work file | Checkpoint status update, Discovery note | No prior approval required; report target Work ID after execution |
-| Work file | Done Criteria met, `status: Done`, `actual_end` | Confirm with the user and name the target Work ID |
-| `docs/STATUS.md` | Active Work pointer add/remove | One-line proposal naming the target Work ID, then wait for approval |
-| `docs/STATUS.md` | Phase criteria, Current phase/focus, Recent Decisions | Full STATUS Update Proposal |
-
-When starting or resuming, report any `status: Done` Work files still under `docs/works/{category}/` as archive-pending. Do not archive before approval.
-
-## Document Language Policy
-
-When creating or editing any document, prompt, command, rule, or hook message:
-
-- **English Only:** `CLAUDE.md`, `AGENTS.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`
-- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `.claude/commands/*.md`
-
-Bilingual Rules (applies to Korean-primary files):
-- Section titles: English Title Case — never translate (e.g., `## Active Work`, `## Next Steps`)
-- Technical terms: English verbatim — no transliteration (e.g., Kubernetes, CI/CD, Refactoring)
-- Body text: Korean primary
-
-Full policy: `docs/decisions/DR-007-language-policy.md`
-
-## Document Structure
-
-When detailed runbooks or checklists accumulate in core documents (e.g., `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md`), extract them to a separate slice file and replace the content with a conditional pointer: `Load \`docs/{slice-file}.md\` only when {condition}.`
-
-## Branch Flow
-
-When the user expresses branch merge intent, such as asking to merge, open a PR, or merge into `develop`,
-if this repository has `docs/GIT-WORKFLOW.md`, load it and follow section 2 (feature development cycle) and section 3 (release cycle). Otherwise, check the project-specific branch/release policy first.
-
-NEVER:
-- Directly local-merge a feature branch into develop. Always merge via PR.
-- Skip the develop sync step after a main PR merge (`git merge origin/main` into `develop`, then `git push origin develop`).
-
-## Post-PR Merge Cleanup
-
-After `gh pr merge` completes, follow the appropriate cleanup for the merge type:
-
-**feature → develop PR:**
-If this repository has `docs/GIT-WORKFLOW.md`, execute §2-4 in full without waiting for a separate instruction:
-1. `git checkout develop && git pull origin develop`
-2. `git branch -d feature/{name}` — delete local branch. If remote was not auto-deleted, also run `git push origin --delete feature/{name}`.
-3. Suggest the next feature branch name based on upcoming work and ask whether to create it now.
-
-**develop → main PR:**
-If this repository has `docs/GIT-WORKFLOW.md`, execute §3-4 (Post-Merge Develop Sync) instead:
-`git checkout main && git pull origin main`, then `git checkout develop && git merge origin/main && git push origin develop`.
+- This Cursor rule is English Only.
+- Korean-primary workflow details belong in `skills/workflow/*.md`, `docs/*.md`, prompts, and Claude/Codex adapters as defined by `docs/decisions/DR-007-language-policy.md`.

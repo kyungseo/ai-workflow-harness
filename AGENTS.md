@@ -28,7 +28,8 @@ NEVER:
 
 When a workflow command is invoked or its intent is matched,
 load `.agents/skills/workflow-{name}/SKILL.md` and follow the procedure.
-Skill name maps directly to command name (e.g., `/start` → `workflow-start`).
+Skill name maps directly to command name (e.g., `/session-start` → `workflow-session-start`).
+Each skill adapter must load the matching canonical procedure in `skills/workflow/{name}.md` as Step 0.
 
 Available workflow skills are the directories under `.agents/skills/`.
 
@@ -37,7 +38,7 @@ Available workflow skills are the directories under `.agents/skills/`.
 When creating or editing any document, prompt, command, rule, or hook message — confirm DR-007 applies.
 
 - **English Only:** `AGENTS.md`, `CLAUDE.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`
-- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `.claude/commands/*.md`
+- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `skills/workflow/*.md`, `.claude/commands/*.md`, `.agents/skills/*/SKILL.md`
 
 Full policy: `docs/decisions/DR-007-language-policy.md`
 

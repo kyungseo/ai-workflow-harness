@@ -203,7 +203,7 @@ source-gitflow workflow는 harness source repo와 동일한 feature -> develop -
 
 ```mermaid
 flowchart TD
-    A["/start"] --> B["STATUS.md → bootstrap pointer 확인"]
+    A["/session-start"] --> B["STATUS.md → bootstrap pointer 확인"]
     B --> C["docs/BOOTSTRAP.md 로드"]
     C --> D{"Product Definition\n확정됐는가?"}
     D -->|No| E["Product Definition Gate\n제품 목표·범위·사용자 정의"]
@@ -266,10 +266,10 @@ Work 파일은 `docs/works/{category}/`에서 생성·관리되고 완료 후 `d
 ```mermaid
 stateDiagram-v2
     direction LR
-    [*] --> Candidate : /register
-    Candidate --> Active : /work 착수 승인\n(Work 파일 생성)
-    Active --> Done : /close\n(Done Criteria 충족)
-    Done --> Archived : archive 승인\n(/start · /resume trigger)
+    [*] --> Candidate : /work-register
+    Candidate --> Active : /work-plan 착수 승인\n(Work 파일 생성)
+    Active --> Done : /work-close\n(Done Criteria 충족)
+    Done --> Archived : archive 승인\n(/session-start · /work-resume trigger)
 ```
 
 | 상태 | 위치 | STATUS.md |

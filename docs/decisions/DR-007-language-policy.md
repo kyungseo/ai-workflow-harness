@@ -28,8 +28,9 @@ Status: Accepted (Amended)
 | 파일 유형 | 비고 |
 |-----------|------|
 | `docs/*.md`, `prompts/*.md`, `docs/decisions/DR-*.md` | 사람이 읽는 문서 |
+| `skills/workflow/*.md` | workflow 상세 절차의 canonical SSoT |
 | `.claude/commands/*.md` | 사용자가 직접 읽고 수정하는 slash command |
-| `.agents/skills/*/SKILL.md` | Codex workflow skill. `.claude/commands/*.md`와 같은 절차 mirror |
+| `.agents/skills/*/SKILL.md` | Codex workflow skill adapter. 상세 절차는 `skills/workflow/*.md`를 따름 |
 | `.claude/settings.json` hook 출력 메시지 | 사용자와 세션에 보이는 안내 메시지 |
 | Java 인라인 주석 | WHY는 한국어로, 기술 용어는 영어 원문 유지 |
 

@@ -2,7 +2,7 @@
 
 `docs/HARNESS-PROTOCOL.md` §9에서 추출한 Naming Rules policy slice다.
 Work ID 부여·검증, OQ/DR ID, 파일명 규칙 확인이 필요할 때만 로드한다.
-`/start`, `/pick`, 일반 status 확인, cascade 검증에서는 로드하지 않는다.
+`/session-start`, `/work-select`, 일반 status 확인, cascade 검증에서는 로드하지 않는다.
 
 ---
 

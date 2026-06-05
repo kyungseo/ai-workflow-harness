@@ -33,10 +33,10 @@ When the user's intent matches a workflow command without an explicit `/command`
 
 | Intent | Command file to follow |
 | --- | --- |
-| Register or add a work item | `.claude/commands/register.md` |
-| Record a DR or decision | `.claude/commands/record-decision.md` |
-| Start or plan a specific task | `.claude/commands/work.md` (includes the three pre-checks) |
-| Resume interrupted work | `.claude/commands/resume.md` (includes drift checks) |
+| Register or add a work item | `.claude/commands/work-register.md` |
+| Record a DR or decision | `.claude/commands/repo-decision.md` |
+| Start or plan a specific task | `.claude/commands/work-plan.md` (includes the three pre-checks) |
+| Resume interrupted work | `.claude/commands/work-resume.md` (includes drift checks) |
 
 **Criteria for adding intent recognition here:**
 
@@ -47,7 +47,7 @@ When the user's intent matches a workflow command without an explicit `/command`
 | False-positive risk | Intent is clear and low-risk to detect | Context is broad and may trigger incorrectly |
 | Invocation style | Automatic recognition is more natural | Explicit `/command` invocation is more predictable |
 
-Example: do not add `/doc` here because it is occasional and heavy. Load `doc.md` only for an explicit `/doc` invocation or a clear user request.
+Example: do not add `/work-doc` here because it is occasional and heavy. Load `work-doc.md` only for an explicit `/work-doc` invocation or a clear user request.
 
 NEVER:
 
