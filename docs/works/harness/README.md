@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| CHORE-20260605-001 | Phase 2 Slice 0 — Direction Decision | `docs/works/harness/CHORE-20260605-001-phase2-slice0-direction.md` |
 
 ## Done (Archive Pending)
 

@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-04 (Harness Phase 2 refactor planning active 등록 — CHORE-20260604-001)
+Last updated: 2026-06-05 (Phase 2 slice 0 방향 결정 Work 착수 — CHORE-20260605-001)
 
 ## Current State
 
@@ -28,6 +28,7 @@ Last updated: 2026-06-04 (Harness Phase 2 refactor planning active 등록 — CH
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| CHORE-20260605-001 | Phase 2 Slice 0 — Direction Decision | `docs/works/harness/CHORE-20260605-001-phase2-slice0-direction.md` |
 
 ## Blockers And Open Questions
 
