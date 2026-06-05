@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-05 (Phase 2 slice 0 방향 결정 Work Done — CHORE-20260605-001, DR-A~D 후보 산출)
+Last updated: 2026-06-05 (slice 0 DR-021~024 Accepted — CHORE-20260605-002 Done)
 
 ## Current State
 
@@ -38,6 +38,7 @@ Last updated: 2026-06-05 (Phase 2 slice 0 방향 결정 Work Done — CHORE-2026
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-05 | slice 0 4축 방향 DR 채택 — DR-021(source/target boundary), DR-022(PLAN lifecycle), DR-023(canonical+hybrid adapter), DR-024(gate 2D taxonomy) | Phase 2 리팩토링 4축 TO-BE 확정. cross-agent R0~R6 합의, decision-only(적용은 하류 slice) — CHORE-20260605-001/002 | DR별 상이(Low~High) |
 | 2026-05-29 | pre-commit: main만 hard block, develop은 warning 유지. commit-msg build type 추가, 두 hook 설치 | GitHub ruleset이 develop direct push를 이미 차단. solo 프로젝트에서 housekeeping마다 PR 강제는 과도한 마찰 — CHORE-20260529-003 + fix | Low |
 | 2026-05-27 | Work/OQ/Tracker ID를 `<TYPE>-<YYYYMMDD>-<NNN>` 형식으로 전환, backlog candidate ID-less 정책 도입 | 전역 순번 HRN-*/P{n}-NNN 방식의 병렬 feature 충돌 및 scaffold 확장성 문제 해소 — CHORE-20260527-001 | Medium |
 | 2026-05-26 | feature branch pre-PR `/close`가 commit 전략을 3-state(미push/push+PR없음/push+PR열림·공유·확인불가)로 안내하도록 개선 | feature branch /close 시 별도 close commit이 PR history 노이즈를 만드는 패턴 해소 — HRN-037 | Low |
@@ -45,11 +46,8 @@ Last updated: 2026-06-05 (Phase 2 slice 0 방향 결정 Work Done — CHORE-2026
 | 2026-05-25 | `AWH-OQ-001` Blockers 제거 — archive policy가 필요할 때 신규 Work로 재등록 | public baseline에 Open Blocker가 남으면 "미완" 인상 지속. HARNESS.md Deferred Ideas로 이동 | Low |
 | 2026-05-24 | Product Definition / Project Initialization Gate 도입 | baseline 없이 기능 후보를 등록하는 흐름 차단 — BOOTSTRAP.md §2–§3 + PLAN-SUMMARY.md Implementation Baseline + PHASE1.md Baseline Gate | Low |
 | 2026-05-23 | README를 `WORKFLOW-MANUAL-SUMMARY-PUBLIC.md` 기반 단일 문서(경로 A)로 교체 | 파일 목록형 README에서 Prologue·원칙·흐름을 통합한 공개 front-door로 전환 — SUMMARY-PUBLIC drift 방지 | Low |
-| 2026-05-22 | `AGENTS.md`와 `.cursor/rules/workflow.mdc`에 Document Language Policy 섹션 추가 | Codex/Cursor가 DR-007을 문서 편집 시 적용하지 않는 구조적 결함 수정 — path-scoped 자동 로딩이 없는 도구에 inline 규칙 삽입 | Medium |
-| 2026-05-22 | AWH-001 이후 phase를 `Workflow hardening`으로 전환 | public-ready migration 이후 모든 후속 작업을 문서 현행화, scaffold 정합성, tool surface alignment 강화 단계로 묶기 위함 | Low |
-| 2026-05-22 | `.cursor/rules/role-backend.mdc` → `role-harness-maintainer.mdc` rename | 파일명이 Spring Boot 시절 이름을 유지하고 있었고 내용은 이미 Harness Maintainer Role로 교체된 상태 — 파일명/내용 불일치 수정 | Low |
 
 ## Next Actions
 
-1. **DR 작성 (`/record-decision`)** — slice 0이 산출한 4 primary DR 후보를 정식 DR로 등록: DR-A(framework/project-state boundary), DR-B(PLAN lifecycle: T5 배선+archive drain), DR-C(canonical+hybrid adapter), DR-D(gate strictness 2D taxonomy). + 하류 child DR(Commit gate runtime enforcement). 근거/합의는 `docs/works/harness/CHORE-20260605-001-phase2-slice0-direction.md` (Done) Direction Decisions·Cross-Agent Review 참조.
-2. **하류 slice 진행** — DR Accepted 후 Follow-Up PR Slicing Draft(부모 Work CHORE-20260604-001) 순서로: 현존 결함 수선(1a)·불변식 테스트(1b) 병행 → PLAN lifecycle 배선 → minimal output → breaking slice #13(canonical+adapter 전환 + no-alias rename 동시). 각 slice 착수 시 Next Actions 재평가(자동 연쇄 아님).
+1. **하류 slice 진행** — DR-021~024 Accepted 완료. Follow-Up PR Slicing Draft(부모 Work CHORE-20260604-001) 순서로 착수: 현존 결함 수선(1a)·불변식 테스트(1b) 병행 → PLAN lifecycle 배선(DR-022 적용) → scaffold minimal output(DR-021 적용) → breaking slice #13(DR-023 canonical+adapter 전환 + no-alias rename 동시). 각 slice 착수 시 Next Actions 재평가(자동 연쇄 아님).
+2. **child DR — Commit gate runtime enforcement** — DR-024 하류. causal finalization bundling hard-stop/override 정책을 gate runtime enforcement 적용 slice에서 별도 DR로 작성.

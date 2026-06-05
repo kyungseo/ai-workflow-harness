@@ -19,3 +19,8 @@ Superseded DR은 `docs/archive/docs/decisions/`로 이동된다.
 | DR-017 | Git 머지 전략 및 Branch Flow | 2026-05-20 | Accepted | feature→develop→main, PR 기반 머지 |
 | DR-018 | CI 트리거 최적화 | 2026-05-20 | Accepted | path filter + 병렬화, develop push CI 제거 |
 | DR-019 | Codex Skill Naming Standard | 2026-05-24 | Accepted | `.agents/skills/workflow-{name}/` prefix, suffix mapping 규칙 확정 |
+| DR-020 | GitHub Repository Settings Policy | 2026-05-25 | Accepted (일부 Deferred) | public 전환 ruleset/보안/기능 설정. `protect-main`·`protect-develop` 활성화, 일부 항목 보류 |
+| DR-021 | Source / Framework-vs-Project-State Boundary | 2026-06-05 | Accepted | scaffold 자산 3-class(framework/project-state/Optional pack), 물리 이동 없이 logical marker |
+| DR-022 | PLAN Lifecycle — T5 배선 + Archive Drain | 2026-06-05 | Accepted | hard gate 미신설, 기존 T5 closeout 배선 + PLAN archive drain |
+| DR-023 | Canonical + Hybrid Adapter | 2026-06-05 | Accepted | workflow canonical SSoT 1벌 + 도구별 hybrid adapter(hard-stop만 자체보유) |
+| DR-024 | Gate Strictness 2D Taxonomy | 2026-06-05 | Accepted | strictness × enforcement mode 2축, archive=optional hygiene |
