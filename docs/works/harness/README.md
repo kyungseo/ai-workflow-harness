@@ -7,11 +7,13 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| CHORE-20260605-004 | PLAN Lifecycle Wiring (DR-022 적용) | `docs/works/harness/CHORE-20260605-004-plan-lifecycle-wiring.md` |
 
 ## Done (Archive Pending)
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260605-004 | PLAN Lifecycle Wiring (DR-022 적용) | 2026-06-05 | `docs/works/harness/CHORE-20260605-004-plan-lifecycle-wiring.md` |
 | CHORE-20260605-003 | Slice 1a/1b — Defects + Invariants | 2026-06-05 | `docs/works/harness/CHORE-20260605-003-slice1ab-defects-invariants.md` |
 | CHORE-20260605-002 | Slice 0 DR Authoring (DR-021~024) | 2026-06-05 | `docs/works/harness/CHORE-20260605-002-slice0-dr-authoring.md` |
 | CHORE-20260605-001 | Phase 2 Slice 0 — Direction Decision | 2026-06-05 | `docs/works/harness/CHORE-20260605-001-phase2-slice0-direction.md` |

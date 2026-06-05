@@ -27,6 +27,7 @@ disable-model-invocation: true
    - Recent Decisions 변경 제안에는 후속 행동을 바꾸는 운영/기술 판단만 포함해. 단순 완료 사실은 Active Work pointer, Work 파일 Checkpoints, commit history에 둬.
    - Recent Decisions는 최근 8개 rolling window를 유지하고, 초과분 제거 전 DR-worthy 항목이면 대응 DR 존재 여부를 확인해.
    - 사용자가 명시적으로 승인한 뒤에만 STATUS.md를 수정해.
+   - PLAN impact(T5): 이번 세션 결정이 `docs/PLAN.md` roadmap/milestone 방향에 영향을 줬으면 summary에 보고해. Work closeout 시의 PLAN 처리는 `/close`가 담당하며 `/done`은 보고 수준에 그친다(closeout gate 아님).
 7. 의사결정 기록 필요 여부
    - 이번 작업에서 DR-worthy 결정이 확정되었으면 목록화하고 기록 여부를 물어봐.
    - 계획·검토 중 발견된 미결 의사결정이 있으면 STATUS.md OQ 추가 및 DR Draft 생성을 제안해.
