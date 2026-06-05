@@ -24,3 +24,4 @@ Superseded DR은 `docs/archive/docs/decisions/`로 이동된다.
 | DR-022 | PLAN Lifecycle — T5 배선 + Archive Drain | 2026-06-05 | Accepted | hard gate 미신설, 기존 T5 closeout 배선 + PLAN archive drain |
 | DR-023 | Canonical + Hybrid Adapter | 2026-06-05 | Accepted | workflow canonical SSoT 1벌 + 도구별 hybrid adapter(hard-stop만 자체보유) |
 | DR-024 | Gate Strictness 2D Taxonomy | 2026-06-05 | Accepted | strictness × enforcement mode 2축, archive=optional hygiene |
+| DR-025 | Commit Gate Runtime Enforcement | 2026-06-06 | Accepted | DR-024 child. bundling 대상={T15,T16}, hard-stop=local-only 증명 기준(불가 시 degrade), override=commit-trailer sentinel, 구현은 downstream 위임 |
