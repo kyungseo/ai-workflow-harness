@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-05 (Scaffold manifest + --check Done — CHORE-20260605-006, Q4 최소 경로)
+Last updated: 2026-06-05 (WORKFLOW-MANUAL deep rewrite Done — CHORE-20260606-003)
 
 ## Current State
 
@@ -49,5 +49,6 @@ Last updated: 2026-06-05 (Scaffold manifest + --check Done — CHORE-20260605-00
 
 ## Next Actions
 
-1. **하류 slice 진행** — Q4 manifest + `--check` 최소 경로(CHORE-20260605-006) Done → slice #13 전제조건 충족(`--check` 경로 확보). 이제 **breaking slice #13(DR-023 canonical+adapter 전환 + no-alias command rename 동시)** unblock. 단 High reversal-cost breaking이므로 착수 시 신중한 Work+plan+cross-agent 합의 필요. 이후 user-facing 개편(slice #11). 미이월: PQ-5/OQ-7(scaffold PLAN Roadmap Lifecycle propagate) 별도 scaffold PLAN/template slice, settings/hooks manifest 추적 일원화(D-7 follow-up). 각 slice 착수 시 Next Actions 재평가(자동 연쇄 아님).
+1. **Scaffold target maintenance note 후보 검토** — CHORE-20260606-003 후속. generated target README에 framework-owned vs project-owned 경계, `--check` 사용법, `--upgrade` 미제공·수동 selective migration 주의를 짧게 안내할지 검토한다(`docs/backlog/HARNESS.md`의 `scaffold-target-maintenance-note` 후보).
 2. **child DR — Commit gate runtime enforcement** — DR-024 하류. causal finalization bundling hard-stop/override 정책을 gate runtime enforcement 적용 slice에서 별도 DR로 작성.
+3. **Phase 2 원칙 정리 후보 검토** — 외부화 실패모드 통합 설계 원칙과 Work 파일 계층화 규칙 후보는 별도 Work로 착수 여부를 판단한다.

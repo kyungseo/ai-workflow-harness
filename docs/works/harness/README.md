@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260606-003 | WORKFLOW-MANUAL Deep Rewrite | 2026-06-05 | `docs/works/harness/CHORE-20260606-003-workflow-manual-deep-rewrite.md` |
 | CHORE-20260606-002 | User-Facing Documentation Overhaul | 2026-06-05 | `docs/works/harness/CHORE-20260606-002-user-facing-doc-overhaul.md` |
 | CHORE-20260606-001 | Canonical Adapter + No-Alias Command Rename | 2026-06-05 | `docs/works/harness/CHORE-20260606-001-canonical-adapter-rename.md` |
 | CHORE-20260605-006 | Scaffold Manifest + --check (Q4 최소 경로) | 2026-06-05 | `docs/works/harness/CHORE-20260605-006-scaffold-manifest-check.md` |
