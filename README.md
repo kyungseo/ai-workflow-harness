@@ -482,7 +482,12 @@ scripts/create-harness.sh --workflow source-gitflow my-app /path/to/my-app
 
 # dry-run (파일 생성 없이 확인)
 scripts/create-harness.sh --dry-run my-app
+
+# drift check (target의 framework 파일이 source 대비 얼마나 바뀌었나 보고, report-only)
+scripts/create-harness.sh --check /path/to/my-app
 ```
+
+scaffold는 target에 `.harness/manifest.json`(harness version + framework 파일 list/hash)을 기록한다. `--check`는 이 manifest를 읽어 각 framework 파일이 현재 source 대비 `source-updated`(source가 갱신됨) / `locally-modified`(target에서 수정됨) / `in-sync`인지 보고한다. 자동 머지(`--upgrade`)는 아직 제공하지 않는다.
 
 **`--profile`과 `--workflow` 역할 구분:**
 - `--profile`: project template 선택 (언어·프레임워크 예시 rule/prompt 포함 여부)

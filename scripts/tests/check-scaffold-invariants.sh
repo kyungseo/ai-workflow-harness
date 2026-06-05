@@ -173,6 +173,34 @@ check_target() {
     FAIL=1
   fi
 
+  # [5] .harness/manifest.json 존재·shape + --check 자기일관성 (Q4)
+  echo ""
+  echo "== [5] manifest + --check 자기일관성 (hard-fail) =="
+  local manifest="${TARGET}/.harness/manifest.json"
+  local c5_fail=0 f5
+  if [[ ! -f "${manifest}" ]]; then
+    echo "  FAIL: .harness/manifest.json 없음"
+    c5_fail=1
+  else
+    for f5 in '"manifest_version"' '"harness_version"' '"hash_mode": "normalized_source_template"' '"framework_files"'; do
+      grep -q "${f5}" "${manifest}" || { echo "  FAIL: manifest 필드 누락: ${f5}"; c5_fail=1; }
+    done
+    # 갓 생성한 target은 source 대비 drift 0이어야 한다(자기일관성)
+    if grep -q '"path"' "${manifest}"; then
+      local drift_line
+      drift_line="$("${REPO_ROOT}/scripts/create-harness.sh" --check "${TARGET}" 2>/dev/null | grep 'summary:')"
+      if ! printf '%s' "${drift_line}" | grep -q ', 0 drifted'; then
+        echo "  FAIL: --check 자기일관성 위반 → ${drift_line}"
+        c5_fail=1
+      fi
+    fi
+  fi
+  if [[ "${c5_fail}" -eq 0 ]]; then
+    echo "  OK: manifest 형식 + --check 자기일관성(drift 0)"
+  else
+    FAIL=1
+  fi
+
   echo ""
   if [[ "${FAIL}" -eq 0 ]]; then
     echo "RESULT: PASS"

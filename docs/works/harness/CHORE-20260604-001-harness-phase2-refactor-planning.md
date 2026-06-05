@@ -981,7 +981,7 @@ Phase 2 리팩토링이 거의 모든 surface를 건드리므로, `README.md`를
 | CHORE-20260604-001/OQ-7 | target-local harness customization 방향 기록처를 Work/DR만으로 둘 것인가, optional `docs/HARNESS-PLAN.md`를 둘 것인가? | Codex + Claude | Open |
 | CHORE-20260604-001/OQ-8 | Canonical+Adapter 전환 시 adapter에 남길 minimum hard-stop 절차의 범위는 어디까지인가? | Codex + Claude | Open |
 | CHORE-20260604-001/OQ-9 | generated reference integrity test에서 dangling reference를 어떤 수준으로 판정할 것인가? direct link, filename mention, historical example을 구분해야 하는가? | Codex + Claude | Open |
-| CHORE-20260604-001/OQ-10 | manifest hash 기준은 normalized template hash인가, rendered output hash인가? | Codex + Claude | Open |
+| CHORE-20260604-001/OQ-10 | manifest hash 기준은 normalized template hash인가, rendered output hash인가? | Codex + Claude | Resolved — normalized source-template hash (단일 토큰 치환이라 project-agnostic). CHORE-20260605-006 R20, DR 신설 안 함 |
 | CHORE-20260604-001/OQ-11 | user-facing manual/guide의 canonical 참조를 완전 0까지 줄일 것인가, 중복 없는 단방향 위임 pointer는 유지할 것인가? | Codex + Claude | Open |
 | CHORE-20260604-001/OQ-12 | `/close`를 commit-agnostic Work Done state edit으로 제한할 것인가, commit 전략까지 소유하게 둘 것인가? | Codex + Claude | Open |
 | CHORE-20260604-001/OQ-13 | causal finalization bundling을 commit gate의 conditional mandatory hard-stop으로 둘 것인가, warning/recommended로 둘 것인가? | Codex + Claude | Open |

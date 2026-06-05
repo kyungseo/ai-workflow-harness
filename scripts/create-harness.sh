@@ -19,6 +19,10 @@
 #                              extended prompt bundle, and their companion DRs
 #                              (DR-017, DR-020 — reference closure). Default
 #                              output is minimal.
+#   --check <target-dir>       Report-only drift check. Reads the target's
+#                              .harness/manifest.json and compares each tracked
+#                              framework file against the current source
+#                              template (normalized hash). Does not scaffold.
 #
 # Defaults:
 #   New mode       — TARGET must not exist; creates everything fresh.
@@ -35,6 +39,7 @@ MODE="new"
 PROFILE="generic"
 WORKFLOW_MODE="generic"
 WITH_OPTIONAL=false
+CHECK_MODE=false
 
 while [[ "${1:-}" == --* || "${1:-}" == -* ]]; do
   case "${1}" in
@@ -66,6 +71,10 @@ while [[ "${1:-}" == --* || "${1:-}" == -* ]]; do
       WITH_OPTIONAL=true
       shift
       ;;
+    --check)
+      CHECK_MODE=true
+      shift
+      ;;
     *)
       echo "Unknown flag: $1" >&2
       exit 1
@@ -89,37 +98,67 @@ case "${WORKFLOW_MODE}" in
     ;;
 esac
 
-PROJECT_NAME="${1:?Usage: $0 [--dry-run] [--existing] [--profile generic|spring-boot] [--workflow generic|source-gitflow] <project-name> [target-dir]}"
+# --check mode takes a single positional <target-dir> and skips scaffolding setup.
+if [[ "${CHECK_MODE}" == true ]]; then
+  CHECK_TARGET="${1:?Usage: $0 --check <target-dir>}"
+else
+  PROJECT_NAME="${1:?Usage: $0 [--dry-run] [--existing] [--profile generic|spring-boot] [--workflow generic|source-gitflow] [--with-optional] <project-name> [target-dir]}"
 
-if [[ "${MODE}" == "existing" ]]; then
-  if [[ -z "${2:-}" ]]; then
-    echo "ERROR: --existing requires <existing-project-root>." >&2
-    echo "Usage: $0 --existing <project-name> <existing-project-root>" >&2
+  if [[ "${MODE}" == "existing" ]]; then
+    if [[ -z "${2:-}" ]]; then
+      echo "ERROR: --existing requires <existing-project-root>." >&2
+      echo "Usage: $0 --existing <project-name> <existing-project-root>" >&2
+      exit 1
+    fi
+    TARGET_ROOT="$2"
+  else
+    TARGET_ROOT="${2:-${TEMPLATE_ROOT}/temp/${PROJECT_NAME}}"
+  fi
+fi
+
+# ── Guards (scaffold modes only) ─────────────────────────────────────────────
+if [[ "${CHECK_MODE}" != true ]]; then
+  if [[ "${MODE}" == "new" && -d "${TARGET_ROOT}" ]]; then
+    echo "ERROR: '${TARGET_ROOT}' already exists. Use --existing to overlay." >&2
     exit 1
   fi
-  TARGET_ROOT="$2"
-else
-  TARGET_ROOT="${2:-${TEMPLATE_ROOT}/temp/${PROJECT_NAME}}"
-fi
 
-# ── Guards ──────────────────────────────────────────────────────────────────
-if [[ "${MODE}" == "new" && -d "${TARGET_ROOT}" ]]; then
-  echo "ERROR: '${TARGET_ROOT}' already exists. Use --existing to overlay." >&2
-  exit 1
-fi
-
-if [[ "${MODE}" == "existing" && ! -d "${TARGET_ROOT}" ]]; then
-  echo "ERROR: existing project root does not exist: '${TARGET_ROOT}'." >&2
-  exit 1
+  if [[ "${MODE}" == "existing" && ! -d "${TARGET_ROOT}" ]]; then
+    echo "ERROR: existing project root does not exist: '${TARGET_ROOT}'." >&2
+    exit 1
+  fi
 fi
 
 TODAY="$(date +%Y-%m-%d)"
+
+# Harness version (manifest baseline). Root VERSION file is the single bump point.
+if [[ -f "${TEMPLATE_ROOT}/VERSION" ]]; then
+  HARNESS_VERSION="$(tr -d ' \t\n\r' < "${TEMPLATE_ROOT}/VERSION")"
+else
+  HARNESS_VERSION="0.0.0-dev"
+fi
+SOURCE_IDENTITY="ai-workflow-harness"
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 rel() {
   local path="$1"
   echo "${path#${TARGET_ROOT}/}"
 }
+
+# sha256 of a file's raw bytes (portable: Linux sha256sum / macOS shasum).
+sha256_of() {
+  local f="$1"
+  if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum "${f}" | awk '{print $1}'
+  else
+    shasum -a 256 "${f}" | awk '{print $1}'
+  fi
+}
+
+# Manifest accumulator: adapt() appends one JSON object per framework file.
+# Hash basis = normalized source-template hash (DR-021/023 / OQ-10):
+# the source file before single-token substitution, so it is project-agnostic.
+MANIFEST_ROWS=""
 
 ensure_dir() {
   local dir="$1"
@@ -150,6 +189,14 @@ adapt() {
   if can_write "${dst}"; then
     sed "s/ai-workflow-harness/${PROJECT_NAME}/g" "${src}" > "${dst}"
     echo "  create: $(rel "${dst}")"
+    # Record this framework-owned file in the manifest accumulator.
+    # path = target-relative, src = template-relative (re-hash anchor for --check).
+    local rel_dst rel_src h
+    rel_dst="$(rel "${dst}")"
+    rel_src="${src#${TEMPLATE_ROOT}/}"
+    h="$(sha256_of "${src}")"
+    MANIFEST_ROWS="${MANIFEST_ROWS}    {\"path\": \"${rel_dst}\", \"src\": \"${rel_src}\", \"sha256\": \"${h}\"},
+"
   fi
 }
 
@@ -173,6 +220,111 @@ copy_prompt() {
   local name="$1"
   adapt "${TEMPLATE_ROOT}/prompts/${name}" "${TARGET_ROOT}/prompts/${name}"
 }
+
+# ── --check: report-only drift diagnostic ────────────────────────────────────
+# Compares each framework file recorded in the target manifest against the
+# current source template (normalized hash). Report-only; writes nothing.
+# Statuses: in-sync / source-updated (primary) / locally-modified (advisory) /
+#           source-missing / target-missing.
+# source-updated takes precedence: when the source template changed, local edits
+# cannot be cleanly separated without an at-generation snapshot.
+# Exit: 0 = clean or drift-only, 2 = invalid manifest, 3 = untracked target.
+do_check() {
+  local target="$1"
+  local manifest="${target}/.harness/manifest.json"
+
+  if [[ ! -d "${target}" ]]; then
+    echo "ERROR: target dir not found: ${target}" >&2
+    return 2
+  fi
+  if [[ ! -f "${manifest}" ]]; then
+    echo "untracked target / pre-manifest scaffold: ${target}"
+    echo "  (.harness/manifest.json 없음 — manifest 도입 이전 scaffold이거나 harness 비대상)"
+    return 3
+  fi
+
+  # field extractor for my own controlled single-line JSON format
+  local field
+  field() { grep "\"$1\"" "${manifest}" | head -1 | sed -E "s/.*\"$1\": \"?([^\",]*)\"?.*/\1/"; }
+
+  local m_version m_project
+  m_version="$(field harness_version)"
+  m_project="$(field project_name)"
+  if [[ -z "${m_version}" || -z "${m_project}" ]] || ! grep -q '"framework_files"' "${manifest}"; then
+    echo "ERROR: invalid manifest (harness_version/project_name/framework_files 누락): ${manifest}" >&2
+    return 2
+  fi
+
+  echo "harness --check: ${target}"
+  echo "  manifest version : ${m_version}   (current source: ${HARNESS_VERSION})"
+  [[ "${m_version}" != "${HARNESS_VERSION}" ]] && echo "  version delta    : ${m_version} -> ${HARNESS_VERSION}"
+  echo ""
+
+  local total=0 insync=0 drift=0
+  local line rel_dst rel_src recorded cur_src_hash tgt_hash rendered_hash status
+  local check_list
+  check_list="$(mktemp)"
+
+  # iterate framework_files entries: select by "path" (entry-only; avoids the
+  # hash_algorithm metadata line). '|| true' so an empty set does not trip set -e.
+  grep '"path"' "${manifest}" > "${check_list}" 2>/dev/null || true
+  if [[ ! -s "${check_list}" ]]; then
+    echo "ERROR: invalid manifest (framework_files 엔트리 없음): ${manifest}" >&2
+    rm -f "${check_list}"
+    return 2
+  fi
+  while IFS= read -r line; do
+    [[ "${line}" == *'"path"'* ]] || continue
+    rel_dst="$(printf '%s' "${line}" | sed -E 's/.*"path": "([^"]*)".*/\1/')"
+    rel_src="$(printf '%s' "${line}" | sed -E 's/.*"src": "([^"]*)".*/\1/')"
+    recorded="$(printf '%s' "${line}" | sed -E 's/.*"sha256": "([^"]*)".*/\1/')"
+    total=$((total + 1))
+
+    if [[ ! -f "${TEMPLATE_ROOT}/${rel_src}" ]]; then
+      status="source-missing"
+    elif [[ ! -f "${target}/${rel_dst}" ]]; then
+      status="target-missing"
+    else
+      cur_src_hash="$(sha256_of "${TEMPLATE_ROOT}/${rel_src}")"
+      if [[ "${cur_src_hash}" != "${recorded}" ]]; then
+        # source evolved since scaffold (primary signal). Local edits cannot be
+        # cleanly separated without an at-generation snapshot, so report
+        # source-updated.
+        status="source-updated"
+      else
+        # source unchanged: forward-render the current template with the target's
+        # project name (same substitution adapt() used) and compare to the target
+        # file. Forward rendering is reliable; reverse-normalizing over-replaces
+        # common project-name substrings.
+        rendered_hash="$(sed "s/${SOURCE_IDENTITY}/${m_project}/g" "${TEMPLATE_ROOT}/${rel_src}" | sha256_of /dev/stdin)"
+        tgt_hash="$(sha256_of "${target}/${rel_dst}")"
+        if [[ "${tgt_hash}" != "${rendered_hash}" ]]; then
+          status="locally-modified"
+        else
+          status="in-sync"
+        fi
+      fi
+    fi
+
+    if [[ "${status}" == "in-sync" ]]; then
+      insync=$((insync + 1))
+    else
+      drift=$((drift + 1))
+      echo "  [${status}] ${rel_dst}"
+    fi
+  done < "${check_list}"
+  rm -f "${check_list}"
+
+  echo ""
+  echo "summary: ${total} tracked, ${insync} in-sync, ${drift} drifted"
+  echo "  (source-updated=primary signal, locally-modified=advisory)"
+  return 0
+}
+
+if [[ "${CHECK_MODE}" == true ]]; then
+  do_check "${CHECK_TARGET}"
+  exit $?
+fi
 
 if [[ "${DRY_RUN}" == true ]]; then
   echo "Dry-run [mode: ${MODE}, profile: ${PROFILE}, workflow: ${WORKFLOW_MODE}] — target: ${TARGET_ROOT}"
@@ -202,6 +354,7 @@ for dir in \
   "${TARGET_ROOT}/.cursor/rules" \
   "${TARGET_ROOT}/.agents/skills" \
   "${TARGET_ROOT}/.codex" \
+  "${TARGET_ROOT}/.harness" \
   "${TARGET_ROOT}/prompts"; do
   ensure_dir "${dir}"
 done
@@ -423,6 +576,32 @@ if [[ "${PROFILE}" == "spring-boot" ]]; then
     21-create-layer.prompt.md; do
     copy_prompt "$f"
   done
+fi
+
+# ── Harness manifest (.harness/manifest.json) ────────────────────────────────
+# Records harness version + framework-owned file list/hash so the target knows
+# its baseline and `--check` can report drift. Framework files were accumulated
+# by adapt(); B-class seeds (write_text) are intentionally excluded.
+if [[ "${DRY_RUN}" != true ]]; then
+  # strip trailing comma+newline from the accumulated rows
+  MANIFEST_BODY="${MANIFEST_ROWS%,
+}"
+  write_text "${TARGET_ROOT}/.harness/manifest.json" "{
+  \"manifest_version\": 1,
+  \"harness_version\": \"${HARNESS_VERSION}\",
+  \"source_identity\": \"${SOURCE_IDENTITY}\",
+  \"generated_at\": \"${TODAY}\",
+  \"profile\": \"${PROFILE}\",
+  \"workflow_mode\": \"${WORKFLOW_MODE}\",
+  \"with_optional\": ${WITH_OPTIONAL},
+  \"project_name\": \"${PROJECT_NAME}\",
+  \"hash_algorithm\": \"sha256\",
+  \"hash_mode\": \"normalized_source_template\",
+  \"framework_files\": [
+${MANIFEST_BODY}
+  ]
+}
+"
 fi
 
 # ── Generated README ─────────────────────────────────────────────────────────

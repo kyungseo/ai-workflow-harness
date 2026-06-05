@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260605-006 | Scaffold Manifest + --check (Q4 최소 경로) | 2026-06-05 | `docs/works/harness/CHORE-20260605-006-scaffold-manifest-check.md` |
 | CHORE-20260605-005 | Scaffold Minimal Output (DR-021 적용) | 2026-06-05 | `docs/works/harness/CHORE-20260605-005-scaffold-minimal-output.md` |
 | CHORE-20260605-004 | PLAN Lifecycle Wiring (DR-022 적용) | 2026-06-05 | `docs/works/harness/CHORE-20260605-004-plan-lifecycle-wiring.md` |
 | CHORE-20260605-003 | Slice 1a/1b — Defects + Invariants | 2026-06-05 | `docs/works/harness/CHORE-20260605-003-slice1ab-defects-invariants.md` |
