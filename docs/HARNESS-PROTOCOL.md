@@ -7,6 +7,8 @@
 `docs/WORKFLOW-MANUAL.md`는 사람이 읽는 사용자 매뉴얼이다.
 Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, 이 문서다.
 
+> **Optional pack 참조 주의:** `docs/HARNESS-ARCHITECTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/WORKFLOW-MANUAL.md`는 Optional source pack이라 minimal scaffold에는 존재하지 않을 수 있다. 이 문서가 이 셋을 가리키는 cascade·참조 항목은 해당 문서가 없으면 N/A로 처리하고, 필요하면 `scripts/create-harness.sh --with-optional`로 재생성하거나 source repo 문서를 참조한다.
+
 ## 1. Purpose
 
 하네스의 목적은 자유로운 탐색이 아니라 상태 기반, 통제된 실행이다.

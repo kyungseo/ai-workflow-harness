@@ -100,6 +100,8 @@ git diff --cached --name-only
 `docs/WORKFLOW-MANUAL.md`는 평시 AI 실행 규칙 로드 대상이 아니며, `--cascade`에서 user-facing workflow drift를 확인할 때만 필요한 섹션을 읽는다.
 예: slash command 설명, trigger reference, 사용자-visible workflow, scaffold 안내가 바뀐 경우.
 
+> **Optional pack 참조 주의:** 아래 Required Surface Matrix·Grep Pack이 가리키는 `docs/WORKFLOW-MANUAL.md`, `docs/HARNESS-ARCHITECTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`는 Optional source pack이라 minimal scaffold에는 없을 수 있다. 해당 파일이 없으면 그 surface/grep 항목은 N/A로 처리하고, 필요하면 `scripts/create-harness.sh --with-optional`로 재생성하거나 source repo 문서를 참조한다.
+
 `--cascade`는 변경 파일 기준으로 감사 대상을 좁힌다. 단, 선택된 파일 유형의 required surface, grep, simulation은 생략하지 않고, 누락·불일치·과잉반복·불필요복잡성·사용자생산성저하를 P0/P1/P2로 보고한다.
 변경 파일이 없으면 Quick 모드(A+B+E)와 동일하게 동작한다.
 전체 surface를 모두 훑어야 하면 `--full --cascade`를 사용한다.

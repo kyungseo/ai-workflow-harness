@@ -26,7 +26,7 @@ $ARGUMENTS 또는 현재 대화에서 확정된 기술적 의사결정 사항을
    - 불필요하면 이유를 closeout 또는 commit 전 summary에 명시해.
    - 후속 행동을 바꾸는 운영/기술 판단만 포함해. 단순 완료 사실은 Active Work pointer, Work 파일 Checkpoints, commit history에 둬.
    - 최근 8개 rolling window를 유지해. 초과분 제거 전 DR-worthy 항목이면 대응 DR 존재 여부를 확인해.
-6. PLAN/HARNESS-ARCHITECTURE/HARNESS-MAINTAINER-GUIDE/backlog cascade 대상이 있는지 확인하고 제안해.
+6. PLAN/HARNESS-ARCHITECTURE/HARNESS-MAINTAINER-GUIDE/backlog cascade 대상이 있는지 확인하고 제안해. (HARNESS-ARCHITECTURE·HARNESS-MAINTAINER-GUIDE는 optional pack — minimal scaffold에 없으면 해당 대상 N/A.)
 
 승인 없이 파일을 생성하지 마.
 승인 없이 STATUS.md를 수정하지 마.

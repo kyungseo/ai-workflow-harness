@@ -453,6 +453,7 @@ main
 
 새 프로젝트 또는 기존 프로젝트에 적용할 때는 [`scripts/create-harness.sh`](scripts/create-harness.sh)를 사용한다.  
 기본 profile은 framework를 가정하지 않는 `generic`이다 — 언어·프레임워크별 예시 rule/prompt 없이 harness 구조만 생성한다. Spring Boot 등 특정 스택 예시가 필요하면 `--profile spring-boot` 등을 명시한다.
+기본 출력은 minimal이다 — 무거운 framework 문서(`HARNESS-ARCHITECTURE`/`HARNESS-MAINTAINER-GUIDE`/`WORKFLOW-MANUAL`)와 확장 prompt 번들은 제외된다. 이들이 필요하면 `--with-optional`로 함께 생성한다.
 
 > **권장 경로:** 이 repository를 clone한 뒤 직접 project-local workspace로 전환하지 않는다.
 > 이 repository는 harness source로 유지하고, 실제 적용 대상은 아래 scaffold 명령으로 별도 target directory에 생성한다.
@@ -472,6 +473,9 @@ scripts/create-harness.sh --existing my-app /path/to/existing-project
 
 # Spring Boot example pack 포함
 scripts/create-harness.sh --profile spring-boot my-app /path/to/my-app
+
+# Optional pack 포함 (heavy framework 문서 + 확장 prompt)
+scripts/create-harness.sh --with-optional my-app /path/to/my-app
 
 # Gitflow 브랜치 정책 포함 (feature→develop→main, Branch Isolation Gate)
 scripts/create-harness.sh --workflow source-gitflow my-app /path/to/my-app
