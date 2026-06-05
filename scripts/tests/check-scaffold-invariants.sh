@@ -62,6 +62,7 @@ core_files() {
   find "${TARGET}/docs/decisions" "${TARGET}/.claude/rules" "${TARGET}/.claude/commands" \
        "${TARGET}/.agents/skills" "${TARGET}/.cursor/rules" \
        -type f \( -name '*.md' -o -name '*.mdc' \) 2>/dev/null
+  find "${TARGET}/skills/workflow" -type f -name '*.md' 2>/dev/null
   find "${TARGET}/prompts" -type f -name '*session-start.md' 2>/dev/null
 }
 

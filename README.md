@@ -241,7 +241,7 @@ flowchart TD
     FAIL --> RECOVER["RECOVER\n계획 수정 또는 범위 축소"]
     RECOVER --> PLAN
     PASS -- "예" --> CHECKPOINT["CHECKPOINT\n필요한 상태 갱신·보고"]
-    CHECKPOINT --> END["END\n/done 또는 다음 작업"]
+    CHECKPOINT --> END["END\n/session-summary 또는 다음 작업"]
 
     style INIT fill:#d4edda,stroke:#28a745
     style APPROVAL fill:#fff3cd,stroke:#ffc107
@@ -250,12 +250,12 @@ flowchart TD
     style RECOVER fill:#fff3cd,stroke:#ffc107
 ```
 
-1. `/start` 또는 intent recognition으로 현재 상태를 확인한다.
-2. `/pick`, `/work`, `/resume`, `/debug` 중 맞는 흐름으로 진입한다.
+1. `/session-start` 또는 intent recognition으로 현재 상태를 확인한다.
+2. `/work-select`, `/work-plan`, `/work-resume`, `/work-debug` 중 맞는 흐름으로 진입한다.
 3. Plan에는 Scope, Files, Verification, Risk, Reversal Cost를 포함한다.
 4. 승인 후 실행한다.
 5. 검증 실패 시 commit과 checkpoint를 만들지 않는다.
-6. Work 완료는 `/close`, 세션 요약은 `/done`으로 분리한다.
+6. Work 완료는 `/work-close`, 세션 요약은 `/session-summary`으로 분리한다.
 
 ---
 
@@ -265,11 +265,11 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    NEW["새 요청·아이디어·버그"] --> REGISTER["/register\n등록·라우팅"]
+    NEW["새 요청·아이디어·버그"] --> REGISTER["/work-register\n등록·라우팅"]
     REGISTER --> NOW{"지금 착수?"}
 
     NOW -- "예" --> ACTIVE["STATUS.md Active Work\n현재 진행 pointer"]
-    ACTIVE --> WORK["/work\n계획 수립"]
+    ACTIVE --> WORK["/work-plan\n계획 수립"]
     WORK --> WORKFILE["docs/works/{category}\n{ID}-*.md"]
 
     NOW -- "아니오" --> TYPE{"성격"}
@@ -336,10 +336,10 @@ flowchart LR
     BACKLOG["backlog · 즉시 착수\n후보 pool 또는 신규 요청"]
     ARCHIVE["archive\n완료 이력"]
 
-    BACKLOG -->|"/work 승인"| STATUS
+    BACKLOG -->|"/work-plan 승인"| STATUS
     STATUS -->|"pointer"| WORK
     WORK -->|"checkpoint/discovery"| WORK
-    WORK -->|"/close Done"| STATUS
+    WORK -->|"/work-close Done"| STATUS
     WORK -->|"archive 승인"| ARCHIVE
 
     style STATUS fill:#d4edda,stroke:#28a745
@@ -361,8 +361,8 @@ flowchart LR
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Active: /work 승인 후 Work 파일 생성
-    Active --> Done: /close 승인
+    [*] --> Active: /work-plan 승인 후 Work 파일 생성
+    Active --> Done: /work-close 승인
     Done --> Archived: archive 승인
     Archived --> [*]
     Done --> [*]
@@ -375,12 +375,12 @@ stateDiagram-v2
     end note
 ```
 
-`/close`와 `/done`은 다르다.
+`/work-close`와 `/session-summary`은 다르다.
 
 | Command | Purpose |
 | --- | --- |
-| `/close` | Work Done 처리 — `status: Done`, `actual_end` 기입, STATUS Active Work 항목 제거 제안 |
-| `/done` | 세션 요약 — Work Done 처리 없음. 완료했다면 먼저 `/close` |
+| `/work-close` | Work Done 처리 — `status: Done`, `actual_end` 기입, STATUS Active Work 항목 제거 제안 |
+| `/session-summary` | 세션 요약 — Work Done 처리 없음. 완료했다면 먼저 `/work-close` |
 
 ---
 
@@ -390,26 +390,26 @@ Claude slash command는 Codex 역시 같은 의도로 수행한다.
 
 | Command | Use When | Core Action |
 | --- | --- | --- |
-| `/start` | 세션 시작 | STATUS current sections 확인, 현재 상태와 후보 요약 |
-| `/pick` | 다음 작업 선택 | product/harness backlog 비교 후 추천 |
-| `/register` | 새 항목 등록 | 긴급도·성격에 따라 Product/Harness backlog, Blockers/Open Questions, Next Actions 중 적절한 위치로 등록 |
-| `/work {ID\|title-or-slug}` | 특정 작업 시작 | Work 파일 확인, 필요 시 Work ID 확정, risk 판단, plan 승인 대기 |
-| `/resume {ID}` | 중단 작업 재개 | 실제 파일 상태와 STATUS·Work 파일 간 불일치 확인 |
-| `/debug` | 오류 분석 | 원인 근거와 최소 수정 계획 |
-| `/doc` | 발표·보고·review package | brief, source, format, quality bar 확인 |
-| `/record-decision` | 결정 기록 | DR 초안 작성 |
-| `/close` | Work 완료 | Done 처리와 선택적 archive |
-| `/done` | 세션 마무리 | 변경·검증·리스크·다음 prompt 요약 |
-| `/health` | workflow 점검 | harness 구조 위생·정합성 점검. 문서 로드 경로 비대화(Workflow Context Weight 감지)와 workflow surface cascade drift 감지 |
+| `/session-start` | 세션 시작 | STATUS current sections 확인, 현재 상태와 후보 요약 |
+| `/work-select` | 다음 작업 선택 | product/harness backlog 비교 후 추천 |
+| `/work-register` | 새 항목 등록 | 긴급도·성격에 따라 Product/Harness backlog, Blockers/Open Questions, Next Actions 중 적절한 위치로 등록 |
+| `/work-plan {ID\|title-or-slug}` | 특정 작업 시작 | Work 파일 확인, 필요 시 Work ID 확정, risk 판단, plan 승인 대기 |
+| `/work-resume {ID}` | 중단 작업 재개 | 실제 파일 상태와 STATUS·Work 파일 간 불일치 확인 |
+| `/work-debug` | 오류 분석 | 원인 근거와 최소 수정 계획 |
+| `/work-doc` | 발표·보고·review package | brief, source, format, quality bar 확인 |
+| `/repo-decision` | 결정 기록 | DR 초안 작성 |
+| `/work-close` | Work 완료 | Done 처리와 선택적 archive |
+| `/session-summary` | 세션 마무리 | 변경·검증·리스크·다음 prompt 요약 |
+| `/repo-health` | workflow 점검 | harness 구조 위생·정합성 점검. 문서 로드 경로 비대화(Workflow Context Weight 감지)와 workflow surface cascade drift 감지 |
 
 Health 체크 권장 cadence:
 
 | Health Mode | Use | 수행 내용 |
 | --- | --- | --- |
-| `/health` | 주 1~2회 또는 작업 블록 시작 전 | STATUS 정확성, tool surface 정합성, Work 파일 Done Criteria 존재 여부 등 핵심 영역 경량 점검 |
-| `/health --full` | Phase 전환 전 또는 월 1회 | Quick 점검 전체 + command/rule 수준 중복 instruction 탐지, 문서 로드 경로 비대화(Workflow Context Weight) 감지, 최근 변경 surface 동기화 확인 |
-| `/health --cascade` | workflow/process 문서 변경 후 | 변경 파일 유형에 따라 canonical → tool-specific → user-facing → scaffold 계층 drift 선택 감사; 반복 문구 중복·충돌·누락 감지 |
-| `/health --full --cascade` | 대형 harness 변경 후 최종 점검 | 전체 영역 점검 + 모든 surface cascade 감사; 중복 instruction·충돌·누락 통합 수행 |
+| `/repo-health` | 주 1~2회 또는 작업 블록 시작 전 | STATUS 정확성, tool surface 정합성, Work 파일 Done Criteria 존재 여부 등 핵심 영역 경량 점검 |
+| `/repo-health --full` | Phase 전환 전 또는 월 1회 | Quick 점검 전체 + command/rule 수준 중복 instruction 탐지, 문서 로드 경로 비대화(Workflow Context Weight) 감지, 최근 변경 surface 동기화 확인 |
+| `/repo-health --cascade` | workflow/process 문서 변경 후 | 변경 파일 유형에 따라 canonical → tool-specific → user-facing → scaffold 계층 drift 선택 감사; 반복 문구 중복·충돌·누락 감지 |
+| `/repo-health --full --cascade` | 대형 harness 변경 후 최종 점검 | 전체 영역 점검 + 모든 surface cascade 감사; 중복 instruction·충돌·누락 통합 수행 |
 
 ---
 
@@ -513,11 +513,11 @@ flowchart TD
     GW1 --> E["scaffold 생성\nSTATUS.md · BOOTSTRAP.md\nbacklog · decisions(DR-007/008/013/014 + README) · works\ncommands · rules · prompts"]
     GW2 --> E
 
-    E --> G["/start 첫 세션"]
+    E --> G["/session-start 첫 세션"]
 
     G --> H{"STATUS.md Next Actions에\nbootstrap pointer 있음?"}
 
-    H -- "없음" --> I["일반 세션 시작\n/pick → /work → /close"]
+    H -- "없음" --> I["일반 세션 시작\n/work-select → /work-plan → /work-close"]
     H -- "있음" --> J["BOOTSTRAP.md 로드\n§8 First Session Prompt 사용"]
 
     J --> K["Bootstrap Onboarding\nProduct Definition → Project Initialization\n→ Phase 1 Backlog"]
@@ -538,12 +538,12 @@ Implementation Baseline이 비어 있으면 AI가 기능 후보 작업을 착수
 
 ### 이 Repository에서 작업
 
-Claude Code 세션: [`CLAUDE.md`](CLAUDE.md)를 읽고 `/start`로 현재 상태를 확인한다.  
-Codex 세션: [`AGENTS.md`](AGENTS.md)를 읽고 `/start` intent로 현재 상태를 확인한다.
+Claude Code 세션: [`CLAUDE.md`](CLAUDE.md)를 읽고 `/session-start`로 현재 상태를 확인한다.
+Codex 세션: [`AGENTS.md`](AGENTS.md)를 읽고 `/session-start` intent로 현재 상태를 확인한다.
 
 > [!NOTE]
-> - Claude Code는 `/start` 입력 시 `.claude/commands/start.md`를 직접 로드·실행하는 slash command 메커니즘이 있다.
-> - Codex는 네이티브 slash command 실행이 없으므로 `/start`를 intent로 인식해 동일한 워크플로우를 처리한다 — 매핑 기준은 `.claude/rules/docs-workflow.md` Command Intent Recognition 섹션을 따른다.
+> - Claude Code는 `/session-start` 입력 시 `.claude/commands/session-start.md`를 직접 로드·실행하는 slash command 메커니즘이 있다.
+> - Codex는 네이티브 slash command 실행이 없으므로 `/session-start`를 intent로 인식해 동일한 워크플로우를 처리한다 — 매핑 기준은 `.claude/rules/docs-workflow.md` Command Intent Recognition 섹션을 따른다.
 
 ```bash
 # pre-commit hook 선택적 설치 (일반 사용이나 scaffold 적용에는 불필요)
@@ -621,7 +621,7 @@ sh tools/git-hooks/install.sh
 ├── .agents/
 │   └── skills/                            # Codex skill 파일
 ├── .claude/
-│   ├── commands/                          # slash command 정의 (/start, /work, /close 등)
+│   ├── commands/                          # slash command 정의 (/session-start, /work-plan, /work-close 등)
 │   └── rules/                             # path-scoped rule mirror
 ├── .codex/
 │   └── hooks.json                         # Codex hook 설정

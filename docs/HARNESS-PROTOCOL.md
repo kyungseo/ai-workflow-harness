@@ -75,8 +75,8 @@ INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END
 | APPROVAL | 사용자 승인 대기 | "진행할까요?" |
 | EXECUTE | 승인된 범위만 수행 | minimal diff |
 | VALIDATE | 결과 확인 | command/result 또는 미실행 사유 |
-| CHECKPOINT | 재개 가능한 저장점. Work Done 처리(`/close`)도 이 단계에서 수행 | approved STATUS update, commit decision |
-| END | 세션 종료(`/done`). Work Done 처리 없음 — Done 처리는 CHECKPOINT에서 `/close`로 수행 | summary, next files, residual risk |
+| CHECKPOINT | 재개 가능한 저장점. Work Done 처리(`/work-close`)도 이 단계에서 수행 | approved STATUS update, commit decision |
+| END | 세션 종료(`/session-summary`). Work Done 처리 없음 — Done 처리는 CHECKPOINT에서 `/work-close`로 수행 | summary, next files, residual risk |
 | FAIL | 규칙 위반 또는 검증 실패 | failure type, root cause |
 | RECOVER | 복구 경로 선택 | options, recommended path |
 
@@ -213,11 +213,11 @@ AI Workflow Harness는 적용 대상 repository에 Product track과 Harness trac
 | 유지보수 절차 | `docs/HARNESS-MAINTAINER-GUIDE.md` |
 | 완료된 Phase 이력 | `docs/archive/` |
 
-새 항목 등록은 `/register`로 수행한다. 긴급도와 성격에 따라 위 위치 중 적절한 곳으로 라우팅된다.
+새 항목 등록은 `/work-register`로 수행한다. 긴급도와 성격에 따라 위 위치 중 적절한 곳으로 라우팅된다.
 
 | 긴급도 / 성격 | 라우팅 대상 |
 | --- | --- |
-| 지금 바로 착수 | `docs/STATUS.md` Active Work -> `/work` 연결 |
+| 지금 바로 착수 | `docs/STATUS.md` Active Work -> `/work-plan` 연결 |
 | 곧 할 것 | `docs/STATUS.md` Next Actions |
 | Product track 작업 | `docs/backlog/PHASE{n}.md` |
 | Harness 작업 | `docs/backlog/HARNESS.md` |
@@ -225,7 +225,7 @@ AI Workflow Harness는 적용 대상 repository에 Product track과 Harness trac
 ## 9. Naming Rules
 
 Work ID, OQ ID, DR ID 형식, File Naming, Historical Prefix 상세 기준은 `docs/HARNESS-NAMING-RULES.md`를 따른다.
-Work ID, OQ ID, DR ID 부여·검증, 파일명 규칙 확인이 필요할 때만 로드한다. `/start`, `/pick`, 일반 status 확인에서는 로드하지 않는다.
+Work ID, OQ ID, DR ID 부여·검증, 파일명 규칙 확인이 필요할 때만 로드한다. `/session-start`, `/work-select`, 일반 status 확인에서는 로드하지 않는다.
 
 ## 10. Work File Decomposition
 
@@ -284,13 +284,13 @@ Backlog의 `Candidate` 항목은 후보 pool이다.
 착수 전 분해, 조사 메모, Work 파일 필요성 판단은 backlog 항목이나 계획 제안에 남긴다.
 Work 파일은 착수 승인 후 `Active` 상태로 생성한다.
 `Done`과 `Archived`는 분리한다.
-Work Done 처리(status: Done, actual_end, README Active->Done, STATUS pointer 제거 제안)와 선택적 archive는 `/close`로 수행한다.
-`/close`는 Work Done 처리만 수행한다. commit/PR이 이어지면 별도 commit gate에서 STATUS Finalization과 Tracking Finalization을 보고한다.
-`/done`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
-Archive 이동은 사용자 명시 승인 또는 `/start`·`/resume`에서 Done 항목 발견 후 승인된 경우에 수행한다.
+Work Done 처리(status: Done, actual_end, README Active->Done, STATUS pointer 제거 제안)와 선택적 archive는 `/work-close`로 수행한다.
+`/work-close`는 Work Done 처리만 수행한다. commit/PR이 이어지면 별도 commit gate에서 STATUS Finalization과 Tracking Finalization을 보고한다.
+`/session-summary`은 세션 요약만 출력하며 Work Done 처리를 포함하지 않는다.
+Archive 이동은 사용자 명시 승인 또는 `/session-start`·`/work-resume`에서 Done 항목 발견 후 승인된 경우에 수행한다.
 
 Review-sensitive Work는 사용자 최종 리뷰를 Done Criteria에 선택적으로 포함한다.
-`/close`는 모든 Work에 사용자 리뷰를 강제하지 않는다. 그러나 Done Criteria에 사용자 최종 리뷰, final review, 검토 후 Done 같은 명시적 리뷰 조건이 있으면 그 조건을 충족하기 전 `status: Done`으로 전환하지 않는다.
+`/work-close`는 모든 Work에 사용자 리뷰를 강제하지 않는다. 그러나 Done Criteria에 사용자 최종 리뷰, final review, 검토 후 Done 같은 명시적 리뷰 조건이 있으면 그 조건을 충족하기 전 `status: Done`으로 전환하지 않는다.
 기본 포함 후보는 harness/workflow surface, user-facing manual, rule/command, policy/operational procedure 변경이다.
 Quick Mode, 단순 오타·링크·기계적 정합성 패치, 테스트·검증으로 닫히는 구현 작업은 기본 제외다.
 
@@ -355,7 +355,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | User-facing workflow docs | `docs/WORKFLOW-MANUAL.md` | 사람이 읽는 매뉴얼. 평시 Agent 자동 로드 대상 아님 |
 | Historical and evaluation docs | `docs/archive/`, `docs/retrospectives/`, reference-only plans | 완료 이력, snapshot, 시점별 평가, 완료된 계획의 참조 기록 |
 | Troubleshooting docs | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 패턴의 재사용 가능한 incident record |
-| Artifacts | `docs/reports/`, `docs/presentations/` | `/doc` 산출물. source traceability와 version naming 유지 |
+| Artifacts | `docs/reports/`, `docs/presentations/` | `/work-doc` 산출물. source traceability와 version naming 유지 |
 | Media assets | root 또는 관련 문서 인접 위치 | 기존 asset은 참조 안정성을 우선하고, 신규 asset은 관련 문서 옆에 둔다 |
 
 ### Update Rules
@@ -434,7 +434,7 @@ cascade 감사 시 `docs/retrospectives/README.md` 인덱스를 참조하여 최
 | T14 | Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
 | T15 | commit 또는 PR 생성 전 | `docs/STATUS.md` 최종본 반영 필요 여부 판정 |
 | T16 | commit 또는 PR 생성 전 | backlog/Work/DR tracker 최종 상태 반영 필요 여부 판정 |
-| T17 | commit 또는 PR 생성 전, Active Work의 Done Criteria 전 항목 `[x]` 확인 | `/close` 선제 제안 — 상태 변경(Work Done, Work Index, STATUS pointer)을 같은 commit에 번들하기 위함 |
+| T17 | commit 또는 PR 생성 전, Active Work의 Done Criteria 전 항목 `[x]` 확인 | `/work-close` 선제 제안 — 상태 변경(Work Done, Work Index, STATUS pointer)을 같은 commit에 번들하기 위함 |
 
 ### Loop Safety
 
@@ -450,16 +450,16 @@ cascade 감사 시 `docs/retrospectives/README.md` 인덱스를 참조하여 최
 - T14는 entrypoint/workflow/protocol/command/rule/prompt/scaffold/status 변경을 기본 L2로 다루며, 관련 tool surface를 확인한다.
 - T15는 자동 STATUS 수정을 허용하지 않는다. Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, Active Work Discovery 최신성을 확인한다. 필요하면 Approval Matrix에 맞는 state-change proposal 또는 `STATUS Update Proposal`을 먼저 제안하고, 불필요하면 commit/PR 전 summary에 이유를 남긴다.
 - T16은 backlog/Work/DR tracker를 실제 완료 상태와 맞추는 gate다. 연결된 backlog 항목의 Status/Done Criteria/Verification, Work 파일 frontmatter/status/Checkpoints/Discovery, Work index README 위치, 관련 DR의 Status/Supersedes/Linked Backlog Items, 완료된 Quick Mode 작업이 backlog Candidate로 남아 있는지 여부를 확인한다.
-- T17은 `/close` 제안만 수행한다. 사용자가 거부하거나 분리를 원하면 기존 commit 흐름대로 진행한다.
-- T15/T16/T17(commit/PR 전 finalization)과 T3(phase transition), `/close`(Work closeout)는 **T5(PLAN 영향 판단)**를 함께 확인한다. PLAN 영향이 있으면 Approval Matrix proposal, 없으면 보고만 한다. PLAN 작성 완료를 hard-stop으로 강제하지 않는다(recommended/warning). PLAN lifecycle/archive-drain 규칙의 SSoT는 `docs/PLAN.md`의 Roadmap Lifecycle 규칙이며, 여기서는 trigger pointer만 둔다.
+- T17은 `/work-close` 제안만 수행한다. 사용자가 거부하거나 분리를 원하면 기존 commit 흐름대로 진행한다.
+- T15/T16/T17(commit/PR 전 finalization)과 T3(phase transition), `/work-close`(Work closeout)는 **T5(PLAN 영향 판단)**를 함께 확인한다. PLAN 영향이 있으면 Approval Matrix proposal, 없으면 보고만 한다. PLAN 작성 완료를 hard-stop으로 강제하지 않는다(recommended/warning). PLAN lifecycle/archive-drain 규칙의 SSoT는 `docs/PLAN.md`의 Roadmap Lifecycle 규칙이며, 여기서는 trigger pointer만 둔다.
 
 ### Cascade Rule
 
 Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 파일 수정은 사용자 승인 또는 명시 요청 후 진행한다.
-`/health --cascade`는 changed-surface cascade audit으로 사용한다.
-감사 범위는 변경 파일 유형에 맞는 canonical -> tool-specific -> user-facing -> scaffold 계층으로 제한하되, 선택된 계층의 required surface, grep, simulation은 생략하지 않는다. 전체 표면 감사가 필요하면 `/health --full --cascade`를 사용한다.
-변경 파일이 없으면 `/health --cascade`는 Quick health mode와 동일하게 동작한다.
+`/repo-health --cascade`는 changed-surface cascade audit으로 사용한다.
+감사 범위는 변경 파일 유형에 맞는 canonical -> tool-specific -> user-facing -> scaffold 계층으로 제한하되, 선택된 계층의 required surface, grep, simulation은 생략하지 않는다. 전체 표면 감사가 필요하면 `/repo-health --full --cascade`를 사용한다.
+변경 파일이 없으면 `/repo-health --cascade`는 Quick health mode와 동일하게 동작한다.
 `--cascade` 대상이 workflow context/load path 관련 파일이면 Area H (Workflow Context Weight)도 활성화한다.
 
 | Level | Action | Meaning |
@@ -473,9 +473,10 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 
 | 변경 대상 | 반드시 확인할 표면 |
 | --- | --- |
-| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.cursor/rules/`, `.agents/skills/`, `.codex/hooks.json`, `prompts/`, `scripts/create-harness.sh`가 있으면 scaffold source |
-| `.claude/commands/*.md` | `AGENTS.md` skill routing pointer, `.agents/skills/workflow-{name}/SKILL.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md`, `docs/HARNESS-QUICK-REFERENCE.md` |
-| `.agents/skills/*/SKILL.md` | `.claude/commands/` 대응 파일, `AGENTS.md` skill routing pointer |
+| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | `skills/workflow/`, `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.cursor/rules/`, `.agents/skills/`, `.codex/hooks.json`, `prompts/`, `scripts/create-harness.sh`가 있으면 scaffold source |
+| `skills/workflow/*.md` | `.claude/commands/` adapter, `.agents/skills/workflow-{name}/SKILL.md` adapter, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `scripts/create-harness.sh`가 있으면 scaffold source |
+| `.claude/commands/*.md` | `skills/workflow/{name}.md`, `AGENTS.md` skill routing pointer, `.agents/skills/workflow-{name}/SKILL.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md`, `docs/HARNESS-QUICK-REFERENCE.md` |
+| `.agents/skills/*/SKILL.md` | `skills/workflow/{name}.md`, `.claude/commands/` 대응 파일, `AGENTS.md` skill routing pointer |
 | `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc` | 반대 tool rule, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` |
 | `.codex/hooks.json` | `AGENTS.md`, `docs/HARNESS-PROTOCOL.md` hook 관련 섹션 |
 | `prompts/*session-start.md` | `prompts/README.md`, `AGENTS.md`, `CLAUDE.md`, relevant command/rule |
