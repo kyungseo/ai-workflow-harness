@@ -683,6 +683,18 @@ claude        # Claude Code 열기
 git repository는 자동으로 초기화되지 않는다. 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
 \`--workflow source-gitflow\`를 선택하지 않았다면 branch/release policy는 이 target project가 직접 정한다.
 
+### Framework Files & Updating
+
+이 project에는 harness가 생성한 framework-owned 파일과, 이 project가 직접 채워야 하는 project-owned 파일이 함께 있다.
+
+| 구분 | 의미 | 예시 |
+| --- | --- | --- |
+| framework-owned | harness source에서 생성된 workflow 파일. 가능하면 직접 고치기보다 source 업데이트와 비교한다. | entrypoint, command/skill/rule, protocol, prompt |
+| project-owned | 이 project의 실제 상태와 계획을 담는 파일. 첫 세션에서 채워야 한다. | \`docs/STATUS.md\`, backlog, Work 파일, project decision |
+
+Harness source clone에서 \`scripts/create-harness.sh --check /path/to/project\`를 실행하면 manifest를 기준으로 framework 파일이 source 대비 \`in-sync\`, \`source-updated\`, \`locally-modified\`인지 보고한다.
+현재 자동 upgrade 기능은 제공하지 않는다. 이미 적용한 harness를 최신 source와 맞추려면 \`--check\` 결과를 보고 필요한 파일만 수동으로 selective migration한다.
+
 스캐폴딩 직후 첫 \`/session-start\`에서는 \`docs/STATUS.md\` Next Actions를 확인한다.
 Next Actions가 scaffold bootstrap/onboarding을 가리키면 \`docs/BOOTSTRAP.md\`를 §0부터 순서대로 채운다.
 Bootstrap onboarding에 사용할 prompt는 \`docs/BOOTSTRAP.md\` §8에 있다.
@@ -697,7 +709,9 @@ Bootstrap onboarding에 사용할 prompt는 \`docs/BOOTSTRAP.md\` §8에 있다.
 
 ---
 
-*Scaffolded ${TODAY} — [AI Workflow Harness](${HARNESS_DOC_LINK})*
+*Scaffolded ${TODAY} with [AI Workflow Harness](https://github.com/kyungseo/ai-workflow-harness). Local workflow reference: [${HARNESS_DOC_LINK}](${HARNESS_DOC_LINK}).*
+
+*Harness framework origin: AI Workflow Harness, Copyright (c) Kyungseo Park <Kyungseo.Park@gmail.com>, licensed under Apache License 2.0. This notice applies to the scaffolded harness framework files, not to this project's own product code or content.*
 "
 
 # ── Skeleton docs ─────────────────────────────────────────────────────────────
