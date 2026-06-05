@@ -224,6 +224,27 @@ adapt "${TEMPLATE_ROOT}/docs/decisions/DR-008-docs-filename-standard.md" \
       "${TARGET_ROOT}/docs/decisions/DR-008-docs-filename-standard.md"
 adapt "${TEMPLATE_ROOT}/docs/decisions/DR-013-work-file-spec.md" \
       "${TARGET_ROOT}/docs/decisions/DR-013-work-file-spec.md"
+adapt "${TEMPLATE_ROOT}/docs/decisions/DR-014-archive-policy.md" \
+      "${TARGET_ROOT}/docs/decisions/DR-014-archive-policy.md"
+
+write_text "${TARGET_ROOT}/docs/decisions/README.md" "# Decision Records
+
+이 프로젝트의 결정 근거(WHY) 인덱스다.
+각 DR은 하나의 결정 이유를 기록한다.
+
+cascade 감사 시 이 인덱스의 Accepted DR만 확인 대상이다.
+Superseded DR은 \`docs/archive/docs/decisions/\`로 이동한다.
+
+| ID | Title | Date | Status | 요약 |
+|----|-------|------|--------|------|
+| DR-007 | 파일 유형별 작성 언어 원칙 | — | Accepted | 문서·command·prompt·hook은 Korean primary + English technical terms |
+| DR-008 | docs/ 파일명 대소문자 표준 | — | Accepted | \`docs/\` 파일명은 UPPER-KEBAB-CASE |
+| DR-013 | Work 파일 기반 작업 단위 체계 | — | Accepted | \`docs/works/{category}/{ID}-{topic}.md\`, Active/Done/Archived 3단계 |
+| DR-014 | Archive 구조 정책 | — | Accepted | \`docs/archive/\` 하위 경로 mirror 방식 |
+
+위 DR들은 harness가 동반하는 foundational decision이다.
+이 프로젝트 고유의 결정은 \`DR-{NNN}-{topic}.md\`(\`docs/decisions/DECISION-TEMPLATE.md\` 사용)로 추가하고 이 인덱스에 등록한다.
+"
 
 write_text "${TARGET_ROOT}/docs/troubleshooting/README.md" "# Troubleshooting
 

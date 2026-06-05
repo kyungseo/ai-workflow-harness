@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-05 (slice 0 DR-021~024 Accepted — CHORE-20260605-002 Done)
+Last updated: 2026-06-05 (slice 1a/1b Done — CHORE-20260605-003, 결함수선 + 불변식 테스트)
 
 ## Current State
 
@@ -49,5 +49,5 @@ Last updated: 2026-06-05 (slice 0 DR-021~024 Accepted — CHORE-20260605-002 Don
 
 ## Next Actions
 
-1. **하류 slice 진행** — DR-021~024 Accepted 완료. Follow-Up PR Slicing Draft(부모 Work CHORE-20260604-001) 순서로 착수: 현존 결함 수선(1a)·불변식 테스트(1b) 병행 → PLAN lifecycle 배선(DR-022 적용) → scaffold minimal output(DR-021 적용) → breaking slice #13(DR-023 canonical+adapter 전환 + no-alias rename 동시). 각 slice 착수 시 Next Actions 재평가(자동 연쇄 아님).
+1. **하류 slice 진행** — slice 1a/1b(CHORE-20260605-003) Done. Follow-Up PR Slicing Draft(부모 Work CHORE-20260604-001) 남은 순서: PLAN lifecycle 배선(DR-022 적용, D3 PLAN ID drift 포함) → scaffold minimal output(DR-021 적용, D4 heavy-doc dangling 해소) → breaking slice #13(DR-023 canonical+adapter 전환 + no-alias rename 동시). 각 slice 착수 시 Next Actions 재평가(자동 연쇄 아님).
 2. **child DR — Commit gate runtime enforcement** — DR-024 하류. causal finalization bundling hard-stop/override 정책을 gate runtime enforcement 적용 slice에서 별도 DR로 작성.
