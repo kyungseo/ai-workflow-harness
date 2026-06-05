@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260605-001 | Phase 2 Slice 0 — Direction Decision | 2026-06-05 | `docs/works/harness/CHORE-20260605-001-phase2-slice0-direction.md` |
 | CHORE-20260604-001 | Harness Phase 2 Refactor Planning | 2026-06-04 | `docs/works/harness/CHORE-20260604-001-harness-phase2-refactor-planning.md` |
 
 ## Archived

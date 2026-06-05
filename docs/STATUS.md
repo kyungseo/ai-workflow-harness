@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-04 (Harness Phase 2 refactor planning active 등록 — CHORE-20260604-001)
+Last updated: 2026-06-05 (Phase 2 slice 0 방향 결정 Work Done — CHORE-20260605-001, DR-A~D 후보 산출)
 
 ## Current State
 
@@ -51,5 +51,5 @@ Last updated: 2026-06-04 (Harness Phase 2 refactor planning active 등록 — CH
 
 ## Next Actions
 
-1. **slice 0 실행 Work 시작** — Phase 2 방향 결정: A/B(framework/project-state) boundary + canonical+adapter 구조 + gate strictness taxonomy(2D) + PLAN lifecycle 배선. 산출은 DR 후보 확정. 근거/합의는 `docs/works/harness/CHORE-20260604-001-harness-phase2-refactor-planning.md` (Done) 참조.
-   - 이후 단계(slice 1~13)는 같은 Work file의 Follow-Up PR Slicing Draft 참조. slice 0 close 시점에 다음 Next Actions를 재평가해 갱신한다(자동 연쇄 아님).
+1. **DR 작성 (`/record-decision`)** — slice 0이 산출한 4 primary DR 후보를 정식 DR로 등록: DR-A(framework/project-state boundary), DR-B(PLAN lifecycle: T5 배선+archive drain), DR-C(canonical+hybrid adapter), DR-D(gate strictness 2D taxonomy). + 하류 child DR(Commit gate runtime enforcement). 근거/합의는 `docs/works/harness/CHORE-20260605-001-phase2-slice0-direction.md` (Done) Direction Decisions·Cross-Agent Review 참조.
+2. **하류 slice 진행** — DR Accepted 후 Follow-Up PR Slicing Draft(부모 Work CHORE-20260604-001) 순서로: 현존 결함 수선(1a)·불변식 테스트(1b) 병행 → PLAN lifecycle 배선 → minimal output → breaking slice #13(canonical+adapter 전환 + no-alias rename 동시). 각 slice 착수 시 Next Actions 재평가(자동 연쇄 아님).
