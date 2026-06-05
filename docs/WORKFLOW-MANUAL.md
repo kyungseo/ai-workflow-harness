@@ -1025,7 +1025,7 @@ Low | Medium | High — 이유
 P2-{n}, P2-{m}
 ```
 
-파일명 규칙: `DR-{3자리 번호}-{짧은-주제}.md` (ex. `DR-001-token-storage.md`)
+파일명 규칙: `DR-{3자리 번호}-{짧은-주제}.md` (ex. `DR-013-work-file-spec.md`)
 
 ---
 
