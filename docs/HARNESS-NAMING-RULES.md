@@ -88,7 +88,7 @@ backlog 후보는 제목/slug만 유지한다. Work 파일 생성(착수 승인)
 | --- | --- | --- |
 | `docs/` root | UPPERCASE-HYPHENATED | `HARNESS-PROTOCOL.md` |
 | `docs/backlog/` | UPPERCASE-HYPHENATED | `PHASE2.md` |
-| `docs/decisions/` | `DR-{NNN}-{topic}.md` | `DR-011-status-recent-decisions-policy.md` |
+| `docs/decisions/` | `DR-{NNN}-{topic}.md` | `DR-013-work-file-spec.md` |
 | `docs/works/{category}/` | `{ID}-{lowercase-topic}.md` | `CHORE-20260527-001-id-tracker-rule.md` |
 | `docs/archive/docs/` | 원본 상대 경로와 파일명 mirror | `docs/archive/docs/WORKFLOW-MANUAL-ai-workflow-v1.0.0.md` |
 | `docs/archive/snapshots/` | `{topic}-{YYYYMMDD}` | `harness-refactor-20260514/` |

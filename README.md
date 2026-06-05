@@ -501,7 +501,7 @@ flowchart TD
     WF -- "generic(기본)" --> GW1["git-workflow.md\nproject-specific 정책 유지"]
     WF -- "source-gitflow" --> GW2["git-workflow.md\nGitflow + Branch Isolation Gate"]
 
-    GW1 --> E["scaffold 생성\nSTATUS.md · BOOTSTRAP.md\nbacklog · decisions(DR-007/008/013) · works\ncommands · rules · prompts"]
+    GW1 --> E["scaffold 생성\nSTATUS.md · BOOTSTRAP.md\nbacklog · decisions(DR-007/008/013/014 + README) · works\ncommands · rules · prompts"]
     GW2 --> E
 
     E --> G["/start 첫 세션"]
