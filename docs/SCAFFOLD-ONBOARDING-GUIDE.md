@@ -30,9 +30,13 @@
 
 ## 1. 개요
 
-이 가이드는 `scripts/create-harness.sh`로 생성된 프로젝트의 첫 온보딩을 다룬다.
+이 가이드는 `scripts/create-harness.sh`로 생성된 **target project**의 첫 온보딩을 다룬다.
 `ai-workflow-harness` repository 자체를 clone한 경우에는 이 clone을 직접 project-local workspace로 전환하지 말고,
 [README Section 10 New Project Adoption](../README.md#10-new-project-adoption)에 따라 별도 target directory에 scaffold를 생성한 뒤 그 프로젝트에서 온보딩을 진행한다.
+
+Source repo(`ai-workflow-harness`)는 scaffold script, canonical workflow, migration note, maintainer 문서를 소유한다.
+Target project는 생성된 `docs/BOOTSTRAP.md`, `docs/STATUS.md`, backlog, Work 파일을 채워 자기 프로젝트 상태를 소유한다.
+`--workflow source-gitflow`를 명시하지 않는 한 source repo의 Gitflow/release gate가 target 기본값으로 강제되지 않는다.
 
 이 harness는 AI 도구(Claude Code / Codex / Cursor)와 함께 프로젝트를 운영하기 위한 워크플로우 프레임워크다.
 scaffold 직후에는 빈 껍데기 상태이므로, `docs/BOOTSTRAP.md`의 §0~§9를 순서대로 확인해야
@@ -755,5 +759,6 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 > 참고 문서:
 > - `docs/BOOTSTRAP.md` — AI가 온보딩 시 사용하는 체크리스트 원본
 > - `docs/HARNESS-QUICK-REFERENCE.md` — 세션 실행 규칙 요약
-> - `docs/WORKFLOW-MANUAL.md` — 전체 워크플로우 매뉴얼
+> - `skills/workflow/` — workflow command별 canonical 절차
+> - `docs/WORKFLOW-MANUAL.md` — optional pack에 포함될 수 있는 전체 워크플로우 매뉴얼
 > - `docs/AGENT-WORKFLOW.md` — 공통 운영 규칙 (Project Constants, Approval Matrix)
