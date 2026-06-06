@@ -273,10 +273,23 @@ do_check() {
     *)              posture="unknown (workflow_mode not recorded)" ;;
   esac
 
+  # Project gate config (Class B, not in framework_files). Report-only: presence +
+  # count of active (non-comment, non-blank, non-section-header) path entries. A
+  # missing config is advisory (defaults only), never counted as drift.
+  local gate_cfg gate_entries gate_line
+  gate_cfg="${target}/.harness/gate-config"
+  if [[ -f "${gate_cfg}" ]]; then
+    gate_entries="$(grep -vE '^[[:space:]]*(#|\[|$)' "${gate_cfg}" | grep -cE '[^[:space:]]' || true)"
+    gate_line=".harness/gate-config present (${gate_entries} project path(s))"
+  else
+    gate_line="none (.harness/gate-config absent; defaults only)"
+  fi
+
   echo "harness --check: ${target}"
   echo "  manifest version : ${m_version}   (current source: ${HARNESS_VERSION})"
   [[ "${m_version}" != "${HARNESS_VERSION}" ]] && echo "  version delta    : ${m_version} -> ${HARNESS_VERSION}"
   echo "  enforcement      : ${posture}"
+  echo "  gate config      : ${gate_line}"
   echo ""
 
   local total=0 insync=0 drift=0
@@ -623,6 +636,44 @@ if [[ "${PROFILE}" == "spring-boot" ]]; then
     copy_prompt "$f"
   done
 fi
+
+# ── Project gate config seed (.harness/gate-config) ──────────────────────────
+# Class B (project-owned) seed: lets the target ADD its own protected/finalization
+# paths without editing framework-owned tools/git-hooks/lib/gate-lists.sh. Written
+# with write_text so it is NOT recorded in the manifest framework_files set and
+# survives a harness upgrade. Seeded with commented examples only → zero active
+# entries → default gate behavior until the target opts in.
+write_text "${TARGET_ROOT}/.harness/gate-config" '# Project gate config (.harness/gate-config) — project-owned, add-only.
+#
+# Extend the harness default protected/finalization path lists with paths specific
+# to THIS repository, WITHOUT editing framework-owned tools/git-hooks/lib/gate-lists.sh
+# (that file is recorded in the manifest and overwritten on a harness upgrade).
+# This file survives upgrades.
+#
+# Format: one glob pattern per line, under a section header.
+#   - Whole-line comments (#...) and blank lines are ignored. Inline comments are
+#     NOT supported: "infra/**  # note" is treated as one literal pattern, so keep
+#     comments on their own line.
+#   - Patterns are shell case-globs: * also matches "/", so infra/* covers infra/a/b.
+#   - add-only: you can ADD paths here; framework defaults cannot be removed.
+#
+# In a hook-gated (source-gitflow) target the git hooks read this file directly.
+# In a generic (advisory-only) target it has no hooks; the agent honors it as
+# advisory input per .claude/rules/git-workflow.md.
+#
+# [protected]    block direct commits to these on develop/main (branch isolation)
+# [finalization] treat these as tracking/finalization files (DR-025 bundling gate)
+#
+# Examples (uncomment and adapt to this repository):
+
+[protected]
+# infra/**
+# db/schema.sql
+# .github/workflows/deploy.yml
+
+[finalization]
+# docs/PRODUCT-STATUS.md
+'
 
 # ── Harness manifest (.harness/manifest.json) ────────────────────────────────
 # Records harness version + framework-owned file list/hash so the target knows
@@ -1176,7 +1227,8 @@ if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
   echo "  Gate hooks deployed at tools/git-hooks/ (branch isolation + DR-025 finalization gate)."
   echo "  After git init, install them with: sh tools/git-hooks/install.sh"
   echo "  Environment bootstrap runbook: docs/GIT-WORKFLOW.md §0-1"
-  echo "  Tune protected/finalization paths for this repo in tools/git-hooks/lib/gate-lists.sh"
+  echo "  Tune project-specific protected/finalization paths in .harness/gate-config (add-only, upgrade-safe)."
+  echo "  Do not edit framework-owned tools/git-hooks/lib/gate-lists.sh — it is overwritten on harness upgrade."
 fi
 if [[ ! -d "${TARGET_ROOT}/.git" ]]; then
   echo "Note: git repository is not initialized. Follow docs/BOOTSTRAP.md §0 to decide when to run git init."

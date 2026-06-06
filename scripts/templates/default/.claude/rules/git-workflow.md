@@ -10,6 +10,13 @@ paths:
 This scaffold uses the generic workflow: **no git hooks are installed**, so the branch-isolation, finalization-bundling, and commit-message gates below are **advisory** — they rely on the agent and committer honoring them, not on runtime enforcement (per DR-025: gates are AI-advisory when hooks are absent).
 To enable runtime hook enforcement, re-scaffold with `--workflow source-gitflow`.
 
+Project-specific gate paths: this repository may list extra protected/finalization
+paths in `.harness/gate-config` (`[protected]` / `[finalization]` sections, one glob
+per line). Because this is a generic scaffold there are no hooks to enforce them, so
+treat any paths listed there as **advisory input** — honor them as protected (avoid
+direct `develop`/`main` edits) and as finalization (bundle with substantive work) the
+same way as the defaults below.
+
 If the current directory is not a git repository (bootstrap initial state), report the steps below as `Not Applicable` and proceed with document/file validation only.
 
 Before committing, always run in this order:
