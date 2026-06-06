@@ -23,6 +23,9 @@ policy_type: source-gitflow
 | AI entrypoint | `AGENTS.md`, `CLAUDE.md` |
 | Canonical workflow | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md` |
 | Tool surface | `.claude/commands/*.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.agents/skills/**`, `prompts/**` |
+| Enforcement | `tools/git-hooks/**` |
+
+> 이 표는 `tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path`와 동일한 목록을 가리킨다. 이 repo 고유 경로를 추가하려면 두 곳을 함께 갱신한다.
 
 ### Allowed Exceptions
 
@@ -236,36 +239,25 @@ fix: TokenRedisRepository SCAN 기반 invalidation 제거
 
 상세 규칙: `docs/decisions/DR-007-language-policy.md`
 
-## 6. Git Hooks (Optional)
+## 6. Git Hooks
 
-hook은 자동 설치하지 않으며, 필요하면 project-specific hook으로 별도 정의한다.
-source harness repo의 `tools/git-hooks/`를 그대로 복사하지 않는다 — protected file 목록과 validation scope가 source-specific이므로 이 project의 경로·규칙에 맞게 직접 작성한다.
+이 repository는 `--workflow source-gitflow`로 scaffold되어 gate hook이 `tools/git-hooks/`에 함께 포함된다(generic workflow scaffold에는 포함되지 않는다).
 
-**branch isolation 강제가 필요한 경우 — pre-commit hook 참고 패턴:**
+- `pre-commit`: diff hygiene, `develop`·`main` branch isolation, shell syntax, finalization advisory.
+- `commit-msg`: Conventional Commits 형식 검증 + DR-025 finalization bundling gate(override trailer 지원).
+- `lib/gate-lists.sh`: protected paths와 finalization bundling targets, override trailer token의 단일 정의.
 
-`develop`·`main`에 workflow 파일을 직접 commit하는 것을 차단하려면 아래 패턴을 project-specific protected paths에 맞게 조정한다.
+### 설치
+
+git repository 초기화 후 한 번 실행한다:
 
 ```sh
-#!/usr/bin/env sh
-BRANCH=$(git branch --show-current 2>/dev/null || echo "")
-[ -f ".git/MERGE_HEAD" ] && exit 0   # merge commit 면제
-if [ "$BRANCH" = "develop" ] || [ "$BRANCH" = "main" ]; then
-    STAGED=$(git diff --cached --name-only --diff-filter=ACMR)
-    # project 경로에 맞게 수정
-    PROTECTED=$(echo "$STAGED" | grep -E \
-        "^(AGENTS\.md|CLAUDE\.md|docs/STATUS\.md|docs/backlog/|docs/works/|\.claude/|\.cursor/)")
-    if [ -n "$PROTECTED" ]; then
-        echo "ERROR: feature/* branch에서 commit해야 합니다."
-        echo "$PROTECTED"
-        exit 1
-    fi
-fi
-git diff --cached --check
+sh tools/git-hooks/install.sh
 ```
 
-**commit message 형식 검증이 필요한 경우 — commit-msg hook:**
+### 이 repo에 맞게 조정
 
-§5 Commit Message Format의 type 목록을 기준으로 commit-msg hook을 작성한다. harness source repo의 `tools/git-hooks/commit-msg`를 참고할 수 있다.
+`tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path`와 `awh_is_finalization_file` 목록은 harness 기본값에서 시작한다. 이 repo 고유의 민감 경로(예: 배포 설정, secret 경로)는 해당 함수의 `case` 패턴에 추가한다. hook 로직 자체를 수정할 필요 없이 목록만 확장하면 된다.
 
 ## 7. Related Documents
 

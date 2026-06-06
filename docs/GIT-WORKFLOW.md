@@ -246,7 +246,7 @@ fix: TokenRedisRepository SCAN 기반 invalidation 제거
 
 ## 6. Git Hooks
 
-> **Source repo 전용.** `tools/git-hooks/`의 hook은 `ai-workflow-harness` source repo에서만 설치·운영한다. scaffold된 product repo에는 기본 포함되지 않는다 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
+> **배포 경계.** `tools/git-hooks/`의 hook은 `ai-workflow-harness` source repo에서 설치·운영한다. scaffold된 product repo에는 기본(generic workflow) 포함되지 않으나, `--workflow source-gitflow`로 scaffold하면 opt-in으로 함께 배포된다 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
 
 ### pre-commit
 
