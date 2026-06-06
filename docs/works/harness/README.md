@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260606-009 | Gate CI Source Hardening — Slice C2-A | 2026-06-06 | `docs/works/harness/CHORE-20260606-009-gate-ci-source-hardening.md` |
 | CHORE-20260606-008 | Gate Hook Scaffold Distribution — Slice C1 | 2026-06-06 | `docs/works/harness/CHORE-20260606-008-gate-hook-scaffold-distribution.md` |
 | CHORE-20260606-007 | Gate List SSoT Slice B | 2026-06-06 | `docs/works/harness/CHORE-20260606-007-gate-list-ssot.md` |
 | CHORE-20260606-006 | Commit Gate Runtime Slice A | 2026-06-06 | `docs/works/harness/CHORE-20260606-006-commit-gate-runtime-slice-a.md` |
