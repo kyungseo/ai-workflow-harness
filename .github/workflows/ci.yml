@@ -101,6 +101,22 @@ jobs:
           done
           echo "OK: generic scaffolds carry no gate hooks or harness-validate workflow."
 
+      - name: Validate generic advisory posture (c3)
+        run: |
+          set -euo pipefail
+          for SCAFFOLD in /tmp/ci-phrase-check /tmp/ci-phrase-check-sb; do
+            grep -q "Workflow enforcement (advisory-only)" "$SCAFFOLD/README.md" \
+              || { echo "ERROR: generic README missing advisory-only enforcement note in $SCAFFOLD"; exit 1; }
+            grep -q "Enforcement Posture (advisory-only)" "$SCAFFOLD/.claude/rules/git-workflow.md" \
+              || { echo "ERROR: generic git-workflow rule missing advisory posture in $SCAFFOLD"; exit 1; }
+            grep -q '"workflow_mode": "generic"' "$SCAFFOLD/.harness/manifest.json" \
+              || { echo "ERROR: generic manifest workflow_mode != generic in $SCAFFOLD"; exit 1; }
+            CHK="$(./scripts/create-harness.sh --check "$SCAFFOLD")"
+            printf '%s\n' "$CHK" | grep -q "enforcement      : advisory-only" \
+              || { echo "ERROR: --check did not report advisory-only posture for $SCAFFOLD"; echo "$CHK"; exit 1; }
+          done
+          echo "OK: generic scaffolds report advisory-only posture (README + rule + manifest + --check)."
+
       - name: Validate source-gitflow scaffold deploys gate hooks
         run: |
           set -euo pipefail
@@ -132,6 +148,17 @@ jobs:
               || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing fresh repo bootstrap guidance in $DEST"; exit 1; }
             grep -q "Existing repo" "$DEST/docs/GIT-WORKFLOW.md" \
               || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing existing repo bootstrap guidance in $DEST"; exit 1; }
+            # c3: source-gitflow posture is hook-capable, and advisory-only wording
+            # must be absent (no advisory-vs-enforced contradiction).
+            CHK="$(./scripts/create-harness.sh --check "$DEST")"
+            printf '%s\n' "$CHK" | grep -q "enforcement      : hook-capable" \
+              || { echo "ERROR: --check did not report hook-capable posture for $DEST"; echo "$CHK"; exit 1; }
+            if grep -q "Workflow enforcement (advisory-only)" "$DEST/README.md"; then
+              echo "ERROR: source-gitflow README must not contain advisory-only note in $DEST"; exit 1
+            fi
+            if grep -q "Enforcement Posture (advisory-only)" "$DEST/.claude/rules/git-workflow.md"; then
+              echo "ERROR: source-gitflow git-workflow rule must not contain advisory-only posture in $DEST"; exit 1
+            fi
             for f in pre-commit commit-msg install.sh lib/gate-lists.sh; do
               [ -f "$DEST/tools/git-hooks/$f" ] || { echo "ERROR: missing tools/git-hooks/$f in $DEST"; exit 1; }
             done
