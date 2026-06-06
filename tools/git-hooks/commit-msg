@@ -8,6 +8,14 @@
 TYPES="feat|fix|docs|style|refactor|chore|config|test|perf|ci|build|revert"
 MSG_FILE=$1
 MSG=$(cat "$MSG_FILE")
+ROOT=$(git rev-parse --show-toplevel)
+GATE_LISTS="$ROOT/tools/git-hooks/lib/gate-lists.sh"
+if [ ! -r "$GATE_LISTS" ]; then
+    echo "ERROR: Missing git hook gate list SSoT: $GATE_LISTS"
+    echo "Reinstall or restore tools/git-hooks/lib/gate-lists.sh."
+    exit 1
+fi
+. "$GATE_LISTS"
 
 if ! echo "$MSG" | grep -qE "^($TYPES)(\(.+\))?: .+"; then
     echo ""
@@ -21,30 +29,19 @@ if ! echo "$MSG" | grep -qE "^($TYPES)(\(.+\))?: .+"; then
 fi
 
 is_source_gitflow() {
-    grep -q "policy_type: source-gitflow" docs/GIT-WORKFLOW.md 2>/dev/null
-}
-
-is_finalization_file() {
-    case "$1" in
-        docs/STATUS.md|docs/backlog/*|docs/works/*|docs/decisions/README.md)
-            return 0
-            ;;
-        *)
-            return 1
-            ;;
-    esac
+    grep -q "policy_type: source-gitflow" "$ROOT/docs/GIT-WORKFLOW.md" 2>/dev/null
 }
 
 has_gate_override() {
-    echo "$MSG" | grep -qE '^AWH-Gate-Override:[[:space:]]*finalization-split[[:space:]]*$'
+    echo "$MSG" | grep -qE "^${AWH_GATE_OVERRIDE_TRAILER}:[[:space:]]*${AWH_GATE_OVERRIDE_TOKEN}[[:space:]]*$"
 }
 
 has_any_gate_override() {
-    echo "$MSG" | grep -qE '^AWH-Gate-Override:'
+    echo "$MSG" | grep -qE "^${AWH_GATE_OVERRIDE_TRAILER}:"
 }
 
 has_gate_reason() {
-    echo "$MSG" | grep -qE '^AWH-Gate-Reason:[[:space:]]*[^[:space:]].*'
+    echo "$MSG" | grep -qE "^${AWH_GATE_REASON_TRAILER}:[[:space:]]*[^[:space:]].*"
 }
 
 git_path_exists() {
@@ -107,7 +104,7 @@ if is_source_gitflow; then
         echo ""
         echo "  ERROR: Invalid AWH gate override trailer."
         echo ""
-        echo "  Expected : AWH-Gate-Override: finalization-split"
+        echo "  Expected : $AWH_GATE_OVERRIDE_TRAILER: $AWH_GATE_OVERRIDE_TOKEN"
         echo ""
         exit 1
     fi
@@ -115,7 +112,7 @@ if is_source_gitflow; then
         echo ""
         echo "  ERROR: AWH gate override requires a durable reason."
         echo ""
-        echo "  Add      : AWH-Gate-Reason: <one-line reason>"
+        echo "  Add      : $AWH_GATE_REASON_TRAILER: <one-line reason>"
         echo ""
         exit 1
     fi
@@ -124,7 +121,7 @@ if is_source_gitflow; then
     FINALIZATION_COUNT=0
     SUBSTANTIVE_COUNT=0
     for FILE in $STAGED_FILES; do
-        if is_finalization_file "$FILE"; then
+        if awh_is_finalization_file "$FILE"; then
             FINALIZATION_COUNT=$((FINALIZATION_COUNT + 1))
         else
             SUBSTANTIVE_COUNT=$((SUBSTANTIVE_COUNT + 1))
@@ -136,7 +133,7 @@ if is_source_gitflow; then
         case "$CONTEXT" in
             hard-stop-local-only)
                 if has_gate_override; then
-                    echo "AWH finalization gate override recorded: finalization-split"
+                    echo "AWH finalization gate override recorded: $AWH_GATE_OVERRIDE_TOKEN"
                 else
                     echo ""
                     echo "  ERROR: Finalization-only commit blocked by DR-025."
@@ -145,8 +142,8 @@ if is_source_gitflow; then
                     echo "  should be bundled with the substantive work commit, usually via amend."
                     echo ""
                     echo "  If splitting is intentional, add both commit trailers:"
-                    echo "    AWH-Gate-Override: finalization-split"
-                    echo "    AWH-Gate-Reason: <one-line reason>"
+                    echo "    $AWH_GATE_OVERRIDE_TRAILER: $AWH_GATE_OVERRIDE_TOKEN"
+                    echo "    $AWH_GATE_REASON_TRAILER: <one-line reason>"
                     echo ""
                     exit 1
                 fi
