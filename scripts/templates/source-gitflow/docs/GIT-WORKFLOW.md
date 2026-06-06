@@ -45,6 +45,58 @@ policy_type: source-gitflow
 
 Violation: AI tool은 `develop` 또는 `main`에서 protected files가 staged된 경우 FAIL로 전환하고 적절한 branch 생성을 제안한다.
 
+## 0-1. Environment Bootstrap
+
+`--workflow source-gitflow`로 scaffold된 repo는 source-style branch/ruleset/hook 정책을 선택한 상태다.
+단, scaffold 직후 git repository와 GitHub ruleset이 자동으로 만들어지지는 않는다.
+
+### Fresh repo
+
+git repository가 아직 없을 때만 아래 순서를 사용한다.
+
+```bash
+git init
+git checkout -b main
+git add .
+git commit -m "chore: scaffold AI workflow harness"
+git checkout -b develop
+sh tools/git-hooks/install.sh
+```
+
+remote repository를 만든 뒤:
+
+```bash
+git remote add origin <git-url>
+git push -u origin main
+git push -u origin develop
+```
+
+### Existing repo
+
+이미 git repository가 있으면 `git init` 또는 branch 재작성 명령을 실행하지 않는다.
+먼저 현재 branch, remote, protected branch 운영 정책을 확인한다.
+
+```bash
+git status --short --branch
+git remote -v
+git branch --list main develop
+```
+
+- `main`/`develop`이 이미 있으면 기존 history와 remote 정책을 보존한다.
+- `develop`이 없으면 생성 여부를 사용자와 결정한 뒤 `main`에서 분기한다.
+- 기존 default branch가 `main`이 아니면 rename 여부를 별도 decision으로 다룬다.
+- hook 설치는 git repository가 확인된 뒤 실행한다: `sh tools/git-hooks/install.sh`.
+
+### GitHub Ruleset
+
+GitHub ruleset 적용은 repo 존재, branch 존재, `gh` auth, admin 권한에 의존한다.
+따라서 scaffold가 자동 적용하지 않는다. Repository maintainer가 확인 후 GitHub UI 또는 `gh api`로 적용한다.
+
+- `protect-main`: deletion, non-fast-forward, PR required, required status check context `harness-validate`.
+- `protect-develop`: deletion, non-fast-forward, PR required. Required status check는 연결하지 않는다.
+
+`harness-validate` workflow는 path filter 없이 항상 실행되어 required check가 `Expected`/pending 상태에 머무는 것을 방지한다.
+
 ## 1. Branch Strategy
 
 ```
@@ -214,20 +266,16 @@ git status                  # "up to date with 'origin/develop'" 확인
 `harness-validate.yml`의 job key는 `harness-validate`이며 job-level `name:`을 설정하지 않는다.
 GitHub ruleset의 `required_status_checks`는 job key가 아니라 보고되는 check-run name과 매칭되므로,
 branch ruleset을 설정할 때 required check context는 `harness-validate`로 연결한다.
-
-주의: `harness-validate.yml`은 path filter가 있으므로 이 check를 required로 연결할 때는
-path filter에 걸리지 않는 PR에서 required check가 `Expected` 상태로 남을 수 있다.
-source-gitflow environment bootstrap은 이 상호작용을 처리해야 한다. 예: required로 연결할
-항상-실행 gate job을 별도로 두거나, path filter 없는 workflow/status-check 패턴에 연결한다.
+Required check는 `protect-main`에만 연결한다. `protect-develop`에는 required status check를 연결하지 않는다.
 
 CI trigger는 project-specific product CI와 공존할 수 있다. Product test/build workflow는 별도 파일로 추가한다.
+`harness-validate.yml`은 workflow-level path filter 없이 실행된다. Required check로 연결되는 workflow에
+path filter가 있으면 filter 미일치 PR에서 check가 `Expected`/pending 상태로 남을 수 있기 때문이다.
 
 | 이벤트 | 조건 | 실행 Job |
 |---|---|---|
-| `push` to `main` | docs/prompts/tool surface/hook/workflow 변경 시 | Harness Validate |
-| `pull_request` targeting `main` 또는 `develop` | docs/prompts/tool surface/hook/workflow 변경 시 | Harness Validate |
-
-**Path filter 대상:** `docs/**`, `prompts/**`, `.claude/**`, `.cursor/**`, `.agents/**`, `.codex/**`, `skills/**`, `tools/git-hooks/**`, `.github/workflows/**`, `AGENTS.md`, `CLAUDE.md`, `README.md`
+| `push` to `main` | 항상 | Harness Validate |
+| `pull_request` targeting `main` 또는 `develop` | 항상 | Harness Validate |
 
 > Product CI가 필요하면 `.github/workflows/product-ci.yml` 같은 별도 workflow로 추가한다.
 

@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260606-011 | Source-Gitflow Environment Bootstrap — Slice D | 2026-06-06 | `docs/works/harness/CHORE-20260606-011-source-gitflow-environment-bootstrap.md` |
 | CHORE-20260606-010 | Gate Target CI Template And Ruleset Connection — Slice C2-B | 2026-06-06 | `docs/works/harness/CHORE-20260606-010-gate-target-ci-ruleset.md` |
 | CHORE-20260606-009 | Gate CI Source Hardening — Slice C2-A | 2026-06-06 | `docs/works/harness/CHORE-20260606-009-gate-ci-source-hardening.md` |
 | CHORE-20260606-008 | Gate Hook Scaffold Distribution — Slice C1 | 2026-06-06 | `docs/works/harness/CHORE-20260606-008-gate-hook-scaffold-distribution.md` |
