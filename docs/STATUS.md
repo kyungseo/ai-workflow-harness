@@ -50,4 +50,5 @@ Last updated: 2026-06-06 (Gate CI Source Hardening Slice C2-A Done — CHORE-202
 ## Next Actions
 
 1. **다음 후보: `gate-enforcement-runtime-and-env` 남은 sub-slice** — (a) source runtime, (b) shared hook list SSoT, (c1) source-gitflow opt-in hook 배포, (c2-A) source CI hardening은 Done. 남은 후보: (c2-B) target CI 템플릿 + ruleset required-check 연결(DR-020 후속), (c3) hook-less target documented advisory/manifest check, (c4) product-adaptive gate logic, (d) source-gitflow environment bootstrap. `docs/backlog/HARNESS.md` 참조.
-2. **Phase 2 원칙 정리 후보 검토** — 외부화 실패모드 통합 설계 원칙과 Work 파일 계층화 규칙 후보는 별도 Work로 착수 여부를 판단한다.
+2. **Harness upgrade/migration 메커니즘 (P1, L3)** — 공개 adopter `ai-deck-compiler`가 이 harness 적용 중이고 upstream 변경 반영(업그레이드/마이그레이션)이 필요. gate 잔여작업(c2-B/c3/c4/d)에 이어, 또는 우선순위에 따라 착수. 구 HRN-FUT-008 + drift-window 후보를 통폐합해 backlog에 promote 완료. `docs/backlog/HARNESS.md` 참조.
+3. **Phase 2 원칙 정리 후보 검토** — 외부화 실패모드 통합 설계 원칙과 Work 파일 계층화 규칙 후보는 별도 Work로 착수 여부를 판단한다.
