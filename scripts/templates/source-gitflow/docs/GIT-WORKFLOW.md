@@ -205,16 +205,31 @@ git status                  # "up to date with 'origin/develop'" 확인
 
 ## 4. CI Trigger
 
-CI 설정은 project-specific이다. 아래는 참고 패턴이다.
+이 repo는 source-gitflow mode로 scaffold되어 harness validation workflow를 포함한다.
+
+| 파일 | 역할 |
+|---|---|
+| `.github/workflows/harness-validate.yml` | harness-owned validation. GitHub ruleset required check에 연결할 check-run name은 `harness-validate`다. |
+
+`harness-validate.yml`의 job key는 `harness-validate`이며 job-level `name:`을 설정하지 않는다.
+GitHub ruleset의 `required_status_checks`는 job key가 아니라 보고되는 check-run name과 매칭되므로,
+branch ruleset을 설정할 때 required check context는 `harness-validate`로 연결한다.
+
+주의: `harness-validate.yml`은 path filter가 있으므로 이 check를 required로 연결할 때는
+path filter에 걸리지 않는 PR에서 required check가 `Expected` 상태로 남을 수 있다.
+source-gitflow environment bootstrap은 이 상호작용을 처리해야 한다. 예: required로 연결할
+항상-실행 gate job을 별도로 두거나, path filter 없는 workflow/status-check 패턴에 연결한다.
+
+CI trigger는 project-specific product CI와 공존할 수 있다. Product test/build workflow는 별도 파일로 추가한다.
 
 | 이벤트 | 조건 | 실행 Job |
 |---|---|---|
-| `push` to `main` | docs/prompts/tool surface 변경 시 | Docs Validation |
-| `pull_request` targeting `main` 또는 `develop` | docs/prompts/tool surface 변경 시 | Docs Validation |
+| `push` to `main` | docs/prompts/tool surface/hook/workflow 변경 시 | Harness Validate |
+| `pull_request` targeting `main` 또는 `develop` | docs/prompts/tool surface/hook/workflow 변경 시 | Harness Validate |
 
-**Path filter 대상 (예시):** `docs/**`, `prompts/**`, `.claude/**`, `.cursor/**`, `AGENTS.md`, `CLAUDE.md`, `README.md`
+**Path filter 대상:** `docs/**`, `prompts/**`, `.claude/**`, `.cursor/**`, `.agents/**`, `.codex/**`, `skills/**`, `tools/git-hooks/**`, `.github/workflows/**`, `AGENTS.md`, `CLAUDE.md`, `README.md`
 
-> CI 상세 설정은 프로젝트 CI 파일을 참조한다.
+> Product CI가 필요하면 `.github/workflows/product-ci.yml` 같은 별도 workflow로 추가한다.
 
 ## 5. Commit Message Format
 

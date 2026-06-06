@@ -1,6 +1,8 @@
 # PLAN-SUMMARY.md - AI Workflow Harness
 
 > 전체 방향은 `docs/PLAN.md` 참조. 이 파일은 세션 context용 요약이다.
+> `PLAN-SUMMARY.md`는 독립 이력/결정 저장소가 아니라 `PLAN.md`, `STATUS.md`, 핵심 workflow surface에서 파생된 derived summary다.
+> 변경 이력은 누적하지 않고, T5 PLAN 영향 판단 또는 closeout/finalization 시 stale 여부만 확인한다.
 
 ## Project Summary
 
@@ -50,7 +52,7 @@ Scaffold + Adoption
 - `base-msa-template`의 전체 Git history는 의도적으로 보존한다.
 - AWH-001 migration 이후 current tree는 AI Workflow Harness 중심으로 정리된 상태다.
 - `docs/PLAN.md`와 `docs/STATUS.md`는 migration 이후에도 live 문서로 유지하고, migration 세부 기록은 Work 파일에 둔다.
-- `docs/PLAN-SUMMARY.md`는 core Context Routing surface이므로 제거하지 않고 현재 상태에 맞게 유지한다.
+- `docs/PLAN-SUMMARY.md`는 core Context Routing surface이므로 제거하지 않고 현재 상태에 맞게 유지한다. 단, 자체 이력이나 L3 결정 근거를 담지 않고 PLAN/STATUS에서 파생된 압축 context로만 관리한다.
 - AWH-002(Workflow hardening) 완료 이후 current phase는 Public baseline / Maintenance로 전환됐다. 이후 작업은 public repository 유지·채택 지원·운영 부채 경감에 집중한다.
 
 ## Core Files
@@ -78,9 +80,9 @@ Scaffold + Adoption
 
 | Class | Examples |
 |------|------|
-| Core로 유지 | entrypoint, behavior/workflow/protocol docs, STATUS/PLAN/PLAN-SUMMARY, Work/backlog/DR structure, tool command/rule mirror, generic prompt, scaffold |
+| Core로 유지 | entrypoint, behavior/workflow/protocol docs, STATUS/PLAN/PLAN-SUMMARY, Work/backlog/DR structure, tool command/rule mirror, session-start fallback prompt, scaffold |
 | Core로 전환 완료 | HARNESS-ARCHITECTURE, HARNESS-MAINTAINER-GUIDE (구 DEVELOPER-GUIDE + CODING-CONVENTIONS 통합) |
-| 유지 여부 검토 | troubleshooting, presentations, archive, optional Spring Boot example profile and prompt pack |
+| 유지 여부 검토 | troubleshooting, presentations, archive, optional Spring Boot example profile, extended task prompt library |
 | 제거 또는 legacy 격리 완료 | Spring Boot runtime code, Gradle build, common/gateway/services/frontend/tests, Docker/K8s/DB infra, generated build output |
 
 ## Validation Defaults

@@ -30,7 +30,6 @@ on:
 
 jobs:
   validate:
-    name: Docs and Scaffold Validation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -97,8 +96,12 @@ jobs:
               echo "ERROR: generic scaffold $SCAFFOLD must not contain tools/git-hooks (advisory-only)."
               exit 1
             fi
+            if [ -e "$SCAFFOLD/.github/workflows/harness-validate.yml" ]; then
+              echo "ERROR: generic scaffold $SCAFFOLD must not contain harness-validate workflow."
+              exit 1
+            fi
           done
-          echo "OK: generic scaffolds carry no gate hooks."
+          echo "OK: generic scaffolds carry no gate hooks or harness-validate workflow."
 
       - name: Validate source-gitflow scaffold deploys gate hooks
         run: |
@@ -106,6 +109,17 @@ jobs:
           for PROFILE in generic spring-boot; do
             DEST="/tmp/ci-sg-${PROFILE}"
             ./scripts/create-harness.sh --profile "$PROFILE" --workflow source-gitflow ci-sg-check "$DEST"
+            [ -f "$DEST/.github/workflows/harness-validate.yml" ] \
+              || { echo "ERROR: missing .github/workflows/harness-validate.yml in $DEST"; exit 1; }
+            grep -q "^  harness-validate:" "$DEST/.github/workflows/harness-validate.yml" \
+              || { echo "ERROR: harness-validate job key missing in $DEST"; exit 1; }
+            if grep -q "^    name:" "$DEST/.github/workflows/harness-validate.yml"; then
+              echo "ERROR: harness-validate job must not set job-level name in $DEST"; exit 1
+            fi
+            grep -q "\"path\": \".github/workflows/harness-validate.yml\"" "$DEST/.harness/manifest.json" \
+              || { echo "ERROR: manifest does not record .github/workflows/harness-validate.yml in $DEST"; exit 1; }
+            grep -q "required check context는 \`harness-validate\`" "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing harness-validate ruleset guidance in $DEST"; exit 1; }
             for f in pre-commit commit-msg install.sh lib/gate-lists.sh; do
               [ -f "$DEST/tools/git-hooks/$f" ] || { echo "ERROR: missing tools/git-hooks/$f in $DEST"; exit 1; }
             done
