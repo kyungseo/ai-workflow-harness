@@ -34,6 +34,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full history so the commit-message backstop can read the PR base..head range.
+          fetch-depth: 0
 
       - name: Check whitespace errors
         # git diff-tree --check -r HEAD examines the HEAD commit diff.
@@ -67,9 +70,11 @@ jobs:
           set -euo pipefail
           FAIL=0
           for SCAFFOLD in /tmp/ci-phrase-check /tmp/ci-phrase-check-sb; do
-            # tools/git-hooks/install.sh must not appear in scaffold output
+            # Generic-workflow scaffolds carry no gate hooks, so they must not
+            # reference tools/git-hooks/install.sh. The source-gitflow opt-in path
+            # intentionally deploys it and is asserted separately below.
             if rg "tools/git-hooks/install\.sh" "$SCAFFOLD" 2>/dev/null; then
-              echo "ERROR: tools/git-hooks/install.sh reference in $SCAFFOLD (source repo only)."
+              echo "ERROR: tools/git-hooks/install.sh reference in generic scaffold $SCAFFOLD."
               FAIL=1
             fi
 
@@ -82,6 +87,65 @@ jobs:
             fi
           done
           [ "$FAIL" -eq 0 ] && echo "OK: no broken artifact references in scaffold output."
+          exit "$FAIL"
+
+      - name: Validate generic scaffold has no gate hooks (advisory-only)
+        run: |
+          set -euo pipefail
+          for SCAFFOLD in /tmp/ci-phrase-check /tmp/ci-phrase-check-sb; do
+            if [ -e "$SCAFFOLD/tools/git-hooks" ]; then
+              echo "ERROR: generic scaffold $SCAFFOLD must not contain tools/git-hooks (advisory-only)."
+              exit 1
+            fi
+          done
+          echo "OK: generic scaffolds carry no gate hooks."
+
+      - name: Validate source-gitflow scaffold deploys gate hooks
+        run: |
+          set -euo pipefail
+          for PROFILE in generic spring-boot; do
+            DEST="/tmp/ci-sg-${PROFILE}"
+            ./scripts/create-harness.sh --profile "$PROFILE" --workflow source-gitflow ci-sg-check "$DEST"
+            for f in pre-commit commit-msg install.sh lib/gate-lists.sh; do
+              [ -f "$DEST/tools/git-hooks/$f" ] || { echo "ERROR: missing tools/git-hooks/$f in $DEST"; exit 1; }
+            done
+            for f in pre-commit commit-msg install.sh; do
+              [ -x "$DEST/tools/git-hooks/$f" ] || { echo "ERROR: tools/git-hooks/$f not executable in $DEST"; exit 1; }
+            done
+            if [ -x "$DEST/tools/git-hooks/lib/gate-lists.sh" ]; then
+              echo "ERROR: lib/gate-lists.sh must not be executable in $DEST"; exit 1
+            fi
+            for f in pre-commit commit-msg install.sh lib/gate-lists.sh; do
+              grep -q "\"path\": \"tools/git-hooks/$f\"" "$DEST/.harness/manifest.json" \
+                || { echo "ERROR: manifest does not record tools/git-hooks/$f in $DEST"; exit 1; }
+            done
+            grep -q "tools/git-hooks/install.sh" "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing install.sh guidance in $DEST"; exit 1; }
+          done
+          echo "OK: source-gitflow scaffolds deploy gate hooks with correct permissions and manifest."
+
+      - name: Validate commit message format (PR backstop, advisory)
+        # Advisory PR signal only. Not wired as a ruleset required status check, so
+        # it does not block merge (DR-020 protect-develop has no required checks).
+        if: github.event_name == 'pull_request'
+        run: |
+          set -euo pipefail
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          TYPES="feat|fix|docs|style|refactor|chore|config|test|perf|ci|build|revert"
+          # Compute the range as an independent command first so a failed range
+          # (bad/missing base or head sha) fails closed under `set -e` instead of
+          # silently passing an empty loop (process substitution would swallow it).
+          git log --no-merges --format=%s "${BASE_SHA}..${HEAD_SHA}" > /tmp/commit-subjects
+          FAIL=0
+          while IFS= read -r subject; do
+            [ -z "$subject" ] && continue
+            if ! printf '%s' "$subject" | grep -qE "^(${TYPES})(\(.+\))?: .+"; then
+              echo "ERROR: invalid commit subject: $subject"
+              FAIL=1
+            fi
+          done < /tmp/commit-subjects
+          [ "$FAIL" -eq 0 ] && echo "OK: all non-merge commit subjects follow Conventional Commits."
           exit "$FAIL"
 
       - name: Check for stale runtime identity in live core docs
