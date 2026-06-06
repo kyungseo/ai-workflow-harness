@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-06 (P0 c3 Done — CHORE-20260606-015, 잔여 c4)
+Last updated: 2026-06-06 (P0 c4 Done — CHORE-20260606-016, gate series 완료)
 
 ## Current State
 
@@ -49,5 +49,5 @@ Last updated: 2026-06-06 (P0 c3 Done — CHORE-20260606-015, 잔여 c4)
 
 ## Next Actions
 
-1. **P0 다음 후보: (c4) product-adaptive gate logic + tracking-only commit 예외 검토** — (c3) hook-less/generic advisory + manifest check는 CHORE-20260606-015로 Done. (a)~(d), c2-A/c2-B, c3 완료로 series에 남은 sub-slice는 (c4)뿐이다. target 고유 protected/finalization list 자동 조정과 tracking-only commit 예외 흡수를 검토한다. `docs/backlog/HARNESS.md` 참조.
-2. **P1/P2 후속 후보** — adoption/upgrade follow-ups와 structural cleanup 후보는 `docs/backlog/HARNESS.md`를 참조한다. P0 series 완료 전에는 신규 P1/P2보다 P0 sub-slice 착수를 우선한다.
+1. **P0 `gate-enforcement-runtime-and-env` series 전체 Done** — (a) CHORE-20260606-006, (b) 007, (c1) 008, (c2-A) 009, (c2-B) 010, (d) 011, (c3) 015, (c4) 016까지 모든 sub-slice 완료. backlog의 P0 gate row는 제거됨. c4의 product-adaptive gate(`.harness/gate-config`) + tracking-only convention은 dash 이식성 수정 포함 검증 완료(B/Codex result review는 방전으로 waive, 복귀 시 R2 후속 권장).
+2. **다음 후보: P1** — harness upgrade/migration 메커니즘, prompt surface diet, adopter onboarding refresh, decision workflow product coverage 등. `docs/backlog/HARNESS.md` 참조. 다음 작업 선택은 `/work-select`.

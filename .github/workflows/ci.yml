@@ -177,6 +177,54 @@ jobs:
           done
           echo "OK: source-gitflow scaffolds deploy gate hooks with correct permissions and manifest."
 
+      - name: Validate product-adaptive gate config (c4)
+        run: |
+          set -euo pipefail
+          # Seed presence + manifest exclusion + --check report, for both modes.
+          GEN=/tmp/ci-c4-generic
+          SG=/tmp/ci-c4-sg
+          ./scripts/create-harness.sh ci-c4-generic "$GEN"
+          ./scripts/create-harness.sh --workflow source-gitflow ci-c4-sg "$SG"
+          for D in "$GEN" "$SG"; do
+            [ -f "$D/.harness/gate-config" ] \
+              || { echo "ERROR: missing .harness/gate-config seed in $D"; exit 1; }
+            grep -q '^\[protected\]' "$D/.harness/gate-config" \
+              || { echo "ERROR: gate-config missing [protected] header in $D"; exit 1; }
+            grep -q '^\[finalization\]' "$D/.harness/gate-config" \
+              || { echo "ERROR: gate-config missing [finalization] header in $D"; exit 1; }
+            # Class B seed must NOT be recorded in the manifest framework_files set.
+            if grep -q '"path": ".harness/gate-config"' "$D/.harness/manifest.json"; then
+              echo "ERROR: .harness/gate-config must not be in manifest framework_files ($D)"; exit 1
+            fi
+            # Fresh seed has only commented examples → zero active entries.
+            CHK="$(./scripts/create-harness.sh --check "$D")"
+            printf '%s\n' "$CHK" | grep -q "gate config      : .harness/gate-config present (0 project path(s))" \
+              || { echo "ERROR: --check did not report 0-entry gate config for $D"; echo "$CHK"; exit 1; }
+          done
+          # Functional: a source-gitflow target reads default + project config (add-only).
+          printf '%s\n' '[protected]' 'infra/**' '[finalization]' 'docs/PRODUCT-STATUS.md' \
+            > "$SG/.harness/gate-config"
+          (
+            cd "$SG"
+            ROOT="$SG"
+            . tools/git-hooks/lib/gate-lists.sh
+            awh_is_branch_isolation_protected_path "infra/secret.txt" \
+              || { echo "ERROR: project [protected] glob not honored"; exit 1; }
+            awh_is_branch_isolation_protected_path ".harness/gate-config" \
+              || { echo "ERROR: .harness/gate-config itself not protected"; exit 1; }
+            awh_is_branch_isolation_protected_path "docs/STATUS.md" \
+              || { echo "ERROR: default protected path regressed"; exit 1; }
+            awh_is_finalization_file "docs/PRODUCT-STATUS.md" \
+              || { echo "ERROR: project [finalization] glob not honored"; exit 1; }
+            if awh_is_branch_isolation_protected_path "src/app/main.py"; then
+              echo "ERROR: non-listed path wrongly protected"; exit 1
+            fi
+          ) || exit 1
+          CHK2="$(./scripts/create-harness.sh --check "$SG")"
+          printf '%s\n' "$CHK2" | grep -q "gate config      : .harness/gate-config present (2 project path(s))" \
+            || { echo "ERROR: --check did not count 2 project paths for $SG"; echo "$CHK2"; exit 1; }
+          echo "OK: product-adaptive gate config seeded, manifest-excluded, add-only honored (default + project)."
+
       - name: Validate commit message format (PR backstop, advisory)
         # Advisory PR signal only. Not wired as a ruleset required status check, so
         # it does not block merge (DR-020 protect-develop has no required checks).

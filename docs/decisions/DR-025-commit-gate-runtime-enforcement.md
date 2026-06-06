@@ -40,6 +40,8 @@ force-push 가능 shared branch는 기술적으로 amend 가능하나 협업자 
 
 override는 silent 통과가 아니라 **durable record가 남는 기록된 예외**여야 한다. `git --no-verify`는 모든 hook(whitespace 포함)을 우회하는 coarse override라 부적합하고, env var 단독은 commit에 기록이 남지 않아 부적합하다. **preferred form = commit-trailer sentinel** — 예: `AWH-Gate-Override: finalization-split` + `AWH-Gate-Reason: <한 줄 사유>`. 구체 토큰·구현은 downstream에 위임한다.
 
+**Tracking-only commit convention (amend 2026-06-06, CHORE-20260606-016/c4):** 묶을 substantive 변경이 애초에 없는 **순수 tracking-only commit**(예: `/work-register` backlog row 추가, DR record-only, STATUS housekeeping)은 정당한 예외다. 이를 위해 신규 토큰을 추가하지 않는다(hook/문서 cascade 비대화 회피). 기존 `AWH-Gate-Override: finalization-split` trailer를 유지하되 reason에 `tracking-only registration: <대상>` 형식으로 사유를 남겨 흡수한다. gate 자체를 자동 예외로 약화시키지 않는다(외부화 ③ 선언-실행 괴리 재발 방지).
+
 ### 5. 집행 위치 (Ownership)
 
 - gate 소유 = **commit 시점**: `.claude/rules/git-workflow.md` commit gate + downstream pre-commit hook.
