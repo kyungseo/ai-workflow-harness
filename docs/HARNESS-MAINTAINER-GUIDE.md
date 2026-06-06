@@ -205,8 +205,9 @@ repository를 public으로 전환하기 전에:
 
 ## 10. Product Repo Hook Policy
 
-scaffold된 product repo에는 `tools/git-hooks/`가 기본 포함되지 않는다.
+scaffold workflow mode에 따라 hook 배포가 달라진다.
 
-product repo는 자체 lint/test/pre-commit stack을 우선한다. pre-commit 또는 commit-msg hook이 필요하면 해당 repo의 branch policy, protected paths, validation commands, commit message 규칙에 맞게 project-specific hook으로 별도 정의한다.
+- **generic workflow(기본):** product repo에 `tools/git-hooks/`가 포함되지 않는다. product repo는 자체 lint/test/pre-commit stack을 우선하고, hook이 필요하면 해당 repo의 branch policy, protected paths, validation commands, commit message 규칙에 맞게 project-specific hook으로 별도 정의한다.
+- **`--workflow source-gitflow`(opt-in):** harness gate hook(`tools/git-hooks/{pre-commit,commit-msg,install.sh,lib/gate-lists.sh}`)이 함께 배포된다. source repo와 동일한 feature→develop→main 운영 모델과 DR-025 finalization gate를 그대로 적용하려는 경우에만 선택한다. 배포된 target은 `tools/git-hooks/lib/gate-lists.sh`의 protected/finalization 목록을 자기 경로에 맞게 확장하고, `sh tools/git-hooks/install.sh`로 설치한다.
 
-harness hook을 그대로 복사하지 않는다. source harness hook은 harness source repo의 protected files, branch naming, validation scope, commit type을 전제로 하므로 product repo에 그대로 적용하면 기존 hook stack과 충돌하거나 잘못된 branch/workflow 제약을 만들 수 있다.
+generic workflow에서 harness hook을 임의로 그대로 복사하지 않는다. source harness hook은 harness source repo의 protected files, branch naming, validation scope, commit type을 전제로 하므로 그대로 적용하면 기존 hook stack과 충돌하거나 잘못된 branch/workflow 제약을 만들 수 있다. source-gitflow opt-in은 이 전제를 받아들인 선택이므로 예외다.

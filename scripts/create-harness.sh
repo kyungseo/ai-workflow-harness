@@ -485,6 +485,25 @@ done
 if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
   adapt "${TEMPLATE_ROOT}/scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md" \
         "${TARGET_ROOT}/docs/GIT-WORKFLOW.md"
+
+  # Gate hooks are deployed only for source-gitflow targets (opt-in). Generic targets
+  # stay advisory-only (no tools/git-hooks). Copied from the live tools/git-hooks/ via
+  # adapt() so they are recorded as framework-owned files in the manifest. adapt() does
+  # not set permissions, so exec hooks get +x explicitly afterward.
+  ensure_dir "${TARGET_ROOT}/tools/git-hooks/lib"
+  adapt "${TEMPLATE_ROOT}/tools/git-hooks/pre-commit" \
+        "${TARGET_ROOT}/tools/git-hooks/pre-commit"
+  adapt "${TEMPLATE_ROOT}/tools/git-hooks/commit-msg" \
+        "${TARGET_ROOT}/tools/git-hooks/commit-msg"
+  adapt "${TEMPLATE_ROOT}/tools/git-hooks/install.sh" \
+        "${TARGET_ROOT}/tools/git-hooks/install.sh"
+  adapt "${TEMPLATE_ROOT}/tools/git-hooks/lib/gate-lists.sh" \
+        "${TARGET_ROOT}/tools/git-hooks/lib/gate-lists.sh"
+  if [[ "${DRY_RUN}" != true ]]; then
+    for hook in pre-commit commit-msg install.sh; do
+      [[ -f "${TARGET_ROOT}/tools/git-hooks/${hook}" ]] && chmod +x "${TARGET_ROOT}/tools/git-hooks/${hook}"
+    done
+  fi
 fi
 
 # ── Codex skills ─────────────────────────────────────────────────────────────
@@ -1116,6 +1135,12 @@ if [[ "${PROFILE}" == "generic" ]]; then
 else
   echo "Profile: spring-boot"
   echo "  Included Java/Spring example rules and Spring Boot prompt bundle."
+fi
+if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
+  echo "Workflow: source-gitflow"
+  echo "  Gate hooks deployed at tools/git-hooks/ (branch isolation + DR-025 finalization gate)."
+  echo "  After git init, install them with: sh tools/git-hooks/install.sh"
+  echo "  Tune protected/finalization paths for this repo in tools/git-hooks/lib/gate-lists.sh"
 fi
 if [[ ! -d "${TARGET_ROOT}/.git" ]]; then
   echo "Note: git repository is not initialized. Follow docs/BOOTSTRAP.md §0 to decide when to run git init."
