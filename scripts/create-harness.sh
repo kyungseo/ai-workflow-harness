@@ -485,6 +485,8 @@ done
 if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
   adapt "${TEMPLATE_ROOT}/scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md" \
         "${TARGET_ROOT}/docs/GIT-WORKFLOW.md"
+  adapt "${TEMPLATE_ROOT}/scripts/templates/source-gitflow/.github/workflows/harness-validate.yml" \
+        "${TARGET_ROOT}/.github/workflows/harness-validate.yml"
 
   # Gate hooks are deployed only for source-gitflow targets (opt-in). Generic targets
   # stay advisory-only (no tools/git-hooks). Copied from the live tools/git-hooks/ via

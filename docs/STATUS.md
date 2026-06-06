@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-06 (Gate CI Source Hardening Slice C2-A Done — CHORE-20260606-009)
+Last updated: 2026-06-06 (P0 next — source-gitflow environment bootstrap)
 
 ## Current State
 
@@ -49,6 +49,6 @@ Last updated: 2026-06-06 (Gate CI Source Hardening Slice C2-A Done — CHORE-202
 
 ## Next Actions
 
-1. **다음 후보: `gate-enforcement-runtime-and-env` 남은 sub-slice** — (a) source runtime, (b) shared hook list SSoT, (c1) source-gitflow opt-in hook 배포, (c2-A) source CI hardening은 Done. 남은 후보: (c2-B) target CI 템플릿 + ruleset required-check 연결(DR-020 후속), (c3) hook-less target documented advisory/manifest check, (c4) product-adaptive gate logic, (d) source-gitflow environment bootstrap. `docs/backlog/HARNESS.md` 참조.
-2. **Harness upgrade/migration 메커니즘 (P1, L3)** — 공개 adopter `ai-deck-compiler`가 이 harness 적용 중이고 upstream 변경 반영(업그레이드/마이그레이션)이 필요. gate 잔여작업(c2-B/c3/c4/d)에 이어, 또는 우선순위에 따라 착수. 구 HRN-FUT-008 + drift-window 후보를 통폐합해 backlog에 promote 완료. `docs/backlog/HARNESS.md` 참조.
-3. **Phase 2 원칙 정리 후보 검토** — 외부화 실패모드 통합 설계 원칙과 Work 파일 계층화 규칙 후보는 별도 Work로 착수 여부를 판단한다.
+1. **P0 다음 후보: (d) source-gitflow environment bootstrap** — git init→main→develop→origin→branch protection per DR-020을 fresh scaffold/real repo 기준으로 설계한다. c2-B handoff: required check context는 `harness-validate`이며, path-filter stuck-pending caveat을 함께 처리해야 한다.
+2. **P0 후속 후보** — (d) 완료 후 (c3) hook-less/generic target advisory + manifest check, (c4) product-adaptive gate logic + tracking-only commit 예외 검토 순서로 이어간다.
+3. **P1/P2 후속 후보** — adoption/upgrade follow-ups와 structural cleanup 후보는 `docs/backlog/HARNESS.md`를 참조한다. P0 series 완료 전에는 신규 P1/P2보다 P0 sub-slice 착수를 우선한다.
