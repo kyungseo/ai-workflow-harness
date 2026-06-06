@@ -3,30 +3,8 @@ name: CI
 on:
   pull_request:
     branches: [main, develop]
-    paths:
-      - 'docs/**'
-      - 'prompts/**'
-      - '.claude/**'
-      - '.cursor/**'
-      - 'scripts/**'
-      - 'tools/git-hooks/**'
-      - '.github/workflows/**'
-      - 'AGENTS.md'
-      - 'CLAUDE.md'
-      - 'README.md'
   push:
     branches: [main]
-    paths:
-      - 'docs/**'
-      - 'prompts/**'
-      - '.claude/**'
-      - '.cursor/**'
-      - 'scripts/**'
-      - 'tools/git-hooks/**'
-      - '.github/workflows/**'
-      - 'AGENTS.md'
-      - 'CLAUDE.md'
-      - 'README.md'
 
 jobs:
   validate:
@@ -45,6 +23,26 @@ jobs:
 
       - name: Check shell syntax
         run: bash -n scripts/create-harness.sh
+
+      - name: Validate required checks are not path-filtered
+        run: |
+          set -euo pipefail
+          if grep -q "^    paths:" .github/workflows/ci.yml; then
+            echo "ERROR: source required check workflow must not use workflow-level paths."
+            exit 1
+          fi
+          if grep -q "^    paths-ignore:" .github/workflows/ci.yml; then
+            echo "ERROR: source required check workflow must not use workflow-level paths-ignore."
+            exit 1
+          fi
+          if grep -q "^    paths:" scripts/templates/source-gitflow/.github/workflows/harness-validate.yml; then
+            echo "ERROR: target required check workflow must not use workflow-level paths."
+            exit 1
+          fi
+          if grep -q "^    paths-ignore:" scripts/templates/source-gitflow/.github/workflows/harness-validate.yml; then
+            echo "ERROR: target required check workflow must not use workflow-level paths-ignore."
+            exit 1
+          fi
 
       - name: Validate generic scaffold dry-run
         run: ./scripts/create-harness.sh --dry-run --profile generic ci-harness-check /tmp/ci-harness-check
@@ -116,10 +114,24 @@ jobs:
             if grep -q "^    name:" "$DEST/.github/workflows/harness-validate.yml"; then
               echo "ERROR: harness-validate job must not set job-level name in $DEST"; exit 1
             fi
+            if grep -q "^    paths:" "$DEST/.github/workflows/harness-validate.yml"; then
+              echo "ERROR: harness-validate workflow must not use workflow-level paths in $DEST"; exit 1
+            fi
+            if grep -q "^    paths-ignore:" "$DEST/.github/workflows/harness-validate.yml"; then
+              echo "ERROR: harness-validate workflow must not use workflow-level paths-ignore in $DEST"; exit 1
+            fi
             grep -q "\"path\": \".github/workflows/harness-validate.yml\"" "$DEST/.harness/manifest.json" \
               || { echo "ERROR: manifest does not record .github/workflows/harness-validate.yml in $DEST"; exit 1; }
             grep -q "required check context는 \`harness-validate\`" "$DEST/docs/GIT-WORKFLOW.md" \
               || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing harness-validate ruleset guidance in $DEST"; exit 1; }
+            grep -q 'Required check는 `protect-main`에만 연결한다' "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing protect-main-only guidance in $DEST"; exit 1; }
+            grep -q "protect-develop.*required status check를 연결하지 않는다" "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing protect-develop no-required-check guidance in $DEST"; exit 1; }
+            grep -q "Fresh repo" "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing fresh repo bootstrap guidance in $DEST"; exit 1; }
+            grep -q "Existing repo" "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing existing repo bootstrap guidance in $DEST"; exit 1; }
             for f in pre-commit commit-msg install.sh lib/gate-lists.sh; do
               [ -f "$DEST/tools/git-hooks/$f" ] || { echo "ERROR: missing tools/git-hooks/$f in $DEST"; exit 1; }
             done

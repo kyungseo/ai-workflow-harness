@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-06 (P0 next — source-gitflow environment bootstrap)
+Last updated: 2026-06-06 (P0 next — c3 hook-less/generic advisory)
 
 ## Current State
 
@@ -49,6 +49,6 @@ Last updated: 2026-06-06 (P0 next — source-gitflow environment bootstrap)
 
 ## Next Actions
 
-1. **P0 다음 후보: (d) source-gitflow environment bootstrap** — git init→main→develop→origin→branch protection per DR-020을 fresh scaffold/real repo 기준으로 설계한다. c2-B handoff: required check context는 `harness-validate`이며, path-filter stuck-pending caveat을 함께 처리해야 한다.
-2. **P0 후속 후보** — (d) 완료 후 (c3) hook-less/generic target advisory + manifest check, (c4) product-adaptive gate logic + tracking-only commit 예외 검토 순서로 이어간다.
+1. **P0 다음 후보: (c3) hook-less/generic target advisory + manifest check** — source-gitflow hard enforcement series는 (d)까지 완료됨. generic/hook-less target에는 hard enforcement를 누수하지 않고 advisory + manifest/check 경로를 정리한다.
+2. **P0 후속 후보** — (c3) 완료 후 (c4) product-adaptive gate logic + tracking-only commit 예외 검토 순서로 이어간다.
 3. **P1/P2 후속 후보** — adoption/upgrade follow-ups와 structural cleanup 후보는 `docs/backlog/HARNESS.md`를 참조한다. P0 series 완료 전에는 신규 P1/P2보다 P0 sub-slice 착수를 우선한다.

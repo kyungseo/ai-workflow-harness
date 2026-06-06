@@ -3,34 +3,8 @@ name: Harness Validate
 on:
   pull_request:
     branches: [main, develop]
-    paths:
-      - 'docs/**'
-      - 'prompts/**'
-      - '.claude/**'
-      - '.cursor/**'
-      - '.agents/**'
-      - '.codex/**'
-      - 'skills/**'
-      - 'tools/git-hooks/**'
-      - '.github/workflows/**'
-      - 'AGENTS.md'
-      - 'CLAUDE.md'
-      - 'README.md'
   push:
     branches: [main]
-    paths:
-      - 'docs/**'
-      - 'prompts/**'
-      - '.claude/**'
-      - '.cursor/**'
-      - '.agents/**'
-      - '.codex/**'
-      - 'skills/**'
-      - 'tools/git-hooks/**'
-      - '.github/workflows/**'
-      - 'AGENTS.md'
-      - 'CLAUDE.md'
-      - 'README.md'
 
 jobs:
   # Keep this job key stable. GitHub branch rulesets match the reported
