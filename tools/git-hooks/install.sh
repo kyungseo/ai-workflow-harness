@@ -11,5 +11,5 @@ ln -sf "$SCRIPT_DIR/commit-msg" "$HOOKS_DIR/commit-msg"
 chmod +x "$HOOKS_DIR/pre-commit" "$HOOKS_DIR/commit-msg"
 
 echo "Git hooks installed:"
-echo "  pre-commit : diff and scaffold syntax checks"
-echo "  commit-msg : Conventional Commits format"
+echo "  pre-commit : diff, branch isolation, shell syntax, and finalization advisory checks"
+echo "  commit-msg : Conventional Commits format and DR-025 finalization gate"
