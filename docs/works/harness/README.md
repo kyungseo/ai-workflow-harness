@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260606-006 | Commit Gate Runtime Slice A | 2026-06-06 | `docs/works/harness/CHORE-20260606-006-commit-gate-runtime-slice-a.md` |
 | CHORE-20260606-005 | README / Adopter Guidance Overhaul | 2026-06-06 | `docs/works/harness/CHORE-20260606-005-readme-adopter-guidance-overhaul.md` |
 | CHORE-20260606-004 | Commit Gate Runtime Enforcement Child DR (DR-025) | 2026-06-06 | `docs/works/harness/CHORE-20260606-004-commit-gate-enforcement-dr.md` |
 | CHORE-20260606-003 | WORKFLOW-MANUAL Deep Rewrite | 2026-06-05 | `docs/works/harness/CHORE-20260606-003-workflow-manual-deep-rewrite.md` |

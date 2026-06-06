@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-06 (README / Adopter Guidance Overhaul Done — CHORE-20260606-005)
+Last updated: 2026-06-06 (Commit Gate Runtime Slice A Done — CHORE-20260606-006)
 
 ## Current State
 
@@ -49,5 +49,5 @@ Last updated: 2026-06-06 (README / Adopter Guidance Overhaul Done — CHORE-2026
 
 ## Next Actions
 
-1. **다음 세션 착수 후보: `gate-enforcement-runtime-and-env`** — DR-025로 commit gate 정책 확정(CHORE-20260606-004 Done). 이제 런타임 구현(hook hard-stop/sentinel·`.harness/config.json`·scaffold env)을 (a)~(d) sub-slice로 착수할지 판단(`docs/backlog/HARNESS.md` 통합 후보).
+1. **다음 세션 착수 후보: `gate-enforcement-runtime-and-env` 후속 slice** — slice (a) source hook runtime은 CHORE-20260606-006에서 Done. 남은 후보는 (b) `.harness/config.json` SSoT, (c) target scaffold hook 배포·install·CI 대안, (d) source-gitflow 환경 bootstrap 중 하나를 별도 slice로 선택한다.
 2. **Phase 2 원칙 정리 후보 검토** — 외부화 실패모드 통합 설계 원칙과 Work 파일 계층화 규칙 후보는 별도 Work로 착수 여부를 판단한다.
