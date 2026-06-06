@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-06 (P0 next — c3 hook-less/generic advisory)
+Last updated: 2026-06-06 (P0 c3 Done — CHORE-20260606-015, 잔여 c4)
 
 ## Current State
 
@@ -49,6 +49,5 @@ Last updated: 2026-06-06 (P0 next — c3 hook-less/generic advisory)
 
 ## Next Actions
 
-1. **P0 다음 후보: (c3) hook-less/generic target advisory + manifest check** — source-gitflow hard enforcement series는 (d)까지 완료됨. generic/hook-less target에는 hard enforcement를 누수하지 않고 advisory + manifest/check 경로를 정리한다.
-2. **P0 후속 후보** — (c3) 완료 후 (c4) product-adaptive gate logic + tracking-only commit 예외 검토 순서로 이어간다.
-3. **P1/P2 후속 후보** — adoption/upgrade follow-ups와 structural cleanup 후보는 `docs/backlog/HARNESS.md`를 참조한다. P0 series 완료 전에는 신규 P1/P2보다 P0 sub-slice 착수를 우선한다.
+1. **P0 다음 후보: (c4) product-adaptive gate logic + tracking-only commit 예외 검토** — (c3) hook-less/generic advisory + manifest check는 CHORE-20260606-015로 Done. (a)~(d), c2-A/c2-B, c3 완료로 series에 남은 sub-slice는 (c4)뿐이다. target 고유 protected/finalization list 자동 조정과 tracking-only commit 예외 흡수를 검토한다. `docs/backlog/HARNESS.md` 참조.
+2. **P1/P2 후속 후보** — adoption/upgrade follow-ups와 structural cleanup 후보는 `docs/backlog/HARNESS.md`를 참조한다. P0 series 완료 전에는 신규 P1/P2보다 P0 sub-slice 착수를 우선한다.

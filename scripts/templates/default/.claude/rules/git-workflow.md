@@ -5,6 +5,11 @@ paths:
 
 # Git Workflow Rules
 
+## Enforcement Posture (advisory-only)
+
+This scaffold uses the generic workflow: **no git hooks are installed**, so the branch-isolation, finalization-bundling, and commit-message gates below are **advisory** — they rely on the agent and committer honoring them, not on runtime enforcement (per DR-025: gates are AI-advisory when hooks are absent).
+To enable runtime hook enforcement, re-scaffold with `--workflow source-gitflow`.
+
 If the current directory is not a git repository (bootstrap initial state), report the steps below as `Not Applicable` and proceed with document/file validation only.
 
 Before committing, always run in this order:

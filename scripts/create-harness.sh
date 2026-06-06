@@ -257,9 +257,26 @@ do_check() {
     return 2
   fi
 
+  # Enforcement posture from workflow_mode. workflow_mode is intentionally NOT in
+  # the invalid-manifest set above: an old/partial manifest without it degrades to
+  # `unknown` rather than failing. The label reflects deployed hook *files* only —
+  # workflow_mode does not prove `.git/hooks` installation, so source-gitflow is
+  # reported `hook-capable`, never `hook-gated` (no overclaim of active enforcement).
+  local m_workflow posture
+  # `|| true`: workflow_mode is optional (degrade target). Under `set -euo pipefail`
+  # a missing field makes field()'s grep fail and pipefail would abort the script,
+  # so tolerate the empty result and fall through to the `unknown` posture.
+  m_workflow="$(field workflow_mode || true)"
+  case "${m_workflow}" in
+    generic)        posture="advisory-only (no hook files)" ;;
+    source-gitflow) posture="hook-capable (source-gitflow hook files present; run tools/git-hooks/install.sh to activate)" ;;
+    *)              posture="unknown (workflow_mode not recorded)" ;;
+  esac
+
   echo "harness --check: ${target}"
   echo "  manifest version : ${m_version}   (current source: ${HARNESS_VERSION})"
   [[ "${m_version}" != "${HARNESS_VERSION}" ]] && echo "  version delta    : ${m_version} -> ${HARNESS_VERSION}"
+  echo "  enforcement      : ${posture}"
   echo ""
 
   local total=0 insync=0 drift=0
@@ -646,6 +663,20 @@ if [[ "${WITH_OPTIONAL}" == true ]]; then
   HARNESS_DOC_LINK="docs/WORKFLOW-MANUAL.md"
 fi
 
+# Generic targets carry no git hooks, so the workflow gates are advisory-only.
+# Surface that posture in the README (cross-tool/human front-door). Source-gitflow
+# targets get hook/CI/bootstrap guidance via docs/GIT-WORKFLOW.md instead, so this
+# note is generic-only to avoid an advisory-vs-enforced contradiction.
+ENFORCEMENT_NOTE=""
+if [[ "${WORKFLOW_MODE}" != "source-gitflow" ]]; then
+  ENFORCEMENT_NOTE="
+### Workflow enforcement (advisory-only)
+
+이 scaffold는 generic workflow라 **git hook을 설치하지 않는다**. branch isolation, finalization bundling, commit message gate는 런타임 강제가 아니라 **advisory**(agent·committer가 지키는 honor-system, DR-025 기준)다.
+런타임 hook 강제가 필요하면 \`--workflow source-gitflow\`로 다시 scaffold한다.
+"
+fi
+
 write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 
 > [프로젝트 한 줄 설명 — 채워주세요]
@@ -703,6 +734,7 @@ claude        # Claude Code 열기
 
 git repository는 자동으로 초기화되지 않는다. 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
 \`--workflow source-gitflow\`를 선택하지 않았다면 branch/release policy는 이 target project가 직접 정한다.
+${ENFORCEMENT_NOTE}
 
 ### Framework Files & Updating
 
