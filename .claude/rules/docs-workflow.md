@@ -18,6 +18,7 @@ MUST:
 - Use path-mirrored locations under `docs/archive/` for completed historical detail.
 - Use `docs/HARNESS-QUICK-REFERENCE.md` for daily workflow execution rules.
 - Include done criteria and verification for actionable work items.
+- When adding or moving a file in a directory that has a `README.md` index, update that index in the same change. Applies to `docs/decisions/`, `docs/retrospectives/`, `docs/troubleshooting/`, `docs/works/{category}/`, and any other directory with a `README.md`. On archive moves, remove the row from the source index and add it to the archive index.
 - Use Work files for large tasks: `docs/works/{category}/{ID}-{lowercase-topic}.md` (spec: DR-013).
 - Do not reuse task IDs for different meanings.
 - Follow `docs/decisions/DR-007-language-policy.md` when editing docs, prompts, commands, rules, Cursor rules, or hook messages.

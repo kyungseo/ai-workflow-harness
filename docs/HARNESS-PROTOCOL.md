@@ -397,6 +397,12 @@ cascade 감사 시 `docs/decisions/README.md` 인덱스의 Accepted DR만 확인
 
 cascade 감사 시 `docs/retrospectives/README.md` 인덱스를 참조하여 최신 1개 또는 해당 topic 관련 1개만 확인한다. 전체 목록 스캔은 하지 않는다.
 
+#### Index Pairing Rule
+
+`README.md` 인덱스가 있는 디렉토리에 파일을 추가하거나 이동할 때는 해당 인덱스를 함께 갱신한다.
+대상 디렉토리: `docs/decisions/`, `docs/retrospectives/`, `docs/troubleshooting/`, `docs/works/{category}/` 등 `README.md`가 존재하는 모든 디렉토리.
+archive 이동 시에는 원본 인덱스에서 행을 제거하고, archive 디렉토리 인덱스(`docs/archive/docs/*/README.md`)에 추가한다.
+
 ### Validation
 
 - 새 문서는 `STATUS.md`, harness protocol, 또는 관련 backlog에서 참조되어야 한다.

@@ -16,6 +16,17 @@ Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 
 
 docs/STATUS.md와 관련 backlog를 확인한 뒤 $ARGUMENTS 작업 항목을 등록해줘.
 
+## Duplicate Check (Before Registration)
+
+등록 전 기존 backlog와 Deferred Ideas에서 유사·동일 항목이 있는지 확인한다.
+
+- 제목·topic 키워드로 grep 수준의 빠른 확인으로 충분하다. 자동 유사도 감지는 하지 않는다.
+- 유사 항목이 있으면 다음 중 하나를 제안한다:
+  - **통폐합**: 기존 항목에 내용을 추가하고 신규 등록 생략
+  - **reframe**: 기존 항목을 수정하여 새 관점 반영
+  - **분리 유지**: 명확히 다른 scope임을 확인 후 별도 등록
+- 통폐합 대상이 있으면 참조처(backlog/Work/DR)를 grep으로 확인한 뒤 제거 또는 reframe한다.
+
 ## Registration Location
 
 다음 기준으로 등록 위치를 판단해줘.

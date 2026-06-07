@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260607-002 | 등록·착수 시점 정합성 Hardening | 2026-06-07 | `docs/works/harness/CHORE-20260607-002-registration-integrity.md` |
 | CHORE-20260607-001 | PLAN Trigger Coverage 확장 | 2026-06-07 | `docs/works/harness/CHORE-20260607-001-plan-trigger-coverage.md` |
 | CHORE-20260606-016 | Product-Adaptive Gate Logic + Tracking-Only Commit — Slice C4 | 2026-06-06 | `docs/works/harness/CHORE-20260606-016-product-adaptive-gate-logic.md` |
 | CHORE-20260606-015 | Hook-less / Generic Target Advisory + Manifest Check — Slice C3 | 2026-06-06 | `docs/works/harness/CHORE-20260606-015-hookless-advisory-manifest-check.md` |

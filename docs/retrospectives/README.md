@@ -5,7 +5,7 @@ AI Workflow Harness 회고 인덱스.
 cascade 감사 시 최신 1개 또는 해당 topic 관련 1개만 참조한다. 전체 목록 스캔은 하지 않는다.
 archive 기준: 연관 Work/Phase가 archive되고 insights가 canonical 문서에 반영된 경우 (사용자 승인 후).
 
-공개 전 이전 회고(2026-05-12 ~ 2026-05-22) 전체를 `docs/archive/docs/retrospectives/`로 archive했다.
+공개 전 이전 회고(2026-05-12 ~ 2026-05-22) 전체를 `docs/archive/docs/retrospectives/`로 archive했다. 아카이브 인덱스: [`docs/archive/docs/retrospectives/README.md`](../archive/docs/retrospectives/README.md)
 
 | 날짜 | 파일 | 주제/Scope | 핵심 결론 |
 |------|------|-----------|---------|
