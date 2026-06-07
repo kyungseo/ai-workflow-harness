@@ -411,7 +411,7 @@ AI는 조건이 충족되어도 파일을 자동으로 수정하지 않습니다
 | `/work-resume {ID}` | 중단 작업 재개 | 실제 파일 상태와 STATUS·Work 파일 불일치 확인 |
 | `/work-debug` | 오류 분석 | 원인 근거와 최소 수정 계획 |
 | `/work-doc` | 발표·보고·review package | brief, source, format, quality bar 확인 |
-| `/repo-decision` | 결정 기록 | DR 초안 작성 |
+| `/record-decision` | 결정 기록 | DR 초안 작성 |
 | `/work-close` | Work 완료 | Done 처리와 선택적 archive |
 | `/session-summary` | 세션 마무리 | 변경·검증·리스크·다음 prompt 요약 |
 | `/repo-health` | workflow 점검 | 구조 위생·정합성, context weight, cascade drift 확인 |

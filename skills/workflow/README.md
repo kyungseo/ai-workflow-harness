@@ -27,4 +27,4 @@
 | `/work-debug` | `skills/workflow/work-debug.md` | `.claude/commands/work-debug.md` | `.agents/skills/workflow-work-debug/SKILL.md` | 지정 대상의 원인을 코드/로그 근거로 좁히고 최소 변경 계획을 보고한다 |
 | `/work-doc` | `skills/workflow/work-doc.md` | `.claude/commands/work-doc.md` | `.agents/skills/workflow-work-doc/SKILL.md` | 발표/보고 산출물 제작 workflow. Presentation, Report, Decision Brief 등 고품질 산출물을 생성한다 |
 | `/repo-health` | `skills/workflow/repo-health.md` | `.claude/commands/repo-health.md` | `.agents/skills/workflow-repo-health/SKILL.md` | 프로젝트 워크플로우와 문서 건강 상태를 점검하고 보고한다. 옵션: --full, --cascade |
-| `/repo-decision` | `skills/workflow/repo-decision.md` | `.claude/commands/repo-decision.md` | `.agents/skills/workflow-repo-decision/SKILL.md` | 확정된 기술적 의사결정을 DR 파일로 기록한다 |
+| `/record-decision` | `skills/workflow/record-decision.md` | `.claude/commands/record-decision.md` | `.agents/skills/workflow-record-decision/SKILL.md` | product·harness 의사결정을 DR 파일로 기록한다 |

@@ -35,7 +35,7 @@ When the user's intent matches a workflow command without an explicit `/command`
 | Intent | Command file to follow |
 | --- | --- |
 | Register or add a work item — "작업 등록하자", "백로그에 추가해줘", "이 아이디어 등록해줘" | `.claude/commands/work-register.md` |
-| Record a DR or decision — "결정 기록하자", "DR 남기자", "의사결정 기록해줘" | `.claude/commands/repo-decision.md` |
+| Record a DR or decision — "결정 기록하자", "DR 남기자", "의사결정 기록해줘" | `.claude/commands/record-decision.md` |
 | Start or plan a specific task — "작업 계획을 세우자", "work 파일 작성하자", "작업을 시작하자", "플랜 짜줘". Identify the target task from conversation context (recent Work ID, backlog item, or topic under discussion); if no specific task is identifiable from context, surface `/work-select` first. | `.claude/commands/work-plan.md` (includes the three pre-checks) |
 | Resume interrupted work — "이어서 하자", "작업 재개하자", "중단된 작업 계속하자" | `.claude/commands/work-resume.md` (includes drift checks) |
 | Complete / close / wrap up current work, or request commit·PR·merge after task — "작업 마무리하자", "close 처리해줘", "완료하고 PR 올리자", "커밋하자" | `.claude/commands/work-close.md` (load skill; multi-step procedure runs from canonical) |
