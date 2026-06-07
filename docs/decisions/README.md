@@ -4,7 +4,7 @@ AI Workflow Harness의 결정 근거 인덱스.
 각 DR은 하나의 결정 이유(WHY)를 기록한다.
 
 cascade 감사 시 이 인덱스의 Accepted DR만 확인 대상이다.
-Superseded DR은 `docs/archive/docs/decisions/`로 이동된다.
+Superseded DR은 `docs/archive/docs/decisions/`로 이동된다. 아카이브 인덱스: [`docs/archive/docs/decisions/README.md`](../archive/docs/decisions/README.md)
 
 | ID | Title | Date | Status | 요약 |
 |----|-------|------|--------|------|

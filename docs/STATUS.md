@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-07 (CHORE-20260607-001 Done — PLAN Trigger Coverage 확장, T5 배선 + Intent Recognition + Ambiguity rule)
+Last updated: 2026-06-07 (CHORE-20260607-002 Done — 등록·착수 정합성 Hardening, Index Pairing Rule, archive index 생성)
 
 ## Current State
 
