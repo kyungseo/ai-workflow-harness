@@ -49,9 +49,8 @@ Last updated: 2026-06-07 (CHORE-20260607-006 Done — /record-decision 개명, p
 
 ## Next Actions
 
-> PR #101 머지 완료(DR-027 frontmatter 스펙). scaffold P1 backlog에 PR #93 이후 재검증 항목 등재됨.
-
-1. **P1 우선순위 Top 3** (다음 작업 선택은 `/work-select`):
+1. **P1 우선순위 Top 4** (다음 작업 선택은 `/work-select`):
+   - **Scaffold/tool-surface alignment 점검 체계화** — scaffold drift 구조적 문제. PR #93 이후 신규 merge 전체 재검증 즉시 실행 가능. invariants → `/repo-health` 연계 설계 병행
    - **Harness upgrade/migration 메커니즘** — 실 adopter(`ai-deck-compiler`) upstream 반영 필요. concrete driver 있는 유일한 항목
    - **Backlog row lifecycle SSoT 정비** — work-close마다 수동 확인 발생. 세션 안정성 직접 영향
    - **Adopter onboarding/manual refresh** — README overhaul 이후 onboarding path 정합 미확인. upgrade/migration 전 기반 정리 필요
