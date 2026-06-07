@@ -49,6 +49,8 @@ Last updated: 2026-06-07 (CHORE-20260607-006 Done — /record-decision 개명, p
 
 ## Next Actions
 
+> PR #101 머지 완료(DR-027 frontmatter 스펙). scaffold P1 backlog에 PR #93 이후 재검증 항목 등재됨.
+
 1. **P1 우선순위 Top 3** (다음 작업 선택은 `/work-select`):
    - **Harness upgrade/migration 메커니즘** — 실 adopter(`ai-deck-compiler`) upstream 반영 필요. concrete driver 있는 유일한 항목
    - **Backlog row lifecycle SSoT 정비** — work-close마다 수동 확인 발생. 세션 안정성 직접 영향
