@@ -20,6 +20,7 @@ MUST:
 - Include done criteria and verification for actionable work items.
 - When adding or moving a file in a directory that has a `README.md` index, update that index in the same change. Applies to `docs/decisions/`, `docs/retrospectives/`, `docs/troubleshooting/`, `docs/works/{category}/`, and any other directory with a `README.md`. On archive moves, remove the row from the source index and add it to the archive index.
 - Use Work files for large tasks: `docs/works/{category}/{ID}-{lowercase-topic}.md` (spec: DR-013).
+- When creating a new `docs/troubleshooting/` or `docs/retrospectives/` file, apply the DR-027 frontmatter spec defined in each directory's `README.md`.
 - Do not reuse task IDs for different meanings.
 - Follow `docs/decisions/DR-007-language-policy.md` when editing docs, prompts, commands, rules, Cursor rules, or hook messages.
 - Follow `docs/AGENT-WORKFLOW.md` Approval Matrix before execution, scope expansion, state changes, or committing.

@@ -1,3 +1,12 @@
+---
+symptom: Agent가 승인된 범위 밖 문서까지 함께 수정
+track: harness
+category: workflow
+environment: 공통
+status: Resolved
+related_dr: []
+---
+
 # Agent Scope Approval Drift
 
 Date: 2026-05-17
