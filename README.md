@@ -381,7 +381,7 @@ Quick Mode는 Product track의 작고 명확한 L1 작업에 한정합니다. Ha
 | 파일 | 역할 |
 | --- | --- |
 | `docs/STATUS.md` | 현재 dashboard. Active Work pointer, Next Actions, 최근 결정 digest를 둡니다. |
-| `docs/works/{category}/` | 큰 작업의 SSoT. Plan, Done Criteria, Verification, Checkpoints, Discovery를 둡니다. |
+| `docs/works/{category}/` | 큰 작업의 SSoT. Top Summary, Context Manifest, Scope/Plan, Done Criteria, Verification, Checkpoints, Next Actions, Discovery를 둡니다. |
 | `docs/backlog/` | 아직 착수하지 않은 후보 작업을 둡니다. |
 | `docs/decisions/` | 되돌리기 비용이 있거나 여러 surface에 영향을 주는 결정을 기록합니다. |
 

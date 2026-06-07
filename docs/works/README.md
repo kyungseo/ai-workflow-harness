@@ -1,7 +1,7 @@
 # docs/works/
 
 Work 파일 디렉토리다.
-큰 작업 단위의 Plan, Done Criteria, Verification, Checkpoints, Discovery를 보존하는 SSoT로 사용한다.
+큰 작업 단위의 Top Summary, Context Manifest, Scope/Plan, Done Criteria, Verification, Checkpoints, Next Actions, Discovery를 보존하는 SSoT로 사용한다.
 `docs/STATUS.md`는 현재 Active Work pointer를 보여주는 dashboard다.
 
 Work 파일 스펙: `docs/decisions/DR-013-work-file-spec.md`
