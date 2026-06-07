@@ -438,7 +438,7 @@ if [[ "${WITH_OPTIONAL}" == true ]]; then
         "${TARGET_ROOT}/docs/decisions/DR-017-git-merge-strategy.md"
   adapt "${TEMPLATE_ROOT}/docs/decisions/DR-020-github-repo-settings.md" \
         "${TARGET_ROOT}/docs/decisions/DR-020-github-repo-settings.md"
-  OPTIONAL_DR_ROWS="| DR-017 | Git 머지 전략 | — | Accepted | Regular merge 기본, Squash 선택적, rebase 비권장 |
+  OPTIONAL_DR_ROWS="| DR-017 | Git 머지 전략 | — | Accepted (Amended) | feature→develop: Squash 기본 / Regular 예외; develop→main: Regular Merge 원칙 |
 | DR-020 | GitHub Repository Settings Policy | — | Accepted | repo visibility·branch ruleset·merge 방식 운영 정책 |
 "
 fi
