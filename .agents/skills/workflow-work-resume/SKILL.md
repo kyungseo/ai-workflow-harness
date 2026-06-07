@@ -5,7 +5,7 @@ description: "중단된 Active Work를 재개한다. drift 확인 후 남은 계
 
 # workflow-work-resume
 
-Use this skill when the user asks to invoke `/work-resume` or clearly matches this workflow intent.
+Use this skill when the user asks to invoke `/work-resume`, or uses intent phrases like "이어서 하자", "작업 재개하자", "중단된 작업 계속하자", or clearly matches this workflow intent.
 
 ## Step 0
 

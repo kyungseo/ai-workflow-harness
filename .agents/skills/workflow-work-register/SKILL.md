@@ -5,7 +5,7 @@ description: "새 작업 항목을 적절한 backlog 또는 STATUS.md에 등록�
 
 # workflow-work-register
 
-Use this skill when the user asks to invoke `/work-register` or clearly matches this workflow intent.
+Use this skill when the user asks to invoke `/work-register`, or uses intent phrases like "작업 등록하자", "백로그에 추가해줘", "이 아이디어 등록해줘", or clearly matches this workflow intent.
 
 ## Step 0
 

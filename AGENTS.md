@@ -33,6 +33,8 @@ Each skill adapter must load the matching canonical procedure in `skills/workflo
 
 Available workflow skills are the directories under `.agents/skills/`.
 
+If the matched skill intent is uncertain or multiple skills are equally plausible, confirm the interpreted intent in one line before loading a skill. Do not silently pick one and execute.
+
 ## Document Language Policy
 
 When creating or editing any document, prompt, command, rule, or hook message — confirm DR-007 applies.

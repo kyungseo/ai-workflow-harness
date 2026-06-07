@@ -115,3 +115,12 @@ Phase completion criteria, Current phase/focus, Recent Decisions 변경은 `STAT
 
 계획에 도구·아키텍처·정책 결정이 포함된 경우, 승인 후 구현 시작 전에 DR-worthy 결정 목록을 제시하고 기록 여부를 물어봐.
 DR-worthy 기준: 도구/프레임워크 선택, 아키텍처 경계 정책, reversal cost Medium 이상, 복수 컴포넌트 영향.
+
+**5. PLAN direction alignment (T5 — recommended/warning soft)**
+
+착수 작업이 `docs/PLAN.md`의 roadmap/milestone 방향에 영향을 주거나 상충하는지 확인한다.
+
+- 이 작업이 현재 PLAN의 horizon/focus와 일치하는가?
+- 이 작업의 결과가 PLAN 방향을 바꾸거나 새 DR이 필요한 결정을 포함하는가?
+
+영향/상충이 있으면 계획에 명시하고 Approval Matrix proposal로 제안한다. 없으면 "PLAN 영향 없음" 1줄 보고. PLAN 작성 완료를 착수의 hard-stop으로 강제하지 않는다(recommended/warning). PLAN 변경이 예상되면 closeout 시 `docs/PLAN-SUMMARY.md` stale 여부도 함께 확인하도록 계획에 메모한다.

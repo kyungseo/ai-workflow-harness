@@ -17,6 +17,7 @@ Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 
 docs/STATUS.md의 Current State, Active Work, Blockers And Open Questions, Next Actions만 확인해줘.
 `docs/BOOTSTRAP.md` 존재 여부는 확인하지 마. 다만 Next Actions가 scaffold bootstrap/onboarding을 명시하면 후속 작업에서 `docs/BOOTSTRAP.md`를 로드해야 한다고 알려줘.
 그다음 `docs/works/*/*.md` 중 `status: Done`이지만 archive되지 않은 Work 파일이 있는지 파일명과 frontmatter 수준으로만 확인해줘.
+Done이지만 archive되지 않은 Work 파일이 5개 이상이면, 섹션 6(리스크와 확인 질문)에 PLAN 누적 드리프트 가능성을 soft warning으로 포함한다. 개별 Work마다 T5 판정이 "영향 없음"이었더라도 여러 Work가 완료되면서 `docs/PLAN.md`와 실제 진행 방향 간 괴리가 생길 수 있다. 주기적 PLAN 현행화 검토(`/work-select` 또는 별도 세션)를 권장한다.
 Phase 1 또는 refactor 이전 상세가 필요하고 해당 경로가 실제 존재하는 경우에만 docs/archive/ 또는 docs/archive/snapshots/harness-refactor-20260514/를 추가로 참고해줘.
 
 **Idle-State Rule:** Active Work 없음 + Next Actions 없음 + archive 대기 Work 없음인 경우,

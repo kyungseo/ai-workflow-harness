@@ -5,7 +5,7 @@ description: "확정된 기술적 의사결정을 DR 파일로 기록한다"
 
 # workflow-repo-decision
 
-Use this skill when the user asks to invoke `/repo-decision` or clearly matches this workflow intent.
+Use this skill when the user asks to invoke `/repo-decision`, or uses intent phrases like "결정 기록하자", "DR 남기자", "의사결정 기록해줘", or clearly matches this workflow intent.
 
 ## Step 0
 
