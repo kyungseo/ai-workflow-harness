@@ -50,5 +50,8 @@ Last updated: 2026-06-07 (CHORE-20260607-006 Done — /record-decision 개명, p
 
 ## Next Actions
 
-1. **Clean idle** — Active Work 없음. 다음 작업 선택은 `/work-select` 또는 `/work-register`. 후보는 `docs/backlog/HARNESS.md` 참조.
-2. **Archive 대기** — Done Work 24개 누적. 다음 `/session-start` 시 archive 일괄 처리 권장.
+1. **P1 우선순위 Top 3** (다음 작업 선택은 `/work-select`):
+   - **Harness upgrade/migration 메커니즘** — 실 adopter(`ai-deck-compiler`) upstream 반영 필요. concrete driver 있는 유일한 항목
+   - **Backlog row lifecycle SSoT 정비** — work-close마다 수동 확인 발생. 세션 안정성 직접 영향
+   - **Adopter onboarding/manual refresh** — README overhaul 이후 onboarding path 정합 미확인. upgrade/migration 전 기반 정리 필요
+2. **Archive 대기** — Done Work 24개 누적. 다음 `/session-start` 시 일괄 처리 권장.
