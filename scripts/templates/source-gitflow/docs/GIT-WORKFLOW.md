@@ -161,8 +161,8 @@ gh pr create --base develop --title "..." --body "..."
 `gh pr create` 기본 base는 저장소 default branch(`main`)이므로 `--base develop`을 반드시 명시한다.
 
 **머지 전략:**
-- Regular merge 기본 — feature 브랜치의 커밋 히스토리를 보존한다.
-- WIP 커밋이 많아 히스토리가 지저분할 때만 Squash merge를 선택한다.
+- Squash merge 기본 — develop 히스토리를 기능 단위 단일 커밋으로 간결하게 유지한다. work-close 단일 커밋 패턴과 일치한다. (DR-017 Amended)
+- Regular merge 예외 — 커밋 단위 이력을 반드시 보존해야 할 경우에만 선택한다.
 
 **검증 책임:**
 - PR 전에는 변경 범위에 맞는 로컬 검증 결과(`git diff --check` 등)를 PR 본문이나 세션 요약에 남긴다.
@@ -196,7 +196,7 @@ git push origin --delete feature/{name}
 feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
 의미 있는 패치(하나 또는 여러 feature 묶음)가 완료되어 release 준비가 됐을 때만 develop → main PR을 만든다.
 
-**머지 방식:** 항상 Regular merge (Merge commit) — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다.
+**머지 방식:** Regular Merge (Merge commit) 원칙 — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다. Fast-Forward가 가능하면 허용한다. (DR-017 Amended)
 
 ### 3-1. Public Clean Baseline Gate
 

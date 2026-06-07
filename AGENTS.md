@@ -53,5 +53,5 @@ If this repository has `docs/GIT-WORKFLOW.md`, follow §5 for commit format.
 NEVER open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.
 
 After `gh pr merge` completes, follow the merge type:
-- feature→develop: execute §2-4 (sync develop, delete local feature branch, suggest next feature branch).
-- develop→main: execute §3-4 (Post-Merge Develop Sync: sync main, merge origin/main into develop, push develop).
+- feature→develop: use `--squash` (default per DR-017 Amended); use `--merge` only when commit-level history must be preserved. Then execute §2-4 (sync develop, delete local feature branch, suggest next feature branch).
+- develop→main: use `--merge` (regular merge is the default per DR-017 Amended). Then execute §3-4 (Post-Merge Develop Sync: sync main, merge origin/main into develop, push develop).

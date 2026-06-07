@@ -102,11 +102,13 @@ NEVER:
 After `gh pr merge` completes, follow the appropriate cleanup for the merge type:
 
 **feature → develop PR:**
+Merge flag: `gh pr merge --squash --delete-branch` (squash is the default — DR-017 Amended). Use `--merge` only when commit-level history must be preserved.
 If this repository has `docs/GIT-WORKFLOW.md`, execute §2-4 in full without waiting for a separate instruction:
 1. `git checkout develop && git pull origin develop`
 2. `git branch -d feature/{name}` — delete local branch. If remote was not auto-deleted, also run `git push origin --delete feature/{name}`.
 3. Suggest the next feature branch name based on upcoming work and ask whether to create it now.
 
 **develop → main PR:**
+Merge flag: `gh pr merge --merge` (regular merge is the default — DR-017 Amended). Fast-forward is allowed if applicable.
 If this repository has `docs/GIT-WORKFLOW.md`, execute §3-4 (Post-Merge Develop Sync) instead:
 `git checkout main && git pull origin main`, then `git checkout develop && git merge origin/main && git push origin develop`.
