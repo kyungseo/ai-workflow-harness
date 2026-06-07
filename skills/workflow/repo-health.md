@@ -67,6 +67,7 @@ ls .claude/commands/   # 대응 Claude command 수·이름 확인
 ls .claude/rules/      # Claude rule 수·이름 확인
 ls .cursor/rules/      # Cursor rule 수·이름 확인
 ls .codex/             # Codex hook/config 파일 확인
+ls tools/git-hooks/    # commit gate hook 파일 확인 (있는 경우만)
 ```
 목록 이상 시에만 해당 파일 내용 확인. 정상이면 전체 로드하지 않는다.
 
@@ -122,11 +123,12 @@ git diff --cached --name-only
 | `docs/WORKFLOW-MANUAL.md`, `README.md`, `docs/HARNESS-QUICK-REFERENCE.md` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 관련 command/rule/prompt | 변경된 user-facing 문서 상호 참조 | 필요 시 scaffold README/manual 산출물 | snapshot 덮어쓰기 금지 |
 | `scripts/create-harness.sh`가 존재할 때 | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/SCAFFOLD-BOOTSTRAP.md` | commands/rules/prompts source | generated README/manual expectations | dry-run + temp scaffold + stale phrase search | 필요 시 related Work |
 | `docs/SCAFFOLD-BOOTSTRAP.md` | `docs/HARNESS-PROTOCOL.md` | — | — | `scripts/create-harness.sh`가 있으면 생성 BOOTSTRAP.md 템플릿과 Boot Sequence·Completion Rule 동기화, 없으면 source repo 전용 기준으로 표시 | — |
-| `docs/STATUS.md`, `docs/works/**`, `docs/backlog/**`, `docs/decisions/**` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | session-start/work-resume/work-close/session-summary/repo-decision commands | quick reference/manual state sections | work/index scaffold templates | 관련 Work/DR/retrospective |
+| `docs/STATUS.md`, `docs/works/**`, `docs/backlog/**`, `docs/decisions/**` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | session-start/work-resume/work-close/session-summary/record-decision commands | quick reference/manual state sections | work/index scaffold templates | 관련 Work/DR/retrospective |
 | `docs/GIT-WORKFLOW.md`, branch/release policy 변경 | `docs/AGENT-WORKFLOW.md` | `.claude/commands/work-plan.md`, `work-close.md`, 대응 SKILL mirror | `docs/WORKFLOW-MANUAL.md` branch 섹션, `docs/HARNESS-QUICK-REFERENCE.md` | `scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md`, generated work-plan/work-close command | 관련 Work |
 | `scripts/templates/**` 변경 | `docs/SCAFFOLD-BOOTSTRAP.md`, `docs/AGENT-WORKFLOW.md` | `scripts/create-harness.sh` | `docs/WORKFLOW-MANUAL.md` scaffold 섹션, `README.md` §10 | dry-run + fresh generation, generated command/skill/rule | 관련 Work |
 | `.claude/commands/{x}.md` ↔ `.agents/skills/workflow-{x}/SKILL.md` mirror pair 변경 | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 대응 pair 전체 | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` 섹션 | scaffold 복사 산출물 | 관련 Work/retrospective |
 | `.claude/commands/repo-health.md` 또는 `.agents/skills/workflow-repo-health/SKILL.md` 변경 | `docs/AGENT-WORKFLOW.md` | SKILL mirror (또는 command mirror) | `docs/HARNESS-QUICK-REFERENCE.md` `/repo-health` 행, `docs/WORKFLOW-MANUAL.md` §5 `/repo-health` 셀 | scaffold 복사 산출물 health command/skill | — |
+| `tools/git-hooks/**` 변경 | `docs/HARNESS-PROTOCOL.md` hook trigger section, `docs/AGENT-WORKFLOW.md` commit approval | `tools/git-hooks/install.sh` (설치 script), `tools/git-hooks/lib/gate-lists.sh` (protected 목록), `.harness/gate-config` | `docs/WORKFLOW-MANUAL.md` hook section, `docs/HARNESS-QUICK-REFERENCE.md` | `scripts/create-harness.sh` hook installation block | 관련 Work |
 
 ### Required Grep Pack
 
@@ -138,8 +140,9 @@ git diff --cached --name-only
 LIVE_TARGETS=(
   AGENTS.md CLAUDE.md README.md
   docs/AGENT-WORKFLOW.md docs/HARNESS-PROTOCOL.md docs/HARNESS-QUICK-REFERENCE.md docs/WORKFLOW-MANUAL.md docs/STATUS.md
+  docs/MIGRATION-CANONICAL-ADAPTER-RENAME.md
   docs/backlog docs/decisions docs/works
-  .agents .codex .claude .cursor prompts scripts
+  .agents .codex .claude .cursor prompts scripts tools
 )
 
 # Common stale path / old term check
@@ -147,16 +150,16 @@ rg -n "State Update Gate|Commit Gate|Scope And Commit Approval|docs/harness-prot
   "${LIVE_TARGETS[@]}"
 
 # Command / rule / prompt alignment
-rg -n "Approval Matrix|Quick Mode|Active Work|Done|Archived|/work-close|/session-summary|/repo-health|--cascade" \
+rg -n "Approval Matrix|Quick Mode|Active Work|Done|Archived|/work-close|/session-summary|/repo-health|/record-decision|--cascade" \
   "${LIVE_TARGETS[@]}"
 
 # User-facing drift
-rg -n "/session-start|/work-select|/work-plan|/work-resume|/work-close|/session-summary|/repo-health|Quick Mode|Approval Matrix|cascade|scaffold" \
+rg -n "/session-start|/work-select|/work-plan|/work-resume|/work-close|/session-summary|/repo-health|/record-decision|Quick Mode|Approval Matrix|cascade|scaffold" \
   docs/WORKFLOW-MANUAL.md docs/HARNESS-QUICK-REFERENCE.md README.md
 
 # Scaffold drift
 if test -f scripts/create-harness.sh; then
-  rg -n "HARNESS-PROTOCOL|AGENT-WORKFLOW|WORKFLOW-MANUAL|Quick Mode|Approval Matrix|/repo-health|--cascade" \
+  rg -n "HARNESS-PROTOCOL|AGENT-WORKFLOW|WORKFLOW-MANUAL|Quick Mode|Approval Matrix|/repo-health|/record-decision|--cascade" \
     scripts/create-harness.sh
 else
   echo "skip: scripts/create-harness.sh not present in this repository"
@@ -215,6 +218,8 @@ Historical matches are not automatically drift. Report them separately as snapsh
 - STATUS.md Active Work pointer ↔ Work 파일 frontmatter `status: Active` 정합성
 - `docs/works/*/*.md` 중 `status: Done`인 Work가 STATUS Active Work에 남아 있지 않은가
 - `docs/works/*/README.md` index가 Work 파일 상태(Active/Done/Archived)와 일치하는가
+- `docs/decisions/README.md` index가 `docs/decisions/DR-*.md` 실제 파일 목록과 일치하는가
+- `docs/retrospectives/README.md` index가 `docs/retrospectives/` 실제 파일 목록과 일치하는가
 - archive 위치의 Work 파일은 `status: Archived`인가
 - DR 생애주기 양방향: STATUS.md Recent Decisions ↔ `rg` 결과의 DR Status 일치
 - workflow command 또는 skill을 수정한 Active Work의 CP/commit: `.claude/commands/{name}.md`와 `.agents/skills/workflow-{name}/SKILL.md`가 같은 CP/commit에 함께 반영됐는지 확인 (docs/HARNESS-PARALLEL-WORK-CONTROLS.md §Command/Skill Mirror Atomicity)

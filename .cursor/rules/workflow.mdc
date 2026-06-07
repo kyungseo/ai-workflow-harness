@@ -25,7 +25,7 @@ When the user's intent matches a workflow operation, first load the matching can
 | Debug a scoped issue | `skills/workflow/work-debug.md` |
 | Create presentation/report/review material | `skills/workflow/work-doc.md` |
 | Repository health / cascade audit | `skills/workflow/repo-health.md` |
-| Record a decision as DR | `skills/workflow/repo-decision.md` |
+| Record a decision as DR | `skills/workflow/record-decision.md` |
 | Merge / PR branch integration | Follow `docs/GIT-WORKFLOW.md` when present |
 
 ## Hard Stops

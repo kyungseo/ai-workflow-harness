@@ -23,7 +23,9 @@
 | `/debug` | `/work-debug` | `workflow-work-debug` |
 | `/doc` | `/work-doc` | `workflow-work-doc` |
 | `/health` | `/repo-health` | `workflow-repo-health` |
-| `/record-decision` | `/repo-decision` | `workflow-repo-decision` |
+| `/record-decision` | `/record-decision` | `workflow-record-decision` |
+
+> **Note (2026-06-07):** `CHORE-20260606-001`에서 `/record-decision`이 `/repo-decision`으로 개명됐다가 `CHORE-20260607-006`(DR-026)에서 원래 이름으로 복원됐다. 두 단계 사이(2026-06-05~06-07)에 scaffold를 적용한 target repo는 `.claude/commands/repo-decision.md` → `record-decision.md`, `.agents/skills/workflow-repo-decision/` → `workflow-record-decision/`을 추가로 rename해야 한다.
 
 ## New Canonical Files
 
@@ -42,7 +44,7 @@
 - `skills/workflow/work-debug.md`
 - `skills/workflow/work-doc.md`
 - `skills/workflow/repo-health.md`
-- `skills/workflow/repo-decision.md`
+- `skills/workflow/record-decision.md`
 
 ## Target Migration Checklist
 

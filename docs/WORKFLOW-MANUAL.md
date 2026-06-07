@@ -479,7 +479,7 @@ Claude Code에서 `/명령명`으로 호출한다. 상세 절차는 `skills/work
 | Utility / Analysis | `/work-register [설명]` | 새 작업 항목을 등록할 때 | 긴급도·성격 판단 → STATUS Active Work / Next Actions / PHASE{n}.md / HARNESS.md 중 라우팅 → state-change proposal(필요 시) → 긴급 항목이면 /work-plan 연결 제안 |
 | Utility / Analysis | `/work-debug` | 버그 분석/수정 시 | 코드·로그·테스트 근거로 원인 파악, 최소 변경 계획 |
 | Utility / Analysis | `/work-doc [brief]` | 발표·보고·리뷰 패키지·외부 공유용 문서 산출물을 만들 때 | 목적·audience·format·source brief 확정 → outline 승인 → presentation/document 도구 또는 fallback으로 산출물 생성 → 품질 검증 |
-| Utility / Analysis | `/repo-decision` | 기술 결정을 DR로 기록할 때 | 현재 대화의 확정 결정을 DR 초안으로 작성, 승인 후 파일 생성, Accepted DR마다 Recent Decisions 반영 필요 여부 판정 |
+| Utility / Analysis | `/record-decision` | 기술 결정을 DR로 기록할 때 | 현재 대화의 확정 결정을 DR 초안으로 작성, 승인 후 파일 생성, Accepted DR마다 Recent Decisions 반영 필요 여부 판정 |
 | Utility / Analysis | `/repo-health` | 워크플로우·문서 점검 시 | 구조 정합성, 문서 현행화, 백로그/DR 위생 전체 점검 후 7섹션 Output Contract(Summary/Findings/Surface Coverage/Skipped/Context Budget/Verification/Follow-Ups)로 보고. `--full`은 전체 심화 점검 + Area H(Workflow Context Weight — 일상 workflow가 heavy docs를 불필요하게 로드하는지 감지), `--cascade`는 문서·워크플로우 변경의 연쇄 영향을 required surface, grep, simulation checklist로 감사 |
 
 ### Approval Matrix
@@ -561,7 +561,7 @@ Claude Code에서 `/명령명`으로 호출한다. 상세 절차는 `skills/work
 ```mermaid
 flowchart LR
     OQ["Open Question\ndocs/STATUS.md\nBlockers 섹션"]
-    DECISION["결정 확정\n대화·작업 중 /repo-decision"]
+    DECISION["결정 확정\n대화·작업 중 /record-decision"]
 
     OQ -->|"DR-worthy"| DRAFT["📄 Draft DR\ndocs/decisions/DR-{n}-{topic}.md"]
     DECISION --> DRAFT
@@ -593,7 +593,7 @@ flowchart LR
 
 ### Authoring a DR
 
-DR 작성은 `/repo-decision`으로 한다 — 현재 대화의 확정 결정을 DR 초안으로 만들고, 승인 후 파일을 생성한다. DR 파일의 구조(Question/Decision/Options/Rationale/Reversal Cost/Linked Items)와 파일명 규칙은 재서술하지 않는다.
+DR 작성은 `/record-decision`으로 한다 — 현재 대화의 확정 결정을 DR 초안으로 만들고, 승인 후 파일을 생성한다. DR 파일의 구조(Question/Decision/Options/Rationale/Reversal Cost/Linked Items)와 파일명 규칙은 재서술하지 않는다.
 
 - 파일 구조 템플릿: [`docs/decisions/DECISION-TEMPLATE.md`](decisions/DECISION-TEMPLATE.md)
 - 파일명 규칙(`DR-{3자리}-{주제}.md`): [`docs/decisions/DR-008-docs-filename-standard.md`](decisions/DR-008-docs-filename-standard.md)
@@ -802,7 +802,7 @@ scaffold 직후 첫 세션은 `/session-start`로 시작해 `docs/STATUS.md` Nex
   - `testing.md` → 프로젝트 테스트 전략에 맞게 수정
 
 - [ ] **canonical `skills/workflow/` 1벌 + tool adapter** 복사 및 프로젝트 Phase명·backlog 경로 조정
-  - canonical 11개: `skills/workflow/{name}.md` — `session-start`, `work-select`, `work-register`, `work-plan`, `work-resume`, `work-debug`, `work-doc`, `work-close`, `session-summary`, `repo-decision`, `repo-health`
+  - canonical 11개: `skills/workflow/{name}.md` — `session-start`, `work-select`, `work-register`, `work-plan`, `work-resume`, `work-debug`, `work-doc`, `work-close`, `session-summary`, `record-decision`, `repo-health`
   - adapter: `.claude/commands/{name}.md`(Claude), `.agents/skills/workflow-{name}/SKILL.md`(Codex), `.cursor/rules/workflow.mdc`(Cursor)
   - 새 프로젝트 시작점이 Phase 1이면 `PHASE1.md`를 product backlog로 사용
   - harness 작업은 `docs/backlog/HARNESS.md`를 사용하도록 유지
@@ -874,7 +874,7 @@ scaffold 직후 첫 세션은 `/session-start`로 시작해 `docs/STATUS.md` Nex
 - docs/WORKFLOW-MANUAL.md (선택, 사용자 매뉴얼)
 - .claude/settings.json (defaultMode=plan, 금지 명령 목록)
 - .claude/rules/ (docs-workflow, git-workflow, infra, [언어]-[프레임워크], testing)
-- .claude/commands/ (session-start, work-select, work-register, work-plan, work-resume, work-debug, work-doc, work-close, session-summary, repo-decision, repo-health)
+- .claude/commands/ (session-start, work-select, work-register, work-plan, work-resume, work-debug, work-doc, work-close, session-summary, record-decision, repo-health)
 - skills/workflow/ (command별 canonical workflow 절차)
 - .cursor/rules/ (선택, Cursor를 사용할 경우)
 - prompts/ (필요한 태스크 프롬프트 라이브러리)

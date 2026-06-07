@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260607-006 | Decision Workflow Product Coverage + DR Lifecycle | 2026-06-07 | `docs/works/harness/CHORE-20260607-006-decision-workflow-coverage.md` |
 | CHORE-20260607-005 | Work 파일 스펙 확장 (DR-013 개선) | 2026-06-07 | `docs/works/harness/CHORE-20260607-005-work-file-spec-enhancement.md` |
 | CHORE-20260607-002 | 등록·착수 시점 정합성 Hardening | 2026-06-07 | `docs/works/harness/CHORE-20260607-002-registration-integrity.md` |
 | CHORE-20260607-001 | PLAN Trigger Coverage 확장 | 2026-06-07 | `docs/works/harness/CHORE-20260607-001-plan-trigger-coverage.md` |

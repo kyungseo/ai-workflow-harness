@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-07 (CHORE-20260607-005 Done — DR-013 Work 파일 스펙 확장, 섹션 현행화 cascade)
+Last updated: 2026-06-07 (CHORE-20260607-006 Done — /record-decision 개명, product coverage + DR lifecycle, repo-health 현행화)
 
 ## Current State
 
@@ -38,6 +38,7 @@ Last updated: 2026-06-07 (CHORE-20260607-005 Done — DR-013 Work 파일 스펙 
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-07 | DR-026: `/repo-decision` → `/record-decision` 원복. `track: harness \| product` 메타데이터 도입 | `repo-decision` 명칭이 harness repo 한정 coverage로 오해 유발. 원래 이름으로 복원 + product decision 명시 — CHORE-20260607-006 | Low |
 | 2026-06-05 | slice 0 4축 방향 DR 채택 — DR-021(source/target boundary), DR-022(PLAN lifecycle), DR-023(canonical+hybrid adapter), DR-024(gate 2D taxonomy) | Phase 2 리팩토링 4축 TO-BE 확정. cross-agent R0~R6 합의, decision-only(적용은 하류 slice) — CHORE-20260605-001/002 | DR별 상이(Low~High) |
 | 2026-05-29 | pre-commit: main만 hard block, develop은 warning 유지. commit-msg build type 추가, 두 hook 설치 | GitHub ruleset이 develop direct push를 이미 차단. solo 프로젝트에서 housekeeping마다 PR 강제는 과도한 마찰 — CHORE-20260529-003 + fix | Low |
 | 2026-05-27 | Work/OQ/Tracker ID를 `<TYPE>-<YYYYMMDD>-<NNN>` 형식으로 전환, backlog candidate ID-less 정책 도입 | 전역 순번 HRN-*/P{n}-NNN 방식의 병렬 feature 충돌 및 scaffold 확장성 문제 해소 — CHORE-20260527-001 | Medium |
@@ -49,5 +50,5 @@ Last updated: 2026-06-07 (CHORE-20260607-005 Done — DR-013 Work 파일 스펙 
 
 ## Next Actions
 
-1. **P0 `gate-enforcement-runtime-and-env` series 전체 Done** — (a) CHORE-20260606-006, (b) 007, (c1) 008, (c2-A) 009, (c2-B) 010, (d) 011, (c3) 015, (c4) 016까지 모든 sub-slice 완료. backlog의 P0 gate row는 제거됨. c4의 product-adaptive gate(`.harness/gate-config`) + tracking-only convention은 dash 이식성 수정 포함 검증 완료(B/Codex result review는 방전으로 waive, 복귀 시 R2 후속 권장).
-2. **다음 후보: P1** — harness upgrade/migration 메커니즘, prompt surface diet, adopter onboarding refresh, decision workflow product coverage 등. `docs/backlog/HARNESS.md` 참조. 다음 작업 선택은 `/work-select`.
+1. **Clean idle** — Active Work 없음. 다음 작업 선택은 `/work-select` 또는 `/work-register`. 후보는 `docs/backlog/HARNESS.md` 참조.
+2. **Archive 대기** — Done Work 24개 누적. 다음 `/session-start` 시 archive 일괄 처리 권장.
