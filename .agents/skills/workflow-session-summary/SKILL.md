@@ -5,7 +5,7 @@ description: "세션 전체 요약을 출력한다. Work Done 처리 없음 — 
 
 # workflow-session-summary
 
-Use this skill when the user asks to invoke `/session-summary` or clearly matches this workflow intent.
+Use this skill when the user asks to invoke `/session-summary`, or uses intent phrases like "세션 마무리하자", "오늘 정리해줘", "요약해줘", or clearly matches this workflow intent (without closing a Work item — use work-close first if Work Done processing is needed).
 
 ## Step 0
 

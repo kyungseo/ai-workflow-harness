@@ -4,6 +4,13 @@
 > `PLAN-SUMMARY.md`는 독립 이력/결정 저장소가 아니라 `PLAN.md`, `STATUS.md`, 핵심 workflow surface에서 파생된 derived summary다.
 > 변경 이력은 누적하지 않고, T5 PLAN 영향 판단 또는 closeout/finalization 시 stale 여부만 확인한다.
 
+## Lifecycle Rules
+
+- **역할:** `PLAN.md` / `STATUS.md` / 핵심 surface에서 파생된 세션 context 요약(derived cache). 독립 이력·결정 저장소가 아니다.
+- **갱신 조건:** `PLAN.md` 또는 `STATUS.md`에 실질적 변경이 있을 때 stale 여부를 판정하고 필요한 경우만 갱신한다. T5(PLAN 영향 판단) step 또는 closeout/finalization에서 판정한다.
+- **금지:** 자체 변경 이력 누적 금지. L3 결정 근거 기록 금지(→ `docs/decisions/DR-*.md`). 이 파일에서 독립적 의사결정 추적 금지.
+- **갱신 책임:** T5 배선 지점(`/work-plan`, `/repo-decision`, `/work-close`, commit/PR finalization, phase transition)에서 PLAN 변경이 있으면 이 파일의 stale 여부도 함께 판정한다.
+
 ## Project Summary
 
 `ai-workflow-harness`는 AI-assisted development workflow를 운영하기 위한

@@ -1,13 +1,13 @@
 ---
 id: CHORE-20260607-001
 priority: P1
-status: Active
+status: Done
 risk: L2
 scope: DR-022 T5 배선 확장(work-plan/repo-decision) + PLAN-SUMMARY lifecycle 흡수 + Intent Recognition 보완(work-close/session-summary) + 등록·착수 정합성 hardening 연계
 appetite: 3d
 planned_start: 2026-06-07
 planned_end: 2026-06-10
-actual_end:
+actual_end: 2026-06-07
 related_dr: [DR-022, DR-024]
 related_troubleshooting: []
 ---
@@ -106,15 +106,19 @@ related_troubleshooting: []
 
 ## Done Criteria
 
-- [ ] A: work-plan 착수 시 T5 soft step 배선됨 (canonical + cascade 정합)
-- [ ] B: repo-decision 등록 시 T5 soft step 배선됨 (canonical + cascade 정합)
-- [ ] C: T5 step에 PLAN-SUMMARY stale check 포함됨
-- [ ] D: Intent Recognition 테이블에 work-close + session-summary 추가됨, justification 기록됨
-- [ ] E: `docs/PLAN-SUMMARY.md` derived-cache lifecycle 규정 추가됨
-- [ ] F: backlog PLAN-SUMMARY 흡수 행 제거됨
-- [ ] G: 등록·착수 정합성 hardening이 Next Actions 다음 Work로 명시됨
-- [ ] cascade 점검(canonical → skill → command → cursor → codex) PASS
-- [ ] **사용자 최종 리뷰** 후 Done
+- [x] A: work-plan 착수 시 T5 soft step 배선됨 (canonical + cascade 정합)
+- [x] B: repo-decision 등록 시 T5 soft step 배선됨 (canonical + cascade 정합)
+- [x] C: T5 step에 PLAN-SUMMARY stale check 포함됨
+- [x] D: Intent Recognition 테이블에 work-close + session-summary 추가됨, justification 기록됨
+- [x] E: `docs/PLAN-SUMMARY.md` derived-cache lifecycle 규정 추가됨
+- [x] F: backlog PLAN-SUMMARY 흡수 행 제거됨
+- [x] G: 등록·착수 정합성 hardening이 Next Actions 다음 Work로 명시됨
+- [x] H: Intent Recognition 한국어 예시 추가 + work-plan context-aware 조건 명시 (Claude `docs-workflow.md`)
+- [x] I: Codex SKILL.md 6종 "Use this skill when..." 한국어 intent 예시 추가 (workflow-work-plan/close/register/resume/session-summary/repo-decision)
+- [x] J: PLAN 누적 드리프트 warning — session-start(5개 이상 기준), work-close, HARNESS-PROTOCOL(trigger 명시)
+- [x] cascade 점검 — Claude command adapter: canonical 포인터 구조, 수정 불필요. Codex SKILL.md: 직접 보강 완료. Cursor `workflow.mdc`: English Only 정책 유지(AI 모델 추론으로 커버).
+- [x] K: Intent Recognition ambiguity rule 추가 — 의도가 불명확하면 procedure 로드 전 1줄 확인 (Claude: docs-workflow.md, Codex: AGENTS.md Skill Routing)
+- [x] **사용자 최종 리뷰** 후 Done
 
 ## Verification
 
@@ -127,19 +131,20 @@ related_troubleshooting: []
 
 | CP | Description | Status |
 | --- | --- | --- |
-| 1 | ○ Slice A: Gap 진단 + 방향 확정 | ○ Pending |
-| 2 | ○ Slice B: T5 배선 확장 구현 + cascade | ○ Pending |
-| 3 | ○ Slice C: Intent Recognition 보완 | ○ Pending |
-| 4 | ○ Slice D: PLAN-SUMMARY lifecycle + backlog 정리 | ○ Pending |
-| 5 | ○ cascade 점검 + 사용자 최종 리뷰 | ○ Pending |
+| 1 | Slice A: Gap 진단 + 방향 확정 | ✓ Done |
+| 2 | Slice B: T5 배선 확장 구현 + cascade | ✓ Done |
+| 3 | Slice C: Intent Recognition 보완 | ✓ Done |
+| 4 | Slice D: PLAN-SUMMARY lifecycle + backlog 정리 | ✓ Done |
+| 5 | cascade 점검 + 사용자 최종 리뷰 | → 진행 중 |
 
 ## Next Actions
 
-1. ○ **Slice A 착수** — Gap 진단(grep 기반 D1~D6 실측) + 방향 확정
-2. ○ Slice B — T5 배선 확장 구현
-3. ○ Slice C — Intent Recognition 보완
-4. ○ Slice D — PLAN-SUMMARY lifecycle + backlog 정리
-5. ○ `/work-close` 후 → **등록·착수 시점 정합성 hardening** 착수
+1. ✓ Slice A — Gap 진단 + 방향 확정
+2. ✓ Slice B — T5 배선 확장 구현
+3. ✓ Slice C — Intent Recognition 보완
+4. ✓ Slice D — PLAN-SUMMARY lifecycle + backlog 정리
+5. → **사용자 최종 리뷰** 대기
+6. ○ `/work-close` 후 → **등록·착수 시점 정합성 hardening** 착수 (HARNESS.md P2 Candidate)
 
 ## Cross-Agent Review And Discussion
 

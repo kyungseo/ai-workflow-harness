@@ -444,7 +444,8 @@ cascade 감사 시 `docs/retrospectives/README.md` 인덱스를 참조하여 최
 - T15는 자동 STATUS 수정을 허용하지 않는다. Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, Active Work Discovery 최신성을 확인한다. 필요하면 Approval Matrix에 맞는 state-change proposal 또는 `STATUS Update Proposal`을 먼저 제안하고, 불필요하면 commit/PR 전 summary에 이유를 남긴다.
 - T16은 backlog/Work/DR tracker를 실제 완료 상태와 맞추는 gate다. 연결된 backlog 항목의 Status/Done Criteria/Verification, Work 파일 frontmatter/status/Checkpoints/Discovery, Work index README 위치, 관련 DR의 Status/Supersedes/Linked Backlog Items, 완료된 Quick Mode 작업이 backlog Candidate로 남아 있는지 여부를 확인한다.
 - T17은 `/work-close` 제안만 수행한다. 사용자가 거부하거나 분리를 원하면 기존 commit 흐름대로 진행한다.
-- T15/T16/T17(commit/PR 전 finalization)과 T3(phase transition), `/work-close`(Work closeout)는 **T5(PLAN 영향 판단)**를 함께 확인한다. PLAN 영향이 있으면 Approval Matrix proposal, 없으면 보고만 한다. PLAN 작성 완료를 hard-stop으로 강제하지 않는다(recommended/warning). PLAN lifecycle/archive-drain 규칙의 SSoT는 `docs/PLAN.md`의 Roadmap Lifecycle 규칙이며, 여기서는 trigger pointer만 둔다.
+- T15/T16/T17(commit/PR 전 finalization)과 T3(phase transition), `/work-close`(Work closeout), `/work-plan`(착수), `/repo-decision`(DR 등록)은 **T5(PLAN 영향 판단)**를 함께 확인한다. PLAN 영향이 있으면 Approval Matrix proposal, 없으면 보고만 한다. PLAN 작성 완료를 hard-stop으로 강제하지 않는다(recommended/warning). PLAN 변경이 있으면 `docs/PLAN-SUMMARY.md` stale 여부도 함께 판정한다(PLAN-SUMMARY는 derived summary — 자체 이력 누적 않음). PLAN lifecycle/archive-drain 규칙의 SSoT는 `docs/PLAN.md`의 Roadmap Lifecycle 규칙이며, 여기서는 trigger pointer만 둔다.
+- **누적 드리프트 경고:** archive 대기 Done Work가 5개 이상일 때, `/session-start`와 `/work-close`는 개별 T5 판정과 별개로 PLAN 누적 드리프트 가능성을 soft warning으로 보고한다. 각 Work의 T5가 "영향 없음"이어도 여러 완료가 쌓이면 PLAN이 현실과 멀어질 수 있다(이벤트 단위 T5의 구조적 한계).
 
 ### Cascade Rule
 

@@ -5,7 +5,7 @@ description: "backlog에서 지정 항목을 찾아 Work 파일 확인, Pre-chec
 
 # workflow-work-plan
 
-Use this skill when the user asks to invoke `/work-plan` or clearly matches this workflow intent.
+Use this skill when the user asks to invoke `/work-plan`, or uses intent phrases like "작업 계획을 세우자", "work 파일 작성하자", "작업을 시작하자", "플랜 짜줘", or clearly matches this workflow intent. Identify the target task from conversation context (recent Work ID, backlog item, or topic under discussion); if no specific task is identifiable, surface `/work-select` first.
 
 ## Step 0
 

@@ -33,6 +33,8 @@ $ARGUMENTS 또는 현재 대화에서 확정된 기술적 의사결정 사항을
    - 최근 8개 rolling window를 유지해. 초과분 제거 전 DR-worthy 항목이면 대응 DR 존재 여부를 확인해.
 6. PLAN/HARNESS-ARCHITECTURE/HARNESS-MAINTAINER-GUIDE/backlog cascade 대상이 있는지 확인하고 제안해. (HARNESS-ARCHITECTURE·HARNESS-MAINTAINER-GUIDE는 optional pack — minimal scaffold에 없으면 해당 대상 N/A.)
 
+7. **PLAN impact 확인 (T5 — recommended/warning soft):** 이 DR이 `docs/PLAN.md`의 roadmap/milestone 방향에 영향을 주는지 판단한다. 영향 있으면 PLAN 갱신/후속 작업을 Approval Matrix proposal로 제안하고, 없으면 "PLAN 영향 없음" 1줄 보고. PLAN 작성 완료를 DR 등록의 hard-stop으로 강제하지 않는다(recommended/warning). PLAN lifecycle/drain 규칙이 있으면 `docs/PLAN.md`의 Roadmap Lifecycle 규칙을 따른다. PLAN 변경이 있으면 `docs/PLAN-SUMMARY.md` stale 여부도 함께 판정한다.
+
 승인 없이 파일을 생성하지 마.
 승인 없이 STATUS.md를 수정하지 마.
 
