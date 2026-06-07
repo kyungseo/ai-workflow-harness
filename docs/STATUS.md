@@ -38,6 +38,7 @@ Last updated: 2026-06-07 (CHORE-20260607-006 Done — /record-decision 개명, p
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-07 | DR-027: troubleshooting·retrospective 파일 최소 frontmatter 스펙 도입. `track: harness \| product` 필드 신설 | 분류·상태를 파일 열람 없이 파악하기 위한 최솟값 정형화. 기존 파일 소급 적용, T11 cascade 완료 | Low |
 | 2026-06-07 | DR-026: `/repo-decision` → `/record-decision` 원복. `track: harness \| product` 메타데이터 도입 | `repo-decision` 명칭이 harness repo 한정 coverage로 오해 유발. 원래 이름으로 복원 + product decision 명시 — CHORE-20260607-006 | Low |
 | 2026-06-05 | slice 0 4축 방향 DR 채택 — DR-021(source/target boundary), DR-022(PLAN lifecycle), DR-023(canonical+hybrid adapter), DR-024(gate 2D taxonomy) | Phase 2 리팩토링 4축 TO-BE 확정. cross-agent R0~R6 합의, decision-only(적용은 하류 slice) — CHORE-20260605-001/002 | DR별 상이(Low~High) |
 | 2026-05-29 | pre-commit: main만 hard block, develop은 warning 유지. commit-msg build type 추가, 두 hook 설치 | GitHub ruleset이 develop direct push를 이미 차단. solo 프로젝트에서 housekeeping마다 PR 강제는 과도한 마찰 — CHORE-20260529-003 + fix | Low |
@@ -45,8 +46,6 @@ Last updated: 2026-06-07 (CHORE-20260607-006 Done — /record-decision 개명, p
 | 2026-05-26 | feature branch pre-PR `/close`가 commit 전략을 3-state(미push/push+PR없음/push+PR열림·공유·확인불가)로 안내하도록 개선 | feature branch /close 시 별도 close commit이 PR history 노이즈를 만드는 패턴 해소 — HRN-037 | Low |
 | 2026-05-25 | `Current Milestone Criteria` 제거 및 `Current phase`를 `Public baseline / Maintenance`로 전환 | HRN-035: public clone 첫 `/start` 출력에서 maintainer 내부 milestone이 노출되지 않도록 baseline 정리. 이력은 HRN-035 Work에 보존 | Low |
 | 2026-05-25 | `AWH-OQ-001` Blockers 제거 — archive policy가 필요할 때 신규 Work로 재등록 | public baseline에 Open Blocker가 남으면 "미완" 인상 지속. HARNESS.md Deferred Ideas로 이동 | Low |
-| 2026-05-24 | Product Definition / Project Initialization Gate 도입 | baseline 없이 기능 후보를 등록하는 흐름 차단 — BOOTSTRAP.md §2–§3 + PLAN-SUMMARY.md Implementation Baseline + PHASE1.md Baseline Gate | Low |
-| 2026-05-23 | README를 `WORKFLOW-MANUAL-SUMMARY-PUBLIC.md` 기반 단일 문서(경로 A)로 교체 | 파일 목록형 README에서 Prologue·원칙·흐름을 통합한 공개 front-door로 전환 — SUMMARY-PUBLIC drift 방지 | Low |
 
 ## Next Actions
 

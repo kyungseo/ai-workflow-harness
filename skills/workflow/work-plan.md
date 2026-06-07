@@ -74,7 +74,7 @@ Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROT
 `CHORE-*`, `HRN-*`, `PRE-*`, `DOC-*` 또는 계획·아이디어 성격이 강한 작업이면 `docs/retrospectives/`에서 최신/관련 회고 1개만 선택해 반복 리스크와 우선순위 근거를 확인해줘.
 
 **2. Troubleshooting 관련 이슈 확인**
-작업이 기존에 발생한 비자명 이슈(오류, 환경 설정 문제 등)와 관련된 경우 `docs/troubleshooting/`에 관련 기록이 있는지 확인해줘.
+작업이 기존에 발생한 원인 불명의 이슈(오류, 환경 설정 문제 등)와 관련된 경우 `docs/troubleshooting/`에 관련 기록이 있는지 확인해줘.
 있으면 계획에 참조로 포함하고, 새로 해결된 이슈가 있으면 `/session-summary` 시 기록을 제안해줘.
 
 **3. Tool Rule Reference 확인**

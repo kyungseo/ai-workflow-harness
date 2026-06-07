@@ -428,6 +428,8 @@ adapt "${TEMPLATE_ROOT}/docs/decisions/DR-013-work-file-spec.md" \
       "${TARGET_ROOT}/docs/decisions/DR-013-work-file-spec.md"
 adapt "${TEMPLATE_ROOT}/docs/decisions/DR-014-archive-policy.md" \
       "${TARGET_ROOT}/docs/decisions/DR-014-archive-policy.md"
+adapt "${TEMPLATE_ROOT}/docs/decisions/DR-027-troubleshooting-retrospective-spec.md" \
+      "${TARGET_ROOT}/docs/decisions/DR-027-troubleshooting-retrospective-spec.md"
 
 # Optional-pack companion DRs (DR-021 reference closure): the Optional source pack
 # docs reference DR-020 (HARNESS-MAINTAINER-GUIDE), which transitively cites DR-017.
@@ -451,12 +453,22 @@ write_text "${TARGET_ROOT}/docs/decisions/README.md" "# Decision Records
 cascade 감사 시 이 인덱스의 Accepted DR만 확인 대상이다.
 Superseded DR은 \`docs/archive/docs/decisions/\`로 이동한다.
 
-| ID | Title | Date | Status | 요약 |
-|----|-------|------|--------|------|
-| DR-007 | 파일 유형별 작성 언어 원칙 | — | Accepted | 문서·command·prompt·hook은 Korean primary + English technical terms |
-| DR-008 | docs/ 파일명 대소문자 표준 | — | Accepted | \`docs/\` 파일명은 UPPER-KEBAB-CASE |
-| DR-013 | Work 파일 기반 작업 단위 체계 | — | Accepted | \`docs/works/{category}/{ID}-{topic}.md\`, Active/Done/Archived 3단계 |
-| DR-014 | Archive 구조 정책 | — | Accepted | \`docs/archive/\` 하위 경로 mirror 방식 |
+**Status legend:**
+- \`Accepted\` — 최종 확정
+- \`Accepted (Amended)\` — 확정 후 세부 수정됨. DR 본문에 수정 범위 명시.
+- \`Accepted (일부 Deferred)\` — 일부 항목 보류. DR 본문에 보류 범위 명시.
+- \`Superseded by DR-XXX\` — 전체 대체됨. archive 이동 후보.
+- \`Draft\` — 초안
+
+**Track legend:** \`harness\` = AI workflow·명령·프로토콜 결정 / \`product\` = 적용 프로젝트의 기능·아키텍처 결정
+
+| ID | Title | Date | Status | Track | 요약 |
+|----|-------|------|--------|-------|------|
+| DR-007 | 파일 유형별 작성 언어 원칙 | — | Accepted | harness | 문서·command·prompt·hook은 Korean primary + English technical terms |
+| DR-008 | docs/ 파일명 대소문자 표준 | — | Accepted | harness | \`docs/\` 파일명은 UPPER-KEBAB-CASE |
+| DR-013 | Work 파일 기반 작업 단위 체계 | — | Accepted | harness | \`docs/works/{category}/{ID}-{topic}.md\`, Active/Done/Archived 3단계 |
+| DR-014 | Archive 구조 정책 | — | Accepted | harness | \`docs/archive/\` 하위 경로 mirror 방식 |
+| DR-027 | Troubleshooting / Retrospective 파일 최소 스펙 | — | Accepted | harness | frontmatter(symptom/track/category/status, date/track/type/scope/author) 도입. track 필드로 harness·product 구분 |
 ${OPTIONAL_DR_ROWS}
 위 DR들은 harness가 동반하는 foundational decision이다.
 이 프로젝트 고유의 결정은 \`DR-{NNN}-{topic}.md\`(\`docs/decisions/DECISION-TEMPLATE.md\` 사용)로 추가하고 이 인덱스에 등록한다.
@@ -466,6 +478,22 @@ write_text "${TARGET_ROOT}/docs/troubleshooting/README.md" "# Troubleshooting
 
 증상별 원인 분석과 조치 기록이다.
 
+## Frontmatter 스펙 (DR-027)
+
+\`\`\`yaml
+---
+symptom: {한 줄 증상}
+track: harness | product
+category: {e.g. workflow, scaffold, command, git, tool, feature, api, data, infra, …}
+environment: {e.g. Claude Code, Codex, Cursor, 공통, 기타}
+status: Resolved | Unresolved | Workaround
+related_dr: []
+---
+\`\`\`
+
+\`track\`: harness = AI workflow·명령·프로토콜 이슈 / product = 적용 프로젝트의 기능·인프라 이슈
+\`category\`: 예시 목록이며 열거형으로 제한하지 않는다.
+
 ## 인덱스
 
 | 증상 | 환경 | 파일 |
@@ -474,7 +502,7 @@ write_text "${TARGET_ROOT}/docs/troubleshooting/README.md" "# Troubleshooting
 ## 작성 규칙
 
 - 파일명: \`lowercase-hyphenated.md\`
-- 구성: 증상 -> 원인 -> 조치 -> 검증 -> 관련 문서
+- 구성: 증상 -> 원인 -> 조치 -> 검증 -> 변경 내역 -> 관련 문서
 - 해결 안 된 이슈는 \`docs/STATUS.md\` Blockers에 등록 후 해결 시 이 디렉터리로 이동
 - 관련 결정이 DR-worthy이면 \`docs/decisions/DR-*.md\`로 별도 기록하고 역참조
 "
@@ -1193,7 +1221,35 @@ Harness track 작업 인덱스다.
 touch_file "${TARGET_ROOT}/docs/archive/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/archive/docs/works/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/archive/snapshots/.gitkeep"
-touch_file "${TARGET_ROOT}/docs/retrospectives/.gitkeep"
+write_text "${TARGET_ROOT}/docs/retrospectives/README.md" "# Retrospectives
+
+회고 인덱스.
+
+cascade 감사 시 최신 1개 또는 해당 topic 관련 1개만 참조한다. 전체 목록 스캔은 하지 않는다.
+
+## Frontmatter 스펙 (DR-027)
+
+\`\`\`yaml
+---
+date: YYYY-MM-DD
+track: harness | product
+type: {e.g. session, phase, incident, process, …}
+scope: {무엇에 대한 회고인지 한 줄}
+author: \"agent:{model-name} | human\"
+related_work: []
+---
+\`\`\`
+
+\`track\`: harness = AI workflow·프로세스 회고 / product = 적용 프로젝트의 기능·개발 회고
+\`type\`: 예시 목록이며 열거형으로 제한하지 않는다.
+
+섹션 구성 최솟값: **결론** (필수) → 내용 (자유) → **Revisit Triggers** (권장) → **연결** (해당 시)
+
+## 인덱스
+
+| 날짜 | 파일 | 주제/Scope | 핵심 결론 |
+|------|------|-----------|---------|
+"
 touch_file "${TARGET_ROOT}/docs/reports/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/presentations/.gitkeep"
 

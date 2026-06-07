@@ -333,8 +333,8 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | 유형 | 역할 | 기록 대상 |
 | --- | --- | --- |
 | `docs/decisions/DR-*.md` | 결정 근거 | 아키텍처·전략 선택의 WHY |
-| `docs/retrospectives/` | 회고 | 개발 방식 자체의 평가와 개선 방향 |
-| `docs/troubleshooting/` | 증상 -> 원인 -> 조치 | 비자명 이슈의 재현·원인·해결 내역 |
+| `docs/retrospectives/` | 회고 | 개발 방식 자체의 평가와 개선 방향. 파일 spec: DR-027 |
+| `docs/troubleshooting/` | 증상 -> 원인 -> 조치 | 원인 불명의 이슈의 재현·원인·해결 내역. 파일 spec: DR-027 |
 | `docs/reports/`, `docs/presentations/` | 산출물 | 발표·보고·리뷰·의사결정 지원 자료 |
 
 ### Information Architecture Rules
@@ -358,7 +358,8 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 - 유지보수 절차가 바뀌면 `HARNESS-MAINTAINER-GUIDE.md` 업데이트를 제안한다.
 - 결정 근거가 생기면 DR 생성을 제안한다.
 - 완료된 Phase 상세는 archive로 이동한다.
-- 비자명 이슈(환경 문제, 비직관적 원인)가 해결되면 `docs/troubleshooting/`에 기록을 제안한다.
+- 원인 불명의 이슈(환경 문제, 불명확한 원인)가 해결되면 `docs/troubleshooting/`에 기록을 제안한다.
+- 회고가 필요한 시점(세션 마무리, Phase 완료, 인시던트 해결 후)에는 `docs/retrospectives/`에 기록을 제안한다.
 - 발표/보고 산출물을 만들 때는 목적, audience, source, format, 검증 기준을 먼저 확정한다.
 
 ### Pruning and Archive Policies
@@ -424,7 +425,8 @@ archive 이동 시에는 원본 인덱스에서 행을 제거하고, archive 디
 | T5 | PLAN 영향 결정 | PLAN/summary/rules 관련 문서 확인 |
 | T6 | 구조/흐름 구현 변경 | HARNESS-ARCHITECTURE/HARNESS-MAINTAINER-GUIDE 확인 |
 | T7 | workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 업데이트 |
-| T8 | 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |
+| T8 | 원인 불명의 이슈 해결 | `docs/troubleshooting/` 기록 제안. DR-027 frontmatter 스펙 적용 |
+| T8b | 세션·Phase·이슈 회고 필요 | `docs/retrospectives/` 기록 제안. DR-027 frontmatter 스펙 적용 |
 | T9 | 발표/보고 산출물 생성 | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |
 | T10 | Work 파일 Done 상태 발견 | archive 승인 여부 제안 |
 | T11 | tool surface 변경 | Claude(`.claude/commands/`, `.claude/rules/`)/Codex(`.agents/skills/`, `.codex/hooks.json`)/Cursor(`.cursor/rules/`)/`prompts/`/README/scaffold 정렬 확인 |
@@ -442,6 +444,7 @@ archive 이동 시에는 원본 인덱스에서 행을 제거하고, archive 디
 - T9 결과물은 source 문서를 수정하지 않는다. source 변경이 필요하면 별도 작업으로 분리한다.
 - T5와 T6가 같은 문서를 건드릴 때는 한쪽은 수정, 다른 쪽은 확인만 한다.
 - DR Draft는 Accepted 전까지 PLAN cascade를 발동하지 않는다.
+- T8/T8b는 기록 제안만 수행한다. 원인 분석이나 해결을 자동으로 시작하지 않는다.
 - T10은 archive 제안만 수행한다. 사용자 승인 전 `git mv`를 실행하지 않는다.
 - T11은 관련 tool surface를 확인 대상으로 추가하지만 자동 수정하지 않는다. 발견 -> 제안 -> 승인 순서를 따른다.
 - T12는 `scripts/create-harness.sh`가 있는 source repository에서만 temp target 검증을 수행하고 생성물을 live tree로 복사하지 않는다. scaffold 적용 repository처럼 script가 없으면 Skipped / Not Applicable로 보고한다.

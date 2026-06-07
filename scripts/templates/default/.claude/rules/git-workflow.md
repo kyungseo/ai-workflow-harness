@@ -7,7 +7,7 @@ paths:
 
 ## Enforcement Posture (advisory-only)
 
-This scaffold uses the generic workflow: **no git hooks are installed**, so the branch-isolation, finalization-bundling, and commit-message gates below are **advisory** — they rely on the agent and committer honoring them, not on runtime enforcement (per DR-025: gates are AI-advisory when hooks are absent).
+This scaffold uses the generic workflow: **no git hooks are installed**, so the branch-isolation, finalization-bundling, and commit-message gates below are **advisory** — they rely on the agent and committer honoring them, not on runtime enforcement (advisory-only; use `--workflow source-gitflow` to enable hook enforcement).
 To enable runtime hook enforcement, re-scaffold with `--workflow source-gitflow`.
 
 Project-specific gate paths: this repository may list extra protected/finalization

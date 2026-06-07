@@ -62,7 +62,7 @@ DR 상태는 아래 값만 사용한다. `DECISION-TEMPLATE.md`의 Status 필드
 | `Superseded by DR-XXX` | 이 결정 전체가 다른 DR로 대체됨. | `docs/archive/docs/decisions/`로 이동 후보. archive는 사용자 승인 후 처리. |
 | `Accepted (partial Superseded by DR-XXX)` | 일부 항목만 대체됨. | 대체된 범위를 본문에 명시. 나머지는 유효. |
 
-**Parent-child DR:** 하위 DR은 `Supersedes: DR-XXX` 필드로 상위 DR을 가리킨다 (예: DR-025 → DR-024).
+**Parent-child DR:** 하위 DR은 `Supersedes: DR-XXX` 필드로 상위 DR을 가리킨다 (예: DR-NNN → DR-MMM).
 **Linked DR:** 상호 참조이며 상하위 관계 아님. `Linked DRs:` 필드로 표현.
 **Superseded DR archive 타이밍:** PR merge 후 T10(Done Work 발견) 또는 `/session-start` 에서 제안. `docs/archive/docs/decisions/README.md` index에 이동 경로 기록.
 

@@ -1,3 +1,12 @@
+---
+date: 2026-06-06
+track: harness
+type: process
+scope: source repo branch isolation + commit-time gate의 엄격성이 일반 관례 대비 적정한가
+author: "agent:claude-opus-4-8"
+related_work: []
+---
+
 # AI Workflow Harness — Source Repo Workflow 엄격성 평가
 
 > 작성일: 2026-06-06
