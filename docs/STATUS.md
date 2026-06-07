@@ -28,6 +28,7 @@ Last updated: 2026-06-06 (P0 c4 Done — CHORE-20260606-016, gate series 완료)
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| CHORE-20260607-001 | PLAN Trigger Coverage 확장 | `docs/works/harness/CHORE-20260607-001-plan-trigger-coverage.md` |
 
 ## Blockers And Open Questions
 
