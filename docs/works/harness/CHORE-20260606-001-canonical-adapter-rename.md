@@ -10,6 +10,7 @@ planned_end: 2026-06-13
 actual_end: 2026-06-05
 related_dr: [DR-007, DR-019, DR-021, DR-023]
 related_troubleshooting: [docs/troubleshooting/agent-scope-approval-drift.md]
+related_work: [CHORE-20260604-001]
 ---
 
 # CHORE-20260606-001: Canonical Adapter + No-Alias Command Rename

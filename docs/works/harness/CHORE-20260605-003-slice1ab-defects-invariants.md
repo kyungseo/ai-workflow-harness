@@ -10,6 +10,7 @@ planned_end: 2026-06-07
 actual_end: 2026-06-05
 related_dr: [DR-021, DR-022]
 related_troubleshooting: []
+related_work: [CHORE-20260604-001]
 ---
 
 # CHORE-20260605-003: Slice 1a/1b — Defects + Invariants

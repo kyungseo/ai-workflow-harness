@@ -466,7 +466,7 @@ Superseded DR은 \`docs/archive/docs/decisions/\`로 이동한다.
 |----|-------|------|--------|-------|------|
 | DR-007 | 파일 유형별 작성 언어 원칙 | — | Accepted | harness | 문서·command·prompt·hook은 Korean primary + English technical terms |
 | DR-008 | docs/ 파일명 대소문자 표준 | — | Accepted | harness | \`docs/\` 파일명은 UPPER-KEBAB-CASE |
-| DR-013 | Work 파일 기반 작업 단위 체계 | — | Accepted | harness | \`docs/works/{category}/{ID}-{topic}.md\`, Active/Done/Archived 3단계 |
+| DR-013 | Work 파일 기반 작업 단위 체계 | — | Accepted | harness | \`docs/works/{category}/{ID}-{topic}.md\`, Active/Done/Archived 3단계, \`related_work\` 필드 포함 |
 | DR-014 | Archive 구조 정책 | — | Accepted | harness | \`docs/archive/\` 하위 경로 mirror 방식 |
 | DR-027 | Troubleshooting / Retrospective 파일 최소 스펙 | — | Accepted | harness | frontmatter(symptom/track/category/status, date/track/type/scope/author) 도입. track 필드로 harness·product 구분 |
 ${OPTIONAL_DR_ROWS}

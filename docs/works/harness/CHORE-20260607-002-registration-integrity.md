@@ -10,6 +10,7 @@ planned_end: 2026-06-09
 actual_end: 2026-06-07
 related_dr: [DR-013, DR-023]
 related_troubleshooting: []
+related_work: [CHORE-20260607-001, CHORE-20260607-005]
 ---
 
 # CHORE-20260607-002: 등록·착수 시점 정합성 Hardening

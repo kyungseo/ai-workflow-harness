@@ -10,6 +10,7 @@ planned_end: 2026-06-08
 actual_end: 2026-06-06
 related_dr: [DR-025, DR-024, DR-021, DR-020]
 related_troubleshooting: []
+related_work: [CHORE-20260606-004]
 ---
 
 # Product-Adaptive Gate Logic + Tracking-Only Commit Exception — Slice C4

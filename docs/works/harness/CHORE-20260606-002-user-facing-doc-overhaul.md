@@ -10,6 +10,7 @@ planned_end: 2026-06-13
 actual_end: 2026-06-05
 related_dr: [DR-007, DR-021, DR-023, DR-024]
 related_troubleshooting: []
+related_work: [CHORE-20260604-001, CHORE-20260606-003]
 ---
 
 # CHORE-20260606-002: User-Facing Documentation Overhaul

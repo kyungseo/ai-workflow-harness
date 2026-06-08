@@ -10,6 +10,7 @@ planned_end: 2026-06-09
 actual_end: 2026-06-07
 related_dr: [DR-026]
 related_troubleshooting: []
+related_work: []
 ---
 
 # CHORE-20260607-006: Decision Workflow Product Coverage + DR Lifecycle 정리
