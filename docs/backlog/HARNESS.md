@@ -41,11 +41,17 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | `skills/workflow/repo-health.md` slice 분리 |
 | — | P2 | Candidate | L2 | `skills/workflow/work-doc.md` class 재검토 |
 | — | P2 | Candidate | L2 | `PHASE{n}` → `PROD-P{n}` product track 네이밍 전환 |
+| — | P1 | Candidate | L2 | `docs/VERIFICATION-COMMANDS.md` pointer 연결 및 통합 |
+| — | P2 | Candidate | L2 | Coding canonical optional pack — `--with-coding-guide` scaffold 확장 |
 | HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 |
 
 ---
 
 ### Details
+
+> **Verification 작성 기준:** 변경이 건드리는 surface를 항목별로 명시한다.
+> 점검 후보: tool surface · adopter cascade · canonical · scaffold · README/GUIDE/MANUAL
+> 해당 없는 surface는 제외한다.
 
 #### Harness upgrade/migration 메커니즘
 
@@ -259,6 +265,30 @@ AI Workflow Harness backlog다.
 **Done Criteria:** Claude Code 릴리즈 노트에서 process-exit hook 지원 확인 시 `settings.json` 보완 및 문서 갱신
 
 **Verification:** 릴리즈 노트 확인 후 gap 해소 여부 검증
+
+---
+
+#### `docs/VERIFICATION-COMMANDS.md` pointer 연결 및 통합
+
+**Task:** `docs/VERIFICATION-COMMANDS.md` 파일 생성 완료(이 세션). 남은 작업: ① `docs/AGENT-WORKFLOW.md` Verification Defaults 섹션에 pointer 추가 ② `skills/workflow/repo-health.md`에 참조 추가 ③ `docs/HARNESS-QUICK-REFERENCE.md` one-liner 추가(선택). scaffold 포함 여부 확정(source-only 유지 vs `--with-optional` 편입). **연계: `repo-health gate series 보강`(P1), `Scaffold/tool-surface alignment 점검 체계화`(P1)**
+
+**Dependencies:** `docs/VERIFICATION-COMMANDS.md` 생성 완료(Done).
+
+**Done Criteria:** `AGENT-WORKFLOW.md` Verification Defaults → pointer 존재. `repo-health.md` → pointer 존재. scaffold 포함 여부 결정 기록. `HARNESS-QUICK-REFERENCE.md` 갱신(선택 결정 후).
+
+**Verification:** `grep -n "VERIFICATION-COMMANDS" docs/AGENT-WORKFLOW.md skills/workflow/repo-health.md` 결과 각 1건 이상. scaffold 결정이 DR 또는 backlog note로 기록됨. tool surface: `.claude/rules/`, `.cursor/rules/` 직접 참조 불필요(maintainer doc이므로) — N/A 확인. adopter cascade: scaffold 미포함이면 `--check` drift 0 확인. README/GUIDE/MANUAL: `HARNESS-QUICK-REFERENCE.md` 갱신 여부 결정 근거 기록.
+
+---
+
+#### Coding canonical optional pack — `--with-coding-guide` scaffold 확장
+
+**Task:** 일반 coding 지침(TDD, architecture 설계 원칙, code convention)을 scaffold optional pack으로 제공한다. 현재 `docs/BEHAVIOR-PRINCIPLES.md`는 workflow 원칙이며 coding-specific 구체 지침(구현 전 test 작성, domain/infrastructure 분리, API-first 설계 등)은 없다. `docs/CODING-PRINCIPLES.md`를 harness core 밖에 두고 `--with-coding-guide` 옵션으로 scaffold 시 포함시킨다. tool-surface mirror(`.claude/rules/`, `.cursor/rules/` 등) wiring 포함. 이후 스택별 확장(`--with-spring-boot`, `--with-react`)으로 구체화 가능하도록 확장 구조를 설계한다. **주의: `--with-optional` 재정의(`Prompt surface diet + optional pack 재정의`, P1)와 optional pack 설계 방향이 겹치므로 해당 항목 방향 확정 후 착수 권장. 또한 optional pack이 늘수록 `create-harness.sh` 복잡도가 높아지므로 스크립트 현행 설계 파악을 선행한다.**
+
+**Dependencies:** `Prompt surface diet + optional pack 재정의`(P1) 방향 결정; `Scaffold/tool-surface alignment 점검 체계화`(P1) 완료 후 착수 권장. `scripts/create-harness.sh --with-optional` 현행 설계 파악 필요.
+
+**Done Criteria:** `--with-coding-guide` 옵션으로 scaffold 생성 시 `docs/CODING-PRINCIPLES.md` + tool-surface wiring이 포함됨. core scaffold(옵션 미지정)에는 포함되지 않음. 스택별 확장 설계 결정(최소 Spring Boot, React 진입점 정의 또는 defer 결정) 포함.
+
+**Verification:** `bash scripts/create-harness.sh --with-coding-guide` dry-run으로 파일 목록 확인. core scaffold dry-run에서 `CODING-PRINCIPLES.md` 미포함 확인. tool surface: `.claude/rules/`, `.cursor/rules/` wiring grep 확인. adopter cascade: scaffold dry-run 신규 프로젝트 결과 검증. canonical: `BEHAVIOR-PRINCIPLES.md`(workflow 원칙)와 `CODING-PRINCIPLES.md`(coding 지침) 역할 분리 명확성 확인. scaffold: `scripts/create-harness.sh --with-coding-guide` 옵션 처리 로직 및 core dry-run 미포함 확인. README/GUIDE/MANUAL: `WORKFLOW-MANUAL.md`, `HARNESS-QUICK-REFERENCE.md`에서 `--with-coding-guide` 옵션 언급 필요 여부 확인.
 
 ---
 
