@@ -41,7 +41,9 @@ semver는 adopter가 소비하는 표면(scaffold output 구조, command/skill s
 2. 릴리즈 직전, develop의 VERSION을 목표 값으로 설정 (in-development 동안 미리 올려두어도 됨)
 3. develop → main release PR
 4. main merge 후: git tag ai-workflow-v{VERSION} && git push origin --tags
-5. (선택) 다음 사이클 첫 작업에서 develop VERSION을 다음 목표 값으로 bump
+5. 릴리즈 후 검증: git ls-remote --heads origin develop 로 develop이 삭제되지 않았는지 확인
+   (DR-020 auto-delete off 실효 검증 — develop→main merge가 영구 브랜치를 삭제하면 안 됨)
+6. (선택) 다음 사이클 첫 작업에서 develop VERSION을 다음 목표 값으로 bump
 ```
 
 - `VERSION` 변경은 protected 파일 영향이 없고 reversal cost Low다. feature branch에서 수정 → develop → main 경로를 따른다.
