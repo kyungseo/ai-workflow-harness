@@ -19,9 +19,15 @@ related_work: [CHORE-20260604-001, CHORE-20260605-001]
 
 > **Q2 (2026-06-08):** "이 harness가 개인을 넘어 기업의 표준 harness로 자리잡기 위해서 agents orchestration, sub-agents 등에 대한 영역까지도 확장해야 하는지?"
 
-두 질문은 같은 축에 있다: **harness의 경계를 어디에 그어야 하는가.**
+> **Q3 (2026-06-08):** "현재 추구하고 있는 multi-agent 접근은 가까운 장래에도 유효한 것일까? 애초에 출발은 현재 가장 핫한 AI 도구들에 대해 같은 canonical을 제공하여 같은 방식으로 일할 수 있게끔 하는 것이었다. 단일 agent이거나 복합 agent를 활용할 수 있는 모든 경우를 커버해야 한다는 생각이었고, 무엇보다 단일 agent보다 복합 구성의 협업 체계가 더 높은 품질의 결과를 낸다는 예측이다. 단, AI agent의 미래는 결코 알 수 없다. 지원하던 도구가 낙오될 수도 있고 과금 정책이 바뀌어 더 이상 사용할 수 없는 상황이 올 수도 있다. 여러 변수를 생각할 때 현재의 방향성이 맞는가?"
+
+> **Q4 (2026-06-08):** "이 harness는 간편함과 단순함을 유지하고 과도한 설계나 극도의 자동화를 지양한다는 원칙을 갖고 있다. 오랜 IT 경험에서 'simple한 것이 best다.'라는 신념이다. 이미 100k+ star를 받는 harness 도구들(plugin/npm, agent orchestration 지원)이 넘쳐나고 있는데, 미래지향적으로 볼 때 어느 수준까지 follow-up이 필요한가?"
+
+네 질문은 같은 축에 있다: **harness의 경계를 어디에 그어야 하는가.**
 Q1은 "도구가 잘 하는 것과 harness가 해야 하는 것을 어떻게 구분하는가"이고,
-Q2는 "그 경계가 multi-agent, 기업 규모로 확장될 때도 유지되는가"다.
+Q2는 "그 경계가 multi-agent, 기업 규모로 확장될 때도 유지되는가"이며,
+Q3는 "그 구조가 도구 환경 변화에도 지속 가능한가"이고,
+Q4는 "simplicity 원칙을 유지하면서 외부 트렌드를 어느 수준까지 수용해야 하는가"다.
 
 ---
 
@@ -34,6 +40,10 @@ Q2는 "그 경계가 multi-agent, 기업 규모로 확장될 때도 유지되는
 - 그 경계가 명확한 한, harness는 도구가 발전할수록 더 필요해진다.
 
 **orchestration 확장에 대한 답**: sub-agent가 무엇을 자율로 할 수 있고 무엇은 사람이 승인해야 하는가는 **정책 문제**다. 그 정책을 정의하는 것은 harness의 역할이고, orchestration 메커니즘 자체를 구현하는 것은 도구의 역할이다. 이 구분이 유지되는 한 harness는 orchestration 환경에서도 확장 가능하며, workflow engine으로 전락하지 않는다.
+
+**simplicity 원칙과 외부 harness 벤치마킹**: 100k+ star harness 도구들의 plugin/npm/orchestration은 인프라 레이어다. 이 harness가 추구하는 policy layer의 가치는 인프라 복잡도와 무관하게 유지된다. 어느 수준까지 follow-up할 것인가의 구체적 판단 → [harness-distribution-plugin-model-20260608.md](harness-distribution-plugin-model-20260608.md)
+
+**multi-agent 접근 방식의 지속 가능성**: canonical+adapter 구조(DR-023)가 이미 도구 교체에 대응하는 아키텍처 답을 내장하고 있다. 도구 하나가 탈락해도 adapter 삭제로 흡수되고 정책은 유지된다. 단, multi-agent 품질 향상 가설은 검증 중인 베팅이며, 인프라가 이 가설에 과도하게 의존하지 않도록 관리해야 한다. 방향성을 흔드는 진짜 위험 신호는 **도구 교체가 아니라 canonical이 도구-특화되는 방향으로 드리프트하는 것**이다.
 
 ---
 
@@ -99,7 +109,44 @@ Work tracking, DR 체계, commit gate도 동일하다 — multi-agent가 만든 
 
 ---
 
-## 4. 현재 harness의 위험 신호
+## 4. Multi-agent 접근 방식의 지속 가능성 (Q3)
+
+### canonical+adapter 구조가 도구 불확실성에 대응한다
+
+DR-023이 선택한 구조의 핵심은 **정책을 도구에서 분리**하는 것이다:
+
+```
+skills/workflow/*.md        ← 정책 레이어 (도구 무관, 안정)
+.claude/commands/*.md       ← Claude adapter  (thin pointer)
+.agents/skills/*/SKILL.md  ← Codex adapter   (thin pointer)
+.cursor/rules/workflow.mdc  ← Cursor adapter  (thin pointer)
+```
+
+- 도구 하나가 탈락하면 → adapter 삭제, 정책 무영향
+- 새 도구가 등장하면 → adapter 추가, 정책 재사용
+- 단일 agent로 축소하면 → adapter 1개, 동일 정책
+
+이 구조 자체가 도구 불확실성에 대한 hedge다. **단, canonical이 도구-중립적으로 유지되어야 한다.** 특정 도구의 API나 CLI 문법이 canonical에 직접 등장하기 시작하면 resilience가 깨진다.
+
+### multi-agent 품질 가설은 infrastructure 요건이 아니다
+
+Phase 2 기획(CHORE-20260604-001)에서 Claude+Codex 크로스 리뷰가 단일 agent보다 높은 품질을 낸 것은 확인됐다. 그러나 이 효과는 "multi-agent orchestration 인프라"에서 나온 것이 아니라, **두 AI가 같은 canonical 문서를 읽고 독립적으로 판단**했기 때문이다. 도구가 바뀌어도 canonical이 유지되는 한 이 효과는 재현 가능하다. harness가 orchestration을 직접 구현하지 않아도 된다.
+
+### 시나리오별 영향
+
+| 시나리오 | harness에 미치는 영향 | 대응 |
+|---------|---------------------|------|
+| 지원 도구 중 1개 탈락 (서비스 종료, 과금 변화) | adapter 제거. policy 무영향 | adapter 삭제 |
+| 전체 도구 교체 (신규 dominant tool 등장) | adapter 전면 재작성. policy 재사용 | adapter 교체 |
+| multi-agent 효과가 기대 이하로 판명 | 단일 adapter로 축소해도 harness 가치 유지 | adapter 수 축소 |
+| canonical 자체가 도구-특화로 드리프트 | resilience 붕괴. 도구 교체 시 policy까지 재작성 필요 | **즉시 개입 필요** |
+| AI가 완전 자율화되어 workflow 지침 자체가 불필요 | 근본적 재검토 | §7 Revisit Triggers |
+
+**현재 방향은 유효하다.** 유효성의 근거는 "multi-agent 협업이 더 좋다"가 아니라 "policy layer가 tool-agnostic하게 설계되어 있다"이다.
+
+---
+
+## 5. 현재 harness의 위험 신호
 
 | 신호 | 내용 | 현재 상태 (2026-06-08) |
 |------|------|----------------------|
@@ -109,7 +156,7 @@ Work tracking, DR 체계, commit gate도 동일하다 — multi-agent가 만든 
 
 ---
 
-## 5. Policy-First 리팩토링 방향
+## 6. Policy-First 리팩토링 방향
 
 ### Phase A — 인프라 레이어 축소
 
@@ -141,13 +188,16 @@ DR-021(source/target boundary)에서 framework-owned vs. project-owned 분류로
 
 ---
 
-## 6. Revisit Triggers
+## 7. Revisit Triggers
 
 - AI 도구가 Work 파일·Approval Matrix에 해당하는 기능을 native로 지원하기 시작할 때 → 정책 레이어 경계 재조정
 - Claude Code 또는 Codex에서 sub-agent 위임 기능이 실용 단계가 될 때 → Approval Matrix sub-agent 확장 착수 시점
 - harness command/skill/rule sync 부담이 실측 비용으로 누적될 때 → Phase A 미완 항목 재점검
 - scaffold를 적용한 팀이 "이게 workflow engine인가 policy document인가"를 혼동하는 피드백이 올 때 → Phase C 착수
 - 두 번째 이상의 기업 adopter가 생길 때 → 기업용 Approval Matrix 확장·cross-team DR 체계 설계
+- canonical에 도구-특화 문법·API가 등장하기 시작할 때 → 즉시 개입. resilience 붕괴 신호
+- 지원 도구 중 하나가 서비스 종료·과금 변화로 실질적으로 사용 불가가 될 때 → adapter 제거, canonical 도구-중립성 재점검
+- adapter 수 증가로 sync 비용이 실측 부담이 될 때 → adapter consolidation 검토. 단일 dominant tool 중심으로 재편 여부 판단
 
 ---
 
@@ -159,3 +209,5 @@ DR-021(source/target boundary)에서 framework-owned vs. project-owned 분류로
   - `docs/backlog/HARNESS.md` — "Prompt surface diet + optional pack 재정의" (Phase A 완결)
   - `docs/backlog/HARNESS.md` — "Project-state template pack 검토" (Phase C 첫 단계)
   - Approval Matrix sub-agent 자율 범위 정의 — 현재 미등록, 착수 시 신규 backlog 등록 필요
+  - `docs/backlog/HARNESS.md` — "canonical weight 경량화 + work-doc.md class 재검토" (canonical 도구-중립성 유지 직결)
+- Q4 상세 분석: [`docs/retrospectives/harness-distribution-plugin-model-20260608.md`](harness-distribution-plugin-model-20260608.md) — simplicity 원칙·외부 harness 벤치마킹·follow-up 수준 판단
