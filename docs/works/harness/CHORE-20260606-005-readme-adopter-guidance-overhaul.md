@@ -10,6 +10,7 @@ planned_end: 2026-06-09
 actual_end: 2026-06-06
 related_dr: [DR-021, DR-025, DR-007, DR-008]
 related_troubleshooting: []
+related_work: [CHORE-20260604-001]
 ---
 
 # CHORE-20260606-005: README / Adopter Guidance Overhaul

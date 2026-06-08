@@ -10,6 +10,7 @@ planned_end: 2026-06-06
 actual_end: 2026-06-05
 related_dr: [DR-021, DR-022, DR-023, DR-024]
 related_troubleshooting: []
+related_work: [CHORE-20260604-001, CHORE-20260605-001]
 ---
 
 # CHORE-20260605-002: Slice 0 DR Authoring

@@ -10,6 +10,7 @@ planned_end: 2026-06-08
 actual_end: 2026-06-05
 related_dr: [DR-007, DR-013, DR-017, DR-019, DR-020]
 related_troubleshooting: []
+related_work: [CHORE-20260604-001, CHORE-20260605-002]
 ---
 
 # CHORE-20260605-001: Phase 2 Slice 0 — Direction Decision

@@ -10,6 +10,7 @@ planned_end: 2026-06-08
 actual_end: 2026-06-06
 related_dr: [DR-021, DR-024, DR-025]
 related_troubleshooting: []
+related_work: [CHORE-20260606-004]
 ---
 
 # Gate Hook Scaffold Distribution — Slice C1

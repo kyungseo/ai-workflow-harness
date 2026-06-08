@@ -10,6 +10,7 @@ planned_end: 2026-06-10
 actual_end: 2026-06-07
 related_dr: [DR-022, DR-024]
 related_troubleshooting: []
+related_work: [CHORE-20260605-004, CHORE-20260607-002]
 ---
 
 # CHORE-20260607-001: PLAN Trigger Coverage 확장

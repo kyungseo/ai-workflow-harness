@@ -10,6 +10,7 @@ planned_end: 2026-06-07
 actual_end: 2026-06-07
 related_dr: [DR-013]
 related_troubleshooting: []
+related_work: [CHORE-20260607-002]
 ---
 
 # CHORE-20260607-005: Work 파일 스펙 확장 (DR-013 개선)
