@@ -24,7 +24,52 @@ related_work: []
 
 - surface label("scaffold 점검") 대신 **grep 결과**로 확인한다. 결과가 검증 증거다.
 - 각 Layer는 독립 실행 가능하다. 변경 범위에 맞는 Layer만 선택한다.
-- 발견 항목은 Layer L 결과 분류 형식으로 보고한다.
+- 발견 항목은 문서 말미 **결과 분류 기준** 섹션 형식으로 보고한다.
+
+> **이식성 주의:** 이 카탈로그의 명령은 maintainer가 직접 셸에서 실행하는 것을 전제한다. macOS 기본 `/usr/bin/grep`(BSD)은 일부 GNU 옵션을 지원하지 않는다. 해당 Layer에 호환 대안을 병기한다.
+
+---
+
+## Release Full Sweep (릴리즈 게이트 프리셋)
+
+버전을 올려 릴리즈하기 전, 출하 표면 전수를 아래 순서로 점검한다.
+변경 범위에 맞춰 Layer를 고르는 일반 사용과 달리, 릴리즈 시점에는 **출하 표면에 적용되는 Layer 전수**가 게이트다.
+
+**실행 순서:**
+
+| # | Layer | 점검 |
+| --- | --- | --- |
+| 1 | A | syntax / script 무결성 |
+| 2 | C | scaffold invariant |
+| 3 | R | VERSION ↔ manifest 일관성 |
+| 4 | I | DR / README closure |
+| 5 | E | canonical source 최신성 |
+| 6 | F | tool-specific surface 정렬 |
+| 7 | H | stale phrase / source-only 누수 |
+| 8 | N | state consistency |
+| 9 | O | file spec compliance |
+| 10 | S | prompt surface 정렬 |
+| 11 | G | user-facing docs 정합 |
+| 12 | P | language policy |
+| 13 | J + J-OB | scaffold + onboarding simulation (최고점) |
+| 14 | Q | hook functional test (source-gitflow scaffold) |
+
+**게이트 밖 (제외):**
+
+- **Layer T** — upgrade/migration (미구현 placeholder). 구현 후 편입.
+- **Layer K** — `/repo-health` 통합 실행. 위 전수를 포괄하는 umbrella이므로 개별 sweep과 병행 또는 대체로 선택.
+- **Layer B · D · M** — 보조 진단 / 자체 점검. 필요 시 ad-hoc.
+
+**release-go 판정:** 출하 표면 발견 항목을 분류한다.
+
+| 분류 | 처리 |
+| --- | --- |
+| 출하 표면의 결함/회귀 | 릴리즈 전 반드시 수정 (release-block) |
+| 미구현 기능의 갭 (Layer T 등) | 용인, 백로그 추적 |
+| 품질 개선 / wording | 릴리즈 후 또는 별도 |
+
+출하 표면 P0/P1이 **0**이면 release-go. 등급 기준은 문서 말미 "결과 분류 기준".
+J / J-OB / Q는 temp scaffold를 생성하므로 각 Layer의 정리 단계(OB8 / J11)로 `/tmp` 산출물을 제거한다.
 
 ---
 
@@ -62,7 +107,7 @@ grep -n "Verification\|검증 방법" \
 
 ---
 
-## Layer C. Scaffold 실물 생성 + Invariant 5종
+## Layer C. Scaffold 실물 생성 + Invariant 5종 (+ 1 report-only)
 
 ```bash
 bash scripts/tests/check-scaffold-invariants.sh
@@ -545,7 +590,7 @@ grep -n "idempotent\|re-read\|다시 읽\|최신" skills/workflow/session-start.
 
 ---
 
-### OB8. Post-scaffold config 수정 후 동작 검증
+### OB7. Post-scaffold config 수정 후 동작 검증
 
 scaffold 직후 사용자가 config 파일을 커스터마이징했을 때 시스템이 올바르게 반응하는지 검증한다.
 "기본 동작 OK"와 "커스터마이징 후에도 OK"는 별개다.
@@ -642,7 +687,7 @@ bash "$OLDPWD/scripts/create-harness.sh" --check /tmp/awh-ob-generic \
 
 ---
 
-### OB7. 정리
+### OB8. 정리
 
 ```bash
 cd -
@@ -744,16 +789,18 @@ done
 command/rule/prompt 파일이 Korean primary 원칙을 따르는지 확인한다.
 완전 영어 문장 또는 영어 주어 사용이 과도한 파일을 탐지한다.
 
+> **이식성:** `[가-힣]` 한글 range는 GNU grep과 BSD grep(macOS 기본) 양쪽에서 동작하나, UTF-8 locale(`LC_CTYPE`/`LANG`이 `*.UTF-8`)을 전제한다. `grep -P`(PCRE)는 BSD grep에서 `invalid option`으로 실패하므로 사용하지 않는다.
+
 ```bash
 # command/skill 파일에서 한국어가 전혀 없는 파일 탐지 (순수 영어 파일 의심)
 for f in .claude/commands/*.md skills/workflow/*.md; do
-  ko_count=$(grep -cP '[가-힣]' "$f" 2>/dev/null || echo 0)
+  ko_count=$(grep -c '[가-힣]' "$f" 2>/dev/null || echo 0)
   [ "$ko_count" -eq 0 ] && echo "NO KOREAN (check DR-007): $f"
 done
 
 # rule 파일 동일 점검
 for f in .claude/rules/*.md .cursor/rules/*.mdc; do
-  ko_count=$(grep -cP '[가-힣]' "$f" 2>/dev/null || echo 0)
+  ko_count=$(grep -c '[가-힣]' "$f" 2>/dev/null || echo 0)
   [ "$ko_count" -eq 0 ] && echo "NO KOREAN (check DR-007): $f"
 done
 
@@ -763,7 +810,7 @@ grep -n "^type.*feat\|^type.*fix\|^type.*docs\|Conventional Commits" \
 
 # prompt 파일 언어 확인
 for f in prompts/*.md; do
-  ko_count=$(grep -cP '[가-힣]' "$f" 2>/dev/null || echo 0)
+  ko_count=$(grep -c '[가-힣]' "$f" 2>/dev/null || echo 0)
   total=$(wc -l < "$f")
   [ "$total" -gt 10 ] && [ "$ko_count" -lt 3 ] \
     && echo "LOW KOREAN ratio (check DR-007): $f (${ko_count} Korean lines / ${total} total)"
@@ -773,6 +820,8 @@ done
 ---
 
 ## Layer Q. Hook Functional Test
+
+> **전제:** Layer J-OB의 OB0에서 생성한 `/tmp/awh-ob-gitflow`(source-gitflow scaffold)가 필요하다. 단독 실행 시 OB0를 먼저 수행한다.
 
 hook 파일 존재를 넘어 실제 commit 시 WARN/FAIL이 올바르게 발생하는지 검증한다.
 source-gitflow scaffold에서만 실행한다.
@@ -815,6 +864,8 @@ cd -
 ---
 
 ## Layer R. VERSION ↔ Manifest 버전 일관성
+
+> **전제:** Layer J-OB의 OB0에서 생성한 `/tmp/awh-ob-generic`이 필요하다. 단독 실행 시 OB0를 먼저 수행하거나 임의 temp scaffold 경로로 치환한다.
 
 source repo의 `VERSION` 파일과 scaffold 생성 시 manifest에 기록되는 `harness_version`이 일치하는지 확인한다.
 
@@ -979,9 +1030,11 @@ grep -n "HRN-0[0-9][0-9]\b\|/repo-decision\|repo-decision" docs/VERIFICATION-COM
 
 ### M3. bash 명령 기본 문법 확인
 
+> **한계 (참고용):** 아래는 모든 ```bash 블록을 concat해 `bash -n`에 넣는다. `<target-dir>`·`<upgraded-target>` 같은 placeholder 토큰과 블록 간 문맥 단절(미정의 변수, 독립 `cd`/redirect)이 **false positive**를 만든다. 출력은 "명백한 구조적 오류" 1차 스크리닝으로만 쓰고, 진짜 문법 오류 여부는 해당 블록을 개별 확인한다.
+
 ```bash
-# 코드 블록 내 bash 명령에서 명백한 문법 오류 탐지
-# (셸 스크립트로 추출하여 bash -n 실행)
+# 코드 블록 내 bash 명령에서 명백한 문법 오류 탐지 (1차 스크리닝)
+# (셸 스크립트로 추출하여 bash -n 실행 — placeholder 토큰은 false positive 가능)
 grep -A999 '```bash' docs/VERIFICATION-COMMANDS.md \
   | grep -v '```' | bash -n 2>&1 | head -20
 ```
@@ -1004,7 +1057,7 @@ grep -n "VERIFICATION-COMMANDS" docs/AGENT-WORKFLOW.md
 | --- | --- |
 | `skills/workflow/repo-health.md` | Required Surface Matrix pointer 유효성 |
 | `docs/AGENT-WORKFLOW.md` | Verification Defaults pointer 유효성 |
-| `docs/HARNESS-QUICK-REFERENCE.md` | one-liner 참조 유효성 (pointer 연결 후) |
+| `docs/HARNESS-QUICK-REFERENCE.md` | one-liner 참조 유효성 |
 | 이 파일 내부 (M1~M4) | 경로·명령 stale, bash 문법, cascade 등재 여부 |
 
 **다른 파일이 변경됐을 때 이 파일도 점검 대상:**
@@ -1023,7 +1076,7 @@ grep -n "VERIFICATION-COMMANDS" docs/AGENT-WORKFLOW.md
 | `tools/git-hooks/` hook 로직 변경 | Layer Q functional test 결과 변경 가능 | Layer Q |
 | `VERSION` 파일 변경 | Layer R version 일치 여부 재확인 | Layer R |
 | `prompts/*session-start.md` 변경 | Layer S prompt ↔ canonical 정합 | Layer S |
-| `.harness/gate-config` 형식/파싱 로직 변경 | OB8 gate-config 수정 후 동작 검증 | OB8 |
+| `.harness/gate-config` 형식/파싱 로직 변경 | OB7 gate-config 수정 후 동작 검증 | OB7 |
 | `--upgrade`/`--refresh` 구현 완료 | Layer T placeholder → 실 명령으로 채우기 | Layer T |
 
 ```bash

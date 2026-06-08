@@ -134,6 +134,7 @@ Proposal shape:
 - structure/development flow 변경: `HARNESS-ARCHITECTURE` 또는 `HARNESS-MAINTAINER-GUIDE` 영향 확인 (optional pack — minimal scaffold에 없으면 N/A, 필요 시 `--with-optional`).
 - workflow/tool/scaffold 변경: 관련 canonical workflow, adapter, rule, prompt, `.codex/hooks.json`, user-facing docs, scaffold 정렬 확인.
 - scaffold 또는 canonical workflow 변경: `scripts/create-harness.sh`가 있으면 dry-run과 필요 시 temp scaffold 검증. scaffold 적용 repository처럼 script가 없으면 Skipped / Not Applicable로 보고.
+- 상세 검증 명령·릴리즈 전수 점검: source repo면 `docs/VERIFICATION-COMMANDS.md`(Layer 카탈로그 + "Release Full Sweep" 프리셋) 참조. scaffold 적용 repository에는 없으므로 N/A.
 - non-trivial issue resolved: `docs/troubleshooting/` 기록 제안.
 - presentation/report artifact 생성: source traceability와 output path 확인.
 - phase complete 또는 Work complete: STATUS/archive/tracker 정합성 확인.
