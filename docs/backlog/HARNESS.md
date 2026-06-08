@@ -43,6 +43,7 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | `PHASE{n}` → `PROD-P{n}` product track 네이밍 전환 |
 | — | P1 | Candidate | L2 | `docs/VERIFICATION-COMMANDS.md` pointer 연결 및 통합 |
 | — | P2 | Candidate | L2 | Coding canonical optional pack — `--with-coding-guide` scaffold 확장 |
+| — | P2 | Candidate | L2 | Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의 |
 | HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 |
 
 ---
@@ -289,6 +290,22 @@ AI Workflow Harness backlog다.
 **Done Criteria:** `--with-coding-guide` 옵션으로 scaffold 생성 시 `docs/CODING-PRINCIPLES.md` + tool-surface wiring이 포함됨. core scaffold(옵션 미지정)에는 포함되지 않음. 스택별 확장 설계 결정(최소 Spring Boot, React 진입점 정의 또는 defer 결정) 포함.
 
 **Verification:** `bash scripts/create-harness.sh --with-coding-guide` dry-run으로 파일 목록 확인. core scaffold dry-run에서 `CODING-PRINCIPLES.md` 미포함 확인. tool surface: `.claude/rules/`, `.cursor/rules/` wiring grep 확인. adopter cascade: scaffold dry-run 신규 프로젝트 결과 검증. canonical: `BEHAVIOR-PRINCIPLES.md`(workflow 원칙)와 `CODING-PRINCIPLES.md`(coding 지침) 역할 분리 명확성 확인. scaffold: `scripts/create-harness.sh --with-coding-guide` 옵션 처리 로직 및 core dry-run 미포함 확인. README/GUIDE/MANUAL: `WORKFLOW-MANUAL.md`, `HARNESS-QUICK-REFERENCE.md`에서 `--with-coding-guide` 옵션 언급 필요 여부 확인.
+
+---
+
+#### Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의
+
+**Task:** AI agent가 harness 행동 패턴(cascade 점검 규칙, commit bundling 방침 등)을 agent-side 지속 컨텍스트(Claude memory, Codex custom profile, Cursor user-level rules 등)에 저장하면 harness 문서 단독 검증이 불가능해지고 개발·테스트 결과가 오염된다. harness의 올바른 동작이 "harness 문서만으로" 유도되는지 검증하려면 agent-side 컨텍스트가 행동을 보정해서는 안 된다. 이 원칙이 없으면 agent마다 지속 컨텍스트 보정 여부가 달라져 도구 간 검증 조건도 불균등해진다. "이 레포의 harness 행동을 유도하는 내용은 agent-side 지속 컨텍스트에 저장하지 않는다" 원칙을 모든 agent를 대상으로 명문화하고, 기존 저장된 항목의 처리 방침을 결정한다. **연계: `memory/feedback_memory_scope.md`(현재 Claude 한정), `docs/BEHAVIOR-PRINCIPLES.md`(cross-agent 원칙)**
+
+**Dependencies:** —
+
+**Done Criteria:**
+- 원칙 명문화: cross-agent 관점에서 harness dev/test 노이즈 방지 원칙 기술 — `docs/BEHAVIOR-PRINCIPLES.md` 추가 또는 신규 정책 파일(scope: Claude/Codex/Cursor 모두 적용)
+- Claude memory: `memory/feedback_memory_scope.md`에 harness 행동 패턴 저장 금지 원칙 반영. 기존 해당 memory 파일(cascade verification, T11 등) 처리 결정 및 실행 — 삭제 / harness docs 이전 / 조건부 유지
+- Codex/Cursor: agent-side 지속 컨텍스트 표면 점검 및 harness 행동 패턴 저장 여부 확인
+- 원칙이 "harness docs = SSoT" 방향과 일관성 있는지 확인
+
+**Verification:** agent별 지속 컨텍스트 저장소(Claude `memory/`, Codex profile, Cursor user rules) grep으로 harness 행동 패턴 잔존 여부 확인. `docs/BEHAVIOR-PRINCIPLES.md` 또는 정책 파일에 cross-agent 원칙 반영 확인. tool surface · adopter cascade · scaffold · README/GUIDE/MANUAL: 해당 없음(N/A).
 
 ---
 
