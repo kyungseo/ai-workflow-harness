@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-006
 priority: P1
-status: Done
+status: Archived
 risk: High
 scope: gate-enforcement-runtime-and-env slice (a) commit-gate hard-stop/sentinel runtime
 appetite: 3d

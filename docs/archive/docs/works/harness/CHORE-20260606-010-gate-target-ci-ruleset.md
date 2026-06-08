@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-010
 priority: P0
-status: Done
+status: Archived
 risk: High
 scope: gate-enforcement-runtime-and-env slice c2-B target CI template and ruleset required-check connection
 appetite: 2d

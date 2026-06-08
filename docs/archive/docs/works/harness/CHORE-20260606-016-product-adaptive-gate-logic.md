@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-016
 priority: P0
-status: Done
+status: Archived
 risk: High
 scope: gate-enforcement-runtime-and-env slice c4 product-adaptive gate logic (project-configurable protected/finalization list) and tracking-only commit exception review
 appetite: 2d

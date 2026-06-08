@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-001
 priority: P1
-status: Done
+status: Archived
 risk: High
 scope: Phase 2 slice #13 - DR-023 Canonical + hybrid adapter 적용과 no-alias command rename을 같은 breaking slice로 수행했다. Codex 구현, Claude R31 결과 검토, Work Done 처리가 완료되었고 commit/PR/merge는 별도 승인 후 진행한다.
 appetite: 1w

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260605-004
 priority: P1
-status: Done
+status: Archived
 risk: Medium
 scope: DR-022(PLAN lifecycle) 적용 — 기존 T5를 closeout/phase-transition/commit finalization에 배선, PLAN archive-drain 규칙 신설, PLAN.md 소생(stale header·§4 milestone·§7 roadmap AWH↔CHORE drift 정합). canonical/adapter rename·breaking 변경은 제외
 appetite: 2d

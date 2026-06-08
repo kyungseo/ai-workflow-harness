@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260605-002
 priority: P1
-status: Done
+status: Archived
 risk: High
 scope: Slice 0가 합의한 4축 방향을 정식 DR(DR-021~024)로 작성하고 Codex 검토·사용자 승인 후 Accepted 처리한다. 실제 breaking 적용은 후속 slice
 appetite: 1d

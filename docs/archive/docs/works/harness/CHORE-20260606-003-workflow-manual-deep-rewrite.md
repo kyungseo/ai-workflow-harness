@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-003
 priority: P2
-status: Done
+status: Archived
 risk: High
 scope: Phase 2 slice #11 follow-up - WORKFLOW-MANUAL.md deep rewrite. canonical 실행 규칙 재호스팅을 제거하고 manual을 user-facing teaching/walkthrough 문서로 재정의한다.
 appetite: 1w

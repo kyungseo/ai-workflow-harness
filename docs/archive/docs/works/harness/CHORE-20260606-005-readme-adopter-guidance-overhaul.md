@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-005
 priority: P2
-status: Done
+status: Archived
 risk: Medium
 scope: README public front-door 정보구조를 재설계하고, scaffold product repo 사용자와 clone/fork maintainer-adopter 안내를 분리해 반영한다. 구현 전 plan review 우선.
 appetite: 3d

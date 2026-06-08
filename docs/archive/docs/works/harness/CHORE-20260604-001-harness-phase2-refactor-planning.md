@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260604-001
 priority: P1
-status: Done
+status: Archived
 risk: High
 scope: ai-workflow-harness Phase 2 진입을 위한 전체 workflow, process gate, docs IA, scaffold 구조, AI tool surface, command/skill/settings/test/release flow의 대대적 리팩토링 검토와 실행 계획 수립
 appetite: 3d

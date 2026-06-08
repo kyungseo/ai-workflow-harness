@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260607-006
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: /record-decision 개명 + product decision coverage + DR lifecycle 절차 + track 필드 도입
 appetite: 2d

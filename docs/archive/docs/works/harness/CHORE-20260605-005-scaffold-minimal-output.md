@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260605-005
 priority: P1
-status: Done
+status: Archived
 risk: Medium
 scope: DR-021(source/target boundary) 적용 — Optional source pack(HARNESS-ARCHITECTURE·HARNESS-MAINTAINER-GUIDE·WORKFLOW-MANUAL·확장 prompt)을 default scaffold에서 제외하고 opt-in flag로 전환. D4 heavy-doc dangling(MAINTAINER-GUIDE→DR-020, WORKFLOW-MANUAL→DR-001) 해소. core→optional 참조 정합성 보존. PQ-5/OQ-7(scaffold PLAN Roadmap Lifecycle propagate) 판단. canonical+adapter·command rename·breaking 변경은 제외(slice #13)
 appetite: 2d

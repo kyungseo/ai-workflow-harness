@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-002
 priority: P1
-status: Done
+status: Archived
 risk: High
 scope: Phase 2 slice #11 - canonical+adapter/no-alias command 구조를 source user-facing 문서와 scaffold target 설명에 반영한다.
 appetite: 1w

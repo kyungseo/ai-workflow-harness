@@ -12,38 +12,38 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260608-003 | VERIFICATION-COMMANDS 보완 + pointer 배선 | 2026-06-08 | `docs/works/harness/CHORE-20260608-003-verification-commands-hardening.md` |
-| CHORE-20260608-002 | 버전 체계 정의 + VERSION 정렬 | 2026-06-08 | `docs/works/harness/CHORE-20260608-002-versioning-policy.md` |
-| CHORE-20260608-001 | HARNESS.md 백로그 포맷 2단 구조 전환 | 2026-06-08 | `docs/works/harness/CHORE-20260608-001-harness-backlog-format-2tier.md` |
-| CHORE-20260607-006 | Decision Workflow Product Coverage + DR Lifecycle | 2026-06-07 | `docs/works/harness/CHORE-20260607-006-decision-workflow-coverage.md` |
-| CHORE-20260607-005 | Work 파일 스펙 확장 (DR-013 개선) | 2026-06-07 | `docs/works/harness/CHORE-20260607-005-work-file-spec-enhancement.md` |
-| CHORE-20260607-002 | 등록·착수 시점 정합성 Hardening | 2026-06-07 | `docs/works/harness/CHORE-20260607-002-registration-integrity.md` |
-| CHORE-20260607-001 | PLAN Trigger Coverage 확장 | 2026-06-07 | `docs/works/harness/CHORE-20260607-001-plan-trigger-coverage.md` |
-| CHORE-20260606-016 | Product-Adaptive Gate Logic + Tracking-Only Commit — Slice C4 | 2026-06-06 | `docs/works/harness/CHORE-20260606-016-product-adaptive-gate-logic.md` |
-| CHORE-20260606-015 | Hook-less / Generic Target Advisory + Manifest Check — Slice C3 | 2026-06-06 | `docs/works/harness/CHORE-20260606-015-hookless-advisory-manifest-check.md` |
-| CHORE-20260606-011 | Source-Gitflow Environment Bootstrap — Slice D | 2026-06-06 | `docs/works/harness/CHORE-20260606-011-source-gitflow-environment-bootstrap.md` |
-| CHORE-20260606-010 | Gate Target CI Template And Ruleset Connection — Slice C2-B | 2026-06-06 | `docs/works/harness/CHORE-20260606-010-gate-target-ci-ruleset.md` |
-| CHORE-20260606-009 | Gate CI Source Hardening — Slice C2-A | 2026-06-06 | `docs/works/harness/CHORE-20260606-009-gate-ci-source-hardening.md` |
-| CHORE-20260606-008 | Gate Hook Scaffold Distribution — Slice C1 | 2026-06-06 | `docs/works/harness/CHORE-20260606-008-gate-hook-scaffold-distribution.md` |
-| CHORE-20260606-007 | Gate List SSoT Slice B | 2026-06-06 | `docs/works/harness/CHORE-20260606-007-gate-list-ssot.md` |
-| CHORE-20260606-006 | Commit Gate Runtime Slice A | 2026-06-06 | `docs/works/harness/CHORE-20260606-006-commit-gate-runtime-slice-a.md` |
-| CHORE-20260606-005 | README / Adopter Guidance Overhaul | 2026-06-06 | `docs/works/harness/CHORE-20260606-005-readme-adopter-guidance-overhaul.md` |
-| CHORE-20260606-004 | Commit Gate Runtime Enforcement Child DR (DR-025) | 2026-06-06 | `docs/works/harness/CHORE-20260606-004-commit-gate-enforcement-dr.md` |
-| CHORE-20260606-003 | WORKFLOW-MANUAL Deep Rewrite | 2026-06-05 | `docs/works/harness/CHORE-20260606-003-workflow-manual-deep-rewrite.md` |
-| CHORE-20260606-002 | User-Facing Documentation Overhaul | 2026-06-05 | `docs/works/harness/CHORE-20260606-002-user-facing-doc-overhaul.md` |
-| CHORE-20260606-001 | Canonical Adapter + No-Alias Command Rename | 2026-06-05 | `docs/works/harness/CHORE-20260606-001-canonical-adapter-rename.md` |
-| CHORE-20260605-006 | Scaffold Manifest + --check (Q4 최소 경로) | 2026-06-05 | `docs/works/harness/CHORE-20260605-006-scaffold-manifest-check.md` |
-| CHORE-20260605-005 | Scaffold Minimal Output (DR-021 적용) | 2026-06-05 | `docs/works/harness/CHORE-20260605-005-scaffold-minimal-output.md` |
-| CHORE-20260605-004 | PLAN Lifecycle Wiring (DR-022 적용) | 2026-06-05 | `docs/works/harness/CHORE-20260605-004-plan-lifecycle-wiring.md` |
-| CHORE-20260605-003 | Slice 1a/1b — Defects + Invariants | 2026-06-05 | `docs/works/harness/CHORE-20260605-003-slice1ab-defects-invariants.md` |
-| CHORE-20260605-002 | Slice 0 DR Authoring (DR-021~024) | 2026-06-05 | `docs/works/harness/CHORE-20260605-002-slice0-dr-authoring.md` |
-| CHORE-20260605-001 | Phase 2 Slice 0 — Direction Decision | 2026-06-05 | `docs/works/harness/CHORE-20260605-001-phase2-slice0-direction.md` |
-| CHORE-20260604-001 | Harness Phase 2 Refactor Planning | 2026-06-04 | `docs/works/harness/CHORE-20260604-001-harness-phase2-refactor-planning.md` |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260608-003 | VERIFICATION-COMMANDS 보완 + pointer 배선 | 2026-06-08 | `docs/archive/docs/works/harness/CHORE-20260608-003-verification-commands-hardening.md` |
+| CHORE-20260608-002 | 버전 체계 정의 + VERSION 정렬 | 2026-06-08 | `docs/archive/docs/works/harness/CHORE-20260608-002-versioning-policy.md` |
+| CHORE-20260608-001 | HARNESS.md 백로그 포맷 2단 구조 전환 | 2026-06-08 | `docs/archive/docs/works/harness/CHORE-20260608-001-harness-backlog-format-2tier.md` |
+| CHORE-20260607-006 | Decision Workflow Product Coverage + DR Lifecycle | 2026-06-07 | `docs/archive/docs/works/harness/CHORE-20260607-006-decision-workflow-coverage.md` |
+| CHORE-20260607-005 | Work 파일 스펙 확장 (DR-013 개선) | 2026-06-07 | `docs/archive/docs/works/harness/CHORE-20260607-005-work-file-spec-enhancement.md` |
+| CHORE-20260607-002 | 등록·착수 시점 정합성 Hardening | 2026-06-07 | `docs/archive/docs/works/harness/CHORE-20260607-002-registration-integrity.md` |
+| CHORE-20260607-001 | PLAN Trigger Coverage 확장 | 2026-06-07 | `docs/archive/docs/works/harness/CHORE-20260607-001-plan-trigger-coverage.md` |
+| CHORE-20260606-016 | Product-Adaptive Gate Logic + Tracking-Only Commit — Slice C4 | 2026-06-06 | `docs/archive/docs/works/harness/CHORE-20260606-016-product-adaptive-gate-logic.md` |
+| CHORE-20260606-015 | Hook-less / Generic Target Advisory + Manifest Check — Slice C3 | 2026-06-06 | `docs/archive/docs/works/harness/CHORE-20260606-015-hookless-advisory-manifest-check.md` |
+| CHORE-20260606-011 | Source-Gitflow Environment Bootstrap — Slice D | 2026-06-06 | `docs/archive/docs/works/harness/CHORE-20260606-011-source-gitflow-environment-bootstrap.md` |
+| CHORE-20260606-010 | Gate Target CI Template And Ruleset Connection — Slice C2-B | 2026-06-06 | `docs/archive/docs/works/harness/CHORE-20260606-010-gate-target-ci-ruleset.md` |
+| CHORE-20260606-009 | Gate CI Source Hardening — Slice C2-A | 2026-06-06 | `docs/archive/docs/works/harness/CHORE-20260606-009-gate-ci-source-hardening.md` |
+| CHORE-20260606-008 | Gate Hook Scaffold Distribution — Slice C1 | 2026-06-06 | `docs/archive/docs/works/harness/CHORE-20260606-008-gate-hook-scaffold-distribution.md` |
+| CHORE-20260606-007 | Gate List SSoT Slice B | 2026-06-06 | `docs/archive/docs/works/harness/CHORE-20260606-007-gate-list-ssot.md` |
+| CHORE-20260606-006 | Commit Gate Runtime Slice A | 2026-06-06 | `docs/archive/docs/works/harness/CHORE-20260606-006-commit-gate-runtime-slice-a.md` |
+| CHORE-20260606-005 | README / Adopter Guidance Overhaul | 2026-06-06 | `docs/archive/docs/works/harness/CHORE-20260606-005-readme-adopter-guidance-overhaul.md` |
+| CHORE-20260606-004 | Commit Gate Runtime Enforcement Child DR (DR-025) | 2026-06-06 | `docs/archive/docs/works/harness/CHORE-20260606-004-commit-gate-enforcement-dr.md` |
+| CHORE-20260606-003 | WORKFLOW-MANUAL Deep Rewrite | 2026-06-05 | `docs/archive/docs/works/harness/CHORE-20260606-003-workflow-manual-deep-rewrite.md` |
+| CHORE-20260606-002 | User-Facing Documentation Overhaul | 2026-06-05 | `docs/archive/docs/works/harness/CHORE-20260606-002-user-facing-doc-overhaul.md` |
+| CHORE-20260606-001 | Canonical Adapter + No-Alias Command Rename | 2026-06-05 | `docs/archive/docs/works/harness/CHORE-20260606-001-canonical-adapter-rename.md` |
+| CHORE-20260605-006 | Scaffold Manifest + --check (Q4 최소 경로) | 2026-06-05 | `docs/archive/docs/works/harness/CHORE-20260605-006-scaffold-manifest-check.md` |
+| CHORE-20260605-005 | Scaffold Minimal Output (DR-021 적용) | 2026-06-05 | `docs/archive/docs/works/harness/CHORE-20260605-005-scaffold-minimal-output.md` |
+| CHORE-20260605-004 | PLAN Lifecycle Wiring (DR-022 적용) | 2026-06-05 | `docs/archive/docs/works/harness/CHORE-20260605-004-plan-lifecycle-wiring.md` |
+| CHORE-20260605-003 | Slice 1a/1b — Defects + Invariants | 2026-06-05 | `docs/archive/docs/works/harness/CHORE-20260605-003-slice1ab-defects-invariants.md` |
+| CHORE-20260605-002 | Slice 0 DR Authoring (DR-021~024) | 2026-06-05 | `docs/archive/docs/works/harness/CHORE-20260605-002-slice0-dr-authoring.md` |
+| CHORE-20260605-001 | Phase 2 Slice 0 — Direction Decision | 2026-06-05 | `docs/archive/docs/works/harness/CHORE-20260605-001-phase2-slice0-direction.md` |
+| CHORE-20260604-001 | Harness Phase 2 Refactor Planning | 2026-06-04 | `docs/archive/docs/works/harness/CHORE-20260604-001-harness-phase2-refactor-planning.md` |
 | CHORE-20260529-003 | pre-commit/commit-msg hook 검토·정비·설치 | 2026-05-29 | `docs/archive/docs/works/harness/CHORE-20260529-003-pre-commit-hook.md` |
 | CHORE-20260529-002 | HARNESS-STRUCTURE→ARCHITECTURE rename | 2026-05-29 | `docs/archive/docs/works/harness/CHORE-20260529-002-harness-architecture-rename.md` |
 | CHORE-20260529-001 | 문서 정비 및 현행화 | 2026-05-29 | `docs/archive/docs/works/harness/CHORE-20260529-001-docs-maintenance.md` |
