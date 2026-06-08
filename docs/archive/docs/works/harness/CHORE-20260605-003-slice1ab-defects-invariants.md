@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260605-003
 priority: P1
-status: Done
+status: Archived
 risk: Medium
 scope: Phase 2 slice 1a(현존 결함 수선) + 1b(불변식 테스트) 병행. 방향(DR-021~024)과 무관하게 영구 참인 항목만. breaking change·minimal-output 적용은 제외
 appetite: 2d

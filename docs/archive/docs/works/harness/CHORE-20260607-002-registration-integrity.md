@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260607-002
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: 등록·착수 시점 정합성 hardening — workflow prompt 보강 + 인덱스 신규 생성 + 기존 README 현행화
 appetite: 2d

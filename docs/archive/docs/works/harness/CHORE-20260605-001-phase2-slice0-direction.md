@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260605-001
 priority: P1
-status: Done
+status: Archived
 risk: High
 scope: Phase 2 slice 0 — A/B(framework/project-state) boundary + canonical+adapter 구조 + gate strictness 2D taxonomy + PLAN lifecycle의 TO-BE 방향을 합의하고 DR 후보로 확정한다 (실제 breaking 적용은 후속 slice)
 appetite: 3d

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260608-002
 priority: P0
-status: Done
+status: Archived
 risk: L2
 scope: 버전 체계 정의 + VERSION↔git tag 정렬. semver 정책 문서(VERSIONING.md) 신설, VERSION 0.2.0→1.1.0 조정, DR-028 기록, VERSION→create-harness.sh→manifest.json 경로 정합성 검증.
 appetite: 1d

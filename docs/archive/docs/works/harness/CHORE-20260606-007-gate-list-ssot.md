@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-007
 priority: P1
-status: Done
+status: Archived
 risk: High
 scope: gate-enforcement-runtime-and-env slice (b) shared hook gate-list SSoT planning
 appetite: 3d

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260607-001
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: DR-022 T5 배선 확장(work-plan/repo-decision) + PLAN-SUMMARY lifecycle 흡수 + Intent Recognition 보완(work-close/session-summary) + 등록·착수 정합성 hardening 연계
 appetite: 3d

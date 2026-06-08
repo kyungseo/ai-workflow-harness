@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260608-001
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: docs/backlog/HARNESS.md 백로그 포맷을 단일 표 행에서 요약 표 + 상세 섹션 2단 구조로 전환. work-register/work-close canonical 절차 반영, T11 cascade 확인, scaffold 템플릿 일관성 평가.
 appetite: 1d

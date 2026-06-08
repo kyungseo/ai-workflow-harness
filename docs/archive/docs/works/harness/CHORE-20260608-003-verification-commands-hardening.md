@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260608-003
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: VERIFICATION-COMMANDS.md 보완(#1~#7) + canonical pointer 배선(AGENT-WORKFLOW Verification Defaults, repo-health) + scaffold source-only 결정 기록. 릴리즈 Full Sweep 프리셋 신설 포함.
 appetite: 1d

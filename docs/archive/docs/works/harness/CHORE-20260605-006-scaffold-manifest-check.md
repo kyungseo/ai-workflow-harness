@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260605-006
 priority: P1
-status: Done
+status: Archived
 risk: Medium
 scope: Q4 최소 경로 — scaffold 생성 시 `.harness/manifest.json`(harness version + framework-owned 파일 list+hash) 기록, `scripts/create-harness.sh --check <target>`로 target의 framework surface가 source 대비 drift났는지 보고. slice #13(canonical+adapter+no-alias rename, breaking)의 전제조건(DR-023 §41, 부모 §10-a). `--upgrade`(3-way merge)는 deferred. OQ-10(hash 기준) 확정 포함
 appetite: 2d

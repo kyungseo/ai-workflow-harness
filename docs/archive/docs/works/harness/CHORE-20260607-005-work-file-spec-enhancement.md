@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260607-005
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: DR-013 Work 파일 스펙 확장 — Top Summary/Next Actions 공식화, Context Manifest 신규, Slice 기준 명문화, Backlog ID-less 정책 명문화 + 영향 문서 현행화
 appetite: 1d

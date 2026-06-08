@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-015
 priority: P0
-status: Done
+status: Archived
 risk: High
 scope: gate-enforcement-runtime-and-env slice c3 hook-less/generic target documented advisory and manifest-based check
 appetite: 2d

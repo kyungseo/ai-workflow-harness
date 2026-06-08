@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-009
 priority: P1
-status: Done
+status: Archived
 risk: Medium
 scope: gate-enforcement-runtime-and-env slice (c2-A) source repo CI hardening
 appetite: 2d

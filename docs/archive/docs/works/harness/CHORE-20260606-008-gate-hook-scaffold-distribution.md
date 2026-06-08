@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-008
 priority: P1
-status: Done
+status: Archived
 risk: High
 scope: gate-enforcement-runtime-and-env slice (c1) source-gitflow scaffold hook distribution (opt-in)
 appetite: 3d

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-004
 priority: P1
-status: Done
+status: Archived
 risk: Medium
 scope: DR-024 child DR (DR-025) 작성 - causal finalization bundling의 commit gate runtime enforcement 정책(OQ-14 예외 테이블 + override + 집행 위치)을 형식화한다. decision-only, 실제 hook/command 구현은 하류.
 appetite: 3d

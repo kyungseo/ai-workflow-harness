@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260606-011
 priority: P0
-status: Done
+status: Archived
 risk: High
 scope: gate-enforcement-runtime-and-env slice d source-gitflow environment bootstrap
 appetite: 2d
