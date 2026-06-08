@@ -191,3 +191,5 @@ ID prefix와 파일명 상세 기준:
 - Public release prep: secret/private-info scan, stale project identity audit
 
 검증을 실행할 수 없다면 이유와 남은 risk를 보고한다.
+
+상세 검증 명령 카탈로그(Layer별 grep·시뮬레이션)와 릴리즈 직전 전수 점검은 `docs/VERIFICATION-COMMANDS.md`를 참조한다. 이 파일은 source repo 전용 maintainer 문서이며, 릴리즈 게이트는 동 문서 "Release Full Sweep" 프리셋을 따른다. (source repo에만 존재 — scaffold 적용 repository에는 없으므로 N/A.)
