@@ -29,7 +29,10 @@ If the branch is `develop` or `main` AND any of the following files are staged �
 
 - `AGENTS.md`, `CLAUDE.md`, `docs/STATUS.md`, `docs/backlog/**`, `docs/works/**`, `docs/decisions/**`
 - `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md`
-- `.claude/commands/**`, `.claude/rules/**`, `.cursor/rules/**`, `.agents/skills/**`, `prompts/**`, `scripts/create-harness.sh`, `tools/git-hooks/**`
+- `.claude/commands/**`, `.claude/rules/**`, `.cursor/rules/**`, `.agents/skills/**`, `prompts/**`, `scripts/create-harness.sh`, `tools/git-hooks/**`, `.harness/gate-config`
+- Any path listed under `[protected]` in `.harness/gate-config` (project-specific additions)
+
+The list above is the harness default. A target repo adds its own sensitive paths under `[protected]` / `[finalization]` in `.harness/gate-config` (add-only) — do **not** edit framework-owned `tools/git-hooks/lib/gate-lists.sh` directly (it is overwritten on harness upgrade). When hooks are installed they read both the default and `.harness/gate-config`; treat the same union as protected here.
 
 FAIL response: report current branch and the staged protected files, then propose creating a `feature/*` or `hotfix/*` branch and moving the changes there.
 
@@ -44,8 +47,15 @@ Commit Approval:
 - Before committing or opening a PR, report Tracking Finalization: whether backlog/Work/DR tracker updates are needed, why, and which tracker files changed if any.
 - If `docs/STATUS.md` needs to change before commit, provide the Approval Matrix state-change proposal and wait for user approval before editing it.
 - When `docs/STATUS.md` changes are approved, include them in the **same commit** as the substantive changes. Never commit substantive changes first and update `docs/STATUS.md` in a separate follow-up commit.
-- If an Active Work file exists and all Done Criteria are checked ([x]), propose running `/close` before the commit so state changes (Work Done, Work Index, STATUS pointer) are bundled in the same commit rather than generated as a separate close commit later.
+- If an Active Work file exists and all Done Criteria are checked ([x]), propose running `/work-close` before the commit so state changes (Work Done, Work Index, STATUS pointer) are bundled in the same commit rather than generated as a separate close commit later.
 - If not committing after a completed task, record the reason and remaining risk in the session summary.
+
+Tracking-only commits: the finalization-bundling gate exists to stop finalization being split *off* substantive work. A **pure tracking-only commit** — registration with no substantive work to bundle (e.g. `/work-register` adding a backlog row, a DR record, STATUS housekeeping) — is a legitimate exception, not a new commit type. Do **not** loosen the gate for it; use the existing override trailer with a tracking-only reason so a durable record stays in history:
+
+```
+AWH-Gate-Override: finalization-split
+AWH-Gate-Reason: tracking-only registration: <what is being registered>
+```
 
 ## Commit Message Format
 
@@ -92,11 +102,13 @@ NEVER:
 After `gh pr merge` completes, follow the appropriate cleanup for the merge type:
 
 **feature → develop PR:**
+Merge flag: `gh pr merge --squash --delete-branch` (squash is the default per harness merge policy). Use `--merge` only when commit-level history must be preserved.
 If this repository has `docs/GIT-WORKFLOW.md`, execute §2-4 in full without waiting for a separate instruction:
 1. `git checkout develop && git pull origin develop`
 2. `git branch -d feature/{name}` — delete local branch. If remote was not auto-deleted, also run `git push origin --delete feature/{name}`.
 3. Suggest the next feature branch name based on upcoming work and ask whether to create it now.
 
 **develop → main PR:**
+Merge flag: `gh pr merge --merge` (regular merge is the default per harness merge policy). Fast-forward is allowed if applicable.
 If this repository has `docs/GIT-WORKFLOW.md`, execute §3-4 (Post-Merge Develop Sync) instead:
 `git checkout main && git pull origin main`, then `git checkout develop && git merge origin/main && git push origin develop`.

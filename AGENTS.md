@@ -28,16 +28,19 @@ NEVER:
 
 When a workflow command is invoked or its intent is matched,
 load `.agents/skills/workflow-{name}/SKILL.md` and follow the procedure.
-Skill name maps directly to command name (e.g., `/start` → `workflow-start`).
+Skill name maps directly to command name (e.g., `/session-start` → `workflow-session-start`).
+Each skill adapter must load the matching canonical procedure in `skills/workflow/{name}.md` as Step 0.
 
 Available workflow skills are the directories under `.agents/skills/`.
+
+If the matched skill intent is uncertain or multiple skills are equally plausible, confirm the interpreted intent in one line before loading a skill. Do not silently pick one and execute.
 
 ## Document Language Policy
 
 When creating or editing any document, prompt, command, rule, or hook message — confirm DR-007 applies.
 
 - **English Only:** `AGENTS.md`, `CLAUDE.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`
-- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `.claude/commands/*.md`
+- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `skills/workflow/*.md`, `.claude/commands/*.md`, `.agents/skills/*/SKILL.md`
 
 Full policy: `docs/decisions/DR-007-language-policy.md`
 
@@ -50,5 +53,5 @@ If this repository has `docs/GIT-WORKFLOW.md`, follow §5 for commit format.
 NEVER open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.
 
 After `gh pr merge` completes, follow the merge type:
-- feature→develop: execute §2-4 (sync develop, delete local feature branch, suggest next feature branch).
-- develop→main: execute §3-4 (Post-Merge Develop Sync: sync main, merge origin/main into develop, push develop).
+- feature→develop: use `--squash` (default per harness merge policy); use `--merge` only when commit-level history must be preserved. Then execute §2-4 (sync develop, delete local feature branch, suggest next feature branch).
+- develop→main: use `--merge` (regular merge is the default per harness merge policy). Then execute §3-4 (Post-Merge Develop Sync: sync main, merge origin/main into develop, push develop).

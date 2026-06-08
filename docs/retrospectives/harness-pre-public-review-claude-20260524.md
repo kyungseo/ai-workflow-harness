@@ -1,3 +1,12 @@
+---
+date: 2026-05-24
+track: harness
+type: session
+scope: AI Workflow Harness v1.0.0 전체 — 설계·문서·도구·운영 관점 다각도 평가
+author: "agent:claude-sonnet-4-6"
+related_work: []
+---
+
 # AI Workflow Harness — 현재 상태 종합 리뷰
 
 > 작성일: 2026-05-24  

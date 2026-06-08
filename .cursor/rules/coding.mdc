@@ -24,6 +24,7 @@ MUST:
 - Include scope, files, verification, risk, and reversal cost before implementation.
 - Before expanding approved scope to additional files, docs, or settings, report the added scope, reason, and verification plan, then wait for approval.
 - Use Work files for large tasks: `docs/works/{category}/{ID}-{lowercase-topic}.md` (spec: DR-013).
+- When creating a new `docs/troubleshooting/` or `docs/retrospectives/` file, apply the DR-027 frontmatter spec defined in each directory's `README.md`.
 - Treat Work files as the task SSoT and `docs/STATUS.md` as the dashboard pointer view.
 - Use Quick Mode for small Product track L1 changes that do not need Work file tracking; close with final summary, validation, and commit history. Treat harness/workflow surface changes as L2.
 - Do not reuse task IDs for different meanings.

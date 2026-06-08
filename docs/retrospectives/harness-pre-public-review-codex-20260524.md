@@ -1,3 +1,12 @@
+---
+date: 2026-05-24
+track: harness
+type: session
+scope: AI Workflow Harness v1.0.0 — Codex/tool surface 및 scaffold 검증
+author: "agent:codex"
+related_work: []
+---
+
 # AI Workflow Harness — Codex 공개 전 최종 리뷰
 
 > 작성일: 2026-05-24  

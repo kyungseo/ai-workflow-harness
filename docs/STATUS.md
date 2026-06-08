@@ -3,14 +3,14 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-05-29 (pre-commit/commit-msg hook 정비 — CHORE-20260529-003)
+Last updated: 2026-06-08 (PLAN v0.3 — Phase 2 종료, AWH-004 Maintenance & Adoption 전환; Done Work 27개 archive drain)
 
 ## Current State
 
 | Field | Value |
 | --- | --- |
-| Current phase | Public baseline / Maintenance |
-| Current focus | Public repository maintenance and adoption support |
+| Current phase | AWH-004 — Maintenance & Adoption |
+| Current focus | 1.1.0 릴리즈, adopter upgrade/migration, onboarding 현행화 |
 | Project plan | `docs/PLAN.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
@@ -38,17 +38,23 @@ Last updated: 2026-05-29 (pre-commit/commit-msg hook 정비 — CHORE-20260529-0
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-07 | DR-027: troubleshooting·retrospective 파일 최소 frontmatter 스펙 도입. `track: harness \| product` 필드 신설 | 분류·상태를 파일 열람 없이 파악하기 위한 최솟값 정형화. 기존 파일 소급 적용, T11 cascade 완료 | Low |
+| 2026-06-07 | DR-026: `/repo-decision` → `/record-decision` 원복. `track: harness \| product` 메타데이터 도입 | `repo-decision` 명칭이 harness repo 한정 coverage로 오해 유발. 원래 이름으로 복원 + product decision 명시 — CHORE-20260607-006 | Low |
+| 2026-06-05 | slice 0 4축 방향 DR 채택 — DR-021(source/target boundary), DR-022(PLAN lifecycle), DR-023(canonical+hybrid adapter), DR-024(gate 2D taxonomy) | Phase 2 리팩토링 4축 TO-BE 확정. cross-agent R0~R6 합의, decision-only(적용은 하류 slice) — CHORE-20260605-001/002 | DR별 상이(Low~High) |
 | 2026-05-29 | pre-commit: main만 hard block, develop은 warning 유지. commit-msg build type 추가, 두 hook 설치 | GitHub ruleset이 develop direct push를 이미 차단. solo 프로젝트에서 housekeeping마다 PR 강제는 과도한 마찰 — CHORE-20260529-003 + fix | Low |
 | 2026-05-27 | Work/OQ/Tracker ID를 `<TYPE>-<YYYYMMDD>-<NNN>` 형식으로 전환, backlog candidate ID-less 정책 도입 | 전역 순번 HRN-*/P{n}-NNN 방식의 병렬 feature 충돌 및 scaffold 확장성 문제 해소 — CHORE-20260527-001 | Medium |
 | 2026-05-26 | feature branch pre-PR `/close`가 commit 전략을 3-state(미push/push+PR없음/push+PR열림·공유·확인불가)로 안내하도록 개선 | feature branch /close 시 별도 close commit이 PR history 노이즈를 만드는 패턴 해소 — HRN-037 | Low |
 | 2026-05-25 | `Current Milestone Criteria` 제거 및 `Current phase`를 `Public baseline / Maintenance`로 전환 | HRN-035: public clone 첫 `/start` 출력에서 maintainer 내부 milestone이 노출되지 않도록 baseline 정리. 이력은 HRN-035 Work에 보존 | Low |
 | 2026-05-25 | `AWH-OQ-001` Blockers 제거 — archive policy가 필요할 때 신규 Work로 재등록 | public baseline에 Open Blocker가 남으면 "미완" 인상 지속. HARNESS.md Deferred Ideas로 이동 | Low |
-| 2026-05-24 | Product Definition / Project Initialization Gate 도입 | baseline 없이 기능 후보를 등록하는 흐름 차단 — BOOTSTRAP.md §2–§3 + PLAN-SUMMARY.md Implementation Baseline + PHASE1.md Baseline Gate | Low |
-| 2026-05-23 | README를 `WORKFLOW-MANUAL-SUMMARY-PUBLIC.md` 기반 단일 문서(경로 A)로 교체 | 파일 목록형 README에서 Prologue·원칙·흐름을 통합한 공개 front-door로 전환 — SUMMARY-PUBLIC drift 방지 | Low |
-| 2026-05-22 | `AGENTS.md`와 `.cursor/rules/workflow.mdc`에 Document Language Policy 섹션 추가 | Codex/Cursor가 DR-007을 문서 편집 시 적용하지 않는 구조적 결함 수정 — path-scoped 자동 로딩이 없는 도구에 inline 규칙 삽입 | Medium |
-| 2026-05-22 | AWH-001 이후 phase를 `Workflow hardening`으로 전환 | public-ready migration 이후 모든 후속 작업을 문서 현행화, scaffold 정합성, tool surface alignment 강화 단계로 묶기 위함 | Low |
-| 2026-05-22 | `.cursor/rules/role-backend.mdc` → `role-harness-maintainer.mdc` rename | 파일명이 Spring Boot 시절 이름을 유지하고 있었고 내용은 이미 Harness Maintainer Role로 교체된 상태 — 파일명/내용 불일치 수정 | Low |
 
 ## Next Actions
 
-(없음)
+0. **완료 (2026-06-08, CHORE-20260608-002)** — 버전 체계 정의 + VERSION 정렬: DR-028 + `docs/VERSIONING.md` 신설(git tag SSoT + semver 기준), `VERSION` 0.2.0→1.1.0 조정, manifest 정합(0 drifted) 확인.
+1. **완료 (2026-06-08, CHORE-20260608-003)** — `VERIFICATION-COMMANDS.md` pointer 연결(AGENT-WORKFLOW·repo-health·QUICK-REFERENCE) + Release Full Sweep 프리셋 신설 + source-only 확정.
+2. **P1 우선순위 Top 4** (다음 작업 선택은 `/work-select`):
+   - **Scaffold/tool-surface alignment 점검 체계화** — scaffold drift 구조적 문제. PR #93 이후 신규 merge 전체 재검증 즉시 실행 가능
+   - **Harness upgrade/migration 메커니즘** — 실 adopter(`ai-deck-compiler`) upstream 반영 필요. concrete driver 있는 유일한 항목
+   - **Backlog row lifecycle SSoT 정비** — work-close마다 수동 확인 발생. 세션 안정성 직접 영향
+   - **Adopter onboarding/manual refresh** — README overhaul 이후 onboarding path 정합 미확인. upgrade/migration 전 기반 정리 필요
+3. **Canonical weight 경량화 + Optional pack 재정의 클러스터** — `repo-health.md` slice 분리·`work-doc.md` class 재검토(P2 신규)를 repo-health gate 보강·Prompt surface diet(P1)와 묶어 착수
+4. **완료 (2026-06-08)** — Archive drain: Done Work 27개를 `docs/archive/docs/works/harness/`로 일괄 이관.

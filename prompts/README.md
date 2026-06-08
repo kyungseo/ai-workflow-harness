@@ -12,7 +12,7 @@ Prompt library는 두 층으로 나눈다.
 
 | 구분 | 사용 위치 | 역할 |
 | --- | --- | --- |
-| `.claude/commands/` | Claude Code | `/start`, `/pick`, `/work`, `/close`, `/done` 같은 반복 workflow 실행 |
+| `.claude/commands/` | Claude Code | `/session-start`, `/work-select`, `/work-plan`, `/work-close`, `/session-summary` 같은 반복 workflow 실행 |
 | `prompts/*.prompt.md` | 여러 AI 도구 | 기능 구현, 디버깅, 리팩토링, 리뷰 같은 portable task template |
 | `claude-session-start.md` | Claude fallback | slash command를 사용할 수 없을 때 세션 시작 |
 | `cursor-session-start.md` | Cursor | `.cursor/rules`와 하네스 상태를 함께 로드 |

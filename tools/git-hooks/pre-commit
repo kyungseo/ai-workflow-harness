@@ -3,10 +3,39 @@
 
 set -eu
 
+ROOT=$(git rev-parse --show-toplevel)
+GATE_LISTS="$ROOT/tools/git-hooks/lib/gate-lists.sh"
+if [ ! -r "$GATE_LISTS" ]; then
+    echo "ERROR: Missing git hook gate list SSoT: $GATE_LISTS"
+    echo "Reinstall or restore tools/git-hooks/lib/gate-lists.sh."
+    exit 1
+fi
+. "$GATE_LISTS"
+
 echo "Running diff hygiene check..."
 git diff --cached --check
 
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR)
+
+is_source_gitflow() {
+    grep -q "policy_type: source-gitflow" "$ROOT/docs/GIT-WORKFLOW.md" 2>/dev/null
+}
+
+FINALIZATION_ONLY=0
+if is_source_gitflow; then
+    FINALIZATION_COUNT=0
+    SUBSTANTIVE_COUNT=0
+    for FILE in $STAGED_FILES; do
+        if awh_is_finalization_file "$FILE"; then
+            FINALIZATION_COUNT=$((FINALIZATION_COUNT + 1))
+        else
+            SUBSTANTIVE_COUNT=$((SUBSTANTIVE_COUNT + 1))
+        fi
+    done
+    if [ "$FINALIZATION_COUNT" -gt 0 ] && [ "$SUBSTANTIVE_COUNT" -eq 0 ]; then
+        FINALIZATION_ONLY=1
+    fi
+fi
 
 BRANCH=$(git branch --show-current 2>/dev/null || echo "")
 # initial commit, merge commit (release sync 등) — branch isolation check 면제
@@ -17,17 +46,9 @@ elif [ -f ".git/MERGE_HEAD" ]; then
 elif [ "$BRANCH" = "develop" ] || [ "$BRANCH" = "main" ]; then
     PROTECTED=""
     for FILE in $STAGED_FILES; do
-        case "$FILE" in
-            AGENTS.md|CLAUDE.md|docs/STATUS.md|\
-            docs/backlog/*|docs/works/*|docs/decisions/*|\
-            docs/AGENT-WORKFLOW.md|docs/HARNESS-PROTOCOL.md|\
-            docs/HARNESS-QUICK-REFERENCE.md|docs/GIT-WORKFLOW.md|\
-            .claude/commands/*|.claude/rules/*|.cursor/rules/*|\
-            .agents/skills/*|prompts/*|scripts/create-harness.sh|\
-            tools/git-hooks/*)
-                PROTECTED="$PROTECTED $FILE"
-                ;;
-        esac
+        if awh_is_branch_isolation_protected_path "$FILE"; then
+            PROTECTED="$PROTECTED $FILE"
+        fi
     done
     if [ -n "$PROTECTED" ]; then
         if [ "$BRANCH" = "main" ]; then
@@ -59,6 +80,15 @@ done
 if echo "$STAGED_FILES" | grep -q '^scripts/create-harness\.sh$'; then
     echo "Checking create-harness.sh syntax..."
     bash -n scripts/create-harness.sh
+fi
+
+if [ "$FINALIZATION_ONLY" -eq 1 ]; then
+    echo "WARNING: Staged changes look like a finalization-only commit."
+    echo "DR-025 prefers bundling T15/T16 finalization with the substantive work commit."
+    echo "The commit-msg hook will decide hard-stop/warning/report-only using git context and override trailers."
+    echo "Override trailer when intentional:"
+    echo "  $AWH_GATE_OVERRIDE_TRAILER: $AWH_GATE_OVERRIDE_TOKEN"
+    echo "  $AWH_GATE_REASON_TRAILER: <one-line reason>"
 fi
 
 echo "Pre-commit checks passed."

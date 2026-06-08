@@ -3,37 +3,17 @@ name: CI
 on:
   pull_request:
     branches: [main, develop]
-    paths:
-      - 'docs/**'
-      - 'prompts/**'
-      - '.claude/**'
-      - '.cursor/**'
-      - 'scripts/**'
-      - 'tools/git-hooks/**'
-      - '.github/workflows/**'
-      - 'AGENTS.md'
-      - 'CLAUDE.md'
-      - 'README.md'
   push:
     branches: [main]
-    paths:
-      - 'docs/**'
-      - 'prompts/**'
-      - '.claude/**'
-      - '.cursor/**'
-      - 'scripts/**'
-      - 'tools/git-hooks/**'
-      - '.github/workflows/**'
-      - 'AGENTS.md'
-      - 'CLAUDE.md'
-      - 'README.md'
 
 jobs:
   validate:
-    name: Docs and Scaffold Validation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full history so the commit-message backstop can read the PR base..head range.
+          fetch-depth: 0
 
       - name: Check whitespace errors
         # git diff-tree --check -r HEAD examines the HEAD commit diff.
@@ -43,6 +23,26 @@ jobs:
 
       - name: Check shell syntax
         run: bash -n scripts/create-harness.sh
+
+      - name: Validate required checks are not path-filtered
+        run: |
+          set -euo pipefail
+          if grep -q "^    paths:" .github/workflows/ci.yml; then
+            echo "ERROR: source required check workflow must not use workflow-level paths."
+            exit 1
+          fi
+          if grep -q "^    paths-ignore:" .github/workflows/ci.yml; then
+            echo "ERROR: source required check workflow must not use workflow-level paths-ignore."
+            exit 1
+          fi
+          if grep -q "^    paths:" scripts/templates/source-gitflow/.github/workflows/harness-validate.yml; then
+            echo "ERROR: target required check workflow must not use workflow-level paths."
+            exit 1
+          fi
+          if grep -q "^    paths-ignore:" scripts/templates/source-gitflow/.github/workflows/harness-validate.yml; then
+            echo "ERROR: target required check workflow must not use workflow-level paths-ignore."
+            exit 1
+          fi
 
       - name: Validate generic scaffold dry-run
         run: ./scripts/create-harness.sh --dry-run --profile generic ci-harness-check /tmp/ci-harness-check
@@ -67,9 +67,11 @@ jobs:
           set -euo pipefail
           FAIL=0
           for SCAFFOLD in /tmp/ci-phrase-check /tmp/ci-phrase-check-sb; do
-            # tools/git-hooks/install.sh must not appear in scaffold output
+            # Generic-workflow scaffolds carry no gate hooks, so they must not
+            # reference tools/git-hooks/install.sh. The source-gitflow opt-in path
+            # intentionally deploys it and is asserted separately below.
             if rg "tools/git-hooks/install\.sh" "$SCAFFOLD" 2>/dev/null; then
-              echo "ERROR: tools/git-hooks/install.sh reference in $SCAFFOLD (source repo only)."
+              echo "ERROR: tools/git-hooks/install.sh reference in generic scaffold $SCAFFOLD."
               FAIL=1
             fi
 
@@ -82,6 +84,169 @@ jobs:
             fi
           done
           [ "$FAIL" -eq 0 ] && echo "OK: no broken artifact references in scaffold output."
+          exit "$FAIL"
+
+      - name: Validate generic scaffold has no gate hooks (advisory-only)
+        run: |
+          set -euo pipefail
+          for SCAFFOLD in /tmp/ci-phrase-check /tmp/ci-phrase-check-sb; do
+            if [ -e "$SCAFFOLD/tools/git-hooks" ]; then
+              echo "ERROR: generic scaffold $SCAFFOLD must not contain tools/git-hooks (advisory-only)."
+              exit 1
+            fi
+            if [ -e "$SCAFFOLD/.github/workflows/harness-validate.yml" ]; then
+              echo "ERROR: generic scaffold $SCAFFOLD must not contain harness-validate workflow."
+              exit 1
+            fi
+          done
+          echo "OK: generic scaffolds carry no gate hooks or harness-validate workflow."
+
+      - name: Validate generic advisory posture (c3)
+        run: |
+          set -euo pipefail
+          for SCAFFOLD in /tmp/ci-phrase-check /tmp/ci-phrase-check-sb; do
+            grep -q "Workflow enforcement (advisory-only)" "$SCAFFOLD/README.md" \
+              || { echo "ERROR: generic README missing advisory-only enforcement note in $SCAFFOLD"; exit 1; }
+            grep -q "Enforcement Posture (advisory-only)" "$SCAFFOLD/.claude/rules/git-workflow.md" \
+              || { echo "ERROR: generic git-workflow rule missing advisory posture in $SCAFFOLD"; exit 1; }
+            grep -q '"workflow_mode": "generic"' "$SCAFFOLD/.harness/manifest.json" \
+              || { echo "ERROR: generic manifest workflow_mode != generic in $SCAFFOLD"; exit 1; }
+            CHK="$(./scripts/create-harness.sh --check "$SCAFFOLD")"
+            printf '%s\n' "$CHK" | grep -q "enforcement      : advisory-only" \
+              || { echo "ERROR: --check did not report advisory-only posture for $SCAFFOLD"; echo "$CHK"; exit 1; }
+          done
+          echo "OK: generic scaffolds report advisory-only posture (README + rule + manifest + --check)."
+
+      - name: Validate source-gitflow scaffold deploys gate hooks
+        run: |
+          set -euo pipefail
+          for PROFILE in generic spring-boot; do
+            DEST="/tmp/ci-sg-${PROFILE}"
+            ./scripts/create-harness.sh --profile "$PROFILE" --workflow source-gitflow ci-sg-check "$DEST"
+            [ -f "$DEST/.github/workflows/harness-validate.yml" ] \
+              || { echo "ERROR: missing .github/workflows/harness-validate.yml in $DEST"; exit 1; }
+            grep -q "^  harness-validate:" "$DEST/.github/workflows/harness-validate.yml" \
+              || { echo "ERROR: harness-validate job key missing in $DEST"; exit 1; }
+            if grep -q "^    name:" "$DEST/.github/workflows/harness-validate.yml"; then
+              echo "ERROR: harness-validate job must not set job-level name in $DEST"; exit 1
+            fi
+            if grep -q "^    paths:" "$DEST/.github/workflows/harness-validate.yml"; then
+              echo "ERROR: harness-validate workflow must not use workflow-level paths in $DEST"; exit 1
+            fi
+            if grep -q "^    paths-ignore:" "$DEST/.github/workflows/harness-validate.yml"; then
+              echo "ERROR: harness-validate workflow must not use workflow-level paths-ignore in $DEST"; exit 1
+            fi
+            grep -q "\"path\": \".github/workflows/harness-validate.yml\"" "$DEST/.harness/manifest.json" \
+              || { echo "ERROR: manifest does not record .github/workflows/harness-validate.yml in $DEST"; exit 1; }
+            grep -q "required check context는 \`harness-validate\`" "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing harness-validate ruleset guidance in $DEST"; exit 1; }
+            grep -q 'Required check는 `protect-main`에만 연결한다' "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing protect-main-only guidance in $DEST"; exit 1; }
+            grep -q "protect-develop.*required status check를 연결하지 않는다" "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing protect-develop no-required-check guidance in $DEST"; exit 1; }
+            grep -q "Fresh repo" "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing fresh repo bootstrap guidance in $DEST"; exit 1; }
+            grep -q "Existing repo" "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing existing repo bootstrap guidance in $DEST"; exit 1; }
+            # c3: source-gitflow posture is hook-capable, and advisory-only wording
+            # must be absent (no advisory-vs-enforced contradiction).
+            CHK="$(./scripts/create-harness.sh --check "$DEST")"
+            printf '%s\n' "$CHK" | grep -q "enforcement      : hook-capable" \
+              || { echo "ERROR: --check did not report hook-capable posture for $DEST"; echo "$CHK"; exit 1; }
+            if grep -q "Workflow enforcement (advisory-only)" "$DEST/README.md"; then
+              echo "ERROR: source-gitflow README must not contain advisory-only note in $DEST"; exit 1
+            fi
+            if grep -q "Enforcement Posture (advisory-only)" "$DEST/.claude/rules/git-workflow.md"; then
+              echo "ERROR: source-gitflow git-workflow rule must not contain advisory-only posture in $DEST"; exit 1
+            fi
+            for f in pre-commit commit-msg install.sh lib/gate-lists.sh; do
+              [ -f "$DEST/tools/git-hooks/$f" ] || { echo "ERROR: missing tools/git-hooks/$f in $DEST"; exit 1; }
+            done
+            for f in pre-commit commit-msg install.sh; do
+              [ -x "$DEST/tools/git-hooks/$f" ] || { echo "ERROR: tools/git-hooks/$f not executable in $DEST"; exit 1; }
+            done
+            if [ -x "$DEST/tools/git-hooks/lib/gate-lists.sh" ]; then
+              echo "ERROR: lib/gate-lists.sh must not be executable in $DEST"; exit 1
+            fi
+            for f in pre-commit commit-msg install.sh lib/gate-lists.sh; do
+              grep -q "\"path\": \"tools/git-hooks/$f\"" "$DEST/.harness/manifest.json" \
+                || { echo "ERROR: manifest does not record tools/git-hooks/$f in $DEST"; exit 1; }
+            done
+            grep -q "tools/git-hooks/install.sh" "$DEST/docs/GIT-WORKFLOW.md" \
+              || { echo "ERROR: source-gitflow GIT-WORKFLOW.md missing install.sh guidance in $DEST"; exit 1; }
+          done
+          echo "OK: source-gitflow scaffolds deploy gate hooks with correct permissions and manifest."
+
+      - name: Validate product-adaptive gate config (c4)
+        run: |
+          set -euo pipefail
+          # Seed presence + manifest exclusion + --check report, for both modes.
+          GEN=/tmp/ci-c4-generic
+          SG=/tmp/ci-c4-sg
+          ./scripts/create-harness.sh ci-c4-generic "$GEN"
+          ./scripts/create-harness.sh --workflow source-gitflow ci-c4-sg "$SG"
+          for D in "$GEN" "$SG"; do
+            [ -f "$D/.harness/gate-config" ] \
+              || { echo "ERROR: missing .harness/gate-config seed in $D"; exit 1; }
+            grep -q '^\[protected\]' "$D/.harness/gate-config" \
+              || { echo "ERROR: gate-config missing [protected] header in $D"; exit 1; }
+            grep -q '^\[finalization\]' "$D/.harness/gate-config" \
+              || { echo "ERROR: gate-config missing [finalization] header in $D"; exit 1; }
+            # Class B seed must NOT be recorded in the manifest framework_files set.
+            if grep -q '"path": ".harness/gate-config"' "$D/.harness/manifest.json"; then
+              echo "ERROR: .harness/gate-config must not be in manifest framework_files ($D)"; exit 1
+            fi
+            # Fresh seed has only commented examples → zero active entries.
+            CHK="$(./scripts/create-harness.sh --check "$D")"
+            printf '%s\n' "$CHK" | grep -q "gate config      : .harness/gate-config present (0 project path(s))" \
+              || { echo "ERROR: --check did not report 0-entry gate config for $D"; echo "$CHK"; exit 1; }
+          done
+          # Functional: a source-gitflow target reads default + project config (add-only).
+          printf '%s\n' '[protected]' 'infra/**' '[finalization]' 'docs/PRODUCT-STATUS.md' \
+            > "$SG/.harness/gate-config"
+          (
+            cd "$SG"
+            ROOT="$SG"
+            . tools/git-hooks/lib/gate-lists.sh
+            awh_is_branch_isolation_protected_path "infra/secret.txt" \
+              || { echo "ERROR: project [protected] glob not honored"; exit 1; }
+            awh_is_branch_isolation_protected_path ".harness/gate-config" \
+              || { echo "ERROR: .harness/gate-config itself not protected"; exit 1; }
+            awh_is_branch_isolation_protected_path "docs/STATUS.md" \
+              || { echo "ERROR: default protected path regressed"; exit 1; }
+            awh_is_finalization_file "docs/PRODUCT-STATUS.md" \
+              || { echo "ERROR: project [finalization] glob not honored"; exit 1; }
+            if awh_is_branch_isolation_protected_path "src/app/main.py"; then
+              echo "ERROR: non-listed path wrongly protected"; exit 1
+            fi
+          ) || exit 1
+          CHK2="$(./scripts/create-harness.sh --check "$SG")"
+          printf '%s\n' "$CHK2" | grep -q "gate config      : .harness/gate-config present (2 project path(s))" \
+            || { echo "ERROR: --check did not count 2 project paths for $SG"; echo "$CHK2"; exit 1; }
+          echo "OK: product-adaptive gate config seeded, manifest-excluded, add-only honored (default + project)."
+
+      - name: Validate commit message format (PR backstop, advisory)
+        # Advisory PR signal only. Not wired as a ruleset required status check, so
+        # it does not block merge (DR-020 protect-develop has no required checks).
+        if: github.event_name == 'pull_request'
+        run: |
+          set -euo pipefail
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          TYPES="feat|fix|docs|style|refactor|chore|config|test|perf|ci|build|revert"
+          # Compute the range as an independent command first so a failed range
+          # (bad/missing base or head sha) fails closed under `set -e` instead of
+          # silently passing an empty loop (process substitution would swallow it).
+          git log --no-merges --format=%s "${BASE_SHA}..${HEAD_SHA}" > /tmp/commit-subjects
+          FAIL=0
+          while IFS= read -r subject; do
+            [ -z "$subject" ] && continue
+            if ! printf '%s' "$subject" | grep -qE "^(${TYPES})(\(.+\))?: .+"; then
+              echo "ERROR: invalid commit subject: $subject"
+              FAIL=1
+            fi
+          done < /tmp/commit-subjects
+          [ "$FAIL" -eq 0 ] && echo "OK: all non-merge commit subjects follow Conventional Commits."
           exit "$FAIL"
 
       - name: Check for stale runtime identity in live core docs

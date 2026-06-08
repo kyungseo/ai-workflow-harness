@@ -1,9 +1,10 @@
 # PLAN.md - AI Workflow Harness
 
-> 작성일: 2026-05-22
-> 문서 버전: v0.1
+> 작성일: 2026-05-22 · 최종 갱신: 2026-06-08
+> 문서 버전: v0.3 (Phase 2 종료 · AWH-004 Maintenance & Adoption 전환)
 > 목적: AI-assisted development workflow를 안정적으로 운영하기 위한 manual-first harness를 정의한다.
 > 기준: Git history 보존, 도구 중립성, 명시적 승인 gate, public-ready 문서화
+> Lifecycle: 이 문서는 현재+다음 horizon만 유지한다. 갱신/배출 규칙은 §7 Roadmap Lifecycle 참조.
 
 ---
 
@@ -56,17 +57,19 @@ development workflow다.
 
 ## 4. Current Milestone
 
-현재 milestone은 `Public baseline / Maintenance`다.
+현재 milestone은 `AWH-004 — Maintenance & Adoption`이다.
 
-AWH-001(public-ready migration)과 AWH-002(workflow hardening)가 완료됐다.
-현재는 public repository를 안정적으로 유지하고 외부 채택을 지원하는 단계다.
+Phase 2(Externalization refactor)는 DR-021~025 적용과 27개 Work 완료로 종료했고,
+그 산출물을 `ai-workflow-v1.1.0`으로 릴리즈한다. 이후 초점은 harness를 실제로
+채택하는 repository 지원과 반복 운영 부채 축소다.
 
 Milestone 목표:
 
-- public repository 상태를 clean baseline으로 유지한다.
-- harness 채택 — 신규 프로젝트 온보딩과 scaffold 정합성을 지원한다.
+- `ai-workflow-v1.1.0` 릴리즈 — Phase 2 산출물을 공개 버전으로 확정(breaking은 릴리즈 노트 명시).
+- 실 adopter(`ai-deck-compiler`) upgrade/migration 경로를 제공한다.
+- onboarding/manual 정합을 현행화한다(README overhaul 이후 path 점검).
 - 반복 운영에서 발생하는 운영 부채를 점진적으로 줄인다.
-- harness 외부 채택 사례에서 얻은 피드백을 반영한다.
+- public repository 상태를 clean baseline으로 유지한다.
 
 ## 5. Scope Policy
 
@@ -111,12 +114,26 @@ Milestone 목표:
 
 ## 7. Roadmap
 
+`AWH-*`는 roadmap **stage label**이고, `CHORE-YYYYMMDD-NNN` 등은 실행 단위 **Work ID**다. 둘은 층위가 다르며 같은 namespace가 아니다. Stage는 방향/horizon을, Work ID는 개별 작업을 가리킨다.
+
 | Stage | Status | Focus | Output |
 | --- | --- | --- | --- |
 | AWH-001 | 완료 | Public-ready migration | 현재 tree 정리, public docs, release readiness |
 | AWH-002 | 완료 | Workflow hardening | 문서 정합성, scaffold 검증, tool surface alignment, adoption readiness |
-| AWH-003 | — | Adoption guide | 기존 repository에 harness를 적용하는 guide 정리 |
-| AWH-004 | — | Review package | 외부 reviewer가 검토할 수 있는 architecture / workflow package |
+| AWH-003 (Phase 2) | 완료 | Externalization refactor | source/target boundary·canonical+adapter·gate taxonomy·PLAN lifecycle 적용. 방향: DR-021~025. 실행 Work: `CHORE-20260604-001`(planning)~`CHORE-20260608-003`. 산출물은 `ai-workflow-v1.1.0`으로 릴리즈 |
+| AWH-004 | 진행 | Maintenance & Adoption | 1.1.0 릴리즈, 실 adopter upgrade/migration, onboarding/manual 현행화, 운영 부채 축소. 후보는 `docs/backlog/HARNESS.md` |
+
+horizon이 닫히거나 재정의되면 아래 Lifecycle 규칙(§7-a)에 따라 처리한다.
+
+### 7-a. Roadmap Lifecycle (DR-022)
+
+PLAN은 **현재 + 다음 horizon만** 유지한다. STATUS Recent Decisions의 rolling-window와 동형의 배출 규칙이다.
+
+- **나가는 문(drain):** 닫힌 phase의 상세는 `docs/archive/`로 배출하고, PLAN에는 archive link 한 줄만 남긴다. phase 완료/전환은 `docs/HARNESS-PROTOCOL.md` T3가 트리거한다.
+- **들어오는 문(update):** Work closeout·phase transition·commit finalization 시 T5(PLAN 영향 판단)로 roadmap/milestone을 갱신한다. PLAN 작성 완료를 hard-stop으로 강제하지 않는다(recommended/warning).
+- **옆문(rationale):** L3 결정 근거는 PLAN에 누적하지 않고 `docs/decisions/DR-*.md`로 분리한다.
+
+이 규칙의 SSoT는 이 섹션이다. `HARNESS-PROTOCOL.md`는 trigger pointer만 둔다.
 
 ## 8. Validation Model
 

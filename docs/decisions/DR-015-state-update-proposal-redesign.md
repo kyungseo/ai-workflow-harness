@@ -82,7 +82,7 @@ Low — 게이트 규칙은 문서 변경만으로 원복 가능.
 
 ## Linked Backlog Items
 
-- HRN-002 (Hard enforcement 강화) — 이 DR과 연계 검토 필요
+- `gate-enforcement-runtime-and-env` (구 HRN-002 흡수, Hard enforcement runtime) — 이 DR과 연계 검토 필요
 
 ## Addendum (2026-05-18 — HRN-019)
 

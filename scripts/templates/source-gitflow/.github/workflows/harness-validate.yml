@@ -1,0 +1,48 @@
+name: Harness Validate
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main]
+
+jobs:
+  # Keep this job key stable. GitHub branch rulesets match the reported
+  # check-run name; because this job has no job-level `name:`, the check-run
+  # name is `harness-validate`.
+  harness-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check whitespace errors
+        run: git diff-tree --check -r HEAD
+
+      - name: Check hook shell syntax
+        run: |
+          set -euo pipefail
+          sh -n tools/git-hooks/pre-commit
+          sh -n tools/git-hooks/commit-msg
+          sh -n tools/git-hooks/install.sh
+          sh -n tools/git-hooks/lib/gate-lists.sh
+
+      - name: Validate commit message format (PR backstop, advisory)
+        if: github.event_name == 'pull_request'
+        run: |
+          set -euo pipefail
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          TYPES="feat|fix|docs|style|refactor|chore|config|test|perf|ci|build|revert"
+          git log --no-merges --format=%s "${BASE_SHA}..${HEAD_SHA}" > /tmp/commit-subjects
+          FAIL=0
+          while IFS= read -r subject; do
+            [ -z "$subject" ] && continue
+            if ! printf '%s' "$subject" | grep -qE "^(${TYPES})(\(.+\))?: .+"; then
+              echo "ERROR: invalid commit subject: $subject"
+              FAIL=1
+            fi
+          done < /tmp/commit-subjects
+          [ "$FAIL" -eq 0 ] && echo "OK: all non-merge commit subjects follow Conventional Commits."
+          exit "$FAIL"

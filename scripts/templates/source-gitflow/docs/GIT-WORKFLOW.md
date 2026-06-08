@@ -23,6 +23,9 @@ policy_type: source-gitflow
 | AI entrypoint | `AGENTS.md`, `CLAUDE.md` |
 | Canonical workflow | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md` |
 | Tool surface | `.claude/commands/*.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.agents/skills/**`, `prompts/**` |
+| Enforcement | `tools/git-hooks/**` |
+
+> 이 표는 `tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path`와 동일한 목록을 가리킨다. 이 repo 고유 경로를 추가하려면 두 곳을 함께 갱신한다.
 
 ### Allowed Exceptions
 
@@ -41,6 +44,58 @@ policy_type: source-gitflow
 | 긴급 수정 (main 기준) | `hotfix/*` |
 
 Violation: AI tool은 `develop` 또는 `main`에서 protected files가 staged된 경우 FAIL로 전환하고 적절한 branch 생성을 제안한다.
+
+## 0-1. Environment Bootstrap
+
+`--workflow source-gitflow`로 scaffold된 repo는 source-style branch/ruleset/hook 정책을 선택한 상태다.
+단, scaffold 직후 git repository와 GitHub ruleset이 자동으로 만들어지지는 않는다.
+
+### Fresh repo
+
+git repository가 아직 없을 때만 아래 순서를 사용한다.
+
+```bash
+git init
+git checkout -b main
+git add .
+git commit -m "chore: scaffold AI workflow harness"
+git checkout -b develop
+sh tools/git-hooks/install.sh
+```
+
+remote repository를 만든 뒤:
+
+```bash
+git remote add origin <git-url>
+git push -u origin main
+git push -u origin develop
+```
+
+### Existing repo
+
+이미 git repository가 있으면 `git init` 또는 branch 재작성 명령을 실행하지 않는다.
+먼저 현재 branch, remote, protected branch 운영 정책을 확인한다.
+
+```bash
+git status --short --branch
+git remote -v
+git branch --list main develop
+```
+
+- `main`/`develop`이 이미 있으면 기존 history와 remote 정책을 보존한다.
+- `develop`이 없으면 생성 여부를 사용자와 결정한 뒤 `main`에서 분기한다.
+- 기존 default branch가 `main`이 아니면 rename 여부를 별도 decision으로 다룬다.
+- hook 설치는 git repository가 확인된 뒤 실행한다: `sh tools/git-hooks/install.sh`.
+
+### GitHub Ruleset
+
+GitHub ruleset 적용은 repo 존재, branch 존재, `gh` auth, admin 권한에 의존한다.
+따라서 scaffold가 자동 적용하지 않는다. Repository maintainer가 확인 후 GitHub UI 또는 `gh api`로 적용한다.
+
+- `protect-main`: deletion, non-fast-forward, PR required, required status check context `harness-validate`.
+- `protect-develop`: deletion, non-fast-forward, PR required. Required status check는 연결하지 않는다.
+
+`harness-validate` workflow는 path filter 없이 항상 실행되어 required check가 `Expected`/pending 상태에 머무는 것을 방지한다.
 
 ## 1. Branch Strategy
 
@@ -106,8 +161,8 @@ gh pr create --base develop --title "..." --body "..."
 `gh pr create` 기본 base는 저장소 default branch(`main`)이므로 `--base develop`을 반드시 명시한다.
 
 **머지 전략:**
-- Regular merge 기본 — feature 브랜치의 커밋 히스토리를 보존한다.
-- WIP 커밋이 많아 히스토리가 지저분할 때만 Squash merge를 선택한다.
+- Squash merge 기본 — develop 히스토리를 기능 단위 단일 커밋으로 간결하게 유지한다. work-close 단일 커밋 패턴과 일치한다. (DR-017 Amended)
+- Regular merge 예외 — 커밋 단위 이력을 반드시 보존해야 할 경우에만 선택한다.
 
 **검증 책임:**
 - PR 전에는 변경 범위에 맞는 로컬 검증 결과(`git diff --check` 등)를 PR 본문이나 세션 요약에 남긴다.
@@ -141,7 +196,7 @@ git push origin --delete feature/{name}
 feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
 의미 있는 패치(하나 또는 여러 feature 묶음)가 완료되어 release 준비가 됐을 때만 develop → main PR을 만든다.
 
-**머지 방식:** 항상 Regular merge (Merge commit) — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다.
+**머지 방식:** Regular Merge (Merge commit) 원칙 — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다. Fast-Forward가 가능하면 허용한다. (DR-017 Amended)
 
 ### 3-1. Public Clean Baseline Gate
 
@@ -157,7 +212,7 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 | Work lifecycle | `docs/works/*/*.md`에 `status: Done` archive pending 없음 | `rg -n "^status: Done" docs/works` |
 | Work active leakage | release 대상에 internal Active Work가 남지 않음 | `rg -n "^status: Active" docs/works` |
 | Archive state | `docs/archive/docs/works/**` 아래 Work는 모두 `status: Archived` | `rg -n "^status:" docs/archive/docs/works` |
-| `/start` output | public clone 첫 `/start`가 clean idle 또는 의도한 상태로 시뮬레이션됨 | STATUS 기준 문서 시뮬레이션 |
+| `/session-start` output | public clone 첫 `/session-start`가 clean idle 또는 의도한 상태로 시뮬레이션됨 | STATUS 기준 문서 시뮬레이션 |
 | Adoption path | README → onboarding 흐름 정합 | link/path inspection |
 | Docs cascade | release gate 관련 문서 변경 시 canonical/tool/user-facing cascade 정렬 확인 | targeted cascade check |
 | Validation | `git diff --check` 통과 | `git diff --check` |
@@ -202,16 +257,27 @@ git status                  # "up to date with 'origin/develop'" 확인
 
 ## 4. CI Trigger
 
-CI 설정은 project-specific이다. 아래는 참고 패턴이다.
+이 repo는 source-gitflow mode로 scaffold되어 harness validation workflow를 포함한다.
+
+| 파일 | 역할 |
+|---|---|
+| `.github/workflows/harness-validate.yml` | harness-owned validation. GitHub ruleset required check에 연결할 check-run name은 `harness-validate`다. |
+
+`harness-validate.yml`의 job key는 `harness-validate`이며 job-level `name:`을 설정하지 않는다.
+GitHub ruleset의 `required_status_checks`는 job key가 아니라 보고되는 check-run name과 매칭되므로,
+branch ruleset을 설정할 때 required check context는 `harness-validate`로 연결한다.
+Required check는 `protect-main`에만 연결한다. `protect-develop`에는 required status check를 연결하지 않는다.
+
+CI trigger는 project-specific product CI와 공존할 수 있다. Product test/build workflow는 별도 파일로 추가한다.
+`harness-validate.yml`은 workflow-level path filter 없이 실행된다. Required check로 연결되는 workflow에
+path filter가 있으면 filter 미일치 PR에서 check가 `Expected`/pending 상태로 남을 수 있기 때문이다.
 
 | 이벤트 | 조건 | 실행 Job |
 |---|---|---|
-| `push` to `main` | docs/prompts/tool surface 변경 시 | Docs Validation |
-| `pull_request` targeting `main` 또는 `develop` | docs/prompts/tool surface 변경 시 | Docs Validation |
+| `push` to `main` | 항상 | Harness Validate |
+| `pull_request` targeting `main` 또는 `develop` | 항상 | Harness Validate |
 
-**Path filter 대상 (예시):** `docs/**`, `prompts/**`, `.claude/**`, `.cursor/**`, `AGENTS.md`, `CLAUDE.md`, `README.md`
-
-> CI 상세 설정은 프로젝트 CI 파일을 참조한다.
+> Product CI가 필요하면 `.github/workflows/product-ci.yml` 같은 별도 workflow로 추가한다.
 
 ## 5. Commit Message Format
 
@@ -236,36 +302,25 @@ fix: TokenRedisRepository SCAN 기반 invalidation 제거
 
 상세 규칙: `docs/decisions/DR-007-language-policy.md`
 
-## 6. Git Hooks (Optional)
+## 6. Git Hooks
 
-hook은 자동 설치하지 않으며, 필요하면 project-specific hook으로 별도 정의한다.
-source harness repo의 `tools/git-hooks/`를 그대로 복사하지 않는다 — protected file 목록과 validation scope가 source-specific이므로 이 project의 경로·규칙에 맞게 직접 작성한다.
+이 repository는 `--workflow source-gitflow`로 scaffold되어 gate hook이 `tools/git-hooks/`에 함께 포함된다(generic workflow scaffold에는 포함되지 않는다).
 
-**branch isolation 강제가 필요한 경우 — pre-commit hook 참고 패턴:**
+- `pre-commit`: diff hygiene, `develop`·`main` branch isolation, shell syntax, finalization advisory.
+- `commit-msg`: Conventional Commits 형식 검증 + DR-025 finalization bundling gate(override trailer 지원).
+- `lib/gate-lists.sh`: protected paths와 finalization bundling targets, override trailer token의 단일 정의.
 
-`develop`·`main`에 workflow 파일을 직접 commit하는 것을 차단하려면 아래 패턴을 project-specific protected paths에 맞게 조정한다.
+### 설치
+
+git repository 초기화 후 한 번 실행한다:
 
 ```sh
-#!/usr/bin/env sh
-BRANCH=$(git branch --show-current 2>/dev/null || echo "")
-[ -f ".git/MERGE_HEAD" ] && exit 0   # merge commit 면제
-if [ "$BRANCH" = "develop" ] || [ "$BRANCH" = "main" ]; then
-    STAGED=$(git diff --cached --name-only --diff-filter=ACMR)
-    # project 경로에 맞게 수정
-    PROTECTED=$(echo "$STAGED" | grep -E \
-        "^(AGENTS\.md|CLAUDE\.md|docs/STATUS\.md|docs/backlog/|docs/works/|\.claude/|\.cursor/)")
-    if [ -n "$PROTECTED" ]; then
-        echo "ERROR: feature/* branch에서 commit해야 합니다."
-        echo "$PROTECTED"
-        exit 1
-    fi
-fi
-git diff --cached --check
+sh tools/git-hooks/install.sh
 ```
 
-**commit message 형식 검증이 필요한 경우 — commit-msg hook:**
+### 이 repo에 맞게 조정
 
-§5 Commit Message Format의 type 목록을 기준으로 commit-msg hook을 작성한다. harness source repo의 `tools/git-hooks/commit-msg`를 참고할 수 있다.
+`tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path`와 `awh_is_finalization_file` 목록은 harness 기본값에서 시작한다. 이 repo 고유의 민감 경로(예: 배포 설정, secret 경로)는 해당 함수의 `case` 패턴에 추가한다. hook 로직 자체를 수정할 필요 없이 목록만 확장하면 된다.
 
 ## 7. Related Documents
 

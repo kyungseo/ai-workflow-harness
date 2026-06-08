@@ -109,8 +109,8 @@ gh pr create --base develop --title "..." --body "..."
 `gh pr create` 기본 base는 저장소 default branch(`main`)이므로 `--base develop`을 반드시 명시한다.
 
 **머지 전략:**
-- Regular merge 기본 — feature 브랜치의 커밋 히스토리를 보존한다.
-- WIP 커밋이 많아 히스토리가 지저분할 때만 Squash merge를 선택한다.
+- Squash merge 기본 — develop 히스토리를 기능 단위 단일 커밋으로 간결하게 유지한다. work-close 단일 커밋 패턴과 일치한다. (DR-017 Amended)
+- Regular merge 예외 — 커밋 단위 이력을 반드시 보존해야 할 경우에만 선택한다.
 
 **검증 책임:**
 - feature→develop PR은 `.github/workflows/ci.yml` path filter에 걸리는 문서, prompt, rule, scaffold 변경에서 GitHub Actions CI를 실행한다.
@@ -147,7 +147,7 @@ git push origin --delete feature/{name}
 feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
 의미 있는 패치(하나 또는 여러 feature 묶음)가 완료되어 release 준비가 됐을 때만 develop → main PR을 만든다.
 
-**머지 방식:** 항상 Regular merge (Merge commit) — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다. (DR-017)
+**머지 방식:** Regular Merge (Merge commit) 원칙 — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다. Fast-Forward가 가능하면 허용한다. (DR-017 Amended)
 
 ### 3-1. Public Clean Baseline Gate
 
@@ -163,7 +163,7 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 | Work lifecycle | `docs/works/*/*.md`에 `status: Done` archive pending 없음 | `rg -n "^status: Done" docs/works` |
 | Work active leakage | release 대상에 internal Active Work가 남지 않음 | `rg -n "^status: Active" docs/works` |
 | Archive state | `docs/archive/docs/works/**` 아래 Work는 모두 `status: Archived` | `rg -n "^status:" docs/archive/docs/works` |
-| `/start` output | public clone 첫 `/start`가 clean idle 또는 의도한 상태로 시뮬레이션됨 | STATUS 기준 문서 시뮬레이션 |
+| `/session-start` output | public clone 첫 `/session-start`가 clean idle 또는 의도한 상태로 시뮬레이션됨 | STATUS 기준 문서 시뮬레이션 |
 | Adoption path | README → `docs/SCAFFOLD-ONBOARDING-GUIDE.md` → scaffold bootstrap 흐름 정합 | link/path inspection |
 | Scaffold | `bash -n scripts/create-harness.sh` + `--dry-run` 통과. 실제 temp scaffold 생성은 scaffold 파일 변경 시에만 | `bash -n scripts/create-harness.sh`, `scripts/create-harness.sh --dry-run ...` |
 | Docs cascade | release gate 관련 문서 변경 시 canonical/tool/user-facing/scaffold cascade 정렬 확인 | targeted cascade check |
@@ -246,7 +246,7 @@ fix: TokenRedisRepository SCAN 기반 invalidation 제거
 
 ## 6. Git Hooks
 
-> **Source repo 전용.** `tools/git-hooks/`의 hook은 `ai-workflow-harness` source repo에서만 설치·운영한다. scaffold된 product repo에는 기본 포함되지 않는다 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
+> **배포 경계.** `tools/git-hooks/`의 hook은 `ai-workflow-harness` source repo에서 설치·운영한다. scaffold된 product repo에는 기본(generic workflow) 포함되지 않으나, `--workflow source-gitflow`로 scaffold하면 opt-in으로 함께 배포된다 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
 
 ### pre-commit
 

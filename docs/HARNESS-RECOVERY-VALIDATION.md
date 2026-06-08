@@ -5,7 +5,7 @@ policy_slice: recovery-validation
 # HARNESS-RECOVERY-VALIDATION.md
 
 `docs/HARNESS-PROTOCOL.md` §15에서 추출한 Recovery/Validation policy slice다.
-failure state 진입, `/health` 조건부 validation 확인, commit approval 판단 시에만 로드한다. `/start`, `/pick`, 일반 `/work`·`/close`·`/done` 흐름에서는 로드하지 않는다.
+failure state 진입, `/repo-health` 조건부 validation 확인, commit approval 판단 시에만 로드한다. `/session-start`, `/work-select`, 일반 `/work-plan`·`/work-close`·`/session-summary` 흐름에서는 로드하지 않는다.
 
 ## Failure Conditions
 
