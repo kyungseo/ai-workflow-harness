@@ -44,7 +44,7 @@ secrets/
 
 # [IMPORTANT] .vscode 제외 여부
 # 폴더 전체를 막기보다 특정 파일만 막는 것이 유리할 수 있다?
-# .vscode/ 
+# .vscode/
 
 # [OS]
 .DS_Store

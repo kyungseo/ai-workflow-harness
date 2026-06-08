@@ -1,4 +1,4 @@
-# 이 파일에 등록된 파일들은 Cursor의 'Codebase Indexing'에서 제외된다. 
+# 이 파일에 등록된 파일들은 Cursor의 'Codebase Indexing'에서 제외된다.
 # 즉, Cmd+K나 Chat 모드에서 프로젝트 전체를 물어볼 때 해당 파일의 내용은 무시 된다.
 
 # [Build artifacts] AI가 컴파일된 결과물을 읽지 않도록 제외
@@ -43,7 +43,7 @@ bin/
 # [IMPORTANT] .vscode 제외 여부
 # Cursor는 .vscode 내의 settings.json 내용을 참고해야 할 때가 있으므로
 # 폴더 전체를 막기보다 특정 파일만 막는 것이 유리할 수 있다.
-# .vscode/ 
+# .vscode/
 
 # [OS]
 .DS_Store
