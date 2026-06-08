@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-07 (CHORE-20260607-006 Done — /record-decision 개명, product coverage + DR lifecycle, repo-health 현행화)
+Last updated: 2026-06-08 (CHORE-20260608-001 Done — HARNESS.md 백로그 포맷 2단 구조 전환, work-register/work-close 절차 반영, scaffold 템플릿 갱신)
 
 ## Current State
 
