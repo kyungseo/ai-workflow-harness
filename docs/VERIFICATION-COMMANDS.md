@@ -199,7 +199,9 @@ grep -n "/session-start\|/work-plan\|/work-close\|/work-register\|/repo-health" 
   docs/WORKFLOW-MANUAL.md docs/HARNESS-QUICK-REFERENCE.md
 
 # QUICK-REFERENCE command 행 vs 실제 command 파일 교차 확인
-grep -oE '/[a-z-]+' docs/HARNESS-QUICK-REFERENCE.md | sort -u | while read cmd; do
+# slash command만 추출(앞이 비영숫자 + 하이픈 포함) → 경로 segment·절대경로 오탐 제외
+grep -oE '([^a-zA-Z0-9]|^)/[a-z]+-[a-z-]+' docs/HARNESS-QUICK-REFERENCE.md \
+  | grep -oE '/[a-z-]+' | sort -u | while read cmd; do
   name="${cmd#/}"
   [ ! -f ".claude/commands/${name}.md" ] && echo "QUICK-REF에 있으나 command 없음: $cmd"
 done
@@ -1019,7 +1021,9 @@ done
 
 ```bash
 # 이 파일에서 참조하는 command/skill 이름이 실제로 존재하는가
-grep -oE '/[a-z-]+' docs/VERIFICATION-COMMANDS.md | sort -u | while read cmd; do
+# slash command만 추출(앞이 비영숫자 + 하이픈 포함) → 경로 segment·절대경로 오탐 제외
+grep -oE '([^a-zA-Z0-9]|^)/[a-z]+-[a-z-]+' docs/VERIFICATION-COMMANDS.md \
+  | grep -oE '/[a-z-]+' | sort -u | while read cmd; do
   name="${cmd#/}"
   [ ! -f ".claude/commands/${name}.md" ] \
     && [ ! -f "skills/workflow/${name}.md" ] \
