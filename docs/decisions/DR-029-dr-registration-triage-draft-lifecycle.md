@@ -27,7 +27,7 @@ Draft 상태 자체의 정의(`record-decision.md §DR Lifecycle`, `DECISION-TEM
 | DR-worthy + 선택 보류 | Draft DR |
 | non-DR-worthy + 운영·근시일·blocking | STATUS `Blockers And Open Questions` |
 | non-DR-worthy + 전략·roadmap horizon | PLAN `§9 Open Questions` |
-| non-DR-worthy + 실행 후보 작업 | backlog (`PHASE{n}.md` / `HARNESS.md`) |
+| non-DR-worthy + 실행 후보 작업 | backlog (`PRODUCT.md` / `HARNESS.md`) |
 
 Open Question은 두 층위에 존재한다: 전략/roadmap = PLAN §9, 운영/라이브 = STATUS. Blocker는 운영 전용 개념이므로 STATUS에만 두고 PLAN에는 두지 않는다(의도된 비대칭).
 

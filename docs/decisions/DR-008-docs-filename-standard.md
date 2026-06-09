@@ -13,9 +13,10 @@ Status: Accepted
 
 | 위치 | 표준 | 예시 |
 |------|------|------|
-| `docs/` 루트, `docs/backlog/`, `docs/decisions/` | UPPERCASE-HYPHENATED | `HARNESS-PROTOCOL.md`, `PHASE2.md`, `DR-008-*.md` |
+| `docs/` 루트, `docs/backlog/`, `docs/decisions/` | UPPERCASE-HYPHENATED | `HARNESS-PROTOCOL.md`, `PRODUCT.md`, `DR-008-*.md` |
 | `docs/works/{category}/` | `{ID}-{lowercase-topic}.md` | `HRF-002-work-system-refactor.md`, `PRE-C1-architecture-audit.md` |
 | `docs/archive/` | lowercase-hyphenated | `phase1-status.md`, `phase1-plan.md` |
+| `docs/migrations/` | lowercase-hyphenated | `canonical-adapter-rename.md` |
 
 ## Options Considered
 
@@ -38,7 +39,7 @@ Status: Accepted
 - 신규 `docs/works/{category}/` Work 파일은 ID 기반 파일명을 사용한다 (DR-013 참조).
 - `docs/archive/` 자동 생성 파일은 기존 lowercase-hyphenated 유지.
 - `docs/coding-conventions.md` → `docs/CODING-CONVENTIONS.md` 이름 변경 완료 (참조 8곳 업데이트).
-- `docs/decisions/PHASE2-BACKLOG.md` (pointer 파일, 참조 없음) 삭제 완료.
+- 과거 `docs/decisions/`에 있던 미참조 pointer backlog 파일 삭제 완료.
 
 ## HRN-009 Audit Addendum (2026-05-20)
 
@@ -47,7 +48,7 @@ Status: Accepted
 | 대상 | 판정 | 이유 |
 | --- | --- | --- |
 | `docs/` root markdown | UPPERCASE-HYPHENATED 유지 | 기존 root 문서와 context routing이 이미 이 규칙에 맞음 |
-| `docs/backlog/`, `docs/decisions/` | 현행 유지 | `PHASE2.md`, `HARNESS.md`, `DR-{NNN}-{topic}.md`가 명확함 |
+| `docs/backlog/`, `docs/decisions/` | 현행 유지 | `PRODUCT.md`, `HARNESS.md`, `DR-{NNN}-{topic}.md`가 명확함 |
 | `docs/works/{category}/` | 현행 유지 | DR-013의 `{ID}-{lowercase-topic}.md`가 Work ID 추적에 적합함 |
 | `docs/archive/docs/` | DR-014 mirror 예외 | archive mirror는 원본 상대 경로와 파일명을 보존해야 추적성이 높음 |
 | `docs/archive/snapshots/` | lowercase topic-date 유지 | snapshot bundle은 사람이 읽는 시점 기록이므로 root 문서 규칙과 분리함 |

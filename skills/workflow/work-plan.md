@@ -16,9 +16,9 @@ Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 
 
 docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾아 계획을 세워줘.
 
-- `FEAT-*`, `PATCH-*`, `HOTFIX-*`: docs/backlog/PHASE{n}.md 또는 docs/backlog/HARNESS.md (track에 따라 — product track이면 PHASE{n}.md, harness track이면 HARNESS.md)
+- `FEAT-*`, `PATCH-*`, `HOTFIX-*`: docs/backlog/PRODUCT.md 또는 docs/backlog/HARNESS.md (track에 따라 — product track이면 PRODUCT.md, harness track이면 HARNESS.md)
 - `CHORE-*`: docs/backlog/HARNESS.md (항상)
-- `P{n}-*`, `PRE-*` (historical): docs/backlog/PHASE{n}.md
+- `P{n}-*`, `PRE-*` (historical): docs/backlog/PRODUCT.md
 - `HRF-*`, `HRN-*`, `DOC-*` (historical): docs/backlog/HARNESS.md
 - ID 없이 title/slug로 호출한 경우: 두 backlog에서 제목으로 검색한다.
 - 항목 위치가 불명확하면 두 backlog에서 검색하고, 관련 없는 상세는 읽지 마.

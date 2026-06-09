@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260609-005 | Product Track 네이밍 전환 (PHASE{n} → PRODUCT) | 2026-06-09 | `docs/works/harness/CHORE-20260609-005-product-track-naming.md` |
 
 ## Archived
 

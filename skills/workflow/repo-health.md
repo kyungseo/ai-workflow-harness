@@ -142,7 +142,7 @@ git diff --cached --name-only
 LIVE_TARGETS=(
   AGENTS.md CLAUDE.md README.md
   docs/AGENT-WORKFLOW.md docs/HARNESS-PROTOCOL.md docs/HARNESS-QUICK-REFERENCE.md docs/WORKFLOW-MANUAL.md docs/STATUS.md
-  docs/MIGRATION-CANONICAL-ADAPTER-RENAME.md
+  docs/migrations/canonical-adapter-rename.md
   docs/backlog docs/decisions docs/works
   .agents .codex .claude .cursor prompts scripts tools
 )
@@ -272,10 +272,10 @@ Historical matches are not automatically drift. Report them separately as snapsh
 
 - Work 파일: Verification 완료되었으나 Done 처리가 지연된 Active 항목
 - Work 파일: `status: Done`인데 archive 대기 상태로 2세션 이상 남은 항목
-- `docs/backlog/PHASE{n}.md`: product/preparation 항목 중 선행 조건이 이미 충족된 항목, 범위·우선순위 재검토 필요 항목
+- `docs/backlog/PRODUCT.md`: product/preparation 항목 중 선행 조건이 이미 충족된 항목, 범위·우선순위 재검토 필요 항목
   ```bash
   # 상태 확인 예시 — alternation은 | 사용 (\| 아님)
-  rg "Candidate|In Progress" docs/backlog/PHASE*.md
+  rg "Candidate|In Progress" docs/backlog/PRODUCT*.md
   ```
 - `docs/backlog/HARNESS.md`: harness 항목 중 완료되었거나 새 상태 머신과 충돌하는 항목, hard enforcement 후보
 - DR 상태 확인 (Phase 5 `rg` 결과 재사용):
@@ -290,7 +290,7 @@ Historical matches are not automatically drift. Report them separately as snapsh
   - 통합 후보: 동일·유사 주제 복수 DR (1단계 필터 후 확인)
   - Superseded 후보: 이후 결정으로 실질적으로 대체되었으나 Accepted 유지
   - 후보 발견 시, cascade 업데이트 대상을 함께 제시:
-    `docs/STATUS.md` / 관련 backlog(`PHASE{n}.md` 또는 `HARNESS.md`) DR 참조 항목 /
+    `docs/STATUS.md` / 관련 backlog(`PRODUCT.md` 또는 `HARNESS.md`) DR 참조 항목 /
     `docs/PLAN-SUMMARY.md` DR 범위 / 연관 DR 파일
 
 ### F. Implementation Sync (--full)

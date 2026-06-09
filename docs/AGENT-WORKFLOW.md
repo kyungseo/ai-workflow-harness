@@ -54,7 +54,7 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 | Work ID·OQ ID·DR ID 부여·검증, 파일명 규칙 | `docs/HARNESS-NAMING-RULES.md` — `/work-register`·`/work-plan` Work ID 확정 시, branch/Work ID slug 대응 논의 시에만 로드. `/session-start`, `/work-select`, 일반 status 확인, cascade 검증에서는 로드하지 않는다 |
 | failure state 진입, Validation Checklist, Commit Approval 판단, `/repo-health` 조건부 recovery 확인 | `docs/HARNESS-RECOVERY-VALIDATION.md` — `/session-start`, `/work-select`, 일반 `/work-plan`·`/work-close`·`/session-summary` 흐름에서는 로드하지 않는다. validation failure·recovery·commit approval 판단이 필요한 경우에만 로드한다 |
 | 병렬 branch/agent 충돌, Work ID/DR 번호 충돌, STATUS/index merge conflict, command/skill mirror atomicity 판단 | `docs/HARNESS-PARALLEL-WORK-CONTROLS.md` — 해당 충돌이 실제 발생했거나 병렬 작업 중 충돌 위험이 감지될 때만 로드한다 |
-| Product track 또는 Phase{n} 준비 작업 선택 | `docs/backlog/PHASE{n}.md` |
+| Product track 작업 선택 | `docs/backlog/PRODUCT.md` |
 | harness, command/rule, workflow 작업 선택 | `docs/backlog/HARNESS.md` |
 | 아키텍처 요약 | `docs/PLAN-SUMMARY.md` |
 | L3 변경, Phase 계획, 상세 근거 | `docs/PLAN.md` |
@@ -110,7 +110,7 @@ MUST NOT:
 | Item | Where |
 | --- | --- |
 | 지금 진행 중인 작업 | `docs/STATUS.md` Active Work |
-| 다음 후보 Product track 작업 | `docs/backlog/PHASE{n}.md` |
+| 다음 후보 Product track 작업 | `docs/backlog/PRODUCT.md` |
 | 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
 | Scaffold bootstrapping checklist | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` |
 | 한 작업의 세부 분해 | `docs/works/{category}/{ID}-{topic}.md` |

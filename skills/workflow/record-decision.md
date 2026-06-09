@@ -26,7 +26,7 @@ Product decision(ORM 선택, API 설계 방향, 외부 서비스 연동 정책, 
 | DR-worthy + 선택 보류(signal·data·논의 대기) | Draft DR — Status: Draft, 아래 §Draft DR 참조 |
 | non-DR-worthy + 운영·근시일·blocking | STATUS `Blockers And Open Questions` |
 | non-DR-worthy + 전략·roadmap horizon | PLAN `§9 Open Questions` |
-| non-DR-worthy + 실행 후보 작업 | backlog (`PHASE{n}.md` / `HARNESS.md`) |
+| non-DR-worthy + 실행 후보 작업 | backlog (`PRODUCT.md` / `HARNESS.md`) |
 
 DR(Accepted 또는 Draft)로 분기된 경우에만 아래 단계를 진행한다.
 

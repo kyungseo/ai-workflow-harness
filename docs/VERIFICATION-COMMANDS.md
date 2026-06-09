@@ -91,10 +91,10 @@ grep 결과를 한눈에 비교해 불일치를 직접 확인한다.
 
 ```bash
 # write_text로 생성되는 backlog 파일 전체 위치
-grep -n "write_text.*backlog\|write_text.*PHASE\|write_text.*HARNESS" \
+grep -n "write_text.*backlog\|write_text.*PRODUCT\|write_text.*HARNESS" \
   scripts/create-harness.sh
 
-# 모든 Verification 라인 (PHASE1·HARNESS 템플릿 포함)
+# 모든 Verification 라인 (PRODUCT·HARNESS 템플릿 포함)
 grep -n "Verification\|검증 방법" scripts/create-harness.sh
 
 # Details 섹션 포맷 comment 전수
@@ -296,7 +296,7 @@ grep -n "work-register" .cursor/rules/workflow.mdc
 ### J3. 작업 계획 및 시작 (`/work-plan`)
 
 ```bash
-ls -d docs/works/harness/ docs/works/phase1/ 2>/dev/null || echo "MISSING works dirs"
+ls -d docs/works/harness/ docs/works/product/ 2>/dev/null || echo "MISSING works dirs"
 ls docs/decisions/DR-013-*.md    # Work file spec
 ls docs/HARNESS-NAMING-RULES.md  # Work ID 형식 참조
 ls skills/workflow/work-plan.md .claude/commands/work-plan.md
@@ -325,7 +325,7 @@ grep -oE '`docs/[^`]+`\|`\.claude/[^`]+`' skills/workflow/work-close.md \
     done
 
 # Work index README 실재 (Done → Active 이동 대상)
-ls docs/works/harness/README.md docs/works/phase1/README.md 2>/dev/null
+ls docs/works/harness/README.md docs/works/product/README.md 2>/dev/null
 ```
 
 ### J6. Done → Archived 처리

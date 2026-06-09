@@ -217,7 +217,7 @@ scripts/create-harness.sh --check /path/to/my-app
 | `--workflow` | branch/release policy mode를 고릅니다. 기본은 `generic`이고, project-specific branch policy를 유지합니다. |
 | `--workflow source-gitflow` | 이 source repository와 비슷한 feature -> develop -> main 운영 모델을 적용하고 싶을 때만 선택합니다. |
 
-scaffold 직후에는 생성된 project directory에서 `/session-start`로 첫 세션을 시작합니다. `docs/STATUS.md`의 Next Actions가 bootstrap onboarding을 가리키면 `docs/BOOTSTRAP.md`를 채워 Product Definition, Implementation Baseline, Phase 1 backlog를 정리합니다.
+scaffold 직후에는 생성된 project directory에서 `/session-start`로 첫 세션을 시작합니다. `docs/STATUS.md`의 Next Actions가 bootstrap onboarding을 가리키면 `docs/BOOTSTRAP.md`를 채워 Product Definition, Implementation Baseline, product backlog를 정리합니다.
 
 자세한 첫 세션 절차는 [docs/SCAFFOLD-ONBOARDING-GUIDE.md](docs/SCAFFOLD-ONBOARDING-GUIDE.md)를 보세요.
 
@@ -232,7 +232,7 @@ flowchart TD
     D -- "있음" --> E["docs/BOOTSTRAP.md 로드"]
     E --> F["Product Definition 작성"]
     F --> G["Implementation Baseline 작성"]
-    G --> H["Phase 1 backlog 도출"]
+    G --> H["product backlog 도출"]
     H --> I["일반 workflow\n/work-select -> /work-plan"]
     D -- "없음" --> I
 
@@ -352,7 +352,7 @@ flowchart TD
     ACTIVE --> PLAN["/work-plan\n계획 수립"]
     PLAN --> WORK["docs/works/{category}\nWork SSoT"]
     NOW -- "아니오" --> TYPE{"성격"}
-    TYPE -- "Product" --> PHASE["docs/backlog/PHASE{n}.md"]
+    TYPE -- "Product" --> PHASE["docs/backlog/PRODUCT.md"]
     TYPE -- "Harness" --> HARNESS["docs/backlog/HARNESS.md"]
     TYPE -- "다음 후보" --> NEXT["STATUS.md Next Actions"]
     TYPE -- "결정 필요" --> OQ["STATUS.md Blockers/OQ"]

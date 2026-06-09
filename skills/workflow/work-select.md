@@ -16,7 +16,7 @@ Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 
 
 docs/STATUS.md를 확인한 뒤, 작업 성격에 맞는 backlog를 선택해 우선순위가 높은 후보 작업을 검토해줘.
 
-- Product track 작업: docs/backlog/PHASE{n}.md
+- Product track 작업: docs/backlog/PRODUCT.md
 - Harness / workflow 작업: docs/backlog/HARNESS.md
 - Scaffold 직후 부팅 작업: docs/STATUS.md Next Actions가 bootstrap/onboarding을 명시할 때 docs/BOOTSTRAP.md
 - 성격이 불명확하면 두 backlog의 제목과 우선순위만 비교하고, 불필요한 상세 로드는 하지 마.
