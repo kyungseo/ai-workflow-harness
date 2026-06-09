@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260609-005
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: product track backlog/work 네이밍을 harness track과 대칭으로 전환. `docs/backlog/PHASE{n}.md`→`docs/backlog/PRODUCT.md`(phaseless 기본), `docs/works/phase{n}/`→`docs/works/product/`. phase는 optional migration. harness 내부 "Phase"(절차 단계·STATUS 필드·refactor)는 보존. DR-031로 결정 기록.
 appetite: 1d
@@ -92,3 +92,4 @@ L2, blast-radius 큼. Risk: harness "Phase" 오변경 → file-by-file 수동 di
 - 전수 sweep(2026-06-09): all-caps PHASE = product 전용 판별자 확정. Title-case "Phase" 대부분 보존(work-doc/repo-health 절차, STATUS 필드, harness refactor).
 - DR-014 "Phase 완료" archive 트리거가 phaseless에서 무효 → product work 완료 기준으로 변경(DR-031 반영).
 - Migration 부가영향 분석: canonical/tooling을 phasing-agnostic(glob/optional-suffix)으로 작성 + work dir decouple → migration 영향을 파일 rename·project-local 참조·PRODUCT-P2 추가 3가지로 국한.
+- (Archived 2026-06-09) PR #120 merge 후 archive drain. `docs/archive/docs/works/harness/`로 이동.
