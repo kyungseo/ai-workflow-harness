@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-08 (PLAN v0.3 — Phase 2 종료, AWH-004 Maintenance & Adoption 전환; Done Work 27개 archive drain)
+Last updated: 2026-06-09 (agent-facing surface 정합 — AGENTS.md entry contract Codex routing 일원화, STATUS Current State/Next Actions 위생, PLAN §3 Core Surfaces 보강)
 
 ## Current State
 
@@ -15,7 +15,6 @@ Last updated: 2026-06-08 (PLAN v0.3 — Phase 2 종료, AWH-004 Maintenance & Ad
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
 | Harness protocol | `docs/HARNESS-PROTOCOL.md` |
-| User workflow manual | `docs/WORKFLOW-MANUAL.md` |
 | Repository visibility | Public release ready |
 
 ## Work Context Rule
@@ -49,12 +48,9 @@ Last updated: 2026-06-08 (PLAN v0.3 — Phase 2 종료, AWH-004 Maintenance & Ad
 
 ## Next Actions
 
-0. **완료 (2026-06-08, CHORE-20260608-002)** — 버전 체계 정의 + VERSION 정렬: DR-028 + `docs/VERSIONING.md` 신설(git tag SSoT + semver 기준), `VERSION` 0.2.0→1.1.0 조정, manifest 정합(0 drifted) 확인.
-1. **완료 (2026-06-08, CHORE-20260608-003)** — `VERIFICATION-COMMANDS.md` pointer 연결(AGENT-WORKFLOW·repo-health·QUICK-REFERENCE) + Release Full Sweep 프리셋 신설 + source-only 확정.
-2. **P1 우선순위 Top 4** (다음 작업 선택은 `/work-select`):
+1. **P1 우선순위 Top 4** (다음 작업 선택은 `/work-select`):
    - **Scaffold/tool-surface alignment 점검 체계화** — scaffold drift 구조적 문제. PR #93 이후 신규 merge 전체 재검증 즉시 실행 가능
    - **Harness upgrade/migration 메커니즘** — 실 adopter(`ai-deck-compiler`) upstream 반영 필요. concrete driver 있는 유일한 항목
    - **Backlog row lifecycle SSoT 정비** — work-close마다 수동 확인 발생. 세션 안정성 직접 영향
    - **Adopter onboarding/manual refresh** — README overhaul 이후 onboarding path 정합 미확인. upgrade/migration 전 기반 정리 필요
-3. **Canonical weight 경량화 + Optional pack 재정의 클러스터** — `repo-health.md` slice 분리·`work-doc.md` class 재검토(P2 신규)를 repo-health gate 보강·Prompt surface diet(P1)와 묶어 착수
-4. **완료 (2026-06-08)** — Archive drain: Done Work 27개를 `docs/archive/docs/works/harness/`로 일괄 이관.
+2. **Canonical weight 경량화 + Optional pack 재정의 클러스터** — `repo-health.md` slice 분리·`work-doc.md` class 재검토(P2 신규)를 repo-health gate 보강·Prompt surface diet(P1)와 묶어 착수
