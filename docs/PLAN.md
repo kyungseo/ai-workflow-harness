@@ -46,11 +46,13 @@ development workflow다.
 | `docs/HARNESS-PROTOCOL.md` | 상세 protocol reference |
 | `docs/HARNESS-QUICK-REFERENCE.md` | session 중 빠르게 확인하는 operational summary |
 | `docs/STATUS.md` | 현재 project dashboard |
+| `docs/PLAN.md` | 장기 project plan, L3 decisions 근거 |
 | `docs/PLAN-SUMMARY.md` | 세션 context용 architecture / project summary |
 | `docs/works/**` | 작업 단위 SSoT |
 | `docs/backlog/**` | 다음 작업 후보와 deferred work |
 | `docs/decisions/**` | accepted decision 기록 |
-| `.claude/commands/**` | Claude Code command definition |
+| `skills/workflow/**` | workflow 절차 canonical SSoT |
+| `.claude/commands/**`, `.agents/skills/**` | Claude Code / Codex workflow adapter (canonical mirror) |
 | `.claude/rules/**`, `.cursor/rules/**` | tool-specific rule mirror |
 | `prompts/**` | command를 직접 사용할 수 없는 도구를 위한 prompt template |
 | `scripts/create-harness.sh` | 새 repository 또는 기존 repository에 harness 구조를 적용하는 scaffold |
