@@ -13,7 +13,7 @@ MUST:
 
 - Keep active context files short and current.
 - Use `docs/STATUS.md` for live work state.
-- Use `docs/backlog/PHASE{n}.md` for product and Phase{n} preparation candidate work.
+- Use `docs/backlog/PRODUCT.md` for Product track candidate work (optional phasing: `PRODUCT-P{n}.md`).
 - Use `docs/backlog/HARNESS.md` for harness, command/rule, and workflow hardening candidate work.
 - Use path-mirrored locations under `docs/archive/` for completed historical detail.
 - Use `docs/HARNESS-QUICK-REFERENCE.md` for daily workflow execution rules.

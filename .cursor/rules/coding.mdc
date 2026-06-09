@@ -19,7 +19,7 @@ MUST:
 - Follow the workflow state machine: `INIT -> PLAN -> APPROVAL -> EXECUTE -> VALIDATE -> CHECKPOINT -> END`.
 - Request explicit user approval before editing `docs/STATUS.md`; report the Approval Matrix state-change proposal first.
 - Use `docs/BOOTSTRAP.md` only when `docs/STATUS.md` Next Actions point to scaffold bootstrap/onboarding.
-- Use `docs/backlog/PHASE{n}.md` for Product track and Phase{n} preparation candidate work.
+- Use `docs/backlog/PRODUCT.md` for Product track candidate work (optional phasing: `PRODUCT-P{n}.md`).
 - Use `docs/backlog/HARNESS.md` for harness, command/rule, and workflow hardening candidate work.
 - Include scope, files, verification, risk, and reversal cost before implementation.
 - Before expanding approved scope to additional files, docs, or settings, report the added scope, reason, and verification plan, then wait for approval.
