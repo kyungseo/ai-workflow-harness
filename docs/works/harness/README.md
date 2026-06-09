@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260609-002 | Draft DR 체계 도입 + 언어 전략 Draft DR | 2026-06-09 | `docs/works/harness/CHORE-20260609-002-draft-dr-language-strategy.md` |
 
 ## Archived
 

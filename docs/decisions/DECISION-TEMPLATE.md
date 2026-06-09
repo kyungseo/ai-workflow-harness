@@ -25,7 +25,7 @@ Track 사용 가이드:
 
 ## Decision
 
-내려진 결정. (Draft 상태에서는 빈 칸)
+내려진 결정. (Draft 상태에서는 빈 칸 — 승격 시 작성)
 
 ## Options Considered
 
@@ -34,13 +34,25 @@ Track 사용 가이드:
 | Option A | | |
 | Option B | | |
 
+## Open Points
+
+<!-- Draft 전용 (DR-029). 승격 전 해소해야 할 미해소 쟁점. Accepted DR에서는 생략한다. -->
+
+미해소 쟁점.
+
+## Promotion Conditions
+
+<!-- Draft 전용 (DR-029). 무엇이 충족되면 Accepted로 승격하는가. Accepted DR에서는 생략한다. -->
+
+승격 조건.
+
 ## Rationale
 
-이 선택지를 선택한 이유.
+이 선택지를 선택한 이유. (Draft 상태에서는 빈 칸 — 승격 시 작성)
 
 ## Consequences
 
-무엇이 바뀌고 무엇이 유지되는가.
+무엇이 바뀌고 무엇이 유지되는가. (Draft 상태에서는 빈 칸 — 승격 시 작성)
 
 ## Reversal Cost
 

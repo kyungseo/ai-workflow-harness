@@ -279,13 +279,14 @@ Historical matches are not automatically drift. Report them separately as snapsh
   ```
 - `docs/backlog/HARNESS.md`: harness 항목 중 완료되었거나 새 상태 머신과 충돌하는 항목, hard enforcement 후보
 - DR 상태 확인 (Phase 5 `rg` 결과 재사용):
-  - Draft 상태이나 결정이 실질적으로 완료된 DR → Accepted 처리 필요
+  - **Draft DR hygiene surfacing (DR-029)**: 모든 `Status: Draft` DR을 나열하고 각 age(Date 기준)와 함께 promote / supersede / drop 중 어느 처리가 필요한지 soft하게 안내한다. hard gate(만료 강제) 아님. Draft 내용 자체는 cascade 감사 대상이 아니다(감사는 Accepted-only).
+  - Draft 상태이나 결정이 실질적으로 완료된 DR → Accepted 승격 제안 (승격 절차: `record-decision.md §Draft DR`)
   - STATUS.md Blockers/OQ 중 이미 해소되었으나 Closed 처리 누락
   - DR ↔ backlog 연결: `Linked Backlog Items` 섹션 누락·오기
 - **DR 삭제/통합/Superseded 후보 식별**:
   - *1단계 (파일명 기반)*: DR 파일명에서 주제 키워드 추출 → 유사 주제 후보 그루핑
   - *2단계 (내용 확인)*: 1단계에서 의심되는 쌍에 한해서만 내용 비교
-  - 삭제 후보: Draft 장기 유지 + 연결 backlog 없음 + 관련 OQ Closed
+  - 폐기 후보: Draft 장기 유지 + 연결 backlog 없음 + 관련 OQ Closed → `Draft (Dropped)` 처리 제안(DR-029)
   - 통합 후보: 동일·유사 주제 복수 DR (1단계 필터 후 확인)
   - Superseded 후보: 이후 결정으로 실질적으로 대체되었으나 Accepted 유지
   - 후보 발견 시, cascade 업데이트 대상을 함께 제시:
