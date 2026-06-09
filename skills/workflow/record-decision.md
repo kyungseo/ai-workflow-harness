@@ -14,9 +14,21 @@ Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 
 
 ## Procedure
 
-$ARGUMENTS 또는 현재 대화에서 확정된 의사결정 사항을 DR로 기록해줘.
+$ARGUMENTS 또는 현재 대화에서 다룬 결정·질문을 DR로 기록해줘.
 
 Product decision(ORM 선택, API 설계 방향, 외부 서비스 연동 정책, 데이터 모델 결정 등)과 harness/workflow decision(명령 개명, 게이트 정책, 프로토콜 변경 등) 모두 이 절차로 기록한다. track과 무관하게 DR-worthy 기준을 충족하면 등록한다.
+
+**0. Registration Triage (DR-029).** 기록 전 입력의 성숙도를 먼저 분기해 제안해. DR-worthy 판정은 아래 §DR-Worthy Criteria를 재사용한다(재서술하지 않는다).
+
+| 입력 성격 | 목적지 |
+| --- | --- |
+| DR-worthy + 결정 완료 | Accepted DR — 아래 1~7 진행 |
+| DR-worthy + 선택 보류(signal·data·논의 대기) | Draft DR — Status: Draft, 아래 §Draft DR 참조 |
+| non-DR-worthy + 운영·근시일·blocking | STATUS `Blockers And Open Questions` |
+| non-DR-worthy + 전략·roadmap horizon | PLAN `§9 Open Questions` |
+| non-DR-worthy + 실행 후보 작업 | backlog (`PHASE{n}.md` / `HARNESS.md`) |
+
+DR(Accepted 또는 Draft)로 분기된 경우에만 아래 단계를 진행한다.
 
 1. `docs/decisions/` 디렉토리의 기존 DR 목록을 확인하고 다음 번호를 결정해.
    - 병렬 branch 환경: Accepted 처리 또는 PR merge 직전에 `docs/decisions/` 목록을 재확인해. 번호 충돌이 발견되면 나중에 merge되는 DR이 번호를 재배정하고, DR 파일명·문서 내부 DR 번호/상태 표기·연결 Work/backlog reference를 새 번호로 업데이트해 (docs/HARNESS-PARALLEL-WORK-CONTROLS.md §DR Global Sequence 충돌 해소).
@@ -56,7 +68,8 @@ DR 상태는 아래 값만 사용한다. `DECISION-TEMPLATE.md`의 Status 필드
 
 | 상태 | 의미 | 처리 |
 |---|---|---|
-| `Draft` | 초안. 아직 확정 전. | PR merge 전까지 유지 가능 |
+| `Draft` | 초안. 아직 확정 전(선택 보류). | PR merge 전까지 유지 가능. cascade·PLAN 미발동. §Draft DR 참조 |
+| `Draft (Dropped)` | 채택하지 않기로 한 Draft. | 폐기 사유 1줄 명시 후 `docs/archive/docs/decisions/`로 이동. 번호 retire(재사용 금지, gap 허용) |
 | `Accepted` | 최종 확정. | — |
 | `Accepted (Amended)` | 결정 방향은 유지, 세부 사항 수정됨. | 수정 범위를 DR 본문 또는 amending DR 번호로 명시 |
 | `Superseded by DR-XXX` | 이 결정 전체가 다른 DR로 대체됨. | `docs/archive/docs/decisions/`로 이동 후보. archive는 사용자 승인 후 처리. |
@@ -65,6 +78,24 @@ DR 상태는 아래 값만 사용한다. `DECISION-TEMPLATE.md`의 Status 필드
 **Parent-child DR:** 하위 DR은 `Supersedes: DR-XXX` 필드로 상위 DR을 가리킨다 (예: DR-NNN → DR-MMM).
 **Linked DR:** 상호 참조이며 상하위 관계 아님. `Linked DRs:` 필드로 표현.
 **Superseded DR archive 타이밍:** PR merge 후 T10(Done Work 발견) 또는 `/session-start` 에서 제안. `docs/archive/docs/decisions/README.md` index에 이동 경로 기록.
+
+## Draft DR (DR-029)
+
+DR-worthy이나 결정을 보류한 경우 `Status: Draft`로 기록한다.
+
+**필수 섹션:** `Question`, `Options Considered`, `Open Points`(미해소 쟁점), `Promotion Conditions`(무엇이 충족되면 Accepted로 승격하는가). `Decision` / `Rationale` / `Consequences`는 승격 시 작성한다(그 전까지 빈 칸).
+
+**승격 (Draft → Accepted):**
+
+1. `Promotion Conditions` 충족 확인, `Open Points` 해소
+2. `Decision` / `Rationale` / `Consequences` 작성, Status를 `Accepted`로 변경
+3. Recent Decisions 등재 판정 발동(위 Procedure step 5)
+4. Draft 동안 보류됐던 PLAN cascade 발동(위 "DR Draft는 Accepted 전까지 PLAN cascade를 발동하지 않는다")
+5. 필요 시 관련 DR amend 연결
+
+**폐기 (Dropped):** 결정하지 않기로 하면 Status를 `Draft (Dropped)`로 바꾸고 폐기 사유 1줄을 본문에 남긴 뒤 archive로 이동한다(사용자 승인 후). 번호는 retire한다(재사용 금지).
+
+**누적 관리:** Draft DR 가시성은 `/repo-health`의 soft surfacing이 담당한다(hard gate 아님). cascade 감사는 Accepted-only이며 Draft 내용은 감사·강제 대상이 아니다.
 
 ## DR-Worthy Criteria (if one or more applies)
 

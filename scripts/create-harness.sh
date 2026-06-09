@@ -430,6 +430,8 @@ adapt "${TEMPLATE_ROOT}/docs/decisions/DR-014-archive-policy.md" \
       "${TARGET_ROOT}/docs/decisions/DR-014-archive-policy.md"
 adapt "${TEMPLATE_ROOT}/docs/decisions/DR-027-troubleshooting-retrospective-spec.md" \
       "${TARGET_ROOT}/docs/decisions/DR-027-troubleshooting-retrospective-spec.md"
+adapt "${TEMPLATE_ROOT}/docs/decisions/DR-029-dr-registration-triage-draft-lifecycle.md" \
+      "${TARGET_ROOT}/docs/decisions/DR-029-dr-registration-triage-draft-lifecycle.md"
 
 # Optional-pack companion DRs (DR-021 reference closure): the Optional source pack
 # docs reference DR-020 (HARNESS-MAINTAINER-GUIDE), which transitively cites DR-017.
@@ -458,7 +460,8 @@ Superseded DR은 \`docs/archive/docs/decisions/\`로 이동한다.
 - \`Accepted (Amended)\` — 확정 후 세부 수정됨. DR 본문에 수정 범위 명시.
 - \`Accepted (일부 Deferred)\` — 일부 항목 보류. DR 본문에 보류 범위 명시.
 - \`Superseded by DR-XXX\` — 전체 대체됨. archive 이동 후보.
-- \`Draft\` — 초안
+- \`Draft\` — 초안. 아직 확정 전(선택 보류). cascade 감사 대상 아님.
+- \`Draft (Dropped)\` — 채택하지 않기로 한 Draft. 폐기 사유 명시 후 archive 이동, 번호 retire (DR-029).
 
 **Track legend:** \`harness\` = AI workflow·명령·프로토콜 결정 / \`product\` = 적용 프로젝트의 기능·아키텍처 결정
 
@@ -469,6 +472,7 @@ Superseded DR은 \`docs/archive/docs/decisions/\`로 이동한다.
 | DR-013 | Work 파일 기반 작업 단위 체계 | — | Accepted | harness | \`docs/works/{category}/{ID}-{topic}.md\`, Active/Done/Archived 3단계, \`related_work\` 필드 포함 |
 | DR-014 | Archive 구조 정책 | — | Accepted | harness | \`docs/archive/\` 하위 경로 mirror 방식 |
 | DR-027 | Troubleshooting / Retrospective 파일 최소 스펙 | — | Accepted | harness | frontmatter(symptom/track/category/status, date/track/type/scope/author) 도입. track 필드로 harness·product 구분 |
+| DR-029 | DR Registration Triage + Draft DR Lifecycle | — | Accepted | harness | DR 등록 3-way triage(Accepted/Draft/OQ·backlog) + Draft 승격·\`Draft (Dropped)\`·repo-health hygiene surfacing |
 ${OPTIONAL_DR_ROWS}
 위 DR들은 harness가 동반하는 foundational decision이다.
 이 프로젝트 고유의 결정은 \`DR-{NNN}-{topic}.md\`(\`docs/decisions/DECISION-TEMPLATE.md\` 사용)로 추가하고 이 인덱스에 등록한다.
