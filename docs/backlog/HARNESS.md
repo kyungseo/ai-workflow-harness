@@ -43,7 +43,6 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | `PHASE{n}` → `PROD-P{n}` product track 네이밍 전환 |
 | — | P2 | Candidate | L2 | Coding canonical optional pack — `--with-coding-guide` scaffold 확장 |
 | — | P2 | Candidate | L2 | Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의 |
-| — | P2 | Candidate | L2 | Release Full Sweep 후속 정리 (1.1.0) |
 | HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 |
 
 ---
@@ -294,18 +293,6 @@ AI Workflow Harness backlog다.
 - 원칙이 "harness docs = SSoT" 방향과 일관성 있는지 확인
 
 **Verification:** agent별 지속 컨텍스트 저장소(Claude `memory/`, Codex profile, Cursor user rules) grep으로 harness 행동 패턴 잔존 여부 확인. `docs/BEHAVIOR-PRINCIPLES.md` 또는 정책 파일에 cross-agent 원칙 반영 확인. tool surface · adopter cascade · scaffold · README/GUIDE/MANUAL: 해당 없음(N/A).
-
----
-
-#### Release Full Sweep 후속 정리 (1.1.0)
-
-**Task:** 1.1.0 릴리즈 직전 Release Full Sweep(2026-06-08)에서 식별한 P2 항목 정리. 모두 pre-existing·비기능·도구 정밀도 이슈로 릴리즈 후 처리. (1) **DR-007 rule scope 명확화** *(2026-06-09 DR-030 Open Point로 흡수 — i18n 언어 전략과 함께 결정)* — `.claude/rules/git-workflow.md`·`infra.md`·`java-spring.md`·`testing.md` 4개가 전부 영어. DR-007 요약은 "문서·command·prompt·hook"만 명시하고 rule 포함 여부가 모호함. rule이 DR-007 대상인지 결정하고, 대상이면 Korean primary로 정리(또는 DR-007에 rule 예외 명문화). (2) **cursor-session-start.md 참조 점검** — 3개 prompt 중 cursor만 canonical `session-start` 미참조. `.cursor/rules/workflow.mdc` 경유가 의도된 설계인지 확인하고, 의도면 그대로, 아니면 참조 보강. (3) **VERIFICATION-COMMANDS Layer G/M grep 정밀도** — `grep -oE '/[a-z-]+'`가 `/archive`·`/backlog` 같은 경로 segment를 slash command로 오탐. 명령 토큰만 매칭하도록 패턴 정밀화(예: known doc-path segment 제외 또는 command 목록 대조).
-
-**Dependencies:** —
-
-**Done Criteria:** (1) ~~DR-007 rule scope 결정 기록~~ → DR-030(Draft)에서 i18n 전략과 함께 결정 (단독 처리 불필요) (2) cursor-session-start 참조 의도 확인·보강 결정 (3) VERIFICATION-COMMANDS Layer G/M grep 오탐 제거
-
-**Verification:** (1) `grep -c '[가-힣]' .claude/rules/*.md` 기준 결정대로 정합 또는 DR-007에 rule 예외 명시 (2) cursor prompt가 canonical 참조하거나 의도 문서화 (3) Layer G grep 재실행 시 경로 segment 오탐 0
 
 ---
 
