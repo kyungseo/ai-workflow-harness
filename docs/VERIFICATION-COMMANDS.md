@@ -13,10 +13,12 @@ related_work: []
 
 이 파일은 source repo 전용 maintainer 참조 문서다. scaffold 대상 아님.
 
+**경계:** 이 파일은 **실행 명령 카탈로그(HOW — 어떤 명령으로 검증하나)**다. 실패 보고·복구 흐름, Validation Checklist, Commit Approval 같은 **판단·정책(WHETHER/WHEN — 진행해도 되나)**은 `docs/HARNESS-RECOVERY-VALIDATION.md`를 따른다.
+
 관련 문서:
 - `docs/AGENT-WORKFLOW.md` Verification Defaults — 변경 유형별 기본 검증 규칙
 - `skills/workflow/repo-health.md` — `/repo-health` 전체 절차 및 Required Surface Matrix
-- `docs/HARNESS-RECOVERY-VALIDATION.md` — 실패 상태 진입 후 복구 절차
+- `docs/HARNESS-RECOVERY-VALIDATION.md` — 실패/복구·Validation Checklist·Commit Approval **판단 정책** (이 파일=명령, 그쪽=판단)
 
 ---
 
