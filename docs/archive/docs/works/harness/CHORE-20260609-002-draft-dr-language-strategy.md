@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260609-002
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: DR 등록 시 결정 성숙도 3-way triage(Accepted/Draft/OQ) 도입 + Draft DR 생명주기(생성·EXIT·hygiene) 명문화(DR-029, Accepted). 첫 Draft DR로 모국어/영어권 언어 규정 i18n 전략을 작성(DR-030, Draft). HARNESS.md P2(1) "DR-007 rule scope 명확화"를 DR-030으로 흡수.
 appetite: 1d
@@ -94,6 +94,7 @@ related_work: []
 
 - 착수 시 backlog `HARNESS.md:302` P2(1) "DR-007 rule scope 명확화" candidate를 본 Work(DR-030)로 흡수.
 - 직전 commit에서 `CHORE-20260609-001`이 tracking ID로 소비되어 본 Work는 `-002` 사용(ID 재사용 금지).
+- (Archived 2026-06-09) PR #116 merge 후 archive drain. `docs/archive/docs/works/harness/`로 이동.
 - **[2026-06-09 영향도 분석] Draft DR 인프라 상당수 기존재 → DR-029 re-scope:**
   - 기존재(참조만, 재서술 금지): Draft 상태 정의·"PR merge 전 유지"(`DECISION-TEMPLATE.md:4,11`, `record-decision §DR Lifecycle`), Draft에서 Decision 빈 칸(`DECISION-TEMPLATE.md:28`), Draft=PLAN cascade 미발동(`record-decision:51`), Draft=cascade 감사 제외(`HARNESS-PROTOCOL §390`), Superseded/archive/parent-child/linked, DR-worthy 기준(`record-decision §DR-Worthy Criteria`), Recent Decisions=Accepted마다 판정(`record-decision:32-36`).
   - NET-NEW(DR-029 실제 범위): ① 3-way 등록 triage(record-decision §Procedure가 "확정된 의사결정" 전제) ② 승격 프로세스 Draft→Accepted ③ Dropped 종료 상태+번호 retire ④ repo-health Draft hygiene surfacing ⑤ 템플릿 Open Points/Promotion Conditions 섹션.
