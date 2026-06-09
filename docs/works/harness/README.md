@@ -12,12 +12,12 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260609-002 | Draft DR 체계 도입 + 언어 전략 Draft DR | 2026-06-09 | `docs/works/harness/CHORE-20260609-002-draft-dr-language-strategy.md` |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260609-002 | Draft DR 체계 도입 + 언어 전략 Draft DR | 2026-06-09 | `docs/archive/docs/works/harness/CHORE-20260609-002-draft-dr-language-strategy.md` |
 | CHORE-20260608-003 | VERIFICATION-COMMANDS 보완 + pointer 배선 | 2026-06-08 | `docs/archive/docs/works/harness/CHORE-20260608-003-verification-commands-hardening.md` |
 | CHORE-20260608-002 | 버전 체계 정의 + VERSION 정렬 | 2026-06-08 | `docs/archive/docs/works/harness/CHORE-20260608-002-versioning-policy.md` |
 | CHORE-20260608-001 | HARNESS.md 백로그 포맷 2단 구조 전환 | 2026-06-08 | `docs/archive/docs/works/harness/CHORE-20260608-001-harness-backlog-format-2tier.md` |
