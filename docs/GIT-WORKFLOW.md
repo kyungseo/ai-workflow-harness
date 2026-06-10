@@ -226,6 +226,8 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 gh pr create --base main --head develop --title "release: ..."
 ```
 
+> **Release marking (source repo 한정):** `VERSION` bump(semver 판정)과 머지 후 tag(`ai-workflow-v{VERSION}`)·GitHub 릴리즈 노트 절차는 `docs/maintainer/VERSIONING.md` §3(Bump 절차)·§5(릴리즈 노트 템플릿)를 따른다. **GitHub Release 객체 생성은 선택이며, tag·`VERSION` 정합은 필수다.** (scaffold 적용 repo는 자체 버전 정책. 이 포인터 대상 `VERSIONING.md`는 source 전용이라 scaffold 템플릿에는 포함하지 않는다.)
+
 ### 3-4. Post-Merge Develop Sync
 
 PR merge 후:
