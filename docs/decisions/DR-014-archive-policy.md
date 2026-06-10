@@ -2,6 +2,7 @@
 
 Date: 2026-05-18
 Status: Accepted
+Linked DRs: DR-031
 
 ## Question
 
@@ -50,7 +51,7 @@ docs/archive/
 |------|------|
 | Work 파일 Done | `docs/works/` → `docs/archive/docs/works/` 로 이동 |
 | 문서 버전업 | 구 버전을 `-v{N}` 접미사로 백업 후 원본 수정 |
-| Product track work 완료/마일스톤 | `docs/works/product/` → `docs/archive/docs/works/product/` 이동 (DR-031) |
+| Product track work 완료/마일스톤 | `docs/works/product/` → `docs/archive/docs/works/product/` 이동 |
 | 대규모 리팩토링 | `snapshots/` 하위에 디렉토리 단위 스냅샷 |
 
 ### 기존 스냅샷 처리
