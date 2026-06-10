@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260610-010
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: HARNESS backlog 전체를 의존성 기반으로 reorg(시퀀싱)한다. 원 내용(항목+detail) 무손실, 기존 work/문서의 참조 링크 업데이트, detail 가독성(ul) 포함. 이번 세션에서 6개 workflow 정비 테마를 병합/링크 등록(준비 단계) 완료. 본 reorg(시퀀싱·재배열·참조 정합·재포맷)는 fresh session + plan mode에서 수행.
 appetite: 1d

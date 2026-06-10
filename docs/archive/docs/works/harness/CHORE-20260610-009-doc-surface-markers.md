@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260610-009
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: docs user/maintainer 표면 정리 요청을 "물리 이동" 대신 DR-021 logical marker로 처리(방안 A). #3 maintainer/README에 audience×distribution 분류 표 추가, #2 P1 "optional pack 재정의" 백로그에 docs/ 물리 레이아웃 재검토 라우팅, DR-021 Amendment History에 재검토 의문 기록(결정 불변). 물리 이동·scaffold 변경·DR 뒤집기 없음.
 appetite: 0.25d

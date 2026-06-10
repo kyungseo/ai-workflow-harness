@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260610-005
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: shipped 표면 문서가 scaffold seed에 없는 DR을 참조해 target에서 dangling을 만드는 패턴을 예방+해소한다. (정책) DR-033으로 closure 규약 확정(mode-a self-describe / mode-b Linked DRs 가드 / seed SSoT=create-harness.sh 파생). (A) 작성 rule. (B) source-only static check + VERIFICATION-COMMANDS·HARNESS-RECOVERY-VALIDATION·repo-health 배선 + invariant [1] Linked DRs 제외. (remediation) 기존 4건(DR-029→DR-011/030, DR-013/014→DR-031) 해소. backlog P1 closure guard + P2 remediation 통합.
 appetite: 1d

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260610-003
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: harness "Phase" 모델을 descriptive + optional 라벨로 de-formalize한다. 제거된 `Phase completion criteria`/`Current Milestone Criteria` 필드의 dangling 참조를 일괄 정정, T3 phase-transition 트리거를 "criteria 게이트"에서 "전환 기록(Recent Decisions + PLAN Roadmap Lifecycle)"으로 재정의, Work Done을 진실 단위로 명문화(phase 경계 비강제). 추가로 routing 중복(works/{category}) framing 통일 + scaffold target STATUS/PLAN의 "Phase 1" 강제를 phaseless-default로 정합(DR-031 정렬). DR-032로 결정 기록. backlog HRN-030 candidate 착수.
 appetite: 1d

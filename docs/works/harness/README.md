@@ -13,17 +13,18 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260610-010 | Backlog 정리 — 의존성 reorg + 시퀀싱 | 2026-06-10 | `docs/works/harness/CHORE-20260610-010-backlog-reorg.md` |
-| CHORE-20260610-009 | Doc surface logical markers (방안 A) | 2026-06-10 | `docs/works/harness/CHORE-20260610-009-doc-surface-markers.md` |
-| CHORE-20260610-008 | Gitflow sync/hotfix 공백 보강 | 2026-06-10 | `docs/works/harness/CHORE-20260610-008-gitflow-sync-hardening.md` |
-| CHORE-20260610-007 | Shipped DR closure check pre-commit hook 게이트화 | 2026-06-10 | `docs/works/harness/CHORE-20260610-007-closure-hook.md` |
-| CHORE-20260610-005 | Shipped DR reference closure guard + 4건 remediation | 2026-06-10 | `docs/works/harness/CHORE-20260610-005-shipped-dr-closure.md` |
-| CHORE-20260610-003 | Phase 모델 de-formalize + routing/decomposition 정리 (HRN-030) | 2026-06-10 | `docs/works/harness/CHORE-20260610-003-phase-deformalize.md` |
+| _(none)_ | | | |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260610-010 | Backlog 정리 — 의존성 reorg + 시퀀싱 | 2026-06-10 | `docs/archive/docs/works/harness/CHORE-20260610-010-backlog-reorg.md` |
+| CHORE-20260610-009 | Doc surface logical markers (방안 A) | 2026-06-10 | `docs/archive/docs/works/harness/CHORE-20260610-009-doc-surface-markers.md` |
+| CHORE-20260610-008 | Gitflow sync/hotfix 공백 보강 | 2026-06-10 | `docs/archive/docs/works/harness/CHORE-20260610-008-gitflow-sync-hardening.md` |
+| CHORE-20260610-007 | Shipped DR closure check pre-commit hook 게이트화 | 2026-06-10 | `docs/archive/docs/works/harness/CHORE-20260610-007-closure-hook.md` |
+| CHORE-20260610-005 | Shipped DR reference closure guard + 4건 remediation | 2026-06-10 | `docs/archive/docs/works/harness/CHORE-20260610-005-shipped-dr-closure.md` |
+| CHORE-20260610-003 | Phase 모델 de-formalize + routing/decomposition 정리 (HRN-030) | 2026-06-10 | `docs/archive/docs/works/harness/CHORE-20260610-003-phase-deformalize.md` |
 | CHORE-20260610-001 | source-only maintainer 문서 디렉토리 정리 | 2026-06-10 | `docs/archive/docs/works/harness/CHORE-20260610-001-maintainer-doc-dir.md` |
 | CHORE-20260609-005 | Product Track 네이밍 전환 (PHASE{n} → PRODUCT) | 2026-06-09 | `docs/archive/docs/works/harness/CHORE-20260609-005-product-track-naming.md` |
 | CHORE-20260609-002 | Draft DR 체계 도입 + 언어 전략 Draft DR | 2026-06-09 | `docs/archive/docs/works/harness/CHORE-20260609-002-draft-dr-language-strategy.md` |
