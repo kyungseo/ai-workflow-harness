@@ -7,12 +7,13 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
-| CHORE-20260610-010 | Backlog 정리 — 의존성 reorg + 시퀀싱 | `docs/works/harness/CHORE-20260610-010-backlog-reorg.md` |
+| _(none)_ | | |
 
 ## Done (Archive Pending)
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260610-010 | Backlog 정리 — 의존성 reorg + 시퀀싱 | 2026-06-10 | `docs/works/harness/CHORE-20260610-010-backlog-reorg.md` |
 | CHORE-20260610-009 | Doc surface logical markers (방안 A) | 2026-06-10 | `docs/works/harness/CHORE-20260610-009-doc-surface-markers.md` |
 | CHORE-20260610-008 | Gitflow sync/hotfix 공백 보강 | 2026-06-10 | `docs/works/harness/CHORE-20260610-008-gitflow-sync-hardening.md` |
 | CHORE-20260610-007 | Shipped DR closure check pre-commit hook 게이트화 | 2026-06-10 | `docs/works/harness/CHORE-20260610-007-closure-hook.md` |
