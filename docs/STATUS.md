@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-10 (Shipped DR reference closure — seed-closed DR 참조 규약 + source-only static check, pre-existing dangling 4건 해소(DR-033) — CHORE-20260610-005)
+Last updated: 2026-06-10 (Shipped DR closure check를 pre-commit hook으로 hard 게이트화 — source repo 자동 강제 / adopter no-op(DR-033 enforcement) — CHORE-20260610-007)
 
 ## Current State
 
