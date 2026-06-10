@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260610-008 | Gitflow sync/hotfix 공백 보강 | 2026-06-10 | `docs/works/harness/CHORE-20260610-008-gitflow-sync-hardening.md` |
 | CHORE-20260610-007 | Shipped DR closure check pre-commit hook 게이트화 | 2026-06-10 | `docs/works/harness/CHORE-20260610-007-closure-hook.md` |
 | CHORE-20260610-005 | Shipped DR reference closure guard + 4건 remediation | 2026-06-10 | `docs/works/harness/CHORE-20260610-005-shipped-dr-closure.md` |
 | CHORE-20260610-003 | Phase 모델 de-formalize + routing/decomposition 정리 (HRN-030) | 2026-06-10 | `docs/works/harness/CHORE-20260610-003-phase-deformalize.md` |
