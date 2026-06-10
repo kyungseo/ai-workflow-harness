@@ -6,8 +6,7 @@ policy_type: source-gitflow
 
 이 프로젝트의 Git 브랜치 전략, 일상 작업 사이클, CI 연동 방식을 정의한다.
 
-> **현재 채택 전략: Gitflow** (feature → develop → main)
-> 전략 변경 검토 중: `docs/backlog/HARNESS.md` HRN-FUT-004 참조
+> **채택 전략: Gitflow** (feature → develop → main) — 이 repo는 확정. scaffold 적용 repo는 자체 결정.
 > 전략 변경 시 §1~§3 전체 재검토 필요
 
 ## 0. Branch Isolation Rule
