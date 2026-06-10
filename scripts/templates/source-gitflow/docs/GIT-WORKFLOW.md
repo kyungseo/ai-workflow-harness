@@ -224,8 +224,9 @@ git push origin --delete feature/{name}
 
 > 이 release cycle과 Public Clean Baseline Gate는 이 프로젝트의 기본 정책이다.
 > project-specific 요구사항에 따라 gate 항목을 조정할 수 있다.
+> 버전·릴리즈 표식(VERSION·tag·릴리즈 노트) 정책은 프로젝트가 자체 수립한다.
 
-`main`은 일반 통합 브랜치가 아니라 **public release snapshot**이다.
+`main`은 일반 통합 브랜치가 아니라 **release snapshot**이다.
 feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
 의미 있는 패치(하나 또는 여러 feature 묶음)가 완료되어 release 준비가 됐을 때만 develop → main PR을 만든다.
 
@@ -240,13 +241,12 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 | --- | --- | --- |
 | Working tree | develop working tree가 clean | `git status --short --branch` |
 | STATUS Active Work | `docs/STATUS.md` Active Work 비어 있음 | file inspection |
-| STATUS Blockers/OQ | Open Blocker/OQ 없음. 남길 경우 public 사용자에게 보여도 되는 이유 기록 | file inspection |
-| STATUS Next Actions | 비어 있거나 public 사용자가 따라도 되는 항목만 존재 | file inspection |
+| STATUS Blockers/OQ | Open Blocker/OQ 없음. 남길 경우 외부/이해관계자에게 노출돼도 되는 이유 기록 | file inspection |
+| STATUS Next Actions | 비어 있거나 외부에 노출돼도 되는 항목만 존재 | file inspection |
 | Work lifecycle | `docs/works/*/*.md`에 `status: Done` archive pending 없음 | `rg -n "^status: Done" docs/works` |
 | Work active leakage | release 대상에 internal Active Work가 남지 않음 | `rg -n "^status: Active" docs/works` |
 | Archive state | `docs/archive/docs/works/**` 아래 Work는 모두 `status: Archived` | `rg -n "^status:" docs/archive/docs/works` |
-| `/session-start` output | public clone 첫 `/session-start`가 clean idle 또는 의도한 상태로 시뮬레이션됨 | STATUS 기준 문서 시뮬레이션 |
-| Adoption path | README → onboarding 흐름 정합 | link/path inspection |
+| `/session-start` output | 첫 `/session-start`가 clean idle 또는 의도한 상태로 시뮬레이션됨 | STATUS 기준 문서 시뮬레이션 |
 | Docs cascade | release gate 관련 문서 변경 시 canonical/tool/user-facing cascade 정렬 확인 | targeted cascade check |
 | Validation | `git diff --check` 통과 | `git diff --check` |
 
@@ -263,7 +263,7 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 
 - Active Work가 남아 있는 상태
 - Done archive pending Work가 남아 있는 상태
-- Open Blocker/OQ가 public 사용자에게 혼란을 줄 수 있는 상태
+- Open Blocker/OQ가 외부/이해관계자에게 혼란을 줄 수 있는 상태
 - README 또는 onboarding 경로가 stale한 상태
 - feature branch에서 직접 main으로 PR을 여는 경우
 
