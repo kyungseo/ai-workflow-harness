@@ -33,6 +33,9 @@ AI Workflow Harness backlog다.
 | — | P1 | Candidate | L2 | Scaffold multi-user clone verification |
 | — | P1 | Candidate | L2 | 외부화 실패모드 통합 설계 원칙 명문화 |
 | — | P1 | Candidate | L2 | Scaffold/tool-surface alignment 점검 체계화 |
+| — | P1 | Candidate | L2 | harness workflow 검증 테스트 체계 정립 |
+| — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
+| — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
 | — | P2 | Candidate | L2 | Harness protocol trigger family simplification |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | HRN-032 | P2 | Candidate | L2 | Windows 지원 확장 |
@@ -164,6 +167,8 @@ AI Workflow Harness backlog다.
 
 **Task:** `docs/HARNESS-PROTOCOL.md` T1~T17 trigger가 복잡해졌으므로 Decision / Planning / Surface / Scaffold / Finalization / Archive family로 재그룹화할 수 있는지 검토한다. 단, P0 gate series가 T15~T17/c4를 건드리므로 P0 완료 전 대형 재작성은 피한다.
 
+**Trigger 정비 (사용자 요청 흡수, 2026-06-10):** "Trigger 정비"는 별도 신규 항목이 아니라 이 항목으로 합친다. `Canonical 개념 계층화 + context-routing restructure`(P1)가 trigger를 상위 개요 + 하위 포인터 구조로 다루므로 **그 restructure와 시퀀싱을 함께 결정**한다 (trigger family 재그룹화 ⊂ canonical restructure).
+
 **Dependencies:** DR-024, DR-025, P0 gate series
 
 **Done Criteria:** trigger 의미는 유지하면서 사용자/AI가 빠르게 찾을 수 있는 family summary 또는 quick reference를 추가. core 문서 비대화 없이 pointer 구조 유지
@@ -269,6 +274,100 @@ AI Workflow Harness backlog다.
 - 원칙이 "harness docs = SSoT" 방향과 일관성 있는지 확인
 
 **Verification:** agent별 지속 컨텍스트 저장소(Claude `memory/`, Codex profile, Cursor user rules) grep으로 harness 행동 패턴 잔존 여부 확인. `docs/BEHAVIOR-PRINCIPLES.md` 또는 정책 파일에 cross-agent 원칙 반영 확인. tool surface · adopter cascade · scaffold · README/GUIDE/MANUAL: 해당 없음(N/A).
+
+---
+
+#### harness workflow 검증 테스트 체계 정립
+
+> 2026-06-10 등록 (사용자 테마). 다른 모든 리팩토링의 enabler 성격 — reorg 시 선순위 후보.
+
+**Task:**
+
+- workflow 전체에 대한 test-driven 검증 체계를 정립·도입한다. 변경 발생 시마다 영향도 검증이 일관·정확하게 수행되도록 강제한다.
+- 매 변경마다 AI에게 요구되는 검증 surface를 표준화한다: tool 표면 · cascade · canonical · 공통 규칙/규정 · scaffold · user 표면(README, MANUAL/GUIDE) · prompts 정렬 · 그 외.
+- 깊은 수준에서는 실제 scaffold 후 다양한 시나리오에 따른 시뮬레이션 테스트를 포함한다. 현재는 그때그때 검증의 정도가 다르고 놓치는 것이 많음 → 검증 기준을 정하고 test 코드 기반으로 일관·정확하게 만든다.
+- 테스트 기본 절차를 정의한다: `/tmp`는 AI 권한 때문에 dry만 수행되는 경우가 많으므로, 테스트 디렉토리를 프로젝트 하위 `temp/`로 고정하는 등 이상 없이 실테스트할 수 있는 절차를 둔다.
+- **repo-health와는 별개 작업**으로 둔다.
+- `docs/maintainer/**`(VERIFICATION-COMMANDS 등)도 참고한다.
+
+**Dependencies:**
+
+- 기존 `scripts/tests/`(`check-scaffold-invariants.sh`, `check-shipped-dr-closure.sh`) 위에 구축.
+- 연계: `Scaffold/tool-surface alignment 점검 체계화`(P1, invariants 자산), `Harness dev/test 노이즈 방지`(P2, harness-only 검증 전제).
+
+**Done Criteria:**
+
+- surface별 검증 기준(무엇을 어느 깊이로)이 정의되고 test 코드로 표현됨.
+- `temp/` 기반 실테스트 기본 절차가 문서화됨(`/tmp` dry 한계 회피).
+- repo-health와 책임 경계가 명확히 분리됨.
+- `docs/maintainer/` 검증 카탈로그와 정합.
+
+**Verification:**
+
+- 대표 변경 시나리오에서 test suite가 surface 누락 없이 검증.
+- `temp/` 실생성 테스트가 권한 문제 없이 수행됨.
+
+---
+
+#### Canonical 개념 계층화 + context-routing restructure
+
+> 2026-06-10 등록 (사용자 테마 — README 흐름 검토 + 개념 상위화 통합).
+
+**Task:**
+
+- README의 Repository Structure 흐름이 정확한지, 흐름 자체를 리팩토링할 필요는 없는지, 현재 흐름이 효율적으로 구성·관리되고 있는지 점검한다.
+- 상위→하위 흐름에서 중복된 내용을 제거한다.
+- 기본 개념·구조는 상위(예: `docs/AGENT-WORKFLOW.md`)에 짧은 개요를 먼저 두고, 하위 흐름의 필요한 지점에서 구체화 + 상세는 하위 링크로 위임하는 구조로 조정할지 검토한다. 대상 예:
+  - 하네스 기본 구조, Operating Tracks, project constants
+  - 문서 구조와 매핑/포인터
+  - State Machine 기본 구조
+  - 전역에 산재한 baseline · routing · gate · trigger · Approval Matrix · Finalization · git workflow · verification (그 외 추가 가능)
+  - scaffold 기본 개념·구조·상세 포인터
+- 목적: 사용자의 흐름 이해와 AI의 효율적 context 로드·전개 양쪽에 유리하게.
+- **[불변 제약] AI workflow가 주축이다. 사용자 이해의 흐름을 돕는다는 이유로 workflow가 사용자 매뉴얼화되어서는 절대 안 된다.**
+
+**Dependencies:**
+
+- 연계: `Prompt surface diet + optional pack 재정의`(P1, canonical weight 경량화), `skills/workflow/repo-health.md slice 분리`(P2), `skills/workflow/work-doc.md class 재검토`(P2), `Harness protocol trigger family simplification`(P2, trigger 재그룹화 ⊂ 이 restructure).
+- `harness workflow 검증 테스트 체계 정립`(P1) 선행 권장 — restructure cascade를 test-backed로 검증.
+- DR-021, DR-023.
+
+**Done Criteria:**
+
+- README 흐름 정확성 검증 + (필요 시) 리팩토링안 반영.
+- 상위 개요 + 하위 포인터 구조로 중복 제거, canonical 비대화 없이.
+- AI 매뉴얼화 금지 제약 충족(workflow 주축 유지) 확인.
+
+**Verification:**
+
+- before/after context 로드 시나리오(사람/AI)에서 개요→상세 경로가 끊김 없이 연결됨.
+- 중복 grep으로 제거 확인, stale pointer 없음.
+
+---
+
+#### 문서-only 규칙 강제화 (CI/hook/hard-gate)
+
+> 2026-06-10 등록 (사용자 테마).
+
+**Task:**
+
+- 문서상으로만 기술된 내용 중 ci · hook · hard gate 및 가용한 다른 수단으로 강제화할 주요 요소를 검토하고 구현한다.
+- 우선순위는 위반 빈도·실피해가 큰 규칙부터.
+
+**Dependencies:**
+
+- 연계: `repo-health gate series 보강`(P1), 기존 gate series(CHORE-20260606-006~016), DR-024, DR-025.
+- 구조 확정 후 착수 권장 — 곧 restructure될 표면을 hard-gate하지 않도록 `Canonical 개념 계층화 + context-routing restructure`(P1) 이후.
+
+**Done Criteria:**
+
+- 강제화 후보 규칙 목록 + 수단(CI/hook/hard-gate) 매핑 결정.
+- 선정 규칙에 대한 enforcement 구현 + 우회/예외 클래스 설계(`repo-health gate series 보강`의 예외 클래스 논의 반영).
+
+**Verification:**
+
+- inject-revert로 위반 차단 + 정상 통과 확인.
+- 예외(상태 파일 tracking-only 등) 정상 동작 확인.
 
 ---
 

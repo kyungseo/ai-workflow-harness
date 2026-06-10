@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-10 (Shipped DR closure check를 pre-commit hook으로 hard 게이트화 — source repo 자동 강제 / adopter no-op(DR-033 enforcement) — CHORE-20260610-007)
+Last updated: 2026-06-10 (Backlog 정리 Work 착수 — workflow 정비 6개 테마 병합/링크 등록 + 의존성 reorg 계획 수립, 실행은 다음 세션 — CHORE-20260610-010)
 
 ## Current State
 
@@ -27,6 +27,7 @@ Last updated: 2026-06-10 (Shipped DR closure check를 pre-commit hook으로 hard
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| CHORE-20260610-010 | Backlog 정리 — 의존성 reorg + 시퀀싱 (계획 수립, 실행은 다음 세션) | `docs/works/harness/CHORE-20260610-010-backlog-reorg.md` |
 
 ## Blockers And Open Questions
 

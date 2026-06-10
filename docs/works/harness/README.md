@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| CHORE-20260610-010 | Backlog 정리 — 의존성 reorg + 시퀀싱 | `docs/works/harness/CHORE-20260610-010-backlog-reorg.md` |
 
 ## Done (Archive Pending)
 
