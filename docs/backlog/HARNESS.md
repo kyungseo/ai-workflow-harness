@@ -33,10 +33,8 @@ AI Workflow Harness backlog다.
 | — | P1 | Candidate | L2 | Scaffold multi-user clone verification |
 | — | P1 | Candidate | L2 | 외부화 실패모드 통합 설계 원칙 명문화 |
 | — | P1 | Candidate | L2 | Scaffold/tool-surface alignment 점검 체계화 |
-| — | P1 | Candidate | L2 | Shipped DR reference closure guard (예방 — 작성 rule + static check) |
 | — | P2 | Candidate | L2 | Harness protocol trigger family simplification |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
-| — | P2 | Candidate | L2 | Shipped DR seed → 비-seed DR dangling 4건 remediation |
 | HRN-032 | P2 | Candidate | L2 | Windows 지원 확장 |
 | — | P2 | Candidate | L3 | Scaffold CLI naming audit |
 | — | P2 | Candidate | L2 | `skills/workflow/repo-health.md` slice 분리 |
@@ -269,30 +267,6 @@ AI Workflow Harness backlog다.
 - 원칙이 "harness docs = SSoT" 방향과 일관성 있는지 확인
 
 **Verification:** agent별 지속 컨텍스트 저장소(Claude `memory/`, Codex profile, Cursor user rules) grep으로 harness 행동 패턴 잔존 여부 확인. `docs/BEHAVIOR-PRINCIPLES.md` 또는 정책 파일에 cross-agent 원칙 반영 확인. tool surface · adopter cascade · scaffold · README/GUIDE/MANUAL: 해당 없음(N/A).
-
----
-
-#### Shipped DR reference closure guard (예방 — 작성 rule + static check)
-
-**Task:** shipped 표면(core canonical 문서·shipped DR seed·adapter/rule/prompt)이 scaffold seed에 없는 DR을 참조해 target에서 dangling을 만드는 패턴을 **사전 예방**한다. (A) 작성 시점 rule: `.claude/rules/docs-workflow.md` + `HARNESS-PROTOCOL.md` cascade trigger에 "shipped 표면 DR 인용 시 seed 대조 → 비-seed면 self-describe/seed 인용/seed 편입". (B) scaffold 생성 없는 source-only static check: `docs/maintainer/VERIFICATION-COMMANDS.md`에 Layer 신설 + Release Full Sweep 편입(HOW), `docs/HARNESS-RECOVERY-VALIDATION.md`에 validation 정책 pointer(WHETHER/WHEN), `skills/workflow/repo-health.md` cascade 배선. seed 목록은 `create-harness.sh` adapt 블록에서 **파생**(제3 사본 금지). CHORE-20260610-003 검증 중 `HARNESS-PROTOCOL → DR-032` dangling을 뒤늦게 발견한 경험에서 파생.
-
-**Dependencies:** 없음
-
-**Done Criteria:** 작성 rule 명문화, source-only static check 명령 신설(VERIFICATION-COMMANDS Layer + Release Full Sweep), HARNESS-RECOVERY-VALIDATION 정책 pointer, repo-health cascade 배선, seed 목록 SSoT 파생 확인
-
-**Verification:** 의도적 dangling 케이스로 check 탐지 시뮬레이션, repo-health cascade 동작 확인
-
----
-
-#### Shipped DR seed → 비-seed DR dangling 4건 remediation
-
-**Task:** `check-scaffold-invariants.sh [1]`의 pre-existing dangling 4건(`DR-029→DR-011/030`, `DR-013/014→DR-031`) 해소. shipped DR seed 파일이 비-seed DR을 참조 → target dangling. **모드 b 정책 결정 포함:** (i) 참조 DR을 seed 편입 vs (ii) shipped DR 내 비-seed 참조 self-describe/제거 vs (iii) adapt()가 비-seed DR 참조 정리. CHORE-20260610-003 검증에서 발견.
-
-**Dependencies:** Shipped DR reference closure guard 착수 시 모드 b 정책 공유 권장
-
-**Done Criteria:** dangling 4건 0, 모드 b 정책 확정(DR 또는 protocol 반영), invariant [1] core A-class PASS
-
-**Verification:** scaffold 생성 후 `check-scaffold-invariants.sh [1]` PASS
 
 ---
 
