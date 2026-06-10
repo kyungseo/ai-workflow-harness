@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260610-001 | source-only maintainer 문서 디렉토리 정리 | 2026-06-10 | `docs/works/harness/CHORE-20260610-001-maintainer-doc-dir.md` |
 
 ## Archived
 

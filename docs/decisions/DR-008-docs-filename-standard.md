@@ -16,7 +16,7 @@ Status: Accepted
 | `docs/` 루트, `docs/backlog/`, `docs/decisions/` | UPPERCASE-HYPHENATED | `HARNESS-PROTOCOL.md`, `PRODUCT.md`, `DR-008-*.md` |
 | `docs/works/{category}/` | `{ID}-{lowercase-topic}.md` | `HRF-002-work-system-refactor.md`, `PRE-C1-architecture-audit.md` |
 | `docs/archive/` | lowercase-hyphenated | `phase1-status.md`, `phase1-plan.md` |
-| `docs/migrations/` | lowercase-hyphenated | `canonical-adapter-rename.md` |
+| `docs/maintainer/migrations/` | lowercase-hyphenated | `canonical-adapter-rename.md` |
 
 ## Options Considered
 
