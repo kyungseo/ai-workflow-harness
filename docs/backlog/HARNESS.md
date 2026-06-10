@@ -273,6 +273,7 @@ AI Workflow Harness backlog다.
 
 - reorg(CHORE-20260610-010)가 `docs/backlog/HARNESS.md`에 ad-hoc 도입한 **`Seq` 열 · `Sequencing Guide` 섹션 · 각 항목 `> Seq …` 주석**이 governing spec 없이 한쪽 파일에만 존재한다.
 - 먼저 결정: **(A) 영구 스키마** — 매 항목 Seq 유지 / **(B) 1회성 스냅샷** — 테이블 열은 부적절, 경량 grouping·주석으로 강등 또는 제거.
+- **기본 가설(결정 미확정):** (B) 권장 — Seq는 `Dependencies`에서 파생되는 derived data라 Summary 열은 제거하고, 의존성 SSoT는 `Dependencies` 필드·현재 시퀀싱 뷰는 STATUS Next Actions가 담당. churn↑·cascade·drift 비용이 at-a-glance 이점을 상회. 'Seq=착수축 / Priority=긴급도축' 개념 설명 유지 여부는 착수 시 판단.
 - 결정에 따라 divergence 4건을 정렬한다:
   - scaffold 템플릿(`scripts/create-harness.sh`)이 생성하는 backlog는 5열(`ID|Priority|Status|Risk|Title`) — Seq 없음.
   - `skills/workflow/work-register.md` Backlog Entry Format도 5열 — 다음 등록 시 6열 테이블 깨짐.
