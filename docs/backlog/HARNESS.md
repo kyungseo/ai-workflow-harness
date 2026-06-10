@@ -121,13 +121,15 @@ AI Workflow Harness backlog다.
 
 **하위 과제 2 — invariants → `/repo-health` 연계 설계 검토:** `check-scaffold-invariants.sh`를 `/repo-health` 게이트에 포함하는 방법을 검토한다. 현행 `/repo-health`가 어떤 표면을 점검하는지 확인하고, invariants 5개 체크 중 repo-health에 추가할 항목과 ad-hoc 실행으로 남길 항목을 구분한다. 자동화 부담 없이 "PR merge 전 또는 harness 마일스톤 완료 시 실행" trigger를 `HARNESS-PROTOCOL.md`에 추가하는 것도 선택지. 장기: hardcode write_text → adapt 전환 검토.
 
+**하위 과제 3 — invariant leak-scan coverage gap (2026-06-10 발견, PR #139):** `check-scaffold-invariants.sh` [2] no-source-only-leakage가 `core_files()`만 스캔한다. 그런데 `docs/GIT-WORKFLOW.md`(source-gitflow scaffold가 배포하는 표면)는 `core_files`에 없어, 그 파일에 `ai-workflow-harness` 등 누수 토큰이 들어가도 **미검출**된다(PR #139에서 generic 처리로 회피했으나 gap은 잔존). shipped이지만 비-core인 표면(`GIT-WORKFLOW.md` 등)을 leak 스캔 대상에 포함할지 `core_files` 정의를 재검토한다.
+
 **Dependencies:**
 
 - —
 
-**Done Criteria:** [과제 1] fresh scaffold invariants PASS + tool-surface grep 이상 없음 / [과제 2] repo-health 연계 여부 결정 및 HARNESS-PROTOCOL trigger 반영
+**Done Criteria:** [과제 1] fresh scaffold invariants PASS + tool-surface grep 이상 없음 / [과제 2] repo-health 연계 여부 결정 및 HARNESS-PROTOCOL trigger 반영 / [과제 3] leak-scan 대상에 shipped 비-core 표면 포함 여부 결정 — 포함 시 `core_files` 확장, 제외 시 근거 기록
 
-**Verification:** [과제 1] `check-scaffold-invariants.sh` OVERALL PASS, 미해결 항목 없음 / [과제 2] `/repo-health` 실행 결과에 invariants 상태 포함 또는 pointer 추가
+**Verification:** [과제 1] `check-scaffold-invariants.sh` OVERALL PASS, 미해결 항목 없음 / [과제 2] `/repo-health` 실행 결과에 invariants 상태 포함 또는 pointer 추가 / [과제 3] `GIT-WORKFLOW.md`에 누수 토큰 inject → invariants가 FAIL로 검출하는지 확인(또는 의도적 제외 근거 기록)
 
 ---
 
