@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260610-007
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: shipped DR reference closure(DR-033) static check를 pre-commit hook으로 하드 게이트화한다. soft(AI 재량) → hard(자동 차단). scaffold 고려: 배포되는 pre-commit에 closure 블록을 넣되 check 스크립트 존재 가드로 source repo만 실행, target은 no-op(scaffold가 scripts/tests 미복사). DR-033 enforcement이므로 신규 DR 없이 DR-033 amend.
 appetite: 0.5d

@@ -152,4 +152,4 @@ PLAN은 **현재 + 다음 horizon만** 유지한다. STATUS Recent Decisions의 
 
 | ID | Question | Status |
 | --- | --- | --- |
-| AWH-OQ-001 | historical product docs를 어느 범위까지 남길 것인가? | Deferred — archive policy가 실제로 필요해지는 시점에 신규 Work로 재등록. `docs/backlog/HARNESS.md` Deferred Ideas 참조 |
+| AWH-OQ-001 | historical product docs를 어느 범위까지 남길 것인가? | 흡수됨(2026-06-10, CHORE-20260610-010) — `docs/backlog/HARNESS.md` 신규 항목 "Archive 누적 관리 정책"(P2)으로 통합. 범위를 work + decision + 기타 archived artifact 누적으로 확장 |

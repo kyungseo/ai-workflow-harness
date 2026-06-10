@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260610-008
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: GIT-WORKFLOW.md에 feature↔develop sync 지침과 hotfix cycle 등 일반 gitflow 공백을 보강한다. 5항목 — §2-3(신설) Sync With Develop, 충돌 해소, force-push 정책, §3-5(신설) Hotfix Cycle + develop 역병합, cascade(template + .claude rule pointer). repo본 docs/GIT-WORKFLOW.md와 scaffold 배포 template 동시 반영. 신규 DR 없이 DR-017(merge strategy) 운영 연장으로 본문 참조.
 appetite: 0.5d

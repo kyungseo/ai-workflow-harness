@@ -1,12 +1,13 @@
 ---
 id: CHORE-20260610-010
 priority: P1
-status: Active
+status: Archived
 risk: L2
 scope: HARNESS backlog 전체를 의존성 기반으로 reorg(시퀀싱)한다. 원 내용(항목+detail) 무손실, 기존 work/문서의 참조 링크 업데이트, detail 가독성(ul) 포함. 이번 세션에서 6개 workflow 정비 테마를 병합/링크 등록(준비 단계) 완료. 본 reorg(시퀀싱·재배열·참조 정합·재포맷)는 fresh session + plan mode에서 수행.
 appetite: 1d
 planned_start: 2026-06-10
-planned_end:
+planned_end: 2026-06-10
+actual_end: 2026-06-10
 related_dr: [DR-021, DR-023]
 related_troubleshooting: []
 related_work: [CHORE-20260610-009]
@@ -56,11 +57,11 @@ backlog에 등록·병합한 항목 (content 무손실, additive):
 
 ## Done Criteria
 
-- [ ] 21개+신규 테마가 의존성 기반으로 시퀀싱됨(순환 없음, enabler 선순위)
-- [ ] 중복 항목 병합/링크 확정, 누락 detail 0 (재정렬 전후 무손실 diff)
-- [ ] backlog를 참조하는 work/docs 링크 정합 (`grep` 확인)
-- [ ] detail ul 포맷 일괄 적용
-- [ ] `git diff --check` clean, shipped DR closure green
+- [x] 21개+신규 테마가 의존성 기반으로 시퀀싱됨(순환 없음, enabler 선순위) — Wave DAG W1~W4 + 독립 병렬, Summary에 `Seq` 열 도입
+- [x] 중복 항목 병합/링크 확정, 누락 detail 0 (재정렬 전후 무손실 diff) — 원본 20개 제목 전부 잔존, distinctive phrase spot-check 통과
+- [x] backlog를 참조하는 work/docs 링크 정합 (`grep` 확인) — live 참조는 WORKFLOW-MANUAL generic 라우팅뿐, 깨짐 0
+- [x] detail ul 포맷 일괄 적용 — **A안 확정**: Dependencies/Done/Verification 등 구조 필드 ul화. `Task:` 산문은 무손실(불변 제약 ①) 우선으로 원문 보존
+- [x] `git diff --check` clean, shipped DR closure green
 
 ## Verification
 
@@ -76,6 +77,7 @@ backlog에 등록·병합한 항목 (content 무손실, additive):
 ## Checkpoints
 
 - (착수) 2026-06-10 — branch `feature/chore-20260610-010-backlog-theme-registration`. 6개 테마 병합/링크 등록(준비 단계) 완료. 본 Work는 Active 유지, reorg 실행은 다음 세션.
+- (reorg 실행·완료) 2026-06-10 — branch `feature/chore-20260610-010-backlog-reorg`. 의존성 그래프 매핑 → Wave 시퀀싱(`Seq` 열 도입, W1~W4 + 독립 병렬) → 신규 항목 `Archive 누적 관리 정책`(P2, W1) 등록 + 구 Deferred `AWH-OQ-001` 흡수(범위를 work + decision + 기타 artifact로 확장) → 구조 필드 ul 재포맷. 무손실·참조 정합·`git diff --check`·shipped DR closure 검증 통과. 사용자 결정: enabler는 P1 유지 + 착수 1순위 주석(P0 신설 안 함), ul은 A안(구조 필드만, Task 산문 보존).
 
 ## Resume Hint (다음 세션)
 
