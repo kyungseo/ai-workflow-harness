@@ -47,6 +47,7 @@ AI Workflow Harness backlog다.
 | W1 | — | P1 | Candidate | L3 | Harness upgrade/migration 메커니즘 |
 | W1 | — | P1 | Candidate | L2 | 외부화 실패모드 통합 설계 원칙 명문화 |
 | W1 | — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
+| W1 | — | P2 | Candidate | L2 | 백로그 Seq/Sequencing 포맷 거버넌스 정렬 |
 | W2★ | — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
 | W2 | — | P1 | Candidate | L2 | Prompt surface diet + optional pack 재정의 |
 | W2⊂ | — | P2 | Candidate | L2 | Harness protocol trigger family simplification |
@@ -260,6 +261,41 @@ AI Workflow Harness backlog다.
 **Verification:**
 
 - 결정 방향에 따라: 정책 문서/DR 반영 확인, `/work-close` archive step과의 정합, archive index README 정합.
+
+---
+
+#### 백로그 Seq/Sequencing 포맷 거버넌스 정렬
+
+> Seq W1 — spine 비의존. 후속 HARNESS.md 등록 정합성에 선행하므로 Seq drift 누적 전 조기 결정 권장.
+> 2026-06-10 등록 (reorg(CHORE-20260610-010)가 ad-hoc 도입한 `Seq` 구조의 거버넌스 미결 — 사용자 지적).
+
+**Task:**
+
+- reorg(CHORE-20260610-010)가 `docs/backlog/HARNESS.md`에 ad-hoc 도입한 **`Seq` 열 · `Sequencing Guide` 섹션 · 각 항목 `> Seq …` 주석**이 governing spec 없이 한쪽 파일에만 존재한다.
+- 먼저 결정: **(A) 영구 스키마** — 매 항목 Seq 유지 / **(B) 1회성 스냅샷** — 테이블 열은 부적절, 경량 grouping·주석으로 강등 또는 제거.
+- 결정에 따라 divergence 4건을 정렬한다:
+  - scaffold 템플릿(`scripts/create-harness.sh`)이 생성하는 backlog는 5열(`ID|Priority|Status|Risk|Title`) — Seq 없음.
+  - `skills/workflow/work-register.md` Backlog Entry Format도 5열 — 다음 등록 시 6열 테이블 깨짐.
+  - PRODUCT/HARNESS **track 대칭**(DR-031) — Seq가 HARNESS 한쪽에만.
+  - Seq 주석 **drift** — W1 항목 완료 시 stale, 유지 메커니즘 없음.
+
+**Dependencies:**
+
+- 연계: `Backlog row lifecycle SSoT 정비`(W1, 같은 backlog 포맷/lifecycle 거버넌스 계열), DR-031(track 대칭), CHORE-20260608-001(2단 구조 전환, archived).
+- 잠정 조치: 결정 전까지 HARNESS.md 신규 등록은 테이블 유효성 위해 Seq 셀을 채운다(본 항목 자체 포함).
+
+**Done Criteria:**
+
+- (A)/(B) 결정을 Recent Decisions 또는 DR로 기록.
+- (A): scaffold 템플릿 · work-register/work-close 절차 · PRODUCT.md 대칭에 Seq 반영. (B): Summary `Seq` 열 제거 + 경량 형태로 강등, drift 방지.
+- 결정과 무관하게 HARNESS.md ↔ scaffold ↔ work-register 절차가 **동일 포맷으로 정합**.
+
+**Verification:**
+
+- canonical: `work-register.md`·`work-close.md` Backlog Entry/제거 절차 포맷 일치.
+- scaffold: `create-harness.sh` 생성 backlog 포맷과 source HARNESS.md 일치(dry-run).
+- adopter cascade: PRODUCT.md 대칭(DR-031) 확인.
+- README/GUIDE/MANUAL: backlog 포맷 언급 stale 여부 점검.
 
 ---
 
