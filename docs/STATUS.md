@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-10 (backlog Seq 포맷 거버넌스 (B) 채택 — Seq 열·Sequencing Guide·주석 제거, 의존성=Dependencies·시퀀싱뷰=STATUS가 SSoT — CHORE-20260610-011 Done)
+Last updated: 2026-06-10 (세션: backlog 의존성 reorg + Seq 포맷 (B) 정리 + Deferred/GIT-WORKFLOW hygiene, clean idle — CHORE-20260610-010·011 Done, PR #133~#140)
 
 ## Current State
 
