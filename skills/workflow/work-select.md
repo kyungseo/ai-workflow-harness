@@ -47,7 +47,7 @@ backlog 후보는 Work ID 없이 제목/slug로 관리하고, Work ID는 /work-p
 대상 Work ID를 명시한 Approval Matrix state-change proposal로 먼저 보고해줘.
 Work ID가 아직 없는 backlog 후보라면 제목/slug를 임시 식별자로 사용하고, Work ID는 `/work-plan [title-or-slug]` 착수 시 확정됨을 명시해줘.
 
-Phase completion criteria, Current phase/focus, Recent Decisions 변경이 함께 필요하면
+Current phase/focus, Recent Decisions 변경이 함께 필요하면
 `STATUS Update Proposal`에 아래 항목을 포함해줘.
 
 - 변경 섹션

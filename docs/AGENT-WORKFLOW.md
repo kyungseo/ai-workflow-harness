@@ -29,7 +29,7 @@ MUST NOT:
 - 승인 없이 넓은 변경, L3 변경, scope 확장을 실행하지 않는다.
 
 Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 없으면 clean idle 상태로 보고한다.
-이때 과거 milestone criteria나 archive 이력을 next candidate로 자동 확장하지 않고, `/work-select` 또는 `/work-register`를 다음 진입로로 안내한다.
+이때 닫힌 milestone이나 archive 이력을 next candidate로 자동 확장하지 않고, `/work-select` 또는 `/work-register`를 다음 진입로로 안내한다.
 
 ## Context Routing
 
@@ -59,7 +59,7 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 | 아키텍처 요약 | `docs/PLAN-SUMMARY.md` |
 | L3 변경, Phase 계획, 상세 근거 | `docs/PLAN.md` |
 | 관련 기술 결정 | `docs/decisions/DR-*.md` |
-| 큰 작업의 내부 실행 계획 | `docs/works/{category}/{ID}-{topic}.md` |
+| 큰 작업의 SSoT (실행 계획·세부 분해) | `docs/works/{category}/{ID}-{topic}.md` |
 | 회고 기반 우선순위·개선 방향 확인 | `docs/retrospectives/` |
 | 이슈 해결 내역 확인 | `docs/troubleshooting/` |
 | 과거 Phase 맥락 | `docs/archive/` |
@@ -90,7 +90,7 @@ Scope approval, state-change approval, commit approval을 하나의 기준으로
 | --- | --- | --- | --- |
 | L1 Product track surface | 간단 plan 승인 후 실행. Work 파일 없이 Quick Mode 가능 | Work checkpoint/discovery는 승인 불필요, 실행 후 대상 Work ID와 변경 보고 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
 | L2 harness/workflow surface 또는 설정 변경 | 상세 plan 승인 후 실행. Work 파일 사용을 기본값으로 둔다 | Work Done과 STATUS Active pointer 변경은 대상 Work ID를 명시하고 승인 후 처리 | validation 결과, diff summary, 제안 commit message 보고 후 승인 |
-| L3 아키텍처·인프라·DB schema·보안 구조 | 관련 계획 또는 `docs/PLAN.md` 확인, AS-IS/TO-BE와 rollback 포함 후 승인 | Phase criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal` 승인 후 처리 | validation 결과, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
+| L3 아키텍처·인프라·DB schema·보안 구조 | 관련 계획 또는 `docs/PLAN.md` 확인, AS-IS/TO-BE와 rollback 포함 후 승인 | Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal` 승인 후 처리 | validation 결과, diff summary, 제안 commit message, rollback 단위 보고 후 승인 |
 
 MUST:
 
@@ -113,7 +113,7 @@ MUST NOT:
 | 다음 후보 Product track 작업 | `docs/backlog/PRODUCT.md` |
 | 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
 | Scaffold bootstrapping checklist | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` |
-| 한 작업의 세부 분해 | `docs/works/{category}/{ID}-{topic}.md` |
+| 큰 작업의 SSoT (실행 계획·세부 분해) | `docs/works/{category}/{ID}-{topic}.md` |
 | 결정 근거 | `docs/decisions/DR-*.md` |
 | 완료된 과거 상태 | `docs/archive/` |
 

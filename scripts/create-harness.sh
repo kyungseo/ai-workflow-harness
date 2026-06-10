@@ -835,7 +835,7 @@ Harness source clone에서 \`scripts/create-harness.sh --check /path/to/project\
 Next Actions가 scaffold bootstrap/onboarding을 가리키면 \`docs/BOOTSTRAP.md\`를 §0부터 순서대로 채운다.
 Bootstrap onboarding에 사용할 prompt는 \`docs/BOOTSTRAP.md\` §8에 있다.
 
-1. \`docs/STATUS.md\` — 프로젝트 목표와 Phase 설명
+1. \`docs/STATUS.md\` — 프로젝트 목표와 Current phase(focus) 설명
 2. \`docs/PLAN-SUMMARY.md\` Project Summary — 제품 목표와 핵심 workflow
 3. \`docs/PLAN-SUMMARY.md\` Implementation Baseline — Runtime/Framework/Build/package 결정 (코드 개발 프로젝트)
 4. \`docs/PLAN.md\` Project Initialization Plan — stack 선택 근거와 초기 구조
@@ -857,7 +857,7 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 
 | Field | Value |
 | --- | --- |
-| Phase | Phase 1 — [프로젝트 목표 한 줄] |
+| Current phase | [프로젝트 focus 또는 목표 한 줄 — 단계(phase) 운영은 optional] |
 | Active plan | — |
 | Bootstrap checklist | \`docs/BOOTSTRAP.md\` |
 | Project backlog | \`docs/backlog/PRODUCT.md\` |
@@ -964,7 +964,7 @@ AI workflow 자체의 조정은 Harness track으로 분리한다.
 ## 6. Core Document Fill Order
 
 1. \`docs/BOOTSTRAP.md\` — identity, production 성격, setup checklist
-2. \`docs/STATUS.md\` — 현재 phase, Active Work, OQ, Next Actions
+2. \`docs/STATUS.md\` — Current phase(focus), Active Work, OQ, Next Actions
 3. \`docs/PLAN-SUMMARY.md\` Project Summary — 프로젝트 요약, 제품 목표
 4. \`docs/PLAN-SUMMARY.md\` Implementation Baseline — Runtime/Framework/Build/package 결정 (코드 프로젝트)
 5. \`docs/PLAN.md\` Project Initialization Plan — stack 선택 근거, 초기 구조 (코드 프로젝트)
@@ -1098,9 +1098,9 @@ write_text "${TARGET_ROOT}/docs/PLAN.md" "# PLAN.md — ${PROJECT_NAME}
 
 *(채워야 함)*
 
-## Phase 계획
+## Roadmap
 
-### Phase 1
+*(채워야 함 — 단계(phase) 운영은 optional. 필요 시 milestone을 Current phase 라벨로 두고 product backlog를 PRODUCT-P{n}으로 분할: DR-031)*
 
 - 목표:
 - 범위:
@@ -1307,7 +1307,7 @@ fi
 echo ""
 echo "Bootstrap onboarding targets (propose/fill during first session):"
 echo "  docs/BOOTSTRAP.md      — 프로젝트 identity와 production 성격 기반 setup checklist"
-echo "  docs/STATUS.md         — 프로젝트 목표와 Phase 설명"
+echo "  docs/STATUS.md         — 프로젝트 목표와 Current phase(focus) 설명"
 echo "  docs/PLAN-SUMMARY.md   — Project Summary와 Implementation Baseline"
 echo "  docs/PLAN.md           — Project Initialization Plan"
 echo "  docs/backlog/PRODUCT.md — baseline 완료 후 도출한 초기 작업 항목 (Work ID는 /work-plan 착수 시 확정)"

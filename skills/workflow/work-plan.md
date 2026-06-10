@@ -112,7 +112,7 @@ Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROT
 
 docs/STATUS.md 변경은 즉시 수행하지 말고 Approval Matrix state rules에 맞게 먼저 제안해줘.
 Active Work pointer 추가/제거는 대상 Work ID를 명시한 1줄 제안으로 충분하다.
-Phase completion criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 보고하고 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 포함해야 한다.
+Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 보고하고 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 포함해야 한다.
 사용자가 명시적으로 승인한 뒤에만 STATUS.md를 수정해줘.
 
 계획에 도구·아키텍처·정책 결정이 포함된 경우, 승인 후 구현 시작 전에 DR-worthy 결정 목록을 제시하고 기록 여부를 물어봐.
