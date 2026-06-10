@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-10 (HARNESS backlog 의존성 reorg 실행 완료 — Wave 시퀀싱(`Seq` 축) + Archive 누적 관리 정책 신규 등록 + AWH-OQ-001 흡수 — CHORE-20260610-010 Done)
+Last updated: 2026-06-10 (backlog Seq 포맷 거버넌스 (B) 채택 — Seq 열·Sequencing Guide·주석 제거, 의존성=Dependencies·시퀀싱뷰=STATUS가 SSoT — CHORE-20260610-011 Done)
 
 ## Current State
 
@@ -38,6 +38,7 @@ Last updated: 2026-06-10 (HARNESS backlog 의존성 reorg 실행 완료 — Wave
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-10 | CHORE-20260610-011: backlog Seq 포맷 거버넌스 (B) 채택 — Seq 열·Sequencing Guide·항목 주석 제거. derived data(의존성=`Dependencies`, 시퀀싱뷰=STATUS)를 손유지 열로 복제하지 않음 | reorg가 ad-hoc 도입한 Seq가 scaffold 템플릿·work-register 5열·PRODUCT 대칭(DR-031)과 divergent + drift 부채. churn·cascade 비용이 at-a-glance 이점 상회 | Low |
 | 2026-06-10 | DR-033: shipped 표면은 scaffold seed에 닫힌 DR만 참조. mode-a(canonical) self-describe / mode-b(DR 파일) `Linked DRs:` 격리. source-only static check로 작성 시점 사전 강제 | 비-seed DR 인용이 target dangling을 만들고 뒤늦게 발견되는 반복 패턴 차단. invariant 사상 첫 OVERALL PASS — CHORE-20260610-005 | Medium |
 | 2026-06-10 | DR-032: harness "Phase"를 descriptive+optional 라벨로 de-formalize. 완료 criteria 게이트 제거, 전환=Recent Decisions 기록, Work Done=진실 단위 | 제거된 `Phase completion criteria` 필드의 dangling 기계장치 정리, DR-031 optional 철학 정렬 — CHORE-20260610-003 | Medium |
 | 2026-06-09 | DR-031: Product track을 harness와 대칭(`PRODUCT.md`/`works/product/`)으로 전환, phase는 optional migration. source-only migration note는 `docs/migrations/` | `PHASE{n}` backlog가 harness 내부 "Phase"와 네이밍 충돌. 대칭화로 충돌 제거 + phase 강제 폐지 — CHORE-20260609-005 | Medium |
@@ -49,7 +50,7 @@ Last updated: 2026-06-10 (HARNESS backlog 의존성 reorg 실행 완료 — Wave
 
 ## Next Actions
 
-> backlog가 의존성 기반 Wave(`Seq`)로 재배열됨(CHORE-20260610-010). 아래 후보는 `docs/backlog/HARNESS.md` Seq 순서를 따른다. 다음 작업 선택은 `/work-select`.
+> backlog 항목은 의존성 기반으로 정렬돼 있다. 착수 순서·의존성은 각 항목 `Dependencies` 필드를 기준으로 한다(별도 Seq 축 없음 — CHORE-20260610-011 (B) 결정). 아래는 enabler 우선 권장 순서. 다음 작업 선택은 `/work-select`.
 
 1. **W1 착수 후보** (지금 착수 가능 — enabler·독립 트랙):
    - **★ harness workflow 검증 테스트 체계 정립** — 착수 1순위 enabler. restructure·강제화가 test-backed로 안전해지려면 선행. `Harness dev/test 노이즈 방지`(전제)를 함께/먼저 검토
