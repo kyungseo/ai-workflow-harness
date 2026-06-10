@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260610-011
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: reorg(CHORE-20260610-010)가 ad-hoc 도입한 backlog Seq 구조의 거버넌스 결정 + 정렬. (B) 채택 — Seq 열·Sequencing Guide·항목 주석 완전 제거, 의존성 SSoT는 Dependencies 필드, 시퀀싱 뷰는 STATUS Next Actions.
 appetite: 0.25d
