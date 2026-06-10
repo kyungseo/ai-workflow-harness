@@ -7,7 +7,7 @@ policy_slice: recovery-validation
 `docs/HARNESS-PROTOCOL.md` §15에서 추출한 Recovery/Validation policy slice다.
 failure state 진입, `/repo-health` 조건부 validation 확인, commit approval 판단 시에만 로드한다. `/session-start`, `/work-select`, 일반 `/work-plan`·`/work-close`·`/session-summary` 흐름에서는 로드하지 않는다.
 
-**경계:** 이 파일은 **판단·정책(WHETHER/WHEN — 진행해도 되나)**이다. 검증을 실행할 **구체 명령 카탈로그(HOW)**는 source repo의 `docs/VERIFICATION-COMMANDS.md`를 참조한다 (adopter repo에는 없을 수 있는 source-only 문서).
+**경계:** 이 파일은 **판단·정책(WHETHER/WHEN — 진행해도 되나)**이다. 검증을 실행할 **구체 명령 카탈로그(HOW)**는 source repo의 `docs/maintainer/VERIFICATION-COMMANDS.md`를 참조한다 (adopter repo에는 없을 수 있는 source-only 문서).
 
 ## Failure Conditions
 
@@ -89,7 +89,7 @@ enforcement는 세 층으로 분리한다.
 | Scaffold phrase scan | temp 생성 후 source-only phrase 검출 시 fail — `.github/workflows/ci.yml` 참조 |
 | Stale runtime identity | `grep -RInE 'Spring Boot ...'` live docs scan |
 
-위 CI 명령의 상세·확장판(전체 Layer·release 전수 점검)은 `docs/VERIFICATION-COMMANDS.md` Layer A 및 Release Full Sweep을 참조한다.
+위 CI 명령의 상세·확장판(전체 Layer·release 전수 점검)은 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer A 및 Release Full Sweep을 참조한다.
 
 **Human Review Checklist — PR body 기재 (develop→main):**
 

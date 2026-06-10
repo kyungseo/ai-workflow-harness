@@ -15,7 +15,7 @@ Supersedes:
 2. **`VERSION` 파일 = bare semver mirror.** `develop`의 `VERSION`은 *다음 in-development 릴리즈 값*을 담는다. 릴리즈 시 이 값이 그대로 tag가 된다 (`ai-workflow-v{VERSION}`).
 3. **semver 기준은 scaffold consumer contract를 대상으로 한다** (아래 Rationale).
 4. **Phase 2 릴리즈 = `1.1.0` (MINOR).** command rename(no-alias)·scaffold 구조 변경 등 adopter-facing 변경을 포함하나, *신규 scaffold가 일관되게 동작*하므로 MINOR로 처리하고, 기존 adopter용 breaking 항목은 릴리즈 노트 Breaking 섹션에 명시한다.
-5. 상세 기준·매핑·bump 절차는 `docs/VERSIONING.md`(source-only maintainer 문서)에 둔다.
+5. 상세 기준·매핑·bump 절차는 `docs/maintainer/VERSIONING.md`(source-only maintainer 문서)에 둔다.
 
 ## Options Considered
 
@@ -40,7 +40,7 @@ Supersedes:
 ## Consequences
 
 - `VERSION` 0.2.0 → 1.1.0. scaffold가 stamp하는 `manifest.json`의 `harness_version`도 1.1.0으로 정렬.
-- `docs/VERSIONING.md` 신설 — semver 기준·tag 매핑·bump 절차의 SSoT. source-only(scaffold 미포함).
+- `docs/maintainer/VERSIONING.md` 신설 — semver 기준·tag 매핑·bump 절차의 SSoT. source-only(scaffold 미포함).
 - 릴리즈 시 `develop`→`main` merge 후 `git tag ai-workflow-v{VERSION}`.
 - upgrade/migration 메커니즘 구현 시 semver 기준에 "upgrade 경로 호환성"을 1급 기준으로 편입(해당 백로그 항목에서 재확인).
 

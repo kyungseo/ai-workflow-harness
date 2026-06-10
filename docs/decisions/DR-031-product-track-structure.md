@@ -63,7 +63,7 @@ phaseless → phased 전환 시(adopter-side 운영):
 - canonical/tooling은 `PRODUCT*.md` glob / "단계 시 PRODUCT-P{n}" 표기로 phasing-agnostic.
 - harness "Phase"(절차·STATUS·refactor) 및 archive는 불변.
 - product 작업 branch 단축 패턴을 `feature/prod-{topic}`로 통일(기존 `feature/p{n}-{topic}` phase-indexed 폐지). phaseless 기본과 `works/product/`에 정합.
-- 이미 scaffold된 target repo(`PHASE1.md`/`phase1/` 보유)의 수용 절차는 `docs/migrations/product-track-rename.md`(source-only)로 제공한다.
+- 이미 scaffold된 target repo(`PHASE1.md`/`phase1/` 보유)의 수용 절차는 `docs/maintainer/migrations/product-track-rename.md`(source-only)로 제공한다.
 
 ## Reversal Cost
 

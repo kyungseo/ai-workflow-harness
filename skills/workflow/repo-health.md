@@ -112,7 +112,7 @@ git diff --cached --name-only
 변경 파일이 없으면 Quick 모드(A+B+E)와 동일하게 동작한다.
 전체 surface를 모두 훑어야 하면 `--full --cascade`를 사용한다.
 
-> **검증 명령 카탈로그:** 아래 Surface Matrix·Grep Pack의 구체 grep 명령과 scaffold/onboarding 시뮬레이션 상세는 `docs/VERIFICATION-COMMANDS.md`(source repo 전용 maintainer 문서)에 Layer별로 정리되어 있다. 릴리즈 직전 전수 점검은 동 문서 "Release Full Sweep" 프리셋을 사용한다.
+> **검증 명령 카탈로그:** 아래 Surface Matrix·Grep Pack의 구체 grep 명령과 scaffold/onboarding 시뮬레이션 상세는 `docs/maintainer/VERIFICATION-COMMANDS.md`(source repo 전용 maintainer 문서)에 Layer별로 정리되어 있다. 릴리즈 직전 전수 점검은 동 문서 "Release Full Sweep" 프리셋을 사용한다.
 
 ### Required Surface Matrix
 
@@ -142,7 +142,7 @@ git diff --cached --name-only
 LIVE_TARGETS=(
   AGENTS.md CLAUDE.md README.md
   docs/AGENT-WORKFLOW.md docs/HARNESS-PROTOCOL.md docs/HARNESS-QUICK-REFERENCE.md docs/WORKFLOW-MANUAL.md docs/STATUS.md
-  docs/migrations/canonical-adapter-rename.md
+  docs/maintainer/migrations/canonical-adapter-rename.md
   docs/backlog docs/decisions docs/works
   .agents .codex .claude .cursor prompts scripts tools
 )
