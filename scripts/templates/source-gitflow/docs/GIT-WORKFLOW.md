@@ -148,7 +148,40 @@ git commit -m "..."
 
 커밋 메시지 형식은 [Commit Message Format](#5-commit-message-format) 참조.
 
-### 2-3. PR Creation (feature → develop)
+### 2-3. Sync With Develop
+
+feature 작업 중 다른 작업이 `develop`에 먼저 병합될 수 있다. **commit·push·PR 직전에 최신 `develop`을 feature 브랜치로 끌어와 미리 반영하는 것을 기본 습관으로 둔다.** 사소해 보이지만 누락하기 쉽고, 누락하면 PR 단계에서 충돌·stale 검증으로 되돌아온다.
+
+```bash
+git fetch origin
+git checkout feature/{name}
+git merge origin/develop        # 최신 develop을 feature에 반영
+```
+
+**언제 sync하나:**
+
+- PR을 열기 직전 (특히 오래 작업한 브랜치).
+- `develop`이 내 변경과 겹치는 파일을 건드린 정황이 보일 때.
+- 최신 `develop` 기준으로 로컬 검증이나 CI를 돌리고 싶을 때.
+
+**merge vs rebase:**
+
+- **기본은 `git merge origin/develop`이다.** 이 repo는 feature→develop을 **squash merge**(§2-4, DR-017 Amended)하므로 feature 내부 history는 단일 커밋으로 합쳐진다. rebase로 linear history를 만들어도 그 이점이 결과에 남지 않으므로, 이미 push된 브랜치를 rebase해 force-push하는 비용을 치를 이유가 없다.
+- rebase는 **아직 push하지 않은 로컬 전용 커밋**을 정리할 때만 선택한다: `git rebase origin/develop`.
+
+**충돌 발생 시:**
+
+- 충돌은 GitHub PR 화면이 아니라 **로컬 sync 단계에서 먼저 해소**한다. `git status`로 충돌 파일 확인 → 수정 → `git add` → `git merge --continue` (rebase면 `git rebase --continue`).
+- PR 생성 후 base가 다시 앞서 나가 충돌이 나면 같은 방식으로 feature에서 재-sync한 뒤 push한다.
+
+**force-push 정책:**
+
+- `--force-with-lease`는 **본인이 단독 작업하는 feature 브랜치에 한해서만** 허용한다 (`--force`는 사용하지 않는다).
+- `develop`·`main`에는 어떤 경우에도 force-push하지 않는다.
+
+> 병렬 feature/agent 간 충돌(Work ID·STATUS·index 동시 변경) 통제가 필요하면 project-specific 병렬 작업 정책을 따른다.
+
+### 2-4. PR Creation (feature → develop)
 
 > **feature PR의 base는 항상 `develop`이다. `main`으로 직접 PR하지 않는다.**
 > **feature 브랜치를 develop에 직접 local merge하지 않는다. 반드시 PR을 통해 머지한다.**
@@ -167,7 +200,7 @@ gh pr create --base develop --title "..." --body "..."
 **검증 책임:**
 - PR 전에는 변경 범위에 맞는 로컬 검증 결과(`git diff --check` 등)를 PR 본문이나 세션 요약에 남긴다.
 
-### 2-4. Post-PR Cleanup
+### 2-5. Post-PR Cleanup
 
 feature → develop PR merge 후, 방금 merge된 최신 develop을 로컬에 반영한다.
 
@@ -254,6 +287,33 @@ git merge origin/main       # develop을 main과 동기화
 git push origin develop
 git status                  # "up to date with 'origin/develop'" 확인
 ```
+
+### 3-5. Hotfix Cycle
+
+`main`의 긴급 결함은 `develop`을 거치지 않고 `main` 기준 `hotfix/*` 브랜치에서 수정한다 (§1 Branch Naming).
+
+```bash
+git checkout main
+git pull origin main
+git checkout -b hotfix/{topic}
+# 수정 + commit
+gh pr create --base main --head hotfix/{topic} --title "fix: ..."
+```
+
+- hotfix PR의 base는 `main`이다. feature와 달리 `develop`을 경유하지 않는다.
+- Work ID는 `HOTFIX-YYYYMMDD-NNN`을 사용한다.
+
+**main 병합 후 develop 역병합 (필수):** hotfix가 `main`에만 반영되면 다음 release에서 `develop`이 `main`을 덮어써 수정이 유실된다. main 병합 직후 반드시 `develop`으로 역병합한다.
+
+```bash
+git checkout main
+git pull origin main
+git checkout develop
+git merge origin/main        # hotfix를 develop에 반영
+git push origin develop
+```
+
+> 이는 §3-4 Post-Merge Develop Sync와 동일한 main→develop 동기화다. release든 hotfix든 `main`이 앞서면 `develop`을 즉시 맞춘다.
 
 ## 4. CI Trigger
 
