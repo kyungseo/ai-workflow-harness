@@ -50,6 +50,7 @@ Report includes:
   - `docs/PLAN-SUMMARY.md`는 상태 필드를 갖지 않는다 — Tracking Finalization 확인 대상에서 제외.
   - Work ID collision 확인: 신규 Work ID가 target branch(프로젝트 통합/release branch; source repo에서는 develop/main)의 `docs/works/` 파일과 충돌하지 않는지 확인한다 (병렬 branch NNN 충돌 방지).
 - DR/Work 파일/archive/cascade가 필요한가
+- (source repo 전용 — adopter repo N/A) shipped 표면(core canonical·shipped DR seed·adapter/rule/prompt)에 `DR-NNN` 인용을 추가·변경했다면, 그 DR이 scaffold seed에 닫혀 있는가. seed 밖이면 canonical은 self-describe, DR 파일 lineage는 `Linked DRs:` frontmatter로 처리하고 `scripts/tests/check-shipped-dr-closure.sh`로 검증했는가 (HOW: `docs/maintainer/VERIFICATION-COMMANDS.md` Layer I)
 - 다음 세션이 `STATUS.md`만 보고 재개 가능한가
 
 ## Commit Approval

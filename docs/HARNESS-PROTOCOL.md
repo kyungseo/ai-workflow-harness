@@ -467,6 +467,8 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 변경 파일이 없으면 `/repo-health --cascade`는 Quick health mode와 동일하게 동작한다.
 `--cascade` 대상이 workflow context/load path 관련 파일이면 Area H (Workflow Context Weight)도 활성화한다.
 
+**Shipped DR reference closure.** core canonical 문서·shipped DR seed 파일·adapter/rule/prompt에 `DR-NNN` 인용을 추가·변경하면, 그 DR이 scaffold seed(`scripts/create-harness.sh` 기본 adapt 블록)에 닫혀 있는지 확인한다. seed 밖이면 canonical 문서는 self-describe(번호 없이 서술), DR 파일 lineage는 `Linked DRs:` frontmatter에만 둔다. `bash scripts/tests/check-shipped-dr-closure.sh`로 검증한다(정책 상세는 `docs/HARNESS-RECOVERY-VALIDATION.md` 및 source-only `docs/maintainer/VERIFICATION-COMMANDS.md`. source repo 전용 — adopter repo에는 N/A).
+
 | Level | Action | Meaning |
 | --- | --- | --- |
 | A | 확인만 | 관련 문서를 읽거나 검색해 영향 없음 확인 |

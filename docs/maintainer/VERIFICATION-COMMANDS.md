@@ -242,15 +242,19 @@ grep -oE 'DR-[0-9]{3}' docs/decisions/README.md | sort > /tmp/readme_drs.txt
 ls docs/decisions/DR-*.md | grep -oE 'DR-[0-9]{3}' | sort > /tmp/file_drs.txt
 diff /tmp/readme_drs.txt /tmp/file_drs.txt
 # 출력 없으면 OK
-
-# core 파일의 DR 참조 실재 여부 (invariant [1] 수동 버전)
-grep -rohE 'DR-[0-9]{3}' \
-  CLAUDE.md AGENTS.md docs/BEHAVIOR-PRINCIPLES.md docs/AGENT-WORKFLOW.md \
-  docs/HARNESS-PROTOCOL.md .claude/commands/ .claude/rules/ skills/workflow/ \
-  | sort -u | while read dr; do
-      ls docs/decisions/"${dr}"-*.md 2>/dev/null || echo "MISSING: $dr"
-    done
 ```
+
+**Shipped DR reference closure (정책: `docs/decisions/DR-033-shipped-dr-reference-closure.md`).**
+shipped 표면 문서가 scaffold seed 밖 DR을 인용하면 target에서 dangling이 된다. scaffold 생성 없이 source만으로 사전 검출:
+
+```bash
+bash scripts/tests/check-shipped-dr-closure.sh
+# OK = closed, 위반 출력 시 mode-a(self-describe) 또는 mode-b(Linked DRs frontmatter)로 처리
+```
+
+- seed SSoT는 `scripts/create-harness.sh` 기본 adapt 블록에서 파생한다(하드코딩 사본 금지).
+- `Linked DRs:` frontmatter 라인은 검사에서 제외한다(source lineage 메타데이터). 동일 제외 규칙을 scaffold 생성 후 검사인 `check-scaffold-invariants.sh [1]`도 적용한다.
+- 작성 시점 규약은 `.claude/rules/docs-workflow.md`와 `docs/HARNESS-PROTOCOL.md` cascade 절을 따른다.
 
 ---
 

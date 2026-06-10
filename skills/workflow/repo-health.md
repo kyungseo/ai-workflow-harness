@@ -93,6 +93,12 @@ rg -n "^# |^Status:" docs/decisions
 ```
 제목과 Status 필드만 추출. 내용 읽기는 통합 후보로 의심되는 쌍에만 한정.
 
+변경 surface에 `docs/decisions/**` 또는 shipped canonical/adapter/rule/prompt가 포함되면 shipped DR reference closure를 확인한다(source repo 전용; script가 없으면 N/A):
+```bash
+bash scripts/tests/check-shipped-dr-closure.sh
+```
+위반은 mode-a(self-describe) 또는 mode-b(`Linked DRs:` frontmatter)로 처리한다. 정책·HOW는 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer I.
+
 **Phase 6 — Cascade Checklist (--cascade only)**
 
 변경된 파일 목록을 먼저 확인한다:

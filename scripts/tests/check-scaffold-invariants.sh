@@ -85,7 +85,7 @@ check_target() {
   core_files > "${TMPLIST}"
   while IFS= read -r file; do
     [[ -z "${file}" ]] && continue
-    for dr in $(grep -ohE 'DR-[0-9]{3}' "${file}" | sort -u); do
+    for dr in $(grep -vE '^Linked DRs:' "${file}" | grep -ohE 'DR-[0-9]{3}' | sort -u); do
       if ! dr_exists "${dr}"; then
         echo "  FAIL: ${file#${TARGET}/} -> ${dr} (target에 DR 파일 없음)"
         FAIL=1
@@ -101,7 +101,7 @@ check_target() {
   if [[ -s "${TMPLIST}" ]]; then
     while IFS= read -r file; do
       [[ -z "${file}" ]] && continue
-      for dr in $(grep -ohE 'DR-[0-9]{3}' "${file}" | sort -u); do
+      for dr in $(grep -vE '^Linked DRs:' "${file}" | grep -ohE 'DR-[0-9]{3}' | sort -u); do
         dr_exists "${dr}" || echo "  REPORT: ${file#${TARGET}/} -> ${dr} (optional doc dangling)"
       done
     done < "${TMPLIST}"
