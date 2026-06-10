@@ -19,48 +19,33 @@ AI Workflow Harness backlog다.
 | P2 | 운영 부채를 줄이는 보완 항목 |
 | P3 | 선택적, 실험적, 또는 사용 빈도 확인 후 진행할 항목 |
 
-## Sequencing Guide
-
-`Seq`는 **착수 축**(의존성 기반 wave), `Priority`는 **긴급도 축**으로 분리한다.
-두 축은 독립이며, 같은 Priority 안에서도 Seq가 선후를 결정한다.
-
-| Seq | Meaning |
-| --- | --- |
-| W1 | enabler 또는 spine 비의존 독립 트랙 — 지금 착수 가능 |
-| W2 | restructure core — W1 enabler(검증 테스트 체계) 이후 |
-| W3 | restructure·optional pack 방향 확정에 의존 |
-| W4 | downstream 또는 passive monitoring |
-
-`★` = wave 내 착수 1순위. `⊂` = 상위 항목 실행에 흡수되어 함께 결정.
-
 ## Backlog
 
 ### Summary
 
-| Seq | ID | Priority | Status | Risk | Title |
-| --- | --- | --- | --- | --- | --- |
-| W1★ | — | P1 | Candidate | L2 | harness workflow 검증 테스트 체계 정립 |
-| W1 | — | P2 | Candidate | L2 | Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의 |
-| W1 | — | P1 | Candidate | L2 | Scaffold/tool-surface alignment 점검 체계화 |
-| W1 | — | P1 | Candidate | L2 | repo-health gate series 보강 |
-| W1 | — | P1 | Candidate | L2 | Backlog row lifecycle SSoT 정비 |
-| W1 | — | P1 | Candidate | L3 | Harness upgrade/migration 메커니즘 |
-| W1 | — | P1 | Candidate | L2 | 외부화 실패모드 통합 설계 원칙 명문화 |
-| W1 | — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
-| W1 | — | P2 | Candidate | L2 | 백로그 Seq/Sequencing 포맷 거버넌스 정렬 |
-| W2★ | — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
-| W2 | — | P1 | Candidate | L2 | Prompt surface diet + optional pack 재정의 |
-| W2⊂ | — | P2 | Candidate | L2 | Harness protocol trigger family simplification |
-| W3 | — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
-| W3 | — | P2 | Candidate | L2 | `skills/workflow/repo-health.md` slice 분리 |
-| W3 | — | P2 | Candidate | L2 | `skills/workflow/work-doc.md` class 재검토 |
-| W3 | — | P2 | Candidate | L2 | Coding canonical optional pack — `--with-coding-guide` scaffold 확장 |
-| W3 | — | P1 | Candidate | L2 | Adopter onboarding/manual refresh |
-| W3 | — | P1 | Candidate | L2 | Scaffold multi-user clone verification |
-| W4 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
-| W4 | — | P2 | Candidate | L3 | Scaffold CLI naming audit |
-| W4 | HRN-032 | P2 | Candidate | L2 | Windows 지원 확장 |
-| W4 | HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 |
+| ID | Priority | Status | Risk | Title |
+| --- | --- | --- | --- | --- |
+| — | P1 | Candidate | L2 | harness workflow 검증 테스트 체계 정립 |
+| — | P2 | Candidate | L2 | Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의 |
+| — | P1 | Candidate | L2 | Scaffold/tool-surface alignment 점검 체계화 |
+| — | P1 | Candidate | L2 | repo-health gate series 보강 |
+| — | P1 | Candidate | L2 | Backlog row lifecycle SSoT 정비 |
+| — | P1 | Candidate | L3 | Harness upgrade/migration 메커니즘 |
+| — | P1 | Candidate | L2 | 외부화 실패모드 통합 설계 원칙 명문화 |
+| — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
+| — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
+| — | P1 | Candidate | L2 | Prompt surface diet + optional pack 재정의 |
+| — | P2 | Candidate | L2 | Harness protocol trigger family simplification |
+| — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
+| — | P2 | Candidate | L2 | `skills/workflow/repo-health.md` slice 분리 |
+| — | P2 | Candidate | L2 | `skills/workflow/work-doc.md` class 재검토 |
+| — | P2 | Candidate | L2 | Coding canonical optional pack — `--with-coding-guide` scaffold 확장 |
+| — | P1 | Candidate | L2 | Adopter onboarding/manual refresh |
+| — | P1 | Candidate | L2 | Scaffold multi-user clone verification |
+| — | P2 | Candidate | L2 | Project-state template pack 검토 |
+| — | P2 | Candidate | L3 | Scaffold CLI naming audit |
+| HRN-032 | P2 | Candidate | L2 | Windows 지원 확장 |
+| HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 |
 
 ---
 
@@ -70,13 +55,10 @@ AI Workflow Harness backlog다.
 > 점검 후보: tool surface · adopter cascade · canonical · scaffold · README/GUIDE/MANUAL
 > 해당 없는 surface는 제외한다.
 
-> **Details 정렬:** 아래 블록은 Summary의 Seq(wave) 순서를 따른다.
-
 ---
 
 #### harness workflow 검증 테스트 체계 정립
 
-> Seq W1★ — **착수 1순위 enabler.** restructure·강제화 등 다른 리팩토링이 test-backed로 안전해지려면 이 체계가 선행되어야 한다.
 > 2026-06-10 등록 (사용자 테마).
 
 **Task:**
@@ -109,8 +91,6 @@ AI Workflow Harness backlog다.
 
 #### Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의
 
-> Seq W1 — `harness workflow 검증 테스트 체계 정립`(W1★)의 전제. harness-only 검증이 성립하려면 agent-side 컨텍스트 보정이 없어야 하므로 함께/먼저 처리 권장.
-
 **Task:** AI agent가 harness 행동 패턴(cascade 점검 규칙, commit bundling 방침 등)을 agent-side 지속 컨텍스트(Claude memory, Codex custom profile, Cursor user-level rules 등)에 저장하면 harness 문서 단독 검증이 불가능해지고 개발·테스트 결과가 오염된다. harness의 올바른 동작이 "harness 문서만으로" 유도되는지 검증하려면 agent-side 컨텍스트가 행동을 보정해서는 안 된다. 이 원칙이 없으면 agent마다 지속 컨텍스트 보정 여부가 달라져 도구 간 검증 조건도 불균등해진다. "이 레포의 harness 행동을 유도하는 내용은 agent-side 지속 컨텍스트에 저장하지 않는다" 원칙을 모든 agent를 대상으로 명문화하고, 기존 저장된 항목의 처리 방침을 결정한다. **연계: `memory/feedback_memory_scope.md`(현재 Claude 한정), `docs/BEHAVIOR-PRINCIPLES.md`(cross-agent 원칙)**
 
 **Dependencies:**
@@ -129,8 +109,6 @@ AI Workflow Harness backlog다.
 ---
 
 #### Scaffold/tool-surface alignment 점검 체계화
-
-> Seq W1 — subtask 1은 즉시 실행 가능하며, invariants 자산을 `harness workflow 검증 테스트 체계 정립`(W1★)에 공급한다.
 
 **Task:** DR 신규 등재·README 추가·hardcode 변경 시 scaffold가 자동으로 동기화되지 않는 구조적 문제. 2026-06-07 세션에서 scaffold drift 4건(decisions README legend·컬럼 누락, retrospectives README 미생성, troubleshooting README stale, DR-027 adapt 미등재)과 dangling DR 참조 5건(AGENTS.md 2건, git-workflow.md 3건, record-decision.md 1건, template git-workflow.md 1건) 발견. **연계: `repo-health.md` slice 분리(P2)**
 
@@ -155,8 +133,6 @@ AI Workflow Harness backlog다.
 
 #### repo-health gate series 보강
 
-> Seq W1 — gate series 완료 자산 위에서 독립 실행 가능하며, `문서-only 규칙 강제화`(W3)·`repo-health.md slice 분리`(W3)에 입력을 공급한다.
-
 **Task:** gate series(CHORE-20260606-006~016) 이후 `.harness/gate-config`가 live operational 파일이 됐으나 repo-health LIVE_TARGETS·Required Surface Matrix에 없음. 또한 `tools/git-hooks/lib/gate-lists.sh`(framework SSoT) ↔ `.harness/gate-config`(project extension) 정합 교차 검증 체크 없음. 두 파일이 충돌해도 감지 불가. LIVE_TARGETS에 `.harness/gate-config` 추가, Surface Matrix에 gate-config 변경 시 cascade 행 추가, grep pack에 gate-lists.sh ↔ gate-config 교차 검증 추가. P2: AWH-Gate-Override trailer 사용 패턴 grep도 추가 검토. **연계: `repo-health.md` slice 분리(P2)**
 
 > **[2026-06-08 설계 논의 메모]** pre-commit hook이 protected 파일을 develop에서 stage할 때 WARNING만 발행하고 exit(1)하지 않는다는 점이 확인됐다. `git-workflow.md`의 인지 규칙("move to FAIL")과 기계 신호(WARNING=proceed)가 불일치하며, AI 도구는 기계 신호를 따라 commit을 진행할 수 있다. GitHub ruleset이 push 단계에서 hard-stop을 제공하므로 실피해는 "local develop에 잘못된 commit이 남는 불편함"에 한정된다. hook exit(1) 강화를 검토했으나, 예외 설계가 복잡하다는 결론: ① STATUS.md 같은 상태 파일의 tracking-only commit은 develop 직접 commit이 정당한 예외이고, ② Quick Mode L1 작업은 feature branch 없이 처리하는 경우가 있으며, ③ product track까지 확장하면 repo별 custom protected path가 추가되고, ④ `commands/**`, `rules/**`, `create-harness.sh` 같은 구조 파일은 trailer 우회도 불가해야 할 수 있다. 이 예외 클래스 분류(상태 파일 vs. 구조 파일), hook의 override trailer 인식 여부, Quick Mode/product track 적용 범위를 사전에 DR로 확정하지 않으면 hook 구현이 설계 없이 진행될 위험이 있다. 현재 GitHub ruleset으로 충분한 보호가 이루어지고 있어 현행 유지가 더 효율적일 수 있다는 판단 하에 보류 중. 착수 시 hook 강화보다 예외 클래스 설계 DR을 선행해야 함.
@@ -173,8 +149,6 @@ AI Workflow Harness backlog다.
 
 #### Backlog row lifecycle SSoT 정비
 
-> Seq W1 — spine 비의존 독립 트랙. 세션 안정성에 직접 영향하므로 지금 착수 가능.
-
 **Task:** backlog row 제거 시점이 `HARNESS-PROTOCOL.md`("Work archived 시"), `work-plan.md`("develop merge 후 tracking-only commit"), `work-close.md`(언급 없음) 세 곳에서 불일치. 매 work-close마다 수동으로 잡아야 하는 구조적 결함. 단일 시점("Work Done 처리 시 동일 commit에 포함")으로 통일하고, `work-close.md`에 backlog row 확인·제거 단계를 추가하며, `work-plan.md`의 잘못된 타이밍 문구를 정정한다. `HARNESS-PROTOCOL.md` Pruning Policy도 일치시킨다.
 
 **Dependencies:**
@@ -188,8 +162,6 @@ AI Workflow Harness backlog다.
 ---
 
 #### Harness upgrade/migration 메커니즘
-
-> Seq W1 — spine 비의존 병렬 트랙. 공개 adopter라는 concrete driver가 있어 P0 series 완료 후 우선 착수 후보.
 
 **Task:** `--upgrade`/`--refresh` 또는 update guide 구현. **driver: 공개 adopter `ai-deck-compiler`가 이 harness를 적용 중이며 upstream 변경 반영(업그레이드/마이그레이션)이 필요.** `--existing`은 신규 overlay용일 뿐 갱신 기능 아님. 이미 있는 `--check`(manifest sha256 drift 감지, CHORE-20260605-006) 위에 구축. 기본 방향: source가 manifest/check/update guide를 제공하고, target repo AI가 자기 커스터마이징을 가장 잘 아는 주체로 selective migration 수행. 결정 사항: overwrite vs merge 정책, 사용자 커스터마이징/로컬 변경 보존(backup), version marker(`VERSION`), drift detection→apply 경로, release timing/criteria. **흡수: 구 HRN-FUT-008 + 구 Deferred "Scaffold template drift window 관리"(release timing). drift window 개념 자체는 `docs/HARNESS-PROTOCOL.md` §T12에 유지.**
 
@@ -206,8 +178,6 @@ AI Workflow Harness backlog다.
 
 #### 외부화 실패모드 통합 설계 원칙 명문화
 
-> Seq W1 — spine 비의존 framing 작업. slice 0 방향 결정의 상위 프레임.
-
 **Task:** AI 맥락 외부화의 3대 실패모드(① 라우팅 누락 ② 비대화 ③ 선언-실행 괴리)와 각 보완(manifest·canonical / archive drain·SSoT 단일화 / test·hard-stop)을 Phase 2 slice 0 방향 결정의 상위 프레임으로 채택
 
 **Dependencies:**
@@ -222,7 +192,6 @@ AI Workflow Harness backlog다.
 
 #### Archive 누적 관리 정책
 
-> Seq W1 — spine 비의존 lifecycle hygiene. 구 Deferred `AWH-OQ-001`(historical docs 보존 기준)을 흡수한다.
 > 2026-06-10 등록 (사용자 제기).
 
 **Task:**
@@ -264,45 +233,8 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### 백로그 Seq/Sequencing 포맷 거버넌스 정렬
-
-> Seq W1 — spine 비의존. 후속 HARNESS.md 등록 정합성에 선행하므로 Seq drift 누적 전 조기 결정 권장.
-> 2026-06-10 등록 (reorg(CHORE-20260610-010)가 ad-hoc 도입한 `Seq` 구조의 거버넌스 미결 — 사용자 지적).
-
-**Task:**
-
-- reorg(CHORE-20260610-010)가 `docs/backlog/HARNESS.md`에 ad-hoc 도입한 **`Seq` 열 · `Sequencing Guide` 섹션 · 각 항목 `> Seq …` 주석**이 governing spec 없이 한쪽 파일에만 존재한다.
-- 먼저 결정: **(A) 영구 스키마** — 매 항목 Seq 유지 / **(B) 1회성 스냅샷** — 테이블 열은 부적절, 경량 grouping·주석으로 강등 또는 제거.
-- **기본 가설(결정 미확정):** (B) 권장 — Seq는 `Dependencies`에서 파생되는 derived data라 Summary 열은 제거하고, 의존성 SSoT는 `Dependencies` 필드·현재 시퀀싱 뷰는 STATUS Next Actions가 담당. churn↑·cascade·drift 비용이 at-a-glance 이점을 상회. 'Seq=착수축 / Priority=긴급도축' 개념 설명 유지 여부는 착수 시 판단.
-- 결정에 따라 divergence 4건을 정렬한다:
-  - scaffold 템플릿(`scripts/create-harness.sh`)이 생성하는 backlog는 5열(`ID|Priority|Status|Risk|Title`) — Seq 없음.
-  - `skills/workflow/work-register.md` Backlog Entry Format도 5열 — 다음 등록 시 6열 테이블 깨짐.
-  - PRODUCT/HARNESS **track 대칭**(DR-031) — Seq가 HARNESS 한쪽에만.
-  - Seq 주석 **drift** — W1 항목 완료 시 stale, 유지 메커니즘 없음.
-
-**Dependencies:**
-
-- 연계: `Backlog row lifecycle SSoT 정비`(W1, 같은 backlog 포맷/lifecycle 거버넌스 계열), DR-031(track 대칭), CHORE-20260608-001(2단 구조 전환, archived).
-- 잠정 조치: 결정 전까지 HARNESS.md 신규 등록은 테이블 유효성 위해 Seq 셀을 채운다(본 항목 자체 포함).
-
-**Done Criteria:**
-
-- (A)/(B) 결정을 Recent Decisions 또는 DR로 기록.
-- (A): scaffold 템플릿 · work-register/work-close 절차 · PRODUCT.md 대칭에 Seq 반영. (B): Summary `Seq` 열 제거 + 경량 형태로 강등, drift 방지.
-- 결정과 무관하게 HARNESS.md ↔ scaffold ↔ work-register 절차가 **동일 포맷으로 정합**.
-
-**Verification:**
-
-- canonical: `work-register.md`·`work-close.md` Backlog Entry/제거 절차 포맷 일치.
-- scaffold: `create-harness.sh` 생성 backlog 포맷과 source HARNESS.md 일치(dry-run).
-- adopter cascade: PRODUCT.md 대칭(DR-031) 확인.
-- README/GUIDE/MANUAL: backlog 포맷 언급 stale 여부 점검.
-
----
-
 #### Canonical 개념 계층화 + context-routing restructure
 
-> Seq W2★ — restructure core. `harness workflow 검증 테스트 체계 정립`(W1★) 이후 test-backed로 착수. trigger family simplification을 흡수한다.
 > 2026-06-10 등록 (사용자 테마 — README 흐름 검토 + 개념 상위화 통합).
 
 **Task:**
@@ -339,8 +271,6 @@ AI Workflow Harness backlog다.
 
 #### Prompt surface diet + optional pack 재정의
 
-> Seq W2 — canonical weight 경량화 작업으로 restructure(W2★)와 entangle. optional pack 방향이 W3의 work-doc class·coding pack·onboarding refresh에 입력을 공급한다.
-
 **Task:** source repo에서도 `prompts/*session-start.md` 3종과 `prompts/README.md`를 제외한 task prompt(`00~22`)를 live surface에서 제거할지 결정한다. 제거 결정 시 실제 삭제하지 않고 `docs/archive/` 하위로 이동하거나 opt-in archive/example pack으로 격리해 이력을 보존한다. 기본 판단: canonical workflow(`skills/workflow/*.md` + adapter) 이후 task prompt library는 harness core라기보다 과거 product-template/example pack 성격이 강하고 cascade 비용이 큼. archive/격리 시 `scripts/create-harness.sh --with-optional`, README, WORKFLOW-MANUAL, PLAN/PLAN-SUMMARY, maintainer guide, repo-health prompt cascade 표를 함께 정리한다. **연계: `work-doc.md` class 재검토(P2)**
 
 **docs/ 물리 레이아웃 재검토 (CHORE-20260610-009 라우팅):** 이 항목에서 `--with-optional` 재정의와 함께 docs/ 물리 레이아웃(user/maintainer/pack을 audience별 디렉토리로 분리할지)도 재검토한다. DR-021은 "물리 이동 보류, logical marker로 식별"을 채택했고 근거는 "reversal cost가 높다"였으나, **그 비용은 hardcoded flat-path 참조 방식에 종속**된다 — manifest/anchor 기반 indirection을 도입하면 이동 비용이 낮아져 물리 분리 재고가 정당해질 수 있다. 즉흥 뒤집기 대신 pack 구조·scaffold wiring을 통합 설계하는 이 시점에서 함께 판단한다.
@@ -356,8 +286,6 @@ AI Workflow Harness backlog다.
 ---
 
 #### Harness protocol trigger family simplification
-
-> Seq W2⊂ — 별도 신규 항목이 아니라 `Canonical 개념 계층화 + context-routing restructure`(W2★) 실행에 흡수되어 함께 결정된다. 독립 착수하지 않는다.
 
 **Task:** `docs/HARNESS-PROTOCOL.md` T1~T17 trigger가 복잡해졌으므로 Decision / Planning / Surface / Scaffold / Finalization / Archive family로 재그룹화할 수 있는지 검토한다. 단, P0 gate series가 T15~T17/c4를 건드리므로 P0 완료 전 대형 재작성은 피한다.
 
@@ -375,7 +303,6 @@ AI Workflow Harness backlog다.
 
 #### 문서-only 규칙 강제화 (CI/hook/hard-gate)
 
-> Seq W3 — 곧 restructure될 표면을 hard-gate하지 않도록 `Canonical 개념 계층화 + context-routing restructure`(W2★) 구조 확정 이후 착수.
 > 2026-06-10 등록 (사용자 테마).
 
 **Task:**
@@ -402,8 +329,6 @@ AI Workflow Harness backlog다.
 
 #### `skills/workflow/repo-health.md` slice 분리
 
-> Seq W3 — `repo-health gate series 보강`(W1)과 `Scaffold/tool-surface alignment 점검 체계화`(W1) 입력에 의존.
-
 **Task:** 422줄로 canonical 파일 중 가장 무거움. 상시 로드 섹션(Procedure/Mode Contract/Output Contract/Inspection Areas A~B)과 조건부 섹션(--full 전용: C/D/F, --cascade 전용: G/H, Required Simulation Matrix)을 별도 slice 파일로 분리하고 conditional pointer로 교체. context budget 절감 및 --full/--cascade 로드 범위 명확화. **연계: repo-health gate series 보강(P1), Scaffold/tool-surface alignment 점검 체계화(P1)**
 
 **Dependencies:**
@@ -417,8 +342,6 @@ AI Workflow Harness backlog다.
 ---
 
 #### `skills/workflow/work-doc.md` class 재검토
-
-> Seq W3 — `Prompt surface diet + optional pack 재정의`(W2)의 optional pack 방향에 의존.
 
 **Task:** 243줄. Design System·Tone & Manner·Presentation Deck Principles 등 product-track 특화 내용이 harness core A-class canonical에 포함되어 있음. DR-021 A/B-class boundary 기준으로 Optional source pack 또는 source-only 이동 여부를 결정한다. **연계: Prompt surface diet + optional pack 재정의(P1)**
 
@@ -434,8 +357,6 @@ AI Workflow Harness backlog다.
 
 #### Coding canonical optional pack — `--with-coding-guide` scaffold 확장
 
-> Seq W3 — `Prompt surface diet + optional pack 재정의`(W2) 방향 확정 후 착수.
-
 **Task:** 일반 coding 지침(TDD, architecture 설계 원칙, code convention)을 scaffold optional pack으로 제공한다. 현재 `docs/BEHAVIOR-PRINCIPLES.md`는 workflow 원칙이며 coding-specific 구체 지침(구현 전 test 작성, domain/infrastructure 분리, API-first 설계 등)은 없다. `docs/CODING-PRINCIPLES.md`를 harness core 밖에 두고 `--with-coding-guide` 옵션으로 scaffold 시 포함시킨다. tool-surface mirror(`.claude/rules/`, `.cursor/rules/` 등) wiring 포함. 이후 스택별 확장(`--with-spring-boot`, `--with-react`)으로 구체화 가능하도록 확장 구조를 설계한다. **주의: `--with-optional` 재정의(`Prompt surface diet + optional pack 재정의`, P1)와 optional pack 설계 방향이 겹치므로 해당 항목 방향 확정 후 착수 권장. 또한 optional pack이 늘수록 `create-harness.sh` 복잡도가 높아지므로 스크립트 현행 설계 파악을 선행한다.**
 
 **Dependencies:**
@@ -449,8 +370,6 @@ AI Workflow Harness backlog다.
 ---
 
 #### Adopter onboarding/manual refresh
-
-> Seq W3 — `Prompt surface diet + optional pack 재정의`(W2)의 prompt surface 방향에 의존.
 
 **Task:** README overhaul(CHORE-20260606-005) 이후 `docs/SCAFFOLD-BOOTSTRAP.md`, generated `docs/BOOTSTRAP.md`, generated README/manual, `prompts/*session-start.md`가 같은 onboarding path를 말하는지 점검한다. 특히 fresh scaffold 후 여러 사용자가 clone하여 작업하는 상황, bootstrap pointer 제거/교체 규칙, framework-owned vs project-owned 설명, `--check`/selective migration 안내를 현행화한다.
 
@@ -466,8 +385,6 @@ AI Workflow Harness backlog다.
 
 #### Scaffold multi-user clone verification
 
-> Seq W3 — gate series 완료 위에서 실행 가능하나, 결과가 `Adopter onboarding/manual refresh`(W3)에 흡수되므로 함께 묶는다.
-
 **Task:** scaffold 후 여러 사용자가 clone하여 작업하는 상황을 상정해 branch/ruleset/hook/CI/advisory/manifest/check 동작을 점검한다. source-gitflow target과 generic/hook-less target을 분리해 검증하고, 결과는 P0 gate series 또는 onboarding refresh에 흡수한다.
 
 **Dependencies:**
@@ -481,8 +398,6 @@ AI Workflow Harness backlog다.
 ---
 
 #### Project-state template pack 검토
-
-> Seq W4 — downstream. scaffold onboarding 안정화 이후 검토.
 
 **Task:** `docs/decisions/DECISION-TEMPLATE.md` 외에 project-state-owned 파일을 채우는 template이 더 필요한지 검토한다. 후보: Work 파일 skeleton, backlog candidate row guide, retrospective/troubleshooting template, project decision index seed. 단, 작은 target에서 파일 수만 늘어나는 과잉 template은 피한다.
 
@@ -498,8 +413,6 @@ AI Workflow Harness backlog다.
 
 #### Scaffold CLI naming audit
 
-> Seq W4 — downstream. `Harness upgrade/migration 메커니즘`(W1)의 no-alias migration 방향에 의존.
-
 **Task:** `--workflow`는 실제로 Git/branch flow 선택인데 harness workflow 전체 옵션처럼 오해될 수 있다. 대안: `--branch-flow`, `--git-flow`, `--repo-flow`. 단 no-alias/breaking policy와 upgrade/migration 설계가 얽히므로 즉시 rename하지 않고 option naming + migration note + no-runtime-alias 정책을 함께 검토한다.
 
 **Dependencies:**
@@ -514,8 +427,6 @@ AI Workflow Harness backlog다.
 
 #### Windows 지원 확장 (HRN-032)
 
-> Seq W4 — downstream. HRN-031 이후 scaffold smoke test에 의존.
-
 **Task:** macOS 기준 workflow/scaffold 검증을 Windows/WSL/Git Bash까지 정렬
 
 **Dependencies:**
@@ -529,8 +440,6 @@ AI Workflow Harness backlog다.
 ---
 
 #### `/exit` → Stop hook gap 추적 (HRN-016)
-
-> Seq W4 — passive monitoring. 지원 확인 전 action 없음.
 
 **Task:** Claude Code process-exit hook 지원 여부 모니터링 (소극적 감시; 지원 확인 전 action 없음)
 
