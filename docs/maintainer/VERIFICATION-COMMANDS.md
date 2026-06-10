@@ -255,6 +255,7 @@ bash scripts/tests/check-shipped-dr-closure.sh
 - seed SSoT는 `scripts/create-harness.sh` 기본 adapt 블록에서 파생한다(하드코딩 사본 금지).
 - `Linked DRs:` frontmatter 라인은 검사에서 제외한다(source lineage 메타데이터). 동일 제외 규칙을 scaffold 생성 후 검사인 `check-scaffold-invariants.sh [1]`도 적용한다.
 - 작성 시점 규약은 `.claude/rules/docs-workflow.md`와 `docs/HARNESS-PROTOCOL.md` cascade 절을 따른다.
+- **자동 강제:** source repo `tools/git-hooks/pre-commit`이 commit 시 이 check를 자동 실행한다(hard gate). 위반 시 commit이 차단된다. check 스크립트가 없는 adopter repo에서는 존재 가드로 no-op.
 
 ---
 

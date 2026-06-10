@@ -82,6 +82,20 @@ if echo "$STAGED_FILES" | grep -q '^scripts/create-harness\.sh$'; then
     bash -n scripts/create-harness.sh
 fi
 
+# Shipped DR reference closure (DR-033) — source repo only.
+# The check script ships in the source repo but not to scaffolded targets, so the
+# existence guard makes this a no-op in adopter repos (the deployed hook stays inert).
+CLOSURE_CHECK="$ROOT/scripts/tests/check-shipped-dr-closure.sh"
+if [ -f "$CLOSURE_CHECK" ]; then
+    echo "Checking shipped DR reference closure..."
+    if ! CLOSURE_OUT=$(bash "$CLOSURE_CHECK" 2>&1); then
+        echo "$CLOSURE_OUT"
+        echo "ERROR: shipped 표면이 scaffold seed 밖 DR을 참조합니다 — commit 차단 (DR-033)."
+        echo "mode-a(canonical self-describe) 또는 mode-b(DR 파일 Linked DRs frontmatter)로 처리 후 재시도하세요."
+        exit 1
+    fi
+fi
+
 if [ "$FINALIZATION_ONLY" -eq 1 ]; then
     echo "WARNING: Staged changes look like a finalization-only commit."
     echo "DR-025 prefers bundling T15/T16 finalization with the substantive work commit."

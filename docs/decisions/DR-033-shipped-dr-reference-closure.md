@@ -44,6 +44,7 @@ DR-021은 scaffold output을 minimal로 유지하므로 "모든 참조 DR을 see
 - `docs/maintainer/VERIFICATION-COMMANDS.md`에 Layer + Release Full Sweep 편입, `docs/HARNESS-RECOVERY-VALIDATION.md`에 정책 pointer, `skills/workflow/repo-health.md` cascade 배선, `.claude/rules/docs-workflow.md` + `HARNESS-PROTOCOL.md` trigger에 작성 규약.
 - 기존 4건(DR-029→DR-011/030, DR-013/014→DR-031) remediation: body self-describe + `Linked DRs:` 이동.
 - 향후 shipped 문서에 DR 인용 시 seed closure를 작성 시점에 확인.
+- **Hard enforcement (CHORE-20260610-007):** source repo `tools/git-hooks/pre-commit`이 commit 시 closure check를 자동 실행한다. soft(AI 재량)가 실제로 뚫린(규약 저자가 직후 위반) 근거로 hard gate를 추가했다. check 스크립트가 없는 adopter repo에서는 존재 가드로 no-op이다.
 
 ## Reversal Cost
 
