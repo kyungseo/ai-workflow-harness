@@ -42,7 +42,6 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | `skills/workflow/work-doc.md` class 재검토 |
 | — | P2 | Candidate | L2 | Coding canonical optional pack — `--with-coding-guide` scaffold 확장 |
 | — | P2 | Candidate | L2 | Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의 |
-| — | P2 | Candidate | L2 | source-only maintainer 문서 디렉토리 정리 |
 | HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 |
 
 ---
@@ -281,18 +280,6 @@ AI Workflow Harness backlog다.
 - 원칙이 "harness docs = SSoT" 방향과 일관성 있는지 확인
 
 **Verification:** agent별 지속 컨텍스트 저장소(Claude `memory/`, Codex profile, Cursor user rules) grep으로 harness 행동 패턴 잔존 여부 확인. `docs/BEHAVIOR-PRINCIPLES.md` 또는 정책 파일에 cross-agent 원칙 반영 확인. tool surface · adopter cascade · scaffold · README/GUIDE/MANUAL: 해당 없음(N/A).
-
----
-
-#### source-only maintainer 문서 디렉토리 정리
-
-**Task:** scaffold 미복사 source-only maintainer 문서를 `docs/` 루트에서 전용 디렉토리(예: `docs/maintainer/`)로 통합해 루트 누적을 방지한다. 대상 6개: `VERIFICATION-COMMANDS.md`, `VERSIONING.md`, `SCAFFOLD-ONBOARDING-GUIDE.md`, `SCAFFOLD-BOOTSTRAP.md`, `HARNESS-MAINTAINER-GUIDE.md`, `HARNESS-ARCHITECTURE.md`. `docs/migrations/`(선례)를 그 하위로 둘지 병존시킬지 함께 결정. CHORE-20260609-005 논의에서 파생.
-
-**Dependencies:** —
-
-**Done Criteria:** 6개 문서 전용 디렉토리로 이동, live 참조 cascade 전수 갱신(stale 0 — VERIFICATION-COMMANDS만 repo-health/AGENT-WORKFLOW/HARNESS-RECOVERY-VALIDATION/QUICK-REFERENCE/VERSIONING 5+건), 인덱스·DR-008 location 표 정합, DR-021 boundary 확인, scaffold 출력 무영향.
-
-**Verification:** 이동 전 경로 `rg` stale 0, scaffold dry-run에 maintainer 문서 미생성, 참조 파일 링크 유효.
 
 ---
 
