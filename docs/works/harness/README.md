@@ -12,12 +12,12 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260610-001 | source-only maintainer 문서 디렉토리 정리 | 2026-06-10 | `docs/works/harness/CHORE-20260610-001-maintainer-doc-dir.md` |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260610-001 | source-only maintainer 문서 디렉토리 정리 | 2026-06-10 | `docs/archive/docs/works/harness/CHORE-20260610-001-maintainer-doc-dir.md` |
 | CHORE-20260609-005 | Product Track 네이밍 전환 (PHASE{n} → PRODUCT) | 2026-06-09 | `docs/archive/docs/works/harness/CHORE-20260609-005-product-track-naming.md` |
 | CHORE-20260609-002 | Draft DR 체계 도입 + 언어 전략 Draft DR | 2026-06-09 | `docs/archive/docs/works/harness/CHORE-20260609-002-draft-dr-language-strategy.md` |
 | CHORE-20260608-003 | VERIFICATION-COMMANDS 보완 + pointer 배선 | 2026-06-08 | `docs/archive/docs/works/harness/CHORE-20260608-003-verification-commands-hardening.md` |

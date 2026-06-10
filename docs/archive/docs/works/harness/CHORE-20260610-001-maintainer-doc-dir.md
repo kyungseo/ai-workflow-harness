@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260610-001
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: scaffold 미복사 source-only "release·maintenance 내부 문서" 3종을 `docs/` 루트에서 전용 디렉토리 `docs/maintainer/`로 통합한다. 대상 `VERIFICATION-COMMANDS.md`, `VERSIONING.md`, `docs/migrations/`(디렉토리째). SCAFFOLD-BOOTSTRAP·SCAFFOLD-ONBOARDING-GUIDE는 온보딩/사용자 표면이라 루트 유지(제외). inbound live 참조 cascade 갱신, DR-008 location 표 정합, DR-021 amendment note.
 appetite: 0.5d
@@ -85,6 +85,7 @@ docs/maintainer/
 
 - backlog의 "source-only maintainer 문서 디렉토리 정리" candidate(P2) 착수. CHORE-20260609-005 논의에서 파생.
 - 원 candidate는 6종 대상이었으나, scaffold 동작 검토로 SCAFFOLD-BOOTSTRAP(scaffold 표면)·SCAFFOLD-ONBOARDING-GUIDE(사용자 매뉴얼)·optional-pack 2종을 제외, **순수 maintenance 내부 3종**으로 축소(사용자 승인).
+- 2026-06-10 archive: PR #123 develop merge 완료 후 archive drain. backlog candidate row 정리와 동일 commit(CHORE-20260610-002 tracking).
 
 ## Checkpoints
 
