@@ -35,7 +35,7 @@
    - `docs/decisions/*.md` `Linked Backlog Items`
    - `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, target prompts/docs
 4. **framework surface 갱신** — canonical(`skills/workflow/*`)·adapter(`.claude/commands/`, `.agents/skills/`, `.cursor/rules/`)·rule을 source 최신으로 교체한다. 이들은 이미 `PRODUCT.md`/glob을 phasing-agnostic으로 참조하므로 단계 운영 여부와 무관하게 동작한다.
-5. **harness "Phase" 보존 확인** — STATUS `Current phase`, `Phase completion criteria`, 명령 절차 "Phase 1-6", 리팩토링 milestone은 그대로 둔다. 오변경하지 않는다.
+5. **harness "Phase" 보존 확인** — STATUS `Current phase`(descriptive optional 라벨 — DR-032), 명령 절차 "Phase 1-6", 리팩토링 milestone은 그대로 둔다. 오변경하지 않는다.
 6. **archive 미수정** — `docs/archive/**`의 과거 `PHASE{n}` 참조는 historical snapshot이므로 재작성하지 않는다(DR-014 immutability).
 7. **검증**: `rg --hidden --glob='!docs/archive/**' 'PHASE\{n\}|PHASE[0-9]|backlog/PHASE|works/phase'` 결과가 전환을 설명하는 의도적 참조(예: 본 migration 기록)만 남는지 확인한다.
 

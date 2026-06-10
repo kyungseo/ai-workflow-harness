@@ -28,8 +28,8 @@ Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 
 6. docs/STATUS.md 업데이트 필요 여부
    - 필요하다면 즉시 수정하지 말고 Approval Matrix state rules에 맞는 제안을 제시해.
    - Active Work pointer 추가/제거는 대상 Work ID를 명시한 1줄 제안으로 충분하다.
-   - Phase completion criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 제시해.
-   - commit/PR 전 STATUS Finalization이 완료되었는지 확인해. Active Work pointer, Current phase/focus, Phase criteria, Blockers/OQ, Next Actions, Recent Decisions, Active Work Discovery 최신성을 기준으로 `STATUS.md` 변경 필요 yes/no와 이유를 보고해.
+   - Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 제시해.
+   - commit/PR 전 STATUS Finalization이 완료되었는지 확인해. Active Work pointer, Current phase/focus, Blockers/OQ, Next Actions, Recent Decisions, Active Work Discovery 최신성을 기준으로 `STATUS.md` 변경 필요 yes/no와 이유를 보고해.
    - commit/PR 전 Tracking Finalization이 완료되었는지 확인해.
      연결된 backlog 항목의 Status/Done Criteria/Verification, Work 파일 frontmatter/status/Checkpoints/Discovery,
      Work index README 위치, 관련 DR의 Status/Supersedes/Linked Backlog Items,

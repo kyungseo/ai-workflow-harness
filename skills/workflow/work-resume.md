@@ -38,7 +38,7 @@ Done 상태의 Work 파일이 `docs/works/{category}/`에 남아 있으면 archi
 
 docs/STATUS.md 변경은 즉시 수행하지 말고 Approval Matrix state rules에 맞게 먼저 제안해줘.
 Active Work pointer 추가/제거는 대상 Work ID를 명시한 1줄 제안으로 충분하다.
-Phase completion criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 보고해줘.
+Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 보고해줘.
 사용자가 명시적으로 승인한 뒤에만 STATUS.md를 수정해줘.
 
 그다음 남은 작업 계획과 검증 방법을 제안해줘.

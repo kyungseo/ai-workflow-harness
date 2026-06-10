@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260610-003 | Phase 모델 de-formalize + routing/decomposition 정리 (HRN-030) | 2026-06-10 | `docs/works/harness/CHORE-20260610-003-phase-deformalize.md` |
 
 ## Archived
 
