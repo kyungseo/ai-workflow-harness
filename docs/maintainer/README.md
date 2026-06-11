@@ -8,6 +8,7 @@ scaffold 적용 repository에는 존재하지 않으므로, 다른 문서가 이
 
 | 자산 | 역할 |
 | --- | --- |
+| `SOURCE-REPO-OPERATIONS.md` | source repo 변경 lifecycle 운영 runbook — 검증 척추 산출물을 실행 순서로 엮는 진입 문서(순서축, SSoT 복제 아님) |
 | `VERIFICATION-COMMANDS.md` | Layer별 검증 명령 카탈로그 + "Release Full Sweep" 릴리즈 전수 점검 프리셋 |
 | `VERSIONING.md` | semver 기준·tag 매핑·bump 절차의 SSoT (근거: DR-028) |
 | `migrations/` | source framework 변경을 기존 target repo가 수용하는 migration note 인덱스 |
@@ -25,6 +26,7 @@ DR-021은 source/target 경계를 **물리 디렉토리 이동 없이** logical 
 | `HARNESS-ARCHITECTURE.md` | maintainer / contributor | optional-pack | `docs/` 루트 |
 | `HARNESS-MAINTAINER-GUIDE.md` | maintainer | optional-pack | `docs/` 루트 |
 | `VERIFICATION-COMMANDS.md`, `VERSIONING.md`, `migrations/` | maintainer | source-only (미배포) | `docs/maintainer/` |
+| `SOURCE-REPO-OPERATIONS.md` | source maintainer / AI driver | source-only (미배포) | `docs/maintainer/` |
 
 > SCAFFOLD-ONBOARDING-GUIDE는 source-only이나 *도입 시 source/clone에서 읽는* adopter용이라 루트에 둔다 (maintainer 전용 자산과 성격이 다름).
 > docs/ 물리 레이아웃 자체(audience별 디렉토리 분리)의 재검토 여지는 `docs/backlog/HARNESS.md` "Prompt surface diet + optional pack 재정의"(P1)에서 reversal-cost 논거와 함께 다룬다.
