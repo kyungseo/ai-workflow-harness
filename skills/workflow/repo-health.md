@@ -137,6 +137,11 @@ git diff --cached --name-only
 | `.claude/commands/{x}.md` ↔ `.agents/skills/workflow-{x}/SKILL.md` mirror pair 변경 | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 대응 pair 전체 | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` 섹션 | scaffold 복사 산출물 | 관련 Work/retrospective |
 | `.claude/commands/repo-health.md` 또는 `.agents/skills/workflow-repo-health/SKILL.md` 변경 | `docs/AGENT-WORKFLOW.md` | SKILL mirror (또는 command mirror) | `docs/HARNESS-QUICK-REFERENCE.md` `/repo-health` 행, `docs/WORKFLOW-MANUAL.md` §5 `/repo-health` 셀 | scaffold 복사 산출물 health command/skill | — |
 | `tools/git-hooks/**` 변경 | `docs/HARNESS-PROTOCOL.md` hook trigger section, `docs/AGENT-WORKFLOW.md` commit approval | `tools/git-hooks/install.sh` (설치 script), `tools/git-hooks/lib/gate-lists.sh` (protected 목록), `.harness/gate-config` | `docs/WORKFLOW-MANUAL.md` hook section, `docs/HARNESS-QUICK-REFERENCE.md` | `scripts/create-harness.sh` hook installation block | 관련 Work |
+| **gate path-list parity** — `tools/git-hooks/lib/gate-lists.sh` · `.claude/rules/git-workflow.md` · `docs/GIT-WORKFLOW.md` · `scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md` · `scripts/create-harness.sh` gate-config seed 중 변경 | `docs/AGENT-WORKFLOW.md` commit approval, branch isolation | `tools/git-hooks/lib/gate-lists.sh` (SSoT), `.claude/rules/git-workflow.md` | `docs/GIT-WORKFLOW.md` | `scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md`, `scripts/create-harness.sh` gate-config seed | 관련 Work |
+
+> **gate parity 실행 pointer:** 위 `gate path-list parity` 행의 5 surface 중 하나라도 변경되면 `docs/maintainer/VERIFICATION-COMMANDS.md` **Layer Q-static**(protected semantic-key matrix / finalization policy / seed section·add-only — Axis A/B/C)을 실행한다. grep 명령은 catalog에만 두고 여기엔 pointer만 둔다(중복 금지).
+> **LIVE_TARGETS 경계:** `.harness/gate-config`는 source repo에 존재하지 않으므로(scaffold target 전용, create-harness.sh가 seed) 아래 LIVE_TARGETS에 추가하지 않는다 — phantom path 방지. scaffold-target의 gate-config 실동작은 Tier2/OB7(`VERIFICATION-COMMANDS.md`)가 커버한다.
+> **runner 연계(F4):** gate parity의 executable 동반자는 `scripts/tests/run-harness-checks.sh`이나 현재 runner는 Q-static을 호출하지 않는다 — 통합은 후속 F4.
 
 ### Required Grep Pack
 

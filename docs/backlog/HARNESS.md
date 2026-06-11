@@ -28,7 +28,7 @@ AI Workflow Harness backlog다.
 
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
-| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | repo-health gate series 보강, Source repo maintainer operations manual (검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007 완료) |
+| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | Source repo maintainer operations manual (검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008 완료) |
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | Harness upgrade/migration 메커니즘, Product starter planning pack + feedback import loop, User-facing docs rewrite, Scaffold multi-user clone verification |
 | W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health slice, work-doc class |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
@@ -38,7 +38,6 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | repo-health gate series 보강 |
 | — | P2 | Candidate | L2 | Source repo maintainer operations manual |
 | — | P1 | Candidate | L3 | Harness upgrade/migration 메커니즘 |
 | — | P1 | Candidate | L3 | Product starter planning pack + feedback import loop |
@@ -66,24 +65,6 @@ AI Workflow Harness backlog다.
 > **Verification 작성 기준:** 변경이 건드리는 surface를 항목별로 명시한다.
 > 점검 후보: tool surface · adopter cascade · canonical · scaffold · README/GUIDE/MANUAL
 > 해당 없는 surface는 제외한다.
-
----
-
-#### repo-health gate series 보강
-
-**Cluster:** W1. Validation Spine / W4. Enforcement And Lifecycle
-
-**Task:** gate series(CHORE-20260606-006~016) 이후 `.harness/gate-config`가 live operational 파일이 됐으나 repo-health LIVE_TARGETS·Required Surface Matrix에 없음. 또한 `tools/git-hooks/lib/gate-lists.sh`(framework SSoT) ↔ `.harness/gate-config`(project extension) 정합 교차 검증 체크 없음. 두 파일이 충돌해도 감지 불가. LIVE_TARGETS에 `.harness/gate-config` 추가, Surface Matrix에 gate-config 변경 시 cascade 행 추가, grep pack에 gate-lists.sh ↔ gate-config 교차 검증 추가. P2: AWH-Gate-Override trailer 사용 패턴 grep도 추가 검토. **연계: `repo-health.md` slice 분리(P2)**
-
-> **[2026-06-08 설계 논의 메모]** pre-commit hook이 protected 파일을 develop에서 stage할 때 WARNING만 발행하고 exit(1)하지 않는다는 점이 확인됐다. `git-workflow.md`의 인지 규칙("move to FAIL")과 기계 신호(WARNING=proceed)가 불일치하며, AI 도구는 기계 신호를 따라 commit을 진행할 수 있다. GitHub ruleset이 push 단계에서 hard-stop을 제공하므로 실피해는 "local develop에 잘못된 commit이 남는 불편함"에 한정된다. hook exit(1) 강화를 검토했으나, 예외 설계가 복잡하다는 결론: ① STATUS.md 같은 상태 파일의 tracking-only commit은 develop 직접 commit이 정당한 예외이고, ② Quick Mode L1 작업은 feature branch 없이 처리하는 경우가 있으며, ③ product track까지 확장하면 repo별 custom protected path가 추가되고, ④ `commands/**`, `rules/**`, `create-harness.sh` 같은 구조 파일은 trailer 우회도 불가해야 할 수 있다. 이 예외 클래스 분류(상태 파일 vs. 구조 파일), hook의 override trailer 인식 여부, Quick Mode/product track 적용 범위를 사전에 DR로 확정하지 않으면 hook 구현이 설계 없이 진행될 위험이 있다. 현재 GitHub ruleset으로 충분한 보호가 이루어지고 있어 현행 유지가 더 효율적일 수 있다는 판단 하에 보류 중. 착수 시 hook 강화보다 예외 클래스 설계 DR을 선행해야 함.
-
-**Dependencies:**
-
-- CHORE-20260606-006~016 (gate series Done), DR-024, DR-025, tools/git-hooks/ Surface Matrix 행(이번 세션 추가)
-
-**Done Criteria:** LIVE_TARGETS·Surface Matrix·grep pack이 gate-config와 gate-lists.sh를 커버함. repo-health --cascade 실행 시 gate 파일 변경이 자동으로 감사 대상에 포함됨
-
-**Verification:** gate-config 변경 후 --cascade 실행 → Surface Matrix 해당 행 선택됨 확인. gate-lists.sh ↔ gate-config grep 교차 검증 결과 일치 확인
 
 ---
 
@@ -374,15 +355,17 @@ AI Workflow Harness backlog다.
 - 문서상으로만 기술된 내용 중 ci · hook · hard gate 및 가용한 다른 수단으로 강제화할 주요 요소를 검토하고 구현한다.
 - 우선순위는 위반 빈도·실피해가 큰 규칙부터.
 
+> **[2026-06-08 설계 메모 — CHORE-20260611-008 close 시 `repo-health gate series 보강`에서 이관]** pre-commit hook이 protected 파일을 develop에서 stage할 때 WARNING만 발행하고 exit(1)하지 않는다. `git-workflow.md`의 인지 규칙("move to FAIL")과 기계 신호(WARNING=proceed)가 불일치하며, AI 도구는 기계 신호를 따라 commit을 진행할 수 있다. GitHub ruleset이 push 단계에서 hard-stop을 제공하므로 실피해는 "local develop에 잘못된 commit이 남는 불편함"에 한정된다. hook exit(1) 강화를 검토했으나 예외 설계가 복잡하다는 결론: ① STATUS.md 같은 상태 파일의 tracking-only commit은 develop 직접 commit이 정당한 예외, ② Quick Mode L1은 feature branch 없이 처리하는 경우가 있음, ③ product track 확장 시 repo별 custom protected path 추가, ④ `commands/**`·`rules/**`·`create-harness.sh` 같은 구조 파일은 trailer 우회도 불가해야 할 수 있음. 이 예외 클래스 분류(상태 파일 vs 구조 파일), hook의 override trailer 인식 여부, Quick Mode/product track 적용 범위를 사전에 DR로 확정하지 않으면 hook 구현이 설계 없이 진행될 위험이 있다. 현재 GitHub ruleset으로 충분한 보호가 이뤄지고 있어 현행 유지가 더 효율적일 수 있다는 판단 하에 보류. 착수 시 hook 강화보다 **예외 클래스 설계 DR을 선행**해야 함.
+
 **Dependencies:**
 
-- 연계: `repo-health gate series 보강`(P1), 기존 gate series(CHORE-20260606-006~016), DR-024, DR-025.
+- 연계: gate path-list parity Q-static(CHORE-20260611-008 완료), 기존 gate series(CHORE-20260606-006~016), DR-024, DR-025.
 - 구조 확정 후 착수 권장 — 곧 restructure될 표면을 hard-gate하지 않도록 `Canonical 개념 계층화 + context-routing restructure`(P1) 이후.
 
 **Done Criteria:**
 
 - 강제화 후보 규칙 목록 + 수단(CI/hook/hard-gate) 매핑 결정.
-- 선정 규칙에 대한 enforcement 구현 + 우회/예외 클래스 설계(`repo-health gate series 보강`의 예외 클래스 논의 반영).
+- 선정 규칙에 대한 enforcement 구현 + 우회/예외 클래스 설계(위 hook exit(1) 예외 클래스 메모 반영).
 
 **Verification:**
 
@@ -395,11 +378,11 @@ AI Workflow Harness backlog다.
 
 **Cluster:** W3. Workflow IA Diet
 
-**Task:** 422줄로 canonical 파일 중 가장 무거움. 상시 로드 섹션(Procedure/Mode Contract/Output Contract/Inspection Areas A~B)과 조건부 섹션(--full 전용: C/D/F, --cascade 전용: G/H, Required Simulation Matrix)을 별도 slice 파일로 분리하고 conditional pointer로 교체. context budget 절감 및 --full/--cascade 로드 범위 명확화. **연계: repo-health gate series 보강(P1), scaffold/tool-surface regression alignment(CHORE-20260611-006 완료) F4 repo-health 연계**
+**Task:** 422줄로 canonical 파일 중 가장 무거움. 상시 로드 섹션(Procedure/Mode Contract/Output Contract/Inspection Areas A~B)과 조건부 섹션(--full 전용: C/D/F, --cascade 전용: G/H, Required Simulation Matrix)을 별도 slice 파일로 분리하고 conditional pointer로 교체. context budget 절감 및 --full/--cascade 로드 범위 명확화. **연계: gate path-list parity(CHORE-20260611-008 완료, Surface Matrix gate row 추가됨), scaffold/tool-surface regression alignment(CHORE-20260611-006 완료) F4 repo-health 연계**
 
 **Dependencies:**
 
-- `repo-health gate series 보강`(P1), scaffold/tool-surface regression alignment(CHORE-20260611-006 완료) F4 repo-health 연계
+- gate path-list parity(CHORE-20260611-008 완료), scaffold/tool-surface regression alignment(CHORE-20260611-006 완료) F4 repo-health 연계
 
 **Done Criteria:** 상시 로드 섹션이 200줄 이하로 줄고, 조건부 섹션이 conditional pointer로 참조됨
 
