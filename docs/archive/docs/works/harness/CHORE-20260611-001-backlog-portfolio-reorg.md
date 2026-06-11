@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260611-001
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: HARNESS backlog를 이번 주 하네스 마무리와 다음 주 실제 product scaffold 운영 전환 기준으로 portfolio 재구성한다. 기존 detail은 보존하되 오래된 PR #93 이후 재검증 항목은 검증 spine의 regression asset으로 흡수하고, onboarding guide/workflow manual 전면 재작성 필요성을 user-facing docs rewrite 클러스터에 반영한다.
 appetite: 0.5d
@@ -56,3 +56,4 @@ related_work: [CHORE-20260610-010, CHORE-20260610-011]
 ## Discovery
 
 - 명시적 backlog candidate가 아니라 사용자 직접 지시로 착수한 portfolio 정리 Work.
+- Archived 2026-06-11: Done work 정리(routine), `/work-close` archive step.

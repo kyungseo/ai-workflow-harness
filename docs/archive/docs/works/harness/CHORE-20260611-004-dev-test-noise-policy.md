@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260611-004
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: harness 행동을 유도하는 내용을 agent-side 지속 컨텍스트(Claude memory, Codex 전역 profile, Cursor user-level rules)에 저장하지 않는다는 cross-agent 정책을 harness 문서로 명문화하고, 현존 Claude memory 4개 파일의 처리 방향을 결정·실행한다. 정책의 hard-gate 강제화는 범위에서 제외한다.
 appetite: 0.5d
@@ -106,6 +106,7 @@ agent-side 지속 컨텍스트에 저장된 항목을 다음 기준으로 분류
 
 - 2026-06-11 — Work 파일 + plan 작성, Active 등록. Codex R0 Conditional Approve → must-fix 3건 반영(R0a).
 - 2026-06-11 — 구현: `BEHAVIOR-PRINCIPLES.md` §6 신설, Claude memory 2개 pointer 축소, `MEMORY.md` 정합.
+- 2026-06-11 — Archived: Done work 정리(routine), `/work-close` archive step. PR #143 merge 후 동일 세션 archive.
 
 ### Memory 변경 복구 기록 (§3 절차 — repo 밖, git revert 불가)
 

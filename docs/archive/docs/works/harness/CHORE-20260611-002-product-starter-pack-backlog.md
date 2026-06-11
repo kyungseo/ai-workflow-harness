@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260611-002
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: 신규 product 착수 예정 메모를 HARNESS backlog에 반영한다. source-first product planning pack, scaffold repo 실행, source repo option-pack import loop를 추가하고 기존 coding guide pack 후보를 Spring Boot MSA TDD product engineering option-pack 후보로 재정의한다.
 appetite: 0.25d
@@ -53,3 +53,4 @@ related_work: [CHORE-20260611-001]
 ## Discovery
 
 - CHORE-20260611-001 완료 후 사용자 추가 메모로 착수한 follow-up backlog 보완.
+- Archived 2026-06-11: Done work 정리(routine), `/work-close` archive step.

@@ -13,15 +13,16 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260611-004 | Harness dev/test noise scope policy | 2026-06-11 | `docs/works/harness/CHORE-20260611-004-dev-test-noise-policy.md` |
-| CHORE-20260611-003 | Product pack verification backlog 사전 보강 | 2026-06-11 | `docs/works/harness/CHORE-20260611-003-verification-pack-backlog-review.md` |
-| CHORE-20260611-002 | Product starter pack backlog 반영 | 2026-06-11 | `docs/works/harness/CHORE-20260611-002-product-starter-pack-backlog.md` |
-| CHORE-20260611-001 | Harness backlog portfolio 재구성 | 2026-06-11 | `docs/works/harness/CHORE-20260611-001-backlog-portfolio-reorg.md` |
+| _(none)_ | | | |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260611-004 | Harness dev/test noise scope policy | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-004-dev-test-noise-policy.md` |
+| CHORE-20260611-003 | Product pack verification backlog 사전 보강 | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-003-verification-pack-backlog-review.md` |
+| CHORE-20260611-002 | Product starter pack backlog 반영 | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-002-product-starter-pack-backlog.md` |
+| CHORE-20260611-001 | Harness backlog portfolio 재구성 | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-001-backlog-portfolio-reorg.md` |
 | CHORE-20260610-011 | 백로그 Seq/Sequencing 포맷 거버넌스 정렬 ((B) 채택) | 2026-06-10 | `docs/archive/docs/works/harness/CHORE-20260610-011-seq-format-governance.md` |
 | CHORE-20260610-010 | Backlog 정리 — 의존성 reorg + 시퀀싱 | 2026-06-10 | `docs/archive/docs/works/harness/CHORE-20260610-010-backlog-reorg.md` |
 | CHORE-20260610-009 | Doc surface logical markers (방안 A) | 2026-06-10 | `docs/archive/docs/works/harness/CHORE-20260610-009-doc-surface-markers.md` |
