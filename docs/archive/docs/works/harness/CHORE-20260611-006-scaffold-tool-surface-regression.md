@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260611-006
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: "PR #93 이후 전수 재검증" 대신 scaffold/tool-surface drift를 대표 regression asset으로 흡수한다(CHORE-20260611-005 검증 척추 위에). 1차 slice는 invariant leak-scan coverage gap(shipped 비-core 표면, 특히 source-gitflow `GIT-WORKFLOW.md`) 수정 + 검증 척추로의 regression asset 흡수 명문화 + repo-health/HARNESS-PROTOCOL trigger 결정까지로 자르고, mirror parity executable 승격·full simulation-as-code는 후속(F1/F3)으로 분해한다.
 appetite: 1d
@@ -225,6 +225,7 @@ B(Codex)가 plan review와 result review를 수행한다.
 - source-gitflow shipped 표면: `docs/GIT-WORKFLOW.md`, `.github/workflows/harness-validate.yml`, `tools/git-hooks/**`(모두 adapt). 전부 core_files 밖 → OQ-2 범위 결정 대상.
 - manifest(`framework_files`)가 이미 모든 adapt() 파일을 추적 → leak-scan을 manifest-driven 일반해로 가는 대안 존재(후속 후보).
 - **선행 Work archive 대기:** CHORE-20260611-005 Work 파일이 `docs/works/harness/`에 archive 대기. 이 Work와 함께 또는 다음 세션에서 배치 archive 가능.
+- **Archived 2026-06-11:** PR #146 merge 후 CHORE-20260611-005와 묶어 archive 처리(routine, `/work-close` archive step).
 - **[구현 발견 + 수정] `leak_scan_files()` set -e 누수:** 새 helper가 마지막 `[[ -f ]] && echo`(default 모드엔 source-gitflow 파일 부재 → false=1)로 끝나, `leak_scan_files > tmp`가 `set -e`로 스크립트를 죽였다(CHORE-005 cleanup 버그와 동형). `core_files`는 마지막이 `find`(항상 0)라 무사. → helper 끝에 `return 0` 추가로 수정. 3모드 PASS 회복.
 - **[검증] inject-revert 성공:** `GIT-WORKFLOW.md` 템플릿에 `/Users/...` inject → source-gitflow 모드 `[2]`가 `LEAK: docs/GIT-WORKFLOW.md:7` 검출 + RESULT FAIL(exit 1). 이전엔 미검출이던 gap이 닫힘을 실증. revert 후 PASS, 잔여 토큰 0.
 - **[사용자 조정] test scripts 자체가 verification spine 영향도 surface:** `scripts/tests/**`(invariants/closure/runner)는 척추의 executable SSoT이므로 변경 시 cascade 대상. 단 **scaffold target leak-scan과 별개**(source-only maintainer surface, scaffold ship 아님 → target leak-scan 대상 아님). 이번 Work에서 최소 반영: runner `--tier0` syntax + taxonomy matrix 행 + VERIFICATION-COMMANDS cascade. repo-health 영향 surface 반영은 **F4로 defer**(pointer만).
