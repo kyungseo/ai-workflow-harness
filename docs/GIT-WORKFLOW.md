@@ -329,6 +329,8 @@ commit message 형식 검증. Conventional Commits 미준수 시 hard block (exi
 
 유효 type: `feat` `fix` `docs` `style` `refactor` `chore` `config` `test` `perf` `ci` `build` `revert`
 
+또한 commit-msg는 **finalization bundling gate**를 적용한다 — Work Done·`docs/STATUS.md`·Work index·backlog·decision tracker 같은 finalization 산출물을 substantive 변경과 같은 commit에 묶도록 요구하며, `AWH-Gate-Override` trailer로 예외를 명시한다(`.claude/rules/git-workflow.md` 참조).
+
 ### hook 설치
 
 ```bash

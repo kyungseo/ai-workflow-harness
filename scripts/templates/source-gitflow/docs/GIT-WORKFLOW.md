@@ -25,7 +25,7 @@ policy_type: source-gitflow
 | Tool surface | `.claude/commands/*.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.agents/skills/**`, `prompts/**` |
 | Enforcement | `tools/git-hooks/**` |
 
-> 이 표는 `tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path`와 동일한 목록을 가리킨다. 이 repo 고유 경로를 추가하려면 두 곳을 함께 갱신한다.
+> 이 표는 `tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path` 기본 목록을 가리킨다. 이 repo 고유 경로는 framework-owned `gate-lists.sh`를 편집하지 말고(upgrade 시 overwrite) add-only `.harness/gate-config`의 `[protected]`에 추가한다.
 
 ### Allowed Exceptions
 
@@ -380,7 +380,7 @@ sh tools/git-hooks/install.sh
 
 ### 이 repo에 맞게 조정
 
-`tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path`와 `awh_is_finalization_file` 목록은 harness 기본값에서 시작한다. 이 repo 고유의 민감 경로(예: 배포 설정, secret 경로)는 해당 함수의 `case` 패턴에 추가한다. hook 로직 자체를 수정할 필요 없이 목록만 확장하면 된다.
+`tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path`와 `awh_is_finalization_file` 목록은 harness 기본값이며 framework-owned다(upgrade 시 overwrite). 이 repo 고유의 민감 경로(예: 배포 설정, secret 경로)는 `gate-lists.sh`를 편집하지 말고 add-only `.harness/gate-config`의 `[protected]`/`[finalization]`에 추가한다 — upgrade-safe하며, hook이 기본 목록과 `.harness/gate-config`를 합쳐 읽는다.
 
 ## 7. Related Documents
 

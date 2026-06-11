@@ -884,6 +884,121 @@ cd -
 
 ---
 
+## Layer Q-static. Gate Path-List Parity (static, 생성 없음)
+
+Layer Q(hook **functional** test, scaffold 생성)와 분리된 **static parity** 점검이다. 같은 protected/finalization 정책을 서술하는 **5개 source-실재 surface**가 서로 drift하지 않는지 본다. 생성·hook 실행 없이 grep만 수행한다.
+
+비교 surface: `tools/git-hooks/lib/gate-lists.sh`(SSoT) · `.claude/rules/git-workflow.md`(rule) · `docs/GIT-WORKFLOW.md`(source user-facing) · `scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md`(shipped template) · `scripts/create-harness.sh`의 `.harness/gate-config` seed.
+
+> **설계 원칙:** raw glob(`docs/backlog/*` vs `**` vs `*.md`) 직접 diff 금지 — **semantic key 대표 토큰**으로 정규화한다. protected/finalization/seed는 성격이 달라 **3축으로 분리**한다.
+
+### Axis A — Protected-path semantic-key parity (surface별 expected matrix)
+
+surface마다 기대 key가 다르다(정책 차이 ≠ drift). 아래 **expected matrix가 SSoT**다.
+
+| semantic key | gate-lists.sh | git-workflow.md rule | docs/GIT-WORKFLOW.md | source-gitflow template |
+| --- | --- | --- | --- | --- |
+| workflow-status | ✓ | ✓ | ✓ | ✓ |
+| ai-entrypoint | ✓ | ✓ | ✓ | ✓ |
+| canonical-workflow | ✓ | ✓ | ✓ | ✓ |
+| tool-surface | ✓ | ✓ | ✓ | ✓ |
+| hooks | ✓ | ✓ | ✓ | ✓ |
+| scaffold (`scripts/create-harness.sh`) | ✓ | ✓ | ✓ | **N/A** (target 미ship) |
+| project-gate-config (`.harness/gate-config`) | ✓ | ✓ | **N/A** (user doc) | **N/A** |
+
+각 surface를 자기 expected 열과 대조한다 — expected ✓인데 누락이면 DRIFT, N/A면 비교 제외.
+
+```bash
+GL=tools/git-hooks/lib/gate-lists.sh
+RULE=.claude/rules/git-workflow.md
+GWF=docs/GIT-WORKFLOW.md
+TPL=scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md
+
+# key → 대표 regex (glob 표현 차이 무시한 정규화 토큰)
+key_rx() {
+  case "$1" in
+    workflow-status)     echo 'docs/STATUS\.md' ;;
+    ai-entrypoint)       echo 'CLAUDE\.md' ;;
+    canonical-workflow)  echo 'AGENT-WORKFLOW' ;;
+    tool-surface)        echo '\.claude/(commands|rules)|\.agents/skills' ;;
+    hooks)               echo 'tools/git-hooks' ;;
+    scaffold)            echo 'scripts/create-harness\.sh' ;;
+    project-gate-config) echo '\.harness/gate-config' ;;
+  esac
+}
+# check_surface <label> <file> <expected-key...>
+#   label 명시: source/template GIT-WORKFLOW.md는 basename이 같아 구분이 안 되므로 label로 분리한다.
+#   "$@" 전개는 bash/zsh 양쪽 portable(scalar 분리는 zsh에서 비동작).
+check_surface() {
+  _lbl="$1"; _f="$2"; shift 2
+  for _k in "$@"; do
+    if grep -qE "$(key_rx "$_k")" "$_f"; then echo "  OK    [$_lbl] $_k"
+    else echo "  DRIFT [$_lbl] $_k expected but 누락"; fi
+  done
+}
+
+check_surface "gate-lists.sh" "$GL"   workflow-status ai-entrypoint canonical-workflow tool-surface hooks scaffold project-gate-config
+check_surface "rule"          "$RULE" workflow-status ai-entrypoint canonical-workflow tool-surface hooks scaffold project-gate-config
+check_surface "GWF(source)"   "$GWF"  workflow-status ai-entrypoint canonical-workflow tool-surface hooks scaffold
+check_surface "GWF(template)" "$TPL"  workflow-status ai-entrypoint canonical-workflow tool-surface hooks
+```
+
+### Axis B — Finalization parity (policy/pointer, path-list 아님)
+
+`awh_is_finalization_file` default(STATUS/backlog/works/decisions/README)를 SSoT로 두고, 문서는 finalization을 **bundling 정책/pointer**로 참조한다(같은 path-list를 재나열하지 않음). **expected surface는 모두 참조해야 한다** — 누락은 INFO가 아니라 DRIFT다(그렇지 않으면 "검증한다 말하지만 실패하지 않는 검사"가 된다). expected surface: gate-lists.sh(SSoT set), rule, docs/GIT-WORKFLOW.md(source), source-gitflow template. label은 source/template basename 충돌을 피하려 pair로 명시한다.
+
+```bash
+GL=tools/git-hooks/lib/gate-lists.sh
+# B1. SSoT 집합이 gate-lists.sh에 보존되는가
+for t in 'docs/STATUS\.md' 'docs/backlog' 'docs/works' 'docs/decisions/README'; do
+  grep -qE "$t" "$GL" && echo "  OK    [gate-lists] finalization set: $t" \
+    || echo "  DRIFT [gate-lists] finalization set 누락: $t"
+done
+# B2. expected 문서 surface가 finalization bundling 정책/pointer를 참조 — 누락=DRIFT
+for pair in \
+  "rule:.claude/rules/git-workflow.md" \
+  "GWF(source):docs/GIT-WORKFLOW.md" \
+  "GWF(template):scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md"; do
+  lbl="${pair%%:*}"; f="${pair#*:}"
+  grep -qiE 'finalization|bundling' "$f" \
+    && echo "  OK    [$lbl] finalization 정책 참조" \
+    || echo "  DRIFT [$lbl] finalization bundling 정책 pointer 누락(expected surface)"
+done
+```
+
+### Axis C — Seed section + add-only 안내 parity
+
+```bash
+GL=tools/git-hooks/lib/gate-lists.sh
+SEED=scripts/create-harness.sh
+
+# c1: seed [protected]/[finalization] 섹션 ↔ gate-lists.sh section args 정합
+for s in protected finalization; do
+  grep -qE "\[$s\]" "$SEED" && echo "  OK    seed [$s] 섹션 존재" || echo "  DRIFT seed [$s] 섹션 누락"
+  grep -qE "$s" "$GL"       && echo "  OK    gate-lists section arg '$s'" || echo "  DRIFT gate-lists section arg '$s' 누락"
+done
+
+# c2: anti-drift — shipped doc이 project 경로를 framework-owned gate-lists.sh에 직접 추가하라고
+#     안내하지 않는다(add-only .harness/gate-config로 유도해야 함). 한국어+영어/식별자형 모두 포착.
+#     단, "편집하지 말고 …" 같은 부정문(add-only로 유도하는 올바른 문구)은 오탐하지 않도록 EXCL로 제외.
+BAD='동일한 목록|동일 목록|두 곳을 함께|case 패턴에 추가|edit .{0,25}gate-lists|gate-lists[^ ]*\.sh.{0,25}case|awh_is_[a-z_]+.{0,40}case|add .{0,40}awh_is_|awh_is_[a-z_]+.{0,15}추가'
+EXCL='편집하지|편집 금지|do not edit|add-only|gate-config'
+for pair in "GWF(source):docs/GIT-WORKFLOW.md" "GWF(template):scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md"; do
+  lbl="${pair%%:*}"; f="${pair#*:}"
+  hits=$(grep -nE "$BAD" "$f" | grep -vE "$EXCL")
+  if [ -n "$hits" ]; then
+    echo "  DRIFT [$lbl] gate-lists.sh 직접 편집 안내 — add-only gate-config로 정정 필요:"
+    echo "$hits" | sed 's/^/        /'
+  else
+    echo "  OK    [$lbl] gate-lists 직접편집 안내 없음(add-only 정합)"
+  fi
+done
+```
+
+> **Surface Matrix 연계:** 위 5 surface 중 하나라도 변경되면 이 Q-static을 실행한다(`skills/workflow/repo-health.md` Surface Matrix가 pointer로 연결). **runner와의 관계(F4):** gate parity의 executable 동반자는 `run-harness-checks.sh`이나, 현재 runner는 이 static parity를 호출하지 않는다 — 통합은 후속 F4. 이번에는 catalog Q-static + repo-health pointer까지만.
+
+---
+
 ## Layer R. VERSION ↔ Manifest 버전 일관성
 
 > **전제:** Layer J-OB의 OB0에서 생성한 `/tmp/awh-ob-generic`이 필요하다. 단독 실행 시 OB0를 먼저 수행하거나 임의 temp scaffold 경로로 치환한다.
