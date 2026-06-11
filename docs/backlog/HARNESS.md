@@ -28,7 +28,7 @@ AI Workflow Harness backlog다.
 
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
-| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | Scaffold/tool-surface regression alignment, Product pack verification layer 보강, repo-health gate series 보강, Source repo maintainer operations manual (검증 척추 spine은 CHORE-20260611-005에서 도입 완료) |
+| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | Product pack verification layer 보강, repo-health gate series 보강, Source repo maintainer operations manual (검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006 완료) |
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | Harness upgrade/migration 메커니즘, Product starter planning pack + feedback import loop, User-facing docs rewrite, Scaffold multi-user clone verification |
 | W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health slice, work-doc class |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
@@ -38,7 +38,6 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | Scaffold/tool-surface regression alignment 체계화 |
 | — | P1 | Candidate | L2 | Product pack verification layer 보강 |
 | — | P1 | Candidate | L2 | repo-health gate series 보강 |
 | — | P2 | Candidate | L2 | Source repo maintainer operations manual |
@@ -68,41 +67,6 @@ AI Workflow Harness backlog다.
 > **Verification 작성 기준:** 변경이 건드리는 surface를 항목별로 명시한다.
 > 점검 후보: tool surface · adopter cascade · canonical · scaffold · README/GUIDE/MANUAL
 > 해당 없는 surface는 제외한다.
-
----
-
-#### Scaffold/tool-surface regression alignment 체계화
-
-**Cluster:** W1. Validation Spine
-
-**Task:** DR 신규 등재·README 추가·hardcode 변경 시 scaffold가 자동으로 동기화되지 않는 구조적 문제를 regression test asset으로 체계화한다. 2026-06-07 세션에서 scaffold drift 4건(decisions README legend·컬럼 누락, retrospectives README 미생성, troubleshooting README stale, DR-027 adapt 미등재)과 dangling DR 참조 5건(AGENTS.md 2건, git-workflow.md 3건, record-decision.md 1건, template git-workflow.md 1건)이 발견됐다.
-
-**현 시점 판단 (2026-06-11):**
-
-- 기존 하위 과제 1의 "PR #93 이후 전체 재검증"은 시점이 지나 단독 실행 후보로는 비용 대비 효율이 낮다. #94~#141에서 DR lifecycle, product-track rename, source-only maintainer 분리, shipped DR closure guard, Gitflow/versioning, backlog governance가 추가되었기 때문이다.
-- PR #93 이후 Work 파일을 하나씩 읽는 cross-check는 생략하고, 문제가 차후 발견되면 후속 Work로 조정한다.
-- 대신 기존 검증 절차를 검증 척추(`HARNESS-TEST-TAXONOMY.md` + `run-harness-checks.sh`, CHORE-20260611-005 도입)의 대표 regression asset으로 흡수한다.
-
-**Regression assets:**
-
-- `bash -n scripts/create-harness.sh`
-- `bash scripts/create-harness.sh <name> temp/<name>`
-- `bash scripts/tests/check-scaffold-invariants.sh temp/<name>`
-- `git diff --check`
-- tool-surface(`.claude/rules`, `.cursor/rules`, `.agents/skills`, `prompts/*session-start.md`, `skills/workflow/`) grep으로 변경 DR 참조 일관성 확인.
-
-**하위 과제 1 — invariants → `/repo-health` 연계 설계 검토:** `check-scaffold-invariants.sh`를 `/repo-health` 게이트에 포함하는 방법을 검토한다. 현행 `/repo-health`가 어떤 표면을 점검하는지 확인하고, invariants 체크 중 repo-health에 추가할 항목과 ad-hoc 실행으로 남길 항목을 구분한다. 자동화 부담 없이 "PR merge 전 또는 harness 마일스톤 완료 시 실행" trigger를 `HARNESS-PROTOCOL.md`에 추가하는 것도 선택지. 장기: hardcode write_text → adapt 전환 검토.
-
-**하위 과제 2 — invariant leak-scan coverage gap (2026-06-10 발견, PR #139):** `check-scaffold-invariants.sh` [2] no-source-only-leakage가 `core_files()`만 스캔한다. 그런데 `docs/GIT-WORKFLOW.md`(source-gitflow scaffold가 배포하는 표면)는 `core_files`에 없어, 그 파일에 `ai-workflow-harness` 등 누수 토큰이 들어가도 **미검출**된다(PR #139에서 generic 처리로 회피했으나 gap은 잔존). shipped이지만 비-core인 표면(`GIT-WORKFLOW.md` 등)을 leak 스캔 대상에 포함할지 `core_files` 정의를 재검토한다.
-
-**Dependencies:**
-
-- 검증 척추(CHORE-20260611-005 도입 완료)와 강하게 연계 — Tier1 승격(F3)·simulation-as-code(F1) 후보.
-- `repo-health.md` slice 분리(P2)와 연계.
-
-**Done Criteria:** fresh scaffold invariants PASS + tool-surface grep 이상 없음. repo-health 연계 여부 결정 및 HARNESS-PROTOCOL trigger 반영. leak-scan 대상에 shipped 비-core 표면 포함 여부 결정 — 포함 시 `core_files` 확장, 제외 시 근거 기록.
-
-**Verification:** `check-scaffold-invariants.sh` OVERALL PASS, 미해결 항목 없음. `/repo-health` 실행 결과에 invariants 상태 포함 또는 pointer 추가. `GIT-WORKFLOW.md`에 누수 토큰 inject → invariants가 FAIL로 검출하는지 확인(또는 의도적 제외 근거 기록).
 
 ---
 
@@ -471,11 +435,11 @@ AI Workflow Harness backlog다.
 
 **Cluster:** W3. Workflow IA Diet
 
-**Task:** 422줄로 canonical 파일 중 가장 무거움. 상시 로드 섹션(Procedure/Mode Contract/Output Contract/Inspection Areas A~B)과 조건부 섹션(--full 전용: C/D/F, --cascade 전용: G/H, Required Simulation Matrix)을 별도 slice 파일로 분리하고 conditional pointer로 교체. context budget 절감 및 --full/--cascade 로드 범위 명확화. **연계: repo-health gate series 보강(P1), Scaffold/tool-surface regression alignment 체계화(P1)**
+**Task:** 422줄로 canonical 파일 중 가장 무거움. 상시 로드 섹션(Procedure/Mode Contract/Output Contract/Inspection Areas A~B)과 조건부 섹션(--full 전용: C/D/F, --cascade 전용: G/H, Required Simulation Matrix)을 별도 slice 파일로 분리하고 conditional pointer로 교체. context budget 절감 및 --full/--cascade 로드 범위 명확화. **연계: repo-health gate series 보강(P1), scaffold/tool-surface regression alignment(CHORE-20260611-006 완료) F4 repo-health 연계**
 
 **Dependencies:**
 
-- `repo-health gate series 보강`(P1), `Scaffold/tool-surface regression alignment 체계화`(P1 하위 과제 1)
+- `repo-health gate series 보강`(P1), scaffold/tool-surface regression alignment(CHORE-20260611-006 완료) F4 repo-health 연계
 
 **Done Criteria:** 상시 로드 섹션이 200줄 이하로 줄고, 조건부 섹션이 conditional pointer로 참조됨
 
@@ -519,7 +483,7 @@ AI Workflow Harness backlog다.
 
 - `Product starter planning pack + feedback import loop`에서 실제 product 산출물과 일반화 가능 범위를 먼저 확보.
 - `Prompt surface diet + optional pack 재정의`(P1) 방향 결정.
-- `Scaffold/tool-surface regression alignment 체계화`(P1) 완료 후 착수 권장.
+- scaffold/tool-surface regression alignment(CHORE-20260611-006 완료) 이후 착수 권장.
 - `scripts/create-harness.sh --with-optional` 현행 설계 파악 필요.
 
 **Done Criteria:** core scaffold(옵션 미지정)에는 포함되지 않음. product repo에서 검증된 산출물 중 일반화 가능한 부분만 option-pack 후보로 편입. Spring Boot MSA pack을 둘지, 더 일반적인 product engineering pack으로 둘지 결정. stack별 확장(`--with-spring-boot-msa`, `--with-react` 등)은 필요가 확인된 것만 둔다.
