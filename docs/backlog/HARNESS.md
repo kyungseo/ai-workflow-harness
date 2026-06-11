@@ -28,7 +28,7 @@ AI Workflow Harness backlog다.
 
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
-| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | Harness dev/test 노이즈 방지, harness workflow 검증 테스트 체계, Scaffold/tool-surface regression alignment, Product pack verification layer 보강, repo-health gate series 보강 |
+| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | harness workflow 검증 테스트 체계, Scaffold/tool-surface regression alignment, Product pack verification layer 보강, repo-health gate series 보강 |
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | Harness upgrade/migration 메커니즘, Product starter planning pack + feedback import loop, User-facing docs rewrite, Scaffold multi-user clone verification |
 | W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health slice, work-doc class |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
@@ -38,7 +38,6 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의 |
 | — | P1 | Candidate | L2 | harness workflow 검증 테스트 체계 정립 |
 | — | P1 | Candidate | L2 | Scaffold/tool-surface regression alignment 체계화 |
 | — | P1 | Candidate | L2 | Product pack verification layer 보강 |
@@ -69,34 +68,6 @@ AI Workflow Harness backlog다.
 > **Verification 작성 기준:** 변경이 건드리는 surface를 항목별로 명시한다.
 > 점검 후보: tool surface · adopter cascade · canonical · scaffold · README/GUIDE/MANUAL
 > 해당 없는 surface는 제외한다.
-
----
-
-#### Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의
-
-**Cluster:** W1. Validation Spine
-
-**Task:** AI agent가 harness 행동 패턴(cascade 점검 규칙, commit bundling 방침 등)을 agent-side 지속 컨텍스트(Claude memory, Codex custom profile, Cursor user-level rules 등)에 저장하면 harness 문서 단독 검증이 불가능해지고 개발·테스트 결과가 오염된다. harness의 올바른 동작이 "harness 문서만으로" 유도되는지 검증하려면 agent-side 컨텍스트가 행동을 보정해서는 안 된다. 이 원칙이 없으면 agent마다 지속 컨텍스트 보정 여부가 달라져 도구 간 검증 조건도 불균등해진다.
-
-**핵심 결정 대상:**
-
-- "이 repo의 harness 행동을 유도하는 내용은 agent-side 지속 컨텍스트에 저장하지 않는다" 원칙을 cross-agent 정책으로 명문화한다.
-- 기존 저장 항목은 삭제 / harness docs 이전 / 조건부 유지 중 하나로 처리한다.
-- 검증 체계가 "harness docs = SSoT"만으로 동작하는지 확인할 수 있게 만든다.
-
-**Dependencies:**
-
-- 연계: `memory/feedback_memory_scope.md`(현재 Claude 한정), `docs/BEHAVIOR-PRINCIPLES.md`(cross-agent 원칙).
-- `harness workflow 검증 테스트 체계 정립`의 전제 조건으로 함께/먼저 검토.
-
-**Done Criteria:**
-
-- 원칙 명문화: cross-agent 관점에서 harness dev/test 노이즈 방지 원칙 기술.
-- Claude memory: `memory/feedback_memory_scope.md`에 harness 행동 패턴 저장 금지 원칙 반영. 기존 해당 memory 파일(cascade verification, T11 등) 처리 결정 및 실행.
-- Codex/Cursor: agent-side 지속 컨텍스트 표면 점검 및 harness 행동 패턴 저장 여부 확인.
-- 원칙이 "harness docs = SSoT" 방향과 일관성 있는지 확인.
-
-**Verification:** agent별 지속 컨텍스트 저장소(Claude `memory/`, Codex profile, Cursor user rules) grep으로 harness 행동 패턴 잔존 여부 확인. `docs/BEHAVIOR-PRINCIPLES.md` 또는 정책 파일에 cross-agent 원칙 반영 확인.
 
 ---
 
