@@ -66,7 +66,7 @@ Tier는 실행 비용·결정성·생성 여부 순서다.
 
 | Surface | Tier 0 | Tier 1 (target 제공) | Tier 2 (생성) | 현재 자산 / gap |
 | --- | --- | --- | --- | --- |
-| scaffold 출력 | `bash -n` | invariants 5종 (`<target>`) | invariants no-arg / OB 시나리오 | 자산: invariants ✓ |
+| scaffold 출력 | `bash -n` | invariants 5종 (`<target>`) | invariants no-arg 3모드(default/optional/source-gitflow) / OB 시나리오 | 자산: invariants ✓ (leak-scan은 source-gitflow shipped set 포함) |
 | tool surface (adapter/rule/skill mirror) | — | mirror 존재·쌍 일치 grep | — | gap: catalog Layer F manual → **F3 승격 후보** |
 | cascade (canonical→adapter→user→scaffold) | — | 변경 surface→영향 surface 매핑 | — | gap: repo-health --cascade(judgment)만 |
 | canonical / 공통 규칙 | — | DR 참조 closure(closure ✓), Superseded 참조 탐지 | — | 자산: closure ✓ |
@@ -74,6 +74,7 @@ Tier는 실행 비용·결정성·생성 여부 순서다.
 | prompts 정렬 | — | session-start 3종 ↔ canonical 정합 | — | gap: catalog Layer S manual → **F3 승격 후보** |
 | product/adopter surface | — | (이 척추 범위 밖) | — | **non-goal → `Product pack verification layer 보강`** |
 | language policy (DR-007) | — | 한글 비율/순영어 파일 탐지 | — | gap: catalog Layer P manual → **F3 승격 후보** |
+| **source test scripts** (`scripts/tests/**`) — 검증 척추 executable SSoT | `bash -n scripts/tests/*.sh` (runner `--tier0`에 포함) | 해당 script 자체 실행 / `run-harness-checks.sh --all` | — | **source-side surface** (scaffold ship 아님 → target leak-scan 대상 아님). 변경 시 taxonomy/runner/catalog 정합 cascade |
 
 > 현재 executable로 잠긴 것은 scaffold 출력·canonical DR closure·user-facing 일부뿐이다. 나머지 surface는 catalog/judgment에 머물며, Tier 1 승격은 F3에서 다룬다.
 
@@ -87,14 +88,18 @@ Tier는 실행 비용·결정성·생성 여부 순서다.
 | --- | --- | --- |
 | `--tier0` | syntax/무결성(`bash -n`, `git diff --check`) | 없음 |
 | `--tier1 <target>` | **target 인자 필수** — closure + invariants `<target>`(기존 target 검사만) | 없음 |
-| `--tier2` | `temp/harness-tests/<label>-<ts>/`에 **default minimal + `--with-optional` 두 모드** 생성 후 각각 invariants + cleanup(기존 no-arg와 동일 coverage) | **있음 → `temp/`** |
-| `--all` | tier0 + source-level tier1(closure) + tier2(**실제 생성 포함, 두 모드**), exit code 누적 | tier2 단계만 |
+| `--tier2` | `temp/harness-tests/<label>-<ts>/`에 **default minimal + `--with-optional` + `--workflow source-gitflow` 세 모드** 생성 후 각각 invariants + cleanup(기존 no-arg와 동일 coverage). source-gitflow 모드는 `GIT-WORKFLOW.md`/hooks 등 shipped 표면을 leak-scan에 포함 | **있음 → `temp/`** |
+| `--all` | tier0 + source-level tier1(closure) + tier2(**실제 생성 포함, 세 모드**), exit code 누적 | tier2 단계만 |
 
 **경계 규약:**
 
 - **생성하는 모드(`--tier2`, `--all`의 tier2 단계)만 repo-local `temp/`를 사용한다**(`/tmp` 미사용 — AI 권한으로 dry만 되는 한계 회피).
 - `--tier1`은 **target 인자 필수**이며 **생성하지 않는다**(기존 target 검사만). 미지정 시 usage 에러로 종료한다(invariants no-arg의 암묵적 생성을 runner 레벨에서 차단).
 - `--all`은 source-level tier1(closure)과 **실제 생성을 포함하는** tier2를 함께 돈다. help/usage에 생성 포함을 명시한다.
+
+**실행 기준:** 일상 변경은 변경 surface에 맞는 tier만 실행한다. **PR merge 전 또는 harness 마일스톤 완료 시 `run-harness-checks.sh --all`을 권장**한다(scaffold 3모드 + closure + syntax 전수).
+
+**leak-scan 대상 분리(중요):** `check-scaffold-invariants.sh`의 `[1] no-dangling-reference`/`[3] closure`는 **core A-class(`core_files`)**만 본다. `[2] no-source-only-leakage`만 **`leak_scan_files`**(= core_files + source-gitflow shipped adapt text set: `GIT-WORKFLOW.md` + `.github/workflows/harness-validate.yml` + `tools/git-hooks/{pre-commit,commit-msg,install.sh,lib/gate-lists.sh}`)로 확장한다. 모든 check에 동일 목록을 쓰면 DR closure 범위가 의도치 않게 커지므로 분리한다.
 
 **Graceful skip guard (adopter-safe — 중요):**
 

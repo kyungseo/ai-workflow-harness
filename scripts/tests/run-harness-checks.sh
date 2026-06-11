@@ -58,6 +58,16 @@ run_tier0() {
   else
     echo "  SKIP (N/A): scripts/create-harness.sh 없음"
   fi
+  # verification spine의 executable SSoT인 source test scripts 자체도 syntax 검사 대상이다.
+  local ts
+  for ts in "${SCRIPT_DIR}"/*.sh; do
+    [[ -f "${ts}" ]] || continue
+    if bash -n "${ts}"; then
+      echo "  OK: bash -n $(basename "${ts}")"
+    else
+      echo "  FAIL: bash -n $(basename "${ts}")"; mark_fail
+    fi
+  done
   if git -C "${REPO_ROOT}" diff --check; then
     echo "  OK: git diff --check (whitespace)"
   else
@@ -129,15 +139,18 @@ gen_and_check() {
 }
 
 # ── Tier 2: scaffold 실제 생성 후 검사 (repo-local temp/) ────────────────────
-# 기존 check-scaffold-invariants.sh no-arg와 동일 coverage: default minimal + --with-optional 두 모드.
+# check-scaffold-invariants.sh no-arg와 동일 coverage: default minimal + --with-optional +
+# --workflow source-gitflow 세 모드. source-gitflow는 GIT-WORKFLOW.md/hooks 등 shipped 표면을
+# leak-scan 대상에 포함시키므로 반드시 함께 생성·검사한다.
 run_tier2() {
-  echo "== Tier 2: scaffold 실제 생성 후 검사 (temp/, default + --with-optional) =="
+  echo "== Tier 2: scaffold 실제 생성 후 검사 (temp/, default + --with-optional + source-gitflow) =="
   if [[ ! -f "${CREATE_SH}" ]]; then
     echo "  SKIP (N/A): scripts/create-harness.sh 없음 — 생성 불가"
     return 0
   fi
   gen_and_check "default"
   gen_and_check "optional" --with-optional
+  gen_and_check "gitflow" --workflow source-gitflow
 }
 
 # ── 디스패치 ─────────────────────────────────────────────────────────────────

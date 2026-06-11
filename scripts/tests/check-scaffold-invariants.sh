@@ -75,6 +75,23 @@ optional_files() {
   find "${TARGET}/prompts" -type f -name '*.md' ! -name '*session-start.md' ! -name 'README.md' 2>/dev/null
 }
 
+# leak-scan 전용 파일 목록: core A-class + source-gitflow shipped adapt text set.
+# [2] no-source-only-leakage 전용이다. [1] no-dangling-reference/[3] closure는 core_files만
+# 쓴다(같은 목록을 모든 check에 쓰면 DR closure 범위가 의도치 않게 커지므로 분리).
+# source-gitflow extras는 --workflow source-gitflow target에만 존재하므로 [[ -f ]]로 가드한다.
+leak_scan_files() {
+  core_files
+  local f
+  for f in \
+    docs/GIT-WORKFLOW.md \
+    .github/workflows/harness-validate.yml \
+    tools/git-hooks/pre-commit tools/git-hooks/commit-msg \
+    tools/git-hooks/install.sh tools/git-hooks/lib/gate-lists.sh; do
+    [[ -f "${TARGET}/${f}" ]] && echo "${TARGET}/${f}"
+  done
+  return 0  # 마지막 [[ -f ]] && 가 false(1)로 끝나도 set -e가 호출부를 죽이지 않게 한다
+}
+
 # ── 단일 target 검사 (global ${TARGET}, ${GLOBAL_FAIL} 갱신) ─────────────────
 check_target() {
   local FAIL=0
@@ -110,12 +127,12 @@ check_target() {
     echo "  (optional pack 부재 — default minimal)"
   fi
 
-  # [2] no-source-only-leakage (core A-class hard-fail)
+  # [2] no-source-only-leakage (core A-class + source-gitflow shipped, hard-fail)
   echo ""
-  echo "== [2] no-source-only-leakage (core A-class hard-fail) =="
+  echo "== [2] no-source-only-leakage (core A-class + source-gitflow shipped, hard-fail) =="
   local LEAK_PATTERN='ai-workflow-harness|/Users/|/home/[a-z]'
   local leak_hits=0
-  core_files > "${TMPLIST}"
+  leak_scan_files > "${TMPLIST}"
   while IFS= read -r file; do
     [[ -z "${file}" ]] && continue
     if grep -nHE "${LEAK_PATTERN}" "${file}" >/dev/null 2>&1; then
@@ -124,7 +141,7 @@ check_target() {
       FAIL=1
     fi
   done < "${TMPLIST}"
-  [[ "${leak_hits}" -eq 0 ]] && echo "  OK: core A-class에 source-only 식별자/경로 누수 없음"
+  [[ "${leak_hits}" -eq 0 ]] && echo "  OK: core A-class + source-gitflow shipped에 source-only 식별자/경로 누수 없음"
 
   # [3] decisions/README index <-> DR 파일 closure
   echo ""
@@ -233,6 +250,12 @@ else
   echo "### MODE: --with-optional"
   TARGET="${GEN_BASE}/withopt/proj"
   "${REPO_ROOT}/scripts/create-harness.sh" --with-optional invariant-check-proj "${TARGET}" >/dev/null
+  check_target
+
+  echo ""
+  echo "### MODE: --workflow source-gitflow"
+  TARGET="${GEN_BASE}/gitflow/proj"
+  "${REPO_ROOT}/scripts/create-harness.sh" --workflow source-gitflow invariant-check-proj "${TARGET}" >/dev/null
   check_target
 fi
 
