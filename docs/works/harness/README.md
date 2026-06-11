@@ -13,7 +13,9 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| _(none)_ | | | |
+| CHORE-20260611-003 | Product pack verification backlog 사전 보강 | 2026-06-11 | `docs/works/harness/CHORE-20260611-003-verification-pack-backlog-review.md` |
+| CHORE-20260611-002 | Product starter pack backlog 반영 | 2026-06-11 | `docs/works/harness/CHORE-20260611-002-product-starter-pack-backlog.md` |
+| CHORE-20260611-001 | Harness backlog portfolio 재구성 | 2026-06-11 | `docs/works/harness/CHORE-20260611-001-backlog-portfolio-reorg.md` |
 
 ## Archived
 
