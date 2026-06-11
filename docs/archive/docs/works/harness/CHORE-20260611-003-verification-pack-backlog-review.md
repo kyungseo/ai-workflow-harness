@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260611-003
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: product starter planning pack 및 option-pack 관련 backlog를 마무리하기 전에 maintainer verification catalog, recovery validation 문서, scripts 구조를 검토하고 HARNESS backlog에 사전 보강 항목을 반영한다.
 appetite: 0.25d
@@ -58,3 +58,4 @@ related_work: [CHORE-20260608-003, HRN-034, CHORE-20260611-001, CHORE-20260611-0
 - Layer T는 upgrade/migration placeholder이므로 product starter/import loop를 여기에 섞으면 역할이 흐려진다.
 - `HARNESS-RECOVERY-VALIDATION.md`는 policy/judgment 문서로 유지하고 concrete commands는 maintainer catalog에 두는 구조가 적절하다.
 - `scripts/`에는 `create-harness.sh`, `check-scaffold-invariants.sh`, `check-shipped-dr-closure.sh`만 있다. product planning pack/import helper는 아직 없으며, 현재는 checklist layer가 우선이다.
+- Archived 2026-06-11: Done work 정리(routine), `/work-close` archive step.
