@@ -36,6 +36,7 @@ TARGET=""
 cleanup() {
   rm -f "${TMPLIST}"
   [[ -n "${GEN_BASE}" ]] && rm -rf "${GEN_BASE}"
+  return 0  # EXIT trap이 exit code를 덮어쓰지 않게 한다(target 인자 모드에서 GEN_BASE="" → [[ ]] false=1 누수 방지)
 }
 trap cleanup EXIT
 

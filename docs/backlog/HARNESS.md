@@ -28,7 +28,7 @@ AI Workflow Harness backlog다.
 
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
-| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | harness workflow 검증 테스트 체계, Scaffold/tool-surface regression alignment, Product pack verification layer 보강, repo-health gate series 보강 |
+| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | Scaffold/tool-surface regression alignment, Product pack verification layer 보강, repo-health gate series 보강, Source repo maintainer operations manual (검증 척추 spine은 CHORE-20260611-005에서 도입 완료) |
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | Harness upgrade/migration 메커니즘, Product starter planning pack + feedback import loop, User-facing docs rewrite, Scaffold multi-user clone verification |
 | W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health slice, work-doc class |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
@@ -38,10 +38,10 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | harness workflow 검증 테스트 체계 정립 |
 | — | P1 | Candidate | L2 | Scaffold/tool-surface regression alignment 체계화 |
 | — | P1 | Candidate | L2 | Product pack verification layer 보강 |
 | — | P1 | Candidate | L2 | repo-health gate series 보강 |
+| — | P2 | Candidate | L2 | Source repo maintainer operations manual |
 | — | P1 | Candidate | L3 | Harness upgrade/migration 메커니즘 |
 | — | P1 | Candidate | L3 | Product starter planning pack + feedback import loop |
 | — | P1 | Candidate | L2 | User-facing docs rewrite — onboarding guide + workflow manual |
@@ -71,40 +71,6 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### harness workflow 검증 테스트 체계 정립
-
-> 2026-06-10 등록 (사용자 테마).
-
-**Cluster:** W1. Validation Spine
-
-**Task:**
-
-- workflow 전체에 대한 test-driven 검증 체계를 정립·도입한다. 변경 발생 시마다 영향도 검증이 일관·정확하게 수행되도록 강제한다.
-- 매 변경마다 AI에게 요구되는 검증 surface를 표준화한다: tool 표면 · cascade · canonical · 공통 규칙/규정 · scaffold · user 표면(README, MANUAL/GUIDE) · prompts 정렬 · 그 외.
-- 깊은 수준에서는 실제 scaffold 후 다양한 시나리오에 따른 시뮬레이션 테스트를 포함한다. 현재는 그때그때 검증의 정도가 다르고 놓치는 것이 많음 → 검증 기준을 정하고 test 코드 기반으로 일관·정확하게 만든다.
-- 테스트 기본 절차를 정의한다: `/tmp`는 AI 권한 때문에 dry만 수행되는 경우가 많으므로, 테스트 디렉토리를 프로젝트 하위 `temp/`로 고정하는 등 이상 없이 실테스트할 수 있는 절차를 둔다.
-- **repo-health와는 별개 작업**으로 둔다.
-- `docs/maintainer/**`(VERIFICATION-COMMANDS 등)도 참고한다.
-
-**Dependencies:**
-
-- 기존 `scripts/tests/`(`check-scaffold-invariants.sh`, `check-shipped-dr-closure.sh`) 위에 구축.
-- 연계: `Scaffold/tool-surface regression alignment 체계화`(P1, invariants 자산), `Harness dev/test 노이즈 방지`(P1, harness-only 검증 전제).
-
-**Done Criteria:**
-
-- surface별 검증 기준(무엇을 어느 깊이로)이 정의되고 test 코드로 표현됨.
-- `temp/` 기반 실테스트 기본 절차가 문서화됨(`/tmp` dry 한계 회피).
-- repo-health와 책임 경계가 명확히 분리됨.
-- `docs/maintainer/` 검증 카탈로그와 정합.
-
-**Verification:**
-
-- 대표 변경 시나리오에서 test suite가 surface 누락 없이 검증.
-- `temp/` 실생성 테스트가 권한 문제 없이 수행됨.
-
----
-
 #### Scaffold/tool-surface regression alignment 체계화
 
 **Cluster:** W1. Validation Spine
@@ -115,7 +81,7 @@ AI Workflow Harness backlog다.
 
 - 기존 하위 과제 1의 "PR #93 이후 전체 재검증"은 시점이 지나 단독 실행 후보로는 비용 대비 효율이 낮다. #94~#141에서 DR lifecycle, product-track rename, source-only maintainer 분리, shipped DR closure guard, Gitflow/versioning, backlog governance가 추가되었기 때문이다.
 - PR #93 이후 Work 파일을 하나씩 읽는 cross-check는 생략하고, 문제가 차후 발견되면 후속 Work로 조정한다.
-- 대신 기존 검증 절차를 `harness workflow 검증 테스트 체계 정립`의 대표 regression asset으로 흡수한다.
+- 대신 기존 검증 절차를 검증 척추(`HARNESS-TEST-TAXONOMY.md` + `run-harness-checks.sh`, CHORE-20260611-005 도입)의 대표 regression asset으로 흡수한다.
 
 **Regression assets:**
 
@@ -131,7 +97,7 @@ AI Workflow Harness backlog다.
 
 **Dependencies:**
 
-- `harness workflow 검증 테스트 체계 정립`과 강하게 연계.
+- 검증 척추(CHORE-20260611-005 도입 완료)와 강하게 연계 — Tier1 승격(F3)·simulation-as-code(F1) 후보.
 - `repo-health.md` slice 분리(P2)와 연계.
 
 **Done Criteria:** fresh scaffold invariants PASS + tool-surface grep 이상 없음. repo-health 연계 여부 결정 및 HARNESS-PROTOCOL trigger 반영. leak-scan 대상에 shipped 비-core 표면 포함 여부 결정 — 포함 시 `core_files` 확장, 제외 시 근거 기록.
@@ -170,7 +136,7 @@ AI Workflow Harness backlog다.
 
 - `Product starter planning pack + feedback import loop`
 - `Spring Boot MSA TDD option-pack — product engineering pack 후보`
-- `harness workflow 검증 테스트 체계 정립`
+- 검증 척추(CHORE-20260611-005 도입 완료) — Tier 정의·taxonomy 기준 위에 product pack layer 추가
 - `Harness upgrade/migration 메커니즘`(Layer T와 충돌하지 않게 경계 조정)
 
 **Done Criteria:** product starter planning pack과 product engineering option-pack에 대한 검증 layer가 `VERIFICATION-COMMANDS.md`에 추가됨. Layer T(upgrade/migration)와 역할 경계가 명확함. `HARNESS-RECOVERY-VALIDATION.md`에는 policy/judgment만 남고 concrete command가 중복되지 않음. scripts helper가 필요한지 판단하고, 필요 없으면 checklist-only 이유를 기록.
@@ -197,11 +163,54 @@ AI Workflow Harness backlog다.
 
 ---
 
+#### Source repo maintainer operations manual
+
+> 2026-06-11 등록 (CHORE-20260611-005 Discovery — 검증 척추 산출물의 운영 매뉴얼 부재).
+
+**Cluster:** W1. Validation Spine (후속 — 척추 산출물을 운영 흐름으로 통합). 사이드: W2 `User-facing docs rewrite`의 maintainer-facing 대칭.
+
+**Task:**
+
+- `docs/WORKFLOW-MANUAL.md`(adopter/user-facing)와 **분리된 source repo maintainer/AI driver용 운영 매뉴얼**을 만든다. 후보 경로: `docs/maintainer/SOURCE-REPO-OPERATIONS.md`(이름·위치 Codex 확인).
+- source repo 변경 lifecycle의 operational runbook: 언제 무엇을 어느 순서로 실행·해석하는지.
+- 포함 후보:
+  - 작업 lifecycle: work-select → work-plan → cross-agent review → 구현 → result review → work-close → commit → PR(`--base develop`) → merge.
+  - 변경 유형별 검증 흐름: docs-only / workflow·protocol·tool-surface / scaffold change / maintainer verification taxonomy change / release prep.
+  - `run-harness-checks.sh` tier 사용 기준: `--tier0` / `--tier1 <target>` / `--tier2` / `--all`.
+  - temp/ 실테스트 운용: 생성 위치 · cleanup · `/tmp` 대신 `temp/`를 쓰는 이유.
+  - `HARNESS-TEST-TAXONOMY.md` · `VERIFICATION-COMMANDS.md` · `HARNESS-RECOVERY-VALIDATION.md` · `/repo-health`의 역할 차이.
+  - PR 전 최소 검증 checklist, 실패 시 recovery validation 연결, CI/hook/hard-gate 미적용 항목의 해석.
+- F1~F4(CHORE-20260611-005 후속) 완료 시 이 매뉴얼 업데이트 trigger.
+
+**경계 (중요):**
+
+- adopter/user-facing 아님. `WORKFLOW-MANUAL.md` rewrite와 섞지 않는다(그쪽=user-facing, 이 문서=maintainer operations).
+- 검증 기준 SSoT는 `HARNESS-TEST-TAXONOMY.md`, 명령 카탈로그는 `VERIFICATION-COMMANDS.md`, 판단·정책은 `HARNESS-RECOVERY-VALIDATION.md`. 이 매뉴얼은 그것들을 **운영 순서로 엮는 runbook**이며 기준/명령/정책을 복제하지 않고 pointer로 연결한다(표면 추가·비대화 경계).
+- product/adopter 운영과 섞지 않는다(그쪽=`Product pack verification layer 보강`).
+- 기존 `docs/HARNESS-MAINTAINER-GUIDE.md`는 이미 setup/daily workflow/convention/validation을 다루는 optional maintainer guide다(scaffold 시 optional pack으로 배포 가능). 신규 source-only operations 문서와 역할이 충돌할 가능성이 크므로, **병렬 추가가 아니라 기존 guide를 source-only operations로 흡수·대체·재배치할지를 우선 검토한다**(신규 문서를 대체/상위 runbook 후보로 본다).
+
+**Dependencies:**
+
+- `harness workflow 검증 테스트 체계 정립`(CHORE-20260611-005, 척추 산출물 선행) — 이 매뉴얼이 엮는 대상.
+- `User-facing docs rewrite — onboarding guide + workflow manual`(W2) — user-facing 대칭, 경계 조정.
+- `Product pack verification layer 보강`(W1) — product 운영과 경계.
+- CHORE-20260611-005 후속 F1~F4 완료 시 업데이트.
+
+**Open:** ① 문서명/위치(`SOURCE-REPO-OPERATIONS.md`) 최종 확정 — 착수 시. (Cluster=W1 후속, Priority=P2, `HARNESS-MAINTAINER-GUIDE.md` 흡수·대체·재배치 우선 검토는 R2-extra에서 합의 고정.)
+
+**Done Criteria:** source repo maintainer/AI driver가 변경 lifecycle에서 어떤 문서/스크립트를 어느 순서로 쓰는지 막힘 없이 따라갈 수 있는 runbook이 `docs/maintainer/`에 존재. 검증 기준/명령/정책을 복제하지 않고 pointer로 연결. WORKFLOW-MANUAL/product pack 검증/HARNESS-MAINTAINER-GUIDE와 경계 명확.
+
+**Verification:** runbook 경로 시뮬레이션(docs-only → release prep 각 변경 유형), pointer 실재 grep, `WORKFLOW-MANUAL`·`HARNESS-MAINTAINER-GUIDE`와 역할 중복/stale 점검.
+
+---
+
 #### Backlog row lifecycle SSoT 정비
 
 **Cluster:** W4. Enforcement And Lifecycle
 
-**Task:** backlog row 제거 시점이 `HARNESS-PROTOCOL.md`("Work archived 시"), `work-plan.md`("develop merge 후 tracking-only commit"), `work-close.md`(언급 없음) 세 곳에서 불일치. 매 work-close마다 수동으로 잡아야 하는 구조적 결함. 단일 시점("Work Done 처리 시 동일 commit에 포함")으로 통일하고, `work-close.md`에 backlog row 확인·제거 단계를 추가하며, `work-plan.md`의 잘못된 타이밍 문구를 정정한다. `HARNESS-PROTOCOL.md` Pruning Policy도 일치시킨다.
+**Task:** backlog row 제거 시점이 `HARNESS-PROTOCOL.md`("Work archived 시"), `work-plan.md`("develop merge 후 tracking-only commit"), `work-close.md`(현재는 Step 5에 동일 commit 제거 명시) 세 곳에서 불일치. 매 work-close마다 수동으로 잡아야 하는 구조적 결함. 단일 시점("Work Done 처리 시 동일 commit에 포함")으로 통일하고, `work-plan.md`의 잘못된 타이밍 문구를 정정한다. `HARNESS-PROTOCOL.md` Pruning Policy도 일치시킨다.
+
+> **[2026-06-11 추가, CHORE-20260611-005 close 시 사용자 제기]** `DR-013`의 "backlog row 정리는 develop merge 후 tracking-only commit" 문구도 함께 정리 대상이다. 이 문구는 본래 **ID-less candidate에 Work ID를 역기입하지 않는 정책 맥락**인데, 완료 row 제거 일반 규칙으로 오독될 수 있다. canonical `work-close.md` Step 5(동일 commit 제거)와 정합하도록 DR-013 문구를 한정·정정한다(제거 ≠ ID backfill).
 
 **Dependencies:**
 
@@ -378,7 +387,7 @@ AI Workflow Harness backlog다.
 **Dependencies:**
 
 - 연계: `Prompt surface diet + optional pack 재정의`(P1, canonical weight 경량화), `skills/workflow/repo-health.md slice 분리`(P2), `skills/workflow/work-doc.md class 재검토`(P2), `Harness protocol trigger family simplification`(P2, trigger 재그룹화 ⊂ 이 restructure).
-- `harness workflow 검증 테스트 체계 정립`(P1) 선행 권장 — restructure cascade를 test-backed로 검증.
+- 검증 척추(CHORE-20260611-005 도입 완료) — restructure cascade를 test-backed로 검증.
 - DR-021, DR-023.
 
 **Done Criteria:**

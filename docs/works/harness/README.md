@@ -13,7 +13,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| _(none)_ | | | |
+| CHORE-20260611-005 | Harness workflow verification test system | 2026-06-11 | `docs/works/harness/CHORE-20260611-005-workflow-verification-system.md` |
 
 ## Archived
 

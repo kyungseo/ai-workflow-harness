@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-11 (세션: CHORE-20260611-004 dev/test noise scope policy Done+Archived — BEHAVIOR-PRINCIPLES §6 신설 + Claude memory pointer 축소, Codex R0/R1 합의 완료. CHORE-20260611-001~004 Archived. clean idle)
+Last updated: 2026-06-11 (세션: CHORE-20260611-005 Harness workflow verification test system Done — Validation Spine Slice 1(taxonomy + tier runner + temp/ 정책) 도입, invariants 버그 수정, Codex R0~R2 합의. F5 maintainer ops manual backlog 등록. Active 없음, archive 대기 1건)
 
 ## Current State
 
@@ -38,6 +38,7 @@ Last updated: 2026-06-11 (세션: CHORE-20260611-004 dev/test noise scope policy
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-11 | CHORE-20260611-005: harness 검증 척추(Validation Spine Slice 1) 도입 — `HARNESS-TEST-TAXONOMY.md` 신설(3층 수단 경계·Surface×Depth·Tier·temp/ 정책) + `run-harness-checks.sh` tier runner + AGENT-WORKFLOW/VERIFICATION-COMMANDS pointer. invariants exit-code 버그 수정. F1~F5 후속 분해, F5 maintainer ops manual backlog 등록 | 변경마다 들쭉날쭉하던 surface 검증을 test-backed로 일관·정확화. Codex R0~R2 합의 | Low |
 | 2026-06-11 | CHORE-20260611-004: BEHAVIOR-PRINCIPLES §6 (Harness Context Discipline) 신설 — harness 운영 행동을 agent-side 지속 컨텍스트(Claude memory/Codex profile/Cursor user rules)에 저장 금지. Claude memory 2건 pointer 축소 | harness 동작이 "문서만으로" 유도되는지 검증하려면 agent-side 컨텍스트 보정이 없어야 함. cross-agent 검증 조건 균등화 — Codex R0/R1 합의 | Low |
 | 2026-06-10 | CHORE-20260610-011: backlog Seq 포맷 거버넌스 (B) 채택 — Seq 열·Sequencing Guide·항목 주석 제거. derived data(의존성=`Dependencies`, 시퀀싱뷰=STATUS)를 손유지 열로 복제하지 않음 | reorg가 ad-hoc 도입한 Seq가 scaffold 템플릿·work-register 5열·PRODUCT 대칭(DR-031)과 divergent + drift 부채. churn·cascade 비용이 at-a-glance 이점 상회 | Low |
 | 2026-06-10 | DR-033: shipped 표면은 scaffold seed에 닫힌 DR만 참조. mode-a(canonical) self-describe / mode-b(DR 파일) `Linked DRs:` 격리. source-only static check로 작성 시점 사전 강제 | 비-seed DR 인용이 target dangling을 만들고 뒤늦게 발견되는 반복 패턴 차단. invariant 사상 첫 OVERALL PASS — CHORE-20260610-005 | Medium |
@@ -54,7 +55,7 @@ Last updated: 2026-06-11 (세션: CHORE-20260611-004 dev/test noise scope policy
 > backlog는 확정 실행 계획이 아니라 의견 있는 portfolio view다. 각 항목 착수 시 `/work-plan`에서 논리성·합리성·현재 product 적용 맥락을 다시 검토한다. 별도 Seq 축은 유지하지 않는다(CHORE-20260610-011 (B)).
 
 1. **W1 — Validation Spine** (이번 주 마무리 전 최우선):
-   - **harness workflow 검증 테스트 체계 정립** — scaffold/canonical/tool/user-facing surface regression 기준을 test-backed로 고정
+   - ✓ **harness workflow 검증 테스트 체계 정립** — CHORE-20260611-005에서 검증 척추 Slice 1 도입 완료(taxonomy + tier runner + temp/ 정책). 후속은 F1~F4 + F5(`Source repo maintainer operations manual`)
    - **Scaffold/tool-surface regression alignment 체계화** — PR #93 이후 Work별 전수 재검증은 생략하고, 대표 regression asset과 leak-scan gap으로 흡수
    - **Product pack verification layer 보강** — product starter/import loop와 product engineering option-pack 검증 layer를 maintainer catalog에 추가
    - **repo-health gate series 보강** — `.harness/gate-config`와 gate list 정합을 health/cascade에 연결

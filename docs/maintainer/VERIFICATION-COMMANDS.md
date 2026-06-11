@@ -15,8 +15,12 @@ related_work: []
 
 **경계:** 이 파일은 **실행 명령 카탈로그(HOW — 어떤 명령으로 검증하나)**다. 실패 보고·복구 흐름, Validation Checklist, Commit Approval 같은 **판단·정책(WHETHER/WHEN — 진행해도 되나)**은 `docs/HARNESS-RECOVERY-VALIDATION.md`를 따른다.
 
+**executable assertion과의 경계:** deterministic하게 PASS/FAIL이 갈리고 회귀로 잠글 가치가 있는 점검은 `scripts/tests/**`(executable assertion)가 SSoT다. 이 카탈로그는 그보다 넓은(판단 개입·false-positive 가능) 점검을 human-run 명령으로 유지하며, executable로 승격된 항목은 **스크립트를 pointer로만** 보유한다(명령 중복 금지 — Layer C→`check-scaffold-invariants.sh`, Layer I→`check-shipped-dr-closure.sh`). surface별 검증 기준·Tier·runner는 `docs/maintainer/HARNESS-TEST-TAXONOMY.md`를 따른다.
+
 관련 문서:
 - `docs/AGENT-WORKFLOW.md` Verification Defaults — 변경 유형별 기본 검증 규칙
+- `docs/maintainer/HARNESS-TEST-TAXONOMY.md` — surface별 검증 기준(무엇/어느 깊이)·Tier 정의·3층 수단 경계
+- `scripts/tests/run-harness-checks.sh` — Tier별 deterministic 검증 runner(`--tier0|--tier1 <target>|--tier2|--all`)
 - `skills/workflow/repo-health.md` — `/repo-health` 전체 절차 및 Required Surface Matrix
 - `docs/HARNESS-RECOVERY-VALIDATION.md` — 실패/복구·Validation Checklist·Commit Approval **판단 정책** (이 파일=명령, 그쪽=판단)
 

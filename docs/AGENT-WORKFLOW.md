@@ -193,3 +193,5 @@ ID prefix와 파일명 상세 기준:
 검증을 실행할 수 없다면 이유와 남은 risk를 보고한다.
 
 상세 검증 명령 카탈로그(Layer별 grep·시뮬레이션)와 릴리즈 직전 전수 점검은 `docs/maintainer/VERIFICATION-COMMANDS.md`를 참조한다. 이 파일은 source repo 전용 maintainer 문서이며, 릴리즈 게이트는 동 문서 "Release Full Sweep" 프리셋을 따른다. (source repo에만 존재 — scaffold 적용 repository에는 없으므로 N/A.)
+
+surface별 검증 기준(무엇/어느 깊이)과 Tier 정의, deterministic test runner는 `docs/maintainer/HARNESS-TEST-TAXONOMY.md`와 `scripts/tests/run-harness-checks.sh`를 참조한다. taxonomy 문서는 source repo 전용이며 scaffold 적용 repository에는 없다(N/A). runner는 있으면 사용하고(`bash scripts/tests/run-harness-checks.sh --all` 등), `scripts/create-harness.sh`나 maintainer 검증 스크립트가 없는 환경에서는 해당 step이 Skipped / Not Applicable로 빠진다.
