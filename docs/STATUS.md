@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-11 (세션: CHORE-20260611-006 Scaffold/tool-surface regression alignment Done — leak-scan을 source-gitflow shipped 6파일로 확장, invariants/runner 3모드 parity, scripts/tests source-side surface, inject-revert·set -e 버그 수정. Codex R0~R1 합의. Active 없음, archive 대기 2건(CHORE-005·006))
+Last updated: 2026-06-11 (세션: CHORE-20260611-005·006 Archived — Validation Spine Slice 1(taxonomy/runner) + scaffold/tool-surface leak-scan alignment 완료 후 2건 묶어 archive. Active 없음, archive 대기 없음, clean idle)
 
 ## Current State
 

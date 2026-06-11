@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260611-005
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: harness workflow 변경 시 surface별 검증을 test-backed로 일관·정확하게 수행할 수 있는 검증 척추를 정립한다. 1차 slice는 "test taxonomy 정의 + surface×depth 기준 + temp/ 실테스트 정책 + 최소 runner skeleton"까지로 자르고, 깊은 simulation-as-code·CI 게이트화·hard-gate 강제화는 후속 Work로 분해한다.
 appetite: 1d
@@ -259,5 +259,6 @@ B(Codex)가 plan review와 result review를 수행한다.
 - `temp/`가 `.gitignore`에 등록되어 있고 과거 scaffold 검증에 실제 사용됨을 확인 — `/tmp` 대체 근거 확보.
 - 기존 executable assertion은 2종(`check-scaffold-invariants.sh`, `check-shipped-dr-closure.sh`)뿐이며, 나머지 surface 검증은 `VERIFICATION-COMMANDS.md` manual catalog와 `/repo-health` judgment에 분산되어 있음 — 이 Work의 척추가 그 경계를 고정한다.
 - **[발견 + 수정] `check-scaffold-invariants.sh` exit-code 버그:** runner가 invariants exit code를 프로그램적으로 소비하는 첫 사례라 노출됨. `cleanup()` EXIT trap이 마지막 줄 `[[ -n "${GEN_BASE}" ]] && rm -rf`로 끝나는데, **target 인자 모드에서는 `GEN_BASE=""`**라 이 `[[ ]]`가 false(status 1)를 반환하고, macOS bash에서 `exit 0` 후 trap의 비-0 종료가 스크립트 exit code를 1로 덮어쓴다. 결과: PASS인데도 exit 1. no-arg 모드는 `GEN_BASE`가 실 경로라 영향 없음(그래서 CI에서 미노출). → **수정:** cleanup 끝에 `return 0` 추가(surgical, 사용자 승인). no-arg/CI 경로 회귀 없음 확인. **이것이 검증 척추가 잡아야 할 정확한 종류의 회귀 — runner의 첫 실효 검출.**
+- **Archived 2026-06-11:** PR #145 merge 후 CHORE-20260611-006과 묶어 archive 처리(routine, `/work-close` archive step).
 - **F1~F4 후속 분해** taxonomy §6에 기록: F1(catalog `/tmp`→`temp/` 치환·simulation-as-code), F2(CI/hook 게이트화), F3(mirror/prompt/language Tier1 승격), F4(repo-health 연계). 별도 backlog 등록은 close 시 tracking에서 판단.
 - **[조정 요청 반영, 2026-06-11] F5 — Source repo maintainer operations manual:** 사용자 판단으로, 검증 척추 산출물을 묶는 source repo 운영 매뉴얼(`WORKFLOW-MANUAL.md`와 분리된 maintainer-facing runbook)이 필요하다는 gap 식별. **이 Work 구현 범위는 늘리지 않고** `docs/backlog/HARNESS.md`에 신규 Candidate 등록(W1 후속, P2 제안) + 후속 분해 F5로 기록. 문서명/위치·cluster·우선순위·HARNESS-MAINTAINER-GUIDE 중복 여부는 착수(`/work-plan`) 시 Codex와 확정.

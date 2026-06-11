@@ -13,13 +13,14 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260611-006 | Scaffold/tool-surface regression alignment | 2026-06-11 | `docs/works/harness/CHORE-20260611-006-scaffold-tool-surface-regression.md` |
-| CHORE-20260611-005 | Harness workflow verification test system | 2026-06-11 | `docs/works/harness/CHORE-20260611-005-workflow-verification-system.md` |
+| _(none)_ | | | |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260611-006 | Scaffold/tool-surface regression alignment | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-006-scaffold-tool-surface-regression.md` |
+| CHORE-20260611-005 | Harness workflow verification test system | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-005-workflow-verification-system.md` |
 | CHORE-20260611-004 | Harness dev/test noise scope policy | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-004-dev-test-noise-policy.md` |
 | CHORE-20260611-003 | Product pack verification backlog 사전 보강 | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-003-verification-pack-backlog-review.md` |
 | CHORE-20260611-002 | Product starter pack backlog 반영 | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-002-product-starter-pack-backlog.md` |
