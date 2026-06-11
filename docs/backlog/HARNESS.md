@@ -29,7 +29,7 @@ AI Workflow Harness backlog다.
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
 | W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속 F1~F4는 W3 repo-health slice·W4 enforcement로 연결 |
-| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | Harness upgrade/migration 메커니즘, Product starter planning pack + feedback import loop, User-facing docs rewrite, Scaffold multi-user clone verification |
+| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010) Product starter planning pack + feedback import loop, User-facing docs rewrite, Scaffold multi-user clone verification |
 | W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health slice, work-doc class |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원, `/exit` gap |
@@ -38,7 +38,6 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L3 | Harness upgrade/migration 메커니즘 |
 | — | P1 | Candidate | L3 | Product starter planning pack + feedback import loop |
 | — | P1 | Candidate | L2 | User-facing docs rewrite — onboarding guide + workflow manual |
 | — | P1 | Candidate | L2 | Scaffold multi-user clone verification |
@@ -113,23 +112,6 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### Harness upgrade/migration 메커니즘
-
-**Cluster:** W2. Adopter Transition
-
-**Task:** `--upgrade`/`--refresh` 또는 update guide 구현. **driver: 공개 adopter `ai-deck-compiler`가 이 harness를 적용 중이며 upstream 변경 반영(업그레이드/마이그레이션)이 필요.** `--existing`은 신규 overlay용일 뿐 갱신 기능 아님. 이미 있는 `--check`(manifest sha256 drift 감지, CHORE-20260605-006) 위에 구축. 기본 방향: source가 manifest/check/update guide를 제공하고, target repo AI가 자기 커스터마이징을 가장 잘 아는 주체로 selective migration 수행. 결정 사항: overwrite vs merge 정책, 사용자 커스터마이징/로컬 변경 보존(backup), version marker(`VERSION`), drift detection→apply 경로, release timing/criteria. **흡수: 구 HRN-FUT-008 + 구 Deferred "Scaffold template drift window 관리"(release timing). drift window 개념 자체는 `docs/HARNESS-PROTOCOL.md` §T12에 유지.**
-
-**Dependencies:**
-
-- `--check`/manifest(CHORE-20260605-006 Done), `VERSION` marker, DR-021 source/target boundary
-- gate P0 series와 독립이나 P0 완료 후 우선 착수 후보
-
-**Done Criteria:** adopter(`ai-deck-compiler` 또는 temp scaffold)를 과거 버전→현재 template로 업그레이드하는 경로(자동 또는 문서) 확립 + framework 파일 갱신과 사용자 커스터마이징 보존 양립 + dry-run/backup
-
-**Verification:** 과거 scaffold→현재 template 업그레이드 시뮬레이션에서 framework 파일 갱신·사용자 변경 보존 동시 확인, upgrade 후 `--check` drift가 0이 되는지
-
----
-
 #### Product starter planning pack + feedback import loop
 
 **Cluster:** W2. Adopter Transition
@@ -182,7 +164,7 @@ AI Workflow Harness backlog다.
 **Dependencies:**
 
 - `User-facing docs rewrite — onboarding guide + workflow manual`
-- `Harness upgrade/migration 메커니즘`
+- CHORE-20260611-010 (Done) — pre-manifest adopter upgrade/migration mechanism
 - `Prompt surface diet + optional pack 재정의`
 - `Project-state template pack 검토`
 - 후속: `Spring Boot MSA TDD option-pack — product engineering pack 후보`
@@ -191,7 +173,7 @@ AI Workflow Harness backlog다.
 
 **Verification:** base-msa-template 분석 checklist, scaffold repo 주입 dry-run 또는 walkthrough, source import 후보 format 검토. README/onboarding/workflow manual과 충돌하지 않는지 확인.
 
-**사전 참고:** `docs/maintainer/VERIFICATION-COMMANDS.md`의 Layer J/J-OB는 scaffold/onboarding simulation에 활용하고, Layer T는 upgrade/migration 전용 placeholder로 남긴다. product starter/import loop 검증은 `VERIFICATION-COMMANDS.md` Layer U(CHORE-20260611-007 완료, U2~U4는 criteria placeholder)에 정의돼 있다.
+**사전 참고:** `docs/maintainer/VERIFICATION-COMMANDS.md`의 Layer J/J-OB는 scaffold/onboarding simulation에 활용하고, Layer T는 CHORE-20260611-010에서 pre-manifest adopter upgrade/migration 실행형 검증으로 승격됐다. product starter/import loop 검증은 `VERIFICATION-COMMANDS.md` Layer U(CHORE-20260611-007 완료, U2~U4는 criteria placeholder)에 정의돼 있다.
 
 ---
 
@@ -450,7 +432,7 @@ AI Workflow Harness backlog다.
 **Dependencies:**
 
 - CHORE-20260606-005, DR-021, bootstrap completion rule, prompt surface diet 후보.
-- `Harness upgrade/migration 메커니즘`과 함께 실제 adopter 전환 전에 우선 검토.
+- CHORE-20260611-010 upgrade/migration mechanism 완료 상태를 전제로 실제 adopter 전환 전에 우선 검토.
 
 **Done Criteria:** fresh scaffold 사용자가 README → STATUS → BOOTSTRAP → product/harness backlog 분리까지 막히지 않고 진행. onboarding completion 후 매 세션 bootstrap이 반복되지 않음. `docs/SCAFFOLD-ONBOARDING-GUIDE.md`와 `docs/WORKFLOW-MANUAL.md`가 README rewrite 이후의 개념·톤·source/target 경계와 일치.
 

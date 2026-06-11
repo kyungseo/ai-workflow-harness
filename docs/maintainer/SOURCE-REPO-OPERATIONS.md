@@ -54,6 +54,7 @@ work-select → work-plan → review → 구현 → result review → work-close
 | **docs-only** | `--tier0` (또는 doc 검사) | E(canonical 최신성)·H(stale/source-only 누수)·P(언어정책 DR-007)·N(STATUS↔Work↔index) | `git diff --check` |
 | **workflow / protocol / tool-surface** | `--tier0` + 관련 catalog Layer(기본). scaffold/generated output 영향 시 `--tier2`/`--all`. 기존 target 정합 검증이 필요할 때만 `--tier1 <target-dir>` | E·F(tool-specific surface 정렬)·G(user-facing 정합), gate 표면이면 **Q-static**(gate path-list parity) | canonical→tool-specific→user-facing→scaffold cascade (`HARNESS-MAINTAINER-GUIDE.md` §7) |
 | **scaffold / template change** | `--tier2` 또는 `--all` | A(syntax)·B(write_text 패턴)·C(실물 생성+invariant)·D(manifest drift)·J/J-OB(simulation) | `bash -n scripts/create-harness.sh` + dry-run + temp/ 실생성(D절) |
+| **adopter upgrade / migration** | target 상태에 따라 다름. pre-manifest는 inventory-first | T(upgrade/migration) + 관련 per-change migration note | manifest 없음이면 `--check`를 migration 범위로 해석하지 않음. shadow scaffold baseline 방식으로 current manifest 획득 |
 | **maintainer verification taxonomy / catalog change** | `--all` | self-check(M계열) + 변경한 Layer 자체 재실행 | taxonomy(기준) ↔ catalog(명령) ↔ runner(실행) 3자 정합 확인. 이 runbook의 B/C 매핑도 갱신 |
 | **release prep** | `--all` | **Release Full Sweep 프리셋**(`VERIFICATION-COMMANDS.md` 상단) + H(stale identity/secret)·R(VERSION↔manifest) | `HARNESS-MAINTAINER-GUIDE.md` §9 Public Release Checks |
 
@@ -111,6 +112,30 @@ work-select → work-plan → review → 구현 → result review → work-close
 **실패 시:** `docs/HARNESS-RECOVERY-VALIDATION.md`의 failure state / Validation Checklist로 이동. VALIDATE 실패 상태에서는 checkpoint·commit을 만들지 않는다.
 
 **CI/hook/hard-gate 미적용 항목 해석:** 일부 규칙은 문서로만 기술되고 기계 강제(CI/hook/hard-gate)가 없다. 이때는 **수동 점검이 곧 gate**다 — 자동 신호 부재를 "통과"로 해석하지 않는다. 기계 강제 후보의 backlog는 `docs/backlog/HARNESS.md` "문서-only 규칙 강제화". source-gitflow hook의 commit gate 정책은 `docs/HARNESS-RECOVERY-VALIDATION.md`(Commit Approval).
+
+---
+
+## G. adopter upgrade / migration entry (source-only)
+
+이미 scaffold된 target을 새 source version으로 올릴 때의 진입 경로다. 세부 명령은 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer T와 관련 `docs/maintainer/migrations/*.md` note를 따른다.
+
+```text
+target read-only probe
+  → manifest 유무 확인
+  → inventory-first 분류(framework-owned / project-owned / customized)
+  → 관련 policy / migration note 확인
+  → temp/ shadow scaffold baseline 생성
+  → temp/ selective migration simulation
+  → target repo에서 별도 Work로 적용
+```
+
+주의:
+
+- `--existing`은 신규 overlay 경로이지 이미 harnessed target upgrade가 아니다.
+- `.harness/manifest.json`이 없는 target은 `--check`만으로 범위를 판단하지 않는다.
+- pre-manifest target은 같은 project-name/workflow/profile의 shadow scaffold에서 current source manifest baseline을 획득한다.
+- target-local state(`docs/STATUS.md`, `docs/PLAN.md`, backlog, Work, product decisions, product code)는 자동 overwrite하지 않는다.
+- source repo는 migration mechanism과 note를 제공하고, 실제 target 적용은 target repo의 별도 Work에서 수행한다.
 
 ---
 

@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-11 (세션: CHORE-20260611-009 Done — source repo maintainer operations runbook 신설. W1 Validation Spine 완결. Active 없음, CHORE-007·008·009 archive 완료, archive 대기 0건)
+Last updated: 2026-06-11 (세션: CHORE-20260611-010 Done — pre-manifest adopter upgrade/migration mechanism 정립, archive pending 1건)
 
 ## Current State
 
@@ -38,6 +38,7 @@ Last updated: 2026-06-11 (세션: CHORE-20260611-009 Done — source repo mainta
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-11 | CHORE-20260611-010: pre-manifest adopter upgrade/migration mechanism 정립 — ai-deck-compiler가 manifest 없는 pre-manifest target임을 실측하고, Draft DR-034로 inventory-first + shadow scaffold manifest baseline + project-owned 보존 정책을 기록. manifest-check-baseline.md per-change note 신설, SOURCE-REPO-OPERATIONS.md adopter migration entry 추가, VERIFICATION-COMMANDS.md Layer T를 실행형 검증으로 승격. R1a 재실측에서 첫 drift 분포 76 tracked, 9 in-sync, 67 drifted 확인 후 selective 수렴 경로 기록 | W2 Adopter Transition 첫 gap인 upgrade/migration 경로 부재 해소. `--existing`은 upgrade가 아니며, pre-manifest target은 manifest 심기 전 `--check`가 무력하다는 실측 기반 정책 필요 — Claude R0~R1a 합의 | Medium |
 | 2026-06-11 | CHORE-20260611-009: source repo maintainer operations runbook 신설(`docs/maintainer/SOURCE-REPO-OPERATIONS.md`) — 검증 척추(005~008) 산출물을 변경 lifecycle 순서축(A lifecycle·B 변경유형 5종 매트릭스·C tier·D temp/·E 자산역할·F PR checklist)으로 엮음. SSoT(taxonomy/catalog/recovery/repo-health/GUIDE) 복제 없이 pointer-only, 배포 surface 0개로 source-only 경계 차단. lifecycle은 tool-neutral(고정 역할 없음) | 검증 척추 산출물의 운영 진입 문서 부재 해소. W1 Validation Spine 완결 — Codex R0~R2 합의 | Low |
 | 2026-06-11 | CHORE-20260611-008: gate path-list parity Q-static 신설(`VERIFICATION-COMMANDS.md`) — 5 surface(gate-lists.sh·rule·source/template GIT-WORKFLOW·seed) 3축(protected expected-matrix·finalization policy·seed/add-only). source GIT-WORKFLOW에 finalization pointer 추가(실 drift 해소), template stale "edit gate-lists" 안내 add-only 정정. repo-health Surface Matrix는 pointer-only, `.harness/gate-config` LIVE_TARGETS 미추가(source phantom) | backlog 전제(gate-config가 source live) 정정. gate 정책이 5 표면에 중복 서술되며 drift 미검출이던 사각지대를 catalog 검증으로 닫음 — Codex R0~R2 합의 | Low |
 | 2026-06-11 | CHORE-20260611-007: product pack 검증 Layer U 신설(`VERIFICATION-COMMANDS.md`) — stack/profile↔core 경계는 concrete(U1, marker 파일 존재 검사), planning pack/import는 criteria placeholder(U2~U4). Layer T 분리, M5 cascade·sweep 게이트밖 등재. taxonomy §3 executable non-goal 유지 + pointer, recovery-validation 미변경 | 신규 product 착수 흐름 검증 layer 부재 해소. 미설계 산출물에 추측 기반 명령을 박지 않고 criteria로 한정 — Codex R0~R2 합의 | Low |
@@ -65,7 +66,7 @@ Last updated: 2026-06-11 (세션: CHORE-20260611-009 Done — source repo mainta
    - ✓ **repo-health gate series 보강** — CHORE-20260611-008에서 gate path-list parity Q-static 신설 + source GIT-WORKFLOW finalization pointer·template add-only 정정 완료. 잔여: runner→repo-health deep 통합 F4, hook exit(1) enforcement
    - ✓ **Source repo maintainer operations manual** — CHORE-20260611-009에서 `docs/maintainer/SOURCE-REPO-OPERATIONS.md` 신설(변경 lifecycle 순서축 runbook, pointer-only, 배포 surface 0). **W1 Validation Spine 완결.** 잔여 후속은 F1~F4(완료 시 runbook B/C절 update trigger)
 2. **W2 — Adopter Transition** (다음 주 실제 product 적용 준비):
-   - **Harness upgrade/migration 메커니즘** — `--check` + selective migration guide를 먼저 정리
+   - ✓ **Harness upgrade/migration 메커니즘** — CHORE-20260611-010에서 pre-manifest adopter inventory-first + shadow scaffold manifest baseline + Layer T 실행형 검증 정립 완료. 후속: 실제 target 적용 또는 두 번째 adopter 검증 후 DR-034 Accepted 승격 판단
    - **Product starter planning pack + feedback import loop** — source repo에서 product plan을 먼저 만들고, scaffold repo 산출물을 source option-pack 후보로 반입하는 loop 설계
    - **User-facing docs rewrite** — README rewrite 기준으로 onboarding guide/workflow manual/generated onboarding surface 전면 재작성
    - **Scaffold multi-user clone verification** — generic/source-gitflow target에서 clone·branch·hook·CI 경로 점검
