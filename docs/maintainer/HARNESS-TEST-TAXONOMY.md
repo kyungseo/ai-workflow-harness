@@ -72,7 +72,7 @@ Tier는 실행 비용·결정성·생성 여부 순서다.
 | canonical / 공통 규칙 | — | DR 참조 closure(closure ✓), Superseded 참조 탐지 | — | 자산: closure ✓ |
 | user-facing (README/MANUAL/GUIDE) | — | README↔optional docs 일치(invariants [4] ✓), command 행↔파일 교차 | scaffold 후 문서 경로 실재 | 부분 자산 |
 | prompts 정렬 | — | session-start 3종 ↔ canonical 정합 | — | gap: catalog Layer S manual → **F3 승격 후보** |
-| product/adopter surface | — | (이 척추 범위 밖) | — | **non-goal → `Product pack verification layer 보강`** |
+| product/adopter surface | — | (이 척추 범위 밖) | — | **executable spine non-goal 유지** (judgment/checklist 성격). catalog `VERIFICATION-COMMANDS.md` Layer U(criteria + U1 boundary smoke)로 정의됨 — CHORE-20260611-007 |
 | language policy (DR-007) | — | 한글 비율/순영어 파일 탐지 | — | gap: catalog Layer P manual → **F3 승격 후보** |
 | **source test scripts** (`scripts/tests/**`) — 검증 척추 executable SSoT | `bash -n scripts/tests/*.sh` (runner `--tier0`에 포함) | 해당 script 자체 실행 / `run-harness-checks.sh --all` | — | **source-side surface** (scaffold ship 아님 → target leak-scan 대상 아님). 변경 시 taxonomy/runner/catalog 정합 cascade |
 
