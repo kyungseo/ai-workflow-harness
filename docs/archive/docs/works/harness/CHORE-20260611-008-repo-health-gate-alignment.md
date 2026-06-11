@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260611-008
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: gate-list(framework SSoT)와 gate-config(project add-only)·git-workflow rule 간 정합을 repo-health/검증 surface에 연결한다. repo-health 전면 리팩터, maintainer ops manual, Layer U(product) 경계 확장, runner/helper 변경은 범위 밖.
 appetite: 0.5d
@@ -185,3 +185,4 @@ B(Codex)가 plan review와 result review를 수행한다.
   - **(must-fix 2) Axis C anti-drift regex 협소:** 한국어 stale 문구만 잡고 `edit gate-lists.sh case`·`add ... awh_is_..._path case` 영어/식별자형을 놓쳤다. → BAD regex에 영어/식별자 패턴 추가 + EXCL(`편집하지|add-only|gate-config`)로 "편집하지 말고" 부정문 오탐 회피. 검증: 한/영 3형태 모두 DETECTED, working(fix) 파일 오탐 0.
   - **(nice-to-fix) Axis B label:** source/template basename 충돌 → pair label(`rule`/`GWF(source)`/`GWF(template)`).
 - **남은 후속:** runner→repo-health deep 통합 = F4 본체. hook exit(1) enforcement = `문서-only 규칙 강제화`. gate parity executable 승격(필요 시) = F3.
+- **Archived 2026-06-11:** develop merge(PR #149) 후 Done work를 `docs/archive/`로 이동. archive는 세션 자동 로드 대상이 아니므로 운영 컨텍스트 영향 없음.

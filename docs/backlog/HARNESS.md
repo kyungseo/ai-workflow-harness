@@ -42,6 +42,7 @@ AI Workflow Harness backlog다.
 | — | P1 | Candidate | L3 | Product starter planning pack + feedback import loop |
 | — | P1 | Candidate | L2 | User-facing docs rewrite — onboarding guide + workflow manual |
 | — | P1 | Candidate | L2 | Scaffold multi-user clone verification |
+| — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
 | — | P1 | Candidate | L2 | 외부화 실패모드 통합 설계 원칙 명문화 |
 | — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
 | — | P1 | Candidate | L2 | Prompt surface diet + optional pack 재정의 |
@@ -64,6 +65,33 @@ AI Workflow Harness backlog다.
 > **Verification 작성 기준:** 변경이 건드리는 surface를 항목별로 명시한다.
 > 점검 후보: tool surface · adopter cascade · canonical · scaffold · README/GUIDE/MANUAL
 > 해당 없는 surface는 제외한다.
+
+---
+
+#### Validation Spine residual follow-ups (F1-F4)
+
+> 2026-06-11 등록/정리 (CHORE-20260611-005~009 Discovery). W1 Validation Spine 자체는 완결됐지만, executable 승격·CI/hook 배선·repo-health 통합은 별도 후보로 계속 추적한다.
+
+**Cluster:** W3/W4 bridge — Workflow IA Diet + Enforcement And Lifecycle.
+
+**Task:**
+
+- F1: `VERIFICATION-COMMANDS.md` catalog Layer J/J-OB/Q를 deterministic script로 변환하고, catalog Layer J/J-OB/Q/R/S의 `/tmp/awh-*` 경로를 repo-local `temp/` 정책에 맞춰 치환한다. `HARNESS-TEST-TAXONOMY.md` §5는 이미 정책만 확정했으며, 일괄 치환은 이 후속 Work 범위다.
+- F2: `run-harness-checks.sh`를 CI required check 또는 pre-commit/hook에 배선할지 결정한다. `문서-only 규칙 강제화`와 함께 예외/우회 정책을 먼저 판단한다.
+- F3: mirror parity, prompt 정합, language policy 같은 catalog/judgment 점검을 deterministic Tier 1 assertion으로 승격할지 검토·구현한다. product pack Layer U의 executable 승격도 실제 반복 필요가 확인되면 여기서 다룬다.
+- F4: runner 결과를 `/repo-health`에 surface한다. `skills/workflow/repo-health.md` slice 분리와 연계하되, repo-health가 deterministic 불변식을 재구현하지 않고 runner/catalog 결과를 호출·해석하는 경계를 유지한다.
+
+**Dependencies:**
+
+- CHORE-20260611-005: taxonomy + tier runner
+- CHORE-20260611-006: scaffold/source-gitflow regression alignment
+- CHORE-20260611-007: product pack Layer U
+- CHORE-20260611-008: gate path-list parity Q-static
+- CHORE-20260611-009: source repo operations runbook(Update Triggers)
+
+**Done Criteria:** F1~F4 각각이 Work로 분해되거나, 범위가 다른 backlog 항목(`문서-only 규칙 강제화`, `repo-health.md slice 분리`, W2/W5 product pack 후보)에 명시적으로 흡수됨. `HARNESS-TEST-TAXONOMY.md` §6와 `SOURCE-REPO-OPERATIONS.md` Update Triggers의 후속 pointer가 stale하지 않음.
+
+**Verification:** taxonomy §5/§6, `VERIFICATION-COMMANDS.md` Layer J/J-OB/Q/R/S, `run-harness-checks.sh`, `skills/workflow/repo-health.md`, `SOURCE-REPO-OPERATIONS.md` 간 pointer 정합 grep. F1 착수 시 `/tmp/awh-*` 잔존 grep으로 치환 범위 확인.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260611-007
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: 신규 product 착수 흐름(product starter planning pack, product engineering option-pack, product repo → source repo import loop)을 검증하는 layer를 maintainer 검증 카탈로그에 보강한다. 실제 planning pack/MSA option-pack 구현이나 base-msa-template 분석은 범위 밖.
 appetite: 0.5d
@@ -146,3 +146,4 @@ B(Codex)가 plan review와 result review를 수행한다.
 - 검증 결과: `run-harness-checks.sh --all` OVERALL PASS(source-only 문서 변경이라 척추 회귀 없음), `git diff --check` clean, `check-shipped-dr-closure.sh` OK. M1 self-check의 MISSING 4건은 전부 기존 false positive(M1/M2 자기참조 텍스트, J5/N optional 경로, Layer F 루프변수)로 이번 변경과 무관.
 - 변경 파일: `VERIFICATION-COMMANDS.md`(Layer U + M5 행 + sweep 게이트밖), `HARNESS-TEST-TAXONOMY.md`(§3 pointer), `docs/works/harness/README.md`(Active 등록), Work 파일 신설.
 - 남은 후속: planning pack/import concrete 승격은 W2, MSA pack 검증은 W5, executable 승격은 F3, repo-health 연계는 F4.
+- **Archived 2026-06-11:** develop merge(PR #148) 후 Done work를 `docs/archive/`로 이동. archive는 세션 자동 로드 대상이 아니므로 운영 컨텍스트 영향 없음.

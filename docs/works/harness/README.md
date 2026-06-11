@@ -13,14 +13,15 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260611-007 | Product pack verification layer | 2026-06-11 | `docs/works/harness/CHORE-20260611-007-product-pack-verification-layer.md` |
-| CHORE-20260611-008 | repo-health gate-config/gate-list 정합 surface | 2026-06-11 | `docs/works/harness/CHORE-20260611-008-repo-health-gate-alignment.md` |
-| CHORE-20260611-009 | Source repo maintainer operations manual | 2026-06-11 | `docs/works/harness/CHORE-20260611-009-source-repo-maintainer-operations.md` |
+| _(none)_ | | | |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260611-009 | Source repo maintainer operations manual | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-009-source-repo-maintainer-operations.md` |
+| CHORE-20260611-008 | repo-health gate-config/gate-list 정합 surface | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-008-repo-health-gate-alignment.md` |
+| CHORE-20260611-007 | Product pack verification layer | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-007-product-pack-verification-layer.md` |
 | CHORE-20260611-006 | Scaffold/tool-surface regression alignment | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-006-scaffold-tool-surface-regression.md` |
 | CHORE-20260611-005 | Harness workflow verification test system | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-005-workflow-verification-system.md` |
 | CHORE-20260611-004 | Harness dev/test noise scope policy | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-004-dev-test-noise-policy.md` |
