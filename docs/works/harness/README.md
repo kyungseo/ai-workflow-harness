@@ -15,6 +15,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 |----|-------|------------|-----------|
 | CHORE-20260611-007 | Product pack verification layer | 2026-06-11 | `docs/works/harness/CHORE-20260611-007-product-pack-verification-layer.md` |
 | CHORE-20260611-008 | repo-health gate-config/gate-list 정합 surface | 2026-06-11 | `docs/works/harness/CHORE-20260611-008-repo-health-gate-alignment.md` |
+| CHORE-20260611-009 | Source repo maintainer operations manual | 2026-06-11 | `docs/works/harness/CHORE-20260611-009-source-repo-maintainer-operations.md` |
 
 ## Archived
 

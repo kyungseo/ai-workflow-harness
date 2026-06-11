@@ -28,7 +28,7 @@ AI Workflow Harness backlog다.
 
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
-| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | Source repo maintainer operations manual (검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008 완료) |
+| W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속 F1~F4는 W3 repo-health slice·W4 enforcement로 연결 |
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | Harness upgrade/migration 메커니즘, Product starter planning pack + feedback import loop, User-facing docs rewrite, Scaffold multi-user clone verification |
 | W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health slice, work-doc class |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
@@ -38,7 +38,6 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P2 | Candidate | L2 | Source repo maintainer operations manual |
 | — | P1 | Candidate | L3 | Harness upgrade/migration 메커니즘 |
 | — | P1 | Candidate | L3 | Product starter planning pack + feedback import loop |
 | — | P1 | Candidate | L2 | User-facing docs rewrite — onboarding guide + workflow manual |
@@ -65,47 +64,6 @@ AI Workflow Harness backlog다.
 > **Verification 작성 기준:** 변경이 건드리는 surface를 항목별로 명시한다.
 > 점검 후보: tool surface · adopter cascade · canonical · scaffold · README/GUIDE/MANUAL
 > 해당 없는 surface는 제외한다.
-
----
-
-#### Source repo maintainer operations manual
-
-> 2026-06-11 등록 (CHORE-20260611-005 Discovery — 검증 척추 산출물의 운영 매뉴얼 부재).
-
-**Cluster:** W1. Validation Spine (후속 — 척추 산출물을 운영 흐름으로 통합). 사이드: W2 `User-facing docs rewrite`의 maintainer-facing 대칭.
-
-**Task:**
-
-- `docs/WORKFLOW-MANUAL.md`(adopter/user-facing)와 **분리된 source repo maintainer/AI driver용 운영 매뉴얼**을 만든다. 후보 경로: `docs/maintainer/SOURCE-REPO-OPERATIONS.md`(이름·위치 Codex 확인).
-- source repo 변경 lifecycle의 operational runbook: 언제 무엇을 어느 순서로 실행·해석하는지.
-- 포함 후보:
-  - 작업 lifecycle: work-select → work-plan → cross-agent review → 구현 → result review → work-close → commit → PR(`--base develop`) → merge.
-  - 변경 유형별 검증 흐름: docs-only / workflow·protocol·tool-surface / scaffold change / maintainer verification taxonomy change / release prep.
-  - `run-harness-checks.sh` tier 사용 기준: `--tier0` / `--tier1 <target>` / `--tier2` / `--all`.
-  - temp/ 실테스트 운용: 생성 위치 · cleanup · `/tmp` 대신 `temp/`를 쓰는 이유.
-  - `HARNESS-TEST-TAXONOMY.md` · `VERIFICATION-COMMANDS.md` · `HARNESS-RECOVERY-VALIDATION.md` · `/repo-health`의 역할 차이.
-  - PR 전 최소 검증 checklist, 실패 시 recovery validation 연결, CI/hook/hard-gate 미적용 항목의 해석.
-- F1~F4(CHORE-20260611-005 후속) 완료 시 이 매뉴얼 업데이트 trigger.
-
-**경계 (중요):**
-
-- adopter/user-facing 아님. `WORKFLOW-MANUAL.md` rewrite와 섞지 않는다(그쪽=user-facing, 이 문서=maintainer operations).
-- 검증 기준 SSoT는 `HARNESS-TEST-TAXONOMY.md`, 명령 카탈로그는 `VERIFICATION-COMMANDS.md`, 판단·정책은 `HARNESS-RECOVERY-VALIDATION.md`. 이 매뉴얼은 그것들을 **운영 순서로 엮는 runbook**이며 기준/명령/정책을 복제하지 않고 pointer로 연결한다(표면 추가·비대화 경계).
-- product/adopter 운영과 섞지 않는다(그쪽=product pack 검증 Layer U, CHORE-20260611-007 완료).
-- 기존 `docs/HARNESS-MAINTAINER-GUIDE.md`는 이미 setup/daily workflow/convention/validation을 다루는 optional maintainer guide다(scaffold 시 optional pack으로 배포 가능). 신규 source-only operations 문서와 역할이 충돌할 가능성이 크므로, **병렬 추가가 아니라 기존 guide를 source-only operations로 흡수·대체·재배치할지를 우선 검토한다**(신규 문서를 대체/상위 runbook 후보로 본다).
-
-**Dependencies:**
-
-- `harness workflow 검증 테스트 체계 정립`(CHORE-20260611-005, 척추 산출물 선행) — 이 매뉴얼이 엮는 대상.
-- `User-facing docs rewrite — onboarding guide + workflow manual`(W2) — user-facing 대칭, 경계 조정.
-- product pack 검증 Layer U(CHORE-20260611-007 완료) — product 운영과 경계.
-- CHORE-20260611-005 후속 F1~F4 완료 시 업데이트.
-
-**Open:** ① 문서명/위치(`SOURCE-REPO-OPERATIONS.md`) 최종 확정 — 착수 시. (Cluster=W1 후속, Priority=P2, `HARNESS-MAINTAINER-GUIDE.md` 흡수·대체·재배치 우선 검토는 R2-extra에서 합의 고정.)
-
-**Done Criteria:** source repo maintainer/AI driver가 변경 lifecycle에서 어떤 문서/스크립트를 어느 순서로 쓰는지 막힘 없이 따라갈 수 있는 runbook이 `docs/maintainer/`에 존재. 검증 기준/명령/정책을 복제하지 않고 pointer로 연결. WORKFLOW-MANUAL/product pack 검증/HARNESS-MAINTAINER-GUIDE와 경계 명확.
-
-**Verification:** runbook 경로 시뮬레이션(docs-only → release prep 각 변경 유형), pointer 실재 grep, `WORKFLOW-MANUAL`·`HARNESS-MAINTAINER-GUIDE`와 역할 중복/stale 점검.
 
 ---
 
