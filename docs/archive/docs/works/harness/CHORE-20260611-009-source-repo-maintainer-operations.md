@@ -173,3 +173,4 @@ related_work: [CHORE-20260611-005, CHORE-20260611-006, CHORE-20260611-007, CHORE
 - **runner 인자 형식 확인:** `--tier1`은 `<target-dir>` 인자 필수(생성 없음), `--tier2`/`--all`은 temp/ 생성 포함.
 - **검증 결과:** V2 pointer 16종 dangling 0 / V3 명령 복제 0 / V4 tool-neutral 통과 / V5 diff --check clean / V6 tier0 OVERALL PASS.
 - **경계 차단:** 배포 surface(AGENT-WORKFLOW/GUIDE/WORKFLOW-MANUAL) 0개 변경으로 source-only 경계를 물리적으로 닫음(R0 Must-fix 1).
+- **Archived 2026-06-11:** develop merge(PR #150) 후 Done work를 `docs/archive/`로 이동. archive는 세션 자동 로드 대상이 아니므로 운영 컨텍스트 영향 없음.

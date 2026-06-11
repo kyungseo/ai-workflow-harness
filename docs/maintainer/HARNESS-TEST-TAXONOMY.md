@@ -125,7 +125,7 @@ runner(`scripts/tests/run-harness-checks.sh`)는 scaffold로 ship될 수 있다.
 
 | ID | 범위 |
 | --- | --- |
-| F1 | catalog Layer J/J-OB/Q를 deterministic 스크립트로 변환 + catalog `/tmp`→`temp/` 치환 |
+| F1 | catalog Layer J/J-OB/Q를 deterministic 스크립트로 변환 + catalog Layer J/J-OB/Q/R/S의 `/tmp/awh-*`→`temp/` 치환 |
 | F2 | runner를 CI required check / pre-commit에 배선(↔ `문서-only 규칙 강제화`) |
 | F3 | mirror parity·prompt 정합·language policy를 executable assertion으로 Tier 1 승격 |
 | F4 | runner 결과를 `/repo-health`에 surface(↔ `repo-health gate series 보강`·`repo-health.md slice 분리`) |

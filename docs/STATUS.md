@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-11 (세션: CHORE-20260611-009 Done — source repo maintainer operations runbook 신설. W1 Validation Spine 완결. Active 없음, archive 대기 CHORE-007·008·009 3건)
+Last updated: 2026-06-11 (세션: CHORE-20260611-009 Done — source repo maintainer operations runbook 신설. W1 Validation Spine 완결. Active 없음, CHORE-007·008·009 archive 완료, archive 대기 0건)
 
 ## Current State
 
