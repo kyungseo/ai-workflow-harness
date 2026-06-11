@@ -21,27 +21,42 @@ AI Workflow Harness backlog다.
 
 ## Backlog
 
+### Portfolio View
+
+> 이 분류는 확정된 실행 순서가 아니라 backlog를 읽기 위한 portfolio view다.
+> 각 Work 착수 시 `/work-plan`에서 항목 자체의 논리성, 합리적 의사결정, 현재 product 적용 맥락을 다시 검토한다.
+
+| Cluster | Goal | Backlog Items |
+| --- | --- | --- |
+| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | Harness dev/test 노이즈 방지, harness workflow 검증 테스트 체계, Scaffold/tool-surface regression alignment, Product pack verification layer 보강, repo-health gate series 보강 |
+| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | Harness upgrade/migration 메커니즘, Product starter planning pack + feedback import loop, User-facing docs rewrite, Scaffold multi-user clone verification |
+| W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health slice, work-doc class |
+| W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
+| W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원, `/exit` gap |
+
 ### Summary
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
+| — | P1 | Candidate | L2 | Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의 |
 | — | P1 | Candidate | L2 | harness workflow 검증 테스트 체계 정립 |
-| — | P2 | Candidate | L2 | Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의 |
-| — | P1 | Candidate | L2 | Scaffold/tool-surface alignment 점검 체계화 |
+| — | P1 | Candidate | L2 | Scaffold/tool-surface regression alignment 체계화 |
+| — | P1 | Candidate | L2 | Product pack verification layer 보강 |
 | — | P1 | Candidate | L2 | repo-health gate series 보강 |
-| — | P1 | Candidate | L2 | Backlog row lifecycle SSoT 정비 |
 | — | P1 | Candidate | L3 | Harness upgrade/migration 메커니즘 |
+| — | P1 | Candidate | L3 | Product starter planning pack + feedback import loop |
+| — | P1 | Candidate | L2 | User-facing docs rewrite — onboarding guide + workflow manual |
+| — | P1 | Candidate | L2 | Scaffold multi-user clone verification |
 | — | P1 | Candidate | L2 | 외부화 실패모드 통합 설계 원칙 명문화 |
-| — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
 | — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
 | — | P1 | Candidate | L2 | Prompt surface diet + optional pack 재정의 |
 | — | P2 | Candidate | L2 | Harness protocol trigger family simplification |
-| — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
 | — | P2 | Candidate | L2 | `skills/workflow/repo-health.md` slice 분리 |
 | — | P2 | Candidate | L2 | `skills/workflow/work-doc.md` class 재검토 |
-| — | P2 | Candidate | L2 | Coding canonical optional pack — `--with-coding-guide` scaffold 확장 |
-| — | P1 | Candidate | L2 | Adopter onboarding/manual refresh |
-| — | P1 | Candidate | L2 | Scaffold multi-user clone verification |
+| — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
+| — | P1 | Candidate | L2 | Backlog row lifecycle SSoT 정비 |
+| — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
+| — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P2 | Candidate | L3 | Scaffold CLI naming audit |
 | HRN-032 | P2 | Candidate | L2 | Windows 지원 확장 |
@@ -57,9 +72,39 @@ AI Workflow Harness backlog다.
 
 ---
 
+#### Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의
+
+**Cluster:** W1. Validation Spine
+
+**Task:** AI agent가 harness 행동 패턴(cascade 점검 규칙, commit bundling 방침 등)을 agent-side 지속 컨텍스트(Claude memory, Codex custom profile, Cursor user-level rules 등)에 저장하면 harness 문서 단독 검증이 불가능해지고 개발·테스트 결과가 오염된다. harness의 올바른 동작이 "harness 문서만으로" 유도되는지 검증하려면 agent-side 컨텍스트가 행동을 보정해서는 안 된다. 이 원칙이 없으면 agent마다 지속 컨텍스트 보정 여부가 달라져 도구 간 검증 조건도 불균등해진다.
+
+**핵심 결정 대상:**
+
+- "이 repo의 harness 행동을 유도하는 내용은 agent-side 지속 컨텍스트에 저장하지 않는다" 원칙을 cross-agent 정책으로 명문화한다.
+- 기존 저장 항목은 삭제 / harness docs 이전 / 조건부 유지 중 하나로 처리한다.
+- 검증 체계가 "harness docs = SSoT"만으로 동작하는지 확인할 수 있게 만든다.
+
+**Dependencies:**
+
+- 연계: `memory/feedback_memory_scope.md`(현재 Claude 한정), `docs/BEHAVIOR-PRINCIPLES.md`(cross-agent 원칙).
+- `harness workflow 검증 테스트 체계 정립`의 전제 조건으로 함께/먼저 검토.
+
+**Done Criteria:**
+
+- 원칙 명문화: cross-agent 관점에서 harness dev/test 노이즈 방지 원칙 기술.
+- Claude memory: `memory/feedback_memory_scope.md`에 harness 행동 패턴 저장 금지 원칙 반영. 기존 해당 memory 파일(cascade verification, T11 등) 처리 결정 및 실행.
+- Codex/Cursor: agent-side 지속 컨텍스트 표면 점검 및 harness 행동 패턴 저장 여부 확인.
+- 원칙이 "harness docs = SSoT" 방향과 일관성 있는지 확인.
+
+**Verification:** agent별 지속 컨텍스트 저장소(Claude `memory/`, Codex profile, Cursor user rules) grep으로 harness 행동 패턴 잔존 여부 확인. `docs/BEHAVIOR-PRINCIPLES.md` 또는 정책 파일에 cross-agent 원칙 반영 확인.
+
+---
+
 #### harness workflow 검증 테스트 체계 정립
 
 > 2026-06-10 등록 (사용자 테마).
+
+**Cluster:** W1. Validation Spine
 
 **Task:**
 
@@ -73,7 +118,7 @@ AI Workflow Harness backlog다.
 **Dependencies:**
 
 - 기존 `scripts/tests/`(`check-scaffold-invariants.sh`, `check-shipped-dr-closure.sh`) 위에 구축.
-- 연계: `Scaffold/tool-surface alignment 점검 체계화`(P1, invariants 자산), `Harness dev/test 노이즈 방지`(P2, harness-only 검증 전제).
+- 연계: `Scaffold/tool-surface regression alignment 체계화`(P1, invariants 자산), `Harness dev/test 노이즈 방지`(P1, harness-only 검증 전제).
 
 **Done Criteria:**
 
@@ -89,51 +134,83 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### Harness dev/test 노이즈 방지 — agent 지속 컨텍스트 scope 정책 정의
+#### Scaffold/tool-surface regression alignment 체계화
 
-**Task:** AI agent가 harness 행동 패턴(cascade 점검 규칙, commit bundling 방침 등)을 agent-side 지속 컨텍스트(Claude memory, Codex custom profile, Cursor user-level rules 등)에 저장하면 harness 문서 단독 검증이 불가능해지고 개발·테스트 결과가 오염된다. harness의 올바른 동작이 "harness 문서만으로" 유도되는지 검증하려면 agent-side 컨텍스트가 행동을 보정해서는 안 된다. 이 원칙이 없으면 agent마다 지속 컨텍스트 보정 여부가 달라져 도구 간 검증 조건도 불균등해진다. "이 레포의 harness 행동을 유도하는 내용은 agent-side 지속 컨텍스트에 저장하지 않는다" 원칙을 모든 agent를 대상으로 명문화하고, 기존 저장된 항목의 처리 방침을 결정한다. **연계: `memory/feedback_memory_scope.md`(현재 Claude 한정), `docs/BEHAVIOR-PRINCIPLES.md`(cross-agent 원칙)**
+**Cluster:** W1. Validation Spine
+
+**Task:** DR 신규 등재·README 추가·hardcode 변경 시 scaffold가 자동으로 동기화되지 않는 구조적 문제를 regression test asset으로 체계화한다. 2026-06-07 세션에서 scaffold drift 4건(decisions README legend·컬럼 누락, retrospectives README 미생성, troubleshooting README stale, DR-027 adapt 미등재)과 dangling DR 참조 5건(AGENTS.md 2건, git-workflow.md 3건, record-decision.md 1건, template git-workflow.md 1건)이 발견됐다.
+
+**현 시점 판단 (2026-06-11):**
+
+- 기존 하위 과제 1의 "PR #93 이후 전체 재검증"은 시점이 지나 단독 실행 후보로는 비용 대비 효율이 낮다. #94~#141에서 DR lifecycle, product-track rename, source-only maintainer 분리, shipped DR closure guard, Gitflow/versioning, backlog governance가 추가되었기 때문이다.
+- PR #93 이후 Work 파일을 하나씩 읽는 cross-check는 생략하고, 문제가 차후 발견되면 후속 Work로 조정한다.
+- 대신 기존 검증 절차를 `harness workflow 검증 테스트 체계 정립`의 대표 regression asset으로 흡수한다.
+
+**Regression assets:**
+
+- `bash -n scripts/create-harness.sh`
+- `bash scripts/create-harness.sh <name> temp/<name>`
+- `bash scripts/tests/check-scaffold-invariants.sh temp/<name>`
+- `git diff --check`
+- tool-surface(`.claude/rules`, `.cursor/rules`, `.agents/skills`, `prompts/*session-start.md`, `skills/workflow/`) grep으로 변경 DR 참조 일관성 확인.
+
+**하위 과제 1 — invariants → `/repo-health` 연계 설계 검토:** `check-scaffold-invariants.sh`를 `/repo-health` 게이트에 포함하는 방법을 검토한다. 현행 `/repo-health`가 어떤 표면을 점검하는지 확인하고, invariants 체크 중 repo-health에 추가할 항목과 ad-hoc 실행으로 남길 항목을 구분한다. 자동화 부담 없이 "PR merge 전 또는 harness 마일스톤 완료 시 실행" trigger를 `HARNESS-PROTOCOL.md`에 추가하는 것도 선택지. 장기: hardcode write_text → adapt 전환 검토.
+
+**하위 과제 2 — invariant leak-scan coverage gap (2026-06-10 발견, PR #139):** `check-scaffold-invariants.sh` [2] no-source-only-leakage가 `core_files()`만 스캔한다. 그런데 `docs/GIT-WORKFLOW.md`(source-gitflow scaffold가 배포하는 표면)는 `core_files`에 없어, 그 파일에 `ai-workflow-harness` 등 누수 토큰이 들어가도 **미검출**된다(PR #139에서 generic 처리로 회피했으나 gap은 잔존). shipped이지만 비-core인 표면(`GIT-WORKFLOW.md` 등)을 leak 스캔 대상에 포함할지 `core_files` 정의를 재검토한다.
 
 **Dependencies:**
 
-- —
+- `harness workflow 검증 테스트 체계 정립`과 강하게 연계.
+- `repo-health.md` slice 분리(P2)와 연계.
 
-**Done Criteria:**
+**Done Criteria:** fresh scaffold invariants PASS + tool-surface grep 이상 없음. repo-health 연계 여부 결정 및 HARNESS-PROTOCOL trigger 반영. leak-scan 대상에 shipped 비-core 표면 포함 여부 결정 — 포함 시 `core_files` 확장, 제외 시 근거 기록.
 
-- 원칙 명문화: cross-agent 관점에서 harness dev/test 노이즈 방지 원칙 기술 — `docs/BEHAVIOR-PRINCIPLES.md` 추가 또는 신규 정책 파일(scope: Claude/Codex/Cursor 모두 적용)
-- Claude memory: `memory/feedback_memory_scope.md`에 harness 행동 패턴 저장 금지 원칙 반영. 기존 해당 memory 파일(cascade verification, T11 등) 처리 결정 및 실행 — 삭제 / harness docs 이전 / 조건부 유지
-- Codex/Cursor: agent-side 지속 컨텍스트 표면 점검 및 harness 행동 패턴 저장 여부 확인
-- 원칙이 "harness docs = SSoT" 방향과 일관성 있는지 확인
-
-**Verification:** agent별 지속 컨텍스트 저장소(Claude `memory/`, Codex profile, Cursor user rules) grep으로 harness 행동 패턴 잔존 여부 확인. `docs/BEHAVIOR-PRINCIPLES.md` 또는 정책 파일에 cross-agent 원칙 반영 확인. tool surface · adopter cascade · scaffold · README/GUIDE/MANUAL: 해당 없음(N/A).
+**Verification:** `check-scaffold-invariants.sh` OVERALL PASS, 미해결 항목 없음. `/repo-health` 실행 결과에 invariants 상태 포함 또는 pointer 추가. `GIT-WORKFLOW.md`에 누수 토큰 inject → invariants가 FAIL로 검출하는지 확인(또는 의도적 제외 근거 기록).
 
 ---
 
-#### Scaffold/tool-surface alignment 점검 체계화
+#### Product pack verification layer 보강
 
-**Task:** DR 신규 등재·README 추가·hardcode 변경 시 scaffold가 자동으로 동기화되지 않는 구조적 문제. 2026-06-07 세션에서 scaffold drift 4건(decisions README legend·컬럼 누락, retrospectives README 미생성, troubleshooting README stale, DR-027 adapt 미등재)과 dangling DR 참조 5건(AGENTS.md 2건, git-workflow.md 3건, record-decision.md 1건, template git-workflow.md 1건) 발견. **연계: `repo-health.md` slice 분리(P2)**
+**Cluster:** W1. Validation Spine
 
-**하위 과제 1 — PR #93 이후 전체 재검증 (즉시 실행 가능):** PR #93(c4, 2026-06-06) 이후 merge된 #94~#100 및 현재 세션 변경(DR-026·DR-027·tool-surface cascade)을 대상으로 아래 검증 절차 전체를 재실행한다.
-① `bash -n scripts/create-harness.sh`
-② `bash scripts/create-harness.sh <name> temp/<name>`
-③ `bash scripts/tests/check-scaffold-invariants.sh temp/<name>` — [1] core A-class dangling DR ref / [2] source-only 누수 / [3] decisions README closure / [4] root README ↔ optional docs / [5] manifest --check 자기일관성
-④ `git diff --check`
-⑤ tool-surface(`.claude/rules`, `.cursor/rules`, `.agents/skills`, `prompts/*session-start.md`, `skills/workflow/`) grep으로 변경 DR 참조 일관성 확인. 결과를 보고하고 미해결 항목은 후속 Work로 분리한다.
+**Task:** `docs/maintainer/VERIFICATION-COMMANDS.md`와 `docs/HARNESS-RECOVERY-VALIDATION.md`를 기준으로 product starter planning pack, product-local harness, product repo → source repo import loop를 검증하는 layer를 보강한다.
 
-**하위 과제 2 — invariants → `/repo-health` 연계 설계 검토:** `check-scaffold-invariants.sh`를 `/repo-health` 게이트에 포함하는 방법을 검토한다. 현행 `/repo-health`가 어떤 표면을 점검하는지 확인하고, invariants 5개 체크 중 repo-health에 추가할 항목과 ad-hoc 실행으로 남길 항목을 구분한다. 자동화 부담 없이 "PR merge 전 또는 harness 마일스톤 완료 시 실행" trigger를 `HARNESS-PROTOCOL.md`에 추가하는 것도 선택지. 장기: hardcode write_text → adapt 전환 검토.
+**사전 검토 결과 (2026-06-11):**
 
-**하위 과제 3 — invariant leak-scan coverage gap (2026-06-10 발견, PR #139):** `check-scaffold-invariants.sh` [2] no-source-only-leakage가 `core_files()`만 스캔한다. 그런데 `docs/GIT-WORKFLOW.md`(source-gitflow scaffold가 배포하는 표면)는 `core_files`에 없어, 그 파일에 `ai-workflow-harness` 등 누수 토큰이 들어가도 **미검출**된다(PR #139에서 generic 처리로 회피했으나 gap은 잔존). shipped이지만 비-core인 표면(`GIT-WORKFLOW.md` 등)을 leak 스캔 대상에 포함할지 `core_files` 정의를 재검토한다.
+- `docs/maintainer/VERIFICATION-COMMANDS.md`는 Layer J/J-OB/Q로 scaffold·onboarding·hook simulation을 충분히 다룬다.
+- Layer T는 upgrade/migration placeholder라 `Harness upgrade/migration 메커니즘` 구현 후 채울 수 있게 되어 있다.
+- 그러나 신규 product 착수 흐름의 핵심인 source-first planning pack, base-msa-template 분석, product-local harness 산출물, source repo import 후보 형식 검증은 아직 별도 layer가 없다.
+- `docs/HARNESS-RECOVERY-VALIDATION.md`는 판단·정책 경계가 명확하고, concrete command는 maintainer verification catalog로 위임하는 구조가 적절하다. 새 product pack 검증도 여기보다 `VERIFICATION-COMMANDS.md` 쪽 layer로 두는 것이 맞다.
+- `scripts/` 구조는 현재 `create-harness.sh`, `scripts/tests/check-scaffold-invariants.sh`, `scripts/tests/check-shipped-dr-closure.sh`뿐이다. product engineering pack/import loop 전용 helper는 아직 없으므로, 처음에는 문서 layer와 checklist로 시작하고 반복 사용 후 helper script 여부를 판단한다.
+
+**보강 후보:**
+
+- `VERIFICATION-COMMANDS.md`에 product starter / option-pack import 검증 layer 추가.
+  - source-first planning pack 산출물 checklist.
+  - `base-msa-template` 분석 시 제외/포함 범위: 초기 하네스 잔재 제외, plan/architecture/code 중심.
+  - scaffold repo 주입 walkthrough.
+  - product-local harness 산출물(PRD/TRD/code conventions/user flow/DB design/screen/tasks/test/loop) 존재·역할 확인.
+  - product repo → source repo import 후보 mapping format 확인.
+  - core scaffold와 optional/product engineering pack 경계 확인.
+- `VERIFICATION-COMMANDS.md` M5 양방향 cascade 표에 product engineering pack 옵션/문서 변경 trigger 추가.
+- `HARNESS-RECOVERY-VALIDATION.md`는 필요 시 Validation Checklist에 "source import 후보가 검증된 product 산출물인지" 같은 judgment item만 추가한다. 명령어는 maintainer catalog에 둔다.
 
 **Dependencies:**
 
-- —
+- `Product starter planning pack + feedback import loop`
+- `Spring Boot MSA TDD option-pack — product engineering pack 후보`
+- `harness workflow 검증 테스트 체계 정립`
+- `Harness upgrade/migration 메커니즘`(Layer T와 충돌하지 않게 경계 조정)
 
-**Done Criteria:** [과제 1] fresh scaffold invariants PASS + tool-surface grep 이상 없음 / [과제 2] repo-health 연계 여부 결정 및 HARNESS-PROTOCOL trigger 반영 / [과제 3] leak-scan 대상에 shipped 비-core 표면 포함 여부 결정 — 포함 시 `core_files` 확장, 제외 시 근거 기록
+**Done Criteria:** product starter planning pack과 product engineering option-pack에 대한 검증 layer가 `VERIFICATION-COMMANDS.md`에 추가됨. Layer T(upgrade/migration)와 역할 경계가 명확함. `HARNESS-RECOVERY-VALIDATION.md`에는 policy/judgment만 남고 concrete command가 중복되지 않음. scripts helper가 필요한지 판단하고, 필요 없으면 checklist-only 이유를 기록.
 
-**Verification:** [과제 1] `check-scaffold-invariants.sh` OVERALL PASS, 미해결 항목 없음 / [과제 2] `/repo-health` 실행 결과에 invariants 상태 포함 또는 pointer 추가 / [과제 3] `GIT-WORKFLOW.md`에 누수 토큰 inject → invariants가 FAIL로 검출하는지 확인(또는 의도적 제외 근거 기록)
+**Verification:** `VERIFICATION-COMMANDS.md` 자체 점검(M1~M5), `git diff --check`, shipped DR closure. 신규 layer가 W2 Product starter flow와 W5 option-pack 후보를 모두 검증할 수 있는지 walkthrough.
 
 ---
 
 #### repo-health gate series 보강
+
+**Cluster:** W1. Validation Spine / W4. Enforcement And Lifecycle
 
 **Task:** gate series(CHORE-20260606-006~016) 이후 `.harness/gate-config`가 live operational 파일이 됐으나 repo-health LIVE_TARGETS·Required Surface Matrix에 없음. 또한 `tools/git-hooks/lib/gate-lists.sh`(framework SSoT) ↔ `.harness/gate-config`(project extension) 정합 교차 검증 체크 없음. 두 파일이 충돌해도 감지 불가. LIVE_TARGETS에 `.harness/gate-config` 추가, Surface Matrix에 gate-config 변경 시 cascade 행 추가, grep pack에 gate-lists.sh ↔ gate-config 교차 검증 추가. P2: AWH-Gate-Override trailer 사용 패턴 grep도 추가 검토. **연계: `repo-health.md` slice 분리(P2)**
 
@@ -151,6 +228,8 @@ AI Workflow Harness backlog다.
 
 #### Backlog row lifecycle SSoT 정비
 
+**Cluster:** W4. Enforcement And Lifecycle
+
 **Task:** backlog row 제거 시점이 `HARNESS-PROTOCOL.md`("Work archived 시"), `work-plan.md`("develop merge 후 tracking-only commit"), `work-close.md`(언급 없음) 세 곳에서 불일치. 매 work-close마다 수동으로 잡아야 하는 구조적 결함. 단일 시점("Work Done 처리 시 동일 commit에 포함")으로 통일하고, `work-close.md`에 backlog row 확인·제거 단계를 추가하며, `work-plan.md`의 잘못된 타이밍 문구를 정정한다. `HARNESS-PROTOCOL.md` Pruning Policy도 일치시킨다.
 
 **Dependencies:**
@@ -165,6 +244,8 @@ AI Workflow Harness backlog다.
 
 #### Harness upgrade/migration 메커니즘
 
+**Cluster:** W2. Adopter Transition
+
 **Task:** `--upgrade`/`--refresh` 또는 update guide 구현. **driver: 공개 adopter `ai-deck-compiler`가 이 harness를 적용 중이며 upstream 변경 반영(업그레이드/마이그레이션)이 필요.** `--existing`은 신규 overlay용일 뿐 갱신 기능 아님. 이미 있는 `--check`(manifest sha256 drift 감지, CHORE-20260605-006) 위에 구축. 기본 방향: source가 manifest/check/update guide를 제공하고, target repo AI가 자기 커스터마이징을 가장 잘 아는 주체로 selective migration 수행. 결정 사항: overwrite vs merge 정책, 사용자 커스터마이징/로컬 변경 보존(backup), version marker(`VERSION`), drift detection→apply 경로, release timing/criteria. **흡수: 구 HRN-FUT-008 + 구 Deferred "Scaffold template drift window 관리"(release timing). drift window 개념 자체는 `docs/HARNESS-PROTOCOL.md` §T12에 유지.**
 
 **Dependencies:**
@@ -178,7 +259,74 @@ AI Workflow Harness backlog다.
 
 ---
 
+#### Product starter planning pack + feedback import loop
+
+**Cluster:** W2. Adopter Transition
+
+**Task:** 다음 신규 product 착수 전에 source repo에서 먼저 product planning pack을 만들고, scaffold repo에서 실제 개발에 사용한 뒤, 검증된 산출물을 다시 source repo option-pack 후보로 반입하는 loop를 설계한다.
+
+**배경 / Driver:**
+
+- 다음 주 신규 product 개발을 시작할 예정이며, 하네스는 실제 scaffold 운영을 통해 검증되어야 한다.
+- 계획 수립은 source repo 환경에서 먼저 수행하고, 그 결과를 scaffold repo에 주입해 개발을 시작한다.
+- scaffold repo에서 나온 산출물은 중간중간 정리해 source repo AI가 import 가능한 형태로 만든다.
+
+**Planning Pack 범위:**
+
+- MSA를 기본 방향으로 삼되, 프로젝트 상황상 Monolithic 요건이 있을 때의 대안과 전환 기준을 둔다.
+- `/Users/kyungseo/dev-home/vibe/base-msa-template`를 분석한다.
+  - 초기 하네스 구조가 섞여 있으므로 plan, architecture 등 기술 문서와 code 위주로 본다.
+  - 기존 구현도 리팩토링 요소가 있으면 식별한다.
+  - enterprise급 mission critical 프로젝트에 바로 적용 가능한 수준을 목표로 gap을 분석한다.
+- 아키텍처, 구조, framework/library 요건을 정의한다.
+  - 확장/변경에 유연한 구조를 우선한다.
+  - 코드 품질을 최우선 기준으로 둔다.
+- 필수 기능/비기능 요건을 정의한다.
+  - base-msa-template가 중단된 부분과 enterprise 실전 갭을 requirements에 반영한다.
+- scaffold 입력으로 사용할 기초 plan을 산출한다.
+
+**Product-local Harness 구성 후보:**
+
+- PRD(제품 요구사항)
+- TRD(기술 구조)
+- code conventions
+- user flow
+- DB design
+- screen/screen flow
+- tasks
+- test structure
+- `loop.md` 또는 이에 준하는 반복 실행 절차
+  - Done Criteria를 만족할 때까지 반복하는 구조.
+  - 자동처리와 인간개입 경계를 명확히 둔다.
+
+**Source ↔ Product Feedback Loop:**
+
+1. source repo에서 planning pack 작성.
+2. scaffold로 신규 product repo 생성.
+3. planning pack과 산출물을 product repo에 주입.
+4. product repo AI가 product-local harness와 개발 구조를 구체화.
+5. product repo에서 검증된 일반화 가능 산출물을 source repo에 import 후보로 정리.
+6. source repo에서 option-pack 반영 여부를 별도 Work로 판단.
+
+**Dependencies:**
+
+- `User-facing docs rewrite — onboarding guide + workflow manual`
+- `Harness upgrade/migration 메커니즘`
+- `Prompt surface diet + optional pack 재정의`
+- `Project-state template pack 검토`
+- 후속: `Spring Boot MSA TDD option-pack — product engineering pack 후보`
+
+**Done Criteria:** source-first product planning pack의 산출물 목록, 작성 순서, scaffold 주입 방식, product repo에서 source repo로 반입할 정리 형식이 정의됨. base-msa-template 분석 범위와 제외 범위(초기 하네스 잔재 제외)가 명확함. 자동처리 vs 인간개입 경계가 loop 절차에 포함됨.
+
+**Verification:** base-msa-template 분석 checklist, scaffold repo 주입 dry-run 또는 walkthrough, source import 후보 format 검토. README/onboarding/workflow manual과 충돌하지 않는지 확인.
+
+**사전 참고:** `docs/maintainer/VERIFICATION-COMMANDS.md`의 Layer J/J-OB는 scaffold/onboarding simulation에 활용하고, Layer T는 upgrade/migration 전용 placeholder로 남긴다. product starter/import loop 검증은 `Product pack verification layer 보강`에서 별도 layer로 정의한다.
+
+---
+
 #### 외부화 실패모드 통합 설계 원칙 명문화
+
+**Cluster:** W3. Workflow IA Diet
 
 **Task:** AI 맥락 외부화의 3대 실패모드(① 라우팅 누락 ② 비대화 ③ 선언-실행 괴리)와 각 보완(manifest·canonical / archive drain·SSoT 단일화 / test·hard-stop)을 Phase 2 slice 0 방향 결정의 상위 프레임으로 채택
 
@@ -195,6 +343,8 @@ AI Workflow Harness backlog다.
 #### Archive 누적 관리 정책
 
 > 2026-06-10 등록 (사용자 제기).
+
+**Cluster:** W4. Enforcement And Lifecycle
 
 **Task:**
 
@@ -239,6 +389,8 @@ AI Workflow Harness backlog다.
 
 > 2026-06-10 등록 (사용자 테마 — README 흐름 검토 + 개념 상위화 통합).
 
+**Cluster:** W3. Workflow IA Diet
+
 **Task:**
 
 - README의 Repository Structure 흐름이 정확한지, 흐름 자체를 리팩토링할 필요는 없는지, 현재 흐름이 효율적으로 구성·관리되고 있는지 점검한다.
@@ -273,6 +425,8 @@ AI Workflow Harness backlog다.
 
 #### Prompt surface diet + optional pack 재정의
 
+**Cluster:** W3. Workflow IA Diet
+
 **Task:** source repo에서도 `prompts/*session-start.md` 3종과 `prompts/README.md`를 제외한 task prompt(`00~22`)를 live surface에서 제거할지 결정한다. 제거 결정 시 실제 삭제하지 않고 `docs/archive/` 하위로 이동하거나 opt-in archive/example pack으로 격리해 이력을 보존한다. 기본 판단: canonical workflow(`skills/workflow/*.md` + adapter) 이후 task prompt library는 harness core라기보다 과거 product-template/example pack 성격이 강하고 cascade 비용이 큼. archive/격리 시 `scripts/create-harness.sh --with-optional`, README, WORKFLOW-MANUAL, PLAN/PLAN-SUMMARY, maintainer guide, repo-health prompt cascade 표를 함께 정리한다. **연계: `work-doc.md` class 재검토(P2)**
 
 **docs/ 물리 레이아웃 재검토 (CHORE-20260610-009 라우팅):** 이 항목에서 `--with-optional` 재정의와 함께 docs/ 물리 레이아웃(user/maintainer/pack을 audience별 디렉토리로 분리할지)도 재검토한다. DR-021은 "물리 이동 보류, logical marker로 식별"을 채택했고 근거는 "reversal cost가 높다"였으나, **그 비용은 hardcoded flat-path 참조 방식에 종속**된다 — manifest/anchor 기반 indirection을 도입하면 이동 비용이 낮아져 물리 분리 재고가 정당해질 수 있다. 즉흥 뒤집기 대신 pack 구조·scaffold wiring을 통합 설계하는 이 시점에서 함께 판단한다.
@@ -288,6 +442,8 @@ AI Workflow Harness backlog다.
 ---
 
 #### Harness protocol trigger family simplification
+
+**Cluster:** W3. Workflow IA Diet
 
 **Task:** `docs/HARNESS-PROTOCOL.md` T1~T17 trigger가 복잡해졌으므로 Decision / Planning / Surface / Scaffold / Finalization / Archive family로 재그룹화할 수 있는지 검토한다. 단, P0 gate series가 T15~T17/c4를 건드리므로 P0 완료 전 대형 재작성은 피한다.
 
@@ -306,6 +462,8 @@ AI Workflow Harness backlog다.
 #### 문서-only 규칙 강제화 (CI/hook/hard-gate)
 
 > 2026-06-10 등록 (사용자 테마).
+
+**Cluster:** W4. Enforcement And Lifecycle
 
 **Task:**
 
@@ -331,11 +489,13 @@ AI Workflow Harness backlog다.
 
 #### `skills/workflow/repo-health.md` slice 분리
 
-**Task:** 422줄로 canonical 파일 중 가장 무거움. 상시 로드 섹션(Procedure/Mode Contract/Output Contract/Inspection Areas A~B)과 조건부 섹션(--full 전용: C/D/F, --cascade 전용: G/H, Required Simulation Matrix)을 별도 slice 파일로 분리하고 conditional pointer로 교체. context budget 절감 및 --full/--cascade 로드 범위 명확화. **연계: repo-health gate series 보강(P1), Scaffold/tool-surface alignment 점검 체계화(P1)**
+**Cluster:** W3. Workflow IA Diet
+
+**Task:** 422줄로 canonical 파일 중 가장 무거움. 상시 로드 섹션(Procedure/Mode Contract/Output Contract/Inspection Areas A~B)과 조건부 섹션(--full 전용: C/D/F, --cascade 전용: G/H, Required Simulation Matrix)을 별도 slice 파일로 분리하고 conditional pointer로 교체. context budget 절감 및 --full/--cascade 로드 범위 명확화. **연계: repo-health gate series 보강(P1), Scaffold/tool-surface regression alignment 체계화(P1)**
 
 **Dependencies:**
 
-- `repo-health gate series 보강`(P1), `Scaffold/tool-surface alignment 점검 체계화`(P1 하위 과제 2)
+- `repo-health gate series 보강`(P1), `Scaffold/tool-surface regression alignment 체계화`(P1 하위 과제 1)
 
 **Done Criteria:** 상시 로드 섹션이 200줄 이하로 줄고, 조건부 섹션이 conditional pointer로 참조됨
 
@@ -344,6 +504,8 @@ AI Workflow Harness backlog다.
 ---
 
 #### `skills/workflow/work-doc.md` class 재검토
+
+**Cluster:** W3. Workflow IA Diet
 
 **Task:** 243줄. Design System·Tone & Manner·Presentation Deck Principles 등 product-track 특화 내용이 harness core A-class canonical에 포함되어 있음. DR-021 A/B-class boundary 기준으로 Optional source pack 또는 source-only 이동 여부를 결정한다. **연계: Prompt surface diet + optional pack 재정의(P1)**
 
@@ -357,35 +519,75 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### Coding canonical optional pack — `--with-coding-guide` scaffold 확장
+#### Spring Boot MSA TDD option-pack — product engineering pack 후보
 
-**Task:** 일반 coding 지침(TDD, architecture 설계 원칙, code convention)을 scaffold optional pack으로 제공한다. 현재 `docs/BEHAVIOR-PRINCIPLES.md`는 workflow 원칙이며 coding-specific 구체 지침(구현 전 test 작성, domain/infrastructure 분리, API-first 설계 등)은 없다. `docs/CODING-PRINCIPLES.md`를 harness core 밖에 두고 `--with-coding-guide` 옵션으로 scaffold 시 포함시킨다. tool-surface mirror(`.claude/rules/`, `.cursor/rules/` 등) wiring 포함. 이후 스택별 확장(`--with-spring-boot`, `--with-react`)으로 구체화 가능하도록 확장 구조를 설계한다. **주의: `--with-optional` 재정의(`Prompt surface diet + optional pack 재정의`, P1)와 optional pack 설계 방향이 겹치므로 해당 항목 방향 확정 후 착수 권장. 또한 optional pack이 늘수록 `create-harness.sh` 복잡도가 높아지므로 스크립트 현행 설계 파악을 선행한다.**
+**Cluster:** W5. Future / Optional
+
+**Task:** 실제 신규 product에서 검증된 product engineering 산출물을 바탕으로 Spring Boot 기반 MSA용 TDD option-pack을 설계한다. 기존 "coding guide" 단일 문서 발상은 범위가 좁으므로, PRD/TRD/code conventions/user flow/DB design/screen/tasks/test structure/loop 절차를 포함할 수 있는 product engineering pack으로 재정의한다. 단, 처음부터 source repo에 과잉 일반화하지 않고 product repo에서 검증된 뒤 source repo로 import한다.
+
+**후보 구성:**
+
+- `docs/CODING-PRINCIPLES.md` 또는 code convention guide.
+- TDD loop / Done Criteria 반복 절차.
+- architecture / TRD skeleton.
+- PRD skeleton.
+- DB design / screen / task / test structure template.
+- `.claude/rules/`, `.cursor/rules/` 등 tool-surface wiring.
+- 필요 시 `--with-spring-boot-msa` 또는 유사 옵션. 이름은 `Scaffold CLI naming audit`와 함께 판단한다.
 
 **Dependencies:**
 
-- `Prompt surface diet + optional pack 재정의`(P1) 방향 결정; `Scaffold/tool-surface alignment 점검 체계화`(P1) 완료 후 착수 권장. `scripts/create-harness.sh --with-optional` 현행 설계 파악 필요.
+- `Product starter planning pack + feedback import loop`에서 실제 product 산출물과 일반화 가능 범위를 먼저 확보.
+- `Prompt surface diet + optional pack 재정의`(P1) 방향 결정.
+- `Scaffold/tool-surface regression alignment 체계화`(P1) 완료 후 착수 권장.
+- `scripts/create-harness.sh --with-optional` 현행 설계 파악 필요.
 
-**Done Criteria:** `--with-coding-guide` 옵션으로 scaffold 생성 시 `docs/CODING-PRINCIPLES.md` + tool-surface wiring이 포함됨. core scaffold(옵션 미지정)에는 포함되지 않음. 스택별 확장 설계 결정(최소 Spring Boot, React 진입점 정의 또는 defer 결정) 포함.
+**Done Criteria:** core scaffold(옵션 미지정)에는 포함되지 않음. product repo에서 검증된 산출물 중 일반화 가능한 부분만 option-pack 후보로 편입. Spring Boot MSA pack을 둘지, 더 일반적인 product engineering pack으로 둘지 결정. stack별 확장(`--with-spring-boot-msa`, `--with-react` 등)은 필요가 확인된 것만 둔다.
 
-**Verification:** `bash scripts/create-harness.sh --with-coding-guide` dry-run으로 파일 목록 확인. core scaffold dry-run에서 `CODING-PRINCIPLES.md` 미포함 확인. tool surface: `.claude/rules/`, `.cursor/rules/` wiring grep 확인. adopter cascade: scaffold dry-run 신규 프로젝트 결과 검증. canonical: `BEHAVIOR-PRINCIPLES.md`(workflow 원칙)와 `CODING-PRINCIPLES.md`(coding 지침) 역할 분리 명확성 확인. scaffold: `scripts/create-harness.sh --with-coding-guide` 옵션 처리 로직 및 core dry-run 미포함 확인. README/GUIDE/MANUAL: `WORKFLOW-MANUAL.md`, `HARNESS-QUICK-REFERENCE.md`에서 `--with-coding-guide` 옵션 언급 필요 여부 확인.
+**Verification:** core scaffold dry-run에서 pack 미포함 확인. option-pack dry-run에서 파일 목록·tool surface wiring 확인. product repo 산출물 → source repo import 후보 mapping 검토. README/GUIDE/MANUAL에 pack 설명이 과잉 노출되지 않는지 확인.
+
+**사전 참고:** 현재 `scripts/create-harness.sh`는 `--profile spring-boot`와 `--with-optional`만 지원한다. `--with-spring-boot-msa` 같은 새 옵션은 즉시 전제하지 않고, `Product pack verification layer 보강`에서 검증 layer와 import format이 먼저 정해진 뒤 판단한다.
 
 ---
 
-#### Adopter onboarding/manual refresh
+#### User-facing docs rewrite — onboarding guide + workflow manual
 
-**Task:** README overhaul(CHORE-20260606-005) 이후 `docs/SCAFFOLD-BOOTSTRAP.md`, generated `docs/BOOTSTRAP.md`, generated README/manual, `prompts/*session-start.md`가 같은 onboarding path를 말하는지 점검한다. 특히 fresh scaffold 후 여러 사용자가 clone하여 작업하는 상황, bootstrap pointer 제거/교체 규칙, framework-owned vs project-owned 설명, `--check`/selective migration 안내를 현행화한다.
+**Cluster:** W2. Adopter Transition
+
+**Task:** README overhaul(CHORE-20260606-005)와 같은 기준으로 onboarding guide와 workflow manual 계열을 전면 재작성한다. 단순 refresh가 아니라 README가 잡은 source/target 경계, adopter mode, framework-owned/project-owned 구분, selective migration, bootstrap pointer 제거 규칙을 user-facing docs 전체에 같은 밀도로 반영한다.
+
+**대상 후보:**
+
+- `docs/SCAFFOLD-ONBOARDING-GUIDE.md`
+- `docs/WORKFLOW-MANUAL.md`
+- generated `README.md` / generated `docs/BOOTSTRAP.md`
+- `prompts/*session-start.md`
+- 필요 시 `docs/SCAFFOLD-BOOTSTRAP.md`
+
+**Rewrite 기준:**
+
+- README처럼 "누가 이 문서를 읽는가"를 먼저 분리한다.
+- workflow 자체가 사용자 매뉴얼화되지 않도록, AI execution SSoT는 `skills/workflow/*.md`와 protocol에 둔다.
+- 사람용 문서는 올바른 다음 문서로 보내는 입구와 operational mental model까지만 담당한다.
+- scaffold product repo와 forked harness source의 경계를 흐리지 않는다.
+- `--check`/selective migration 안내는 target customization 보존을 전제로 쓴다.
+
+**기존 refresh 범위 보존:** README overhaul 이후 `docs/SCAFFOLD-BOOTSTRAP.md`, generated `docs/BOOTSTRAP.md`, generated README/manual, `prompts/*session-start.md`가 같은 onboarding path를 말하는지 점검한다. 특히 fresh scaffold 후 여러 사용자가 clone하여 작업하는 상황, bootstrap pointer 제거/교체 규칙, framework-owned vs project-owned 설명, `--check`/selective migration 안내를 현행화한다.
 
 **Dependencies:**
 
-- CHORE-20260606-005, DR-021, bootstrap completion rule, prompt surface diet 후보
+- CHORE-20260606-005, DR-021, bootstrap completion rule, prompt surface diet 후보.
+- `Harness upgrade/migration 메커니즘`과 함께 실제 adopter 전환 전에 우선 검토.
 
-**Done Criteria:** fresh scaffold 사용자가 README → STATUS → BOOTSTRAP → product/harness backlog 분리까지 막히지 않고 진행. onboarding completion 후 매 세션 bootstrap이 반복되지 않음
+**Done Criteria:** fresh scaffold 사용자가 README → STATUS → BOOTSTRAP → product/harness backlog 분리까지 막히지 않고 진행. onboarding completion 후 매 세션 bootstrap이 반복되지 않음. `docs/SCAFFOLD-ONBOARDING-GUIDE.md`와 `docs/WORKFLOW-MANUAL.md`가 README rewrite 이후의 개념·톤·source/target 경계와 일치.
 
-**Verification:** fresh scaffold 생성, README/STATUS/BOOTSTRAP/manual/session-start prompt 경로 시뮬레이션, stale source-only Gitflow 누수 grep
+**Verification:** fresh scaffold 생성, README/STATUS/BOOTSTRAP/manual/session-start prompt 경로 시뮬레이션, stale source-only Gitflow 누수 grep. README ↔ onboarding guide ↔ workflow manual의 audience/role 중복과 stale phrase 점검.
 
 ---
 
 #### Scaffold multi-user clone verification
+
+**Cluster:** W2. Adopter Transition
 
 **Task:** scaffold 후 여러 사용자가 clone하여 작업하는 상황을 상정해 branch/ruleset/hook/CI/advisory/manifest/check 동작을 점검한다. source-gitflow target과 generic/hook-less target을 분리해 검증하고, 결과는 P0 gate series 또는 onboarding refresh에 흡수한다.
 
@@ -401,6 +603,8 @@ AI Workflow Harness backlog다.
 
 #### Project-state template pack 검토
 
+**Cluster:** W5. Future / Optional
+
 **Task:** `docs/decisions/DECISION-TEMPLATE.md` 외에 project-state-owned 파일을 채우는 template이 더 필요한지 검토한다. 후보: Work 파일 skeleton, backlog candidate row guide, retrospective/troubleshooting template, project decision index seed. 단, 작은 target에서 파일 수만 늘어나는 과잉 template은 피한다.
 
 **Dependencies:**
@@ -414,6 +618,8 @@ AI Workflow Harness backlog다.
 ---
 
 #### Scaffold CLI naming audit
+
+**Cluster:** W5. Future / Optional
 
 **Task:** `--workflow`는 실제로 Git/branch flow 선택인데 harness workflow 전체 옵션처럼 오해될 수 있다. 대안: `--branch-flow`, `--git-flow`, `--repo-flow`. 단 no-alias/breaking policy와 upgrade/migration 설계가 얽히므로 즉시 rename하지 않고 option naming + migration note + no-runtime-alias 정책을 함께 검토한다.
 
@@ -429,6 +635,8 @@ AI Workflow Harness backlog다.
 
 #### Windows 지원 확장 (HRN-032)
 
+**Cluster:** W5. Future / Optional
+
 **Task:** macOS 기준 workflow/scaffold 검증을 Windows/WSL/Git Bash까지 정렬
 
 **Dependencies:**
@@ -442,6 +650,8 @@ AI Workflow Harness backlog다.
 ---
 
 #### `/exit` → Stop hook gap 추적 (HRN-016)
+
+**Cluster:** W5. Future / Optional
 
 **Task:** Claude Code process-exit hook 지원 여부 모니터링 (소극적 감시; 지원 확인 전 action 없음)
 
