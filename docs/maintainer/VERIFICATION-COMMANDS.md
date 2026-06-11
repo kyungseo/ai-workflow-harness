@@ -62,7 +62,7 @@ related_work: []
 
 **게이트 밖 (제외):**
 
-- **Layer T** — upgrade/migration (미구현 placeholder). 구현 후 편입.
+- **Layer T** — adopter upgrade/migration walkthrough. source-only·target-specific 검증이므로 릴리즈 full sweep에는 기본 편입하지 않고, migration 관련 변경 또는 실제 adopter 전환 때 실행한다.
 - **Layer U** — product starter/import (U2~U4는 criteria placeholder, U1 boundary smoke만 실재). W2/W5 산출물 확정 후 편입.
 - **Layer K** — `/repo-health` 통합 실행. 위 전수를 포괄하는 umbrella이므로 개별 sweep과 병행 또는 대체로 선택.
 - **Layer B · D · M** — 보조 진단 / 자체 점검. 필요 시 ad-hoc.
@@ -72,7 +72,7 @@ related_work: []
 | 분류 | 처리 |
 | --- | --- |
 | 출하 표면의 결함/회귀 | 릴리즈 전 반드시 수정 (release-block) |
-| 미구현 기능의 갭 (Layer T 등) | 용인, 백로그 추적 |
+| 미구현 기능의 갭 (Layer U2~U4 등) | 용인, 백로그 추적 |
 | 품질 개선 / wording | 릴리즈 후 또는 별도 |
 
 출하 표면 P0/P1이 **0**이면 release-go. 등급 기준은 문서 말미 "결과 분류 기준".
@@ -1067,66 +1067,152 @@ ls /tmp/awh-ob-generic/prompts/*session-start.md 2>/dev/null \
 
 ## Layer T. Scaffold Upgrade / Migration 검증
 
-> **현재 상태: Placeholder** — 구현이 완료되면 이 섹션을 채운다.
-> 선행 작업: `docs/backlog/HARNESS.md` P1 항목 "Harness upgrade/migration 메커니즘" (`--upgrade`/`--refresh` 구현).
+기존 scaffold target을 현재 source baseline으로 올리는 upgrade/migration 검증이다.
+full `--upgrade`/`--refresh` helper는 아직 없다. pre-manifest target은 inventory-first + shadow scaffold baseline 방식으로 검증한다.
 
-upgrade/migration 완료 후 아래 항목을 검증한다.
+### T0. target probe
 
-### T0. 준비: 구버전 scaffold + 현재 source 준비
-
-```bash
-# 구버전 scaffold 생성 (VERSION을 낮춰서 시뮬레이션)
-# TODO: 구버전 archive 또는 git tag 기반으로 이전 scaffold 생성 방법 확정
-```
-
-### T1. Framework 파일 갱신 확인
+manifest 유무를 먼저 확인한다.
 
 ```bash
-# upgrade 실행 후 manifest drift 0
-bash scripts/create-harness.sh --check <upgraded-target> | grep "summary:.*0 drifted"
+TARGET="<target-dir>"
 
-# harness_version이 현재 source VERSION으로 갱신됐는가
-grep '"harness_version"' <upgraded-target>/.harness/manifest.json
-cat VERSION
+test -f "${TARGET}/.harness/manifest.json" \
+  && echo "manifest target" \
+  || echo "pre-manifest target"
+
+bash scripts/create-harness.sh --check "${TARGET}" || true
 ```
 
-### T2. 사용자 커스터마이징 보존 확인
+판정:
+
+- manifest target: `--check` report를 drift input으로 사용한다.
+- pre-manifest target: `--check`는 exit 3이 정상이다. 이 결과를 migration 범위로 해석하지 않고 T1 inventory로 이동한다.
+
+### T1. inventory-first 분류
+
+pre-manifest target은 먼저 file ownership을 분류한다.
 
 ```bash
-# .harness/gate-config 프로젝트 추가 경로 유지
-grep "\[protected\]" -A5 <upgraded-target>/.harness/gate-config | grep -v "^#\|^$"
+TARGET="<target-dir>"
 
-# CLAUDE.md 커스텀 섹션 유지
-grep "Custom Section" <upgraded-target>/CLAUDE.md
+# 1. tool/workflow surface 후보
+find "${TARGET}" \
+  \( -path "${TARGET}/.git" -o -path "${TARGET}/node_modules" \) -prune -o \
+  \( -path "*/.claude/commands/*" -o -path "*/.agents/skills/*" -o \
+     -path "*/.cursor/rules/*" -o -path "*/skills/*" -o -path "*/prompts/*" -o \
+     -name AGENTS.md -o -name CLAUDE.md -o -path "*/docs/GIT-WORKFLOW.md" -o \
+     -path "*/docs/AGENT-WORKFLOW.md" -o -path "*/docs/HARNESS-PROTOCOL.md" \) \
+  -print | sort
 
-# BOOTSTRAP.md 프로젝트 기입 내용 유지
-# TODO: upgrade 정책상 B-class(write_text) 파일은 덮어쓰지 않는지 확인
+# 2. project-owned state 후보
+find "${TARGET}" \
+  \( -path "${TARGET}/.git" -o -path "${TARGET}/node_modules" \) -prune -o \
+  \( -path "*/docs/STATUS.md" -o -path "*/docs/PLAN.md" -o \
+     -path "*/docs/backlog/*" -o -path "*/docs/works/*" -o \
+     -path "*/package.json" -o -path "*/src/*" \) \
+  -print | sort
 ```
 
-### T3. Source-only 누수 없음 (invariant [2])
+Layer T walkthrough 결과에는 `framework-owned / project-owned / customized / accepted drift` 분류를 남긴다.
+
+### T2. shadow scaffold baseline 생성
+
+shadow scaffold는 target과 **동일 project-name**을 사용한다. `adapt()`가 project-name을 치환하므로 이름이 다르면 hash 비교가 오염된다.
 
 ```bash
-bash scripts/tests/check-scaffold-invariants.sh <upgraded-target>
-# [2] no-source-only-leakage PASS 확인
+PROJECT_NAME="<target-project-name>"
+TARGET_COPY="temp/upgrade-target-copy"
+SHADOW="temp/upgrade-shadow"
+
+# 예: source-gitflow + generic
+bash scripts/create-harness.sh --workflow source-gitflow --profile generic "${PROJECT_NAME}" "${SHADOW}"
+
+test -f "${SHADOW}/.harness/manifest.json"
 ```
 
-### T4. upgrade 후 onboarding 시뮬레이션
+### T3. manifest baseline 심기 + drift 관측
+
+먼저 manifest만 target copy에 심고 `--check`로 실제 drift 분포를 관측한다. framework 파일을 복사하기 전에 실행해야 한다.
 
 ```bash
-# Layer J-OB의 OB1~OB6을 upgraded target에 재실행
-# 신규 scaffold와 동일한 흐름이 성립하는가
-# TODO: upgraded target 경로를 OB 시나리오 TARGET으로 치환하는 방법 확정
+TARGET_COPY="temp/upgrade-target-copy"
+SHADOW="temp/upgrade-shadow"
+
+mkdir -p "${TARGET_COPY}/.harness"
+cp "${SHADOW}/.harness/manifest.json" "${TARGET_COPY}/.harness/manifest.json"
+
+bash scripts/create-harness.sh --check "${TARGET_COPY}" \
+  | tee temp/upgrade-check-before.txt
 ```
 
-### T5. 역방향 cascade — 이 파일 갱신 트리거
+### T4. selective migration
+
+`target-missing`은 신규 framework 파일 후보로 복사할 수 있다. `locally-modified`는 바로 덮지 말고 diff/manual-merge 후보로 분류한다. pre-manifest target에는 과거 baseline이 없으므로 이 판단은 3-way merge가 아니라 current source vs adopter의 2-way diff 한정이다.
+
+```bash
+TARGET_COPY="temp/upgrade-target-copy"
+SHADOW="temp/upgrade-shadow"
+
+awk '/\[target-missing\]/ {print substr($0, index($0,$2))}' \
+  temp/upgrade-check-before.txt > temp/upgrade-target-missing.txt
+
+while IFS= read -r line; do
+  mkdir -p "${TARGET_COPY}/$(dirname "${line}")"
+  cp "${SHADOW}/${line}" "${TARGET_COPY}/${line}"
+done < temp/upgrade-target-missing.txt
+
+awk '/\[locally-modified\]/ {print substr($0, index($0,$2))}' \
+  temp/upgrade-check-before.txt > temp/upgrade-locally-modified.txt
+
+# locally-modified 파일은 여기서 diff를 보고 copied / merged / accepted drift / skipped로 분류한다.
+```
+
+### T5. verify baseline
+
+```bash
+TARGET_COPY="temp/upgrade-target-copy"
+
+bash scripts/create-harness.sh --check "${TARGET_COPY}"
+bash scripts/tests/check-scaffold-invariants.sh "${TARGET_COPY}"
+```
+
+첫 `--check`는 drift 분포가 나오는 것이 정상이다. drift 0을 강제하지 말고, framework drift와 accepted drift를 분류한다. 단 source repo invariant 전체를 통과시키려면 manifest-tracked drift는 최종적으로 in-sync 또는 명시적 accepted drift로 정리되어야 한다.
+
+실측(CHORE-20260611-010, `ai-deck-compiler` temp copy):
+
+- shadow scaffold project-name: `ai-deck-compiler` (동일 이름)
+- workflow/profile: `source-gitflow` / `generic`
+- manifest tracked files: 76
+- manifest만 심은 첫 `--check`: `76 tracked, 9 in-sync, 67 drifted` (`target-missing` 37, `locally-modified` 30)
+- 1차 selective 반영: `target-missing` 37개 신규 framework 파일 복사
+- 2차 selective 반영: hard invariant를 깨는 locally-modified 3개(`docs/HARNESS-NAMING-RULES.md`, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`)와 project-owned decision index 보강
+- 중간 `--check`: `76 tracked, 49 in-sync, 27 drifted`
+- 남은 27개는 manifest-tracked locally-modified manual-merge/copy candidates로 분류. temp simulation에서는 current framework baseline으로 반영
+- 최종 `--check`: `76 tracked, 76 in-sync, 0 drifted`
+- invariant 1차: `docs/decisions/README.md` 부재로 FAIL(decision index closure)
+- target-local accepted DR rows(DR-021~023) index 보강 후 invariant PASS
+
+### T6. accepted drift / project-owned 보존 기록
+
+target migration Work는 아래 표를 남긴다.
+
+| Path | Classification | Action | Reason |
+| --- | --- | --- | --- |
+| `docs/STATUS.md` | project-owned | preserved | target state |
+| `docs/decisions/README.md` | project-owned index | updated | target-local DR index closure |
+| `docs/AGENT-WORKFLOW.md` | framework-owned locally-modified | copied / merged | source-only leakage hard invariant |
+
+### T7. 역방향 cascade — 이 파일 갱신 트리거
 
 upgrade 구현이 변경될 때 아래 섹션을 갱신한다:
 
 | 변경 사항 | 갱신 대상 |
 | --- | --- |
-| `--upgrade` 옵션 추가 | T0 준비 명령, M5 역방향 cascade 표 |
-| upgrade 시 B-class 파일 덮어쓰기 정책 변경 | T2 커스터마이징 보존 확인 |
-| manifest version 비교 로직 변경 | T1, Layer R |
+| `--upgrade`/`--refresh` 옵션 추가 | T0~T5 명령, M5 역방향 cascade 표 |
+| `manifest-init` 또는 `--upgrade-plan` 추가 | T2/T3 shadow baseline 절차 |
+| upgrade 시 project-owned 파일 덮어쓰기 정책 변경 | T1/T5 보존 분류 |
+| manifest version 비교 로직 변경 | T4, Layer R |
 
 ---
 
@@ -1312,7 +1398,7 @@ grep -n "VERIFICATION-COMMANDS" docs/AGENT-WORKFLOW.md
 | `VERSION` 파일 변경 | Layer R version 일치 여부 재확인 | Layer R |
 | `prompts/*session-start.md` 변경 | Layer S prompt ↔ canonical 정합 | Layer S |
 | `.harness/gate-config` 형식/파싱 로직 변경 | OB7 gate-config 수정 후 동작 검증 | OB7 |
-| `--upgrade`/`--refresh` 구현 완료 | Layer T placeholder → 실 명령으로 채우기 | Layer T |
+| `--upgrade`/`--refresh`/`manifest-init` 구현 | Layer T 실행 명령·shadow baseline 절차 갱신 | Layer T |
 
 ```bash
 # 역방향 탐지: create-harness.sh 옵션 목록과 OB 시나리오 커버리지 비교
