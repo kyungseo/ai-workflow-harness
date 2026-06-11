@@ -63,6 +63,7 @@ related_work: []
 **게이트 밖 (제외):**
 
 - **Layer T** — upgrade/migration (미구현 placeholder). 구현 후 편입.
+- **Layer U** — product starter/import (U2~U4는 criteria placeholder, U1 boundary smoke만 실재). W2/W5 산출물 확정 후 편입.
 - **Layer K** — `/repo-health` 통합 실행. 위 전수를 포괄하는 umbrella이므로 개별 sweep과 병행 또는 대체로 선택.
 - **Layer B · D · M** — 보조 진단 / 자체 점검. 필요 시 ad-hoc.
 
@@ -1014,6 +1015,102 @@ upgrade 구현이 변경될 때 아래 섹션을 갱신한다:
 
 ---
 
+## Layer U. Product Starter / Option-pack Import 검증
+
+신규 product 착수 흐름 — ① product starter planning pack 산출물 ② core scaffold ↔ stack/profile pack 경계 ③ product repo → source repo import 후보 — 의 검증 기준이다.
+
+> **Layer T와의 분리:** Layer T는 *기존 scaffold를 새 harness 버전으로 올리는* upgrade/migration 검증이다. Layer U는 *새 product를 시작·반입하는* 흐름 검증으로, 관심사가 다르므로 분리한다.
+>
+> **범위 경계 (중요):** 이 흐름의 핵심 산출물(planning pack, import format, product engineering option-pack)은 아직 **설계 전**이다(backlog W2 `Product starter planning pack + feedback import loop`, W5 `Spring Boot MSA TDD option-pack`). 따라서 이 Layer는 **criteria/checklist 우선**이며, concrete 명령은 *오늘 실재하는 surface(stack/profile↔core 경계)*에만 둔다. 미설계 산출물(U2~U4)은 Layer T처럼 **판정 기준 + placeholder**로 두고, W2/W5 산출물이 확정되면 concrete 명령으로 승격한다.
+
+### U1. Core ↔ Stack/Profile Pack 경계 (concrete — boundary smoke check)
+
+> **이 점검의 정확한 의미:** "현 stack/profile-specific 콘텐츠가 core(generic)에 누수되지 않고, 선택 시에만 등장하는가"를 본다. **`--profile spring-boot`의 산출물을 보존·검증하려는 것이 아니다** — 현 spring-boot profile은 효용이 낮아 교체될 수 있다(W5). 검증하는 일반 원칙은 **① stack 콘텐츠 비누수 ② 미래 어떤 product pack이 들어와도 동등한 core↔pack 경계를 가질 것**이며, spring-boot은 그 원칙의 *현재 유일한 구체 사례*로만 인용한다. (source-only 경로 누수는 invariant `[2]`, optional docs 표 일치는 invariant `[4]`가 담당 — 여기서는 **stack-content-in-core**라는 별도 축을 본다.)
+>
+> **검사 방식 주의:** stack 콘텐츠는 **파일 단위**로 추가된다(현 spring-boot: `.claude/rules/java-spring.md`, `.cursor/rules/java-spring.mdc`, stack 전용 `prompts/*.prompt.md` 등). 문자열 `spring-boot` grep은 generic의 BOOTSTRAP/PROTOCOL이 옵션을 *안내 문구로 언급*하는 것까지 잡는 **false positive**가 되므로 쓰지 않는다 — **stack-marker 파일 존재 여부**로 본다.
+
+```bash
+# U0. 준비: profile/option별 scaffold 생성 (Tier 2 정책 §5 — repo-local temp/)
+mkdir -p temp/awh-pp
+G=temp/awh-pp/generic; S=temp/awh-pp/spring; O=temp/awh-pp/optional
+bash scripts/create-harness.sh pp-generic "$G"
+bash scripts/create-harness.sh --profile spring-boot pp-spring "$S"
+bash scripts/create-harness.sh --with-optional pp-optional "$O"
+
+# 현재 stack 표면 식별용 진단(파일 단위): spring profile에만 있는 파일 목록
+comm -13 <(cd "$G" && find . -type f | sort) <(cd "$S" && find . -type f | sort)
+
+# stack-marker 경계 검사 (현 spring-boot 사례 — rule + prompt 양쪽을 대표).
+#   stack 콘텐츠는 rule 파일뿐 아니라 stack 전용 prompt(create-harness.sh의 별도 블록)로도
+#   추가되므로, 둘 다 marker에 포함해야 prompt 누수를 놓치지 않는다.
+#   리스트는 for 루프에 literal로 둔다(unquoted scalar 분리는 zsh에서 동작하지 않음 — bash/zsh 양쪽 portable).
+#   각 marker에 대해 ① generic core 부재 ② spring profile 존재를 한 루프에서 본다.
+for m in \
+  .claude/rules/java-spring.md \
+  .cursor/rules/java-spring.mdc \
+  prompts/02-scaffold-service.prompt.md \
+  prompts/21-create-layer.prompt.md; do
+  [ -e "$G/$m" ] && echo "LEAK: ${m} in generic core" || echo "OK: ${m} absent in generic"
+  [ -e "$S/$m" ] && echo "OK: ${m} present with --profile spring-boot" \
+    || echo "WARN: ${m} 누락 in spring profile — profile/경계 로직 확인"
+done
+
+# 3. optional docs는 --with-optional에서만 (generic 누수 없음)
+ls "$O"/docs/HARNESS-ARCHITECTURE.md "$O"/docs/WORKFLOW-MANUAL.md >/dev/null 2>&1 \
+  && echo "OK: optional docs present with --with-optional"
+ls "$G"/docs/HARNESS-ARCHITECTURE.md 2>/dev/null \
+  && echo "LEAK: optional docs in generic core" \
+  || echo "OK: generic core가 optional-clean"
+
+# U0c. 정리
+rm -rf temp/awh-pp
+```
+
+### U2. Product Starter Planning Pack 산출물 (criteria — placeholder)
+
+W2 planning pack이 산출되면 아래 **존재·역할**을 확인한다(내용 품질 검증은 W2/W5 범위 — 여기서는 산출물이 있고 역할이 맞는지까지만).
+
+| # | 산출물 | 역할 확인 기준 |
+| --- | --- | --- |
+| 1 | product goal / PRD | 제품 목표·요구사항 정의 존재 |
+| 2 | TRD / architecture | 기술 구조·아키텍처 정의 존재 |
+| 3 | code conventions | 코드 규약 존재 |
+| 4 | user flow | 사용자 흐름 정의 존재 |
+| 5 | DB design | 데이터 모델 정의 존재 |
+| 6 | screen / screen flow | 화면·화면 흐름 정의 존재 |
+| 7 | tasks | 작업 분해 존재 |
+| 8 | test structure | 테스트 구조 정의 존재 |
+| 9 | `loop.md` 또는 반복 실행 절차 | Done Criteria 반복 + 자동/인간개입 경계 명시 |
+
+> **승격 조건:** W2가 위 산출물의 실제 경로/파일명을 확정하면, 이 표를 `for f in ...; do [ -f "$f" ] ...` 형태 concrete 존재 검사로 승격한다.
+
+### U3. base-msa-template 분석 범위 (criteria — placeholder)
+
+`/Users/.../base-msa-template` 분석은 아래 include/exclude 경계를 따른다(분석 자체는 W2 범위, 여기서는 *범위 기준*만 고정).
+
+- **include:** plan, architecture, code, enterprise gap(중단 지점·실전 갭).
+- **exclude:** 초기 하네스 잔재(과거 product-template/harness 구조 혼입분).
+
+### U4. Product → Source Import 후보 Mapping (review aid — placeholder)
+
+product repo에서 검증된 산출물을 source repo option-pack 후보로 정리할 때 쓰는 **검토 보조 표(review aid)**다. **format contract가 아니다** — 실제 형식은 W2에서 확정한다. 지금은 import 판단 시 빠뜨리는 축이 없도록 하는 체크 보조로만 쓴다.
+
+| product artifact | generalizable? (Y/N) | source target path | class (adapt / write_text) | note |
+| --- | --- | --- | --- | --- |
+| (예: code conventions) | Y | (후속 확정) | (후속 확정) | product-specific 부분 제거 후 |
+
+> **승격 조건:** W2가 import loop를 실제 운용하고 반복 패턴이 확인되면, 이 review aid를 형식 규약(또는 helper script)으로 승격할지 판단한다.
+
+### U5. 역방향 cascade — 이 Layer 갱신 트리거
+
+| 변경 사항 | 갱신 대상 |
+| --- | --- |
+| product engineering pack 옵션 추가 (예: `--with-spring-boot-msa`) 또는 profile 교체 | U1 경계 검사(새 옵션 대상), U0 준비 명령 |
+| W2 planning pack 산출물 경로/파일명 확정 | U2 표 → concrete 존재 검사로 승격 |
+| W2 import loop 형식 확정 | U4 review aid → 형식 규약/helper 판단 |
+
+---
+
 ## 이 파일 자체 점검
 
 `docs/VERIFICATION-COMMANDS.md`를 수정했을 때 이 파일 자체의 정합성을 확인한다.
@@ -1087,6 +1184,7 @@ grep -n "VERIFICATION-COMMANDS" docs/AGENT-WORKFLOW.md
 | 변경 파일 | 영향 범위 | 갱신 필요 섹션 |
 | --- | --- | --- |
 | `scripts/create-harness.sh` — 옵션 추가/변경 (`--with-*`, `--workflow`, `--profile`) | 새 옵션에 대한 OB 시나리오 누락 가능 | OB0 준비 명령, 해당 옵션 전용 OBn 시나리오 추가 |
+| `scripts/create-harness.sh` — product engineering pack 옵션 추가/변경 (예: `--with-spring-boot-msa`, profile 교체) | 새 stack/profile↔core 경계·pack 산출물 검증 누락 가능 | Layer U (U1 경계 검사 + U2~U4 criteria) |
 | `scripts/create-harness.sh` — write_text() 템플릿 변경 | Layer B grep 패턴 stale 가능 | Layer B |
 | `skills/workflow/*.md` — command 흐름 변경 | J 시나리오 내 파일 체인 stale 가능 | J1~J10 해당 command 시나리오 |
 | `docs/AGENT-WORKFLOW.md` — Verification Defaults 변경 | Layer A/E 기준 변경 | Layer A, E |

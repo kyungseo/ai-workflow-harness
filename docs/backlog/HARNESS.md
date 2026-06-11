@@ -28,7 +28,7 @@ AI Workflow Harness backlog다.
 
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
-| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | Product pack verification layer 보강, repo-health gate series 보강, Source repo maintainer operations manual (검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006 완료) |
+| W1. Validation Spine | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | repo-health gate series 보강, Source repo maintainer operations manual (검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007 완료) |
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | Harness upgrade/migration 메커니즘, Product starter planning pack + feedback import loop, User-facing docs rewrite, Scaffold multi-user clone verification |
 | W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health slice, work-doc class |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
@@ -38,7 +38,6 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | Product pack verification layer 보강 |
 | — | P1 | Candidate | L2 | repo-health gate series 보강 |
 | — | P2 | Candidate | L2 | Source repo maintainer operations manual |
 | — | P1 | Candidate | L3 | Harness upgrade/migration 메커니즘 |
@@ -67,45 +66,6 @@ AI Workflow Harness backlog다.
 > **Verification 작성 기준:** 변경이 건드리는 surface를 항목별로 명시한다.
 > 점검 후보: tool surface · adopter cascade · canonical · scaffold · README/GUIDE/MANUAL
 > 해당 없는 surface는 제외한다.
-
----
-
-#### Product pack verification layer 보강
-
-**Cluster:** W1. Validation Spine
-
-**Task:** `docs/maintainer/VERIFICATION-COMMANDS.md`와 `docs/HARNESS-RECOVERY-VALIDATION.md`를 기준으로 product starter planning pack, product-local harness, product repo → source repo import loop를 검증하는 layer를 보강한다.
-
-**사전 검토 결과 (2026-06-11):**
-
-- `docs/maintainer/VERIFICATION-COMMANDS.md`는 Layer J/J-OB/Q로 scaffold·onboarding·hook simulation을 충분히 다룬다.
-- Layer T는 upgrade/migration placeholder라 `Harness upgrade/migration 메커니즘` 구현 후 채울 수 있게 되어 있다.
-- 그러나 신규 product 착수 흐름의 핵심인 source-first planning pack, base-msa-template 분석, product-local harness 산출물, source repo import 후보 형식 검증은 아직 별도 layer가 없다.
-- `docs/HARNESS-RECOVERY-VALIDATION.md`는 판단·정책 경계가 명확하고, concrete command는 maintainer verification catalog로 위임하는 구조가 적절하다. 새 product pack 검증도 여기보다 `VERIFICATION-COMMANDS.md` 쪽 layer로 두는 것이 맞다.
-- `scripts/` 구조는 현재 `create-harness.sh`, `scripts/tests/check-scaffold-invariants.sh`, `scripts/tests/check-shipped-dr-closure.sh`뿐이다. product engineering pack/import loop 전용 helper는 아직 없으므로, 처음에는 문서 layer와 checklist로 시작하고 반복 사용 후 helper script 여부를 판단한다.
-
-**보강 후보:**
-
-- `VERIFICATION-COMMANDS.md`에 product starter / option-pack import 검증 layer 추가.
-  - source-first planning pack 산출물 checklist.
-  - `base-msa-template` 분석 시 제외/포함 범위: 초기 하네스 잔재 제외, plan/architecture/code 중심.
-  - scaffold repo 주입 walkthrough.
-  - product-local harness 산출물(PRD/TRD/code conventions/user flow/DB design/screen/tasks/test/loop) 존재·역할 확인.
-  - product repo → source repo import 후보 mapping format 확인.
-  - core scaffold와 optional/product engineering pack 경계 확인.
-- `VERIFICATION-COMMANDS.md` M5 양방향 cascade 표에 product engineering pack 옵션/문서 변경 trigger 추가.
-- `HARNESS-RECOVERY-VALIDATION.md`는 필요 시 Validation Checklist에 "source import 후보가 검증된 product 산출물인지" 같은 judgment item만 추가한다. 명령어는 maintainer catalog에 둔다.
-
-**Dependencies:**
-
-- `Product starter planning pack + feedback import loop`
-- `Spring Boot MSA TDD option-pack — product engineering pack 후보`
-- 검증 척추(CHORE-20260611-005 도입 완료) — Tier 정의·taxonomy 기준 위에 product pack layer 추가
-- `Harness upgrade/migration 메커니즘`(Layer T와 충돌하지 않게 경계 조정)
-
-**Done Criteria:** product starter planning pack과 product engineering option-pack에 대한 검증 layer가 `VERIFICATION-COMMANDS.md`에 추가됨. Layer T(upgrade/migration)와 역할 경계가 명확함. `HARNESS-RECOVERY-VALIDATION.md`에는 policy/judgment만 남고 concrete command가 중복되지 않음. scripts helper가 필요한지 판단하고, 필요 없으면 checklist-only 이유를 기록.
-
-**Verification:** `VERIFICATION-COMMANDS.md` 자체 점검(M1~M5), `git diff --check`, shipped DR closure. 신규 layer가 W2 Product starter flow와 W5 option-pack 후보를 모두 검증할 수 있는지 walkthrough.
 
 ---
 
@@ -150,14 +110,14 @@ AI Workflow Harness backlog다.
 
 - adopter/user-facing 아님. `WORKFLOW-MANUAL.md` rewrite와 섞지 않는다(그쪽=user-facing, 이 문서=maintainer operations).
 - 검증 기준 SSoT는 `HARNESS-TEST-TAXONOMY.md`, 명령 카탈로그는 `VERIFICATION-COMMANDS.md`, 판단·정책은 `HARNESS-RECOVERY-VALIDATION.md`. 이 매뉴얼은 그것들을 **운영 순서로 엮는 runbook**이며 기준/명령/정책을 복제하지 않고 pointer로 연결한다(표면 추가·비대화 경계).
-- product/adopter 운영과 섞지 않는다(그쪽=`Product pack verification layer 보강`).
+- product/adopter 운영과 섞지 않는다(그쪽=product pack 검증 Layer U, CHORE-20260611-007 완료).
 - 기존 `docs/HARNESS-MAINTAINER-GUIDE.md`는 이미 setup/daily workflow/convention/validation을 다루는 optional maintainer guide다(scaffold 시 optional pack으로 배포 가능). 신규 source-only operations 문서와 역할이 충돌할 가능성이 크므로, **병렬 추가가 아니라 기존 guide를 source-only operations로 흡수·대체·재배치할지를 우선 검토한다**(신규 문서를 대체/상위 runbook 후보로 본다).
 
 **Dependencies:**
 
 - `harness workflow 검증 테스트 체계 정립`(CHORE-20260611-005, 척추 산출물 선행) — 이 매뉴얼이 엮는 대상.
 - `User-facing docs rewrite — onboarding guide + workflow manual`(W2) — user-facing 대칭, 경계 조정.
-- `Product pack verification layer 보강`(W1) — product 운영과 경계.
+- product pack 검증 Layer U(CHORE-20260611-007 완료) — product 운영과 경계.
 - CHORE-20260611-005 후속 F1~F4 완료 시 업데이트.
 
 **Open:** ① 문서명/위치(`SOURCE-REPO-OPERATIONS.md`) 최종 확정 — 착수 시. (Cluster=W1 후속, Priority=P2, `HARNESS-MAINTAINER-GUIDE.md` 흡수·대체·재배치 우선 검토는 R2-extra에서 합의 고정.)
@@ -264,7 +224,7 @@ AI Workflow Harness backlog다.
 
 **Verification:** base-msa-template 분석 checklist, scaffold repo 주입 dry-run 또는 walkthrough, source import 후보 format 검토. README/onboarding/workflow manual과 충돌하지 않는지 확인.
 
-**사전 참고:** `docs/maintainer/VERIFICATION-COMMANDS.md`의 Layer J/J-OB는 scaffold/onboarding simulation에 활용하고, Layer T는 upgrade/migration 전용 placeholder로 남긴다. product starter/import loop 검증은 `Product pack verification layer 보강`에서 별도 layer로 정의한다.
+**사전 참고:** `docs/maintainer/VERIFICATION-COMMANDS.md`의 Layer J/J-OB는 scaffold/onboarding simulation에 활용하고, Layer T는 upgrade/migration 전용 placeholder로 남긴다. product starter/import loop 검증은 `VERIFICATION-COMMANDS.md` Layer U(CHORE-20260611-007 완료, U2~U4는 criteria placeholder)에 정의돼 있다.
 
 ---
 
@@ -490,7 +450,7 @@ AI Workflow Harness backlog다.
 
 **Verification:** core scaffold dry-run에서 pack 미포함 확인. option-pack dry-run에서 파일 목록·tool surface wiring 확인. product repo 산출물 → source repo import 후보 mapping 검토. README/GUIDE/MANUAL에 pack 설명이 과잉 노출되지 않는지 확인.
 
-**사전 참고:** 현재 `scripts/create-harness.sh`는 `--profile spring-boot`와 `--with-optional`만 지원한다. `--with-spring-boot-msa` 같은 새 옵션은 즉시 전제하지 않고, `Product pack verification layer 보강`에서 검증 layer와 import format이 먼저 정해진 뒤 판단한다.
+**사전 참고:** 현재 `scripts/create-harness.sh`는 `--profile spring-boot`와 `--with-optional`만 지원한다. `--with-spring-boot-msa` 같은 새 옵션은 즉시 전제하지 않고, product pack 검증 Layer U(CHORE-20260611-007)가 정의한 검증 골격 위에서 import format이 W2에서 확정된 뒤 판단한다.
 
 ---
 

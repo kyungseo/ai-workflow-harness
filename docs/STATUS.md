@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-11 (세션: CHORE-20260611-005·006 Archived — Validation Spine Slice 1(taxonomy/runner) + scaffold/tool-surface leak-scan alignment 완료 후 2건 묶어 archive. Active 없음, archive 대기 없음, clean idle)
+Last updated: 2026-06-11 (세션: CHORE-20260611-007 Done — product pack 검증 Layer U 신설(VERIFICATION-COMMANDS). Active 없음, archive 대기 CHORE-007 1건)
 
 ## Current State
 
@@ -38,6 +38,7 @@ Last updated: 2026-06-11 (세션: CHORE-20260611-005·006 Archived — Validatio
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-11 | CHORE-20260611-007: product pack 검증 Layer U 신설(`VERIFICATION-COMMANDS.md`) — stack/profile↔core 경계는 concrete(U1, marker 파일 존재 검사), planning pack/import는 criteria placeholder(U2~U4). Layer T 분리, M5 cascade·sweep 게이트밖 등재. taxonomy §3 executable non-goal 유지 + pointer, recovery-validation 미변경 | 신규 product 착수 흐름 검증 layer 부재 해소. 미설계 산출물에 추측 기반 명령을 박지 않고 criteria로 한정 — Codex R0~R2 합의 | Low |
 | 2026-06-11 | CHORE-20260611-006: scaffold leak-scan을 source-gitflow shipped 표면 6개까지 확장(`leak_scan_files`, `[2]`만 분리). invariants/runner 3모드 parity, `--tier0` test-script syntax, `scripts/tests/**` source-side surface 등록. leak_scan_files set -e 버그 수정 | "PR #93 전수 재검증" 대신 leak-scan coverage gap을 닫아 검증 척추에 흡수. source-only path 누수 미검출 사각지대 제거 — Codex R0~R1 합의 | Low |
 | 2026-06-11 | CHORE-20260611-005: harness 검증 척추(Validation Spine Slice 1) 도입 — `HARNESS-TEST-TAXONOMY.md` 신설(3층 수단 경계·Surface×Depth·Tier·temp/ 정책) + `run-harness-checks.sh` tier runner + AGENT-WORKFLOW/VERIFICATION-COMMANDS pointer. invariants exit-code 버그 수정. F1~F5 후속 분해, F5 maintainer ops manual backlog 등록 | 변경마다 들쭉날쭉하던 surface 검증을 test-backed로 일관·정확화. Codex R0~R2 합의 | Low |
 | 2026-06-11 | CHORE-20260611-004: BEHAVIOR-PRINCIPLES §6 (Harness Context Discipline) 신설 — harness 운영 행동을 agent-side 지속 컨텍스트(Claude memory/Codex profile/Cursor user rules)에 저장 금지. Claude memory 2건 pointer 축소 | harness 동작이 "문서만으로" 유도되는지 검증하려면 agent-side 컨텍스트 보정이 없어야 함. cross-agent 검증 조건 균등화 — Codex R0/R1 합의 | Low |
@@ -58,7 +59,7 @@ Last updated: 2026-06-11 (세션: CHORE-20260611-005·006 Archived — Validatio
 1. **W1 — Validation Spine** (이번 주 마무리 전 최우선):
    - ✓ **harness workflow 검증 테스트 체계 정립** — CHORE-20260611-005에서 검증 척추 Slice 1 도입 완료(taxonomy + tier runner + temp/ 정책). 후속은 F1~F4 + F5(`Source repo maintainer operations manual`)
    - ✓ **Scaffold/tool-surface regression alignment 체계화** — CHORE-20260611-006에서 leak-scan을 source-gitflow shipped 6파일로 확장 + 검증 척추 흡수 완료. 잔여 deep 통합은 F4(`repo-health gate series 보강`)
-   - **Product pack verification layer 보강** — product starter/import loop와 product engineering option-pack 검증 layer를 maintainer catalog에 추가
+   - ✓ **Product pack verification layer 보강** — CHORE-20260611-007에서 `VERIFICATION-COMMANDS.md` Layer U 신설 완료(stack/profile↔core 경계 concrete + planning pack/import criteria). 후속: W2 산출물 확정 시 concrete 승격, executable 승격은 F3
    - **repo-health gate series 보강** — `.harness/gate-config`와 gate list 정합을 health/cascade에 연결
 2. **W2 — Adopter Transition** (다음 주 실제 product 적용 준비):
    - **Harness upgrade/migration 메커니즘** — `--check` + selective migration guide를 먼저 정리
