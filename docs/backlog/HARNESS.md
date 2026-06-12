@@ -46,7 +46,6 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | `skills/workflow/repo-health.md` slice 분리 |
 | — | P2 | Candidate | L2 | `skills/workflow/work-doc.md` class 재검토 |
 | — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
-| — | P1 | Candidate | L2 | Backlog row lifecycle SSoT 정비 |
 | — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
@@ -88,24 +87,6 @@ AI Workflow Harness backlog다.
 **Done Criteria:** F1~F4 각각이 Work로 분해되거나, 범위가 다른 backlog 항목(`문서-only 규칙 강제화`, `repo-health.md slice 분리`, W2/W5 product pack 후보)에 명시적으로 흡수됨. `HARNESS-TEST-TAXONOMY.md` §6와 `SOURCE-REPO-OPERATIONS.md` Update Triggers의 후속 pointer가 stale하지 않음.
 
 **Verification:** taxonomy §5/§6, `VERIFICATION-COMMANDS.md` Layer J/J-OB/Q/R/S, `run-harness-checks.sh`, `skills/workflow/repo-health.md`, `SOURCE-REPO-OPERATIONS.md` 간 pointer 정합 grep. F1 착수 시 `/tmp/awh-*` 잔존 grep으로 치환 범위 확인.
-
----
-
-#### Backlog row lifecycle SSoT 정비
-
-**Cluster:** W4. Enforcement And Lifecycle
-
-**Task:** backlog row 제거 시점이 `HARNESS-PROTOCOL.md`("Work archived 시"), `work-plan.md`("develop merge 후 tracking-only commit"), `work-close.md`(현재는 Step 5에 동일 commit 제거 명시) 세 곳에서 불일치. 매 work-close마다 수동으로 잡아야 하는 구조적 결함. 단일 시점("Work Done 처리 시 동일 commit에 포함")으로 통일하고, `work-plan.md`의 잘못된 타이밍 문구를 정정한다. `HARNESS-PROTOCOL.md` Pruning Policy도 일치시킨다.
-
-> **[2026-06-11 추가, CHORE-20260611-005 close 시 사용자 제기]** `DR-013`의 "backlog row 정리는 develop merge 후 tracking-only commit" 문구도 함께 정리 대상이다. 이 문구는 본래 **ID-less candidate에 Work ID를 역기입하지 않는 정책 맥락**인데, 완료 row 제거 일반 규칙으로 오독될 수 있다. canonical `work-close.md` Step 5(동일 commit 제거)와 정합하도록 DR-013 문구를 한정·정정한다(제거 ≠ ID backfill).
-
-**Dependencies:**
-
-- CHORE-20260607-002 (착수 정합성 hardening Done)
-
-**Done Criteria:** 세 파일의 backlog row 제거 시점이 동일하게 정의됨. work-close 실행 시 backlog row 확인 단계가 자연스럽게 포함됨
-
-**Verification:** work-close 시뮬레이션에서 backlog row 제거 단계가 프롬프트 없이 실행됨. `work-plan`·`work-close`·`HARNESS-PROTOCOL` 세 파일 grep으로 일치 확인
 
 ---
 

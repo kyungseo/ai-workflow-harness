@@ -36,7 +36,7 @@ Work 파일 생성 시 함께 수행할 것:
 2. 착수 전 분해나 메모는 backlog 항목 또는 계획 제안에 남기고, Work 파일은 생성하지 않음
 2a. **Work ID 확정**: Work 파일이 없고 확정된 Work ID가 없으면, TYPE을 판단해 `<TYPE>-<YYYYMMDD>-<NNN>` 형식의 Work ID를 제안하고 사용자 확인을 받는다. NNN은 현재 branch `docs/works/` 파일 기준으로 제안한다. 확정 후 backlog row가 있으면 ID로 갱신한다. (형식 상세: `docs/HARNESS-NAMING-RULES.md`)
 3. 사용자가 해당 Work 착수를 승인하면 Work 파일 frontmatter를 `status: Active`로 두고 README Active 테이블에 행 추가
-3a. **Backlog candidate 착수 연결:** backlog에서 해당 항목이 ID 없는 Candidate 상태라면, Work 파일 Discovery에 "backlog의 [항목명] candidate 착수"로 기록한다. backlog row에는 Work ID를 기입하지 않는다 — feature branch 병렬 NNN 충돌 방지(CHORE-20260527-001 참조). backlog row 정리(제거 또는 Active 표시)는 develop merge 후 tracking-only commit으로 처리한다.
+3a. **Backlog candidate 착수 연결:** backlog에서 해당 항목이 ID 없는 Candidate 상태라면, Work 파일 Discovery에 "backlog의 [항목명] candidate 착수"로 기록한다. backlog row에는 Work ID를 기입하지 않는다 — feature branch 병렬 NNN 충돌 방지(CHORE-20260527-001 참조). backlog row의 Active 표시는 develop merge 후 tracking-only commit으로 처리한다. 완료된 backlog row 제거는 `/work-close`의 Work Done 처리 흐름에서 수행한다.
 3b. **유사·중복 항목 경량 확인:** backlog에서 착수 항목과 제목·topic이 유사한 다른 Candidate 항목이 있으면 통폐합 가능성을 1줄로 안내한다. grep 기반 안내로 충분하며 자동 감지는 불필요하다.
 4. State update: 대상 Work ID를 명시하고 STATUS.md Active Work에 포인터 추가 제안
 
