@@ -1,12 +1,13 @@
 ---
 id: CHORE-20260612-008
 priority: P1
-status: Active
+status: Done
 risk: L2
 scope: AGENT-WORKFLOW.md 한 파일의 구조 분리 — routing table을 ## Context Routing 아래로 이동, ## Operating Tracks를 트랙 설명 전용으로 정리. 다른 파일 수정 없음.
 appetite: 0.5d
 planned_start: 2026-06-12
 planned_end: 2026-06-12
+actual_end: 2026-06-12
 related_dr: [DR-021, DR-023]
 related_work: [CHORE-20260612-007]
 ---
@@ -98,14 +99,14 @@ Anchor cascade 확인 결과 (Phase 1 pre-check): `#context-routing` / `#operati
 
 ## Done Criteria
 
-- [ ] `## Context Routing` 헤딩 아래에 실제 routing table이 위치한다
-- [ ] `## Operating Tracks` 섹션이 트랙 설명만 포함한다 (routing table 없음)
-- [ ] routing table row target 전원 존재 확인 기록
-- [ ] BEHAVIOR-PRINCIPLES §2/§3 위반 없음 (이동만, 내용 변경 없음)
-- [ ] adapter cascade 확인 — anchor 직접 참조 없음 기록
-- [ ] **post-table prose 각 줄의 귀속(Context Routing / Operating Tracks / 후속 Slice)이 기록된다.** (R0 F5)
-- [ ] Codex R0 plan review, R1 result review가 Work 파일에 기록됨
-- [ ] `docs/STATUS.md` Active pointer는 R0 합의/승인 전 변경하지 않는다
+- [x] `## Context Routing` 헤딩 아래에 실제 routing table이 위치한다
+- [x] `## Operating Tracks` 섹션이 트랙 설명만 포함한다 (routing table 없음)
+- [x] routing table row target 전원 존재 확인 기록
+- [x] BEHAVIOR-PRINCIPLES §2/§3 위반 없음 (이동만, 내용 변경 없음)
+- [x] adapter cascade 확인 — anchor 직접 참조 없음 기록
+- [x] **post-table prose 각 줄의 귀속(Context Routing / Operating Tracks / 후속 Slice)이 기록된다.** (R0 F5)
+- [x] Codex R0 plan review, R1 result review가 Work 파일에 기록됨
+- [x] `docs/STATUS.md` Active pointer는 R0 합의/승인 전 변경하지 않는다
 
 ## Verification
 
@@ -142,6 +143,74 @@ grep -rn "#context-routing\|#operating-tracks" .claude/ .agents/ skills/ prompts
 | OQ-1 | post-table prose 3줄이 routing 맥락인가, Operating Tracks 맥락인가? | **약화 (R0 F1):** 앞 2줄("조건이 없으면…", "core 문서에 조건부로…")은 routing 후보. 마지막 1줄("회고는 backlog를 대체하지 않는다")은 broader operating rule에 가까워 보류. Phase 1 line-by-line 판정에서 확정 |
 | OQ-2 | 이동 후 섹션 순서를 바꿀 필요가 있는가? (`## Context Routing`을 먼저?) | **잠금 (R0 F3):** 순서 변경은 이번 Slice 범위 밖. 이동 후 현 순서(`## Context Routing` → `## Operating Tracks`) 유지. 순서 변경 필요성이 보이면 Slice 3 후보로만 기록 |
 
+## Phase 1 Audit Findings
+
+### routing table target 확인
+
+| Target | 상태 | 비고 |
+| --- | --- | --- |
+| `docs/STATUS.md` | OK | |
+| `docs/BOOTSTRAP.md` | OK | |
+| `docs/SCAFFOLD-BOOTSTRAP.md` | OK | |
+| `docs/HARNESS-QUICK-REFERENCE.md` | OK | |
+| `docs/HARNESS-NAMING-RULES.md` | OK | |
+| `docs/HARNESS-RECOVERY-VALIDATION.md` | OK | |
+| `docs/HARNESS-PARALLEL-WORK-CONTROLS.md` | OK | |
+| `docs/backlog/PRODUCT.md` | MISSING (expected) | source-only 설계 의도 일치 — Slice 1 A2 재확인 |
+| `docs/backlog/HARNESS.md` | OK | |
+| `docs/PLAN-SUMMARY.md` | OK | |
+| `docs/PLAN.md` | OK | |
+| `docs/decisions/DR-*.md` | glob — 확인 불필요 | |
+| `docs/works/{category}/...` | template — 확인 불필요 | |
+| `docs/retrospectives/`, `docs/troubleshooting/`, `docs/archive/` | 디렉토리 — 확인 불필요 | |
+
+### post-table prose 3줄 귀속 판정 (OQ-1 line-by-line)
+
+| 줄 | 내용 | 귀속 판정 | 근거 |
+| --- | --- | --- | --- |
+| L65 | "조건이 없으면 추가 문서를 로드하지 않는다." | **Context Routing** | routing rule의 직접적 결론. "로딩하지 않는다"는 context loading 동작 규칙 |
+| L66 | "core 문서에 조건부로만 실행되는 상세 절차·체크리스트가 축적될 경우, 별도 slice 파일로 분리하고 조건부 pointer로 교체한다." | **Context Routing** | context loading 관리 원칙. "조건부 pointer로 교체"는 routing mechanism 관련 |
+| L67 | "회고는 backlog를 대체하지 않는다. 작업 선택, 계획 수립, 아이디어 도출, 반복 리스크 확인이 필요할 때 최신 또는 관련 회고 1개만 선택적으로 확인한다." | **잠정 Context Routing** | routing table의 `docs/retrospectives/` row 사용 제약으로 읽히나, R0가 "broader operating rule"로 지적. R1에서 확정 요청 |
+
+### 섹션 순서 (OQ-2)
+
+`## Context Routing` → `## Operating Tracks` 현 순서 유지. 변경 불필요.
+Context Routing이 먼저, Operating Tracks가 나중 — 개념 흐름이 자연스럽다.
+
+### 제안 변경 (R1 승인 대상)
+
+**이동 대상:**
+- routing table (현 L46-63, 18행 + 헤더)
+- blank line
+- post-table prose L65-L66 (Context Routing 귀속 확정)
+- post-table prose L67 (잠정 포함, R1에서 귀속 확정)
+
+**이동 후 구조:**
+
+```
+## Context Routing
+
+| Need | Load |
+| --- | --- |
+... (18행 routing table)
+
+조건이 없으면 추가 문서를 로드하지 않는다.
+core 문서에 조건부로만 실행되는 상세 절차·체크리스트가 축적될 경우, ...
+회고는 backlog를 대체하지 않는다. ... [R1 귀속 확정 후 포함 여부]
+
+## Operating Tracks
+
+이 harness는 적용 대상 repository 안에서 두 개의 작업 트랙을 함께 운영하도록 설계한다.
+- **Product track**: ...
+- **Harness track**: ...
+이 repository를 harness 자체 개발용 source로 운영하는 경우 ...
+반면 `scripts/create-harness.sh`로 scaffold한 신규/기존 프로젝트는 ...
+```
+
+**순 줄 수:** 이동이므로 net 0 (blank line 처리에 따라 ±1 가능)
+
+---
+
 ## Cross-Agent Review And Discussion
 
 ### Round Log
@@ -149,6 +218,22 @@ grep -rn "#context-routing\|#operating-tracks" .claude/ .agents/ skills/ prompts
 | Round | Reviewer | Status | Summary | Follow-Up |
 | --- | --- | --- | --- | --- |
 | R0 | Codex | **Conditional Hold → 반영 완료** | F1: post-table prose 3줄 자동이동 성급. F2: Work Item Routing 잠금 더 강화. F3: 섹션 순서 결정도 R1 전 금지. F4: "이동만" 전제 조건부로 약화. F5: Done Criteria에 prose 귀속 기록 추가. | Phase 1 Audit 진행 |
+| R1 | Codex | **Approved** | L67 Context Routing 귀속 확정. Operating Tracks 보강 불필요. Slice 3 잠금 그대로. | Phase 2 구현 진행 |
+
+### R1 — Result Review (Codex, 2026-06-12)
+
+**Approval:** Approved
+
+**L67 귀속 확정:**
+L67("회고는 backlog를 대체하지 않는다…")은 broader operating rule처럼 보일 수 있으나, 이 파일 안에서는 `docs/retrospectives/` row의 선택적 load/use constraint 역할이므로 **Context Routing 귀속으로 확정**.
+
+**이동 후 `## Operating Tracks` 단독성:**
+트랙 설명만 남은 상태가 얇지만, 단일 역할 섹션으로 충분하다. 문장 보강이나 예시 추가 불필요.
+
+**Slice 3 잠금:**
+Work Item Routing overlap, 섹션 순서 재판단 — 현 상태 그대로 잠금 유지.
+
+---
 
 ### R0 — Plan Review (Codex, 2026-06-12)
 

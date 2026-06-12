@@ -33,16 +33,6 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 
 ## Context Routing
 
-## Operating Tracks
-
-이 harness는 적용 대상 repository 안에서 두 개의 작업 트랙을 함께 운영하도록 설계한다.
-
-- **Product track**: 적용 대상 프로젝트의 기능, 문서, 테스트, 인프라, Phase backlog를 관리한다.
-- **Harness track**: AI workflow, command/rule, prompt, scaffold, status/process hardening을 관리한다.
-
-이 repository를 harness 자체 개발용 source로 운영하는 경우 Product track이 비어 있을 수 있고 active work는 주로 Harness track에 속할 수 있다.
-반면 `scripts/create-harness.sh`로 scaffold한 신규/기존 프로젝트는 Product track과 Harness track을 모두 가진다.
-
 | Need | Load |
 | --- | --- |
 | 현재 상태 | `docs/STATUS.md` |
@@ -65,6 +55,16 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 조건이 없으면 추가 문서를 로드하지 않는다.
 core 문서에 조건부로만 실행되는 상세 절차·체크리스트가 축적될 경우, 별도 slice 파일로 분리하고 조건부 pointer로 교체한다.
 회고는 backlog를 대체하지 않는다. 작업 선택, 계획 수립, 아이디어 도출, 반복 리스크 확인이 필요할 때 최신 또는 관련 회고 1개만 선택적으로 확인한다.
+
+## Operating Tracks
+
+이 harness는 적용 대상 repository 안에서 두 개의 작업 트랙을 함께 운영하도록 설계한다.
+
+- **Product track**: 적용 대상 프로젝트의 기능, 문서, 테스트, 인프라, Phase backlog를 관리한다.
+- **Harness track**: AI workflow, command/rule, prompt, scaffold, status/process hardening을 관리한다.
+
+이 repository를 harness 자체 개발용 source로 운영하는 경우 Product track이 비어 있을 수 있고 active work는 주로 Harness track에 속할 수 있다.
+반면 `scripts/create-harness.sh`로 scaffold한 신규/기존 프로젝트는 Product track과 Harness track을 모두 가진다.
 
 ## State Machine
 

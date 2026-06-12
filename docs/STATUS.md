@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-12 (세션: CHORE-20260612-008 Active — Canonical 계층화 Slice 2 착수)
+Last updated: 2026-06-12 (세션: CHORE-20260612-008 Done — AGENT-WORKFLOW.md Context Routing / Operating Tracks 구조 분리 완료)
 
 ## Current State
 
@@ -27,7 +27,6 @@ Last updated: 2026-06-12 (세션: CHORE-20260612-008 Active — Canonical 계층
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| CHORE-20260612-008 | Canonical 계층화 Slice 2 — Context Routing / Operating Tracks 구조 분리 | `docs/works/harness/CHORE-20260612-008-canonical-layer-slice2.md` |
 
 ## Blockers And Open Questions
 
