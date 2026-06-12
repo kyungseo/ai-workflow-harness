@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260612-007 | Canonical 개념 계층화 Slice 1 — AGENT-WORKFLOW.md 비대화 점검 + context routing 개선 | 2026-06-12 | `docs/works/harness/CHORE-20260612-007-canonical-layer-slice1.md` |
 | CHORE-20260612-005 | Backlog Row Lifecycle SSoT 정비 | 2026-06-12 | `docs/works/harness/CHORE-20260612-005-backlog-row-lifecycle-ssot.md` |
 | CHORE-20260612-004 | Source-Gitflow Second-Contributor Entry Path 보강 | 2026-06-12 | `docs/works/harness/CHORE-20260612-004-second-contributor-entry-path.md` |
 | CHORE-20260612-003 | Scaffold Multi-User Clone Verification | 2026-06-12 | `docs/works/harness/CHORE-20260612-003-scaffold-multi-user-clone-verification.md` |

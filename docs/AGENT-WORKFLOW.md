@@ -33,8 +33,6 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 
 ## Context Routing
 
-> **Optional pack 참조 주의:** `docs/HARNESS-ARCHITECTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`는 Optional source pack이라 minimal scaffold에는 없을 수 있다. 이들을 가리키는 routing 항목은 해당 문서가 없으면 N/A이며, 필요하면 `scripts/create-harness.sh --with-optional`로 재생성하거나 source repo 문서를 참조한다.
-
 ## Operating Tracks
 
 이 harness는 적용 대상 repository 안에서 두 개의 작업 트랙을 함께 운영하도록 설계한다.
