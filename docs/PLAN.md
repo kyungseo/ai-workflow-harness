@@ -57,6 +57,23 @@ development workflow다.
 | `prompts/**` | command를 직접 사용할 수 없는 도구를 위한 prompt template |
 | `scripts/create-harness.sh` | 새 repository 또는 기존 repository에 harness 구조를 적용하는 scaffold |
 
+### 3-a. Externalization Failure Modes Framing
+
+이 harness의 core surface는 accepted Phase 2 방향을 현재 live 구조로 유지한 결과물이며,
+요약하면 아래 3대 실패모드를 막는 쪽으로 배치되어 있다. 이 절은 새 L3 결정을 추가하는
+자리가 아니라, `AWH-003 (Phase 2)`와 `§7-a Roadmap Lifecycle`에 이미 반영된 방향을
+현재 구조 관점에서 다시 읽기 위한 explanatory framing이다.
+
+| Failure mode | 증상 | 현재 surface에서의 주 보완 |
+| --- | --- | --- |
+| ① 라우팅 누락 | framework-owned 자산과 project-state 자산의 경계가 흐려지고, 어떤 정보가 어디에 남아야 하는지 불명확해진다 | surface별 역할 분리, source/framework vs target/project-state 경계, workflow canonical 경로, `T5` PLAN 영향 판단 |
+| ② 비대화 | 같은 절차·맥락·과거 상세가 여러 surface에 증식해 context weight가 커진다 | canonical SSoT 1벌, thin/hybrid adapter, archive drain, current+next horizon 유지 |
+| ③ 선언-실행 괴리 | 문서에 적힌 원칙이 실제 workflow에서 검증·차단·보고로 이어지지 않는다 | validation defaults, strictness/enforcement 구분, hard-stop·warning·report-only gate, test-backed checks |
+
+`AWH-003 (Phase 2)`의 output은 위 세 실패모드를 각각 줄이는 방향으로 읽어야 한다.
+따라서 이후 W3 구조 작업도 "새 surface를 더 추가하는가"보다 "어느 실패모드를 실제로
+줄이는가"를 먼저 설명해야 한다.
+
 ## 4. Current Milestone
 
 현재 milestone은 `AWH-004 — Maintenance & Adoption`이다.
