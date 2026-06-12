@@ -760,6 +760,16 @@ if [[ "${WORKFLOW_MODE}" != "source-gitflow" ]]; then
 "
 fi
 
+# source-gitflow targets present two explicit entry paths in the README so that
+# a later contributor cloning the repo finds the hook install path without reading BOOTSTRAP.md.
+# Generic targets keep a single bootstrap-only line (no clone scenario).
+CLONE_NOTE="git repository는 자동으로 초기화되지 않는다. 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
+\`--workflow source-gitflow\`를 선택하지 않았다면 branch/release policy는 이 target project가 직접 정한다."
+if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
+  CLONE_NOTE="- 최초 설정 (git repository 미초기화): 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
+- 이미 존재하는 repo에 추가 contributor로 합류: \`docs/GIT-WORKFLOW.md §0-1\` Clone 경로를 먼저 확인한다."
+fi
+
 write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 
 > [프로젝트 한 줄 설명 — 채워주세요]
@@ -815,8 +825,7 @@ claude        # Claude Code 열기
 
 ## 사전 작업
 
-git repository는 자동으로 초기화되지 않는다. 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
-\`--workflow source-gitflow\`를 선택하지 않았다면 branch/release policy는 이 target project가 직접 정한다.
+${CLONE_NOTE}
 ${ENFORCEMENT_NOTE}
 
 ### Framework Files & Updating

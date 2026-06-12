@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-12 (세션: CHORE-20260612-003 Done — scaffold multi-user clone verification 완료, archive pending 3건)
+Last updated: 2026-06-12 (세션: CHORE-20260612-004 Done — source-gitflow second-contributor entry path 보강 완료)
 
 ## Current State
 
@@ -70,8 +70,8 @@ Last updated: 2026-06-12 (세션: CHORE-20260612-003 Done — scaffold multi-use
    - ✓ **Harness upgrade/migration 메커니즘** — CHORE-20260611-010에서 pre-manifest adopter inventory-first + shadow scaffold manifest baseline + Layer T 실행형 검증 정립 완료. 후속: 실제 target 적용 또는 두 번째 adopter 검증 후 DR-034 Accepted 승격 판단
    - ✓ **Docs cascade 현행화** — CHORE-20260611-011에서 README Documentation Map / maintainer map / onboarding surfaces의 objective cascade 정리 완료. 후속 톤/청중 재작성 작업은 별도 candidate(`User-facing docs readability rewrite`)로 유지
    - ✓ **Product starter planning pack + feedback import loop** — CHORE-20260612-001에서 source-only planning pack seed/template 기준, ownership 분류, provisional import loop, Layer U structured review aid 정리 완료. 후속: 첫 concrete product use 후 U2~U4 재검토 및 import candidate 실사례 평가
-   - **User-facing docs readability rewrite** — README/MANUAL/GUIDE류를 초보 개발자·일반 독자 친화성과 전문적 정확성을 동시에 만족하도록 재작성
-   - **Scaffold multi-user clone verification** — generic/source-gitflow target에서 clone·branch·hook·CI 경로 점검
+   - ✓ **User-facing docs readability rewrite** — CHORE-20260612-002 완료
+   - ✓ **Scaffold multi-user clone verification** — CHORE-20260612-003 완료. 발견: G1/G2 Critical gap → "source-gitflow second-contributor entry path 보강" backlog 등록. **W2 Adopter Transition 완결.**
 3. **W3 — Workflow IA Diet** (큰 구조 변경은 결정/최소 정리까지만):
    - Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health/work-doc slice/class 검토
 4. **W4/W5 — Lifecycle hygiene 및 optional 확장**:

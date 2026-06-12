@@ -87,6 +87,20 @@ git branch --list main develop
 - 기존 default branch가 `main`이 아니면 rename 여부를 별도 decision으로 다룬다.
 - hook 설치는 git repository가 확인된 뒤 실행한다: `sh tools/git-hooks/install.sh`.
 
+### Clone from existing remote
+
+이미 remote repository가 있고 두 번째 contributor로 참여하는 경우에 사용하는 경로다.
+
+```bash
+git clone <git-url>
+cd <repo-name>
+sh tools/git-hooks/install.sh
+```
+
+- `tools/git-hooks/install.sh`는 pre-commit·commit-msg hook을 `.git/hooks/`에 설치한다.
+- 설치하지 않으면 commit message 형식 강제가 동작하지 않는다.
+- branch/release 정책과 PR 절차는 §1·§2를 확인한다.
+
 ### GitHub Ruleset
 
 GitHub ruleset 적용은 repo 존재, branch 존재, `gh` auth, admin 권한에 의존한다.
