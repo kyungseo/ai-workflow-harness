@@ -28,6 +28,20 @@ pre-commit / commit-msg hook 설치는 `tools/git-hooks/`가 있는 경우에만
 4. Approval Matrix에 따라 승인 후 수정한다.
 5. 검증 후 Work checkpoint/discovery와 STATUS 필요 여부를 확인한다.
 
+## 2-a. Related Maintainer References
+
+이 문서는 maintainer용 개요와 운영 기준을 설명하는 메인 진입 문서다. 실제 작업에 들어갈 때는 아래 satellite 문서를 같이 봐야 한다.
+
+| 문서 | 언제 함께 읽나 | 역할 |
+| --- | --- | --- |
+| `docs/maintainer/HARNESS-TEST-TAXONOMY.md` | 검증 depth, Tier, `temp/` 정책이 헷갈릴 때 | 검증 구조와 용어의 기준 |
+| `docs/maintainer/SOURCE-REPO-OPERATIONS.md` | source repo 변경 유형별 실행 경로를 고를 때 | 변경 lifecycle별 runbook |
+| `docs/maintainer/VERIFICATION-COMMANDS.md` | 실제 검증 명령이나 release sweep이 필요할 때 | Layer별 검증 catalog |
+| `docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md` | product starter pack / import loop / source-product 경계를 볼 때 | planning pack 기준 문서 |
+| `docs/maintainer/VERSIONING.md` | 버전 bump, tag, release note 판단이 필요할 때 | source repo 버전 정책 |
+
+이 문서 하나만으로 세부 절차를 끝내려 하지 말고, 위 표에서 지금 작업과 직접 맞닿는 문서를 함께 읽는 것이 기본이다.
+
 ## 3. Conventions
 
 ### Language Policy
