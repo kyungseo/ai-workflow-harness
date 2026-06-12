@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| CHORE-20260612-008 | Canonical 계층화 Slice 2 — Context Routing / Operating Tracks 구조 분리 | `docs/works/harness/CHORE-20260612-008-canonical-layer-slice2.md` |
 
 ## Done (Archive Pending)
 
