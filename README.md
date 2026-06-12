@@ -264,6 +264,8 @@ flowchart TD
 
 `scripts/create-harness.sh --check /path/to/project`는 generated manifest를 기준으로 framework 파일이 `in-sync`, `source-updated`, `locally-modified`인지 보고합니다. 현재 자동 upgrade 기능은 없습니다. 이미 scaffold한 project를 최신 source와 맞추려면 `--check` 결과를 보고 필요한 파일만 수동으로 selective migration하세요.
 
+오래된 target에는 `.harness/manifest.json`이 없을 수 있습니다. 이런 pre-manifest target은 `--check`만으로 migration 범위를 판단하지 말고, source repo maintainer가 source-only 문서의 upgrade/migration note를 먼저 확인해야 합니다. 시작점은 [Maintainer reference documents](#maintainer-reference-documents)의 `migrations/`와 `VERIFICATION-COMMANDS.md` Layer T입니다.
+
 ### Forked Harness Source
 
 이 repository를 fork/clone해서 자기만의 harness source로 키우려면 먼저 운영 모드를 정하세요.
@@ -352,7 +354,7 @@ flowchart TD
     ACTIVE --> PLAN["/work-plan\n계획 수립"]
     PLAN --> WORK["docs/works/{category}\nWork SSoT"]
     NOW -- "아니오" --> TYPE{"성격"}
-    TYPE -- "Product" --> PHASE["docs/backlog/PRODUCT.md"]
+    TYPE -- "Product" --> PHASE["Product backlog\n(target repo, when present)"]
     TYPE -- "Harness" --> HARNESS["docs/backlog/HARNESS.md"]
     TYPE -- "다음 후보" --> NEXT["STATUS.md Next Actions"]
     TYPE -- "결정 필요" --> OQ["STATUS.md Blockers/OQ"]
@@ -446,6 +448,7 @@ main
 | 공통 운영 규칙 | [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) |
 | 상세 protocol | [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) |
 | source repo Git 정책 | [docs/GIT-WORKFLOW.md](docs/GIT-WORKFLOW.md) |
+| source-only maintainer 문서 지도 | [docs/maintainer/README.md](docs/maintainer/README.md) |
 | canonical workflow 절차 | [skills/workflow/](skills/workflow/) |
 | 현재 상태 dashboard | [docs/STATUS.md](docs/STATUS.md) |
 | Harness backlog | [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) |
@@ -461,6 +464,9 @@ main
 | [docs/HARNESS-PARALLEL-WORK-CONTROLS.md](docs/HARNESS-PARALLEL-WORK-CONTROLS.md) | 병렬 branch·agent 충돌 감지 시 |
 | [docs/HARNESS-ARCHITECTURE.md](docs/HARNESS-ARCHITECTURE.md) | 구조와 정보 흐름을 깊게 볼 때 |
 | [docs/HARNESS-MAINTAINER-GUIDE.md](docs/HARNESS-MAINTAINER-GUIDE.md) | source repo 유지보수 convention 확인 시 |
+| [docs/maintainer/SOURCE-REPO-OPERATIONS.md](docs/maintainer/SOURCE-REPO-OPERATIONS.md) | source repo 변경 유형별 검증 경로를 고를 때 |
+| [docs/maintainer/VERIFICATION-COMMANDS.md](docs/maintainer/VERIFICATION-COMMANDS.md) | Layer별 검증 명령과 release sweep을 확인할 때 |
+| [docs/maintainer/migrations/](docs/maintainer/migrations/) | 기존 target repo가 framework 변경을 수용할 때 |
 | [prompts/README.md](prompts/README.md) | prompt library 확인 시 |
 
 </details>
@@ -489,6 +495,7 @@ main
 │   ├── SCAFFOLD-ONBOARDING-GUIDE.md       # scaffold 온보딩 가이드
 │   ├── backlog/                           # 후보 작업
 │   ├── decisions/                         # Decision Records
+│   ├── maintainer/                        # source-only maintainer reference
 │   └── works/                             # Work 파일
 ├── skills/workflow/                       # canonical workflow 절차
 ├── prompts/                               # prompt templates
