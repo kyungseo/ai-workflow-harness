@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260612-001 | Product Starter Planning Pack + Feedback Import Loop | 2026-06-12 | `docs/works/harness/CHORE-20260612-001-product-starter-planning-pack.md` |
 | CHORE-20260611-010 | Harness Upgrade / Migration Mechanism | 2026-06-11 | `docs/works/harness/CHORE-20260611-010-harness-upgrade-migration.md` |
 
 ## Archived

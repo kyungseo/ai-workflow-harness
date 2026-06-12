@@ -29,7 +29,7 @@ AI Workflow Harness backlog다.
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
 | W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속 F1~F4는 W3 repo-health slice·W4 enforcement로 연결 |
-| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011) Product starter planning pack + feedback import loop, User-facing docs readability rewrite, Scaffold multi-user clone verification |
+| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001) User-facing docs readability rewrite, Scaffold multi-user clone verification |
 | W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health slice, work-doc class |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원, `/exit` gap |
@@ -38,7 +38,6 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L3 | Product starter planning pack + feedback import loop |
 | — | P1 | Candidate | L2 | User-facing docs readability rewrite — audience-aware README/MANUAL/GUIDE |
 | — | P1 | Candidate | L2 | Scaffold multi-user clone verification |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
@@ -109,71 +108,6 @@ AI Workflow Harness backlog다.
 **Done Criteria:** 세 파일의 backlog row 제거 시점이 동일하게 정의됨. work-close 실행 시 backlog row 확인 단계가 자연스럽게 포함됨
 
 **Verification:** work-close 시뮬레이션에서 backlog row 제거 단계가 프롬프트 없이 실행됨. `work-plan`·`work-close`·`HARNESS-PROTOCOL` 세 파일 grep으로 일치 확인
-
----
-
-#### Product starter planning pack + feedback import loop
-
-**Cluster:** W2. Adopter Transition
-
-**Task:** 다음 신규 product 착수 전에 source repo에서 먼저 product planning pack을 만들고, scaffold repo에서 실제 개발에 사용한 뒤, 검증된 산출물을 다시 source repo option-pack 후보로 반입하는 loop를 설계한다.
-
-**배경 / Driver:**
-
-- 다음 주 신규 product 개발을 시작할 예정이며, 하네스는 실제 scaffold 운영을 통해 검증되어야 한다.
-- 계획 수립은 source repo 환경에서 먼저 수행하고, 그 결과를 scaffold repo에 주입해 개발을 시작한다.
-- scaffold repo에서 나온 산출물은 중간중간 정리해 source repo AI가 import 가능한 형태로 만든다.
-
-**Planning Pack 범위:**
-
-- MSA를 기본 방향으로 삼되, 프로젝트 상황상 Monolithic 요건이 있을 때의 대안과 전환 기준을 둔다.
-- `/Users/kyungseo/dev-home/vibe/base-msa-template`를 분석한다.
-  - 초기 하네스 구조가 섞여 있으므로 plan, architecture 등 기술 문서와 code 위주로 본다.
-  - 기존 구현도 리팩토링 요소가 있으면 식별한다.
-  - enterprise급 mission critical 프로젝트에 바로 적용 가능한 수준을 목표로 gap을 분석한다.
-- 아키텍처, 구조, framework/library 요건을 정의한다.
-  - 확장/변경에 유연한 구조를 우선한다.
-  - 코드 품질을 최우선 기준으로 둔다.
-- 필수 기능/비기능 요건을 정의한다.
-  - base-msa-template가 중단된 부분과 enterprise 실전 갭을 requirements에 반영한다.
-- scaffold 입력으로 사용할 기초 plan을 산출한다.
-
-**Product-local Harness 구성 후보:**
-
-- PRD(제품 요구사항)
-- TRD(기술 구조)
-- code conventions
-- user flow
-- DB design
-- screen/screen flow
-- tasks
-- test structure
-- `loop.md` 또는 이에 준하는 반복 실행 절차
-  - Done Criteria를 만족할 때까지 반복하는 구조.
-  - 자동처리와 인간개입 경계를 명확히 둔다.
-
-**Source ↔ Product Feedback Loop:**
-
-1. source repo에서 planning pack 작성.
-2. scaffold로 신규 product repo 생성.
-3. planning pack과 산출물을 product repo에 주입.
-4. product repo AI가 product-local harness와 개발 구조를 구체화.
-5. product repo에서 검증된 일반화 가능 산출물을 source repo에 import 후보로 정리.
-6. source repo에서 option-pack 반영 여부를 별도 Work로 판단.
-
-**Dependencies:**
-
-- CHORE-20260611-011 (Done) — Docs cascade 현행화
-- CHORE-20260611-010 (Done) — pre-manifest adopter upgrade/migration mechanism
-- `Prompt surface diet + optional pack 재정의`
-- `Project-state template pack 검토`
-- 후속: `Spring Boot MSA TDD option-pack — product engineering pack 후보`
-
-**Done Criteria:** source-first product planning pack의 산출물 목록, 작성 순서, scaffold 주입 방식, product repo에서 source repo로 반입할 정리 형식이 정의됨. base-msa-template 분석 범위와 제외 범위(초기 하네스 잔재 제외)가 명확함. 자동처리 vs 인간개입 경계가 loop 절차에 포함됨.
-
-**Verification:** base-msa-template 분석 checklist, scaffold repo 주입 dry-run 또는 walkthrough, source import 후보 format 검토. README/onboarding/workflow manual과 충돌하지 않는지 확인.
-
-**사전 참고:** `docs/maintainer/VERIFICATION-COMMANDS.md`의 Layer J/J-OB는 scaffold/onboarding simulation에 활용하고, Layer T는 CHORE-20260611-010에서 pre-manifest adopter upgrade/migration 실행형 검증으로 승격됐다. product starter/import loop 검증은 `VERIFICATION-COMMANDS.md` Layer U(CHORE-20260611-007 완료, U2~U4는 criteria placeholder)에 정의돼 있다.
 
 ---
 
@@ -392,7 +326,7 @@ AI Workflow Harness backlog다.
 
 **Dependencies:**
 
-- `Product starter planning pack + feedback import loop`에서 실제 product 산출물과 일반화 가능 범위를 먼저 확보.
+- CHORE-20260612-001에서 정리한 planning pack/import loop 기준 위에서 실제 product 산출물과 일반화 가능 범위를 먼저 확보.
 - `Prompt surface diet + optional pack 재정의`(P1) 방향 결정.
 - scaffold/tool-surface regression alignment(CHORE-20260611-006 완료) 이후 착수 권장.
 - `scripts/create-harness.sh --with-optional` 현행 설계 파악 필요.

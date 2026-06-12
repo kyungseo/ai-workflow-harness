@@ -10,6 +10,7 @@ scaffold 적용 repository에는 존재하지 않으므로, 다른 문서가 이
 | --- | --- |
 | `README.md` | 이 디렉토리의 source-only maintainer 문서 지도 |
 | `SOURCE-REPO-OPERATIONS.md` | source repo 변경 lifecycle 운영 runbook — 검증 척추 산출물을 실행 순서로 엮는 진입 문서(순서축, SSoT 복제 아님) |
+| `PRODUCT-STARTER-PLANNING-PACK.md` | source-first planning pack, source↔product import loop, `base-msa-template` 분석 include/exclude 기준 |
 | `HARNESS-TEST-TAXONOMY.md` | surface별 검증 기준, Tier 정의, `temp/` 정책, runner와 catalog의 역할 경계 |
 | `VERIFICATION-COMMANDS.md` | Layer별 검증 명령 카탈로그 + "Release Full Sweep" 릴리즈 전수 점검 프리셋 |
 | `VERSIONING.md` | semver 기준·tag 매핑·bump 절차의 SSoT (근거: DR-028) |
@@ -27,7 +28,7 @@ DR-021은 source/target 경계를 **물리 디렉토리 이동 없이** logical 
 | `SCAFFOLD-ONBOARDING-GUIDE.md` | adopter (도입 시) | source-only (미배포) | `docs/` 루트 |
 | `HARNESS-ARCHITECTURE.md` | maintainer / contributor | optional-pack | `docs/` 루트 |
 | `HARNESS-MAINTAINER-GUIDE.md` | maintainer | optional-pack | `docs/` 루트 |
-| `HARNESS-TEST-TAXONOMY.md`, `VERIFICATION-COMMANDS.md`, `VERSIONING.md`, `migrations/` | maintainer | source-only (미배포) | `docs/maintainer/` |
+| `HARNESS-TEST-TAXONOMY.md`, `VERIFICATION-COMMANDS.md`, `VERSIONING.md`, `PRODUCT-STARTER-PLANNING-PACK.md`, `migrations/` | maintainer | source-only (미배포) | `docs/maintainer/` |
 | `SOURCE-REPO-OPERATIONS.md` | source maintainer / AI driver | source-only (미배포) | `docs/maintainer/` |
 
 > SCAFFOLD-ONBOARDING-GUIDE는 source-only이나 *도입 시 source/clone에서 읽는* adopter용이라 루트에 둔다 (maintainer 전용 자산과 성격이 다름).

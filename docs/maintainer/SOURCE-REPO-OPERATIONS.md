@@ -55,6 +55,7 @@ work-select → work-plan → review → 구현 → result review → work-close
 | **workflow / protocol / tool-surface** | `--tier0` + 관련 catalog Layer(기본). scaffold/generated output 영향 시 `--tier2`/`--all`. 기존 target 정합 검증이 필요할 때만 `--tier1 <target-dir>` | E·F(tool-specific surface 정렬)·G(user-facing 정합), gate 표면이면 **Q-static**(gate path-list parity) | canonical→tool-specific→user-facing→scaffold cascade (`HARNESS-MAINTAINER-GUIDE.md` §7) |
 | **scaffold / template change** | `--tier2` 또는 `--all` | A(syntax)·B(write_text 패턴)·C(실물 생성+invariant)·D(manifest drift)·J/J-OB(simulation) | `bash -n scripts/create-harness.sh` + dry-run + temp/ 실생성(D절) |
 | **adopter upgrade / migration** | target 상태에 따라 다름. pre-manifest는 inventory-first | T(upgrade/migration) + 관련 per-change migration note | manifest 없음이면 `--check`를 migration 범위로 해석하지 않음. shadow scaffold baseline 방식으로 current manifest 획득 |
+| **product starter planning pack / import loop** | criteria 설계 단계는 문서 검토 중심. stack/profile 경계 확인이 필요하면 `--tier2` | U(product starter/import) + `PRODUCT-STARTER-PLANNING-PACK.md` | source-first pack 정의와 source/product/import ownership 분리. helper/script는 반복 패턴 확인 전 추가하지 않음 |
 | **maintainer verification taxonomy / catalog change** | `--all` | self-check(M계열) + 변경한 Layer 자체 재실행 | taxonomy(기준) ↔ catalog(명령) ↔ runner(실행) 3자 정합 확인. 이 runbook의 B/C 매핑도 갱신 |
 | **release prep** | `--all` | **Release Full Sweep 프리셋**(`VERIFICATION-COMMANDS.md` 상단) + H(stale identity/secret)·R(VERSION↔manifest) | `HARNESS-MAINTAINER-GUIDE.md` §9 Public Release Checks |
 
