@@ -1267,40 +1267,67 @@ ls "$G"/docs/HARNESS-ARCHITECTURE.md 2>/dev/null \
 rm -rf temp/awh-pp
 ```
 
-### U2. Product Starter Planning Pack 산출물 (criteria — placeholder)
+### U2. Product Starter Planning Pack 산출물 (criteria — structured checklist)
 
-W2 planning pack이 산출되면 아래 **존재·역할**을 확인한다(내용 품질 검증은 W2/W5 범위 — 여기서는 산출물이 있고 역할이 맞는지까지만).
+기준 문서: `docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md`
 
-| # | 산출물 | 역할 확인 기준 |
+W2 planning pack이 산출되면 아래 **존재·역할·owner**를 확인한다. 내용 품질의 깊은 검토는 해당 Work 범위이며, Layer U는 "산출물이 빠짐없이 있고 source/product 경계가 맞는가"를 본다.
+
+| 그룹 | 산출물 | 역할 확인 기준 | owner 기대값 |
+| --- | --- | --- | --- |
+| source-first seed | Product brief / PRD template | 질문 프레임 또는 skeleton 존재 | source seed |
+| source-first seed | TRD / architecture brief template | 구조/제약 질문 skeleton 존재 | source seed |
+| source-first seed | Delivery plan / task map skeleton | tranche/task 분해 틀 존재 | source seed |
+| source-first seed | Test structure seed | unit/integration/e2e 계층 제안 존재 | source seed |
+| source-first seed | `loop.md` skeleton 또는 동등 절차 | 반복 실행 + human gate 기본 구조 존재 | source seed |
+| source-first seed | Open questions / assumptions starter | 미결정 질문 starter와 검증 경로 틀 존재 | source seed |
+| product-local expansion | code conventions | source seed와 product-local concrete 구분 | product-owned with source seed |
+| product-local expansion | user flow | 실제 사용자 흐름 정의 존재 | product-owned |
+| product-local expansion | DB design | logical/physical 모델 경계 명시 | product-owned |
+| product-local expansion | screen / screen flow | 실제 화면/상태 전이 정의 존재 | product-owned |
+
+**판정 포인트:**
+
+- source-first seed가 product-specific 내용을 완성본으로 끌어안지 않는가
+- product-local expansion이 source option-pack으로 오인되지 않는가
+- `loop.md`가 자동/인간개입 경계를 분리하는가
+- 아직 검증된 실제 import candidate 사례가 없다는 점이 문서에 명시되어 있는가
+
+> **승격 조건:** W2가 위 산출물의 실제 경로/파일명을 확정하면, 이 표를 concrete path 존재 검사로 승격한다. 그 전까지는 checklist로 유지한다.
+
+### U3. Template 분석 범위 (criteria — structured boundary)
+
+기준 문서: `docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md`
+
+template 분석은 아래 include/exclude/reference-only 경계를 따른다. 특정 repo의 실제 파일/경로 inventory는 해당 Work Discovery 또는 작업 메모에 남긴다.
+
+| 분류 | 포함 경로 예시 | 목적 |
 | --- | --- | --- |
-| 1 | product goal / PRD | 제품 목표·요구사항 정의 존재 |
-| 2 | TRD / architecture | 기술 구조·아키텍처 정의 존재 |
-| 3 | code conventions | 코드 규약 존재 |
-| 4 | user flow | 사용자 흐름 정의 존재 |
-| 5 | DB design | 데이터 모델 정의 존재 |
-| 6 | screen / screen flow | 화면·화면 흐름 정의 존재 |
-| 7 | tasks | 작업 분해 존재 |
-| 8 | test structure | 테스트 구조 정의 존재 |
-| 9 | `loop.md` 또는 반복 실행 절차 | Done Criteria 반복 + 자동/인간개입 경계 명시 |
+| include | root README, plan/summary, architecture/developer guide, coding conventions, build graph, module/service 디렉토리, infra/test 예시 | planning pack seed와 module/test/infra shape 추출 |
+| exclude | harness/agent 운영 문서, status/works/harness backlog, archive/retrospectives, historical decisions 원문 | 운영 흔적과 historical tracking 제외 |
+| reference-only | product backlog, troubleshooting, archived plans/snapshots | enterprise gap / 미완료 hardening / rationale 참고 |
 
-> **승격 조건:** W2가 위 산출물의 실제 경로/파일명을 확정하면, 이 표를 `for f in ...; do [ -f "$f" ] ...` 형태 concrete 존재 검사로 승격한다.
+**판정 포인트:**
 
-### U3. base-msa-template 분석 범위 (criteria — placeholder)
+- harness 운영 문서를 product starter pack seed로 잘못 끌어오지 않는가
+- product backlog와 open gap을 "현재 template의 미완료 영역" 근거로만 쓰고, pack seed 자체로 복사하지 않는가
 
-`/Users/.../base-msa-template` 분석은 아래 include/exclude 경계를 따른다(분석 자체는 W2 범위, 여기서는 *범위 기준*만 고정).
+### U4. Product → Source Import 후보 Mapping (review aid — structured review aid)
 
-- **include:** plan, architecture, code, enterprise gap(중단 지점·실전 갭).
-- **exclude:** 초기 하네스 잔재(과거 product-template/harness 구조 혼입분).
+product repo에서 검증된 산출물을 source repo option-pack 후보로 정리할 때 쓰는 **검토 보조 표(review aid)**다. 형식 규약이 아니라 **승격 심사 표**이며, 실제 source 반영은 별도 Work에서만 수행한다.
+아직 검증된 실제 사례가 없으므로, 첫 concrete product use 후 열 구성과 판단 기준을 재검토한다.
 
-### U4. Product → Source Import 후보 Mapping (review aid — placeholder)
+| artifact | owner | generalizable? | proof of generality | product-specific residue | proposed source target | promotion blocker |
+| --- | --- | --- | --- | --- | --- | --- |
+| (예: test structure) | source/product/shared | Y/N | 다른 product에도 재사용 가능한 이유 | 제거해야 할 도메인 흔적 | `docs/maintainer/` / optional pack / helper candidate | 지금 바로 올리면 안 되는 이유 |
 
-product repo에서 검증된 산출물을 source repo option-pack 후보로 정리할 때 쓰는 **검토 보조 표(review aid)**다. **format contract가 아니다** — 실제 형식은 W2에서 확정한다. 지금은 import 판단 시 빠뜨리는 축이 없도록 하는 체크 보조로만 쓴다.
+**판정 포인트:**
 
-| product artifact | generalizable? (Y/N) | source target path | class (adapt / write_text) | note |
-| --- | --- | --- | --- | --- |
-| (예: code conventions) | Y | (후속 확정) | (후속 확정) | product-specific 부분 제거 후 |
+- generalizable 근거 없이 "잘 됐다"만으로 승격하려 하지 않는가
+- source target이 `docs/maintainer/`, optional pack, helper candidate 중 어디인지 명시되는가
+- product-specific residue 제거 계획이 없는 항목을 승격 후보로 올리지 않는가
 
-> **승격 조건:** W2가 import loop를 실제 운용하고 반복 패턴이 확인되면, 이 review aid를 형식 규약(또는 helper script)으로 승격할지 판단한다.
+> **승격 조건:** 두 번째 product에서도 반복 패턴이 확인되면, 이 review aid를 형식 규약 또는 helper candidate로 승격할지 판단한다.
 
 ### U5. 역방향 cascade — 이 Layer 갱신 트리거
 
