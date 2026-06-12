@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-12 (세션: CHORE-20260612-001 Done — planning pack 설계 정리 완료, archive pending 2건)
+Last updated: 2026-06-12 (세션: CHORE-20260612-003 Done — scaffold multi-user clone verification 완료, archive pending 3건)
 
 ## Current State
 
