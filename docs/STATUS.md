@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-12 (세션: CHORE-20260612-005 Done — backlog row lifecycle SSoT 정비 완료)
+Last updated: 2026-06-12 (세션: CHORE-20260612-007 Done — AGENT-WORKFLOW.md Optional pack 경고 블록 제거 Slice 1 완료)
 
 ## Current State
 
@@ -27,7 +27,6 @@ Last updated: 2026-06-12 (세션: CHORE-20260612-005 Done — backlog row lifecy
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| CHORE-20260612-007 | Canonical 개념 계층화 Slice 1 — AGENT-WORKFLOW.md 비대화 점검 + context routing 개선 | `docs/works/harness/CHORE-20260612-007-canonical-layer-slice1.md` |
 
 ## Blockers And Open Questions
 
