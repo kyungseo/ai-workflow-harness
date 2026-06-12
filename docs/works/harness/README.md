@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| CHORE-20260612-007 | Canonical 개념 계층화 Slice 1 — AGENT-WORKFLOW.md 비대화 점검 + context routing 개선 | `docs/works/harness/CHORE-20260612-007-canonical-layer-slice1.md` |
 
 ## Done (Archive Pending)
 

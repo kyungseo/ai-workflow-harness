@@ -27,6 +27,7 @@ Last updated: 2026-06-12 (세션: CHORE-20260612-005 Done — backlog row lifecy
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| CHORE-20260612-007 | Canonical 개념 계층화 Slice 1 — AGENT-WORKFLOW.md 비대화 점검 + context routing 개선 | `docs/works/harness/CHORE-20260612-007-canonical-layer-slice1.md` |
 
 ## Blockers And Open Questions
 
