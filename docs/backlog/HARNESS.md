@@ -39,7 +39,6 @@ AI Workflow Harness backlog다.
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
-| — | P1 | Candidate | L2 | 외부화 실패모드 통합 설계 원칙 명문화 |
 | — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
 | — | P1 | Candidate | L2 | Prompt surface diet + optional pack 재정의 |
 | — | P2 | Candidate | L2 | Harness protocol trigger family simplification |
@@ -87,22 +86,6 @@ AI Workflow Harness backlog다.
 **Done Criteria:** F1~F4 각각이 Work로 분해되거나, 범위가 다른 backlog 항목(`문서-only 규칙 강제화`, `repo-health.md slice 분리`, W2/W5 product pack 후보)에 명시적으로 흡수됨. `HARNESS-TEST-TAXONOMY.md` §6와 `SOURCE-REPO-OPERATIONS.md` Update Triggers의 후속 pointer가 stale하지 않음.
 
 **Verification:** taxonomy §5/§6, `VERIFICATION-COMMANDS.md` Layer J/J-OB/Q/R/S, `run-harness-checks.sh`, `skills/workflow/repo-health.md`, `SOURCE-REPO-OPERATIONS.md` 간 pointer 정합 grep. F1 착수 시 `/tmp/awh-*` 잔존 grep으로 치환 범위 확인.
-
----
-
-#### 외부화 실패모드 통합 설계 원칙 명문화
-
-**Cluster:** W3. Workflow IA Diet
-
-**Task:** AI 맥락 외부화의 3대 실패모드(① 라우팅 누락 ② 비대화 ③ 선언-실행 괴리)와 각 보완(manifest·canonical / archive drain·SSoT 단일화 / test·hard-stop)을 Phase 2 slice 0 방향 결정의 상위 프레임으로 채택
-
-**Dependencies:**
-
-- CHORE-20260604-001 (Done), slice 0
-
-**Done Criteria:** 3대 실패모드와 보완 매핑을 Phase 2 설계 원칙으로 문서화하고, 기존 §5·§7·§8·§9 결정이 이 프레임에 정합하는지 확인
-
-**Verification:** slice 0 방향 결정 문서/DR에서 세 실패모드가 각각 어느 보완으로 닫히는지 추적 가능
 
 ---
 

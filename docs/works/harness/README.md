@@ -23,6 +23,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260612-006 | 외부화 실패모드 통합 설계 원칙 명문화 | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260612-006-externalization-failure-modes.md` |
 | CHORE-20260611-011 | Docs Cascade 현행화 | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260611-011-docs-cascade.md` |
 | CHORE-20260611-009 | Source repo maintainer operations manual | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-009-source-repo-maintainer-operations.md` |
 | CHORE-20260611-008 | repo-health gate-config/gate-list 정합 surface | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-008-repo-health-gate-alignment.md` |
