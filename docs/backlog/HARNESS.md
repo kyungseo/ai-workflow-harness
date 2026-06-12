@@ -40,7 +40,6 @@ AI Workflow Harness backlog다.
 | --- | --- | --- | --- | --- |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
 | — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
-| — | P1 | Candidate | L2 | Prompt surface diet + optional pack 재정의 |
 | — | P2 | Candidate | L2 | Harness protocol trigger family simplification |
 | — | P2 | Candidate | L2 | `skills/workflow/repo-health.md` slice 분리 |
 | — | P2 | Candidate | L2 | `skills/workflow/work-doc.md` class 재검토 |
@@ -155,7 +154,7 @@ AI Workflow Harness backlog다.
 
 **Dependencies:**
 
-- 연계: `Prompt surface diet + optional pack 재정의`(P1, canonical weight 경량화), `skills/workflow/repo-health.md slice 분리`(P2), `skills/workflow/work-doc.md class 재검토`(P2), `Harness protocol trigger family simplification`(P2, trigger 재그룹화 ⊂ 이 restructure).
+- 연계: `Prompt surface diet + optional pack 재정의`는 CHORE-20260612-010에서 classification-only로 완료. 후속은 `skills/workflow/repo-health.md slice 분리`(P2), `skills/workflow/work-doc.md class 재검토`(P2), `Harness protocol trigger family simplification`(P2, trigger 재그룹화 ⊂ 이 restructure).
 - 검증 척추(CHORE-20260611-005 도입 완료) — restructure cascade를 test-backed로 검증.
 - DR-021, DR-023.
 
@@ -169,24 +168,6 @@ AI Workflow Harness backlog다.
 
 - before/after context 로드 시나리오(사람/AI)에서 개요→상세 경로가 끊김 없이 연결됨.
 - 중복 grep으로 제거 확인, stale pointer 없음.
-
----
-
-#### Prompt surface diet + optional pack 재정의
-
-**Cluster:** W3. Workflow IA Diet
-
-**Task:** source repo에서도 `prompts/*session-start.md` 3종과 `prompts/README.md`를 제외한 task prompt(`00~22`)를 live surface에서 제거할지 결정한다. 제거 결정 시 실제 삭제하지 않고 `docs/archive/` 하위로 이동하거나 opt-in archive/example pack으로 격리해 이력을 보존한다. 기본 판단: canonical workflow(`skills/workflow/*.md` + adapter) 이후 task prompt library는 harness core라기보다 과거 product-template/example pack 성격이 강하고 cascade 비용이 큼. archive/격리 시 `scripts/create-harness.sh --with-optional`, README, WORKFLOW-MANUAL, PLAN/PLAN-SUMMARY, maintainer guide, repo-health prompt cascade 표를 함께 정리한다. **연계: `work-doc.md` class 재검토(P2)**
-
-**docs/ 물리 레이아웃 재검토 (CHORE-20260610-009 라우팅):** 이 항목에서 `--with-optional` 재정의와 함께 docs/ 물리 레이아웃(user/maintainer/pack을 audience별 디렉토리로 분리할지)도 재검토한다. DR-021은 "물리 이동 보류, logical marker로 식별"을 채택했고 근거는 "reversal cost가 높다"였으나, **그 비용은 hardcoded flat-path 참조 방식에 종속**된다 — manifest/anchor 기반 indirection을 도입하면 이동 비용이 낮아져 물리 분리 재고가 정당해질 수 있다. 즉흥 뒤집기 대신 pack 구조·scaffold wiring을 통합 설계하는 이 시점에서 함께 판단한다.
-
-**Dependencies:**
-
-- DR-021 Optional source pack, DR-023 canonical workflow, DR-014 archive policy, prompt/session-start fallback 유지 정책
-
-**Done Criteria:** session-start fallback만 core로 남기는지, task prompt examples를 archive/격리/유지할지 결정하고 source/scaffold 설명이 일관됨. `--with-optional`의 남은 의미(heavy docs/example rules/profile)를 재정의. docs/ 물리 레이아웃 분리 여부와 (분리 시) 참조 indirection 방식을 DR-021 reversal-cost 논거와 함께 결정
-
-**Verification:** `find prompts`, `rg "prompts/"`, scaffold dry-run, generated README/manual/prompt inventory 확인. archive 결정 시 live prompt stale reference 없음 + archive 경로에서 이력 보존 확인
 
 ---
 
@@ -258,11 +239,11 @@ AI Workflow Harness backlog다.
 
 **Cluster:** W3. Workflow IA Diet
 
-**Task:** 243줄. Design System·Tone & Manner·Presentation Deck Principles 등 product-track 특화 내용이 harness core A-class canonical에 포함되어 있음. DR-021 A/B-class boundary 기준으로 Optional source pack 또는 source-only 이동 여부를 결정한다. **연계: Prompt surface diet + optional pack 재정의(P1)**
+**Task:** 243줄. Design System·Tone & Manner·Presentation Deck Principles 등 product-track 특화 내용이 harness core A-class canonical에 포함되어 있음. DR-021 A/B-class boundary 기준으로 Optional source pack 또는 source-only 이동 여부를 결정한다. **연계: CHORE-20260612-010 classification result**
 
 **Dependencies:**
 
-- DR-021 A/B-class boundary, `Prompt surface diet + optional pack 재정의`(P1)
+- DR-021 A/B-class boundary, CHORE-20260612-010 prompt/optional pack classification result
 
 **Done Criteria:** DR-021 기준으로 class 판정 완료. Optional pack 이동 시 scaffold/adapter/README cascade 반영
 
@@ -289,7 +270,7 @@ AI Workflow Harness backlog다.
 **Dependencies:**
 
 - CHORE-20260612-001에서 정리한 planning pack/import loop 기준 위에서 실제 product 산출물과 일반화 가능 범위를 먼저 확보.
-- `Prompt surface diet + optional pack 재정의`(P1) 방향 결정.
+- CHORE-20260612-010 prompt/optional pack classification result.
 - scaffold/tool-surface regression alignment(CHORE-20260611-006 완료) 이후 착수 권장.
 - `scripts/create-harness.sh --with-optional` 현행 설계 파악 필요.
 

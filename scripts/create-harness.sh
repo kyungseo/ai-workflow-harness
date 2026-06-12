@@ -800,7 +800,7 @@ ${OPTIONAL_README_ROWS}| \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 | \`.claude/commands/\` | \`/session-start\`, \`/work-select\`, \`/work-register\`, \`/work-plan\`, \`/work-close\`, \`/session-summary\` 등 |
 | \`.agents/skills/\` | Codex workflow adapter |
 | \`.codex/hooks.json\` | Codex hook 설정 |
-| \`prompts/\` | 세션 시작 및 태스크 프롬프트 라이브러리 |
+| \`prompts/\` | 세션 시작 fallback prompt (optional: generic task prompt library) |
 
 ### Workflow 구조
 
