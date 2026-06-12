@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-11 (세션: CHORE-20260611-010 Done — pre-manifest adopter upgrade/migration mechanism 정립, archive pending 1건)
+Last updated: 2026-06-12 (세션: CHORE-20260611-011 Archived — docs cascade 현행화 정리 완료, archive pending 1건)
 
 ## Current State
 
@@ -27,7 +27,6 @@ Last updated: 2026-06-11 (세션: CHORE-20260611-010 Done — pre-manifest adopt
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| _(none)_ | | |
 
 ## Blockers And Open Questions
 
@@ -38,6 +37,7 @@ Last updated: 2026-06-11 (세션: CHORE-20260611-010 Done — pre-manifest adopt
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-12 | CHORE-20260611-011: Docs cascade 현행화 완료 — README Documentation Map/Repository Layout에 source-only maintainer map을 반영하고, `docs/backlog/PRODUCT.md` dangling을 제거. maintainer README의 migration 인덱스는 SSoT 복제를 피하고 `docs/maintainer/migrations/README.md` pointer로만 유지. readability/tone rewrite는 별도 backlog candidate로 분리 | CHORE-20260611-009/010 이후 reader entrypoint가 실제 구조보다 뒤처지던 cascade debt를 객관적 map/link/pointer 정리로 해소. user-facing tone rewrite와 source-only maintainer depth를 섞지 않기 위해 scope를 분리 — Claude R0a~R1a 합의 | Low |
 | 2026-06-11 | CHORE-20260611-010: pre-manifest adopter upgrade/migration mechanism 정립 — ai-deck-compiler가 manifest 없는 pre-manifest target임을 실측하고, Draft DR-034로 inventory-first + shadow scaffold manifest baseline + project-owned 보존 정책을 기록. manifest-check-baseline.md per-change note 신설, SOURCE-REPO-OPERATIONS.md adopter migration entry 추가, VERIFICATION-COMMANDS.md Layer T를 실행형 검증으로 승격. R1a 재실측에서 첫 drift 분포 76 tracked, 9 in-sync, 67 drifted 확인 후 selective 수렴 경로 기록 | W2 Adopter Transition 첫 gap인 upgrade/migration 경로 부재 해소. `--existing`은 upgrade가 아니며, pre-manifest target은 manifest 심기 전 `--check`가 무력하다는 실측 기반 정책 필요 — Claude R0~R1a 합의 | Medium |
 | 2026-06-11 | CHORE-20260611-009: source repo maintainer operations runbook 신설(`docs/maintainer/SOURCE-REPO-OPERATIONS.md`) — 검증 척추(005~008) 산출물을 변경 lifecycle 순서축(A lifecycle·B 변경유형 5종 매트릭스·C tier·D temp/·E 자산역할·F PR checklist)으로 엮음. SSoT(taxonomy/catalog/recovery/repo-health/GUIDE) 복제 없이 pointer-only, 배포 surface 0개로 source-only 경계 차단. lifecycle은 tool-neutral(고정 역할 없음) | 검증 척추 산출물의 운영 진입 문서 부재 해소. W1 Validation Spine 완결 — Codex R0~R2 합의 | Low |
 | 2026-06-11 | CHORE-20260611-008: gate path-list parity Q-static 신설(`VERIFICATION-COMMANDS.md`) — 5 surface(gate-lists.sh·rule·source/template GIT-WORKFLOW·seed) 3축(protected expected-matrix·finalization policy·seed/add-only). source GIT-WORKFLOW에 finalization pointer 추가(실 drift 해소), template stale "edit gate-lists" 안내 add-only 정정. repo-health Surface Matrix는 pointer-only, `.harness/gate-config` LIVE_TARGETS 미추가(source phantom) | backlog 전제(gate-config가 source live) 정정. gate 정책이 5 표면에 중복 서술되며 drift 미검출이던 사각지대를 catalog 검증으로 닫음 — Codex R0~R2 합의 | Low |
@@ -67,8 +67,9 @@ Last updated: 2026-06-11 (세션: CHORE-20260611-010 Done — pre-manifest adopt
    - ✓ **Source repo maintainer operations manual** — CHORE-20260611-009에서 `docs/maintainer/SOURCE-REPO-OPERATIONS.md` 신설(변경 lifecycle 순서축 runbook, pointer-only, 배포 surface 0). **W1 Validation Spine 완결.** 잔여 후속은 F1~F4(완료 시 runbook B/C절 update trigger)
 2. **W2 — Adopter Transition** (다음 주 실제 product 적용 준비):
    - ✓ **Harness upgrade/migration 메커니즘** — CHORE-20260611-010에서 pre-manifest adopter inventory-first + shadow scaffold manifest baseline + Layer T 실행형 검증 정립 완료. 후속: 실제 target 적용 또는 두 번째 adopter 검증 후 DR-034 Accepted 승격 판단
+   - ✓ **Docs cascade 현행화** — CHORE-20260611-011에서 README Documentation Map / maintainer map / onboarding surfaces의 objective cascade 정리 완료. 후속 톤/청중 재작성 작업은 별도 candidate(`User-facing docs readability rewrite`)로 유지
    - **Product starter planning pack + feedback import loop** — source repo에서 product plan을 먼저 만들고, scaffold repo 산출물을 source option-pack 후보로 반입하는 loop 설계
-   - **User-facing docs rewrite** — README rewrite 기준으로 onboarding guide/workflow manual/generated onboarding surface 전면 재작성
+   - **User-facing docs readability rewrite** — README/MANUAL/GUIDE류를 초보 개발자·일반 독자 친화성과 전문적 정확성을 동시에 만족하도록 재작성
    - **Scaffold multi-user clone verification** — generic/source-gitflow target에서 clone·branch·hook·CI 경로 점검
 3. **W3 — Workflow IA Diet** (큰 구조 변경은 결정/최소 정리까지만):
    - Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health/work-doc slice/class 검토
