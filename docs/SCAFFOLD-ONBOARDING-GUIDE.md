@@ -42,11 +42,24 @@ Target project는 생성된 `docs/BOOTSTRAP.md`, `docs/STATUS.md`, backlog, Work
 scaffold 직후에는 빈 껍데기 상태이므로, `docs/BOOTSTRAP.md`의 §0~§9를 순서대로 확인해야
 AI가 프로젝트 맥락을 올바르게 파악하고 실제 작업에 착수할 수 있다.
 
+먼저 큰 흐름만 잡고 싶다면 아래 4단계만 기억해도 시작할 수 있다.
+
+1. scaffold된 **target project directory**로 이동한다.
+2. `/session-start`를 실행해 `docs/STATUS.md`의 Next Actions를 확인한다.
+3. bootstrap pointer가 있으면 `docs/BOOTSTRAP.md`의 §0 → §4를 먼저 채운다.
+4. 온보딩이 끝나면 그 다음부터는 일반 workflow(`/work-select` → `/work-plan`)로 넘어간다.
+
 **온보딩이 완료된 상태란:**
 - AI가 "어떤 프로젝트인지", "어떤 기술을 쓰는지", "무엇을 먼저 해야 하는지"를 알고 있는 상태
 - `docs/STATUS.md`에 실제 작업 후보가 등록되어 있는 상태
 - `docs/STATUS.md` Next Actions의 scaffold bootstrap pointer가 제거되거나 다음 실제 작업으로 교체된 상태
 - 다음 세션에서 `/session-start`를 실행하면 bootstrap 반복 없이 실제 작업 후보로 이어지는 상태
+
+반대로 아직 온보딩이 덜 된 상태는 아래처럼 보면 된다.
+
+- `/session-start`를 할 때마다 `docs/BOOTSTRAP.md`로 다시 돌아간다.
+- Product Definition이나 Implementation Baseline이 비어 있어 backlog 후보를 만들기 어렵다.
+- target project인지 source repo clone인지 스스로 설명하기 어렵다.
 
 **중간에 잘못돼도 다시 시작할 수 있다.**
 온보딩은 문서와 git 상태를 정리하는 과정이므로, 사용자가 승인하면 언제든 중단하거나 처음부터 다시 진행할 수 있다.
@@ -98,6 +111,8 @@ scaffold 후 생성되는 `docs/BOOTSTRAP.md`는 아래 순서로 구성된다.
 
 scaffold 직후 `docs/STATUS.md`에는 `Next Actions`가 이미 bootstrap onboarding을 가리킨다.
 따라서 첫 `/session-start`는 clean idle로 끝나지 않고, `docs/BOOTSTRAP.md`를 후속으로 읽어야 한다고 안내하는 것이 정상이다.
+
+즉, 첫 `/session-start`의 목표는 "바로 구현 시작"이 아니라 "지금 이 프로젝트에 무엇이 비어 있는지 파악"하는 것이다.
 
 예상되는 요약은 아래와 비슷하다.
 
@@ -183,6 +198,8 @@ workspace root가 scaffold된 프로젝트 경로인지, 그 루트에 `AGENTS.m
 ```
 
 > **핵심 원칙:** AI는 사용자의 승인 없이 파일을 수정하거나 커밋하지 않는다.
+
+git이 아직 없거나 branch 전략이 정해지지 않았더라도 이 원칙은 그대로 유지된다. 단지 commit / PR / `git diff` 기반 검증이 `Not Applicable`로 바뀔 뿐이다.
 
 ---
 

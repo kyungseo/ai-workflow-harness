@@ -29,7 +29,7 @@ AI Workflow Harness backlog다.
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
 | W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속 F1~F4는 W3 repo-health slice·W4 enforcement로 연결 |
-| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001) User-facing docs readability rewrite, Scaffold multi-user clone verification |
+| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002) Scaffold multi-user clone verification |
 | W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health slice, work-doc class |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원, `/exit` gap |
@@ -38,7 +38,6 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | User-facing docs readability rewrite — audience-aware README/MANUAL/GUIDE |
 | — | P1 | Candidate | L2 | Scaffold multi-user clone verification |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
 | — | P1 | Candidate | L2 | 외부화 실패모드 통합 설계 원칙 명문화 |
@@ -336,31 +335,6 @@ AI Workflow Harness backlog다.
 **Verification:** core scaffold dry-run에서 pack 미포함 확인. option-pack dry-run에서 파일 목록·tool surface wiring 확인. product repo 산출물 → source repo import 후보 mapping 검토. README/GUIDE/MANUAL에 pack 설명이 과잉 노출되지 않는지 확인.
 
 **사전 참고:** 현재 `scripts/create-harness.sh`는 `--profile spring-boot`와 `--with-optional`만 지원한다. `--with-spring-boot-msa` 같은 새 옵션은 즉시 전제하지 않고, product pack 검증 Layer U(CHORE-20260611-007)가 정의한 검증 골격 위에서 import format이 W2에서 확정된 뒤 판단한다.
-
----
-
-#### User-facing docs readability rewrite — audience-aware README/MANUAL/GUIDE
-
-**Cluster:** W2. Adopter Transition
-
-**Task:** README/MANUAL/GUIDE류 문서를 초보 개발자 또는 일반 독자도 따라올 수 있는 구조와 톤으로 재작성한다. 단, 전문적 제약·운영 위험·정책 판단은 생략하지 않는다. 이번 항목은 CHORE-20260611-011의 객관적 cascade가 아니라, 독자별 구성·톤·문장 품질을 다루는 별도 rewrite 작업이다.
-
-**Audience / Writing Principles:**
-
-- 쉬운 문장은 단순화가 아니라 **독자별 정보 설계**다. 먼저 독자의 상황과 다음 행동을 잡고, 필요한 개념·명령·위험을 그 순서로 설명한다.
-- source maintainer용 문서는 더 촘촘해도 되지만, 사람이 쓴 운영 문서처럼 읽혀야 한다. 선언문·슬로건·AI가 생성한 듯한 추상어를 줄이고, "왜 필요한가 → 언제 읽는가 → 무엇을 하면 되는가"가 보이게 쓴다.
-- 새 용어나 framework 내부 개념은 처음 등장할 때 짧게 의미를 풀고, 이후에는 일관된 이름으로 사용한다. 독자가 모르는 전제를 암묵적으로 요구하지 않는다.
-- AI execution SSoT(`skills/workflow/*.md`, protocol, adapter)는 사용자 매뉴얼화하지 않는다. readability 원칙의 1차 대상은 README, onboarding guide, workflow manual, maintainer guide 같은 human-facing 문서다.
-
-**Dependencies:**
-
-- CHORE-20260611-011 Docs cascade 현행화 완료.
-- CHORE-20260606-005 README overhaul 기준.
-- DR-007 language policy, DR-021 source/target boundary.
-
-**Done Criteria:** README/MANUAL/GUIDE류 핵심 문서가 청중별 목적·다음 행동·전문적 제약을 자연스러운 문장으로 설명한다. 사람이 쓴 운영 문서처럼 읽히며, AI식 추상 문장과 선언문 과잉이 줄어든다. canonical workflow나 skills 문서를 사용자용 manual처럼 바꾸지 않는다.
-
-**Verification:** 주요 문단 샘플 리뷰: "초보 독자가 다음 행동을 알 수 있는가", "전문적 제약이 누락되지 않았는가", "AI식 추상 문장이 과잉이지 않은가". README ↔ onboarding guide ↔ workflow manual ↔ maintainer guide의 audience/role 중복 점검. DR-007 language policy와 source/target boundary grep.
 
 ---
 
