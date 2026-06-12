@@ -105,19 +105,13 @@ MUST NOT:
 
 ## Work Item Routing
 
+이 섹션은 문서를 읽기 위한 load map이 아니라, 현재 작업을 어떤 tracker에서 관리하거나 갱신하는지 보여주는 write/track 관점 라우팅이다.
+
 | Item | Where |
 | --- | --- |
 | 지금 진행 중인 작업 | `docs/STATUS.md` Active Work |
-| 다음 후보 Product track 작업 | `docs/backlog/PRODUCT.md` |
-| 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
-| Scaffold bootstrapping checklist | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` |
-| 큰 작업의 SSoT (실행 계획·세부 분해) | `docs/works/{category}/{ID}-{topic}.md` |
-| 결정 근거 | `docs/decisions/DR-*.md` |
-| 완료된 과거 상태 | `docs/archive/` |
 
-새 작업 항목 등록은 `/work-register`로 수행한다. 긴급도와 성격에 따라 TYPE(FEAT/PATCH/HOTFIX/CHORE)을 판단하고 위 위치 중 적절한 곳에 라우팅된다. backlog 후보는 제목/slug만 유지하고, Work ID는 `/work-plan` 착수 승인 후 Work 파일 생성 시 확정한다.
-
-Work ID 형식 상세 기준: `docs/HARNESS-NAMING-RULES.md`
+새 작업 항목 등록은 `/work-register`로 수행한다. 등록 시 TYPE(FEAT/PATCH/HOTFIX/CHORE)를 판단하고 backlog 후보는 제목/slug만 유지한다. Work ID는 `/work-plan` 착수 승인 후 Work 파일 생성 시 확정한다.
 
 ## Risk Levels
 
