@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| CHORE-20260612-009 | Canonical 계층화 Slice 3 — Work Item Routing 중복 감사 + 해소 | `docs/works/harness/CHORE-20260612-009-canonical-layer-slice3.md` |
 
 ## Done (Archive Pending)
 
