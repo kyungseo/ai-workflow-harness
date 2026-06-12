@@ -38,7 +38,6 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | source-gitflow second-contributor entry path 보강 (CHORE-20260612-003 G1/G2) |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
 | — | P1 | Candidate | L2 | 외부화 실패모드 통합 설계 원칙 명문화 |
 | — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
@@ -335,32 +334,6 @@ AI Workflow Harness backlog다.
 **Verification:** core scaffold dry-run에서 pack 미포함 확인. option-pack dry-run에서 파일 목록·tool surface wiring 확인. product repo 산출물 → source repo import 후보 mapping 검토. README/GUIDE/MANUAL에 pack 설명이 과잉 노출되지 않는지 확인.
 
 **사전 참고:** 현재 `scripts/create-harness.sh`는 `--profile spring-boot`와 `--with-optional`만 지원한다. `--with-spring-boot-msa` 같은 새 옵션은 즉시 전제하지 않고, product pack 검증 Layer U(CHORE-20260611-007)가 정의한 검증 골격 위에서 import format이 W2에서 확정된 뒤 판단한다.
-
----
-
-#### source-gitflow second-contributor entry path 보강
-
-> 2026-06-12 등록 (CHORE-20260612-003 G1/G2 발견).
-
-**Cluster:** W2. Adopter Transition
-
-**Task:** CHORE-20260612-003 clone verification에서 발견된 두 가지 Critical gap을 보강한다.
-- G1: scaffold target README.md가 hook install을 직접 가리키지 않음. second-contributor가 blind onboarding 상태에서 `sh tools/git-hooks/install.sh` 경로를 찾기 어려움 (entry-path discoverability failure).
-- G2: `docs/GIT-WORKFLOW.md §0-1`에 "Fresh repo"(초기 설정자)와 "Existing repo"(overlay 적용자) 분기만 있고 "Clone from existing remote"(두 번째 contributor) 경로가 없음.
-
-**대상 surface (좁게 한정):**
-- scaffold target `README.md` — hook install 또는 GIT-WORKFLOW §0-1 포인터 직접 추가
-- scaffold `docs/GIT-WORKFLOW.md §0-1` — "Clone from existing remote" 하위 절 또는 명시적 note
-
-**추가 확인 사항:** "bootstrap 완료 후 later-contributor clone" 시나리오(CHORE-20260612-003 검증 한계) 커버 여부
-
-**Dependencies:**
-
-- CHORE-20260612-003 (Findings G1, G2)
-
-**Done Criteria:** second-contributor가 README/GUIDE만 보고 hook 설치 경로를 발견할 수 있음. GIT-WORKFLOW §0-1에서 clone 경로가 명확히 분리됨.
-
-**Verification:** blank-state 재현 — scaffold 후 GIT-WORKFLOW 없이 README/BOOTSTRAP만 보고 hook 설치 경로 발견 가능한지 확인. GIT-WORKFLOW §0-1 clone 절 존재 확인.
 
 ---
 
