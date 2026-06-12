@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-12 (세션: CHORE-20260612-004 Done — source-gitflow second-contributor entry path 보강 완료)
+Last updated: 2026-06-12 (세션: CHORE-20260612-005 Done — backlog row lifecycle SSoT 정비 완료)
 
 ## Current State
 
@@ -75,5 +75,4 @@ Last updated: 2026-06-12 (세션: CHORE-20260612-004 Done — source-gitflow sec
 3. **W3 — Workflow IA Diet** (큰 구조 변경은 결정/최소 정리까지만):
    - Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health/work-doc slice/class 검토
 4. **W4/W5 — Lifecycle hygiene 및 optional 확장**:
-   - Backlog row lifecycle SSoT는 짧게 닫을 수 있는 hygiene 후보
    - Archive policy, Spring Boot MSA TDD option-pack, template pack, CLI naming, Windows, `/exit` gap은 실제 product 운용 후 필요성 재판단

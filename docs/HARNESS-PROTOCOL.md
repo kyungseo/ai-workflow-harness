@@ -372,7 +372,7 @@ backlog 항목의 Status가 Done 또는 Superseded가 되면 다음 기준으로
 
 | 조건 | 처리 |
 | --- | --- |
-| Done — 연관 Work 파일이 archived | backlog 파일에서 해당 행 삭제 |
+| Done — Work Done 처리 완료 (→ `/work-close` Step 5) | backlog 파일에서 해당 행 삭제 |
 | Done — Work 파일 없음 (Quick Mode) | Phase 완료 또는 다음 harness review 시 삭제 |
 | Superseded | 즉시 삭제 가능 |
 

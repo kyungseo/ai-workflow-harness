@@ -110,7 +110,8 @@ feature branch에서 backlog row에 Work ID를 역기입하지 않는다.
 
 - **이유:** 병렬 feature branch에서 NNN이 충돌할 수 있다 (CHORE-20260527-001 참조).
 - **대신:** Work 파일 Discovery 섹션에 "backlog의 [항목명] candidate 착수"로 기록한다.
-- **backlog row 정리** (제거 또는 Active 표시)는 develop merge 후 tracking-only commit으로 처리한다.
+- **backlog row의 Active 표시**는 develop merge 후 tracking-only commit으로 처리한다.
+- **완료된 backlog row 제거**는 `/work-close`의 Work Done 처리 흐름에서 수행한다.
 
 ### Status Lifecycle
 
