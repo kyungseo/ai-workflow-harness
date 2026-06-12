@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260612-009 | Canonical 계층화 Slice 3 — Work Item Routing 중복 감사 + 해소 | 2026-06-12 | `docs/works/harness/CHORE-20260612-009-canonical-layer-slice3.md` |
 | CHORE-20260612-008 | Canonical 계층화 Slice 2 — Context Routing / Operating Tracks 구조 분리 | 2026-06-12 | `docs/works/harness/CHORE-20260612-008-canonical-layer-slice2.md` |
 | CHORE-20260612-007 | Canonical 개념 계층화 Slice 1 — AGENT-WORKFLOW.md 비대화 점검 + context routing 개선 | 2026-06-12 | `docs/works/harness/CHORE-20260612-007-canonical-layer-slice1.md` |
 | CHORE-20260612-005 | Backlog Row Lifecycle SSoT 정비 | 2026-06-12 | `docs/works/harness/CHORE-20260612-005-backlog-row-lifecycle-ssot.md` |
