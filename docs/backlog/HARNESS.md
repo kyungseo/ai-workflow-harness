@@ -38,7 +38,7 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | Scaffold multi-user clone verification |
+| — | P1 | Candidate | L2 | source-gitflow second-contributor entry path 보강 (CHORE-20260612-003 G1/G2) |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
 | — | P1 | Candidate | L2 | 외부화 실패모드 통합 설계 원칙 명문화 |
 | — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
@@ -338,19 +338,29 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### Scaffold multi-user clone verification
+#### source-gitflow second-contributor entry path 보강
+
+> 2026-06-12 등록 (CHORE-20260612-003 G1/G2 발견).
 
 **Cluster:** W2. Adopter Transition
 
-**Task:** scaffold 후 여러 사용자가 clone하여 작업하는 상황을 상정해 branch/ruleset/hook/CI/advisory/manifest/check 동작을 점검한다. source-gitflow target과 generic/hook-less target을 분리해 검증하고, 결과는 P0 gate series 또는 onboarding refresh에 흡수한다.
+**Task:** CHORE-20260612-003 clone verification에서 발견된 두 가지 Critical gap을 보강한다.
+- G1: scaffold target README.md가 hook install을 직접 가리키지 않음. second-contributor가 blind onboarding 상태에서 `sh tools/git-hooks/install.sh` 경로를 찾기 어려움 (entry-path discoverability failure).
+- G2: `docs/GIT-WORKFLOW.md §0-1`에 "Fresh repo"(초기 설정자)와 "Existing repo"(overlay 적용자) 분기만 있고 "Clone from existing remote"(두 번째 contributor) 경로가 없음.
+
+**대상 surface (좁게 한정):**
+- scaffold target `README.md` — hook install 또는 GIT-WORKFLOW §0-1 포인터 직접 추가
+- scaffold `docs/GIT-WORKFLOW.md §0-1` — "Clone from existing remote" 하위 절 또는 명시적 note
+
+**추가 확인 사항:** "bootstrap 완료 후 later-contributor clone" 시나리오(CHORE-20260612-003 검증 한계) 커버 여부
 
 **Dependencies:**
 
-- P0 gate series, DR-020, DR-021, source-gitflow bootstrap
+- CHORE-20260612-003 (Findings G1, G2)
 
-**Done Criteria:** fresh scaffold→git init/remote/clone→두 사용자 작업→PR/check/manual gate 경로의 위험과 문서 gap을 식별하고 필요한 후속 Work로 연결
+**Done Criteria:** second-contributor가 README/GUIDE만 보고 hook 설치 경로를 발견할 수 있음. GIT-WORKFLOW §0-1에서 clone 경로가 명확히 분리됨.
 
-**Verification:** temp repo 2개 clone 시뮬레이션 또는 mock 한계 보고, branch/ruleset/manifest/check 경로 확인
+**Verification:** blank-state 재현 — scaffold 후 GIT-WORKFLOW 없이 README/BOOTSTRAP만 보고 hook 설치 경로 발견 가능한지 확인. GIT-WORKFLOW §0-1 clone 절 존재 확인.
 
 ---
 
