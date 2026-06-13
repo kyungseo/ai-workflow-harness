@@ -32,7 +32,7 @@ AI Workflow Harness backlog다.
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002) Scaffold multi-user clone verification |
 | W3. Workflow IA Diet ✓ 완결 | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | (Canonical 개념 계층화 핵심 달성 = CHORE-20260613-002~005, Prompt surface diet 완료 = CHORE-20260612-010, work-doc class 완료 = CHORE-20260613-005, trigger family simplification 완료 = CHORE-20260613-006) 전부 완료 |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | (전부 종결) Validation Spine residual F1~F4 = CHORE-20260613-017/018·DR-036, 문서-only 규칙 강제화 = DR-037, Archive 누적 관리 정책 = DR-038, CI inline assertion ↔ invariants SSoT parity = CHORE-20260613-016 no-action closeout |
-| W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원, `/exit` gap |
+| W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원 |
 
 ### Summary
 
@@ -42,7 +42,6 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P2 | Candidate | L3 | Scaffold CLI naming audit |
 | HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
-| HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 |
 
 ---
 
@@ -136,22 +135,6 @@ AI Workflow Harness backlog다.
 **Done Criteria:** (착수 시) WSL/Git Bash 전제가 onboarding 문서에 명시되고 `python3` 의존성의 graceful 동작이 확인됨. native cmd/PowerShell 지원은 Done 기준에 포함하지 않는다.
 
 **Verification:** WSL/Git Bash별 `create-harness.sh`·`/start` smoke, Stop hook의 `python3`/`python` fallback 동작 확인. (과거 `/tmp` 대체안 항목은 `temp/` 정책으로 해소되어 제거됨.)
-
----
-
-#### `/exit` → Stop hook gap 추적 (HRN-016)
-
-**Cluster:** W5. Future / Optional
-
-**Task:** Claude Code process-exit hook 지원 여부 모니터링 (소극적 감시; 지원 확인 전 action 없음)
-
-**Dependencies:**
-
-- —
-
-**Done Criteria:** Claude Code 릴리즈 노트에서 process-exit hook 지원 확인 시 `settings.json` 보완 및 문서 갱신
-
-**Verification:** 릴리즈 노트 확인 후 gap 해소 여부 검증
 
 ---
 
