@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-13 (세션: CHORE-20260613-011 F2 wiring decision Done)
+Last updated: 2026-06-13 (세션: CHORE-20260613-012 doc-only enforcement 테마 종결 Done)
 
 ## Current State
 
@@ -37,6 +37,7 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-011 F2 wiring decision Done)
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-13 | CHORE-20260613-012 / DR-037: broad 테마 `문서-only 규칙 강제화`를 종결 — doc-only 규칙 전반 enforcement landscape를 기록하고, (위반-피해 + 기계강제 가능 + gate 부재) 동시 만족은 branch-isolation 유일=강제화 완료, 나머지는 기존강제 또는 behavioral(hard-gate 부적합)로 판정. parent backlog 제거 + dangling 3건 repoint | criterion #1("강제화 후보 규칙 목록 + 수단 매핑")을 실제 산출물 없이 체크하는 것을 막고, "다른 규칙도 hard-gate하자" 재론을 차단하기 위해. Claude self red-team R0 | Low |
 | 2026-06-13 | CHORE-20260613-011 / DR-036: Runner / CI / F2 wiring을 **무배선**으로 종결 — `run-harness-checks.sh`를 CI required check·pre-commit gate에 배선하지 않고 manual-only 유지. runner 검사는 이미 `ci.yml`·`pre-commit`에서 강제되고 tier2는 과중, 고유가치(invariants SSoT 호출)는 F4 repo-health surface 대상. **DR-035 follow-up split(3종) 전체 완료** | runner 배선이 enforcement 공백을 메우지 않고 중복만 만들며, 2026-06-08부터 3회 deferral된 F2를 재론 없이 닫기 위해. CI↔invariants SSoT parity residual은 별도 candidate로 분리. Claude self red-team R0 | Low |
 | 2026-06-13 | CHORE-20260613-010: project-protected extension classification 완료 — `.harness/gate-config`에 `[tracking-state]` section을 신설해 custom protected path를 P2-T1(develop warning)으로 선언하는 최소 mechanism 구현. `awh_is_branch_isolation_tracking_path()` custom fallthrough와 protected union 확장, `create-harness.sh` seed / source rule / doc cascade 정렬 | DR-035에서 고정한 P1/P2 class를 runtime에 반영하고, adopter target repo가 project-specific tracking-state path를 T1 warning 예외로 선언할 수 있는 최소 add-only 메커니즘을 제공하기 위해. Claude R0/R1 승인 | Medium |
 | 2026-06-13 | CHORE-20260613-007 / DR-035: protected workflow enforcement exception classes를 `I0/T1/S1/P1/P2`로 고정. Quick Mode/product L1은 독립 예외 클래스가 아니며, DR-025 finalization trailer는 branch isolation에서 재사용하지 않음 | `문서-only 규칙 강제화`를 broad implementation으로 열기 전에, 상태 파일 / 구조 파일 / project extension / override boundary를 선행 결정으로 고정해 후속 slice를 runtime hardening / custom classification / F2 wiring으로 분해하기 위해. Claude R0/R1 승인 | Medium |
@@ -44,7 +45,6 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-011 F2 wiring decision Done)
 | 2026-06-13 | CHORE-20260613-006: trigger family simplification 완료. trigger family를 `/work-select`, `/work-plan`, `/work-close`, `/session-summary` 중심으로 정리하고 STATUS/Next Actions 정합까지 마쳐 **W3 Workflow IA Diet**를 종료 | 구조 변경을 더 벌리지 않고도 workflow 진입면과 종료면의 naming/load 흐름을 단순화하고, W3를 decision/minimal realignment 범위 안에서 깔끔하게 닫기 위해 | Low |
 | 2026-06-12 | CHORE-20260612-001: source-only maintainer 문서 `docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md`를 신설해 product starter planning pack의 seed/template 경계, source-owned vs product-owned vs import-candidate 분류, source→product→source provisional loop, generic template 분석 기준을 정리. `VERIFICATION-COMMANDS.md` Layer U의 U2~U4는 executable 승격 없이 structured checklist/review aid로 구체화 | 다음 product 착수 전에 source repo가 먼저 제공할 planning skeleton과 product-local concreteization 경계를 명확히 하고, 실사례 없는 import loop를 과장 없이 provisional skeleton로 남기기 위해. CHORE-20260611-007/009/010/011 후속 구조 공백 해소 — Claude R0~R1a 합의 | Medium |
 | 2026-06-12 | CHORE-20260611-011: Docs cascade 현행화 완료 — README Documentation Map/Repository Layout에 source-only maintainer map을 반영하고, `docs/backlog/PRODUCT.md` dangling을 제거. maintainer README의 migration 인덱스는 SSoT 복제를 피하고 `docs/maintainer/migrations/README.md` pointer로만 유지. readability/tone rewrite는 별도 backlog candidate로 분리 | CHORE-20260611-009/010 이후 reader entrypoint가 실제 구조보다 뒤처지던 cascade debt를 객관적 map/link/pointer 정리로 해소. user-facing tone rewrite와 source-only maintainer depth를 섞지 않기 위해 scope를 분리 — Claude R0a~R1a 합의 | Low |
-| 2026-06-11 | CHORE-20260611-010: pre-manifest adopter upgrade/migration mechanism 정립 — ai-deck-compiler가 manifest 없는 pre-manifest target임을 실측하고, Draft DR-034로 inventory-first + shadow scaffold manifest baseline + project-owned 보존 정책을 기록. manifest-check-baseline.md per-change note 신설, SOURCE-REPO-OPERATIONS.md adopter migration entry 추가, VERIFICATION-COMMANDS.md Layer T를 실행형 검증으로 승격. R1a 재실측에서 첫 drift 분포 76 tracked, 9 in-sync, 67 drifted 확인 후 selective 수렴 경로 기록 | W2 Adopter Transition 첫 gap인 upgrade/migration 경로 부재 해소. `--existing`은 upgrade가 아니며, pre-manifest target은 manifest 심기 전 `--check`가 무력하다는 실측 기반 정책 필요 — Claude R0~R1a 합의 | Medium |
 
 ## Next Actions
 
@@ -71,6 +71,7 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-011 F2 wiring decision Done)
    - ✓ **Canonical 개념 계층화** — CHORE-20260613-002~005로 핵심 목표 달성, 별도 Work 없이 종료
    - ✓ **trigger family simplification** — CHORE-20260613-006 완료. **W3 Workflow IA Diet 전부 완결.**
 4. **W4/W5 — Lifecycle hygiene 및 optional 확장**:
-   - ✓ **DR-035 follow-up split 전체 완료** — CHORE-20260613-008(framework default) / -010(P1/P2 classification) / -011(F2 wiring, 무배선·DR-036) 종결
-   - 잔여: `Validation Spine residual`의 F1/F3/F4 (F2는 DR-036으로 종결), 신규 `CI inline assertion ↔ invariants SSoT parity` candidate, Archive 누적 관리 정책
+   - ✓ **`문서-only 규칙 강제화` 테마 종결 (DR-037)** — doc-only enforcement landscape 검토 결과 branch-isolation만 강제화 대상이었고 완료. 나머지는 기존강제 또는 behavioral(hard-gate 부적합)
+   - ✓ **DR-035 follow-up split 전체 완료** — CHORE-20260613-008 / -010 / -011(F2 무배선·DR-036)
+   - 잔여: `Validation Spine residual`의 F1/F3/F4, 신규 `CI inline assertion ↔ invariants SSoT parity` candidate, Archive 누적 관리 정책
    - Spring Boot MSA TDD option-pack, template pack, CLI naming, Windows, `/exit` gap은 실제 product 운용 후 필요성 재판단

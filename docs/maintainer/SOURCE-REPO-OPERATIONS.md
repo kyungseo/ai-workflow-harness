@@ -112,7 +112,7 @@ work-select → work-plan → review → 구현 → result review → work-close
 
 **실패 시:** `docs/HARNESS-RECOVERY-VALIDATION.md`의 failure state / Validation Checklist로 이동. VALIDATE 실패 상태에서는 checkpoint·commit을 만들지 않는다.
 
-**CI/hook/hard-gate 미적용 항목 해석:** 일부 규칙은 문서로만 기술되고 기계 강제(CI/hook/hard-gate)가 없다. 이때는 **수동 점검이 곧 gate**다 — 자동 신호 부재를 "통과"로 해석하지 않는다. 기계 강제 후보의 backlog는 `docs/backlog/HARNESS.md` "문서-only 규칙 강제화". source-gitflow hook의 commit gate 정책은 `docs/HARNESS-RECOVERY-VALIDATION.md`(Commit Approval).
+**CI/hook/hard-gate 미적용 항목 해석:** 일부 규칙은 문서로만 기술되고 기계 강제(CI/hook/hard-gate)가 없다. 이때는 **수동 점검이 곧 gate**다 — 자동 신호 부재를 "통과"로 해석하지 않는다. doc-only 규칙의 enforcement landscape(무엇이 강제됨/behavioral인지)는 `docs/decisions/DR-037-doc-only-enforcement-landscape.md`. source-gitflow hook의 commit gate 정책은 `docs/HARNESS-RECOVERY-VALIDATION.md`(Commit Approval).
 
 ---
 
