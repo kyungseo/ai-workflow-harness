@@ -323,6 +323,9 @@ git checkout develop
 git merge origin/main       # develop을 main과 동기화
 git push origin develop
 git status                  # "up to date with 'origin/develop'" 확인
+
+# sync 결과 검증 (절차 수행이 아니라 결과 정합 확인 — git status 보강)
+git log origin/develop..origin/main --oneline   # 비어 있어야 develop이 main과 완전 sync
 ```
 
 ### 3-5. Hotfix Cycle
