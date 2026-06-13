@@ -41,7 +41,6 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
 | — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
 | — | P2 | Candidate | L2 | Harness protocol trigger family simplification |
-| — | P2 | Candidate | L2 | `skills/workflow/work-doc.md` class 재검토 |
 | — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
 | — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
@@ -153,7 +152,7 @@ AI Workflow Harness backlog다.
 
 **Dependencies:**
 
-- 연계: `Prompt surface diet + optional pack 재정의`는 CHORE-20260612-010에서 classification-only로 완료. `skills/workflow/repo-health.md` slice 분리는 CHORE-20260613-004에서 완료. 남은 후속은 `skills/workflow/work-doc.md class 재검토`(P2), `Harness protocol trigger family simplification`(P2, trigger 재그룹화 ⊂ 이 restructure).
+- 연계: `Prompt surface diet + optional pack 재정의`는 CHORE-20260612-010에서 classification-only로 완료. `skills/workflow/repo-health.md` slice 분리는 CHORE-20260613-004에서 완료. `skills/workflow/work-doc.md class 재검토`는 CHORE-20260613-005에서 완료. 남은 후속은 `Harness protocol trigger family simplification`(P2, trigger 재그룹화 ⊂ 이 restructure).
 - 검증 척추(CHORE-20260611-005 도입 완료) — restructure cascade를 test-backed로 검증.
 - DR-021, DR-023.
 
@@ -215,22 +214,6 @@ AI Workflow Harness backlog다.
 
 - inject-revert로 위반 차단 + 정상 통과 확인.
 - 예외(상태 파일 tracking-only 등) 정상 동작 확인.
-
----
-
-#### `skills/workflow/work-doc.md` class 재검토
-
-**Cluster:** W3. Workflow IA Diet
-
-**Task:** 243줄. Design System·Tone & Manner·Presentation Deck Principles 등 product-track 특화 내용이 harness core A-class canonical에 포함되어 있음. DR-021 A/B-class boundary 기준으로 Optional source pack 또는 source-only 이동 여부를 결정한다. **연계: CHORE-20260612-010 classification result**
-
-**Dependencies:**
-
-- DR-021 A/B-class boundary, CHORE-20260612-010 prompt/optional pack classification result
-
-**Done Criteria:** DR-021 기준으로 class 판정 완료. Optional pack 이동 시 scaffold/adapter/README cascade 반영
-
-**Verification:** class 결정 후 scaffold dry-run + generated README 확인. Optional pack 이동 시 `find skills/workflow/work-doc.md` + adapt/write_text 경로 확인
 
 ---
 
