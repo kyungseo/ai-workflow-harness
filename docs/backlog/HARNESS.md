@@ -139,23 +139,26 @@ AI Workflow Harness backlog다.
 
 - 문서상으로만 기술된 내용 중 ci · hook · hard gate 및 가용한 다른 수단으로 강제화할 주요 요소를 검토하고 구현한다.
 - 우선순위는 위반 빈도·실피해가 큰 규칙부터.
+- **선행 결정 완료 (2026-06-13):** DR-035에서 protected workflow surface branch isolation 예외 클래스를 `I0/T1/S1/P1/P2`로 고정했다. 남은 범위는 implementation slice다.
 
 > **[2026-06-08 설계 메모 — CHORE-20260611-008 close 시 `repo-health gate series 보강`에서 이관]** pre-commit hook이 protected 파일을 develop에서 stage할 때 WARNING만 발행하고 exit(1)하지 않는다. `git-workflow.md`의 인지 규칙("move to FAIL")과 기계 신호(WARNING=proceed)가 불일치하며, AI 도구는 기계 신호를 따라 commit을 진행할 수 있다. GitHub ruleset이 push 단계에서 hard-stop을 제공하므로 실피해는 "local develop에 잘못된 commit이 남는 불편함"에 한정된다. hook exit(1) 강화를 검토했으나 예외 설계가 복잡하다는 결론: ① STATUS.md 같은 상태 파일의 tracking-only commit은 develop 직접 commit이 정당한 예외, ② Quick Mode L1은 feature branch 없이 처리하는 경우가 있음, ③ product track 확장 시 repo별 custom protected path 추가, ④ `commands/**`·`rules/**`·`create-harness.sh` 같은 구조 파일은 trailer 우회도 불가해야 할 수 있음. 이 예외 클래스 분류(상태 파일 vs 구조 파일), hook의 override trailer 인식 여부, Quick Mode/product track 적용 범위를 사전에 DR로 확정하지 않으면 hook 구현이 설계 없이 진행될 위험이 있다. 현재 GitHub ruleset으로 충분한 보호가 이뤄지고 있어 현행 유지가 더 효율적일 수 있다는 판단 하에 보류. 착수 시 hook 강화보다 **예외 클래스 설계 DR을 선행**해야 함.
 
 **Dependencies:**
 
 - 연계: gate path-list parity Q-static(CHORE-20260611-008 완료), 기존 gate series(CHORE-20260606-006~016), DR-024, DR-025.
+- 선행 decision: DR-035 (Protected Workflow Enforcement Exception Classes) — branch isolation 예외 클래스, Quick Mode non-exception, DR-025 trailer non-reuse, follow-up split 3종 고정.
 - Canonical 개념 계층화의 핵심 목표는 CHORE-20260613-002~005로 달성됨(2026-06-13). 이 항목은 blocking dependency 없이 독립 착수 가능하다.
 
 **Done Criteria:**
 
 - 강제화 후보 규칙 목록 + 수단(CI/hook/hard-gate) 매핑 결정.
-- 선정 규칙에 대한 enforcement 구현 + 우회/예외 클래스 설계(위 hook exit(1) 예외 클래스 메모 반영).
+- 선정 규칙에 대한 enforcement 구현. 예외 클래스 설계는 DR-035를 따른다.
+- implementation Work는 최소 다음 3갈래 중 어디를 다루는지 scope를 명시한다: framework default hardening / project extension classification / F2 wiring.
 
 **Verification:**
 
 - inject-revert로 위반 차단 + 정상 통과 확인.
-- 예외(상태 파일 tracking-only 등) 정상 동작 확인.
+- 예외(`T1 tracking-state-only`, merge inherited exception 등) 정상 동작 확인.
 
 ---
 
