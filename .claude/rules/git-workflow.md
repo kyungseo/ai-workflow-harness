@@ -35,9 +35,9 @@ If the branch is `develop`, apply a class-sensitive check:
 - `AGENTS.md`, `CLAUDE.md`, `docs/STATUS.md`, `docs/backlog/**`, `docs/works/**`, `docs/decisions/**`
 - `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md`
 - `.claude/commands/**`, `.claude/rules/**`, `.cursor/rules/**`, `.agents/skills/**`, `prompts/**`, `scripts/create-harness.sh`, `tools/git-hooks/**`, `.harness/gate-config`
-- Any path listed under `[protected]` in `.harness/gate-config` (project-specific additions)
+- Any path listed under `[protected]` or `[tracking-state]` in `.harness/gate-config` (project-specific additions)
 
-The list above is the harness default. A target repo adds its own sensitive paths under `[protected]` / `[finalization]` in `.harness/gate-config` (add-only) — do **not** edit framework-owned `tools/git-hooks/lib/gate-lists.sh` directly (it is overwritten on harness upgrade). When hooks are installed they read both the default and `.harness/gate-config`; treat the same union as protected here.
+The list above is the harness default. A target repo adds its own sensitive paths under `[protected]`, `[tracking-state]`, or `[finalization]` in `.harness/gate-config` (add-only) — do **not** edit framework-owned `tools/git-hooks/lib/gate-lists.sh` directly (it is overwritten on harness upgrade). When hooks are installed they read both the default and `.harness/gate-config`; treat the same union as protected here. Use `[tracking-state]` only for project-specific paths that should inherit the `T1` bounded warning exception.
 
 FAIL response: report current branch and the staged protected files, then propose creating a `feature/*` or `hotfix/*` branch and moving the changes there.
 

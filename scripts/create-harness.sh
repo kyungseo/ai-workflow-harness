@@ -658,14 +658,14 @@ for f in \
 done
 
 # ── Project gate config seed (.harness/gate-config) ──────────────────────────
-# Class B (project-owned) seed: lets the target ADD its own protected/finalization
+# Class B (project-owned) seed: lets the target ADD its own protected/tracking-state/finalization
 # paths without editing framework-owned tools/git-hooks/lib/gate-lists.sh. Written
 # with write_text so it is NOT recorded in the manifest framework_files set and
 # survives a harness upgrade. Seeded with commented examples only → zero active
 # entries → default gate behavior until the target opts in.
 write_text "${TARGET_ROOT}/.harness/gate-config" '# Project gate config (.harness/gate-config) — project-owned, add-only.
 #
-# Extend the harness default protected/finalization path lists with paths specific
+# Extend the harness default protected/tracking-state/finalization path lists with paths specific
 # to THIS repository, WITHOUT editing framework-owned tools/git-hooks/lib/gate-lists.sh
 # (that file is recorded in the manifest and overwritten on a harness upgrade).
 # This file survives upgrades.
@@ -681,8 +681,9 @@ write_text "${TARGET_ROOT}/.harness/gate-config" '# Project gate config (.harnes
 # In a generic (advisory-only) target it has no hooks; the agent honors it as
 # advisory input per .claude/rules/git-workflow.md.
 #
-# [protected]    block direct commits to these on develop/main (branch isolation)
-# [finalization] treat these as tracking/finalization files (DR-025 bundling gate)
+# [protected]      block direct commits to these on develop/main (branch isolation)
+# [tracking-state] treat these as project-specific T1 tracking-state paths
+# [finalization]   treat these as tracking/finalization files (DR-025 bundling gate)
 #
 # Examples (uncomment and adapt to this repository):
 
@@ -690,6 +691,10 @@ write_text "${TARGET_ROOT}/.harness/gate-config" '# Project gate config (.harnes
 # infra/**
 # db/schema.sql
 # .github/workflows/deploy.yml
+
+[tracking-state]
+# docs/PRODUCT-STATUS.md
+# docs/team-log/**
 
 [finalization]
 # docs/PRODUCT-STATUS.md
@@ -1323,7 +1328,7 @@ if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
   echo "  Gate hooks deployed at tools/git-hooks/ (branch isolation + DR-025 finalization gate)."
   echo "  After git init, install them with: sh tools/git-hooks/install.sh"
   echo "  Environment bootstrap runbook: docs/GIT-WORKFLOW.md §0-1"
-  echo "  Tune project-specific protected/finalization paths in .harness/gate-config (add-only, upgrade-safe)."
+  echo "  Tune project-specific protected/tracking-state/finalization paths in .harness/gate-config (add-only, upgrade-safe)."
   echo "  Do not edit framework-owned tools/git-hooks/lib/gate-lists.sh — it is overwritten on harness upgrade."
 fi
 if [[ ! -d "${TARGET_ROOT}/.git" ]]; then

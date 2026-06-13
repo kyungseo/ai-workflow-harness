@@ -141,7 +141,8 @@ AI Workflow Harness backlog다.
 - 우선순위는 위반 빈도·실피해가 큰 규칙부터.
 - **선행 결정 완료 (2026-06-13):** DR-035에서 protected workflow surface branch isolation 예외 클래스를 `I0/T1/S1/P1/P2`로 고정했다. 남은 범위는 implementation slice다.
 - **implementation slice 1 완료 (2026-06-13):** CHORE-20260613-008에서 framework default branch-isolation hardening을 반영했다. source repo 기본 protected path는 `develop`에서 `T1 tracking-state-only` staged set만 warning 예외로 허용하고, `S1 structural-policy` 또는 mixed staged set은 hard-stop한다. `main` hard-stop과 merge inherited exception은 유지된다.
-- **남은 구현 범위:** project-protected extension classification(`P1/P2`)과 Runner / CI / F2 wiring decision.
+- **implementation slice 2 완료 (2026-06-13):** CHORE-20260613-010에서 `.harness/gate-config`의 project-protected extension classification(`P1/P2`)을 shipped/runtime에 반영했다. `[protected]` only는 `P1 default-safe hard-stop`, `[tracking-state]`는 `P2-T1`로서 bounded warning 예외를 상속한다. finalization gate와 F2 wiring은 그대로 범위 밖에 뒀다.
+- **남은 구현 범위:** Runner / CI / F2 wiring decision.
 
 > **[2026-06-08 설계 메모 — CHORE-20260611-008 close 시 `repo-health gate series 보강`에서 이관]** pre-commit hook이 protected 파일을 develop에서 stage할 때 WARNING만 발행하고 exit(1)하지 않는다. `git-workflow.md`의 인지 규칙("move to FAIL")과 기계 신호(WARNING=proceed)가 불일치하며, AI 도구는 기계 신호를 따라 commit을 진행할 수 있다. GitHub ruleset이 push 단계에서 hard-stop을 제공하므로 실피해는 "local develop에 잘못된 commit이 남는 불편함"에 한정된다. hook exit(1) 강화를 검토했으나 예외 설계가 복잡하다는 결론: ① STATUS.md 같은 상태 파일의 tracking-only commit은 develop 직접 commit이 정당한 예외, ② Quick Mode L1은 feature branch 없이 처리하는 경우가 있음, ③ product track 확장 시 repo별 custom protected path 추가, ④ `commands/**`·`rules/**`·`create-harness.sh` 같은 구조 파일은 trailer 우회도 불가해야 할 수 있음. 이 예외 클래스 분류(상태 파일 vs 구조 파일), hook의 override trailer 인식 여부, Quick Mode/product track 적용 범위를 사전에 DR로 확정하지 않으면 hook 구현이 설계 없이 진행될 위험이 있다. 현재 GitHub ruleset으로 충분한 보호가 이뤄지고 있어 현행 유지가 더 효율적일 수 있다는 판단 하에 보류. 착수 시 hook 강화보다 **예외 클래스 설계 DR을 선행**해야 함.
 
