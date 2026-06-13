@@ -246,6 +246,27 @@ feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
 
 **머지 방식:** Regular Merge (Merge commit) 원칙 — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다. Fast-Forward가 가능하면 허용한다. (DR-017 Amended)
 
+### 3-0. Release Prep Branch
+
+develop → main PR을 열기 전에 짧은 release-prep branch에서 release gate를 먼저 실측한다.
+이 branch는 새 기능을 추가하는 곳이 아니라, release-block 보정과 evidence 수집을 위한 작업 단위다.
+
+```bash
+git checkout develop
+git pull origin develop
+git checkout -b feature/release-prep-{YYYYMMDD}
+```
+
+**Release-prep에서 수행할 일:**
+
+1. project-specific version/tag/release-note 정책이 있으면 현재 `main`, `develop`, 최신 release tag, version file의 관계를 확인한다.
+2. 이미 존재하는 release tag와 같은 version으로 새 release를 만들 수 없으면 project-specific semver 기준에 따라 version을 목표 값으로 올린다.
+3. `docs/STATUS.md`와 `docs/PLAN.md`의 release target 문구가 목표 release와 맞는지 확인하고, 필요한 최소 보정만 반영한다.
+4. §3-1 Public Clean Baseline Gate를 실제 명령으로 확인한다.
+5. project-specific release validation을 수행한다. 최소 evidence는 `git diff --check`, scaffold/onboarding 경로 확인, 필요한 build/test 명령을 포함한다.
+6. 발견된 release-block만 수정한다. 예: archive Work의 `status` 불일치, stale release target, version/tag mismatch, onboarding 경로 stale.
+7. release-prep 변경은 feature → develop PR로 먼저 병합한다. 그 다음에 develop → main release PR을 연다.
+
 ### 3-1. Public Clean Baseline Gate
 
 develop → main PR 생성 전 아래 항목을 모두 확인한다.
@@ -286,6 +307,8 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 ```bash
 gh pr create --base main --head develop --title "release: ..."
 ```
+
+release PR body 또는 release note 초안은 project-specific release note 정책을 따른다. 정책이 없으면 이번 release의 impact, validation evidence, breaking/change notes를 PR body에 명시한다.
 
 ### 3-4. Post-Merge Develop Sync
 

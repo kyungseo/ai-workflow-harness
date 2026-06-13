@@ -181,6 +181,29 @@ feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
 
 **머지 방식:** Regular Merge (Merge commit) 원칙 — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다. Fast-Forward가 가능하면 허용한다. (DR-017 Amended)
 
+### 3-0. Release Prep Branch
+
+develop → main PR을 열기 전에 짧은 release-prep branch에서 release gate를 먼저 실측한다.
+이 branch는 새 기능을 추가하는 곳이 아니라, release-block 보정과 evidence 수집을 위한 작업 단위다.
+
+```bash
+git checkout develop
+git pull origin develop
+git checkout -b feature/release-prep-{YYYYMMDD}
+```
+
+**Release-prep에서 수행할 일:**
+
+1. `git fetch --tags origin` 후 `main`, `develop`, 최신 `ai-workflow-v*` tag, `VERSION`의 관계를 확인한다.
+2. 이미 존재하는 tag와 같은 `VERSION`으로 새 release를 만들 수 없으면 `docs/maintainer/VERSIONING.md` §2 기준으로 MAJOR/MINOR/PATCH를 판정하고 `VERSION`을 목표 값으로 올린다.
+3. `docs/STATUS.md`와 `docs/PLAN.md`의 release target 문구가 목표 `VERSION`과 맞는지 확인하고, 필요한 최소 보정만 반영한다.
+4. §3-1 Public Clean Baseline Gate를 실제 명령으로 확인한다.
+5. Release Full Sweep을 수행한다. 최소 evidence는 `bash scripts/tests/run-harness-checks.sh --all`, `bash scripts/tests/check-onboarding-flows.sh`, `bash -n scripts/create-harness.sh`, `scripts/create-harness.sh --dry-run ...`, `git diff --check`를 포함한다.
+6. 발견된 release-block만 수정한다. 예: archive Work의 `status` 불일치, stale release target, VERSION/tag mismatch, onboarding/scaffold 경로 stale.
+7. release-prep 변경은 feature → develop PR로 먼저 병합한다. 그 다음에 develop → main release PR을 연다.
+
+**Evidence boundary:** `run-harness-checks.sh --all`은 deterministic validation spine evidence이고, `check-onboarding-flows.sh`는 Layer J-OB/Q core evidence다. 둘 다 통과해도 Release Full Sweep의 judgment Layer를 대체하지 않는다.
+
 ### 3-1. Public Clean Baseline Gate
 
 develop → main PR 생성 전 아래 항목을 모두 확인한다.
@@ -231,6 +254,8 @@ gh pr create --base main --head develop --title "release: ..."
 ```
 
 > **Release marking (source repo 한정):** `VERSION` bump(semver 판정)과 머지 후 tag(`ai-workflow-v{VERSION}`)·GitHub 릴리즈 노트 절차는 `docs/maintainer/VERSIONING.md` §3(Bump 절차)·§5(릴리즈 노트 템플릿)를 따른다. **GitHub Release 객체 생성은 선택이며, tag·`VERSION` 정합은 필수다.** (scaffold 적용 repo는 자체 버전 정책. 이 포인터 대상 `VERSIONING.md`는 source 전용이라 scaffold 템플릿에는 포함하지 않는다.)
+
+release PR body 또는 GitHub Release note 초안은 `docs/maintainer/VERSIONING.md` §5의 릴리즈 노트 템플릿을 따른다.
 
 ### 3-4. Post-Merge Develop Sync
 

@@ -3,14 +3,14 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-14 (HRN-016 `/exit` gap backlog drop)
+Last updated: 2026-06-14 (release-prep 1.2.0 target)
 
 ## Current State
 
 | Field | Value |
 | --- | --- |
 | Current phase | AWH-004 — Maintenance & Adoption |
-| Current focus | 1.1.0 릴리즈, adopter upgrade/migration, onboarding 현행화 |
+| Current focus | 1.2.0 릴리즈, adopter upgrade/migration, onboarding 현행화 |
 | Project plan | `docs/PLAN.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
