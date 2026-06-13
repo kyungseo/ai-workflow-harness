@@ -79,12 +79,12 @@ development workflow다.
 현재 milestone은 `AWH-004 — Maintenance & Adoption`이다.
 
 Phase 2(Externalization refactor)는 DR-021~025 적용과 27개 Work 완료로 종료했고,
-그 산출물을 `ai-workflow-v1.1.0`으로 릴리즈한다. 이후 초점은 harness를 실제로
+그 산출물을 `ai-workflow-v1.1.0`으로 릴리즈했다. 이후 초점은 harness를 실제로
 채택하는 repository 지원과 반복 운영 부채 축소다.
 
 Milestone 목표:
 
-- `ai-workflow-v1.1.0` 릴리즈 — Phase 2 산출물을 공개 버전으로 확정(breaking은 릴리즈 노트 명시).
+- `ai-workflow-v1.2.0` 릴리즈 — Phase 2 이후 adoption/validation 산출물을 공개 버전으로 확정(breaking은 릴리즈 노트 명시).
 - 실 adopter(`ai-deck-compiler`) upgrade/migration 경로를 제공한다.
 - onboarding/manual 정합을 현행화한다(README overhaul 이후 path 점검).
 - 반복 운영에서 발생하는 운영 부채를 점진적으로 줄인다.
@@ -139,7 +139,7 @@ Milestone 목표:
 | AWH-001 | 완료 | Public-ready migration | 현재 tree 정리, public docs, release readiness |
 | AWH-002 | 완료 | Workflow hardening | 문서 정합성, scaffold 검증, tool surface alignment, adoption readiness |
 | AWH-003 (Phase 2) | 완료 | Externalization refactor | source/target boundary·canonical+adapter·gate taxonomy·PLAN lifecycle 적용. 방향: DR-021~025. 실행 Work: `CHORE-20260604-001`(planning)~`CHORE-20260608-003`. 산출물은 `ai-workflow-v1.1.0`으로 릴리즈 |
-| AWH-004 | 진행 | Maintenance & Adoption | 1.1.0 릴리즈, 실 adopter upgrade/migration, onboarding/manual 현행화, 운영 부채 축소. 후보는 `docs/backlog/HARNESS.md` |
+| AWH-004 | 진행 | Maintenance & Adoption | 1.2.0 릴리즈, 실 adopter upgrade/migration, onboarding/manual 현행화, 운영 부채 축소. 후보는 `docs/backlog/HARNESS.md` |
 
 horizon이 닫히거나 재정의되면 아래 Lifecycle 규칙(§7-a)에 따라 처리한다.
 

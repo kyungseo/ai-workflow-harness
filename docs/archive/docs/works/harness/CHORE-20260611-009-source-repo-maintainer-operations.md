@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260611-009
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: source repo maintainer/AI driver용 운영 runbook(`docs/maintainer/SOURCE-REPO-OPERATIONS.md`)을 신설하고 `docs/maintainer/README.md`를 갱신해 검증 척추(CHORE-20260611-005~008) 산출물을 변경 lifecycle 순서로 엮는다. 배포 surface(AGENT-WORKFLOW/GUIDE/WORKFLOW-MANUAL) 변경, 검증 기준/명령/정책 SSoT 복제, 기존 자산 재배치·rewrite, upgrade/migration·product planning pack 설계는 범위 밖.
 appetite: 0.5d
