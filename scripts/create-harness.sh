@@ -1162,7 +1162,7 @@ write_text "${TARGET_ROOT}/docs/backlog/HARNESS.md" "# Harness Backlog
 AI workflow, command/rule, prompt, scaffold, process 개선 후보를 관리한다.
 
 > Done/Superseded 항목은 이 파일에서 제거된다.
-> 완료 이력: Work 파일이 있는 항목은 \`docs/works/harness/README.md\` Archived 테이블, Work 파일이 없는 항목(Quick Mode)은 \`git log --grep=\"{ID}\"\`로 확인한다.
+> 완료 이력: Work 파일이 있는 항목은 \`docs/archive/docs/works/harness/README.md\` Archived 인덱스, Work 파일이 없는 항목(Quick Mode)은 \`git log --grep=\"{ID}\"\`로 확인한다.
 
 ## Backlog
 
@@ -1239,8 +1239,7 @@ Product track 작업 인덱스다.
 
 ## Archived
 
-| ID | Title | actual_end | Archive |
-| --- | --- | --- | --- |
+완전 종결 Work는 archive-side 인덱스 참조: \`docs/archive/docs/works/product/README.md\` (첫 archive 시 생성).
 "
 
 write_text "${TARGET_ROOT}/docs/works/harness/README.md" "# Harness Work Index
@@ -1259,8 +1258,7 @@ Harness track 작업 인덱스다.
 
 ## Archived
 
-| ID | Title | actual_end | Archive |
-| --- | --- | --- | --- |
+완전 종결 Work는 archive-side 인덱스 참조: \`docs/archive/docs/works/harness/README.md\` (첫 archive 시 생성).
 "
 
 touch_file "${TARGET_ROOT}/docs/archive/.gitkeep"

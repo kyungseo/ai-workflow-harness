@@ -279,11 +279,11 @@ Quick Mode, 단순 오타·링크·기계적 정합성 패치, 테스트·검증
 ### Index Rules
 
 각 `docs/works/{category}/README.md`는 category별 inventory다.
-권장 섹션은 Active, Done (Archive Pending), Archived다.
+live README 권장 섹션은 Active, Done (Archive Pending)다. Archived 인덱스는 hot-path live README에 누적하지 않고 archive-side mirrored README `docs/archive/docs/works/{category}/README.md`에 둔다.
 
-- Active Work 파일은 STATUS Active Work pointer와 category index Active 섹션에 모두 나타나야 한다.
-- Done Work 파일은 STATUS Active Work에서 제거하고 category index Done 섹션에 둔다.
-- Archived Work 파일은 `docs/archive/docs/works/{category}/`로 이동하고 category index Archived 섹션에 archive 경로를 남긴다.
+- Active Work 파일은 STATUS Active Work pointer와 live index Active 섹션에 모두 나타나야 한다.
+- Done Work 파일은 STATUS Active Work에서 제거하고 live index Done (Archive Pending) 섹션에 둔다.
+- Archived Work 파일은 `docs/archive/docs/works/{category}/`로 이동하고, live README에서 행을 제거한 뒤 **archive-side `docs/archive/docs/works/{category}/README.md`의 Archived 인덱스**에 archive 경로를 남긴다. live README의 `## Archived` 섹션은 그 archive-side 인덱스를 가리키는 pointer만 둔다.
 
 이 섹션이 Work 파일 공통 운영 규칙의 권위 문서다.
 개별 Work 파일은 이 규칙을 반복하지 않는다.
@@ -364,7 +364,7 @@ backlog 항목의 Status가 Done 또는 Superseded가 되면 다음 기준으로
 삭제된 항목의 상세는 git history와 Work 파일(archive)에 남는다. backlog에 별도 archive를 만들지 않는다.
 
 삭제된 항목을 찾으려면:
-- Work 파일이 있는 항목 → `docs/works/harness/README.md` Archived 테이블 → `docs/archive/docs/works/harness/`
+- Work 파일이 있는 항목 → `docs/archive/docs/works/harness/README.md` Archived 인덱스 → `docs/archive/docs/works/harness/`
 - Work 파일이 없는 항목 (Quick Mode 완료) → `git log --grep="{ID}"`
 
 #### Decision Records (DR)

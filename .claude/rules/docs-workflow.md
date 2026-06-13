@@ -18,7 +18,7 @@ MUST:
 - Use path-mirrored locations under `docs/archive/` for completed historical detail.
 - Use `docs/HARNESS-QUICK-REFERENCE.md` for daily workflow execution rules.
 - Include done criteria and verification for actionable work items.
-- When adding or moving a file in a directory that has a `README.md` index, update that index in the same change. Applies to `docs/decisions/`, `docs/retrospectives/`, `docs/troubleshooting/`, `docs/works/{category}/`, and any other directory with a `README.md`. On archive moves, remove the row from the source index and add it to the archive index.
+- When adding or moving a file in a directory that has a `README.md` index, update that index in the same change. Applies to `docs/decisions/`, `docs/retrospectives/`, `docs/troubleshooting/`, `docs/works/{category}/`, and any other directory with a `README.md`. On archive moves, remove the row from the live source index and add it to the **archive-side index** at `docs/archive/<mirrored-path>/README.md`. Live category README는 Active/현행 인덱스만 유지하고, Archived 인덱스는 archive-side mirrored README가 보유한다.
 - Use Work files for large tasks: `docs/works/{category}/{ID}-{lowercase-topic}.md` (spec: DR-013).
 - When creating a new `docs/troubleshooting/` or `docs/retrospectives/` file, apply the DR-027 frontmatter spec defined in each directory's `README.md`.
 - Do not reuse task IDs for different meanings.

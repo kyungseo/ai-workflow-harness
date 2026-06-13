@@ -106,7 +106,7 @@ ls tools/git-hooks/    # commit gate hook 파일 확인 (있는 경우만)
 - STATUS.md Active Work pointer가 가리키는 Work 파일에 Done Criteria + Verification이 존재하는가
 - STATUS.md Active Work pointer ↔ Work 파일 frontmatter `status: Active` 정합성
 - `docs/works/*/*.md` 중 `status: Done`인 Work가 STATUS Active Work에 남아 있지 않은가
-- `docs/works/*/README.md` index가 Work 파일 상태(Active/Done/Archived)와 일치하는가
+- live `docs/works/*/README.md` index가 Active/Done(Pending) Work 상태와 일치하고, Archived 인덱스는 archive-side `docs/archive/docs/works/*/README.md`와 일치하는가
 - `docs/decisions/README.md` index가 `docs/decisions/DR-*.md` 실제 파일 목록과 일치하는가
 - `docs/retrospectives/README.md` index가 `docs/retrospectives/` 실제 파일 목록과 일치하는가
 - archive 위치의 Work 파일은 `status: Archived`인가

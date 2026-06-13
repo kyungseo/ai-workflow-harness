@@ -8,7 +8,7 @@ AI Workflow Harness backlog다.
 기존 product-template backlog와 Work 기록은 history와 archive에 남아 있지만, 이 repository의 현재 active scope는 AI Workflow Harness다.
 
 > Done/Superseded 항목은 이 파일에서 제거된다.
-> 완료 이력: Work 파일이 있는 항목은 `docs/works/harness/README.md` Archived 테이블, Work 파일이 없는 항목(Quick Mode)은 `git log --grep="{ID}"`로 확인한다.
+> 완료 이력: Work 파일이 있는 항목은 `docs/archive/docs/works/harness/README.md` Archived 인덱스, Work 파일이 없는 항목(Quick Mode)은 `git log --grep="{ID}"`로 확인한다.
 
 ## Priority Guide
 
@@ -31,7 +31,7 @@ AI Workflow Harness backlog다.
 | W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속은 W3/W4 후보에서 별도 추적 |
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002) Scaffold multi-user clone verification |
 | W3. Workflow IA Diet ✓ 완결 | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | (Canonical 개념 계층화 핵심 달성 = CHORE-20260613-002~005, Prompt surface diet 완료 = CHORE-20260612-010, work-doc class 완료 = CHORE-20260613-005, trigger family simplification 완료 = CHORE-20260613-006) 전부 완료 |
-| W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | CI inline assertion ↔ invariants SSoT parity, Archive 누적 관리 정책 (문서-only 규칙 강제화는 DR-037로 종결) |
+| W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | CI inline assertion ↔ invariants SSoT parity (문서-only 규칙 강제화 = DR-037 종결, Archive 누적 관리 정책 = DR-038 종결) |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원, `/exit` gap |
 
 ### Summary
@@ -40,7 +40,7 @@ AI Workflow Harness backlog다.
 | --- | --- | --- | --- | --- |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
 | — | P3 | Candidate | L2 | CI inline assertion ↔ invariants SSoT parity |
-| — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
+| — | P2 | Candidate | L2 | scaffold manifest src가 workflow.mdc를 temp 경로로 기록 (tier2 self-consistency FAIL) |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P2 | Candidate | L3 | Scaffold CLI naming audit |
@@ -105,48 +105,22 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### Archive 누적 관리 정책
+#### scaffold manifest src가 workflow.mdc를 temp 경로로 기록 (tier2 self-consistency FAIL)
 
-> 2026-06-10 등록 (사용자 제기).
+> 2026-06-13 등록 (CHORE-20260613-013 tier2 검증 중 발견 — pre-existing, archive-index와 무관).
 
-**Cluster:** W4. Enforcement And Lifecycle
+**Cluster:** W4. Enforcement And Lifecycle (scaffold 정합).
 
 **Task:**
 
-- archive artifact가 지속 누적되는 구조가 문제인지 판단하고, 필요 시 관리 정책을 수립한다.
-- **범위(사용자 지시 확장):** work 파일뿐 아니라 **decision(DR) 및 기타 archived artifact(retrospective/troubleshooting)** 누적도 동일 프레임으로 다룬다.
-- **실태 (2026-06-10 측정):**
-  - `docs/archive/docs/works/harness/` 71개, `docs/archive/docs/decisions/` 9개.
-  - work 파일은 6월 1~10일 ~30개 증가(≈3/day) — 증가율 가파름.
+- `scripts/create-harness.sh`가 `.cursor/rules/workflow.mdc`를 생성할 때(특히 `_AWH_WF_TMP` temp 파일 경유 경로, lines 633-641), `.harness/manifest.json`의 `src` 필드에 **ephemeral temp 경로**(`/var/folders/.../tmp.*`)를 기록한다. 생성 후 temp가 사라지므로 `create-harness.sh --check`가 해당 파일을 항상 `[source-missing]`으로 보고하고, `run-harness-checks.sh --tier2/--all`의 manifest 자기일관성 invariant가 FAIL한다(예: 75 tracked, 74 in-sync, 1 drifted).
+- src를 canonical template 경로로 기록하도록 수정한다.
 
-**비판적 framing (먼저 해악을 정량화 — Simplicity First):**
+**Dependencies:** `scripts/create-harness.sh`(workflow.mdc adapt 경로 + manifest src 기록), `check-scaffold-invariants.sh` invariant 5(manifest 자기일관성), `run-harness-checks.sh`.
 
-- archive는 세션 시작 시 자동 로드되지 않는다 (`docs/AGENT-WORKFLOW.md`가 archive 로드를 명시 금지). 따라서 운영/context 비용 ≈ 0.
-- 실제 bounded 해악: ① archive index README 비대 ② `find`/디렉터리 스캔 노이즈 ③ repo 파일 수 bloat ④ git 연산 marginal 저하.
-- **항목의 첫 과제:** "쌓이는 게 문제"가 구체적으로 무엇을 깨뜨리는지 정의한다. 무문제면 무조치 근거를 명문화하고 닫는다(아래 옵션 A).
+**Done Criteria:** fresh scaffold의 `--check`가 workflow.mdc를 drift로 보고하지 않고, `run-harness-checks.sh --tier2`가 PASS. 다른 temp 경유 생성 파일에도 동일 패턴 없는지 확인.
 
-**개선 방향 옵션 (이 항목이 결정할 대상):**
-
-- A) **현행 유지 + 무조치 근거 명문화** — git-tracked·미로드 → cost~0를 DR/정책으로 확정.
-- B) **주기적 rollup/digest** — 월/분기 단위 단일 digest로 압축, 세부는 git history. 파일 수↓ / granular 검색성↓.
-- C) **retention/pruning** — 오래된 artifact 실제 삭제(git log 보존). 공격적, reversal cost 있음.
-- D) **close 시 archive 미이동** — `/work-close`에서 work 파일을 옮기지 않고 제거, git history가 기록. archive works 디렉터리 축소/폐지.
-- E) **tiered/index-only** — 최근 N개만 full 유지, 이전은 index README row만 남기고 본문 압축.
-
-**Dependencies:**
-
-- DR-014 archive policy, `/work-close` archive step.
-- 연계: `Backlog row lifecycle SSoT 정비`(W1, 같은 lifecycle hygiene 클러스터).
-- 흡수: 구 Deferred `AWH-OQ-001`(historical product docs를 archive에 얼마나 남길 것인가 — 현재 guidance와 혼동되지 않는 legacy 기준 결정).
-
-**Done Criteria:**
-
-- 누적의 실해악을 정량 정의하고, 옵션 A~E 중 방향을 결정(또는 무조치 근거 명문화).
-- 결정이 work·decision·기타 artifact에 일관 적용되는지 확인. 필요 시 DR-014 갱신 또는 신규 DR.
-
-**Verification:**
-
-- 결정 방향에 따라: 정책 문서/DR 반영 확인, `/work-close` archive step과의 정합, archive index README 정합.
+**Verification:** `run-harness-checks.sh --tier2` PASS, `--check`에 `[source-missing]` 0건. manifest `src`에 `/var/folders` 또는 `tmp.` 부재 grep.
 
 ---
 
