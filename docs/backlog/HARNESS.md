@@ -39,7 +39,6 @@ AI Workflow Harness backlog다.
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
-| CHORE-20260613-006 | P2 | Done | L2 | Harness protocol trigger family simplification |
 | — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
 | — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
@@ -127,24 +126,6 @@ AI Workflow Harness backlog다.
 **Verification:**
 
 - 결정 방향에 따라: 정책 문서/DR 반영 확인, `/work-close` archive step과의 정합, archive index README 정합.
-
----
-
-#### Harness protocol trigger family simplification
-
-**Cluster:** W3. Workflow IA Diet
-
-**Task:** `docs/HARNESS-PROTOCOL.md` T1~T17 trigger가 복잡해졌으므로 Decision / Planning / Surface / Scaffold / Finalization / Archive family로 재그룹화할 수 있는지 검토한다. 단, P0 gate series가 T15~T17/c4를 건드리므로 P0 완료 전 대형 재작성은 피한다.
-
-**Trigger 정비 (사용자 요청 흡수, 2026-06-10):** "Trigger 정비"는 별도 신규 항목이 아니라 이 항목으로 합친다. Canonical 개념 계층화의 핵심 목표(상위 개요 + 하위 포인터 구조)는 CHORE-20260613-002~005로 실질 달성됨(2026-06-13 종료). 이 항목은 이제 blocking dependency 없이 독립 착수 가능하다.
-
-**Dependencies:**
-
-- DR-024, DR-025, P0 gate series
-
-**Done Criteria:** trigger 의미는 유지하면서 사용자/AI가 빠르게 찾을 수 있는 family summary 또는 quick reference를 추가. core 문서 비대화 없이 pointer 구조 유지
-
-**Verification:** trigger 시나리오별 before/after lookup 테스트, stale trigger reference grep
 
 ---
 
