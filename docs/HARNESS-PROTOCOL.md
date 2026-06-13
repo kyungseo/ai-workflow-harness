@@ -401,6 +401,17 @@ archive 이동 시에는 원본 인덱스에서 행을 제거하고, archive 디
 
 ## 14. Triggers and Cascade
 
+### Trigger Family Quick Reference
+
+| Family | Trigger IDs | 용도 |
+| --- | --- | --- |
+| Decision | T1, T2 | DR 생성·정리 |
+| Planning | T3, T4, T5 | phase 전환·작업 분해·PLAN 영향 |
+| Surface | T6, T7, T11, T12, T13, T14 | 문서·구조·command·tool·scaffold 변경 |
+| Record | T8, T8b, T9 | troubleshooting·회고·산출물 |
+| Lifecycle | T10 | Work Done 상태 발견 |
+| Finalization | T15, T16, T17 | commit/PR 전 STATUS·tracker·/work-close |
+
 ### Trigger Summary
 
 | ID | Trigger | Result |
