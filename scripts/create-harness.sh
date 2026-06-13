@@ -631,15 +631,14 @@ for f in behavior-principles.mdc coding.mdc debugging.mdc execution.mdc git-comm
 done
 
 # workflow.mdc: work-doc routing row only for --with-optional targets (work-doc is B-class).
-# Default targets get a filtered copy without the dead route.
+# Default targets use a stable filtered template so manifest src/hash remain
+# self-consistent under --check and tier2 invariants.
 if [[ "${WITH_OPTIONAL}" == true ]]; then
   adapt "${TEMPLATE_ROOT}/.cursor/rules/workflow.mdc" \
         "${TARGET_ROOT}/.cursor/rules/workflow.mdc"
 else
-  _AWH_WF_TMP="$(mktemp)"
-  grep -v "work-doc" "${TEMPLATE_ROOT}/.cursor/rules/workflow.mdc" > "${_AWH_WF_TMP}"
-  adapt "${_AWH_WF_TMP}" "${TARGET_ROOT}/.cursor/rules/workflow.mdc"
-  rm -f "${_AWH_WF_TMP}"
+  adapt "${TEMPLATE_ROOT}/scripts/templates/default/.cursor/rules/workflow.mdc" \
+        "${TARGET_ROOT}/.cursor/rules/workflow.mdc"
 fi
 
 if [[ "${PROFILE}" == "spring-boot" ]]; then

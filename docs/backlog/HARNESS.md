@@ -40,7 +40,6 @@ AI Workflow Harness backlog다.
 | --- | --- | --- | --- | --- |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
 | — | P3 | Candidate | L2 | CI inline assertion ↔ invariants SSoT parity |
-| — | P2 | Candidate | L2 | scaffold manifest src가 workflow.mdc를 temp 경로로 기록 (tier2 self-consistency FAIL) |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P2 | Candidate | L3 | Scaffold CLI naming audit |
@@ -102,25 +101,6 @@ AI Workflow Harness backlog다.
 **Done Criteria:** drift 실해악 정량 정의 후 parity 수단 결정(또는 무조치 근거 명문화). 결정이 CI/runner/invariants 경계와 정합.
 
 **Verification:** `ci.yml` inline assertion 목록 ↔ `check-scaffold-invariants.sh` 검사 항목 대조 grep. 결정 방향에 따라 CI 수정 시 scaffold dry-run regression 확인.
-
----
-
-#### scaffold manifest src가 workflow.mdc를 temp 경로로 기록 (tier2 self-consistency FAIL)
-
-> 2026-06-13 등록 (CHORE-20260613-013 tier2 검증 중 발견 — pre-existing, archive-index와 무관).
-
-**Cluster:** W4. Enforcement And Lifecycle (scaffold 정합).
-
-**Task:**
-
-- `scripts/create-harness.sh`가 `.cursor/rules/workflow.mdc`를 생성할 때(특히 `_AWH_WF_TMP` temp 파일 경유 경로, lines 633-641), `.harness/manifest.json`의 `src` 필드에 **ephemeral temp 경로**(`/var/folders/.../tmp.*`)를 기록한다. 생성 후 temp가 사라지므로 `create-harness.sh --check`가 해당 파일을 항상 `[source-missing]`으로 보고하고, `run-harness-checks.sh --tier2/--all`의 manifest 자기일관성 invariant가 FAIL한다(예: 75 tracked, 74 in-sync, 1 drifted).
-- src를 canonical template 경로로 기록하도록 수정한다.
-
-**Dependencies:** `scripts/create-harness.sh`(workflow.mdc adapt 경로 + manifest src 기록), `check-scaffold-invariants.sh` invariant 5(manifest 자기일관성), `run-harness-checks.sh`.
-
-**Done Criteria:** fresh scaffold의 `--check`가 workflow.mdc를 drift로 보고하지 않고, `run-harness-checks.sh --tier2`가 PASS. 다른 temp 경유 생성 파일에도 동일 패턴 없는지 확인.
-
-**Verification:** `run-harness-checks.sh --tier2` PASS, `--check`에 `[source-missing]` 0건. manifest `src`에 `/var/folders` 또는 `tmp.` 부재 grep.
 
 ---
 

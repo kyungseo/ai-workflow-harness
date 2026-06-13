@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-13 (세션: CHORE-20260613-013 archive index policy Done)
+Last updated: 2026-06-13 (세션: CHORE-20260613-014 workflow.mdc temp-src fix Done)
 
 ## Current State
 
@@ -74,5 +74,5 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-013 archive index policy Done)
    - ✓ **`문서-only 규칙 강제화` 테마 종결 (DR-037)** — doc-only enforcement landscape 검토 결과 branch-isolation만 강제화 대상이었고 완료. 나머지는 기존강제 또는 behavioral(hard-gate 부적합)
    - ✓ **DR-035 follow-up split 전체 완료** — CHORE-20260613-008 / -010 / -011(F2 무배선·DR-036)
    - ✓ **Archive 누적 관리 정책 종결 (DR-038)** — archive-side index relocation, retention=keep-all. works/harness 106행 archive-side 이전 + cascade 정렬
-   - 잔여: `Validation Spine residual`의 F1/F3/F4, `CI inline assertion ↔ invariants SSoT parity`, 신규 `scaffold manifest workflow.mdc temp-src` defect(tier2 FAIL 원인)
+   - 잔여: `Validation Spine residual`의 F1/F3/F4, `CI inline assertion ↔ invariants SSoT parity`
    - Spring Boot MSA TDD option-pack, template pack, CLI naming, Windows, `/exit` gap은 실제 product 운용 후 필요성 재판단
