@@ -31,14 +31,13 @@ AI Workflow Harness backlog다.
 | W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속은 W3/W4 후보에서 별도 추적 |
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002) Scaffold multi-user clone verification |
 | W3. Workflow IA Diet ✓ 완결 | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | (Canonical 개념 계층화 핵심 달성 = CHORE-20260613-002~005, Prompt surface diet 완료 = CHORE-20260612-010, work-doc class 완료 = CHORE-20260613-005, trigger family simplification 완료 = CHORE-20260613-006) 전부 완료 |
-| W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | Validation Spine residual follow-ups (F1/F3/F4). 문서-only 규칙 강제화 = DR-037 종결, Archive 누적 관리 정책 = DR-038 종결, CI inline assertion ↔ invariants SSoT parity = CHORE-20260613-016 no-action closeout |
+| W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | (전부 종결) Validation Spine residual F1~F4 = CHORE-20260613-017/018·DR-036, 문서-only 규칙 강제화 = DR-037, Archive 누적 관리 정책 = DR-038, CI inline assertion ↔ invariants SSoT parity = CHORE-20260613-016 no-action closeout |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원, `/exit` gap |
 
 ### Summary
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P2 | Candidate | L3 | Scaffold CLI naming audit |
@@ -54,31 +53,6 @@ AI Workflow Harness backlog다.
 > 해당 없는 surface는 제외한다.
 
 ---
-
-#### Validation Spine residual follow-ups (F1-F4)
-
-> 2026-06-11 등록/정리 (CHORE-20260611-005~009 Discovery). W1 Validation Spine 자체는 완결됐지만, executable 승격·CI/hook 배선·repo-health 통합은 별도 후보로 계속 추적한다.
-
-**Cluster:** W3/W4 bridge — Workflow IA Diet + Enforcement And Lifecycle.
-
-**Task:**
-
-- F1: ✅ **종결 (2026-06-13, CHORE-20260613-017).** Layer J는 interactive/human-run catalog으로 유지하고, Layer J-OB(OB0/OB1/OB3/OB4/OB5) + Layer Q core를 `scripts/tests/check-onboarding-flows.sh`로 deterministic 승격했다. Layer J/J-OB/Q/R/S의 `/tmp/awh-*`를 `temp/harness-tests/` 기준으로 정렬 완료. Claude R0/R1 승인.
-- F2: ✅ **종결 (2026-06-13, DR-036 / CHORE-20260613-011).** `run-harness-checks.sh`를 CI required check·pre-commit/hook에 **배선하지 않기로 결정**(무배선). runner 검사는 이미 `ci.yml`·`pre-commit`에서 강제되고 tier2는 과중하며, 고유가치(invariants SSoT 호출)는 enforcement gate가 아니라 F4(repo-health surface) 대상이다. F2 종결 시 발견된 residual(CI inline scaffold assertion ↔ `check-scaffold-invariants.sh` SSoT parity drift)은 CHORE-20260613-016에서 실해악 low / no-action rationale로 종결했다.
-- F3: mirror parity, prompt 정합, language policy 같은 catalog/judgment 점검을 deterministic Tier 1 assertion으로 승격할지 검토·구현한다. product pack Layer U의 executable 승격도 실제 반복 필요가 확인되면 여기서 다룬다.
-- F4: runner 결과를 `/repo-health`에 surface한다. CHORE-20260613-004의 repo-health slice 분리 이후 구조와 연계하되, repo-health가 deterministic 불변식을 재구현하지 않고 runner/catalog 결과를 호출·해석하는 경계를 유지한다.
-
-**Dependencies:**
-
-- CHORE-20260611-005: taxonomy + tier runner
-- CHORE-20260611-006: scaffold/source-gitflow regression alignment
-- CHORE-20260611-007: product pack Layer U
-- CHORE-20260611-008: gate path-list parity Q-static
-- CHORE-20260611-009: source repo operations runbook(Update Triggers)
-
-**Done Criteria:** F1~F4 각각이 Work로 분해되거나, 범위가 다른 backlog 항목(CHORE-20260613-004, W2/W5 product pack 후보) 또는 DR(F2는 DR-036으로 종결)에 명시적으로 흡수됨. `HARNESS-TEST-TAXONOMY.md` §6와 `SOURCE-REPO-OPERATIONS.md` Update Triggers의 후속 pointer가 stale하지 않음.
-
-**Verification:** taxonomy §5/§6, `VERIFICATION-COMMANDS.md` Layer J/J-OB/Q/R/S, `run-harness-checks.sh`, `skills/workflow/repo-health.md`, `SOURCE-REPO-OPERATIONS.md` 간 pointer 정합 grep. F1 착수 시 `/tmp/awh-*` 잔존 grep으로 치환 범위 확인.
 
 #### Spring Boot MSA TDD option-pack — product engineering pack 후보
 

@@ -40,7 +40,7 @@ harness workflow 변경 시 **무엇을 / 어느 깊이로 / 어떤 수단으로
 
 **경계 원칙:**
 
-- **executable assertion**은 "기계적으로 PASS/FAIL이 갈리고 false-positive가 거의 없는, 회귀로 잠글 가치가 있는" 점검만 담는다. 현재 2종(`check-scaffold-invariants.sh`, `check-shipped-dr-closure.sh`).
+- **executable assertion**은 "기계적으로 PASS/FAIL이 갈리고 false-positive가 거의 없는, 회귀로 잠글 가치가 있는" 점검만 담는다. 핵심 불변식은 scaffold invariants(`check-scaffold-invariants.sh`)·DR closure(`check-shipped-dr-closure.sh`)이며, parity(`check-default-template-parity.sh`·`check-surface-mirror-parity.sh`)·onboarding(`check-onboarding-flows.sh`) helper가 더해져 있다.
 - **command catalog**는 더 넓은(판단 개입·false-positive 가능) 점검을 human-run 명령으로 유지한다. executable로 승격된 항목은 catalog가 **스크립트를 pointer로만** 보유하고 명령을 중복 보유하지 않는다(Layer C→invariants, Layer I→closure가 이미 그렇다).
 - **repo-health**는 위 둘을 *호출·해석*하는 judgment 표면이다. 자체적으로 deterministic 불변식을 재구현하지 않는다.
 - onboarding / hook처럼 multi-scenario 생성과 git 동작이 섞인 deterministic core는 **별도 helper script**로 둘 수 있다. runner는 여전히 thin orchestrator로 유지한다.
@@ -69,16 +69,16 @@ Tier는 실행 비용·결정성·생성 여부 순서다.
 | Surface | Tier 0 | Tier 1 (target 제공) | Tier 2 (생성) | 현재 자산 / gap |
 | --- | --- | --- | --- | --- |
 | scaffold 출력 | `bash -n` | invariants 5종 (`<target>`) | invariants no-arg 3모드(default/optional/source-gitflow) / OB 시나리오 | 자산: invariants ✓ (leak-scan은 source-gitflow shipped set 포함) |
-| tool surface (adapter/rule/skill mirror) | — | mirror 존재·쌍 일치 grep | — | gap: catalog Layer F manual → **F3 승격 후보** |
+| tool surface (adapter/rule/skill mirror) | — | mirror 존재·쌍 일치 (`check-surface-mirror-parity.sh`) | — | 자산: mirror/prompt parity ✓ (F3) — 과잉반복·adapter 비대 판단은 catalog/judgment 유지 |
 | cascade (canonical→adapter→user→scaffold) | — | 변경 surface→영향 surface 매핑 | — | gap: repo-health --cascade(judgment)만 |
 | canonical / 공통 규칙 | — | DR 참조 closure(closure ✓), Superseded 참조 탐지 | — | 자산: closure ✓ |
 | user-facing (README/MANUAL/GUIDE) | — | README↔optional docs 일치(invariants [4] ✓), command 행↔파일 교차 | scaffold 후 문서 경로 실재 | 부분 자산 |
-| prompts 정렬 | — | session-start 3종 ↔ canonical 정합 | — | gap: catalog Layer S manual → **F3 승격 후보** |
+| prompts 정렬 | — | session-start 3종 존재 (`check-surface-mirror-parity.sh`) | — | 부분 자산 ✓ (F3, 존재만) — canonical 참조·섹션 정합은 catalog 유지 |
 | product/adopter surface | — | (이 척추 범위 밖) | — | **executable spine non-goal 유지** (judgment/checklist 성격). catalog `VERIFICATION-COMMANDS.md` Layer U(criteria + U1 boundary smoke)로 정의됨 — CHORE-20260611-007 |
-| language policy (DR-007) | — | 한글 비율/순영어 파일 탐지 | — | gap: catalog Layer P manual → **F3 승격 후보** |
+| language policy (DR-007) | — | 한글 비율/순영어 파일 탐지 | — | catalog 유지 (F3 보류) — rule 파일 다수가 정당한 영어라 deterministic 승격 시 false-positive·judgment 필요 |
 | **source test scripts** (`scripts/tests/**`) — 검증 척추 executable SSoT | `bash -n scripts/tests/*.sh` (runner `--tier0`에 포함) | 해당 script 자체 실행 / `run-harness-checks.sh --all` | — | **source-side surface** (scaffold ship 아님 → target leak-scan 대상 아님). 변경 시 taxonomy/runner/catalog 정합 cascade |
 
-> 현재 executable로 잠긴 것은 scaffold 출력·canonical DR closure·user-facing 일부뿐이다. 나머지 surface는 catalog/judgment에 머물며, Tier 1 승격은 F3에서 다룬다.
+> executable로 잠긴 것은 scaffold 출력·canonical DR closure·user-facing 일부·tool surface mirror/prompt 존재(F3)다. language policy 등 judgment·screening surface는 catalog에 유지한다(F3에서 승격 가치 검토 후 보류 결정).
 
 ---
 
@@ -130,8 +130,8 @@ runner(`scripts/tests/run-harness-checks.sh`)는 scaffold로 ship될 수 있다.
 | --- | --- |
 | F1 | catalog Layer J는 interactive/human-run으로 유지하고, deterministic core는 Layer J-OB(OB0/OB1/OB3/OB4/OB5) + Layer Q core helper로 승격한다. catalog Layer J/J-OB/Q/R/S의 `/tmp/awh-*` 예시는 repo-local `temp/` 정책에 맞춰 정렬한다 |
 | F2 | ✅ 종결 — runner를 CI required check / pre-commit에 **배선하지 않기로 결정**(무배선, DR-036) |
-| F3 | mirror parity·prompt 정합·language policy를 executable assertion으로 Tier 1 승격 |
-| F4 | runner 결과를 `/repo-health`에 surface(↔ `repo-health gate series 보강`·CHORE-20260613-004 이후 slice 구조) |
+| F3 | ✅ 종결 (2026-06-13, CHORE-20260613-018). mirror parity(canonical↔claude↔agents 3자) + session-start prompt 3종 존재를 `check-surface-mirror-parity.sh`로 Tier 1 승격(runner `--tier0`). language policy는 정당한 영어 rule 다수로 deterministic 승격 시 false-positive·judgment 필요 → **보류**, catalog screening 유지 |
+| F4 | ✅ 종결 (2026-06-13, CHORE-20260613-018). Layer K + `repo-health.md` Execution Principles에 runner tier 호출/해석 경계 명시(Quick=tier0/tier1 생성 없음, --full=--all). repo-health는 불변식 재구현 없이 호출·해석만 |
 
 ---
 

@@ -69,7 +69,7 @@ work-select → work-plan → review → 구현 → result review → work-close
 
 | 모드 | 언제 | 생성 |
 | --- | --- | --- |
-| `--tier0` | syntax / script 무결성만 빠르게 | 없음 |
+| `--tier0` | syntax / script 무결성 + source-level parity(default template·surface mirror/prompt) 빠르게 | 없음 |
 | `--tier1 <target-dir>` | **기존** target에 deterministic 검사(closure + invariants). target 인자 필수 | 없음 |
 | `--tier2` | scaffold 실물 생성 포함 검증 | temp/에 생성 |
 | `--all` | tier0 + source-level tier1(closure) + tier2 누적. release/대형 변경 | 생성 포함 |
@@ -142,6 +142,6 @@ target read-only probe
 
 ## Update Triggers
 
-- CHORE-20260611-005 후속 F1~F4(runner→repo-health deep 통합 등) 완료 시 B/C절 갱신.
+- CHORE-20260611-005 후속 F1~F4는 전부 종결(F1=CHORE-20260613-017, F2=DR-036 무배선, F3/F4=CHORE-20260613-018 — F4는 deep 통합이 아니라 Layer K+`repo-health.md` runner-surface 최소 명시로 종결). 이후 runner 모드·repo-health surface 변경 시 B/C절 갱신.
 - 새 catalog Layer 추가·runner 모드 변경 시 B/C절 매핑 갱신.
 - lifecycle command(`skills/workflow/*`)·`docs/GIT-WORKFLOW.md` 절차 변경 시 A절 pointer 갱신.

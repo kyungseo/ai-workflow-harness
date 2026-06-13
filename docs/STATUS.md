@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-13 (세션: CHORE-20260613-017 validation spine F1 Done)
+Last updated: 2026-06-13 (세션: CHORE-20260613-018 validation spine F3+F4 Done)
 
 ## Current State
 
@@ -37,6 +37,7 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-017 validation spine F1 Done)
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-13 | CHORE-20260613-018: `Validation Spine residual F3+F4` 종결 — F3은 mirror parity(canonical↔claude↔agents 3자)+session-start prompt 3종 존재를 `check-surface-mirror-parity.sh`로 Tier 1 승격(runner `--tier0c`, adopter-safe skip), language policy는 정당한 영어 rule 다수(실측 15건)로 deterministic 승격 시 false-positive→**보류**. F4는 Layer K+`repo-health.md`에 runner tier 호출/해석 경계 최소 명시(Quick=tier0/tier1 생성 없음). **`Validation Spine residual (F1-F4)` backlog 항목 전체 종결.** mirror parity는 hard gate가 아닌 수동/repo-health 시점 회귀 탐지 자산(DR-036 무배선 기조). Claude self red-team(plan+result) + 사용자 승인 | Low |
 | 2026-06-13 | CHORE-20260613-017: `Validation Spine residual F1` — Layer J-OB(OB0/OB1/OB3/OB4/OB5) + Layer Q core를 `check-onboarding-flows.sh`로 deterministic 승격, Layer J는 human-run catalog 유지, J~S `/tmp/awh-*`→`temp/harness-tests/` 정렬 완료. backlog F1 ✅종결, F3/F4만 잔존. Claude R0/R1 승인 | Low |
 | 2026-06-13 | CHORE-20260613-016: `CI inline assertion ↔ invariants SSoT parity`를 **no-action with explicit rationale**로 종결하고 archive 처리 | Phase 1 분류 결과 CI inline assertions와 `check-scaffold-invariants.sh`는 "같은 검사의 중복 구현"보다 "같은 scaffold surface를 다른 altitude에서 본다"에 가깝고, 실제 overlap이 작아 parity helper/partial convergence가 boundary를 흐릴 가능성이 더 컸기 때문. invariant-only [1]/[3]/[4]는 maintainer-facing structural correctness라 CI required gate 대상이 아님. Claude R0/R1 승인 | Low |
 | 2026-06-13 | CHORE-20260613-015: default template canonical parity guard를 `scripts/tests/check-default-template-parity.sh` + `run-harness-checks.sh --tier0`로 추가하고, related archive pending Work `CHORE-20260613-014`와 함께 archive 처리 | default tracked template pair(`workflow.mdc`, `git-workflow.md`)가 canonical 변경 후 조용히 stale해지는 drift를 source-level deterministic check로 즉시 드러내고, live Work queue를 archive-side index 기준으로 정리하기 위해. Claude R0/R1 review 승인 | Low |
@@ -77,5 +78,5 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-017 validation spine F1 Done)
    - ✓ **`문서-only 규칙 강제화` 테마 종결 (DR-037)** — doc-only enforcement landscape 검토 결과 branch-isolation만 강제화 대상이었고 완료. 나머지는 기존강제 또는 behavioral(hard-gate 부적합)
    - ✓ **DR-035 follow-up split 전체 완료** — CHORE-20260613-008 / -010 / -011(F2 무배선·DR-036)
    - ✓ **Archive 누적 관리 정책 종결 (DR-038)** — archive-side index relocation, retention=keep-all. works/harness 106행 archive-side 이전 + cascade 정렬
-   - 잔여: `Validation Spine residual`의 F1/F3/F4
+   - ✓ **Validation Spine residual 전부 종결** — F1=CHORE-20260613-017, F2=DR-036, F3/F4=CHORE-20260613-018(mirror/prompt parity Tier 1 승격, language policy 보류, repo-health runner-surface). **W4 잔여 concrete 항목 없음.**
    - Spring Boot MSA TDD option-pack, template pack, CLI naming, Windows, `/exit` gap은 실제 product 운용 후 필요성 재판단

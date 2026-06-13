@@ -29,6 +29,7 @@ CREATE_SH="${REPO_ROOT}/scripts/create-harness.sh"
 INVARIANTS="${SCRIPT_DIR}/check-scaffold-invariants.sh"
 CLOSURE="${SCRIPT_DIR}/check-shipped-dr-closure.sh"
 DEFAULT_TEMPLATE_PARITY="${SCRIPT_DIR}/check-default-template-parity.sh"
+MIRROR_PARITY="${SCRIPT_DIR}/check-surface-mirror-parity.sh"
 
 RC=0
 mark_fail() { RC=1; }
@@ -83,6 +84,16 @@ run_tier0() {
     fi
   else
     echo "  SKIP (N/A): check-default-template-parity.sh 없음"
+  fi
+  echo "== Tier 0c: surface mirror/prompt parity (source-level) =="
+  if [[ -f "${MIRROR_PARITY}" ]]; then
+    if bash "${MIRROR_PARITY}"; then
+      echo "  OK: surface mirror/prompt parity"
+    else
+      echo "  FAIL: surface mirror/prompt parity"; mark_fail
+    fi
+  else
+    echo "  SKIP (N/A): check-surface-mirror-parity.sh 없음"
   fi
 }
 

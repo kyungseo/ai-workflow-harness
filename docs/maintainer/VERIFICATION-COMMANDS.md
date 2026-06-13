@@ -177,6 +177,8 @@ SUPERSEDED=$(grep -l "^status: Superseded" docs/decisions/DR-*.md 2>/dev/null \
 
 단순 존재 여부가 아니라 반복 품질을 판단한다.
 
+> **deterministic core helper:** mirror **존재 누락**(canonical command ↔ claude adapter ↔ agents skill 3자)과 역방향 orphan은 `bash scripts/tests/check-surface-mirror-parity.sh`가 source-side deterministic assertion으로 수행한다(runner `--tier0`에 포함). 아래 "mirror 누락 탐지" 명령은 수동 재현용 appendix다. 과잉반복·adapter 비대 판단은 deterministic 대상이 아니므로 아래 명령(judgment)으로 유지한다.
+
 ```bash
 # skills/workflow ↔ .claude/commands 쌍 목록
 echo "=== canonical ===" && ls skills/workflow/*.md
@@ -730,7 +732,14 @@ rm -rf temp/harness-tests/manual-ob-generic temp/harness-tests/manual-ob-gitflow
 
 ## Layer K. repo-health 통합 실행
 
+`/repo-health`는 deterministic 불변식을 재구현하지 않고 runner/helper 결과를 호출·해석한다(taxonomy §1 경계). Quick 모드는 생성 없는 tier만 호출해 경량성을 유지한다.
+
 ```bash
+# deterministic 검증 척추 — repo-health가 호출·해석 (생성 여부 주의)
+bash scripts/tests/run-harness-checks.sh --tier0   # syntax/template/mirror parity, 생성 없음 (Quick 적합)
+bash scripts/tests/run-harness-checks.sh --all     # + tier2 scaffold 실생성 (--full / 마일스톤 전)
+
+# judgment·cascade 감사
 /repo-health --cascade          # 변경 surface 기준 cascade 감사
 /repo-health --full --cascade   # 전체 surface + cascade (Phase 전환 / 대형 변경 후)
 ```
@@ -1047,6 +1056,8 @@ grep -n "version delta\|version.*current source" scripts/create-harness.sh
 ## Layer S. Prompt Surface 정렬
 
 `prompts/*session-start.md` 3종(claude/codex/cursor)이 `skills/workflow/session-start.md` canonical과 정합하는지 확인한다.
+
+> **deterministic core helper:** session-start prompt **3종 존재**(#1)는 `bash scripts/tests/check-surface-mirror-parity.sh`가 deterministic assertion으로 수행한다(runner `--tier0`에 포함). 아래 #1은 수동 재현용이다. canonical 섹션 정합(#2)·canonical 참조(#3, cursor는 `workflow.mdc` 경유라 참조 패턴이 다름)·중량/독자규칙 의심(#4)·scaffold 경로(#5/#6)는 judgment 또는 scaffold 시나리오 성격이라 아래 명령(human-run)으로 유지한다.
 
 ```bash
 # 1. 3종 prompt 파일 존재 확인
