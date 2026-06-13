@@ -42,6 +42,8 @@ related_work: []
 버전을 올려 릴리즈하기 전, 출하 표면 전수를 아래 순서로 점검한다.
 변경 범위에 맞춰 Layer를 고르는 일반 사용과 달리, 릴리즈 시점에는 **출하 표면에 적용되는 Layer 전수**가 게이트다.
 
+> 이 sweep은 `docs/GIT-WORKFLOW.md` §3-1 Public Clean Baseline Gate(state cleanliness)와 함께 release 직전 gate를 구성한다. §3-1은 이 sweep 통과를 `Surface sweep` evidence row로 요구한다. 아래 deterministic Layer(A·C·I + default template·surface mirror/prompt parity)는 `bash scripts/tests/run-harness-checks.sh --all`로 자동 실행되며(§3-1 `Validation spine` 행), 나머지 judgment Layer는 수동 점검한다.
+
 **실행 순서:**
 
 | # | Layer | 점검 |

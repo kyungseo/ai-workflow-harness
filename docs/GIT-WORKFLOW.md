@@ -186,6 +186,8 @@ feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
 develop → main PR 생성 전 아래 항목을 모두 확인한다.
 확인 결과는 **PR body에 반드시 남긴다.**
 
+> Surface 검증 전수와 deterministic spine 실행 기준의 SSoT는 `docs/maintainer/VERIFICATION-COMMANDS.md` "Release Full Sweep"이다. 아래 표의 `Validation spine` / `Surface sweep` 행이 그 통과 evidence를 요구한다 — 이 gate(state cleanliness)와 Release Full Sweep(surface 전수)이 함께 release 직전 검증을 구성한다. (source repo 기준 — §3 note에 따라 scaffold 적용 repo는 자체 결정.)
+
 | Area | Clean Condition | Evidence |
 | --- | --- | --- |
 | Working tree | develop working tree가 clean | `git status --short --branch` |
@@ -200,6 +202,8 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 | Scaffold | `bash -n scripts/create-harness.sh` + `--dry-run` 통과. 실제 temp scaffold 생성은 scaffold 파일 변경 시에만 | `bash -n scripts/create-harness.sh`, `scripts/create-harness.sh --dry-run ...` |
 | Docs cascade | release gate 관련 문서 변경 시 canonical/tool/user-facing/scaffold cascade 정렬 확인 | targeted cascade check |
 | Validation | `git diff --check` 통과 | `git diff --check` |
+| Validation spine | deterministic 검증 척추 전수 PASS | `bash scripts/tests/run-harness-checks.sh --all` → OVERALL PASS (syntax·scaffold invariant·DR closure·default template·surface mirror/prompt parity 포함) |
+| Surface sweep | 출하 표면 Layer 전수에서 release-block(P0/P1) 0 | `docs/maintainer/VERIFICATION-COMMANDS.md` "Release Full Sweep" 결과 — 출하표면 P0/P1=0 |
 
 ### 3-2. Main Merge Gate
 

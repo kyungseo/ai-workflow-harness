@@ -14,6 +14,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 |----|-------|------------|-----------|
 | CHORE-20260613-017 | validation spine f1 simulation as code | 2026-06-13 | `docs/works/harness/CHORE-20260613-017-validation-spine-f1-simulation-as-code.md` |
 | CHORE-20260613-018 | validation spine f3 f4 | 2026-06-13 | `docs/works/harness/CHORE-20260613-018-validation-spine-f3-f4.md` |
+| CHORE-20260613-019 | release gate spine evidence | 2026-06-13 | `docs/works/harness/CHORE-20260613-019-release-gate-spine-evidence.md` |
 
 ## Archived
 
