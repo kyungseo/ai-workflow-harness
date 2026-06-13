@@ -39,6 +39,7 @@ AI Workflow Harness backlog다.
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
+| — | P3 | Candidate | L2 | CI inline assertion ↔ invariants SSoT parity |
 | — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
 | — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
@@ -66,7 +67,7 @@ AI Workflow Harness backlog다.
 **Task:**
 
 - F1: `VERIFICATION-COMMANDS.md` catalog Layer J/J-OB/Q를 deterministic script로 변환하고, catalog Layer J/J-OB/Q/R/S의 `/tmp/awh-*` 경로를 repo-local `temp/` 정책에 맞춰 치환한다. `HARNESS-TEST-TAXONOMY.md` §5는 이미 정책만 확정했으며, 일괄 치환은 이 후속 Work 범위다.
-- F2: `run-harness-checks.sh`를 CI required check 또는 pre-commit/hook에 배선할지 결정한다. `문서-only 규칙 강제화`와 함께 예외/우회 정책을 먼저 판단한다.
+- F2: ✅ **종결 (2026-06-13, DR-036 / CHORE-20260613-011).** `run-harness-checks.sh`를 CI required check·pre-commit/hook에 **배선하지 않기로 결정**(무배선). runner 검사는 이미 `ci.yml`·`pre-commit`에서 강제되고 tier2는 과중하며, 고유가치(invariants SSoT 호출)는 enforcement gate가 아니라 F4(repo-health surface) 대상이다. F2 종결 시 발견된 residual(CI inline scaffold assertion ↔ `check-scaffold-invariants.sh` SSoT parity drift)은 F2 범위 밖으로, 아래 별도 candidate(`CI inline assertion ↔ invariants SSoT parity`)로 분리한다.
 - F3: mirror parity, prompt 정합, language policy 같은 catalog/judgment 점검을 deterministic Tier 1 assertion으로 승격할지 검토·구현한다. product pack Layer U의 executable 승격도 실제 반복 필요가 확인되면 여기서 다룬다.
 - F4: runner 결과를 `/repo-health`에 surface한다. CHORE-20260613-004의 repo-health slice 분리 이후 구조와 연계하되, repo-health가 deterministic 불변식을 재구현하지 않고 runner/catalog 결과를 호출·해석하는 경계를 유지한다.
 
@@ -81,6 +82,27 @@ AI Workflow Harness backlog다.
 **Done Criteria:** F1~F4 각각이 Work로 분해되거나, 범위가 다른 backlog 항목(`문서-only 규칙 강제화`, CHORE-20260613-004, W2/W5 product pack 후보)에 명시적으로 흡수됨. `HARNESS-TEST-TAXONOMY.md` §6와 `SOURCE-REPO-OPERATIONS.md` Update Triggers의 후속 pointer가 stale하지 않음.
 
 **Verification:** taxonomy §5/§6, `VERIFICATION-COMMANDS.md` Layer J/J-OB/Q/R/S, `run-harness-checks.sh`, `skills/workflow/repo-health.md`, `SOURCE-REPO-OPERATIONS.md` 간 pointer 정합 grep. F1 착수 시 `/tmp/awh-*` 잔존 grep으로 치환 범위 확인.
+
+---
+
+#### CI inline assertion ↔ invariants SSoT parity
+
+> 2026-06-13 등록 (CHORE-20260613-011 / DR-036 F2 종결 시 Discovery).
+
+**Cluster:** W4. Enforcement And Lifecycle (검증 parity).
+
+**Task:**
+
+- `ci.yml`(source)이 scaffold assertion을 inline 재구현하면서 `scripts/tests/check-scaffold-invariants.sh`(invariants SSoT)를 호출하지 않는다. 두 표면이 발산할 drift 위험을 평가하고, 필요 시 parity 점검 수단(예: 경량 static parity check, 또는 CI가 invariants SSoT를 호출하도록 부분 수렴)을 결정한다.
+- 이는 DR-036에서 "F2 배선 여부"와 분리한 residual이다. F2는 무배선으로 종결됐고, 이 항목은 CI↔SSoT parity 문제만 다룬다.
+
+**비판적 framing:** 우선 drift 실해악을 정량화한다. 두 표면 모두 활발히 유지되고 CI가 hard gate이므로, 실피해는 "invariants SSoT가 갱신될 때 CI inline assertion이 뒤처질 수 있음"에 한정될 수 있다. 무문제면 무조치 근거를 명문화하고 닫는다.
+
+**Dependencies:** DR-036, `run-harness-checks.sh`, `check-scaffold-invariants.sh`, `.github/workflows/ci.yml`.
+
+**Done Criteria:** drift 실해악 정량 정의 후 parity 수단 결정(또는 무조치 근거 명문화). 결정이 CI/runner/invariants 경계와 정합.
+
+**Verification:** `ci.yml` inline assertion 목록 ↔ `check-scaffold-invariants.sh` 검사 항목 대조 grep. 결정 방향에 따라 CI 수정 시 scaffold dry-run regression 확인.
 
 ---
 
@@ -142,7 +164,7 @@ AI Workflow Harness backlog다.
 - **선행 결정 완료 (2026-06-13):** DR-035에서 protected workflow surface branch isolation 예외 클래스를 `I0/T1/S1/P1/P2`로 고정했다. 남은 범위는 implementation slice다.
 - **implementation slice 1 완료 (2026-06-13):** CHORE-20260613-008에서 framework default branch-isolation hardening을 반영했다. source repo 기본 protected path는 `develop`에서 `T1 tracking-state-only` staged set만 warning 예외로 허용하고, `S1 structural-policy` 또는 mixed staged set은 hard-stop한다. `main` hard-stop과 merge inherited exception은 유지된다.
 - **implementation slice 2 완료 (2026-06-13):** CHORE-20260613-010에서 `.harness/gate-config`의 project-protected extension classification(`P1/P2`)을 shipped/runtime에 반영했다. `[protected]` only는 `P1 default-safe hard-stop`, `[tracking-state]`는 `P2-T1`로서 bounded warning 예외를 상속한다. finalization gate와 F2 wiring은 그대로 범위 밖에 뒀다.
-- **남은 구현 범위:** Runner / CI / F2 wiring decision.
+- **implementation slice 3 완료 (2026-06-13):** CHORE-20260613-011 / DR-036에서 Runner / CI / F2 wiring decision을 **무배선**으로 종결했다. `run-harness-checks.sh`는 manual-only로 유지하고, 자동 surfacing은 F4(repo-health)에서 별도로 다룬다. **DR-035 follow-up split(3종) 전체 완료.** 이 항목의 남은 구현 범위 없음.
 
 > **[2026-06-08 설계 메모 — CHORE-20260611-008 close 시 `repo-health gate series 보강`에서 이관]** pre-commit hook이 protected 파일을 develop에서 stage할 때 WARNING만 발행하고 exit(1)하지 않는다. `git-workflow.md`의 인지 규칙("move to FAIL")과 기계 신호(WARNING=proceed)가 불일치하며, AI 도구는 기계 신호를 따라 commit을 진행할 수 있다. GitHub ruleset이 push 단계에서 hard-stop을 제공하므로 실피해는 "local develop에 잘못된 commit이 남는 불편함"에 한정된다. hook exit(1) 강화를 검토했으나 예외 설계가 복잡하다는 결론: ① STATUS.md 같은 상태 파일의 tracking-only commit은 develop 직접 commit이 정당한 예외, ② Quick Mode L1은 feature branch 없이 처리하는 경우가 있음, ③ product track 확장 시 repo별 custom protected path 추가, ④ `commands/**`·`rules/**`·`create-harness.sh` 같은 구조 파일은 trailer 우회도 불가해야 할 수 있음. 이 예외 클래스 분류(상태 파일 vs 구조 파일), hook의 override trailer 인식 여부, Quick Mode/product track 적용 범위를 사전에 DR로 확정하지 않으면 hook 구현이 설계 없이 진행될 위험이 있다. 현재 GitHub ruleset으로 충분한 보호가 이뤄지고 있어 현행 유지가 더 효율적일 수 있다는 판단 하에 보류. 착수 시 hook 강화보다 **예외 클래스 설계 DR을 선행**해야 함.
 
