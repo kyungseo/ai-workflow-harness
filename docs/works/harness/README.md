@@ -12,7 +12,6 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260613-020 | maintainer-guide validation currency | 2026-06-13 | `docs/works/harness/CHORE-20260613-020-maintainer-guide-validation-currency.md` |
 
 ## Archived
 
