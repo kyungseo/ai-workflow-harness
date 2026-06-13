@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-13 (세션: CHORE-20260613-014 workflow.mdc temp-src fix Done)
+Last updated: 2026-06-13 (세션: CHORE-20260613-015 default template parity assertion Archived)
 
 ## Current State
 
@@ -37,6 +37,7 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-014 workflow.mdc temp-src fix D
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-13 | CHORE-20260613-015: default template canonical parity guard를 `scripts/tests/check-default-template-parity.sh` + `run-harness-checks.sh --tier0`로 추가하고, related archive pending Work `CHORE-20260613-014`와 함께 archive 처리 | default tracked template pair(`workflow.mdc`, `git-workflow.md`)가 canonical 변경 후 조용히 stale해지는 drift를 source-level deterministic check로 즉시 드러내고, live Work queue를 archive-side index 기준으로 정리하기 위해. Claude R0/R1 review 승인 | Low |
 | 2026-06-13 | CHORE-20260613-013 / DR-038: Archive 누적 관리 정책 종결 — 누적 cost≈0(archive 미로드) 정량 확인, 유일 실비용인 live README hot-path 인덱스(106행)를 archive-side mirrored README로 이전. retention=keep-all(prune/rollup/미이동 기각), 전 category 일관, works/harness outlier를 decisions/retro 기존 패턴에 정합. cascade(DR-016/013 amend, HARNESS-PROTOCOL, work-close/plan, repo-health, scaffold) 정렬 | live working 파일에 무한 증가 archived 인덱스를 두는 구조 모순 해소 + backlog 항목·AWH-OQ-001 종결. tier2 검증 중 pre-existing scaffold cursor manifest-src 버그를 발견·등록. Claude self red-team R0/result review | Medium |
 | 2026-06-13 | CHORE-20260613-012 / DR-037: broad 테마 `문서-only 규칙 강제화`를 종결 — doc-only 규칙 전반 enforcement landscape를 기록하고, (위반-피해 + 기계강제 가능 + gate 부재) 동시 만족은 branch-isolation 유일=강제화 완료, 나머지는 기존강제 또는 behavioral(hard-gate 부적합)로 판정. parent backlog 제거 + dangling 3건 repoint | criterion #1("강제화 후보 규칙 목록 + 수단 매핑")을 실제 산출물 없이 체크하는 것을 막고, "다른 규칙도 hard-gate하자" 재론을 차단하기 위해. Claude self red-team R0 | Low |
 | 2026-06-13 | CHORE-20260613-011 / DR-036: Runner / CI / F2 wiring을 **무배선**으로 종결 — `run-harness-checks.sh`를 CI required check·pre-commit gate에 배선하지 않고 manual-only 유지. runner 검사는 이미 `ci.yml`·`pre-commit`에서 강제되고 tier2는 과중, 고유가치(invariants SSoT 호출)는 F4 repo-health surface 대상. **DR-035 follow-up split(3종) 전체 완료** | runner 배선이 enforcement 공백을 메우지 않고 중복만 만들며, 2026-06-08부터 3회 deferral된 F2를 재론 없이 닫기 위해. CI↔invariants SSoT parity residual은 별도 candidate로 분리. Claude self red-team R0 | Low |

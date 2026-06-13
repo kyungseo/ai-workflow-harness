@@ -28,6 +28,7 @@ REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 CREATE_SH="${REPO_ROOT}/scripts/create-harness.sh"
 INVARIANTS="${SCRIPT_DIR}/check-scaffold-invariants.sh"
 CLOSURE="${SCRIPT_DIR}/check-shipped-dr-closure.sh"
+DEFAULT_TEMPLATE_PARITY="${SCRIPT_DIR}/check-default-template-parity.sh"
 
 RC=0
 mark_fail() { RC=1; }
@@ -72,6 +73,16 @@ run_tier0() {
     echo "  OK: git diff --check (whitespace)"
   else
     echo "  FAIL: git diff --check (whitespace 오류)"; mark_fail
+  fi
+  echo "== Tier 0b: default template parity (source-level) =="
+  if [[ -f "${DEFAULT_TEMPLATE_PARITY}" ]]; then
+    if bash "${DEFAULT_TEMPLATE_PARITY}"; then
+      echo "  OK: default template parity"
+    else
+      echo "  FAIL: default template parity"; mark_fail
+    fi
+  else
+    echo "  SKIP (N/A): check-default-template-parity.sh 없음"
   fi
 }
 
