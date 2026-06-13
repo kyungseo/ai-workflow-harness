@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260612-007
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: AGENT-WORKFLOW.md 한 파일의 비대화 점검 + context routing 테이블 구조 개선. README, HARNESS-PROTOCOL.md trigger family, docs/ 물리 레이아웃, skills/workflow/*, scaffold, adapter는 Non-goals다.
 appetite: 1d

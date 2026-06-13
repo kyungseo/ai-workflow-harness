@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-004
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: `skills/workflow/repo-health.md`의 Quick/default path와 `--full`/`--cascade` 상세 checklist를 분리해 context load weight를 줄이는 최소 slice split. R0 승인 전 구현 변경은 하지 않는다.
 appetite: 0.5d

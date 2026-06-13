@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-001
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Prompt task library archive + scaffold prompt copy pruning. `prompts/*-session-start.md`와 `prompts/README.md`만 live fallback surface로 남기고, `.prompt.md` task/profile prompt는 archive 보존으로 전환한다.
 appetite: 0.5d

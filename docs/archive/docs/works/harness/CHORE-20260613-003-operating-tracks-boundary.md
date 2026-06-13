@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-003
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Operating Tracks definition boundary minimal realignment. `docs/AGENT-WORKFLOW.md`와 `docs/HARNESS-PROTOCOL.md` 양쪽의 Product/Harness track 정의 중복을 감사하고, startup summary와 protocol detail reference 역할을 깨지 않는 최소 정리만 R0 이후 수행한다.
 appetite: 0.5d
