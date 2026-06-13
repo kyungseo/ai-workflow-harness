@@ -30,7 +30,7 @@ AI Workflow Harness backlog다.
 | --- | --- | --- |
 | W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속은 W3/W4 후보에서 별도 추적 |
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002) Scaffold multi-user clone verification |
-| W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, work-doc class |
+| W3. Workflow IA Diet ✓ 완결 | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | (Canonical 개념 계층화 핵심 달성 = CHORE-20260613-002~005, Prompt surface diet 완료 = CHORE-20260612-010, work-doc class 완료 = CHORE-20260613-005) 잔여: trigger family simplification(P2, 독립 착수 가능) |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원, `/exit` gap |
 
@@ -39,7 +39,6 @@ AI Workflow Harness backlog다.
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
-| — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
 | — | P2 | Candidate | L2 | Harness protocol trigger family simplification |
 | — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
 | — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
@@ -131,51 +130,13 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### Canonical 개념 계층화 + context-routing restructure
-
-> 2026-06-10 등록 (사용자 테마 — README 흐름 검토 + 개념 상위화 통합).
-
-**Cluster:** W3. Workflow IA Diet
-
-**Task:**
-
-- README의 Repository Structure 흐름이 정확한지, 흐름 자체를 리팩토링할 필요는 없는지, 현재 흐름이 효율적으로 구성·관리되고 있는지 점검한다.
-- 상위→하위 흐름에서 중복된 내용을 제거한다.
-- 기본 개념·구조는 상위(예: `docs/AGENT-WORKFLOW.md`)에 짧은 개요를 먼저 두고, 하위 흐름의 필요한 지점에서 구체화 + 상세는 하위 링크로 위임하는 구조로 조정할지 검토한다. 대상 예:
-  - 하네스 기본 구조, Operating Tracks, project constants
-  - 문서 구조와 매핑/포인터
-  - State Machine 기본 구조
-  - 전역에 산재한 baseline · routing · gate · trigger · Approval Matrix · Finalization · git workflow · verification (그 외 추가 가능)
-  - scaffold 기본 개념·구조·상세 포인터
-- 목적: 사용자의 흐름 이해와 AI의 효율적 context 로드·전개 양쪽에 유리하게.
-- **[불변 제약] AI workflow가 주축이다. 사용자 이해의 흐름을 돕는다는 이유로 workflow가 사용자 매뉴얼화되어서는 절대 안 된다.**
-
-**Dependencies:**
-
-- 연계: `Prompt surface diet + optional pack 재정의`는 CHORE-20260612-010에서 classification-only로 완료. `skills/workflow/repo-health.md` slice 분리는 CHORE-20260613-004에서 완료. `skills/workflow/work-doc.md class 재검토`는 CHORE-20260613-005에서 완료. 남은 후속은 `Harness protocol trigger family simplification`(P2, trigger 재그룹화 ⊂ 이 restructure).
-- 검증 척추(CHORE-20260611-005 도입 완료) — restructure cascade를 test-backed로 검증.
-- DR-021, DR-023.
-
-**Done Criteria:**
-
-- README 흐름 정확성 검증 + (필요 시) 리팩토링안 반영.
-- 상위 개요 + 하위 포인터 구조로 중복 제거, canonical 비대화 없이.
-- AI 매뉴얼화 금지 제약 충족(workflow 주축 유지) 확인.
-
-**Verification:**
-
-- before/after context 로드 시나리오(사람/AI)에서 개요→상세 경로가 끊김 없이 연결됨.
-- 중복 grep으로 제거 확인, stale pointer 없음.
-
----
-
 #### Harness protocol trigger family simplification
 
 **Cluster:** W3. Workflow IA Diet
 
 **Task:** `docs/HARNESS-PROTOCOL.md` T1~T17 trigger가 복잡해졌으므로 Decision / Planning / Surface / Scaffold / Finalization / Archive family로 재그룹화할 수 있는지 검토한다. 단, P0 gate series가 T15~T17/c4를 건드리므로 P0 완료 전 대형 재작성은 피한다.
 
-**Trigger 정비 (사용자 요청 흡수, 2026-06-10):** "Trigger 정비"는 별도 신규 항목이 아니라 이 항목으로 합친다. `Canonical 개념 계층화 + context-routing restructure`(P1)가 trigger를 상위 개요 + 하위 포인터 구조로 다루므로 **그 restructure와 시퀀싱을 함께 결정**한다 (trigger family 재그룹화 ⊂ canonical restructure).
+**Trigger 정비 (사용자 요청 흡수, 2026-06-10):** "Trigger 정비"는 별도 신규 항목이 아니라 이 항목으로 합친다. Canonical 개념 계층화의 핵심 목표(상위 개요 + 하위 포인터 구조)는 CHORE-20260613-002~005로 실질 달성됨(2026-06-13 종료). 이 항목은 이제 blocking dependency 없이 독립 착수 가능하다.
 
 **Dependencies:**
 
@@ -203,7 +164,7 @@ AI Workflow Harness backlog다.
 **Dependencies:**
 
 - 연계: gate path-list parity Q-static(CHORE-20260611-008 완료), 기존 gate series(CHORE-20260606-006~016), DR-024, DR-025.
-- 구조 확정 후 착수 권장 — 곧 restructure될 표면을 hard-gate하지 않도록 `Canonical 개념 계층화 + context-routing restructure`(P1) 이후.
+- Canonical 개념 계층화의 핵심 목표는 CHORE-20260613-002~005로 달성됨(2026-06-13). 이 항목은 blocking dependency 없이 독립 착수 가능하다.
 
 **Done Criteria:**
 

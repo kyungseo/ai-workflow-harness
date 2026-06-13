@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260612-004
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: CHORE-20260612-003 G1/G2 Critical gap 보강. scaffold target README.md에 clone 시나리오용 GIT-WORKFLOW §0-1 포인터를 추가하고, GIT-WORKFLOW.md §0-1에 "Clone from existing remote" 하위 절을 추가한다. 변경은 scaffold template/script에만 적용하며, 기존 scaffolded repo 소급 수정은 범위 밖이다.
 appetite: 0.5d

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260612-003
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: scaffold 후 첫 외부 contributor가 source context 없이 clone했을 때의 로컬 온보딩 마찰을 측정한다. local bare remote를 사이에 두고 두 사용자 흐름(hook 설치, branch/push 경로)을 검증하고, PR/ruleset/CI는 local 재현 불가 항목으로서 문서 gap만 inventory한다. 결과는 P0 gate series, onboarding refresh, maintainer operations, migration follow-up 중 적합한 곳으로 연결한다. 문서 수정은 범위 밖이며 발견물은 후속 Work로 연결한다.
 appetite: 0.5d

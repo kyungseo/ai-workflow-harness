@@ -12,27 +12,28 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260613-005 | work-doc.md Class Recategorization | 2026-06-13 | `docs/works/harness/CHORE-20260613-005-work-doc-class.md` |
-| CHORE-20260613-004 | Repo-Health Canonical Slice Split | 2026-06-13 | `docs/works/harness/CHORE-20260613-004-repo-health-slice.md` |
-| CHORE-20260613-003 | Operating Tracks Definition Boundary Minimal Realignment | 2026-06-13 | `docs/works/harness/CHORE-20260613-003-operating-tracks-boundary.md` |
-| CHORE-20260613-002 | Protocol Load Map / Context Routing Minimal Realignment | 2026-06-13 | `docs/works/harness/CHORE-20260613-002-protocol-load-map-routing.md` |
-| CHORE-20260613-001 | Prompt Task Library Archive + Scaffold Pruning | 2026-06-13 | `docs/works/harness/CHORE-20260613-001-prompt-task-library-archive.md` |
-| CHORE-20260612-011 | Workflow Core Layering Audit + Minimal Realignment | 2026-06-13 | `docs/works/harness/CHORE-20260612-011-workflow-core-stale-audit.md` |
-| CHORE-20260612-010 | Prompt Surface Diet + Optional Pack 재정의 | 2026-06-12 | `docs/works/harness/CHORE-20260612-010-prompt-surface-diet.md` |
-| CHORE-20260612-009 | Canonical 계층화 Slice 3 — Work Item Routing 중복 감사 + 해소 | 2026-06-12 | `docs/works/harness/CHORE-20260612-009-canonical-layer-slice3.md` |
-| CHORE-20260612-008 | Canonical 계층화 Slice 2 — Context Routing / Operating Tracks 구조 분리 | 2026-06-12 | `docs/works/harness/CHORE-20260612-008-canonical-layer-slice2.md` |
-| CHORE-20260612-007 | Canonical 개념 계층화 Slice 1 — AGENT-WORKFLOW.md 비대화 점검 + context routing 개선 | 2026-06-12 | `docs/works/harness/CHORE-20260612-007-canonical-layer-slice1.md` |
-| CHORE-20260612-005 | Backlog Row Lifecycle SSoT 정비 | 2026-06-12 | `docs/works/harness/CHORE-20260612-005-backlog-row-lifecycle-ssot.md` |
-| CHORE-20260612-004 | Source-Gitflow Second-Contributor Entry Path 보강 | 2026-06-12 | `docs/works/harness/CHORE-20260612-004-second-contributor-entry-path.md` |
-| CHORE-20260612-003 | Scaffold Multi-User Clone Verification | 2026-06-12 | `docs/works/harness/CHORE-20260612-003-scaffold-multi-user-clone-verification.md` |
-| CHORE-20260612-002 | User-facing Docs Readability Rewrite | 2026-06-12 | `docs/works/harness/CHORE-20260612-002-user-facing-docs-readability-rewrite.md` |
-| CHORE-20260612-001 | Product Starter Planning Pack + Feedback Import Loop | 2026-06-12 | `docs/works/harness/CHORE-20260612-001-product-starter-planning-pack.md` |
-| CHORE-20260611-010 | Harness Upgrade / Migration Mechanism | 2026-06-11 | `docs/works/harness/CHORE-20260611-010-harness-upgrade-migration.md` |
+| CHORE-20260613-006 | Harness Protocol Trigger Family Simplification | 2026-06-13 | `docs/works/harness/CHORE-20260613-006-trigger-simplification.md` |
 
 ## Archived
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260613-005 | work-doc.md Class Recategorization | 2026-06-13 | `docs/archive/docs/works/harness/CHORE-20260613-005-work-doc-class.md` |
+| CHORE-20260613-004 | Repo-Health Canonical Slice Split | 2026-06-13 | `docs/archive/docs/works/harness/CHORE-20260613-004-repo-health-slice.md` |
+| CHORE-20260613-003 | Operating Tracks Definition Boundary Minimal Realignment | 2026-06-13 | `docs/archive/docs/works/harness/CHORE-20260613-003-operating-tracks-boundary.md` |
+| CHORE-20260613-002 | Protocol Load Map / Context Routing Minimal Realignment | 2026-06-13 | `docs/archive/docs/works/harness/CHORE-20260613-002-protocol-load-map-routing.md` |
+| CHORE-20260613-001 | Prompt Task Library Archive + Scaffold Pruning | 2026-06-13 | `docs/archive/docs/works/harness/CHORE-20260613-001-prompt-task-library-archive.md` |
+| CHORE-20260612-011 | Workflow Core Layering Audit + Minimal Realignment | 2026-06-13 | `docs/archive/docs/works/harness/CHORE-20260612-011-workflow-core-stale-audit.md` |
+| CHORE-20260612-010 | Prompt Surface Diet + Optional Pack 재정의 | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260612-010-prompt-surface-diet.md` |
+| CHORE-20260612-009 | Canonical 계층화 Slice 3 — Work Item Routing 중복 감사 + 해소 | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260612-009-canonical-layer-slice3.md` |
+| CHORE-20260612-008 | Canonical 계층화 Slice 2 — Context Routing / Operating Tracks 구조 분리 | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260612-008-canonical-layer-slice2.md` |
+| CHORE-20260612-007 | Canonical 개념 계층화 Slice 1 — AGENT-WORKFLOW.md 비대화 점검 + context routing 개선 | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260612-007-canonical-layer-slice1.md` |
+| CHORE-20260612-005 | Backlog Row Lifecycle SSoT 정비 | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260612-005-backlog-row-lifecycle-ssot.md` |
+| CHORE-20260612-004 | Source-Gitflow Second-Contributor Entry Path 보강 | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260612-004-second-contributor-entry-path.md` |
+| CHORE-20260612-003 | Scaffold Multi-User Clone Verification | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260612-003-scaffold-multi-user-clone-verification.md` |
+| CHORE-20260612-002 | User-facing Docs Readability Rewrite | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260612-002-user-facing-docs-readability-rewrite.md` |
+| CHORE-20260612-001 | Product Starter Planning Pack + Feedback Import Loop | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260612-001-product-starter-planning-pack.md` |
+| CHORE-20260611-010 | Harness Upgrade / Migration Mechanism | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-010-harness-upgrade-migration.md` |
 | CHORE-20260612-006 | 외부화 실패모드 통합 설계 원칙 명문화 | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260612-006-externalization-failure-modes.md` |
 | CHORE-20260611-011 | Docs Cascade 현행화 | 2026-06-12 | `docs/archive/docs/works/harness/CHORE-20260611-011-docs-cascade.md` |
 | CHORE-20260611-009 | Source repo maintainer operations manual | 2026-06-11 | `docs/archive/docs/works/harness/CHORE-20260611-009-source-repo-maintainer-operations.md` |

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-002
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Protocol Load Map / Context Routing 중복 최소 정리. `docs/AGENT-WORKFLOW.md`의 Context Routing / Project Constants와 `docs/HARNESS-PROTOCOL.md`의 Document Map / Load Map 역할 경계를 감사하고, workflow 보존 가능한 최소 realignment만 R0 이후 수행한다.
 appetite: 0.5d

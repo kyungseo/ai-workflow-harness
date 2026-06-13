@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260612-009
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: AGENT-WORKFLOW.md 한 파일 — ## Work Item Routing 섹션의 ## Context Routing 테이블 중복 여부 감사 + 중복 해소 최소 변경. 다른 파일 수정 없음.
 appetite: 0.5d

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260611-010
 priority: P1
-status: Done
+status: Archived
 risk: L3
 scope: 실 adopter가 pre-manifest target임을 기준으로, 기존 harness 적용 repo를 현재 source로 올리기 위한 inventory-first upgrade/migration 정책과 검증 경로를 정립한다. 첫 slice는 실측, Draft DR 정책 결정, pre-manifest manifest baseline 획득 방식, pre-manifest baseline migration note, Layer T concrete 검증에 한정한다. user-facing docs rewrite, product starter planning pack, full `--upgrade` apply 구현은 범위 밖.
 appetite: 1.5d

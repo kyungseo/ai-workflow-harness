@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260612-001
 priority: P1
-status: Done
+status: Archived
 risk: L3
 scope: source repo 기준의 product starter planning pack과 source->scaffolded project->source feedback import loop 설계에 한정한다. planning pack 산출물 구조, source/scaffold 경계, base-msa-template 분석 범위, human-in-the-loop 경계, verification placeholder 구체화까지 다룬다. user-facing readability rewrite, multi-user clone verification, helper/script 자동화 확장, 실제 product repo 적용 구현은 범위 밖이다.
 appetite: 1.5d

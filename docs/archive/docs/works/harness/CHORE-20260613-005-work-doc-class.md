@@ -16,7 +16,7 @@
 | Risk | L2 |
 | Dependency | CHORE-20260612-010 (classification direction 완료, work-doc은 follow-up으로 지정) |
 | Branch | `feature/chore-20260613-005-work-doc-class` |
-| Status | Done |
+| Status | Archived |
 | actual_end | 2026-06-13 |
 
 ## Scope

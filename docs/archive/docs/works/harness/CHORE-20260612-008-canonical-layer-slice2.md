@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260612-008
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: AGENT-WORKFLOW.md 한 파일의 구조 분리 — routing table을 ## Context Routing 아래로 이동, ## Operating Tracks를 트랙 설명 전용으로 정리. 다른 파일 수정 없음.
 appetite: 0.5d

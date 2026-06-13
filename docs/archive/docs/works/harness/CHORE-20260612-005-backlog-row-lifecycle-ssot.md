@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260612-005
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Backlog row 제거/정리 시점이 `HARNESS-PROTOCOL.md`, `skills/workflow/work-plan.md`, `skills/workflow/work-close.md`, `DR-013`에서 서로 다르게 설명되는 lifecycle drift를 정리한다. 단일 시점은 "Work Done 처리 시 동일 commit에 포함"을 기준으로 검토하며, archive 정책 자체와 W3 canonical restructure는 범위 밖이다.
 appetite: 0.5d

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260612-010
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Prompt surface diet + optional pack redefinition planning. R0에서는 inventory/decision grid/implementation boundary만 확정하고, prompts 이동·삭제·scaffold rewiring은 수행하지 않는다.
 appetite: 0.5d

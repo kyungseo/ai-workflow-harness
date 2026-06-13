@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260612-011
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Workflow core layering audit + minimal realignment. 상위 canonical에서 하위 상세로 내려가는 문서 위계 원칙을 세우고, AGENT-WORKFLOW / HARNESS-PROTOCOL / fallback/scaffold surface 중복·stale을 workflow 보존 기준으로 정렬한다. R0 전 구현 없음.
 appetite: 0.5d

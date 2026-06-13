@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260612-002
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: README/MANUAL/GUIDE류의 user-facing 문서를 초보 개발자 또는 일반 독자도 따라올 수 있게 audience-aware rewrite한다. 핵심은 청중별 목적, 다음 행동, 전문적 제약의 자연스러운 설명이며, source-only maintainer 문서 재구성, planning pack 설계, scaffold clone verification, canonical workflow/skill 절차 변경은 범위 밖이다.
 appetite: 1.5d
