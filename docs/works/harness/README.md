@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260613-007 | Protected Workflow Enforcement Exception-Class DR | 2026-06-13 | `docs/works/harness/CHORE-20260613-007-enforcement-exception-classes.md` |
 | CHORE-20260613-006 | Harness Protocol Trigger Family Simplification | 2026-06-13 | `docs/works/harness/CHORE-20260613-006-trigger-simplification.md` |
 
 ## Archived
