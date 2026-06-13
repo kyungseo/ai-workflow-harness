@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-13 (세션: CHORE-20260613-015 default template parity assertion Archived)
+Last updated: 2026-06-13 (세션: CHORE-20260613-016 ci inline invariants parity Archived)
 
 ## Current State
 
@@ -37,6 +37,7 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-015 default template parity ass
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-13 | CHORE-20260613-016: `CI inline assertion ↔ invariants SSoT parity`를 **no-action with explicit rationale**로 종결하고 archive 처리 | Phase 1 분류 결과 CI inline assertions와 `check-scaffold-invariants.sh`는 "같은 검사의 중복 구현"보다 "같은 scaffold surface를 다른 altitude에서 본다"에 가깝고, 실제 overlap이 작아 parity helper/partial convergence가 boundary를 흐릴 가능성이 더 컸기 때문. invariant-only [1]/[3]/[4]는 maintainer-facing structural correctness라 CI required gate 대상이 아님. Claude R0/R1 승인 | Low |
 | 2026-06-13 | CHORE-20260613-015: default template canonical parity guard를 `scripts/tests/check-default-template-parity.sh` + `run-harness-checks.sh --tier0`로 추가하고, related archive pending Work `CHORE-20260613-014`와 함께 archive 처리 | default tracked template pair(`workflow.mdc`, `git-workflow.md`)가 canonical 변경 후 조용히 stale해지는 drift를 source-level deterministic check로 즉시 드러내고, live Work queue를 archive-side index 기준으로 정리하기 위해. Claude R0/R1 review 승인 | Low |
 | 2026-06-13 | CHORE-20260613-013 / DR-038: Archive 누적 관리 정책 종결 — 누적 cost≈0(archive 미로드) 정량 확인, 유일 실비용인 live README hot-path 인덱스(106행)를 archive-side mirrored README로 이전. retention=keep-all(prune/rollup/미이동 기각), 전 category 일관, works/harness outlier를 decisions/retro 기존 패턴에 정합. cascade(DR-016/013 amend, HARNESS-PROTOCOL, work-close/plan, repo-health, scaffold) 정렬 | live working 파일에 무한 증가 archived 인덱스를 두는 구조 모순 해소 + backlog 항목·AWH-OQ-001 종결. tier2 검증 중 pre-existing scaffold cursor manifest-src 버그를 발견·등록. Claude self red-team R0/result review | Medium |
 | 2026-06-13 | CHORE-20260613-012 / DR-037: broad 테마 `문서-only 규칙 강제화`를 종결 — doc-only 규칙 전반 enforcement landscape를 기록하고, (위반-피해 + 기계강제 가능 + gate 부재) 동시 만족은 branch-isolation 유일=강제화 완료, 나머지는 기존강제 또는 behavioral(hard-gate 부적합)로 판정. parent backlog 제거 + dangling 3건 repoint | criterion #1("강제화 후보 규칙 목록 + 수단 매핑")을 실제 산출물 없이 체크하는 것을 막고, "다른 규칙도 hard-gate하자" 재론을 차단하기 위해. Claude self red-team R0 | Low |
@@ -75,5 +76,5 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-015 default template parity ass
    - ✓ **`문서-only 규칙 강제화` 테마 종결 (DR-037)** — doc-only enforcement landscape 검토 결과 branch-isolation만 강제화 대상이었고 완료. 나머지는 기존강제 또는 behavioral(hard-gate 부적합)
    - ✓ **DR-035 follow-up split 전체 완료** — CHORE-20260613-008 / -010 / -011(F2 무배선·DR-036)
    - ✓ **Archive 누적 관리 정책 종결 (DR-038)** — archive-side index relocation, retention=keep-all. works/harness 106행 archive-side 이전 + cascade 정렬
-   - 잔여: `Validation Spine residual`의 F1/F3/F4, `CI inline assertion ↔ invariants SSoT parity`
+   - 잔여: `Validation Spine residual`의 F1/F3/F4
    - Spring Boot MSA TDD option-pack, template pack, CLI naming, Windows, `/exit` gap은 실제 product 운용 후 필요성 재판단
