@@ -409,12 +409,21 @@ adapt "${TEMPLATE_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md" \
       "${TARGET_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"      "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
 
-# Optional source pack (DR-021): heavy framework docs. Default scaffold excludes
-# them to keep target context minimal; --with-optional opts in.
+# Optional source pack (DR-021): heavy framework docs + product-track workflow
+# (work-doc). Default scaffold excludes them to keep target context minimal;
+# --with-optional opts in.
 if [[ "${WITH_OPTIONAL}" == true ]]; then
   adapt "${TEMPLATE_ROOT}/docs/HARNESS-ARCHITECTURE.md"      "${TARGET_ROOT}/docs/HARNESS-ARCHITECTURE.md"
   adapt "${TEMPLATE_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"  "${TARGET_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"
   adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL.md"           "${TARGET_ROOT}/docs/WORKFLOW-MANUAL.md"
+  # work-doc: B-class product-track presentation/report workflow (DR-021).
+  adapt "${TEMPLATE_ROOT}/skills/workflow/work-doc.md" \
+        "${TARGET_ROOT}/skills/workflow/work-doc.md"
+  adapt "${TEMPLATE_ROOT}/.claude/commands/work-doc.md" \
+        "${TARGET_ROOT}/.claude/commands/work-doc.md"
+  ensure_dir "${TARGET_ROOT}/.agents/skills/workflow-work-doc"
+  adapt "${TEMPLATE_ROOT}/.agents/skills/workflow-work-doc/SKILL.md" \
+        "${TARGET_ROOT}/.agents/skills/workflow-work-doc/SKILL.md"
 fi
 
 adapt "${TEMPLATE_ROOT}/docs/decisions/DECISION-TEMPLATE.md" \
@@ -531,11 +540,14 @@ if [[ "${PROFILE}" == "spring-boot" ]]; then
 fi
 
 # ── Canonical workflow procedures ────────────────────────────────────────────
+# work-doc.md is B-class (--with-optional); excluded from default scaffold.
 for f in "${TEMPLATE_ROOT}"/skills/workflow/*.md; do
+  [[ "$(basename "$f")" == "work-doc.md" ]] && continue
   adapt "$f" "${TARGET_ROOT}/skills/workflow/$(basename "$f")"
 done
 
 for f in "${TEMPLATE_ROOT}"/.claude/commands/*.md; do
+  [[ "$(basename "$f")" == "work-doc.md" ]] && continue
   adapt "$f" "${TARGET_ROOT}/.claude/commands/$(basename "$f")"
 done
 
@@ -570,8 +582,10 @@ if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
 fi
 
 # ── Codex skills ─────────────────────────────────────────────────────────────
+# workflow-work-doc is B-class (--with-optional); excluded from default scaffold.
 for skill_dir in "${TEMPLATE_ROOT}"/.agents/skills/*/; do
   skill_name="$(basename "${skill_dir}")"
+  [[ "${skill_name}" == "workflow-work-doc" ]] && continue
   ensure_dir "${TARGET_ROOT}/.agents/skills/${skill_name}"
   adapt "${skill_dir}SKILL.md" "${TARGET_ROOT}/.agents/skills/${skill_name}/SKILL.md"
 done
@@ -612,9 +626,21 @@ write_text "${TARGET_ROOT}/.claude/settings.json" '{
 '
 
 # ── Cursor config and rules ──────────────────────────────────────────────────
-for f in behavior-principles.mdc coding.mdc debugging.mdc execution.mdc git-commit.mdc output-format.mdc role-harness-maintainer.mdc safety-critical.mdc workflow.mdc; do
+for f in behavior-principles.mdc coding.mdc debugging.mdc execution.mdc git-commit.mdc output-format.mdc role-harness-maintainer.mdc safety-critical.mdc; do
   adapt "${TEMPLATE_ROOT}/.cursor/rules/${f}" "${TARGET_ROOT}/.cursor/rules/${f}"
 done
+
+# workflow.mdc: work-doc routing row only for --with-optional targets (work-doc is B-class).
+# Default targets get a filtered copy without the dead route.
+if [[ "${WITH_OPTIONAL}" == true ]]; then
+  adapt "${TEMPLATE_ROOT}/.cursor/rules/workflow.mdc" \
+        "${TARGET_ROOT}/.cursor/rules/workflow.mdc"
+else
+  _AWH_WF_TMP="$(mktemp)"
+  grep -v "work-doc" "${TEMPLATE_ROOT}/.cursor/rules/workflow.mdc" > "${_AWH_WF_TMP}"
+  adapt "${_AWH_WF_TMP}" "${TARGET_ROOT}/.cursor/rules/workflow.mdc"
+  rm -f "${_AWH_WF_TMP}"
+fi
 
 if [[ "${PROFILE}" == "spring-boot" ]]; then
   adapt "${TEMPLATE_ROOT}/.cursor/rules/java-spring.mdc" "${TARGET_ROOT}/.cursor/rules/java-spring.mdc"
