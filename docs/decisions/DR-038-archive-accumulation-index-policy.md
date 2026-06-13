@@ -52,6 +52,15 @@ Linked DRs: DR-013, DR-014, DR-016
 - backlog `Archive 누적 관리 정책` 항목과 흡수된 `AWH-OQ-001`(historical artifact 보존량 기준)을 종결한다 — 보존량 결정은 "keep-all + archive-side index"로 답한다.
 - behavior 불변: Done/Archived 상태 분리, soft archive 트리거(`/session-start`·`/work-resume`), git mv 경로 미러링(DR-014)은 그대로다.
 
+## Scaling Boundary
+
+archive-side 인덱스가 매우 커질 때(예: 수천~만 행)의 거동과 escalation 경로를 명시한다.
+
+- **무한 확장되는 부분(설계 목표):** archive-side README는 세션 시작 시 자동 로드되지 않으므로, 인덱스 크기와 무관하게 세션 context 비용은 O(1) ≈ 0이다. 이 이득은 N에 비례하지 않는다.
+- **큰 N에서 degrade하는 부분:** ① work-close의 인덱스 append 시 전체 파일을 읽으면 비용이 N에 비례 → **헤더 anchor prepend 규율**로 회피한다(`work-close` Archive step 참조). ② 한 번에 전체를 읽는 도구는 대용량 파일에서 한계가 있으나, lookup은 `grep`으로 충분하다.
+- **graceful fallback:** 인덱스 README는 편의 도구이지 SSoT가 아니다. 진실은 `docs/archive/docs/works/{category}/`의 Work 파일 자체이며, 파일명에 ID·topic이 있어 `ls`·`grep`으로 조회 가능하다. 인덱스가 무력화돼도 기능 상실은 없다.
+- **escalation 임계(YAGNI까지 미구현):** 단일 인덱스가 ~1–2k 행에 접근하면 **기간별 sharding**(연도/분기 분할, 예: `README.md`=최근 + `README-{YYYY}.md` 아카이브)으로 전환한다. 이는 본 결정(archive-side relocation)의 자연 확장이며, 임계 도달 전에는 도입하지 않는다. 관측 증가율(≈3/day)상 단일 프로젝트로는 수년 거리다.
+
 ## Reversal Cost
 
 Medium — 다중 canonical/protocol/scaffold 표면을 정합시키므로, 되돌리면 그 표면들을 함께 복원해야 한다. 단 데이터(인덱스 행)는 무손실 이동이라 정보 손실 위험은 없다.
