@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-018
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: `Validation Spine residual follow-ups`의 F3 + F4를 한 Work로 다룬다. F3은 mirror parity / prompt 정합 / language policy(DR-007) catalog 점검을 deterministic Tier 1 assertion으로 **승격할지 먼저 검토(Phase 0)** 하고, 검토 결과 승인된 subset만 구현한다(승격 0건도 정당한 결론). F4는 runner 결과를 `/repo-health`에 surface하되 기존 Layer K 표면을 우선 활용하는 최소 변경으로 한다. F1은 CHORE-20260613-017에서 종결, F2는 DR-036으로 무배선 종결. broad repo-health 재구조화·CI/pre-commit 배선 재논의는 비범위.
 appetite: 0.5d

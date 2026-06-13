@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-019
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: release 검증 두 체계의 연결 gap만 닫는다. 루트 `docs/GIT-WORKFLOW.md` §3-1 Public Clean Baseline Gate에 deterministic spine(`run-harness-checks.sh --all`)·Release Full Sweep 통과 evidence row를 추가하고, §3-1 ↔ `VERIFICATION-COMMANDS.md` Release Full Sweep 상호 pointer를 건다. scaffold 템플릿(`scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md`) 미변경, CI/pre-commit 배선 없음(DR-036 유지), 새 스크립트 없음.
 appetite: 0.25d

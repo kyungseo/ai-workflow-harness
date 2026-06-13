@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-017
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: `Validation Spine residual follow-ups (F1-F4)` 중 F1만 독립 slice로 다룬다. `VERIFICATION-COMMANDS.md` Layer J/J-OB/Q를 deterministic script로 승격할 최소 경로와 Layer J/J-OB/Q/R/S의 `/tmp/awh-*` 경로를 repo-local `temp/` 정책에 정렬하는 방안을 설계·구현한다. F3/F4와 broad repo-health 재구조화는 비범위다. R0 전 구현 없음.
 appetite: 0.5d
