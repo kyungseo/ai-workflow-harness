@@ -8,7 +8,7 @@ AI Workflow Harness backlog다.
 기존 product-template backlog와 Work 기록은 history와 archive에 남아 있지만, 이 repository의 현재 active scope는 AI Workflow Harness다.
 
 > Done/Superseded 항목은 이 파일에서 제거된다.
-> 완료 이력: Work 파일이 있는 항목은 `docs/works/harness/README.md` Archived 테이블, Work 파일이 없는 항목(Quick Mode)은 `git log --grep="{ID}"`로 확인한다.
+> 완료 이력: Work 파일이 있는 항목은 `docs/archive/docs/works/harness/README.md` Archived 인덱스, Work 파일이 없는 항목(Quick Mode)은 `git log --grep="{ID}"`로 확인한다.
 
 ## Priority Guide
 
@@ -31,7 +31,7 @@ AI Workflow Harness backlog다.
 | W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속은 W3/W4 후보에서 별도 추적 |
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002) Scaffold multi-user clone verification |
 | W3. Workflow IA Diet ✓ 완결 | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | (Canonical 개념 계층화 핵심 달성 = CHORE-20260613-002~005, Prompt surface diet 완료 = CHORE-20260612-010, work-doc class 완료 = CHORE-20260613-005, trigger family simplification 완료 = CHORE-20260613-006) 전부 완료 |
-| W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
+| W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | CI inline assertion ↔ invariants SSoT parity (문서-only 규칙 강제화 = DR-037 종결, Archive 누적 관리 정책 = DR-038 종결) |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원, `/exit` gap |
 
 ### Summary
@@ -39,8 +39,8 @@ AI Workflow Harness backlog다.
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
-| — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
-| — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
+| — | P3 | Candidate | L2 | CI inline assertion ↔ invariants SSoT parity |
+| — | P2 | Candidate | L2 | default template ↔ canonical parity assertion (`workflow.mdc` / `git-workflow.md`) |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P2 | Candidate | L3 | Scaffold CLI naming audit |
@@ -66,7 +66,7 @@ AI Workflow Harness backlog다.
 **Task:**
 
 - F1: `VERIFICATION-COMMANDS.md` catalog Layer J/J-OB/Q를 deterministic script로 변환하고, catalog Layer J/J-OB/Q/R/S의 `/tmp/awh-*` 경로를 repo-local `temp/` 정책에 맞춰 치환한다. `HARNESS-TEST-TAXONOMY.md` §5는 이미 정책만 확정했으며, 일괄 치환은 이 후속 Work 범위다.
-- F2: `run-harness-checks.sh`를 CI required check 또는 pre-commit/hook에 배선할지 결정한다. `문서-only 규칙 강제화`와 함께 예외/우회 정책을 먼저 판단한다.
+- F2: ✅ **종결 (2026-06-13, DR-036 / CHORE-20260613-011).** `run-harness-checks.sh`를 CI required check·pre-commit/hook에 **배선하지 않기로 결정**(무배선). runner 검사는 이미 `ci.yml`·`pre-commit`에서 강제되고 tier2는 과중하며, 고유가치(invariants SSoT 호출)는 enforcement gate가 아니라 F4(repo-health surface) 대상이다. F2 종결 시 발견된 residual(CI inline scaffold assertion ↔ `check-scaffold-invariants.sh` SSoT parity drift)은 F2 범위 밖으로, 아래 별도 candidate(`CI inline assertion ↔ invariants SSoT parity`)로 분리한다.
 - F3: mirror parity, prompt 정합, language policy 같은 catalog/judgment 점검을 deterministic Tier 1 assertion으로 승격할지 검토·구현한다. product pack Layer U의 executable 승격도 실제 반복 필요가 확인되면 여기서 다룬다.
 - F4: runner 결과를 `/repo-health`에 surface한다. CHORE-20260613-004의 repo-health slice 분리 이후 구조와 연계하되, repo-health가 deterministic 불변식을 재구현하지 않고 runner/catalog 결과를 호출·해석하는 경계를 유지한다.
 
@@ -78,90 +78,52 @@ AI Workflow Harness backlog다.
 - CHORE-20260611-008: gate path-list parity Q-static
 - CHORE-20260611-009: source repo operations runbook(Update Triggers)
 
-**Done Criteria:** F1~F4 각각이 Work로 분해되거나, 범위가 다른 backlog 항목(`문서-only 규칙 강제화`, CHORE-20260613-004, W2/W5 product pack 후보)에 명시적으로 흡수됨. `HARNESS-TEST-TAXONOMY.md` §6와 `SOURCE-REPO-OPERATIONS.md` Update Triggers의 후속 pointer가 stale하지 않음.
+**Done Criteria:** F1~F4 각각이 Work로 분해되거나, 범위가 다른 backlog 항목(CHORE-20260613-004, W2/W5 product pack 후보) 또는 DR(F2는 DR-036으로 종결)에 명시적으로 흡수됨. `HARNESS-TEST-TAXONOMY.md` §6와 `SOURCE-REPO-OPERATIONS.md` Update Triggers의 후속 pointer가 stale하지 않음.
 
 **Verification:** taxonomy §5/§6, `VERIFICATION-COMMANDS.md` Layer J/J-OB/Q/R/S, `run-harness-checks.sh`, `skills/workflow/repo-health.md`, `SOURCE-REPO-OPERATIONS.md` 간 pointer 정합 grep. F1 착수 시 `/tmp/awh-*` 잔존 grep으로 치환 범위 확인.
 
 ---
 
-#### Archive 누적 관리 정책
+#### CI inline assertion ↔ invariants SSoT parity
 
-> 2026-06-10 등록 (사용자 제기).
+> 2026-06-13 등록 (CHORE-20260613-011 / DR-036 F2 종결 시 Discovery).
 
-**Cluster:** W4. Enforcement And Lifecycle
+**Cluster:** W4. Enforcement And Lifecycle (검증 parity).
 
 **Task:**
 
-- archive artifact가 지속 누적되는 구조가 문제인지 판단하고, 필요 시 관리 정책을 수립한다.
-- **범위(사용자 지시 확장):** work 파일뿐 아니라 **decision(DR) 및 기타 archived artifact(retrospective/troubleshooting)** 누적도 동일 프레임으로 다룬다.
-- **실태 (2026-06-10 측정):**
-  - `docs/archive/docs/works/harness/` 71개, `docs/archive/docs/decisions/` 9개.
-  - work 파일은 6월 1~10일 ~30개 증가(≈3/day) — 증가율 가파름.
+- `ci.yml`(source)이 scaffold assertion을 inline 재구현하면서 `scripts/tests/check-scaffold-invariants.sh`(invariants SSoT)를 호출하지 않는다. 두 표면이 발산할 drift 위험을 평가하고, 필요 시 parity 점검 수단(예: 경량 static parity check, 또는 CI가 invariants SSoT를 호출하도록 부분 수렴)을 결정한다.
+- 이는 DR-036에서 "F2 배선 여부"와 분리한 residual이다. F2는 무배선으로 종결됐고, 이 항목은 CI↔SSoT parity 문제만 다룬다.
 
-**비판적 framing (먼저 해악을 정량화 — Simplicity First):**
+**비판적 framing:** 우선 drift 실해악을 정량화한다. 두 표면 모두 활발히 유지되고 CI가 hard gate이므로, 실피해는 "invariants SSoT가 갱신될 때 CI inline assertion이 뒤처질 수 있음"에 한정될 수 있다. 무문제면 무조치 근거를 명문화하고 닫는다.
 
-- archive는 세션 시작 시 자동 로드되지 않는다 (`docs/AGENT-WORKFLOW.md`가 archive 로드를 명시 금지). 따라서 운영/context 비용 ≈ 0.
-- 실제 bounded 해악: ① archive index README 비대 ② `find`/디렉터리 스캔 노이즈 ③ repo 파일 수 bloat ④ git 연산 marginal 저하.
-- **항목의 첫 과제:** "쌓이는 게 문제"가 구체적으로 무엇을 깨뜨리는지 정의한다. 무문제면 무조치 근거를 명문화하고 닫는다(아래 옵션 A).
+**Dependencies:** DR-036, `run-harness-checks.sh`, `check-scaffold-invariants.sh`, `.github/workflows/ci.yml`.
 
-**개선 방향 옵션 (이 항목이 결정할 대상):**
+**Done Criteria:** drift 실해악 정량 정의 후 parity 수단 결정(또는 무조치 근거 명문화). 결정이 CI/runner/invariants 경계와 정합.
 
-- A) **현행 유지 + 무조치 근거 명문화** — git-tracked·미로드 → cost~0를 DR/정책으로 확정.
-- B) **주기적 rollup/digest** — 월/분기 단위 단일 digest로 압축, 세부는 git history. 파일 수↓ / granular 검색성↓.
-- C) **retention/pruning** — 오래된 artifact 실제 삭제(git log 보존). 공격적, reversal cost 있음.
-- D) **close 시 archive 미이동** — `/work-close`에서 work 파일을 옮기지 않고 제거, git history가 기록. archive works 디렉터리 축소/폐지.
-- E) **tiered/index-only** — 최근 N개만 full 유지, 이전은 index README row만 남기고 본문 압축.
-
-**Dependencies:**
-
-- DR-014 archive policy, `/work-close` archive step.
-- 연계: `Backlog row lifecycle SSoT 정비`(W1, 같은 lifecycle hygiene 클러스터).
-- 흡수: 구 Deferred `AWH-OQ-001`(historical product docs를 archive에 얼마나 남길 것인가 — 현재 guidance와 혼동되지 않는 legacy 기준 결정).
-
-**Done Criteria:**
-
-- 누적의 실해악을 정량 정의하고, 옵션 A~E 중 방향을 결정(또는 무조치 근거 명문화).
-- 결정이 work·decision·기타 artifact에 일관 적용되는지 확인. 필요 시 DR-014 갱신 또는 신규 DR.
-
-**Verification:**
-
-- 결정 방향에 따라: 정책 문서/DR 반영 확인, `/work-close` archive step과의 정합, archive index README 정합.
+**Verification:** `ci.yml` inline assertion 목록 ↔ `check-scaffold-invariants.sh` 검사 항목 대조 grep. 결정 방향에 따라 CI 수정 시 scaffold dry-run regression 확인.
 
 ---
 
-#### 문서-only 규칙 강제화 (CI/hook/hard-gate)
+#### default template ↔ canonical parity assertion (`workflow.mdc` / `git-workflow.md`)
 
-> 2026-06-10 등록 (사용자 테마).
+> 2026-06-13 등록 (CHORE-20260613-014 closeout residual).
 
-**Cluster:** W4. Enforcement And Lifecycle
+**Cluster:** W4. Enforcement And Lifecycle (template parity / drift guard).
 
 **Task:**
 
-- 문서상으로만 기술된 내용 중 ci · hook · hard gate 및 가용한 다른 수단으로 강제화할 주요 요소를 검토하고 구현한다.
-- 우선순위는 위반 빈도·실피해가 큰 규칙부터.
-- **선행 결정 완료 (2026-06-13):** DR-035에서 protected workflow surface branch isolation 예외 클래스를 `I0/T1/S1/P1/P2`로 고정했다. 남은 범위는 implementation slice다.
-- **implementation slice 1 완료 (2026-06-13):** CHORE-20260613-008에서 framework default branch-isolation hardening을 반영했다. source repo 기본 protected path는 `develop`에서 `T1 tracking-state-only` staged set만 warning 예외로 허용하고, `S1 structural-policy` 또는 mixed staged set은 hard-stop한다. `main` hard-stop과 merge inherited exception은 유지된다.
-- **implementation slice 2 완료 (2026-06-13):** CHORE-20260613-010에서 `.harness/gate-config`의 project-protected extension classification(`P1/P2`)을 shipped/runtime에 반영했다. `[protected]` only는 `P1 default-safe hard-stop`, `[tracking-state]`는 `P2-T1`로서 bounded warning 예외를 상속한다. finalization gate와 F2 wiring은 그대로 범위 밖에 뒀다.
-- **남은 구현 범위:** Runner / CI / F2 wiring decision.
+- source repo는 shipped canonical 파일에서 default target용 filtered/default variant를 파생해 scaffold한다. 현재 확인된 쌍은 `.cursor/rules/workflow.mdc` ↔ `scripts/templates/default/.cursor/rules/workflow.mdc`, `.claude/rules/git-workflow.md` ↔ `scripts/templates/default/.claude/rules/git-workflow.md`.
+- 기존 temp/grep 방식은 런타임 파생이라 parity drift가 구조적으로 적었지만, 현재는 source와 default variant가 **별도 tracked file**이라 canonical만 수정하면 default template이 조용히 stale해질 수 있다.
+- 경량 deterministic guard를 추가해, allowed delta를 제외한 parity drift를 maintainer 검증에서 즉시 드러내는지 결정·구현한다. 예: `workflow.mdc`는 `work-doc` row만 제외하고 나머지 diff가 0인지, `git-workflow.md`는 default-only substitution/삭제 허용분 외에는 canonical과 정규화 후 동일한지 assert.
 
-> **[2026-06-08 설계 메모 — CHORE-20260611-008 close 시 `repo-health gate series 보강`에서 이관]** pre-commit hook이 protected 파일을 develop에서 stage할 때 WARNING만 발행하고 exit(1)하지 않는다. `git-workflow.md`의 인지 규칙("move to FAIL")과 기계 신호(WARNING=proceed)가 불일치하며, AI 도구는 기계 신호를 따라 commit을 진행할 수 있다. GitHub ruleset이 push 단계에서 hard-stop을 제공하므로 실피해는 "local develop에 잘못된 commit이 남는 불편함"에 한정된다. hook exit(1) 강화를 검토했으나 예외 설계가 복잡하다는 결론: ① STATUS.md 같은 상태 파일의 tracking-only commit은 develop 직접 commit이 정당한 예외, ② Quick Mode L1은 feature branch 없이 처리하는 경우가 있음, ③ product track 확장 시 repo별 custom protected path 추가, ④ `commands/**`·`rules/**`·`create-harness.sh` 같은 구조 파일은 trailer 우회도 불가해야 할 수 있음. 이 예외 클래스 분류(상태 파일 vs 구조 파일), hook의 override trailer 인식 여부, Quick Mode/product track 적용 범위를 사전에 DR로 확정하지 않으면 hook 구현이 설계 없이 진행될 위험이 있다. 현재 GitHub ruleset으로 충분한 보호가 이뤄지고 있어 현행 유지가 더 효율적일 수 있다는 판단 하에 보류. 착수 시 hook 강화보다 **예외 클래스 설계 DR을 선행**해야 함.
+**비범위:** `CI inline assertion ↔ invariants SSoT parity` 후보와 통합하지 않는다. 이 항목은 CI↔SSoT가 아니라 **source canonical ↔ scaffold default variant** drift만 다룬다.
 
-**Dependencies:**
+**Dependencies:** CHORE-20260613-014, CHORE-20260613-005(work-doc conditional generation), CHORE-20260611-008(default `git-workflow.md` variant), `scripts/create-harness.sh`, `scripts/tests/run-harness-checks.sh`.
 
-- 연계: gate path-list parity Q-static(CHORE-20260611-008 완료), 기존 gate series(CHORE-20260606-006~016), DR-024, DR-025.
-- 선행 decision: DR-035 (Protected Workflow Enforcement Exception Classes) — branch isolation 예외 클래스, Quick Mode non-exception, DR-025 trailer non-reuse, follow-up split 3종 고정.
-- Canonical 개념 계층화의 핵심 목표는 CHORE-20260613-002~005로 달성됨(2026-06-13). 이 항목은 blocking dependency 없이 독립 착수 가능하다.
+**Done Criteria:** default variant를 가지는 canonical/template 쌍 목록을 확정하고, 각 쌍에 대해 허용 차이를 제외한 parity drift가 maintainer 검증에서 검출된다. `workflow.mdc`와 `git-workflow.md` 두 쌍 모두 커버되며, 새 variant가 추가될 때 검증 누락이 드러나는 최소 운영 규칙이 정리된다.
 
-**Done Criteria:**
-
-- 강제화 후보 규칙 목록 + 수단(CI/hook/hard-gate) 매핑 결정.
-- 선정 규칙에 대한 enforcement 구현. 예외 클래스 설계는 DR-035를 따른다.
-- implementation Work는 최소 다음 3갈래 중 어디를 다루는지 scope를 명시한다: framework default hardening / project extension classification / F2 wiring.
-
-**Verification:**
-
-- inject-revert로 위반 차단 + 정상 통과 확인.
-- 예외(`T1 tracking-state-only`, merge inherited exception 등) 정상 동작 확인.
+**Verification:** canonical ↔ default template 정규화 diff 또는 grep assertion 추가 후 PASS/FAIL inject-revert로 재현. surface: canonical · scaffold · README/GUIDE/MANUAL 중 필요 시 maintainer verification 문서만 반영.
 
 ---
 

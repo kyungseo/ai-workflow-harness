@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-008
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: DR-035 후속 implementation 첫 slice로 framework default branch-isolation hardening만 다룬다. source repo 기본 protected path에 대해 `develop` warning-only / `main` hard-stop의 현재 pre-commit 동작을 DR-035 class(`I0/T1/S1`) 기준으로 재정렬하고, 관련 `gate-lists`/rule/doc cascade를 함께 맞춘다. project-protected extension classification(`P1/P2`)과 F2 runner/CI 배선은 범위 밖이다.
 appetite: 0.5d
@@ -257,3 +257,5 @@ Claude R1 result review 요청: CHORE-20260613-008 Framework Default Branch-Isol
 - 2026-06-13: local verification 완료. `git diff --check`, `sh -n tools/git-hooks/pre-commit`, `sh -n tools/git-hooks/lib/gate-lists.sh` PASS.
 - 2026-06-13: 임시 repo 시나리오 검증 PASS. `develop T1 warning`, `develop S1 hard-stop`, `develop mixed hard-stop`, `main hard-stop`, `.git/MERGE_HEAD` skip를 모두 확인했다.
 - 2026-06-13: Claude R1 Approved. blocking finding 없음. 권고된 `docs/GIT-WORKFLOW.md` grep 재확인 완료 후 closeout 준비로 전환했다.
+
+- 2026-06-13: batch archive (CHORE-20260613-013 DR-038 archive-side flow 실사용 검증). status Done→Archived, live README Done(Pending) 행 제거 후 archive-side Archived 인덱스로 이전.

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-006
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: docs/HARNESS-PROTOCOL.md §14 Trigger Summary 표 앞에 family quick reference 섹션 추가. T1~T17 번호·내용·순서 변경 없음. 비대화 억제.
 appetite: 0.5d
@@ -183,3 +183,5 @@ Review focus:
 - 2026-06-13: Branch Isolation Check — source-gitflow mode. `feature/chore-20260613-006-trigger-simplification` branch 생성.
 - 2026-06-13: Work 파일 초안이 co-working 패턴(역할 분리, R0/R1 gate, Round Log, Approval/State, tracker 연동) 미반영으로 재작성. 초안은 개인 메모 수준이었음.
 - 2026-06-13: R0 gate 이전에 `docs/HARNESS-PROTOCOL.md` §14 변경 실행(family quick reference 표 추가) — 절차 위반. Phase 0 주의사항에 기록하고 R0를 소급 적용.
+
+- 2026-06-13: batch archive (CHORE-20260613-013 DR-038 archive-side flow 실사용 검증). status Done→Archived, live README Done(Pending) 행 제거 후 archive-side Archived 인덱스로 이전.
