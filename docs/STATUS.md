@@ -78,7 +78,7 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-006 Done — trigger family sim
    - ✓ **Operating Tracks 경계 최소 정합** — CHORE-20260613-003 완료
    - ✓ **repo-health canonical slice 분리** — CHORE-20260613-004 완료
    - ✓ **work-doc.md B-class 분류** — CHORE-20260613-005 완료
-   - Canonical 개념 계층화 + context-routing restructure (P1, broad — 별도 Work 필요)
-   - trigger family simplification (P2, Canonical restructure 선행)
+   - ✓ **Canonical 개념 계층화** — CHORE-20260613-002~005로 핵심 목표 달성, 별도 Work 없이 종료
+   - ✓ **trigger family simplification** — CHORE-20260613-006 완료. **W3 Workflow IA Diet 전부 완결.**
 4. **W4/W5 — Lifecycle hygiene 및 optional 확장**:
    - Archive policy, Spring Boot MSA TDD option-pack, template pack, CLI naming, Windows, `/exit` gap은 실제 product 운용 후 필요성 재판단
