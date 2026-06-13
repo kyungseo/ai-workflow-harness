@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260613-003 | Operating Tracks Definition Boundary Minimal Realignment | 2026-06-13 | `docs/works/harness/CHORE-20260613-003-operating-tracks-boundary.md` |
 | CHORE-20260613-002 | Protocol Load Map / Context Routing Minimal Realignment | 2026-06-13 | `docs/works/harness/CHORE-20260613-002-protocol-load-map-routing.md` |
 | CHORE-20260613-001 | Prompt Task Library Archive + Scaffold Pruning | 2026-06-13 | `docs/works/harness/CHORE-20260613-001-prompt-task-library-archive.md` |
 | CHORE-20260612-011 | Workflow Core Layering Audit + Minimal Realignment | 2026-06-13 | `docs/works/harness/CHORE-20260612-011-workflow-core-stale-audit.md` |
