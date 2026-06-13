@@ -40,6 +40,7 @@ AI Workflow Harness backlog다.
 | --- | --- | --- | --- | --- |
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
 | — | P3 | Candidate | L2 | CI inline assertion ↔ invariants SSoT parity |
+| — | P2 | Candidate | L2 | default template ↔ canonical parity assertion (`workflow.mdc` / `git-workflow.md`) |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P2 | Candidate | L3 | Scaffold CLI naming audit |
@@ -101,6 +102,28 @@ AI Workflow Harness backlog다.
 **Done Criteria:** drift 실해악 정량 정의 후 parity 수단 결정(또는 무조치 근거 명문화). 결정이 CI/runner/invariants 경계와 정합.
 
 **Verification:** `ci.yml` inline assertion 목록 ↔ `check-scaffold-invariants.sh` 검사 항목 대조 grep. 결정 방향에 따라 CI 수정 시 scaffold dry-run regression 확인.
+
+---
+
+#### default template ↔ canonical parity assertion (`workflow.mdc` / `git-workflow.md`)
+
+> 2026-06-13 등록 (CHORE-20260613-014 closeout residual).
+
+**Cluster:** W4. Enforcement And Lifecycle (template parity / drift guard).
+
+**Task:**
+
+- source repo는 shipped canonical 파일에서 default target용 filtered/default variant를 파생해 scaffold한다. 현재 확인된 쌍은 `.cursor/rules/workflow.mdc` ↔ `scripts/templates/default/.cursor/rules/workflow.mdc`, `.claude/rules/git-workflow.md` ↔ `scripts/templates/default/.claude/rules/git-workflow.md`.
+- 기존 temp/grep 방식은 런타임 파생이라 parity drift가 구조적으로 적었지만, 현재는 source와 default variant가 **별도 tracked file**이라 canonical만 수정하면 default template이 조용히 stale해질 수 있다.
+- 경량 deterministic guard를 추가해, allowed delta를 제외한 parity drift를 maintainer 검증에서 즉시 드러내는지 결정·구현한다. 예: `workflow.mdc`는 `work-doc` row만 제외하고 나머지 diff가 0인지, `git-workflow.md`는 default-only substitution/삭제 허용분 외에는 canonical과 정규화 후 동일한지 assert.
+
+**비범위:** `CI inline assertion ↔ invariants SSoT parity` 후보와 통합하지 않는다. 이 항목은 CI↔SSoT가 아니라 **source canonical ↔ scaffold default variant** drift만 다룬다.
+
+**Dependencies:** CHORE-20260613-014, CHORE-20260613-005(work-doc conditional generation), CHORE-20260611-008(default `git-workflow.md` variant), `scripts/create-harness.sh`, `scripts/tests/run-harness-checks.sh`.
+
+**Done Criteria:** default variant를 가지는 canonical/template 쌍 목록을 확정하고, 각 쌍에 대해 허용 차이를 제외한 parity drift가 maintainer 검증에서 검출된다. `workflow.mdc`와 `git-workflow.md` 두 쌍 모두 커버되며, 새 variant가 추가될 때 검증 누락이 드러나는 최소 운영 규칙이 정리된다.
+
+**Verification:** canonical ↔ default template 정규화 diff 또는 grep assertion 추가 후 PASS/FAIL inject-revert로 재현. surface: canonical · scaffold · README/GUIDE/MANUAL 중 필요 시 maintainer verification 문서만 반영.
 
 ---
 
