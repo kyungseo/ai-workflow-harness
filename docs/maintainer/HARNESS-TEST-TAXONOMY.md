@@ -22,7 +22,7 @@ harness workflow 변경 시 **무엇을 / 어느 깊이로 / 어떤 수단으로
 관련 문서:
 - `docs/AGENT-WORKFLOW.md` Verification Defaults — 변경 유형별 기본 검증 규칙(shipped/core)
 - `docs/maintainer/VERIFICATION-COMMANDS.md` — Layer별 실행 명령 카탈로그
-- `skills/workflow/repo-health.md` — `/repo-health` 감사 절차 및 Required Surface Matrix
+- `skills/workflow/repo-health.md` — `/repo-health` 감사 절차. Cascade detail/Required Surface Matrix는 `skills/workflow/repo-health-cascade.md`
 - `scripts/tests/run-harness-checks.sh` — 이 문서의 Tier를 오케스트레이션하는 runner
 
 ---
@@ -35,7 +35,7 @@ harness workflow 변경 시 **무엇을 / 어느 깊이로 / 어떤 수단으로
 | --- | --- | --- | --- | --- |
 | `scripts/tests/**` (executable assertions) | deterministic, non-interactive, exit-code | CI·hook·AI·maintainer | PASS/FAIL | **검증 가능한 불변식의 SSoT** |
 | `docs/maintainer/VERIFICATION-COMMANDS.md` (command catalog) | 광범위·human-run·일부 false-positive 허용(screening) | maintainer(직접 셸) | grep 결과(증거) | **HOW 카탈로그** |
-| `skills/workflow/repo-health.md` (`/repo-health`) | interactive 감사·judgment·cascade 선택 | AI(세션 중) | 분류 보고 | **오케스트레이션/판단 표면** |
+| `skills/workflow/repo-health.md` + conditional slices (`/repo-health`) | interactive 감사·judgment·cascade 선택 | AI(세션 중) | 분류 보고 | **오케스트레이션/판단 표면** |
 
 **경계 원칙:**
 
@@ -128,7 +128,7 @@ runner(`scripts/tests/run-harness-checks.sh`)는 scaffold로 ship될 수 있다.
 | F1 | catalog Layer J/J-OB/Q를 deterministic 스크립트로 변환 + catalog Layer J/J-OB/Q/R/S의 `/tmp/awh-*`→`temp/` 치환 |
 | F2 | runner를 CI required check / pre-commit에 배선(↔ `문서-only 규칙 강제화`) |
 | F3 | mirror parity·prompt 정합·language policy를 executable assertion으로 Tier 1 승격 |
-| F4 | runner 결과를 `/repo-health`에 surface(↔ `repo-health gate series 보강`·`repo-health.md slice 분리`) |
+| F4 | runner 결과를 `/repo-health`에 surface(↔ `repo-health gate series 보강`·CHORE-20260613-004 이후 slice 구조) |
 
 ---
 

@@ -28,3 +28,10 @@
 | `/work-doc` | `skills/workflow/work-doc.md` | `.claude/commands/work-doc.md` | `.agents/skills/workflow-work-doc/SKILL.md` | 발표/보고 산출물 제작 workflow. Presentation, Report, Decision Brief 등 고품질 산출물을 생성한다 |
 | `/repo-health` | `skills/workflow/repo-health.md` | `.claude/commands/repo-health.md` | `.agents/skills/workflow-repo-health/SKILL.md` | 프로젝트 워크플로우와 문서 건강 상태를 점검하고 보고한다. 옵션: --full, --cascade |
 | `/record-decision` | `skills/workflow/record-decision.md` | `.claude/commands/record-decision.md` | `.agents/skills/workflow-record-decision/SKILL.md` | product·harness 의사결정을 DR 파일로 기록한다 |
+
+## Supporting Slices
+
+| Slice | Loaded By | Role |
+| --- | --- | --- |
+| `skills/workflow/repo-health-full.md` | `/repo-health --full` | full mode 전용 reading order와 Inspection Areas C/D/F |
+| `skills/workflow/repo-health-cascade.md` | `/repo-health --cascade` | cascade mode 전용 Required Surface Matrix, Grep Pack, Simulation Matrix, Area G |

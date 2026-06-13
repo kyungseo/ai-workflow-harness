@@ -28,9 +28,9 @@ AI Workflow Harness backlog다.
 
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
-| W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속 F1~F4는 W3 repo-health slice·W4 enforcement로 연결 |
+| W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속은 W3/W4 후보에서 별도 추적 |
 | W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002) Scaffold multi-user clone verification |
-| W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health slice, work-doc class |
+| W3. Workflow IA Diet | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | 외부화 실패모드 원칙, Canonical 개념 계층화, Prompt surface diet, trigger family simplification, work-doc class |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | 문서-only 규칙 강제화, Backlog row lifecycle SSoT, Archive 누적 관리 정책 |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원, `/exit` gap |
 
@@ -41,7 +41,6 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | Validation Spine residual follow-ups (F1-F4) |
 | — | P1 | Candidate | L3 | Canonical 개념 계층화 + context-routing restructure |
 | — | P2 | Candidate | L2 | Harness protocol trigger family simplification |
-| — | P2 | Candidate | L2 | `skills/workflow/repo-health.md` slice 분리 |
 | — | P2 | Candidate | L2 | `skills/workflow/work-doc.md` class 재검토 |
 | — | P1 | Candidate | L2 | 문서-only 규칙 강제화 (CI/hook/hard-gate) |
 | — | P2 | Candidate | L2 | Archive 누적 관리 정책 |
@@ -72,7 +71,7 @@ AI Workflow Harness backlog다.
 - F1: `VERIFICATION-COMMANDS.md` catalog Layer J/J-OB/Q를 deterministic script로 변환하고, catalog Layer J/J-OB/Q/R/S의 `/tmp/awh-*` 경로를 repo-local `temp/` 정책에 맞춰 치환한다. `HARNESS-TEST-TAXONOMY.md` §5는 이미 정책만 확정했으며, 일괄 치환은 이 후속 Work 범위다.
 - F2: `run-harness-checks.sh`를 CI required check 또는 pre-commit/hook에 배선할지 결정한다. `문서-only 규칙 강제화`와 함께 예외/우회 정책을 먼저 판단한다.
 - F3: mirror parity, prompt 정합, language policy 같은 catalog/judgment 점검을 deterministic Tier 1 assertion으로 승격할지 검토·구현한다. product pack Layer U의 executable 승격도 실제 반복 필요가 확인되면 여기서 다룬다.
-- F4: runner 결과를 `/repo-health`에 surface한다. `skills/workflow/repo-health.md` slice 분리와 연계하되, repo-health가 deterministic 불변식을 재구현하지 않고 runner/catalog 결과를 호출·해석하는 경계를 유지한다.
+- F4: runner 결과를 `/repo-health`에 surface한다. CHORE-20260613-004의 repo-health slice 분리 이후 구조와 연계하되, repo-health가 deterministic 불변식을 재구현하지 않고 runner/catalog 결과를 호출·해석하는 경계를 유지한다.
 
 **Dependencies:**
 
@@ -82,7 +81,7 @@ AI Workflow Harness backlog다.
 - CHORE-20260611-008: gate path-list parity Q-static
 - CHORE-20260611-009: source repo operations runbook(Update Triggers)
 
-**Done Criteria:** F1~F4 각각이 Work로 분해되거나, 범위가 다른 backlog 항목(`문서-only 규칙 강제화`, `repo-health.md slice 분리`, W2/W5 product pack 후보)에 명시적으로 흡수됨. `HARNESS-TEST-TAXONOMY.md` §6와 `SOURCE-REPO-OPERATIONS.md` Update Triggers의 후속 pointer가 stale하지 않음.
+**Done Criteria:** F1~F4 각각이 Work로 분해되거나, 범위가 다른 backlog 항목(`문서-only 규칙 강제화`, CHORE-20260613-004, W2/W5 product pack 후보)에 명시적으로 흡수됨. `HARNESS-TEST-TAXONOMY.md` §6와 `SOURCE-REPO-OPERATIONS.md` Update Triggers의 후속 pointer가 stale하지 않음.
 
 **Verification:** taxonomy §5/§6, `VERIFICATION-COMMANDS.md` Layer J/J-OB/Q/R/S, `run-harness-checks.sh`, `skills/workflow/repo-health.md`, `SOURCE-REPO-OPERATIONS.md` 간 pointer 정합 grep. F1 착수 시 `/tmp/awh-*` 잔존 grep으로 치환 범위 확인.
 
@@ -154,7 +153,7 @@ AI Workflow Harness backlog다.
 
 **Dependencies:**
 
-- 연계: `Prompt surface diet + optional pack 재정의`는 CHORE-20260612-010에서 classification-only로 완료. 후속은 `skills/workflow/repo-health.md slice 분리`(P2), `skills/workflow/work-doc.md class 재검토`(P2), `Harness protocol trigger family simplification`(P2, trigger 재그룹화 ⊂ 이 restructure).
+- 연계: `Prompt surface diet + optional pack 재정의`는 CHORE-20260612-010에서 classification-only로 완료. `skills/workflow/repo-health.md` slice 분리는 CHORE-20260613-004에서 완료. 남은 후속은 `skills/workflow/work-doc.md class 재검토`(P2), `Harness protocol trigger family simplification`(P2, trigger 재그룹화 ⊂ 이 restructure).
 - 검증 척추(CHORE-20260611-005 도입 완료) — restructure cascade를 test-backed로 검증.
 - DR-021, DR-023.
 
@@ -216,22 +215,6 @@ AI Workflow Harness backlog다.
 
 - inject-revert로 위반 차단 + 정상 통과 확인.
 - 예외(상태 파일 tracking-only 등) 정상 동작 확인.
-
----
-
-#### `skills/workflow/repo-health.md` slice 분리
-
-**Cluster:** W3. Workflow IA Diet
-
-**Task:** 422줄로 canonical 파일 중 가장 무거움. 상시 로드 섹션(Procedure/Mode Contract/Output Contract/Inspection Areas A~B)과 조건부 섹션(--full 전용: C/D/F, --cascade 전용: G/H, Required Simulation Matrix)을 별도 slice 파일로 분리하고 conditional pointer로 교체. context budget 절감 및 --full/--cascade 로드 범위 명확화. **연계: gate path-list parity(CHORE-20260611-008 완료, Surface Matrix gate row 추가됨), scaffold/tool-surface regression alignment(CHORE-20260611-006 완료) F4 repo-health 연계**
-
-**Dependencies:**
-
-- gate path-list parity(CHORE-20260611-008 완료), scaffold/tool-surface regression alignment(CHORE-20260611-006 완료) F4 repo-health 연계
-
-**Done Criteria:** 상시 로드 섹션이 200줄 이하로 줄고, 조건부 섹션이 conditional pointer로 참조됨
-
-**Verification:** `/repo-health` 기본·--full·--cascade 모드별 실행 후 각 섹션이 올바르게 로드되는지 확인
 
 ---
 
