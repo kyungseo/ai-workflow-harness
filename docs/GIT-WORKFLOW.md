@@ -338,6 +338,10 @@ commit message 형식 검증. Conventional Commits 미준수 시 hard block (exi
 bash tools/git-hooks/install.sh
 ```
 
+### 이 repo에 맞게 조정
+
+`tools/git-hooks/lib/gate-lists.sh`의 기본 protected/tracking-state/finalization 목록은 harness framework-owned 값이다(upgrade 시 overwrite). 이 repo 고유의 민감 경로나 project-specific tracking-state 경로는 framework-owned `gate-lists.sh`를 편집하지 말고 add-only `.harness/gate-config`의 `[protected]` / `[tracking-state]` / `[finalization]`에 추가한다. `[tracking-state]`는 project-specific 경로를 `T1 tracking-state-only` 예외로 분류할 때만 사용한다.
+
 ### Enforcement 설계 원칙
 
 branch isolation은 세 계층으로 구성된다. 각 계층이 독립적으로 작동하므로 하나가 누락돼도 나머지가 보완한다.

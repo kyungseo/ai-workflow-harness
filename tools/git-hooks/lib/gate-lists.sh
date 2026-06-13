@@ -67,7 +67,7 @@ awh_is_branch_isolation_tracking_path() {
             return 0
             ;;
     esac
-    return 1
+    awh_project_glob_match "$1" tracking-state
 }
 
 awh_is_branch_isolation_protected_path() {
@@ -82,5 +82,6 @@ awh_is_branch_isolation_protected_path() {
             return 0
             ;;
     esac
-    awh_project_glob_match "$1" protected
+    awh_project_glob_match "$1" protected || \
+    awh_project_glob_match "$1" tracking-state
 }
