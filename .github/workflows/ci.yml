@@ -231,6 +231,13 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           set -euo pipefail
+          BASE_REF="${{ github.event.pull_request.base.ref }}"
+          HEAD_REF="${{ github.event.pull_request.head.ref }}"
+          if [ "$BASE_REF" = "main" ] && [ "$HEAD_REF" = "develop" ]; then
+            echo "OK: release PR develop -> main skips historical commit subject backstop."
+            echo "Feature PRs into develop remain covered before release."
+            exit 0
+          fi
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
           TYPES="feat|fix|docs|style|refactor|chore|config|test|perf|ci|build|revert"
