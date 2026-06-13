@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260613-001 | Prompt Task Library Archive + Scaffold Pruning | 2026-06-13 | `docs/works/harness/CHORE-20260613-001-prompt-task-library-archive.md` |
 | CHORE-20260612-011 | Workflow Core Layering Audit + Minimal Realignment | 2026-06-13 | `docs/works/harness/CHORE-20260612-011-workflow-core-stale-audit.md` |
 | CHORE-20260612-010 | Prompt Surface Diet + Optional Pack 재정의 | 2026-06-12 | `docs/works/harness/CHORE-20260612-010-prompt-surface-diet.md` |
 | CHORE-20260612-009 | Canonical 계층화 Slice 3 — Work Item Routing 중복 감사 + 해소 | 2026-06-12 | `docs/works/harness/CHORE-20260612-009-canonical-layer-slice3.md` |

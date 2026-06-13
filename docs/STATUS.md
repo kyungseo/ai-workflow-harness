@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-12 (세션: CHORE-20260612-009 Done — Canonical 계층화 Slice 3 완료)
+Last updated: 2026-06-13 (세션: CHORE-20260613-001 Done — Prompt task library archive + scaffold pruning 완료)
 
 ## Current State
 

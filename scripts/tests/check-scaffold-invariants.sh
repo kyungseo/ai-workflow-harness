@@ -10,7 +10,7 @@
 #
 # Scope (DR-021 boundary):
 #   - core A-class (hard-fail): entrypoint/protocol/rule/command/skill/cursor/session-start/decisions
-#   - Optional-pack(HARNESS-ARCHITECTURE/MAINTAINER-GUIDE/WORKFLOW-MANUAL, 확장 prompt)은
+#   - Optional-pack(HARNESS-ARCHITECTURE/MAINTAINER-GUIDE/WORKFLOW-MANUAL)은
 #     default minimal scaffold에 부재(slice #9, DR-021). --with-optional에서만 포함되며
 #     이때 companion DR(DR-017/DR-020) closure가 [1]/[3]으로 hard-fail 검증된다.
 #

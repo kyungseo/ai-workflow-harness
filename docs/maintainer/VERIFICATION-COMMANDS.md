@@ -1228,7 +1228,7 @@ upgrade 구현이 변경될 때 아래 섹션을 갱신한다:
 
 > **이 점검의 정확한 의미:** "현 stack/profile-specific 콘텐츠가 core(generic)에 누수되지 않고, 선택 시에만 등장하는가"를 본다. **`--profile spring-boot`의 산출물을 보존·검증하려는 것이 아니다** — 현 spring-boot profile은 효용이 낮아 교체될 수 있다(W5). 검증하는 일반 원칙은 **① stack 콘텐츠 비누수 ② 미래 어떤 product pack이 들어와도 동등한 core↔pack 경계를 가질 것**이며, spring-boot은 그 원칙의 *현재 유일한 구체 사례*로만 인용한다. (source-only 경로 누수는 invariant `[2]`, optional docs 표 일치는 invariant `[4]`가 담당 — 여기서는 **stack-content-in-core**라는 별도 축을 본다.)
 >
-> **검사 방식 주의:** stack 콘텐츠는 **파일 단위**로 추가된다(현 spring-boot: `.claude/rules/java-spring.md`, `.cursor/rules/java-spring.mdc`, stack 전용 `prompts/*.prompt.md` 등). 문자열 `spring-boot` grep은 generic의 BOOTSTRAP/PROTOCOL이 옵션을 *안내 문구로 언급*하는 것까지 잡는 **false positive**가 되므로 쓰지 않는다 — **stack-marker 파일 존재 여부**로 본다.
+> **검사 방식 주의:** stack 콘텐츠는 **파일 단위**로 추가된다(현 spring-boot: `.claude/rules/java-spring.md`, `.cursor/rules/java-spring.mdc`). 문자열 `spring-boot` grep은 generic의 BOOTSTRAP/PROTOCOL이 옵션을 *안내 문구로 언급*하는 것까지 잡는 **false positive**가 되므로 쓰지 않는다 — **stack-marker 파일 존재 여부**로 본다.
 
 ```bash
 # U0. 준비: profile/option별 scaffold 생성 (Tier 2 정책 §5 — repo-local temp/)
@@ -1241,16 +1241,12 @@ bash scripts/create-harness.sh --with-optional pp-optional "$O"
 # 현재 stack 표면 식별용 진단(파일 단위): spring profile에만 있는 파일 목록
 comm -13 <(cd "$G" && find . -type f | sort) <(cd "$S" && find . -type f | sort)
 
-# stack-marker 경계 검사 (현 spring-boot 사례 — rule + prompt 양쪽을 대표).
-#   stack 콘텐츠는 rule 파일뿐 아니라 stack 전용 prompt(create-harness.sh의 별도 블록)로도
-#   추가되므로, 둘 다 marker에 포함해야 prompt 누수를 놓치지 않는다.
+# stack-marker 경계 검사 (현 spring-boot 사례 — rule 파일을 대표 marker로 사용).
 #   리스트는 for 루프에 literal로 둔다(unquoted scalar 분리는 zsh에서 동작하지 않음 — bash/zsh 양쪽 portable).
 #   각 marker에 대해 ① generic core 부재 ② spring profile 존재를 한 루프에서 본다.
 for m in \
   .claude/rules/java-spring.md \
-  .cursor/rules/java-spring.mdc \
-  prompts/02-scaffold-service.prompt.md \
-  prompts/21-create-layer.prompt.md; do
+  .cursor/rules/java-spring.mdc; do
   [ -e "$G/$m" ] && echo "LEAK: ${m} in generic core" || echo "OK: ${m} absent in generic"
   [ -e "$S/$m" ] && echo "OK: ${m} present with --profile spring-boot" \
     || echo "WARN: ${m} 누락 in spring profile — profile/경계 로직 확인"

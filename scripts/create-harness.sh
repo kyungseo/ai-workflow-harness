@@ -15,10 +15,9 @@
 #                              Gitflow branch isolation rules.
 #   --with-optional            Include the Optional source pack (DR-021): heavy
 #                              framework docs (HARNESS-ARCHITECTURE,
-#                              HARNESS-MAINTAINER-GUIDE, WORKFLOW-MANUAL),
-#                              extended prompt bundle, and their companion DRs
-#                              (DR-017, DR-020 — reference closure). Default
-#                              output is minimal.
+#                              HARNESS-MAINTAINER-GUIDE, WORKFLOW-MANUAL)
+#                              and their companion DRs (DR-017, DR-020 —
+#                              reference closure). Default output is minimal.
 #   --check <target-dir>       Report-only drift check. Reads the target's
 #                              .harness/manifest.json and compares each tracked
 #                              framework file against the current source
@@ -632,43 +631,6 @@ for f in \
   copy_prompt "$f"
 done
 
-# Optional source pack (DR-021): extended generic prompt bundle. Default excludes
-# them to keep target minimal; --with-optional opts in.
-if [[ "${WITH_OPTIONAL}" == true ]]; then
-  for f in \
-    00-generic-task.prompt.md \
-    01-scaffold-project.prompt.md \
-    03-add-single-feature.prompt.md \
-    05-debug-error.prompt.md \
-    06-write-tests-first.prompt.md \
-    07-refactor-code.prompt.md \
-    09-api-integration.prompt.md \
-    15-write-readme.prompt.md \
-    16-code-review.prompt.md \
-    17-reproduce-and-fix.prompt.md \
-    19-design-feature.prompt.md \
-    20-summarize-work.prompt.md \
-    22-minimal-diff.prompt.md; do
-    copy_prompt "$f"
-  done
-fi
-
-if [[ "${PROFILE}" == "spring-boot" ]]; then
-  for f in \
-    02-scaffold-service.prompt.md \
-    04-security-review.prompt.md \
-    08-split-service.prompt.md \
-    10-add-validation.prompt.md \
-    11-add-resilience.prompt.md \
-    12-performance-fix.prompt.md \
-    13-add-metrics.prompt.md \
-    14-write-migration.prompt.md \
-    18-add-cache.prompt.md \
-    21-create-layer.prompt.md; do
-    copy_prompt "$f"
-  done
-fi
-
 # ── Project gate config seed (.harness/gate-config) ──────────────────────────
 # Class B (project-owned) seed: lets the target ADD its own protected/finalization
 # paths without editing framework-owned tools/git-hooks/lib/gate-lists.sh. Written
@@ -800,7 +762,7 @@ ${OPTIONAL_README_ROWS}| \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 | \`.claude/commands/\` | \`/session-start\`, \`/work-select\`, \`/work-register\`, \`/work-plan\`, \`/work-close\`, \`/session-summary\` 등 |
 | \`.agents/skills/\` | Codex workflow adapter |
 | \`.codex/hooks.json\` | Codex hook 설정 |
-| \`prompts/\` | 세션 시작 fallback prompt (optional: generic task prompt library) |
+| \`prompts/\` | 세션 시작 fallback prompt |
 
 ### Workflow 구조
 
@@ -1324,11 +1286,11 @@ echo "  docs/AGENT-WORKFLOW.md — Project Constants와 Verification Defaults"
 echo ""
 if [[ "${PROFILE}" == "generic" ]]; then
   echo "Profile: generic"
-  echo "  Spring Boot example-pack rules and prompts were not included."
+  echo "  Spring Boot example-pack rules were not included."
   echo "  Use --profile spring-boot only when Java/Spring examples are useful."
 else
   echo "Profile: spring-boot"
-  echo "  Included Java/Spring example rules and Spring Boot prompt bundle."
+  echo "  Included Java/Spring example rules."
 fi
 if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
   echo "Workflow: source-gitflow"
