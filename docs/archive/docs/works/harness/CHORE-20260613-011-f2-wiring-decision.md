@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-011
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: DR-035 §6 Slice 3(Runner / CI / F2 wiring decision)만 다룬다. `run-harness-checks.sh`를 CI required check 또는 pre-commit/hook에 배선할지 결정하고, backlog `Validation Spine residual follow-ups`의 F2를 흡수한다. 결정은 "무배선 + 근거 명문화"이며 실제 배선 구현은 비범위다. framework default runtime, finalization gate, P1/P2 classification은 건드리지 않는다.
 appetite: 0.5d
@@ -133,3 +133,5 @@ rg -n "F2|wiring|run-harness-checks|DR-036" docs/backlog/HARNESS.md docs/STATUS.
 - 2026-06-13: R1 residual 등록 — CI inline assertion ↔ `check-scaffold-invariants.sh` SSoT parity는 F2 범위 밖. closeout 시 별도 backlog candidate 등록 여부 제안.
 </content>
 </invoke>
+
+- 2026-06-13: batch archive (CHORE-20260613-013 DR-038 archive-side flow 실사용 검증). status Done→Archived, live README Done(Pending) 행 제거 후 archive-side Archived 인덱스로 이전.

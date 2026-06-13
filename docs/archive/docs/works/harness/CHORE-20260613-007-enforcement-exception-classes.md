@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-007
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: `문서-only 규칙 강제화 (CI/hook/hard-gate)` 전체 구현에 앞서, protected workflow surface direct-develop handling의 예외 클래스(상태 파일 vs 구조 파일 vs project-owned custom protected path), warning-only vs hard-block 판정 기준, override/trailer 허용 범위를 decision-only DR slice로 고정한다. hook/CI 구현, runner 배선, repo-health 통합은 범위 밖이다.
 appetite: 0.5d
@@ -271,3 +271,5 @@ Claude R1 result review 요청: DR-035 Protected Workflow Enforcement Exception 
 - 2026-06-13: 검증 완료. `git diff --check` PASS, `bash scripts/tests/check-shipped-dr-closure.sh` PASS, decisions README ↔ DR file closure PASS.
 - 2026-06-13: Claude R1 Approved. blocking finding 없음. non-blocking observation 2건을 즉시 반영했다: archive move는 feature branch 전제 명시, DR-025 trailer non-reuse 근거 문구 정밀화. Slice 3와 F2 관계는 후속 implementation Work에서 명시하도록 DR follow-up split에 메모했다.
 - 2026-06-13: `/work-close` 처리. decision slice 자체는 Done으로 닫고 archive는 보류한다. backlog의 `문서-only 규칙 강제화` candidate는 제거하지 않고, DR-035 선행 결정 완료 사실과 남은 implementation scope를 계속 추적한다.
+
+- 2026-06-13: batch archive (CHORE-20260613-013 DR-038 archive-side flow 실사용 검증). status Done→Archived, live README Done(Pending) 행 제거 후 archive-side Archived 인덱스로 이전.

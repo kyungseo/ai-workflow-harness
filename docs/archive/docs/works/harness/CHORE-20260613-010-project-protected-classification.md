@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-010
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: DR-035 follow-up implementation slice 2로 project-protected extension classification(`P1/P2`)만 다룬다. `.harness/gate-config`의 custom protected path를 어떤 형식으로 class declaration 하고, hook runtime이 그 선언을 어떻게 ingest할지 source repo 기준 최소 메커니즘을 정한다. framework default hardening(`I0/T1/S1`) 재수정과 Runner / CI / F2 wiring은 범위 밖이다.
 appetite: 0.5d
@@ -249,3 +249,5 @@ Claude R1 result review 요청: CHORE-20260613-010 Project-Protected Extension C
 - 2026-06-13: local verification 완료. `git diff --check`, `sh -n tools/git-hooks/pre-commit`, `sh -n tools/git-hooks/lib/gate-lists.sh`, `bash -n scripts/create-harness.sh`, `bash scripts/tests/check-shipped-dr-closure.sh` PASS.
 - 2026-06-13: 임시 repo scenario verification PASS. custom `P1` hard-stop, custom `P2-T1` warning, custom T1 + default tracking warning, custom T1 + framework `S1` hard-stop, custom tracking glob warning, `main` hard-stop를 모두 확인했다.
 - 2026-06-13: Claude R1 result review 승인. blocking finding 없이 `P1 default-safe` / `P2-T1` mapped-class / docs-template cascade 정렬이 확인됐고, optional docs clarification만 non-blocking 관찰로 남았다.
+
+- 2026-06-13: batch archive (CHORE-20260613-013 DR-038 archive-side flow 실사용 검증). status Done→Archived, live README Done(Pending) 행 제거 후 archive-side Archived 인덱스로 이전.

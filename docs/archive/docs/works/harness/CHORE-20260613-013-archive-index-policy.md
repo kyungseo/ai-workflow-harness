@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-013
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: backlog `Archive 누적 관리 정책`을 종결한다. 누적 실해악을 정량화(≈0, 단 live README hot-path 인덱스 예외)하고 DR-038로 retention=keep-all + archive-side index relocation을 결정한다. works/harness 106행 Archived 인덱스를 archive-side로 이전하고, 이를 전제하는 canonical/protocol/scaffold/rule cascade(DR-016/013 amend 포함)를 일관 정렬한다. prune/rollup/retention은 비범위(기각).
 appetite: 1d
@@ -129,3 +129,5 @@ Codex 협업 없음. Claude self red-team 검토 기록.
 - 2026-06-13: sweep로 cascade 표면 식별(DR-013/016, HARNESS-PROTOCOL, work-close/plan, repo-health, docs-workflow rule, scaffold ×4, VERIFICATION-COMMANDS, backlog).
 - 2026-06-13: 106행 archive-side 이전, live README 130→25줄 trim 완료.
 </content>
+
+- 2026-06-13: batch archive (CHORE-20260613-013 DR-038 archive-side flow 실사용 검증). status Done→Archived, live README Done(Pending) 행 제거 후 archive-side Archived 인덱스로 이전.
