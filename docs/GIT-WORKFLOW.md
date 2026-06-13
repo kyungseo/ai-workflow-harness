@@ -317,7 +317,8 @@ commit 전 자동 실행.
 |---|---|
 | 전체 staged diff | `git diff --cached --check` |
 | `main`에 protected workflow 파일 staged | hard block (exit 1) — `feature/*` 또는 `hotfix/*` branch로 이동 필요 |
-| `develop`에 protected workflow 파일 staged | warning only — GitHub ruleset이 실질 강제. feature branch 사용 권장 |
+| `develop`에 `docs/STATUS.md` / `docs/backlog/**` / `docs/works/**`만 staged | warning only — bounded tracking-state exception |
+| `develop`에 구조/정책 protected 파일이 staged되거나, tracking-state와 다른 파일이 함께 staged | hard block (exit 1) — `T1 tracking-state-only` 예외 불가 |
 | `scripts/*.sh`, `scripts/*/*.sh`, `tools/git-hooks/*` | `sh -n` shell syntax check |
 | `scripts/create-harness.sh` | `bash -n scripts/create-harness.sh` |
 
@@ -343,11 +344,11 @@ branch isolation은 세 계층으로 구성된다. 각 계층이 독립적으로
 
 | Layer | 수단 | 역할 |
 |---|---|---|
-| 1 | AI rule (`.claude/rules/git-workflow.md`) | 즉각 FAIL 선언 — commit 시도 전에 feature branch 생성을 안내한다 |
-| 2 | pre-commit hook | 로컬 안전망 — AI가 규칙을 놓쳤을 때 commit 단계에서 포착한다 |
+| 1 | AI rule (`.claude/rules/git-workflow.md`) | class-sensitive gate — `T1 tracking-state-only`는 warning, 나머지 protected direct commit은 FAIL |
+| 2 | pre-commit hook | 로컬 안전망 — `T1` warning / `S1` 또는 mixed protected set hard block을 commit 단계에서 포착한다 |
 | 3 | GitHub ruleset (`protect-develop`, `protect-main`) | 실질 강제 — push/PR 없이는 어떤 commit도 remote에 반영되지 않는다 |
 
-`main`은 공개 릴리즈 스냅샷이므로 layer 2에서 hard block. `develop`은 GitHub ruleset(layer 3)이 실질 강제를 담당하므로 layer 2는 warning으로 충분하다. solo 프로젝트에서 housekeeping 작업마다 PR을 강제하는 것은 불필요한 마찰이다.
+`main`은 공개 릴리즈 스냅샷이므로 layer 2에서 hard block이다. `develop`도 더 이상 blanket warning이 아니다. `docs/STATUS.md` / backlog / works만 포함된 `T1 tracking-state-only` staged set만 bounded warning 예외로 허용하고, `docs/decisions/**`, workflow/rule/hook/scaffold 같은 구조/정책 변경이나 tracking-state와 다른 파일이 섞인 staged set은 로컬에서 hard block한다. GitHub ruleset(layer 3)은 여전히 최종 backstop이지만, local signal도 policy와 같은 강도로 정렬한다.
 
 ## 7. Related Documents
 

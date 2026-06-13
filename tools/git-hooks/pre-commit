@@ -45,9 +45,13 @@ elif [ -f ".git/MERGE_HEAD" ]; then
     : # skip — merge commit
 elif [ "$BRANCH" = "develop" ] || [ "$BRANCH" = "main" ]; then
     PROTECTED=""
+    DEVELOP_T1_ONLY=1
     for FILE in $STAGED_FILES; do
         if awh_is_branch_isolation_protected_path "$FILE"; then
             PROTECTED="$PROTECTED $FILE"
+        fi
+        if [ "$BRANCH" = "develop" ] && ! awh_is_branch_isolation_tracking_path "$FILE"; then
+            DEVELOP_T1_ONLY=0
         fi
     done
     if [ -n "$PROTECTED" ]; then
@@ -57,11 +61,17 @@ elif [ "$BRANCH" = "develop" ] || [ "$BRANCH" = "main" ]; then
             echo "Affected files:"
             for F in $PROTECTED; do echo "  $F"; done
             exit 1
-        else
-            echo "WARNING: Committing protected workflow files directly on 'develop'."
-            echo "Consider using a feature/* or hotfix/* branch instead."
+        elif [ "$DEVELOP_T1_ONLY" -eq 1 ]; then
+            echo "WARNING: Committing tracking-state workflow files directly on 'develop'."
+            echo "This bounded exception applies only when the entire staged set is limited to docs/STATUS.md, docs/backlog/**, or docs/works/**."
             echo "Affected files:"
             for F in $PROTECTED; do echo "  $F"; done
+        else
+            echo "ERROR: Committing structural-policy or mixed protected workflow changes directly on 'develop' is not allowed."
+            echo "Use a feature/* branch instead. The warning-only exception is limited to tracking-state-only staged sets."
+            echo "Affected files:"
+            for F in $PROTECTED; do echo "  $F"; done
+            exit 1
         fi
     fi
 fi

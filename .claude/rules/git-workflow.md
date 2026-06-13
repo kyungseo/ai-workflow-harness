@@ -25,7 +25,12 @@ Before staging or committing, check the current branch:
 git branch --show-current
 ```
 
-If the branch is `develop` or `main` AND any of the following files are staged — move to FAIL:
+If the branch is `main` AND any of the following files are staged — move to FAIL.
+
+If the branch is `develop`, apply a class-sensitive check:
+
+- Warning only when the **entire staged set** is limited to `docs/STATUS.md`, `docs/backlog/**`, `docs/works/**`
+- Move to FAIL if any staged file falls outside that tracking-state subset and any protected workflow file is staged
 
 - `AGENTS.md`, `CLAUDE.md`, `docs/STATUS.md`, `docs/backlog/**`, `docs/works/**`, `docs/decisions/**`
 - `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md`
@@ -35,6 +40,8 @@ If the branch is `develop` or `main` AND any of the following files are staged �
 The list above is the harness default. A target repo adds its own sensitive paths under `[protected]` / `[finalization]` in `.harness/gate-config` (add-only) — do **not** edit framework-owned `tools/git-hooks/lib/gate-lists.sh` directly (it is overwritten on harness upgrade). When hooks are installed they read both the default and `.harness/gate-config`; treat the same union as protected here.
 
 FAIL response: report current branch and the staged protected files, then propose creating a `feature/*` or `hotfix/*` branch and moving the changes there.
+
+Warning response on `develop`: tracking-state-only direct commits are a bounded exception. Still report the branch and staged files, and recommend using a feature branch if the change is turning substantive.
 
 Exception: skip this check if `.git/MERGE_HEAD` exists (merge commit — release sync).
 Not Applicable: if the current directory is not a git repository.
