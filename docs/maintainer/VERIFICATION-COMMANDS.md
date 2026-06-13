@@ -21,6 +21,7 @@ related_work: []
 - `docs/AGENT-WORKFLOW.md` Verification Defaults — 변경 유형별 기본 검증 규칙
 - `docs/maintainer/HARNESS-TEST-TAXONOMY.md` — surface별 검증 기준(무엇/어느 깊이)·Tier 정의·3층 수단 경계
 - `scripts/tests/run-harness-checks.sh` — Tier별 deterministic 검증 runner(`--tier0|--tier1 <target>|--tier2|--all`)
+- `scripts/tests/check-onboarding-flows.sh` — Layer J-OB deterministic core + Layer Q core helper
 - `skills/workflow/repo-health.md` — `/repo-health` 전체 절차. Required Surface Matrix는 `skills/workflow/repo-health-cascade.md`
 - `docs/HARNESS-RECOVERY-VALIDATION.md` — 실패/복구·Validation Checklist·Commit Approval **판단 정책** (이 파일=명령, 그쪽=판단)
 
@@ -76,7 +77,7 @@ related_work: []
 | 품질 개선 / wording | 릴리즈 후 또는 별도 |
 
 출하 표면 P0/P1이 **0**이면 release-go. 등급 기준은 문서 말미 "결과 분류 기준".
-J / J-OB / Q는 temp scaffold를 생성하므로 각 Layer의 정리 단계(OB8 / J11)로 `/tmp` 산출물을 제거한다.
+J / J-OB / Q는 `temp/harness-tests/` scaffold를 생성하므로 각 Layer의 정리 단계(OB8 / J11)로 생성 산출물을 제거한다.
 
 ---
 
@@ -276,11 +277,13 @@ bash scripts/tests/check-shipped-dr-closure.sh
 파일 존재 여부가 아니라 scaffold 후 사용자가 실제로 취하는 action 흐름을 케이스별로 검증한다.
 **이것이 scaffold 검증의 최고점이다.**
 
+> **경계:** Layer J는 세션 중 `/session-start` 출력 관찰, work lifecycle 해석, repo-health 진입처럼 interactive/human-run 성격이 강하다. F1 deterministic script화 대상은 아니다. deterministic core는 Layer J-OB / Q helper(`bash scripts/tests/check-onboarding-flows.sh`)로 분리하고, Layer J는 catalog reference로 남긴다.
+
 ### J0. 준비: temp scaffold 생성
 
 ```bash
-bash scripts/create-harness.sh sim-proj /tmp/awh-sim
-cd /tmp/awh-sim
+bash scripts/create-harness.sh sim-proj temp/harness-tests/manual-sim
+cd temp/harness-tests/manual-sim
 ```
 
 ### J1. 새 세션 시작 (`/session-start`)
@@ -395,7 +398,7 @@ done
 
 ```bash
 cd -
-rm -rf /tmp/awh-sim
+rm -rf temp/harness-tests/manual-sim
 ```
 
 ---
@@ -405,21 +408,29 @@ rm -rf /tmp/awh-sim
 scaffold 직후 실제 사용자가 처음 마주하는 흐름을 케이스별로 시뮬레이션한다.
 단순 파일 존재가 아니라 **절차가 올바르게 안내되고 사용자의 선택/예외 상황에서도 안착하는지**를 검증한다.
 
+> **deterministic core helper:** OB0/OB1/OB3/OB4/OB5와 Layer Q core는 아래 helper가 source-side deterministic smoke로 수행한다. 생성 경로는 repo-local `temp/harness-tests/`이며 helper가 cleanup까지 담당한다.
+
+```bash
+bash scripts/tests/check-onboarding-flows.sh
+```
+
+> 아래 명령은 helper가 무엇을 검증하는지 사람이 추적하거나, helper 밖의 interactive 예외 흐름을 수동으로 재현할 때 참고하는 manual appendix다.
+
 ### OB0. 준비: 옵션별 scaffold 생성
 
 ```bash
 # default (generic workflow)
-bash scripts/create-harness.sh onboard-generic /tmp/awh-ob-generic
+bash scripts/create-harness.sh onboard-generic temp/harness-tests/manual-ob-generic
 
 # source-gitflow workflow
-bash scripts/create-harness.sh --workflow source-gitflow onboard-gitflow /tmp/awh-ob-gitflow
+bash scripts/create-harness.sh --workflow source-gitflow onboard-gitflow temp/harness-tests/manual-ob-gitflow
 
 # with-optional
-bash scripts/create-harness.sh --with-optional onboard-optional /tmp/awh-ob-optional
+bash scripts/create-harness.sh --with-optional onboard-optional temp/harness-tests/manual-ob-optional
 
 # existing project overlay
-mkdir -p /tmp/awh-ob-existing && touch /tmp/awh-ob-existing/my-existing-file.md
-bash scripts/create-harness.sh --existing onboard-existing /tmp/awh-ob-existing
+mkdir -p temp/harness-tests/manual-ob-existing && touch temp/harness-tests/manual-ob-existing/my-existing-file.md
+bash scripts/create-harness.sh --existing onboard-existing temp/harness-tests/manual-ob-existing
 ```
 
 ---
@@ -429,7 +440,7 @@ bash scripts/create-harness.sh --existing onboard-existing /tmp/awh-ob-existing
 신규 프로젝트 scaffold 후 AI가 처음 `/session-start`를 실행했을 때 BOOTSTRAP 안내까지 올바르게 이어지는지 확인한다.
 
 ```bash
-cd /tmp/awh-ob-generic
+cd temp/harness-tests/manual-ob-generic
 
 # 1. BOOTSTRAP.md 존재 + 기본 섹션 구조
 ls docs/BOOTSTRAP.md
@@ -456,7 +467,7 @@ grep -n "work-register\|work-select" docs/BOOTSTRAP.md
 ### OB2. 최초 온보딩 — generic workflow (예외 경로)
 
 ```bash
-cd /tmp/awh-ob-generic
+cd temp/harness-tests/manual-ob-generic
 
 # 예외 1: 사용자가 BOOTSTRAP.md를 건너뛰고 바로 /work-register 실행
 # → session-start idle-state rule이 /work-register 또는 /work-select로 안내하는가
@@ -486,7 +497,7 @@ grep -n "Active Work\|Next Actions" skills/workflow/session-start.md
 source-gitflow는 CI gate + 브랜치 정책이 추가되므로 사용자가 처음 만나는 제약을 올바르게 안내받는지 확인한다.
 
 ```bash
-cd /tmp/awh-ob-gitflow
+cd temp/harness-tests/manual-ob-gitflow
 
 # 1. source-gitflow 전용 파일 존재
 ls docs/GIT-WORKFLOW.md
@@ -513,7 +524,7 @@ grep -n "feature/\|base develop\|--base develop" \
 grep -n "hook\|install.sh\|GIT-WORKFLOW" docs/BOOTSTRAP.md
 
 # 8. generic scaffold에 GIT-WORKFLOW.md가 없는지 (source-only marker 누수 없음)
-ls /tmp/awh-ob-generic/docs/GIT-WORKFLOW.md 2>/dev/null && echo "LEAK: GIT-WORKFLOW in generic"
+ls temp/harness-tests/manual-ob-generic/docs/GIT-WORKFLOW.md 2>/dev/null && echo "LEAK: GIT-WORKFLOW in generic"
 ```
 
 ---
@@ -523,7 +534,7 @@ ls /tmp/awh-ob-generic/docs/GIT-WORKFLOW.md 2>/dev/null && echo "LEAK: GIT-WORKF
 optional docs가 추가될 때 README, invariant, 사용자 안내가 일관성 있는지 확인한다.
 
 ```bash
-cd /tmp/awh-ob-optional
+cd temp/harness-tests/manual-ob-optional
 
 # 1. optional docs 존재
 ls docs/HARNESS-ARCHITECTURE.md docs/HARNESS-MAINTAINER-GUIDE.md docs/WORKFLOW-MANUAL.md
@@ -535,11 +546,11 @@ grep -n "HARNESS-ARCHITECTURE\|HARNESS-MAINTAINER\|WORKFLOW-MANUAL" README.md
 grep -n "WORKFLOW-MANUAL\|HARNESS-ARCHITECTURE\|--with-optional" docs/BOOTSTRAP.md
 
 # 4. generic scaffold에는 optional docs 없음 (누수 없음)
-ls /tmp/awh-ob-generic/docs/HARNESS-ARCHITECTURE.md 2>/dev/null && echo "LEAK"
-ls /tmp/awh-ob-generic/docs/WORKFLOW-MANUAL.md 2>/dev/null && echo "LEAK"
+ls temp/harness-tests/manual-ob-generic/docs/HARNESS-ARCHITECTURE.md 2>/dev/null && echo "LEAK"
+ls temp/harness-tests/manual-ob-generic/docs/WORKFLOW-MANUAL.md 2>/dev/null && echo "LEAK"
 
 # 5. invariant [4] 직접 실행
-bash "$OLDPWD/scripts/tests/check-scaffold-invariants.sh" /tmp/awh-ob-optional
+bash "$OLDPWD/scripts/tests/check-scaffold-invariants.sh" temp/harness-tests/manual-ob-optional
 ```
 
 ---
@@ -549,7 +560,7 @@ bash "$OLDPWD/scripts/tests/check-scaffold-invariants.sh" /tmp/awh-ob-optional
 기존 프로젝트에 harness를 덧씌울 때 사용자 파일이 보존되고 충돌 없이 안착하는지 확인한다.
 
 ```bash
-cd /tmp/awh-ob-existing
+cd temp/harness-tests/manual-ob-existing
 
 # 1. 기존 파일 보존 확인
 ls my-existing-file.md || echo "LOST: user file overwritten"
@@ -559,7 +570,7 @@ ls .harness/manifest.json
 grep -n "harness_version\|framework_files" .harness/manifest.json | head -5
 
 # 3. --check drift 0 (갓 생성한 target은 clean해야 함)
-bash "$OLDPWD/scripts/create-harness.sh" --check /tmp/awh-ob-existing \
+bash "$OLDPWD/scripts/create-harness.sh" --check temp/harness-tests/manual-ob-existing \
   | grep "summary:"
 
 # 4. BOOTSTRAP.md에 --existing 관련 안내 (기존 프로젝트 특이사항)
@@ -573,7 +584,7 @@ grep -n "existing\|기존\|overlay" docs/BOOTSTRAP.md
 정해진 절차를 벗어나는 사용자 선택에 대해 harness가 올바르게 안내하거나 차단하는지 검증한다.
 
 ```bash
-cd /tmp/awh-ob-generic
+cd temp/harness-tests/manual-ob-generic
 
 # 시나리오 A: Happy path — 절차 전체 흐름 파일 체인 검증
 # session-start → work-register → work-plan → implement → work-close 순서로
@@ -619,7 +630,7 @@ scaffold 직후 사용자가 config 파일을 커스터마이징했을 때 시�
 ```bash
 # ── .harness/gate-config 수정 ──────────────────────────────────────────────
 
-cd /tmp/awh-ob-gitflow  # source-gitflow scaffold (hook 있음)
+cd temp/harness-tests/manual-ob-gitflow  # source-gitflow scaffold (hook 있음)
 
 # 1. gate-config 형식 확인 (inline comment 불가, glob 패턴)
 cat .harness/gate-config
@@ -646,13 +657,13 @@ git commit -m "test: infra file on develop" 2>&1 \
 git rm infra/test.tf && git checkout .harness/gate-config
 
 # 5. generic scaffold에서는 gate-config가 advisory — claude rule이 읽는가
-cd /tmp/awh-ob-generic
+cd temp/harness-tests/manual-ob-generic
 grep -n "gate-config\|gate_config\|\[protected\]" .claude/rules/git-workflow.md | head -5
 
 
 # ── CLAUDE.md / AGENTS.md 수정 ─────────────────────────────────────────────
 
-cd /tmp/awh-ob-generic
+cd temp/harness-tests/manual-ob-generic
 
 # 6. CLAUDE.md에 커스텀 내용 추가 후 기존 entry contract 유지 여부
 echo "" >> CLAUDE.md
@@ -699,7 +710,7 @@ cat .codex/hooks.json 2>/dev/null | python3 -m json.tool > /dev/null \
 # ── manifest drift: config 수정 후 --check 영향 없는가 ────────────────────
 
 # 10. gate-config, CLAUDE.md는 B-class(write_text) — manifest 미추적, drift 0 유지
-bash "$OLDPWD/scripts/create-harness.sh" --check /tmp/awh-ob-generic \
+bash "$OLDPWD/scripts/create-harness.sh" --check temp/harness-tests/manual-ob-generic \
   | grep "summary:" \
   | grep -q ", 0 drifted" \
   && echo "OK: config 수정이 manifest drift 없음" \
@@ -712,7 +723,7 @@ bash "$OLDPWD/scripts/create-harness.sh" --check /tmp/awh-ob-generic \
 
 ```bash
 cd -
-rm -rf /tmp/awh-ob-generic /tmp/awh-ob-gitflow /tmp/awh-ob-optional /tmp/awh-ob-existing
+rm -rf temp/harness-tests/manual-ob-generic temp/harness-tests/manual-ob-gitflow temp/harness-tests/manual-ob-optional temp/harness-tests/manual-ob-existing
 ```
 
 ---
@@ -842,35 +853,39 @@ done
 
 ## Layer Q. Hook Functional Test
 
-> **전제:** Layer J-OB의 OB0에서 생성한 `/tmp/awh-ob-gitflow`(source-gitflow scaffold)가 필요하다. 단독 실행 시 OB0를 먼저 수행한다.
+> **전제:** Layer J-OB의 OB0에서 생성한 `temp/harness-tests/manual-ob-gitflow`(source-gitflow scaffold)가 필요하다. 단독 실행 시 OB0를 먼저 수행한다.
+
+> **deterministic core helper:** 아래 main hard-stop / develop warning / feature PASS 3-scenario는 `bash scripts/tests/check-onboarding-flows.sh`가 source-side deterministic helper로 수행한다. 수동 재현이 필요할 때만 아래 appendix를 사용한다.
 
 hook 파일 존재를 넘어 실제 commit 시 WARN/FAIL이 올바르게 발생하는지 검증한다.
 source-gitflow scaffold에서만 실행한다.
 
 ```bash
-cd /tmp/awh-ob-gitflow  # OB0에서 생성한 source-gitflow scaffold
+cd temp/harness-tests/manual-ob-gitflow  # OB0에서 생성한 source-gitflow scaffold
 
-# 1. hook 설치
+# 1. git 초기화 + hook 설치 + 초기 commit (main branch)
+git init -b main 2>/dev/null || { git init && git checkout -b main; }
+git config user.name "AWH Test"
+git config user.email "awh@example.com"
 bash tools/git-hooks/install.sh 2>/dev/null || echo "install.sh 없음 — hook 수동 확인"
+git add . && git commit -m "chore: initial scaffold" 2>&1 | head -5
 
-# 2. git 초기화 + 초기 commit (main branch)
-git init && git add . && git commit -m "chore: initial scaffold" 2>&1 | head -5
-
-# 3. main 직접 commit → HARD FAIL 확인
-echo "test" > /tmp/test-main.txt && cp /tmp/test-main.txt test-main.txt
-git add test-main.txt
-git commit -m "test: direct commit to main" 2>&1 | grep -i "fail\|block\|protected\|error" \
+# 3. main에서 protected tracking file(docs/STATUS.md) 직접 commit → HARD FAIL 확인
+printf '\n# test\n' >> docs/STATUS.md
+git add docs/STATUS.md
+git commit -m "docs: main protected status update" 2>&1 | grep -i "not allowed\|protected\|error" \
   || echo "WARN: main hard-block이 발생하지 않음 — hook 미설치 또는 rule 미작동"
+git restore --staged docs/STATUS.md 2>/dev/null || true
+git checkout -- docs/STATUS.md
 
-# 4. develop branch에서 protected 파일 commit → WARN 확인
+# 4. develop branch에서 tracking-state file commit → WARN 확인
 git checkout -b develop 2>/dev/null || git checkout develop
-cp .claude/commands/session-start.md /tmp/sc_backup.md
-echo "# test" >> .claude/commands/session-start.md
-git add .claude/commands/session-start.md
-git commit -m "test: protected file on develop" 2>&1 | grep -i "warn\|protected\|isolation" \
+printf '\n# test\n' >> docs/STATUS.md
+git add docs/STATUS.md
+git commit -m "docs: develop tracking update" \
+  -m "AWH-Gate-Override: finalization-split" \
+  -m "AWH-Gate-Reason: deterministic hook warning scenario" 2>&1 | grep -i "warn\|protected\|isolation" \
   || echo "INFO: develop WARN이 발생하지 않음 — generic workflow이거나 hook 미설치"
-cp /tmp/sc_backup.md .claude/commands/session-start.md
-git checkout .claude/commands/session-start.md
 
 # 5. feature branch에서 정상 commit → PASS 확인
 git checkout -b feature/hook-test
@@ -1001,7 +1016,7 @@ done
 
 ## Layer R. VERSION ↔ Manifest 버전 일관성
 
-> **전제:** Layer J-OB의 OB0에서 생성한 `/tmp/awh-ob-generic`이 필요하다. 단독 실행 시 OB0를 먼저 수행하거나 임의 temp scaffold 경로로 치환한다.
+> **전제:** Layer J-OB의 OB0에서 생성한 `temp/harness-tests/manual-ob-generic`이 필요하다. 단독 실행 시 OB0를 먼저 수행하거나 임의 temp scaffold 경로로 치환한다.
 
 source repo의 `VERSION` 파일과 scaffold 생성 시 manifest에 기록되는 `harness_version`이 일치하는지 확인한다.
 
@@ -1011,7 +1026,7 @@ SOURCE_VERSION=$(cat VERSION 2>/dev/null || echo "MISSING")
 echo "source VERSION: ${SOURCE_VERSION}"
 
 # 2. 갓 생성한 scaffold manifest의 harness_version 확인
-MANIFEST_VERSION=$(grep '"harness_version"' /tmp/awh-ob-generic/.harness/manifest.json \
+MANIFEST_VERSION=$(grep '"harness_version"' temp/harness-tests/manual-ob-generic/.harness/manifest.json \
   2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9][^"]*')
 echo "manifest harness_version: ${MANIFEST_VERSION}"
 
@@ -1059,7 +1074,7 @@ wc -l prompts/*session-start.md skills/workflow/session-start.md \
 grep -n "write_text.*session-start\|adapt.*session-start" scripts/create-harness.sh
 
 # 6. generic scaffold에서 prompt 파일 존재 확인
-ls /tmp/awh-ob-generic/prompts/*session-start.md 2>/dev/null \
+ls temp/harness-tests/manual-ob-generic/prompts/*session-start.md 2>/dev/null \
   || echo "MISSING: session-start prompts in generic scaffold"
 ```
 

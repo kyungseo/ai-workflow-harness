@@ -24,6 +24,7 @@ harness workflow 변경 시 **무엇을 / 어느 깊이로 / 어떤 수단으로
 - `docs/maintainer/VERIFICATION-COMMANDS.md` — Layer별 실행 명령 카탈로그
 - `skills/workflow/repo-health.md` — `/repo-health` 감사 절차. Cascade detail/Required Surface Matrix는 `skills/workflow/repo-health-cascade.md`
 - `scripts/tests/run-harness-checks.sh` — 이 문서의 Tier를 오케스트레이션하는 runner
+- `scripts/tests/check-onboarding-flows.sh` — Layer J-OB deterministic core + Layer Q core helper
 
 ---
 
@@ -42,6 +43,7 @@ harness workflow 변경 시 **무엇을 / 어느 깊이로 / 어떤 수단으로
 - **executable assertion**은 "기계적으로 PASS/FAIL이 갈리고 false-positive가 거의 없는, 회귀로 잠글 가치가 있는" 점검만 담는다. 현재 2종(`check-scaffold-invariants.sh`, `check-shipped-dr-closure.sh`).
 - **command catalog**는 더 넓은(판단 개입·false-positive 가능) 점검을 human-run 명령으로 유지한다. executable로 승격된 항목은 catalog가 **스크립트를 pointer로만** 보유하고 명령을 중복 보유하지 않는다(Layer C→invariants, Layer I→closure가 이미 그렇다).
 - **repo-health**는 위 둘을 *호출·해석*하는 judgment 표면이다. 자체적으로 deterministic 불변식을 재구현하지 않는다.
+- onboarding / hook처럼 multi-scenario 생성과 git 동작이 섞인 deterministic core는 **별도 helper script**로 둘 수 있다. runner는 여전히 thin orchestrator로 유지한다.
 - `HARNESS-RECOVERY-VALIDATION.md`는 **WHETHER/WHEN(판단·정책)** SSoT로 그대로 둔다. 이 척추는 **HOW-DEEP(기준)**만 추가한다.
 
 ---
@@ -96,6 +98,7 @@ Tier는 실행 비용·결정성·생성 여부 순서다.
 - **생성하는 모드(`--tier2`, `--all`의 tier2 단계)만 repo-local `temp/`를 사용한다**(`/tmp` 미사용 — AI 권한으로 dry만 되는 한계 회피).
 - `--tier1`은 **target 인자 필수**이며 **생성하지 않는다**(기존 target 검사만). 미지정 시 usage 에러로 종료한다(invariants no-arg의 암묵적 생성을 runner 레벨에서 차단).
 - `--all`은 source-level tier1(closure)과 **실제 생성을 포함하는** tier2를 함께 돈다. help/usage에 생성 포함을 명시한다.
+- Layer J-OB / Q의 deterministic core는 `check-onboarding-flows.sh`가 담당한다. 이 helper는 source-side smoke 성격이며 runner에 직접 접합하지 않는다(F4 전까지 thin-runner 경계 유지).
 
 **실행 기준:** 일상 변경은 변경 surface에 맞는 tier만 실행한다. **PR merge 전 또는 harness 마일스톤 완료 시 `run-harness-checks.sh --all`을 권장**한다(scaffold 3모드 + closure + syntax 전수).
 
@@ -117,7 +120,7 @@ runner(`scripts/tests/run-harness-checks.sh`)는 scaffold로 ship될 수 있다.
 - **표준:** Tier 2 simulation의 기본 작업 디렉토리는 repo-local `temp/`(`/tmp` 대체).
 - **근거:** `temp/`는 `.gitignore`에 등록되어 commit 오염이 없고, 과거 scaffold 검증(`temp/gitflow-vfy*`)에서 권한 문제 없이 실생성이 확인됐다. `/tmp`는 환경에 따라 AI 권한 제약으로 dry만 수행되는 경우가 있다.
 - **절차:** `temp/harness-tests/<scenario>-<ts>/`에 생성 → 검증 → 명시적 cleanup. runner가 생성 경로와 cleanup을 책임진다.
-- **catalog 정합:** `VERIFICATION-COMMANDS.md` Layer J/J-OB/Q/R/S가 `/tmp/awh-*`를 사용한다. 일괄 `temp/` 치환은 **F1**로 둔다(이 척추는 정책만 확정).
+- **catalog 정합:** `VERIFICATION-COMMANDS.md` Layer J/J-OB/Q/R/S manual appendix와 `check-onboarding-flows.sh` helper는 같은 `temp/harness-tests/` 기준을 사용한다. 이 척추는 그 정책 기준을 제공한다.
 
 ---
 
@@ -125,7 +128,7 @@ runner(`scripts/tests/run-harness-checks.sh`)는 scaffold로 ship될 수 있다.
 
 | ID | 범위 |
 | --- | --- |
-| F1 | catalog Layer J/J-OB/Q를 deterministic 스크립트로 변환 + catalog Layer J/J-OB/Q/R/S의 `/tmp/awh-*`→`temp/` 치환 |
+| F1 | catalog Layer J는 interactive/human-run으로 유지하고, deterministic core는 Layer J-OB(OB0/OB1/OB3/OB4/OB5) + Layer Q core helper로 승격한다. catalog Layer J/J-OB/Q/R/S의 `/tmp/awh-*` 예시는 repo-local `temp/` 정책에 맞춰 정렬한다 |
 | F2 | ✅ 종결 — runner를 CI required check / pre-commit에 **배선하지 않기로 결정**(무배선, DR-036) |
 | F3 | mirror parity·prompt 정합·language policy를 executable assertion으로 Tier 1 승격 |
 | F4 | runner 결과를 `/repo-health`에 surface(↔ `repo-health gate series 보강`·CHORE-20260613-004 이후 slice 구조) |

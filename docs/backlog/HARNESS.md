@@ -63,7 +63,7 @@ AI Workflow Harness backlog다.
 
 **Task:**
 
-- F1: `VERIFICATION-COMMANDS.md` catalog Layer J/J-OB/Q를 deterministic script로 변환하고, catalog Layer J/J-OB/Q/R/S의 `/tmp/awh-*` 경로를 repo-local `temp/` 정책에 맞춰 치환한다. `HARNESS-TEST-TAXONOMY.md` §5는 이미 정책만 확정했으며, 일괄 치환은 이 후속 Work 범위다.
+- F1: ✅ **종결 (2026-06-13, CHORE-20260613-017).** Layer J는 interactive/human-run catalog으로 유지하고, Layer J-OB(OB0/OB1/OB3/OB4/OB5) + Layer Q core를 `scripts/tests/check-onboarding-flows.sh`로 deterministic 승격했다. Layer J/J-OB/Q/R/S의 `/tmp/awh-*`를 `temp/harness-tests/` 기준으로 정렬 완료. Claude R0/R1 승인.
 - F2: ✅ **종결 (2026-06-13, DR-036 / CHORE-20260613-011).** `run-harness-checks.sh`를 CI required check·pre-commit/hook에 **배선하지 않기로 결정**(무배선). runner 검사는 이미 `ci.yml`·`pre-commit`에서 강제되고 tier2는 과중하며, 고유가치(invariants SSoT 호출)는 enforcement gate가 아니라 F4(repo-health surface) 대상이다. F2 종결 시 발견된 residual(CI inline scaffold assertion ↔ `check-scaffold-invariants.sh` SSoT parity drift)은 CHORE-20260613-016에서 실해악 low / no-action rationale로 종결했다.
 - F3: mirror parity, prompt 정합, language policy 같은 catalog/judgment 점검을 deterministic Tier 1 assertion으로 승격할지 검토·구현한다. product pack Layer U의 executable 승격도 실제 반복 필요가 확인되면 여기서 다룬다.
 - F4: runner 결과를 `/repo-health`에 surface한다. CHORE-20260613-004의 repo-health slice 분리 이후 구조와 연계하되, repo-health가 deterministic 불변식을 재구현하지 않고 runner/catalog 결과를 호출·해석하는 경계를 유지한다.
