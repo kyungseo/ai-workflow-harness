@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-020
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: W1~W5 완료 후 전체 정렬 검토에서 발견한 문서 현행화 gap을 닫는다. (1) `HARNESS-MAINTAINER-GUIDE.md` §5 Validation에 validation spine runner(`run-harness-checks.sh`) 등재, §9 Public Release Checks에 version-release sweep(Release Full Sweep / §3-1 / spine `--all`) pointer 추가. (2) `VERIFICATION-COMMANDS.md` scripts/tests cascade note에 `check-default-template-parity.sh` 스크립트명 등재(P2). README Documentation Map 2건(PLAN-SUMMARY/SCAFFOLD-BOOTSTRAP)은 의도된 제외/무관으로 비범위.
 appetite: 0.25d
