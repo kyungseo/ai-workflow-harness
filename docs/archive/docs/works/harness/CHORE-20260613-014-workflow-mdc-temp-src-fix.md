@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260613-014
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: `scripts/create-harness.sh`가 default scaffold에서 `.cursor/rules/workflow.mdc`를 temp 파일 경유로 생성할 때 `.harness/manifest.json`의 `src`에 ephemeral temp 경로를 기록하는 결함을 수정한다. manifest 자기일관성(`--check`, tier2 invariant)만 바로잡고, CI parity/F1-F4 follow-up으로 범위를 넓히지 않는다.
 appetite: 1d
@@ -78,3 +78,4 @@ rg -n 'workflow\.mdc|/var/folders|tmp\.' <fresh-target>/.harness/manifest.json
 - 2026-06-13: 단순 `src` 문자열 치환은 hash/render baseline을 깨뜨리므로 기각. `scripts/templates/default/.cursor/rules/workflow.mdc` stable filtered template를 추가하고 default scaffold가 이를 직접 adapt하도록 수정.
 - 2026-06-13: 검증 결과 — `bash scripts/tests/run-harness-checks.sh --tier2` PASS, fresh scaffold `scripts/create-harness.sh --check /private/tmp/awh-manifest-check-20260613` = `69 tracked, 69 in-sync, 0 drifted`.
 - 2026-06-13: fresh scaffold manifest 확인 — `.cursor/rules/workflow.mdc` entry의 `src`가 `scripts/templates/default/.cursor/rules/workflow.mdc`로 기록되어 temp 경로 누출이 제거됨.
+- 2026-06-13: 후속 Work CHORE-20260613-015 closeout과 함께 archive 처리. live `docs/works/harness/README.md`의 Done (Archive Pending) row를 제거하고 archive-side index로 이동한다.
