@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-13 (세션: CHORE-20260613-020 archive 완료 — archive 대기 Work 0건)
+Last updated: 2026-06-14 (HRN-016 `/exit` gap backlog drop)
 
 ## Current State
 
@@ -81,4 +81,4 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-020 archive 완료 — archive 
    - ✓ **DR-035 follow-up split 전체 완료** — CHORE-20260613-008 / -010 / -011(F2 무배선·DR-036)
    - ✓ **Archive 누적 관리 정책 종결 (DR-038)** — archive-side index relocation, retention=keep-all. works/harness 106행 archive-side 이전 + cascade 정렬
    - ✓ **Validation Spine residual 전부 종결** — F1=CHORE-20260613-017, F2=DR-036, F3/F4=CHORE-20260613-018(mirror/prompt parity Tier 1 승격, language policy 보류, repo-health runner-surface). **W4 잔여 concrete 항목 없음.**
-   - Spring Boot MSA TDD option-pack, template pack, CLI naming, Windows, `/exit` gap은 실제 product 운용 후 필요성 재판단
+   - Spring Boot MSA TDD option-pack, template pack, CLI naming, Windows은 실제 product 운용 후 필요성 재판단 (HRN-016 `/exit` gap은 2026-06-14 drop — action 없는 외부 감시, Stop hook이 이미 커버)

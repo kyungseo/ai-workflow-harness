@@ -29,20 +29,21 @@ AI Workflow Harness backlog다.
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
 | W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속은 W3/W4 후보에서 별도 추적 |
-| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002) Scaffold multi-user clone verification |
+| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002, clone verification 완료 = CHORE-20260612-003) 후속 후보: `ai-deck-compiler` 실제 upgrade walkthrough, 첫 concrete product planning-pack exercise/import review |
 | W3. Workflow IA Diet ✓ 완결 | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | (Canonical 개념 계층화 핵심 달성 = CHORE-20260613-002~005, Prompt surface diet 완료 = CHORE-20260612-010, work-doc class 완료 = CHORE-20260613-005, trigger family simplification 완료 = CHORE-20260613-006) 전부 완료 |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | (전부 종결) Validation Spine residual F1~F4 = CHORE-20260613-017/018·DR-036, 문서-only 규칙 강제화 = DR-037, Archive 누적 관리 정책 = DR-038, CI inline assertion ↔ invariants SSoT parity = CHORE-20260613-016 no-action closeout |
-| W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원, `/exit` gap |
+| W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원 |
 
 ### Summary
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
+| — | P1 | Candidate | L2 | `ai-deck-compiler` actual upgrade walkthrough + DR-034 acceptance judgment |
+| — | P1 | Candidate | L2 | First concrete product planning-pack exercise + import candidate review |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P2 | Candidate | L3 | Scaffold CLI naming audit |
 | HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
-| HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 |
 
 ---
 
@@ -51,6 +52,42 @@ AI Workflow Harness backlog다.
 > **Verification 작성 기준:** 변경이 건드리는 surface를 항목별로 명시한다.
 > 점검 후보: tool surface · adopter cascade · canonical · scaffold · README/GUIDE/MANUAL
 > 해당 없는 surface는 제외한다.
+
+---
+
+#### `ai-deck-compiler` actual upgrade walkthrough + DR-034 acceptance judgment
+
+**Cluster:** W2. Adopter Transition
+
+**Task:** `ai-deck-compiler` 실제 adopter를 대상으로 Layer T upgrade/migration walkthrough를 수행해 pre-manifest inventory, shadow scaffold baseline, selective migration, accepted drift 분류를 실측한다. source 쪽 설계가 문서상 placeholder를 넘어서 실제 adopter friction을 얼마나 줄이는지 확인하고, 결과를 바탕으로 DR-034를 Draft 유지할지 Accepted로 올릴지 판단한다.
+
+**Dependencies:**
+
+- CHORE-20260611-010에서 정리한 upgrade/migration 메커니즘과 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer T
+- 실제 adopter target 접근 가능 여부와 current target 상태 확인
+- 필요 시 `docs/maintainer/migrations/*.md` note 보강
+
+**Done Criteria:** 실제 adopter walkthrough 결과가 inventory-first 분류와 함께 남고, framework-owned / project-owned / customized / accepted drift 구분이 기록됨. selective migration 후 `--check` 결과와 남은 manual-merge hotspot이 정리되며, DR-034 상태 판단(승격 또는 유지 이유)이 명시된다.
+
+**Verification:** Layer T walkthrough, `scripts/create-harness.sh --check <target>`, drift summary 기록, maintainer migration note/README pointer 정합 확인. Surface: adopter cascade · scaffold · README/GUIDE/MANUAL.
+
+---
+
+#### First concrete product planning-pack exercise + import candidate review
+
+**Cluster:** W2. Adopter Transition
+
+**Task:** source-only planning pack skeleton을 첫 concrete product에 적용해 실제 산출물 세트를 만들고, CHORE-20260612-001이 provisional로 남겨둔 source-owned / product-owned / import-candidate 경계를 실측한다. 결과를 바탕으로 Layer U(U2~U4) checklist와 import review aid가 계속 provisional이어야 하는지, 일부를 더 구체화해도 되는지 판단한다.
+
+**Dependencies:**
+
+- CHORE-20260612-001 planning pack/import loop 기준
+- `docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md`
+- 실제 product 착수 timing과 import candidate로 볼 산출물 확보
+
+**Done Criteria:** 첫 concrete product exercise가 끝나고 planning-pack 산출물의 owner 분류(source/product/import)가 기록된다. import 후보의 일반화 가능 범위와 보류 이유가 남고, Layer U/U4 checklist 또는 review aid의 유지/보강 판단이 정리된다.
+
+**Verification:** Layer U checklist, product artifact → source import mapping review, optional pack/tool-surface spillover 점검. Surface: tool surface · adopter cascade · README/GUIDE/MANUAL.
 
 ---
 
@@ -136,22 +173,6 @@ AI Workflow Harness backlog다.
 **Done Criteria:** (착수 시) WSL/Git Bash 전제가 onboarding 문서에 명시되고 `python3` 의존성의 graceful 동작이 확인됨. native cmd/PowerShell 지원은 Done 기준에 포함하지 않는다.
 
 **Verification:** WSL/Git Bash별 `create-harness.sh`·`/start` smoke, Stop hook의 `python3`/`python` fallback 동작 확인. (과거 `/tmp` 대체안 항목은 `temp/` 정책으로 해소되어 제거됨.)
-
----
-
-#### `/exit` → Stop hook gap 추적 (HRN-016)
-
-**Cluster:** W5. Future / Optional
-
-**Task:** Claude Code process-exit hook 지원 여부 모니터링 (소극적 감시; 지원 확인 전 action 없음)
-
-**Dependencies:**
-
-- —
-
-**Done Criteria:** Claude Code 릴리즈 노트에서 process-exit hook 지원 확인 시 `settings.json` 보완 및 문서 갱신
-
-**Verification:** 릴리즈 노트 확인 후 gap 해소 여부 검증
 
 ---
 
