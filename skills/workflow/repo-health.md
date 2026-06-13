@@ -29,6 +29,7 @@ Mode-specific detail은 조건부 slice를 로드한다.
 - **STATUS 보호**: `docs/STATUS.md` 변경 필요가 발견되면 즉시 수정하지 말고 Approval Matrix state rules에 맞게 보고한다.
 - **컨텍스트 절약**: 현재 tool entrypoint(`AGENTS.md` 또는 `CLAUDE.md`)와 `docs/AGENT-WORKFLOW.md`는 세션 시작 시 로드됨 — 재읽기 금지.
   파일 목록·상태 확인은 full read 대신 `ls`, `rg` 명령을 우선 사용한다.
+- **Validation Spine runner surface**: deterministic 검증은 직접 재구현하지 않고 `scripts/tests/run-harness-checks.sh`(있으면)를 호출·해석해 Findings로 옮긴다. Quick 모드는 `--tier0`(+ 필요 시 `--tier1 <target>`, **생성 없음**)만 호출해 경량성을 유지하고, `--full`에서만 `--all`(tier2 scaffold 실생성 포함)을 권장한다. runner/helper 결과를 해석하되 불변식은 재구현하지 않는다(taxonomy §1 경계). runner 부재(adopter) 시 Skipped/N/A로 보고한다.
 - **모드**:
   - (없음) → Quick 모드: A+B+E 영역, ~10개 타깃 읽기, 작업 블록 시작 전 사용
   - `--full` → 전체 모드: A+B+E+F+C+D 영역, 분기별·Phase 전환 전 사용. `repo-health-full.md`를 조건부 로드한다
