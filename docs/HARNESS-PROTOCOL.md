@@ -154,19 +154,7 @@ AI Workflow Harness는 적용 대상 repository에 Product track과 Harness trac
 
 ### Load Map
 
-| Need | Load |
-| --- | --- |
-| 현재 상태 | `docs/STATUS.md` |
-| 실행 규칙 빠른 확인 | `docs/HARNESS-QUICK-REFERENCE.md` |
-| 상세 harness protocol 판단 | `docs/HARNESS-PROTOCOL.md` |
-| Product track 후보 | `docs/backlog/PRODUCT.md` |
-| harness 후보 | `docs/backlog/HARNESS.md` |
-| 아키텍처 요약 | `docs/PLAN-SUMMARY.md` |
-| L3 또는 상세 근거 | `docs/PLAN.md` |
-| 관련 결정 | `docs/decisions/DR-*.md` |
-| 큰 작업의 SSoT (실행 계획·세부 분해) | `docs/works/{category}/{ID}-{topic}.md` |
-| 작업 우선순위·아이디어·반복 리스크 검토 | `docs/retrospectives/` |
-| 과거 이력 | `docs/archive/` |
+일반 세션/작업 선택 load map은 `docs/AGENT-WORKFLOW.md`의 `Context Routing`을 따른다. 이 문서는 상세 protocol 판단이 필요할 때 해당 섹션만 조건부로 로드한다.
 
 ### Anti-Patterns
 
