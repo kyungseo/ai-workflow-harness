@@ -2,6 +2,7 @@
 
 Date: 2026-05-18
 Status: Accepted
+Linked DRs: DR-031
 
 ## Question
 
@@ -18,7 +19,7 @@ docs/archive/
 ├── docs/                        ← docs/ 하위 파일 아카이빙
 │   ├── works/
 │   │   ├── harness/             ← 완료된 harness Work 파일
-│   │   └── phase2/              ← 완료된 phase2 Work 파일
+│   │   └── product/             ← 완료된 product Work 파일
 │   ├── WORKFLOW-MANUAL-v1.md    ← 버전업 전 백업
 │   └── HARNESS-PROTOCOL-v1.md
 ├── prompts/                     ← prompts/ 파일 아카이빙
@@ -50,7 +51,7 @@ docs/archive/
 |------|------|
 | Work 파일 Done | `docs/works/` → `docs/archive/docs/works/` 로 이동 |
 | 문서 버전업 | 구 버전을 `-v{N}` 접미사로 백업 후 원본 수정 |
-| Phase 완료 | 해당 Phase의 `docs/works/phase{n}/` 전체 이동 |
+| Product track work 완료/마일스톤 | `docs/works/product/` → `docs/archive/docs/works/product/` 이동 |
 | 대규모 리팩토링 | `snapshots/` 하위에 디렉토리 단위 스냅샷 |
 
 ### 기존 스냅샷 처리
@@ -74,7 +75,7 @@ docs/archive/
 
 - `docs/archive/` 하위 구조가 프로젝트 디렉토리 구조를 반영한다.
 - 기존 스냅샷(`harness-refactor-20260514/` 등)은 `snapshots/` 하위로 이동하여 정리한다.
-- harness 프로토콜 문서(`docs/HARNESS-PROTOCOL.md`)에 아카이빙 트리거 반영 필요.
+- harness 프로토콜 문서(`docs/HARNESS-PROTOCOL.md`)는 Work Done과 archive 트리거를 반영한다.
 - Work 파일 완료 절차에 archive 이동 단계가 포함된다.
 
 ## Reversal Cost

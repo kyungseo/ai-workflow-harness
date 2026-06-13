@@ -6,8 +6,7 @@ policy_type: source-gitflow
 
 이 프로젝트의 Git 브랜치 전략, 일상 작업 사이클, CI 연동 방식을 정의한다.
 
-> **현재 채택 전략: Gitflow** (feature → develop → main)
-> 전략 변경 검토 중: `docs/backlog/HARNESS.md` HRN-FUT-004 참조
+> **채택 전략: Gitflow** (feature → develop → main) — 이 repo는 확정. scaffold 적용 repo는 자체 결정.
 > 전략 변경 시 §1~§3 전체 재검토 필요
 
 ## 0. Branch Isolation Rule
@@ -64,7 +63,7 @@ main
 | 패턴 | 용도 |
 |---|---|
 | `feature/{work-id}-{slug}` | 신규 Work (FEAT/PATCH/CHORE). Work ID + slug 권장 (예: `feature/chore-20260527-001-id-tracker-rule`) |
-| `feature/p{n}-{topic}` | Phase{n} product 작업 단축 패턴 (예: `feature/p2-auth`) |
+| `feature/prod-{topic}` | product 작업 단축 패턴 (예: `feature/prod-auth`) |
 | `feature/release-prep-{YYYYMMDD}` | develop→main PR 전 release-prep 보정 (예: `feature/release-prep-20260528`) |
 | `hotfix/{topic}` | main 긴급 수정 — Work ID `HOTFIX-YYYYMMDD-NNN` (develop 우회, main → PR → main) |
 
@@ -96,7 +95,40 @@ git commit -m "..."
 
 커밋 메시지 형식은 [Commit Message Format](#5-commit-message-format) 참조.
 
-### 2-3. PR Creation (feature → develop)
+### 2-3. Sync With Develop
+
+feature 작업 중 다른 작업이 `develop`에 먼저 병합될 수 있다. **commit·push·PR 직전에 최신 `develop`을 feature 브랜치로 끌어와 미리 반영하는 것을 기본 습관으로 둔다.** 사소해 보이지만 누락하기 쉽고, 누락하면 PR 단계에서 충돌·stale 검증으로 되돌아온다.
+
+```bash
+git fetch origin
+git checkout feature/{name}
+git merge origin/develop        # 최신 develop을 feature에 반영
+```
+
+**언제 sync하나:**
+
+- PR을 열기 직전 (특히 오래 작업한 브랜치).
+- `develop`이 내 변경과 겹치는 파일을 건드린 정황이 보일 때.
+- 최신 `develop` 기준으로 로컬 검증이나 CI를 돌리고 싶을 때.
+
+**merge vs rebase:**
+
+- **기본은 `git merge origin/develop`이다.** 이 repo는 feature→develop을 **squash merge**(§2-4, DR-017 Amended)하므로 feature 내부 history는 단일 커밋으로 합쳐진다. rebase로 linear history를 만들어도 그 이점이 결과에 남지 않으므로, 이미 push된 브랜치를 rebase해 force-push하는 비용을 치를 이유가 없다.
+- rebase는 **아직 push하지 않은 로컬 전용 커밋**을 정리할 때만 선택한다: `git rebase origin/develop`.
+
+**충돌 발생 시:**
+
+- 충돌은 GitHub PR 화면이 아니라 **로컬 sync 단계에서 먼저 해소**한다. `git status`로 충돌 파일 확인 → 수정 → `git add` → `git merge --continue` (rebase면 `git rebase --continue`).
+- PR 생성 후 base가 다시 앞서 나가 충돌이 나면 같은 방식으로 feature에서 재-sync한 뒤 push한다.
+
+**force-push 정책:**
+
+- `--force-with-lease`는 **본인이 단독 작업하는 feature 브랜치에 한해서만** 허용한다 (`--force`는 사용하지 않는다).
+- `develop`·`main`에는 어떤 경우에도 force-push하지 않는다.
+
+> 병렬 feature/agent 간 충돌(Work ID·STATUS·index 동시 변경)은 `docs/HARNESS-PARALLEL-WORK-CONTROLS.md`를 따른다.
+
+### 2-4. PR Creation (feature → develop)
 
 > **feature PR의 base는 항상 `develop`이다. `main`으로 직접 PR하지 않는다.**
 > **feature 브랜치를 develop에 직접 local merge하지 않는다. 반드시 PR을 통해 머지한다.**
@@ -117,7 +149,7 @@ gh pr create --base develop --title "..." --body "..."
 - PR 전에는 변경 범위에 맞는 로컬 검증 결과(`git diff --check`, `bash -n scripts/create-harness.sh`, scaffold dry-run 등)를 PR 본문이나 세션 요약에 남긴다.
 - develop→main PR에서도 동일한 docs/scaffold CI를 최종 확인한다.
 
-### 2-4. Post-PR Cleanup
+### 2-5. Post-PR Cleanup
 
 feature → develop PR merge 후, 방금 merge된 최신 develop을 로컬에 반영한다.
 
@@ -149,10 +181,35 @@ feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
 
 **머지 방식:** Regular Merge (Merge commit) 원칙 — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다. Fast-Forward가 가능하면 허용한다. (DR-017 Amended)
 
+### 3-0. Release Prep Branch
+
+develop → main PR을 열기 전에 짧은 release-prep branch에서 release gate를 먼저 실측한다.
+이 branch는 새 기능을 추가하는 곳이 아니라, release-block 보정과 evidence 수집을 위한 작업 단위다.
+
+```bash
+git checkout develop
+git pull origin develop
+git checkout -b feature/release-prep-{YYYYMMDD}
+```
+
+**Release-prep에서 수행할 일:**
+
+1. `git fetch --tags origin` 후 `main`, `develop`, 최신 `ai-workflow-v*` tag, `VERSION`의 관계를 확인한다.
+2. 이미 존재하는 tag와 같은 `VERSION`으로 새 release를 만들 수 없으면 `docs/maintainer/VERSIONING.md` §2 기준으로 MAJOR/MINOR/PATCH를 판정하고 `VERSION`을 목표 값으로 올린다.
+3. `docs/STATUS.md`와 `docs/PLAN.md`의 release target 문구가 목표 `VERSION`과 맞는지 확인하고, 필요한 최소 보정만 반영한다.
+4. §3-1 Public Clean Baseline Gate를 실제 명령으로 확인한다.
+5. Release Full Sweep을 수행한다. 최소 evidence는 `bash scripts/tests/run-harness-checks.sh --all`, `bash scripts/tests/check-onboarding-flows.sh`, `bash -n scripts/create-harness.sh`, `scripts/create-harness.sh --dry-run ...`, `git diff --check`를 포함한다.
+6. 발견된 release-block만 수정한다. 예: archive Work의 `status` 불일치, stale release target, VERSION/tag mismatch, onboarding/scaffold 경로 stale.
+7. release-prep 변경은 feature → develop PR로 먼저 병합한다. 그 다음에 develop → main release PR을 연다.
+
+**Evidence boundary:** `run-harness-checks.sh --all`은 deterministic validation spine evidence이고, `check-onboarding-flows.sh`는 Layer J-OB/Q core evidence다. 둘 다 통과해도 Release Full Sweep의 judgment Layer를 대체하지 않는다.
+
 ### 3-1. Public Clean Baseline Gate
 
 develop → main PR 생성 전 아래 항목을 모두 확인한다.
 확인 결과는 **PR body에 반드시 남긴다.**
+
+> Surface 검증 전수와 deterministic spine 실행 기준의 SSoT는 `docs/maintainer/VERIFICATION-COMMANDS.md` "Release Full Sweep"이다. 아래 표의 `Validation spine` / `Surface sweep` 행이 그 통과 evidence를 요구한다 — 이 gate(state cleanliness)와 Release Full Sweep(surface 전수)이 함께 release 직전 검증을 구성한다. (source repo 기준 — §3 note에 따라 scaffold 적용 repo는 자체 결정.)
 
 | Area | Clean Condition | Evidence |
 | --- | --- | --- |
@@ -168,6 +225,8 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 | Scaffold | `bash -n scripts/create-harness.sh` + `--dry-run` 통과. 실제 temp scaffold 생성은 scaffold 파일 변경 시에만 | `bash -n scripts/create-harness.sh`, `scripts/create-harness.sh --dry-run ...` |
 | Docs cascade | release gate 관련 문서 변경 시 canonical/tool/user-facing/scaffold cascade 정렬 확인 | targeted cascade check |
 | Validation | `git diff --check` 통과 | `git diff --check` |
+| Validation spine | deterministic 검증 척추 전수 PASS | `bash scripts/tests/run-harness-checks.sh --all` → OVERALL PASS (syntax·scaffold invariant·DR closure·default template·surface mirror/prompt parity 포함) |
+| Surface sweep | 출하 표면 Layer 전수에서 release-block(P0/P1) 0 | `docs/maintainer/VERIFICATION-COMMANDS.md` "Release Full Sweep" 결과 — 출하표면 P0/P1=0 |
 
 ### 3-2. Main Merge Gate
 
@@ -194,6 +253,10 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 gh pr create --base main --head develop --title "release: ..."
 ```
 
+> **Release marking (source repo 한정):** `VERSION` bump(semver 판정)과 머지 후 tag(`ai-workflow-v{VERSION}`)·GitHub 릴리즈 노트 절차는 `docs/maintainer/VERSIONING.md` §3(Bump 절차)·§5(릴리즈 노트 템플릿)를 따른다. **GitHub Release 객체 생성은 선택이며, tag·`VERSION` 정합은 필수다.** (scaffold 적용 repo는 자체 버전 정책. 이 포인터 대상 `VERSIONING.md`는 source 전용이라 scaffold 템플릿에는 포함하지 않는다.)
+
+release PR body 또는 GitHub Release note 초안은 `docs/maintainer/VERSIONING.md` §5의 릴리즈 노트 템플릿을 따른다.
+
 ### 3-4. Post-Merge Develop Sync
 
 PR merge 후:
@@ -208,6 +271,33 @@ git merge origin/main       # develop을 main과 동기화
 git push origin develop
 git status                  # "up to date with 'origin/develop'" 확인
 ```
+
+### 3-5. Hotfix Cycle
+
+`main`의 긴급 결함은 `develop`을 거치지 않고 `main` 기준 `hotfix/*` 브랜치에서 수정한다 (§1 Branch Naming).
+
+```bash
+git checkout main
+git pull origin main
+git checkout -b hotfix/{topic}
+# 수정 + commit
+gh pr create --base main --head hotfix/{topic} --title "fix: ..."
+```
+
+- hotfix PR의 base는 `main`이다. feature와 달리 `develop`을 경유하지 않는다.
+- Work ID는 `HOTFIX-YYYYMMDD-NNN`을 사용한다.
+
+**main 병합 후 develop 역병합 (필수):** hotfix가 `main`에만 반영되면 다음 release에서 `develop`이 `main`을 덮어써 수정이 유실된다. main 병합 직후 반드시 `develop`으로 역병합한다.
+
+```bash
+git checkout main
+git pull origin main
+git checkout develop
+git merge origin/main        # hotfix를 develop에 반영
+git push origin develop
+```
+
+> 이는 §3-4 Post-Merge Develop Sync와 동일한 main→develop 동기화다. release든 hotfix든 `main`이 앞서면 `develop`을 즉시 맞춘다.
 
 ## 4. CI Trigger
 
@@ -256,7 +346,8 @@ commit 전 자동 실행.
 |---|---|
 | 전체 staged diff | `git diff --cached --check` |
 | `main`에 protected workflow 파일 staged | hard block (exit 1) — `feature/*` 또는 `hotfix/*` branch로 이동 필요 |
-| `develop`에 protected workflow 파일 staged | warning only — GitHub ruleset이 실질 강제. feature branch 사용 권장 |
+| `develop`에 `docs/STATUS.md` / `docs/backlog/**` / `docs/works/**`만 staged | warning only — bounded tracking-state exception |
+| `develop`에 구조/정책 protected 파일이 staged되거나, tracking-state와 다른 파일이 함께 staged | hard block (exit 1) — `T1 tracking-state-only` 예외 불가 |
 | `scripts/*.sh`, `scripts/*/*.sh`, `tools/git-hooks/*` | `sh -n` shell syntax check |
 | `scripts/create-harness.sh` | `bash -n scripts/create-harness.sh` |
 
@@ -268,11 +359,17 @@ commit message 형식 검증. Conventional Commits 미준수 시 hard block (exi
 
 유효 type: `feat` `fix` `docs` `style` `refactor` `chore` `config` `test` `perf` `ci` `build` `revert`
 
+또한 commit-msg는 **finalization bundling gate**를 적용한다 — Work Done·`docs/STATUS.md`·Work index·backlog·decision tracker 같은 finalization 산출물을 substantive 변경과 같은 commit에 묶도록 요구하며, `AWH-Gate-Override` trailer로 예외를 명시한다(`.claude/rules/git-workflow.md` 참조).
+
 ### hook 설치
 
 ```bash
 bash tools/git-hooks/install.sh
 ```
+
+### 이 repo에 맞게 조정
+
+`tools/git-hooks/lib/gate-lists.sh`의 기본 protected/tracking-state/finalization 목록은 harness framework-owned 값이다(upgrade 시 overwrite). 이 repo 고유의 민감 경로나 project-specific tracking-state 경로는 framework-owned `gate-lists.sh`를 편집하지 말고 add-only `.harness/gate-config`의 `[protected]` / `[tracking-state]` / `[finalization]`에 추가한다. `[tracking-state]`는 project-specific 경로를 `T1 tracking-state-only` 예외로 분류할 때만 사용한다.
 
 ### Enforcement 설계 원칙
 
@@ -280,11 +377,11 @@ branch isolation은 세 계층으로 구성된다. 각 계층이 독립적으로
 
 | Layer | 수단 | 역할 |
 |---|---|---|
-| 1 | AI rule (`.claude/rules/git-workflow.md`) | 즉각 FAIL 선언 — commit 시도 전에 feature branch 생성을 안내한다 |
-| 2 | pre-commit hook | 로컬 안전망 — AI가 규칙을 놓쳤을 때 commit 단계에서 포착한다 |
+| 1 | AI rule (`.claude/rules/git-workflow.md`) | class-sensitive gate — `T1 tracking-state-only`는 warning, 나머지 protected direct commit은 FAIL |
+| 2 | pre-commit hook | 로컬 안전망 — `T1` warning / `S1` 또는 mixed protected set hard block을 commit 단계에서 포착한다 |
 | 3 | GitHub ruleset (`protect-develop`, `protect-main`) | 실질 강제 — push/PR 없이는 어떤 commit도 remote에 반영되지 않는다 |
 
-`main`은 공개 릴리즈 스냅샷이므로 layer 2에서 hard block. `develop`은 GitHub ruleset(layer 3)이 실질 강제를 담당하므로 layer 2는 warning으로 충분하다. solo 프로젝트에서 housekeeping 작업마다 PR을 강제하는 것은 불필요한 마찰이다.
+`main`은 공개 릴리즈 스냅샷이므로 layer 2에서 hard block이다. `develop`도 더 이상 blanket warning이 아니다. `docs/STATUS.md` / backlog / works만 포함된 `T1 tracking-state-only` staged set만 bounded warning 예외로 허용하고, `docs/decisions/**`, workflow/rule/hook/scaffold 같은 구조/정책 변경이나 tracking-state와 다른 파일이 섞인 staged set은 로컬에서 hard block한다. GitHub ruleset(layer 3)은 여전히 최종 backstop이지만, local signal도 policy와 같은 강도로 정렬한다.
 
 ## 7. Related Documents
 

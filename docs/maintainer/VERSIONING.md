@@ -41,7 +41,9 @@ semver는 adopter가 소비하는 표면(scaffold output 구조, command/skill s
 2. 릴리즈 직전, develop의 VERSION을 목표 값으로 설정 (in-development 동안 미리 올려두어도 됨)
 3. develop → main release PR
 4. main merge 후: git tag ai-workflow-v{VERSION} && git push origin --tags
-5. (선택) 다음 사이클 첫 작업에서 develop VERSION을 다음 목표 값으로 bump
+5. 릴리즈 후 검증: git ls-remote --heads origin develop 로 develop이 삭제되지 않았는지 확인
+   (DR-020 auto-delete off 실효 검증 — develop→main merge가 영구 브랜치를 삭제하면 안 됨)
+6. (선택) 다음 사이클 첫 작업에서 develop VERSION을 다음 목표 값으로 bump
 ```
 
 - `VERSION` 변경은 protected 파일 영향이 없고 reversal cost Low다. feature branch에서 수정 → develop → main 경로를 따른다.
@@ -52,7 +54,7 @@ semver는 adopter가 소비하는 표면(scaffold output 구조, command/skill s
 ## 4. 릴리즈 전 검증
 
 버전을 올려 릴리즈하기 전, 출하 표면에 대한 전수 검증을 수행한다.
-검증 명령 카탈로그: `docs/VERIFICATION-COMMANDS.md` (Release Full Sweep 프리셋 — 해당 항목 정비 후).
+검증 명령 카탈로그: `docs/maintainer/VERIFICATION-COMMANDS.md` (Release Full Sweep 프리셋 — 해당 항목 정비 후).
 
 판정 분류:
 
@@ -62,7 +64,7 @@ semver는 adopter가 소비하는 표면(scaffold output 구조, command/skill s
 | 미구현 기능의 갭 | 용인, 백로그 추적 |
 | 품질 개선/wording | 릴리즈 후 또는 별도 |
 
-`VERSION` 정합성 자체는 `docs/VERIFICATION-COMMANDS.md` Layer R로 확인한다 (`VERSION` == manifest `harness_version`).
+`VERSION` 정합성 자체는 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer R로 확인한다 (`VERSION` == manifest `harness_version`).
 
 ---
 

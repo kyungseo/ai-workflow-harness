@@ -7,6 +7,8 @@ policy_slice: recovery-validation
 `docs/HARNESS-PROTOCOL.md` §15에서 추출한 Recovery/Validation policy slice다.
 failure state 진입, `/repo-health` 조건부 validation 확인, commit approval 판단 시에만 로드한다. `/session-start`, `/work-select`, 일반 `/work-plan`·`/work-close`·`/session-summary` 흐름에서는 로드하지 않는다.
 
+**경계:** 이 파일은 **판단·정책(WHETHER/WHEN — 진행해도 되나)**이다. 검증을 실행할 **구체 명령 카탈로그(HOW)**는 source repo의 `docs/maintainer/VERIFICATION-COMMANDS.md`를 참조한다 (adopter repo에는 없을 수 있는 source-only 문서).
+
 ## Failure Conditions
 
 - STATUS 불일치를 보고하지 않음
@@ -48,6 +50,7 @@ Report includes:
   - `docs/PLAN-SUMMARY.md`는 상태 필드를 갖지 않는다 — Tracking Finalization 확인 대상에서 제외.
   - Work ID collision 확인: 신규 Work ID가 target branch(프로젝트 통합/release branch; source repo에서는 develop/main)의 `docs/works/` 파일과 충돌하지 않는지 확인한다 (병렬 branch NNN 충돌 방지).
 - DR/Work 파일/archive/cascade가 필요한가
+- (source repo 전용 — adopter repo N/A) shipped 표면(core canonical·shipped DR seed·adapter/rule/prompt)에 `DR-NNN` 인용을 추가·변경했다면, 그 DR이 scaffold seed에 닫혀 있는가. seed 밖이면 canonical은 self-describe, DR 파일 lineage는 `Linked DRs:` frontmatter로 처리하고 `scripts/tests/check-shipped-dr-closure.sh`로 검증했는가 (HOW: `docs/maintainer/VERIFICATION-COMMANDS.md` Layer I)
 - 다음 세션이 `STATUS.md`만 보고 재개 가능한가
 
 ## Commit Approval
@@ -86,6 +89,8 @@ enforcement는 세 층으로 분리한다.
 | Scaffold dry-run | `scripts/create-harness.sh --dry-run ...` |
 | Scaffold phrase scan | temp 생성 후 source-only phrase 검출 시 fail — `.github/workflows/ci.yml` 참조 |
 | Stale runtime identity | `grep -RInE 'Spring Boot ...'` live docs scan |
+
+위 CI 명령의 상세·확장판(전체 Layer·release 전수 점검)은 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer A 및 Release Full Sweep을 참조한다.
 
 **Human Review Checklist — PR body 기재 (develop→main):**
 

@@ -3,7 +3,7 @@
 프로젝트에 AI workflow를 적용하기 위한 **manual-first, approval-gated workflow harness**입니다.
 Claude Code, Codex, Cursor 같은 AI 도구가 같은 상태 파일과 같은 절차를 보고 움직이도록 문서, command, skill, scaffold를 함께 제공합니다.
 
-AI와 여러 세션에 걸쳐 작업하다 보면 범위가 커지거나, 승인 없이 파일이 바뀌거나, 결정 근거가 대화 속에만 남는 일이 생깁니다. 이 harness는 그런 문제를 workflow engine 없이 **계획, 승인, 검증, 기록**으로 제어합니다.
+여러 세션에 걸쳐 AI와 일하다 보면 보통 세 가지 문제가 먼저 생깁니다. 범위가 조금씩 커지고, 승인 없이 파일이 바뀌고, 왜 그렇게 결정했는지가 대화 속에만 남습니다. 이 harness는 workflow engine을 새로 만들지 않고, **계획, 승인, 검증, 기록**으로 그 문제를 제어합니다.
 
 ---
 
@@ -21,6 +21,12 @@ AI와 여러 세션에 걸쳐 작업하다 보면 범위가 커지거나, 승인
 > [!IMPORTANT]
 > 이 repository 자체를 직접 project-local workspace로 전환하지 마세요. 이 repository는 harness source입니다. 실제 제품, 서비스, 문서 프로젝트에는 `scripts/create-harness.sh`로 별도 project directory에 scaffold를 생성해 적용합니다.
 
+처음 보는 사람이라면 이 순서로 시작하면 가장 덜 헷갈립니다.
+
+1. 내 프로젝트에 적용하려는 경우: `scripts/create-harness.sh`로 별도 project directory를 만든다.
+2. 생성된 project directory에서 `/session-start`를 실행한다.
+3. `docs/STATUS.md`가 bootstrap onboarding을 가리키면 [Scaffold Onboarding Guide](docs/SCAFFOLD-ONBOARDING-GUIDE.md)로 이동한다.
+
 ### Requirements
 
 - macOS 권장. Linux, WSL, Git Bash는 호환을 기대합니다.
@@ -33,6 +39,8 @@ git clone https://github.com/kyungseo/ai-workflow-harness.git
 cd ai-workflow-harness
 
 # 새 프로젝트에 harness 적용
+# <project-name> : 파일 내부 식별자. 생성된 문서 안에서 ai-workflow-harness를 대체한다.
+# <target-dir>   : 파일이 실제로 생성될 디렉토리 경로. project-name과 달라도 된다.
 scripts/create-harness.sh my-app /path/to/my-app
 ```
 
@@ -135,7 +143,7 @@ flowchart TD
     end
 
     subgraph SURFACE ["Reusable Surfaces"]
-        PROMPTS["prompts/\nfallback/task templates"]
+        PROMPTS["prompts/\nsession-start fallback"]
         HOOKS[".codex/hooks.json\nCodex hooks"]
         SCRIPT["scripts/create-harness.sh\nproject scaffold"]
     end
@@ -189,6 +197,11 @@ flowchart TD
 
 새 프로젝트나 기존 프로젝트에 적용할 때는 `scripts/create-harness.sh`를 사용합니다.
 
+두 위치 인자의 역할이 다릅니다.
+
+- `<project-name>`: 생성된 파일 내부에서 `ai-workflow-harness`를 대체하는 **프로젝트 식별자**입니다. 디렉토리 이름과 일치하지 않아도 됩니다.
+- `[target-dir]`: 파일이 실제로 생성될 **디렉토리 경로**입니다. 생략하면 `temp/<project-name>/`에 생성합니다.
+
 ```bash
 # 새 프로젝트
 scripts/create-harness.sh my-app /path/to/my-app
@@ -209,17 +222,17 @@ scripts/create-harness.sh --dry-run my-app
 scripts/create-harness.sh --check /path/to/my-app
 ```
 
-`--profile`과 `--workflow`는 역할이 다릅니다.
+`--profile`과 `--workflow`는 역할이 다릅니다. 둘을 섞어 읽으면 가장 많이 헷갈립니다.
 
 | 옵션 | 의미 |
 | --- | --- |
 | `--profile` | 언어·프레임워크 예시 rule/prompt 포함 여부를 고릅니다. 기본은 `generic`입니다. |
-| `--workflow` | branch/release policy mode를 고릅니다. 기본은 `generic`이고, project-specific branch policy를 유지합니다. |
+| `--workflow` | branch/release policy mode를 고릅니다. 기본은 `generic`이고, 기존 project의 branch policy를 유지합니다. |
 | `--workflow source-gitflow` | 이 source repository와 비슷한 feature -> develop -> main 운영 모델을 적용하고 싶을 때만 선택합니다. |
 
-scaffold 직후에는 생성된 project directory에서 `/session-start`로 첫 세션을 시작합니다. `docs/STATUS.md`의 Next Actions가 bootstrap onboarding을 가리키면 `docs/BOOTSTRAP.md`를 채워 Product Definition, Implementation Baseline, Phase 1 backlog를 정리합니다.
+scaffold 직후에는 생성된 project directory에서 `/session-start`로 첫 세션을 시작합니다. `docs/STATUS.md`의 Next Actions가 bootstrap onboarding을 가리키면 `docs/BOOTSTRAP.md`를 채워 Product Definition, Implementation Baseline, product backlog를 정리합니다.
 
-자세한 첫 세션 절차는 [docs/SCAFFOLD-ONBOARDING-GUIDE.md](docs/SCAFFOLD-ONBOARDING-GUIDE.md)를 보세요.
+자세한 첫 세션 절차는 [docs/SCAFFOLD-ONBOARDING-GUIDE.md](docs/SCAFFOLD-ONBOARDING-GUIDE.md)를 보세요. source repository를 유지보수하는 사람이라면, user-facing 문서만 읽지 말고 아래 [Maintainer reference documents](#maintainer-reference-documents)도 함께 확인하세요.
 
 <details>
 <summary>Scaffold 후 첫 세션 흐름</summary>
@@ -232,7 +245,7 @@ flowchart TD
     D -- "있음" --> E["docs/BOOTSTRAP.md 로드"]
     E --> F["Product Definition 작성"]
     F --> G["Implementation Baseline 작성"]
-    G --> H["Phase 1 backlog 도출"]
+    G --> H["product backlog 도출"]
     H --> I["일반 workflow\n/work-select -> /work-plan"]
     D -- "없음" --> I
 
@@ -251,11 +264,11 @@ flowchart TD
 | Mode | 누구에게 맞나요? | 주의할 점 |
 | --- | --- | --- |
 | Scaffold product repo | 자기 프로젝트에 AI workflow를 적용하려는 사용자 | 이 source repository를 직접 project workspace로 쓰지 말고, 별도 project directory에 scaffold를 생성합니다. |
-| Forked harness source | 이 harness 자체를 fork/clone해서 자기만의 workflow framework로 발전시키려는 maintainer-adopter | source repo의 Gitflow, `source-gitflow` marker, 선택 hook, source-only 문서 전제를 물려받습니다. |
+| Forked harness source | 이 harness 자체를 fork/clone해서 자기만의 workflow framework로 발전시키려는 maintainer-adopter | source repo의 Gitflow, `source-gitflow` marker, 선택 hook, source-only 문서 전제를 함께 관리해야 합니다. |
 
 ### Scaffold Product Repo
 
-생성된 project repository에는 framework-owned 파일과 project-owned 파일이 함께 있습니다.
+생성된 project repository에는 framework-owned 파일과 project-owned 파일이 함께 있습니다. 이 구분을 처음부터 이해해 두면 나중에 migration이나 drift 확인이 훨씬 쉬워집니다.
 
 | 구분 | 예시 | 관리 방법 |
 | --- | --- | --- |
@@ -263,6 +276,8 @@ flowchart TD
 | Project-owned | `docs/STATUS.md`, product backlog, Work 파일, project decisions | 해당 project의 실제 상태로 채웁니다. |
 
 `scripts/create-harness.sh --check /path/to/project`는 generated manifest를 기준으로 framework 파일이 `in-sync`, `source-updated`, `locally-modified`인지 보고합니다. 현재 자동 upgrade 기능은 없습니다. 이미 scaffold한 project를 최신 source와 맞추려면 `--check` 결과를 보고 필요한 파일만 수동으로 selective migration하세요.
+
+오래된 target에는 `.harness/manifest.json`이 없을 수 있습니다. 이런 pre-manifest target은 `--check`만으로 migration 범위를 판단하지 말고, source repo maintainer가 source-only 문서의 upgrade/migration note를 먼저 확인해야 합니다. 시작점은 [Maintainer reference documents](#maintainer-reference-documents)의 `migrations/`, `SOURCE-REPO-OPERATIONS.md`, `VERIFICATION-COMMANDS.md` Layer T입니다.
 
 ### Forked Harness Source
 
@@ -352,7 +367,7 @@ flowchart TD
     ACTIVE --> PLAN["/work-plan\n계획 수립"]
     PLAN --> WORK["docs/works/{category}\nWork SSoT"]
     NOW -- "아니오" --> TYPE{"성격"}
-    TYPE -- "Product" --> PHASE["docs/backlog/PHASE{n}.md"]
+    TYPE -- "Product" --> PHASE["Product backlog\n(target repo, when present)"]
     TYPE -- "Harness" --> HARNESS["docs/backlog/HARNESS.md"]
     TYPE -- "다음 후보" --> NEXT["STATUS.md Next Actions"]
     TYPE -- "결정 필요" --> OQ["STATUS.md Blockers/OQ"]
@@ -446,6 +461,7 @@ main
 | 공통 운영 규칙 | [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) |
 | 상세 protocol | [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) |
 | source repo Git 정책 | [docs/GIT-WORKFLOW.md](docs/GIT-WORKFLOW.md) |
+| source-only maintainer 문서 지도 | [docs/maintainer/README.md](docs/maintainer/README.md) |
 | canonical workflow 절차 | [skills/workflow/](skills/workflow/) |
 | 현재 상태 dashboard | [docs/STATUS.md](docs/STATUS.md) |
 | Harness backlog | [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) |
@@ -461,7 +477,13 @@ main
 | [docs/HARNESS-PARALLEL-WORK-CONTROLS.md](docs/HARNESS-PARALLEL-WORK-CONTROLS.md) | 병렬 branch·agent 충돌 감지 시 |
 | [docs/HARNESS-ARCHITECTURE.md](docs/HARNESS-ARCHITECTURE.md) | 구조와 정보 흐름을 깊게 볼 때 |
 | [docs/HARNESS-MAINTAINER-GUIDE.md](docs/HARNESS-MAINTAINER-GUIDE.md) | source repo 유지보수 convention 확인 시 |
-| [prompts/README.md](prompts/README.md) | prompt library 확인 시 |
+| [docs/maintainer/SOURCE-REPO-OPERATIONS.md](docs/maintainer/SOURCE-REPO-OPERATIONS.md) | source repo 변경 유형별 검증 경로를 고를 때 |
+| [docs/maintainer/VERIFICATION-COMMANDS.md](docs/maintainer/VERIFICATION-COMMANDS.md) | Layer별 검증 명령과 release sweep을 확인할 때 |
+| [docs/maintainer/HARNESS-TEST-TAXONOMY.md](docs/maintainer/HARNESS-TEST-TAXONOMY.md) | 검증 Tier 구조, 용어, `temp/` 정책이 헷갈릴 때 |
+| [docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md](docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md) | product starter pack / import loop / source-product 경계를 볼 때 |
+| [docs/maintainer/VERSIONING.md](docs/maintainer/VERSIONING.md) | source repo 버전 bump, tag, release note 판단이 필요할 때 |
+| [docs/maintainer/migrations/](docs/maintainer/migrations/) | 기존 target repo가 framework 변경을 수용할 때 |
+| [prompts/README.md](prompts/README.md) | session-start fallback prompt 확인 시 |
 
 </details>
 
@@ -489,9 +511,10 @@ main
 │   ├── SCAFFOLD-ONBOARDING-GUIDE.md       # scaffold 온보딩 가이드
 │   ├── backlog/                           # 후보 작업
 │   ├── decisions/                         # Decision Records
+│   ├── maintainer/                        # source-only maintainer reference
 │   └── works/                             # Work 파일
 ├── skills/workflow/                       # canonical workflow 절차
-├── prompts/                               # prompt templates
+├── prompts/                               # session-start fallback prompts
 ├── scripts/create-harness.sh              # scaffold script
 └── tools/git-hooks/                       # source repo 전용 hooks
 ```

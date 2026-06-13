@@ -45,9 +45,13 @@ elif [ -f ".git/MERGE_HEAD" ]; then
     : # skip — merge commit
 elif [ "$BRANCH" = "develop" ] || [ "$BRANCH" = "main" ]; then
     PROTECTED=""
+    DEVELOP_T1_ONLY=1
     for FILE in $STAGED_FILES; do
         if awh_is_branch_isolation_protected_path "$FILE"; then
             PROTECTED="$PROTECTED $FILE"
+        fi
+        if [ "$BRANCH" = "develop" ] && ! awh_is_branch_isolation_tracking_path "$FILE"; then
+            DEVELOP_T1_ONLY=0
         fi
     done
     if [ -n "$PROTECTED" ]; then
@@ -57,11 +61,17 @@ elif [ "$BRANCH" = "develop" ] || [ "$BRANCH" = "main" ]; then
             echo "Affected files:"
             for F in $PROTECTED; do echo "  $F"; done
             exit 1
-        else
-            echo "WARNING: Committing protected workflow files directly on 'develop'."
-            echo "Consider using a feature/* or hotfix/* branch instead."
+        elif [ "$DEVELOP_T1_ONLY" -eq 1 ]; then
+            echo "WARNING: Committing tracking-state workflow files directly on 'develop'."
+            echo "This bounded exception applies only when the entire staged set is limited to docs/STATUS.md, docs/backlog/**, or docs/works/**."
             echo "Affected files:"
             for F in $PROTECTED; do echo "  $F"; done
+        else
+            echo "ERROR: Committing structural-policy or mixed protected workflow changes directly on 'develop' is not allowed."
+            echo "Use a feature/* branch instead. The warning-only exception is limited to tracking-state-only staged sets."
+            echo "Affected files:"
+            for F in $PROTECTED; do echo "  $F"; done
+            exit 1
         fi
     fi
 fi
@@ -80,6 +90,20 @@ done
 if echo "$STAGED_FILES" | grep -q '^scripts/create-harness\.sh$'; then
     echo "Checking create-harness.sh syntax..."
     bash -n scripts/create-harness.sh
+fi
+
+# Shipped DR reference closure (DR-033) — source repo only.
+# The check script ships in the source repo but not to scaffolded targets, so the
+# existence guard makes this a no-op in adopter repos (the deployed hook stays inert).
+CLOSURE_CHECK="$ROOT/scripts/tests/check-shipped-dr-closure.sh"
+if [ -f "$CLOSURE_CHECK" ]; then
+    echo "Checking shipped DR reference closure..."
+    if ! CLOSURE_OUT=$(bash "$CLOSURE_CHECK" 2>&1); then
+        echo "$CLOSURE_OUT"
+        echo "ERROR: shipped 표면이 scaffold seed 밖 DR을 참조합니다 — commit 차단 (DR-033)."
+        echo "mode-a(canonical self-describe) 또는 mode-b(DR 파일 Linked DRs frontmatter)로 처리 후 재시도하세요."
+        exit 1
+    fi
 fi
 
 if [ "$FINALIZATION_ONLY" -eq 1 ]; then

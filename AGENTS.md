@@ -12,9 +12,7 @@ MUST:
 - Read and follow `docs/AGENT-WORKFLOW.md` at session start for common workflow, context routing, status rules, and validation defaults.
 - Read `docs/STATUS.md` current sections before choosing or continuing work.
 - Do not check `docs/BOOTSTRAP.md` just because it exists; use it only when `docs/STATUS.md` Next Actions explicitly points to scaffold bootstrap/onboarding work.
-- Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands.
-- Do not read `.claude/commands/*.md` at session start; load a command file only when that workflow is explicitly invoked or clearly relevant.
-- When a Claude command is relevant, follow the same procedure manually.
+- Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands. Do not read them at session start or follow them directly; run workflows through the Codex skill adapters per Codex Skill Routing below.
 - Treat `.claude/rules/*.md` as project-local rule references. Do not load them at session start; when editing files whose paths match a rule's `paths` frontmatter, read only the matching rule files and apply their guidance manually.
 - Follow `docs/AGENT-WORKFLOW.md` Approval Matrix before execution, scope expansion, state changes, and every commit.
 - On failure: follow `docs/HARNESS-PROTOCOL.md` Failure And Recovery.
@@ -52,6 +50,8 @@ If this repository has `docs/GIT-WORKFLOW.md`, follow §5 for commit format.
 
 NEVER open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.
 
+Before opening a feature PR, sync the latest `develop` into the feature branch (`git fetch origin && git merge origin/develop`) per `docs/GIT-WORKFLOW.md` §2-3, resolving conflicts locally. Default to `merge` (squash policy makes rebase's linear history moot); `--force-with-lease` only on your own feature branch, never on `develop`/`main`.
+
 After `gh pr merge` completes, follow the merge type:
-- feature→develop: use `--squash` (default per harness merge policy); use `--merge` only when commit-level history must be preserved. Then execute §2-4 (sync develop, delete local feature branch, suggest next feature branch).
+- feature→develop: use `--squash` (default per harness merge policy); use `--merge` only when commit-level history must be preserved. Then execute §2-5 (sync develop, delete local feature branch, suggest next feature branch).
 - develop→main: use `--merge` (regular merge is the default per harness merge policy). Then execute §3-4 (Post-Merge Develop Sync: sync main, merge origin/main into develop, push develop).

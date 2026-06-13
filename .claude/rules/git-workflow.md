@@ -25,16 +25,23 @@ Before staging or committing, check the current branch:
 git branch --show-current
 ```
 
-If the branch is `develop` or `main` AND any of the following files are staged — move to FAIL:
+If the branch is `main` AND any of the following files are staged — move to FAIL.
+
+If the branch is `develop`, apply a class-sensitive check:
+
+- Warning only when the **entire staged set** is limited to `docs/STATUS.md`, `docs/backlog/**`, `docs/works/**`
+- Move to FAIL if any staged file falls outside that tracking-state subset and any protected workflow file is staged
 
 - `AGENTS.md`, `CLAUDE.md`, `docs/STATUS.md`, `docs/backlog/**`, `docs/works/**`, `docs/decisions/**`
 - `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md`
 - `.claude/commands/**`, `.claude/rules/**`, `.cursor/rules/**`, `.agents/skills/**`, `prompts/**`, `scripts/create-harness.sh`, `tools/git-hooks/**`, `.harness/gate-config`
-- Any path listed under `[protected]` in `.harness/gate-config` (project-specific additions)
+- Any path listed under `[protected]` or `[tracking-state]` in `.harness/gate-config` (project-specific additions)
 
-The list above is the harness default. A target repo adds its own sensitive paths under `[protected]` / `[finalization]` in `.harness/gate-config` (add-only) — do **not** edit framework-owned `tools/git-hooks/lib/gate-lists.sh` directly (it is overwritten on harness upgrade). When hooks are installed they read both the default and `.harness/gate-config`; treat the same union as protected here.
+The list above is the harness default. A target repo adds its own sensitive paths under `[protected]`, `[tracking-state]`, or `[finalization]` in `.harness/gate-config` (add-only) — do **not** edit framework-owned `tools/git-hooks/lib/gate-lists.sh` directly (it is overwritten on harness upgrade). When hooks are installed they read both the default and `.harness/gate-config`; treat the same union as protected here. Use `[tracking-state]` only for project-specific paths that should inherit the `T1` bounded warning exception.
 
 FAIL response: report current branch and the staged protected files, then propose creating a `feature/*` or `hotfix/*` branch and moving the changes there.
+
+Warning response on `develop`: tracking-state-only direct commits are a bounded exception. Still report the branch and staged files, and recommend using a feature branch if the change is turning substantive.
 
 Exception: skip this check if `.git/MERGE_HEAD` exists (merge commit — release sync).
 Not Applicable: if the current directory is not a git repository.
@@ -92,6 +99,11 @@ PR Base Rule:
 - feature/* → `develop` (ALWAYS use `--base develop` when opening a PR from a feature branch)
 - develop → `main` (release PR only)
 
+Sync Before PR:
+- Before opening a feature PR, pull the latest `develop` into the feature branch (`git fetch origin && git merge origin/develop`) per `docs/GIT-WORKFLOW.md` §2-3, and resolve any conflicts locally first.
+- Default to `merge`; the squash merge policy makes rebase's linear history moot, so reserve `git rebase origin/develop` for local-only unpushed commits.
+- `--force-with-lease` is allowed only on your own feature branch — never force-push `develop` or `main`.
+
 NEVER:
 - Open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.
 - Directly local-merge a feature branch into develop. Always merge via PR.
@@ -103,7 +115,7 @@ After `gh pr merge` completes, follow the appropriate cleanup for the merge type
 
 **feature → develop PR:**
 Merge flag: `gh pr merge --squash --delete-branch` (squash is the default per harness merge policy). Use `--merge` only when commit-level history must be preserved.
-If this repository has `docs/GIT-WORKFLOW.md`, execute §2-4 in full without waiting for a separate instruction:
+If this repository has `docs/GIT-WORKFLOW.md`, execute §2-5 in full without waiting for a separate instruction:
 1. `git checkout develop && git pull origin develop`
 2. `git branch -d feature/{name}` — delete local branch. If remote was not auto-deleted, also run `git push origin --delete feature/{name}`.
 3. Suggest the next feature branch name based on upcoming work and ask whether to create it now.

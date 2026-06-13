@@ -1,5 +1,7 @@
 # DR-016: Work 파일 Done→Archived 전환 트리거 규칙
 
+Status: Accepted (Amended by DR-038 — archived 인덱스를 live README가 아니라 archive-side mirrored README에 둔다)
+
 Date: 2026-05-18
 Status: Accepted
 
@@ -53,10 +55,14 @@ Done과 Archived를 **명시적으로 분리**하고, 각 상태의 의미와 Ar
 Archive 이동 절차:
 1. `docs/archive/docs/works/{category}/` 디렉토리 확인 (`mkdir -p`)
 2. `git mv docs/works/{category}/{ID}-{topic}.md docs/archive/docs/works/{category}/`
-3. `docs/works/{category}/README.md`: Done → Archived 테이블로 행 이동 (또는 archive 경로 링크로 대체)
+3. live `docs/works/{category}/README.md`에서 Done 행을 제거하고, **archive-side `docs/archive/docs/works/{category}/README.md`의 Archived 테이블에 추가**한다 (DR-038). archive-side README가 없으면 이때 생성한다.
 4. `status: Archived` 기입 (archive 위치의 파일)
 
-### docs/works/{category}/README.md 테이블 구조
+### README 인덱스 구조 (DR-038 amended)
+
+archived 인덱스는 hot-path live README에 누적하지 않고 archive-side mirrored README에 둔다.
+
+live `docs/works/{category}/README.md` — 현행만:
 
 ```markdown
 ## Active
@@ -64,11 +70,19 @@ Archive 이동 절차:
 | ID | Status | Scope |
 | -- | ------ | ----- |
 
-## Done (archive 대기)
+## Done (Archive Pending)
 
 | ID | actual_end | Scope |
 | -- | ---------- | ----- |
 
+## Archived
+
+완전 종결 Work는 archive-side 인덱스 참조: `docs/archive/docs/works/{category}/README.md`
+```
+
+archive-side `docs/archive/docs/works/{category}/README.md` — Archived 인덱스:
+
+```markdown
 ## Archived
 
 | ID | actual_end | Archive 경로 |
@@ -99,7 +113,7 @@ Done과 Archived를 분리하면 두 상태를 구분해 처리할 수 있고,
 
 - `done.md` item 11을 Done 즉시 처리 항목과 Archive 트리거 항목으로 분리한다.
 - `docs/HARNESS-PROTOCOL.md` Work File Rules에 Done→Archived 트리거 추가한다.
-- `docs/works/{category}/README.md` 템플릿에 Active / Done / Archived 3개 테이블 구조를 반영한다.
+- live `docs/works/{category}/README.md`는 Active / Done (Archive Pending) 테이블 + archive-side pointer를 둔다. Archived 인덱스는 archive-side README가 보유한다 (DR-038 amend; 최초 결정의 3-table live 구조를 대체).
 - `/resume`, `/start` 명령에 Done 항목 발견 시 archive 제안 안내를 추가한다 (별도 HRN으로 추적).
 - 갱신은 별도 HRN 항목으로 추적한다.
 

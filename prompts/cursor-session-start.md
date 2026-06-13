@@ -16,13 +16,13 @@ Cursor는 `.cursor/rules/*.mdc`를 함께 적용하되, 전역 행동 원칙은 
 
 작업 선택 기준:
 
-- Product track 또는 Phase 준비 작업: `docs/backlog/PHASE{n}.md`
+- Product track 작업: `docs/backlog/PRODUCT.md`
 - Harness, command/rule, workflow hardening: `docs/backlog/HARNESS.md`
 - 큰 작업 Work 파일: `docs/works/{category}/{ID}-{topic}.md` (spec: DR-013)
 
-`docs/STATUS.md` Next Actions가 scaffold bootstrap/onboarding을 명시하면 제품 목표와 Phase 범위를 먼저 정리한다.
+`docs/STATUS.md` Next Actions가 scaffold bootstrap/onboarding을 명시하면 제품 목표와 초기 범위를 먼저 정리한다.
 `docs/PLAN-SUMMARY.md` Implementation Baseline이 비어 있으면 feature 후보 대신 Project Initialization을 첫 후보로 제안하고,
-baseline이 완료된 뒤에 그 결과를 `docs/backlog/PHASE1.md`의 Product track 후보로 등록한다.
+baseline이 완료된 뒤에 그 결과를 `docs/backlog/PRODUCT.md`의 Product track 후보로 등록한다.
 AI workflow 자체의 개선 항목과 example pack 정비 항목은 `docs/backlog/HARNESS.md`로 분리한다.
 
 ---
@@ -75,11 +75,11 @@ Active Work의 [Work ID 또는 작업명]을 진행하려고 해.
 CLAUDE.md, docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 읽어줘.
 작업 성격에 따라 product backlog 또는 harness backlog를 선택해 다음 후보를 검토해줘.
 
-- Product track 또는 Phase 준비 작업: docs/backlog/PHASE{n}.md
+- Product track 작업: docs/backlog/PRODUCT.md
 - harness, command/rule, workflow hardening: docs/backlog/HARNESS.md
 
 docs/STATUS.md Next Actions가 scaffold bootstrap/onboarding을 명시하면 먼저 그 흐름을 따라줘.
-Product backlog가 아직 비어 있으면 제품 목표, 사용자, Phase 1 범위를 기준으로 초기 작업 후보를 먼저 제안해줘 (backlog 후보는 Work ID 없이 제목/slug로 관리하고, Work ID는 /work-plan 착수 승인 시 확정됨).
+Product backlog가 아직 비어 있으면 제품 목표, 사용자, 초기 product 범위를 기준으로 초기 작업 후보를 먼저 제안해줘 (backlog 후보는 Work ID 없이 제목/slug로 관리하고, Work ID는 /work-plan 착수 승인 시 확정됨).
 단, `docs/PLAN-SUMMARY.md` Implementation Baseline이 비어 있으면 feature 후보 대신 Project Initialization을 첫 후보로 제안해줘.
 example pack이나 role/rule/prompt 정비가 필요하면 Harness 후보로 분리해줘.
 

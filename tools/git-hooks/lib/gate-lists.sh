@@ -61,6 +61,15 @@ awh_is_finalization_file() {
     awh_project_glob_match "$1" finalization
 }
 
+awh_is_branch_isolation_tracking_path() {
+    case "$1" in
+        docs/STATUS.md|docs/backlog/*|docs/works/*)
+            return 0
+            ;;
+    esac
+    awh_project_glob_match "$1" tracking-state
+}
+
 awh_is_branch_isolation_protected_path() {
     case "$1" in
         AGENTS.md|CLAUDE.md|docs/STATUS.md|\
@@ -73,5 +82,6 @@ awh_is_branch_isolation_protected_path() {
             return 0
             ;;
     esac
-    awh_project_glob_match "$1" protected
+    awh_project_glob_match "$1" protected || \
+    awh_project_glob_match "$1" tracking-state
 }

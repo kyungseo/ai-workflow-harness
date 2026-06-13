@@ -16,9 +16,9 @@ Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 
 
 docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾아 계획을 세워줘.
 
-- `FEAT-*`, `PATCH-*`, `HOTFIX-*`: docs/backlog/PHASE{n}.md 또는 docs/backlog/HARNESS.md (track에 따라 — product track이면 PHASE{n}.md, harness track이면 HARNESS.md)
+- `FEAT-*`, `PATCH-*`, `HOTFIX-*`: docs/backlog/PRODUCT.md 또는 docs/backlog/HARNESS.md (track에 따라 — product track이면 PRODUCT.md, harness track이면 HARNESS.md)
 - `CHORE-*`: docs/backlog/HARNESS.md (항상)
-- `P{n}-*`, `PRE-*` (historical): docs/backlog/PHASE{n}.md
+- `P{n}-*`, `PRE-*` (historical): docs/backlog/PRODUCT.md
 - `HRF-*`, `HRN-*`, `DOC-*` (historical): docs/backlog/HARNESS.md
 - ID 없이 title/slug로 호출한 경우: 두 backlog에서 제목으로 검색한다.
 - 항목 위치가 불명확하면 두 backlog에서 검색하고, 관련 없는 상세는 읽지 마.
@@ -32,11 +32,11 @@ docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾
 - **Work 파일이 없으면**: `docs/HARNESS-PROTOCOL.md` Work File Decomposition과 Quick Mode 기준을 확인해줘. Product track surface의 L1 Quick Mode에 해당하면 Work 파일 없이 진행하고, harness/workflow surface 변경 또는 Quick Mode 비대상이면 Work 파일 생성을 기본값으로 검토해 계획에 포함할지 판단해줘 (승인 후 생성).
 
 Work 파일 생성 시 함께 수행할 것:
-1. `docs/works/{category}/README.md`가 없으면 먼저 생성 (Active/Done/Archived 테이블 포함)
+1. `docs/works/{category}/README.md`가 없으면 먼저 생성 (live README는 Active / Done (Archive Pending) 테이블 + archive-side pointer; Archived 인덱스는 archive-side mirrored README가 보유)
 2. 착수 전 분해나 메모는 backlog 항목 또는 계획 제안에 남기고, Work 파일은 생성하지 않음
 2a. **Work ID 확정**: Work 파일이 없고 확정된 Work ID가 없으면, TYPE을 판단해 `<TYPE>-<YYYYMMDD>-<NNN>` 형식의 Work ID를 제안하고 사용자 확인을 받는다. NNN은 현재 branch `docs/works/` 파일 기준으로 제안한다. 확정 후 backlog row가 있으면 ID로 갱신한다. (형식 상세: `docs/HARNESS-NAMING-RULES.md`)
 3. 사용자가 해당 Work 착수를 승인하면 Work 파일 frontmatter를 `status: Active`로 두고 README Active 테이블에 행 추가
-3a. **Backlog candidate 착수 연결:** backlog에서 해당 항목이 ID 없는 Candidate 상태라면, Work 파일 Discovery에 "backlog의 [항목명] candidate 착수"로 기록한다. backlog row에는 Work ID를 기입하지 않는다 — feature branch 병렬 NNN 충돌 방지(CHORE-20260527-001 참조). backlog row 정리(제거 또는 Active 표시)는 develop merge 후 tracking-only commit으로 처리한다.
+3a. **Backlog candidate 착수 연결:** backlog에서 해당 항목이 ID 없는 Candidate 상태라면, Work 파일 Discovery에 "backlog의 [항목명] candidate 착수"로 기록한다. backlog row에는 Work ID를 기입하지 않는다 — feature branch 병렬 NNN 충돌 방지(CHORE-20260527-001 참조). backlog row의 Active 표시는 develop merge 후 tracking-only commit으로 처리한다. 완료된 backlog row 제거는 `/work-close`의 Work Done 처리 흐름에서 수행한다.
 3b. **유사·중복 항목 경량 확인:** backlog에서 착수 항목과 제목·topic이 유사한 다른 Candidate 항목이 있으면 통폐합 가능성을 1줄로 안내한다. grep 기반 안내로 충분하며 자동 감지는 불필요하다.
 4. State update: 대상 Work ID를 명시하고 STATUS.md Active Work에 포인터 추가 제안
 
@@ -112,7 +112,7 @@ Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROT
 
 docs/STATUS.md 변경은 즉시 수행하지 말고 Approval Matrix state rules에 맞게 먼저 제안해줘.
 Active Work pointer 추가/제거는 대상 Work ID를 명시한 1줄 제안으로 충분하다.
-Phase completion criteria, Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 보고하고 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 포함해야 한다.
+Current phase/focus, Recent Decisions 변경은 `STATUS Update Proposal`로 보고하고 변경 섹션, 변경 이유, 변경 후 상태, 되돌리기 비용을 포함해야 한다.
 사용자가 명시적으로 승인한 뒤에만 STATUS.md를 수정해줘.
 
 계획에 도구·아키텍처·정책 결정이 포함된 경우, 승인 후 구현 시작 전에 DR-worthy 결정 목록을 제시하고 기록 여부를 물어봐.

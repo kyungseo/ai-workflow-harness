@@ -46,26 +46,45 @@ development workflow다.
 | `docs/HARNESS-PROTOCOL.md` | 상세 protocol reference |
 | `docs/HARNESS-QUICK-REFERENCE.md` | session 중 빠르게 확인하는 operational summary |
 | `docs/STATUS.md` | 현재 project dashboard |
+| `docs/PLAN.md` | 장기 project plan, L3 decisions 근거 |
 | `docs/PLAN-SUMMARY.md` | 세션 context용 architecture / project summary |
 | `docs/works/**` | 작업 단위 SSoT |
 | `docs/backlog/**` | 다음 작업 후보와 deferred work |
 | `docs/decisions/**` | accepted decision 기록 |
-| `.claude/commands/**` | Claude Code command definition |
+| `skills/workflow/**` | workflow 절차 canonical SSoT |
+| `.claude/commands/**`, `.agents/skills/**` | Claude Code / Codex workflow adapter (canonical mirror) |
 | `.claude/rules/**`, `.cursor/rules/**` | tool-specific rule mirror |
-| `prompts/**` | command를 직접 사용할 수 없는 도구를 위한 prompt template |
+| `prompts/**` | command/adapter를 직접 사용할 수 없는 도구를 위한 session-start fallback prompt |
 | `scripts/create-harness.sh` | 새 repository 또는 기존 repository에 harness 구조를 적용하는 scaffold |
+
+### 3-a. Externalization Failure Modes Framing
+
+이 harness의 core surface는 accepted Phase 2 방향을 현재 live 구조로 유지한 결과물이며,
+요약하면 아래 3대 실패모드를 막는 쪽으로 배치되어 있다. 이 절은 새 L3 결정을 추가하는
+자리가 아니라, `AWH-003 (Phase 2)`와 `§7-a Roadmap Lifecycle`에 이미 반영된 방향을
+현재 구조 관점에서 다시 읽기 위한 explanatory framing이다.
+
+| Failure mode | 증상 | 현재 surface에서의 주 보완 |
+| --- | --- | --- |
+| ① 라우팅 누락 | framework-owned 자산과 project-state 자산의 경계가 흐려지고, 어떤 정보가 어디에 남아야 하는지 불명확해진다 | surface별 역할 분리, source/framework vs target/project-state 경계, workflow canonical 경로, `T5` PLAN 영향 판단 |
+| ② 비대화 | 같은 절차·맥락·과거 상세가 여러 surface에 증식해 context weight가 커진다 | canonical SSoT 1벌, thin/hybrid adapter, archive drain, current+next horizon 유지 |
+| ③ 선언-실행 괴리 | 문서에 적힌 원칙이 실제 workflow에서 검증·차단·보고로 이어지지 않는다 | validation defaults, strictness/enforcement 구분, hard-stop·warning·report-only gate, test-backed checks |
+
+`AWH-003 (Phase 2)`의 output은 위 세 실패모드를 각각 줄이는 방향으로 읽어야 한다.
+따라서 이후 W3 구조 작업도 "새 surface를 더 추가하는가"보다 "어느 실패모드를 실제로
+줄이는가"를 먼저 설명해야 한다.
 
 ## 4. Current Milestone
 
 현재 milestone은 `AWH-004 — Maintenance & Adoption`이다.
 
 Phase 2(Externalization refactor)는 DR-021~025 적용과 27개 Work 완료로 종료했고,
-그 산출물을 `ai-workflow-v1.1.0`으로 릴리즈한다. 이후 초점은 harness를 실제로
+그 산출물을 `ai-workflow-v1.1.0`으로 릴리즈했다. 이후 초점은 harness를 실제로
 채택하는 repository 지원과 반복 운영 부채 축소다.
 
 Milestone 목표:
 
-- `ai-workflow-v1.1.0` 릴리즈 — Phase 2 산출물을 공개 버전으로 확정(breaking은 릴리즈 노트 명시).
+- `ai-workflow-v1.2.0` 릴리즈 — Phase 2 이후 adoption/validation 산출물을 공개 버전으로 확정(breaking은 릴리즈 노트 명시).
 - 실 adopter(`ai-deck-compiler`) upgrade/migration 경로를 제공한다.
 - onboarding/manual 정합을 현행화한다(README overhaul 이후 path 점검).
 - 반복 운영에서 발생하는 운영 부채를 점진적으로 줄인다.
@@ -79,13 +98,12 @@ Milestone 목표:
 - behavior principles, protocol, quick reference, manual
 - `PLAN.md`(장기 project plan, L3 decisions 근거), `PLAN-SUMMARY.md`(Context Routing용 아키텍처 요약)
 - Work / backlog / decision / retrospective 체계
-- generic prompt와 generic scaffold
+- session-start fallback prompt와 generic scaffold
 - tool-specific rule mirror
 
 ### Review Before Keeping
 
 - Optional Spring Boot example profile support
-- Java/Spring-specific prompt bundle as optional example pack
 - Java/Spring-specific Claude/Cursor rules as optional profile surface
 - historical snapshots and presentation drafts
 - product-template 시절의 troubleshooting record
@@ -121,7 +139,7 @@ Milestone 목표:
 | AWH-001 | 완료 | Public-ready migration | 현재 tree 정리, public docs, release readiness |
 | AWH-002 | 완료 | Workflow hardening | 문서 정합성, scaffold 검증, tool surface alignment, adoption readiness |
 | AWH-003 (Phase 2) | 완료 | Externalization refactor | source/target boundary·canonical+adapter·gate taxonomy·PLAN lifecycle 적용. 방향: DR-021~025. 실행 Work: `CHORE-20260604-001`(planning)~`CHORE-20260608-003`. 산출물은 `ai-workflow-v1.1.0`으로 릴리즈 |
-| AWH-004 | 진행 | Maintenance & Adoption | 1.1.0 릴리즈, 실 adopter upgrade/migration, onboarding/manual 현행화, 운영 부채 축소. 후보는 `docs/backlog/HARNESS.md` |
+| AWH-004 | 진행 | Maintenance & Adoption | 1.2.0 릴리즈, 실 adopter upgrade/migration, onboarding/manual 현행화, 운영 부채 축소. 후보는 `docs/backlog/HARNESS.md` |
 
 horizon이 닫히거나 재정의되면 아래 Lifecycle 규칙(§7-a)에 따라 처리한다.
 
@@ -150,4 +168,4 @@ PLAN은 **현재 + 다음 horizon만** 유지한다. STATUS Recent Decisions의 
 
 | ID | Question | Status |
 | --- | --- | --- |
-| AWH-OQ-001 | historical product docs를 어느 범위까지 남길 것인가? | Deferred — archive policy가 실제로 필요해지는 시점에 신규 Work로 재등록. `docs/backlog/HARNESS.md` Deferred Ideas 참조 |
+| AWH-OQ-001 | historical product docs를 어느 범위까지 남길 것인가? | 흡수됨(2026-06-10, CHORE-20260610-010) — `docs/backlog/HARNESS.md` 신규 항목 "Archive 누적 관리 정책"(P2)으로 통합. 범위를 work + decision + 기타 archived artifact 누적으로 확장 |

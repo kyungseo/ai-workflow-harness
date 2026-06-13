@@ -25,7 +25,7 @@ policy_type: source-gitflow
 | Tool surface | `.claude/commands/*.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.agents/skills/**`, `prompts/**` |
 | Enforcement | `tools/git-hooks/**` |
 
-> 이 표는 `tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path`와 동일한 목록을 가리킨다. 이 repo 고유 경로를 추가하려면 두 곳을 함께 갱신한다.
+> 이 표는 `tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path` 기본 목록을 가리킨다. 이 repo 고유 경로는 framework-owned `gate-lists.sh`를 편집하지 말고(upgrade 시 overwrite) add-only `.harness/gate-config`의 `[protected]` 또는 `[tracking-state]`에 추가한다. `[tracking-state]`는 project-specific 경로를 `T1 tracking-state-only` 예외로 분류할 때만 사용한다.
 
 ### Allowed Exceptions
 
@@ -87,6 +87,20 @@ git branch --list main develop
 - 기존 default branch가 `main`이 아니면 rename 여부를 별도 decision으로 다룬다.
 - hook 설치는 git repository가 확인된 뒤 실행한다: `sh tools/git-hooks/install.sh`.
 
+### Clone from existing remote
+
+이미 remote repository가 있고 두 번째 contributor로 참여하는 경우에 사용하는 경로다.
+
+```bash
+git clone <git-url>
+cd <repo-name>
+sh tools/git-hooks/install.sh
+```
+
+- `tools/git-hooks/install.sh`는 pre-commit·commit-msg hook을 `.git/hooks/`에 설치한다.
+- 설치하지 않으면 commit message 형식 강제가 동작하지 않는다.
+- branch/release 정책과 PR 절차는 §1·§2를 확인한다.
+
 ### GitHub Ruleset
 
 GitHub ruleset 적용은 repo 존재, branch 존재, `gh` auth, admin 권한에 의존한다.
@@ -116,7 +130,7 @@ main
 | 패턴 | 용도 |
 |---|---|
 | `feature/{work-id}-{slug}` | 신규 Work (FEAT/PATCH/CHORE). Work ID + slug 권장 (예: `feature/chore-20260527-001-id-tracker-rule`) |
-| `feature/p{n}-{topic}` | Phase{n} product 작업 단축 패턴 (예: `feature/p2-auth`) |
+| `feature/prod-{topic}` | product 작업 단축 패턴 (예: `feature/prod-auth`) |
 | `feature/release-prep-{YYYYMMDD}` | develop→main PR 전 release-prep 보정 (예: `feature/release-prep-20260528`) |
 | `hotfix/{topic}` | main 긴급 수정 — Work ID `HOTFIX-YYYYMMDD-NNN` (develop 우회, main → PR → main) |
 
@@ -148,7 +162,40 @@ git commit -m "..."
 
 커밋 메시지 형식은 [Commit Message Format](#5-commit-message-format) 참조.
 
-### 2-3. PR Creation (feature → develop)
+### 2-3. Sync With Develop
+
+feature 작업 중 다른 작업이 `develop`에 먼저 병합될 수 있다. **commit·push·PR 직전에 최신 `develop`을 feature 브랜치로 끌어와 미리 반영하는 것을 기본 습관으로 둔다.** 사소해 보이지만 누락하기 쉽고, 누락하면 PR 단계에서 충돌·stale 검증으로 되돌아온다.
+
+```bash
+git fetch origin
+git checkout feature/{name}
+git merge origin/develop        # 최신 develop을 feature에 반영
+```
+
+**언제 sync하나:**
+
+- PR을 열기 직전 (특히 오래 작업한 브랜치).
+- `develop`이 내 변경과 겹치는 파일을 건드린 정황이 보일 때.
+- 최신 `develop` 기준으로 로컬 검증이나 CI를 돌리고 싶을 때.
+
+**merge vs rebase:**
+
+- **기본은 `git merge origin/develop`이다.** 이 repo는 feature→develop을 **squash merge**(§2-4, DR-017 Amended)하므로 feature 내부 history는 단일 커밋으로 합쳐진다. rebase로 linear history를 만들어도 그 이점이 결과에 남지 않으므로, 이미 push된 브랜치를 rebase해 force-push하는 비용을 치를 이유가 없다.
+- rebase는 **아직 push하지 않은 로컬 전용 커밋**을 정리할 때만 선택한다: `git rebase origin/develop`.
+
+**충돌 발생 시:**
+
+- 충돌은 GitHub PR 화면이 아니라 **로컬 sync 단계에서 먼저 해소**한다. `git status`로 충돌 파일 확인 → 수정 → `git add` → `git merge --continue` (rebase면 `git rebase --continue`).
+- PR 생성 후 base가 다시 앞서 나가 충돌이 나면 같은 방식으로 feature에서 재-sync한 뒤 push한다.
+
+**force-push 정책:**
+
+- `--force-with-lease`는 **본인이 단독 작업하는 feature 브랜치에 한해서만** 허용한다 (`--force`는 사용하지 않는다).
+- `develop`·`main`에는 어떤 경우에도 force-push하지 않는다.
+
+> 병렬 feature/agent 간 충돌(Work ID·STATUS·index 동시 변경) 통제가 필요하면 project-specific 병렬 작업 정책을 따른다.
+
+### 2-4. PR Creation (feature → develop)
 
 > **feature PR의 base는 항상 `develop`이다. `main`으로 직접 PR하지 않는다.**
 > **feature 브랜치를 develop에 직접 local merge하지 않는다. 반드시 PR을 통해 머지한다.**
@@ -167,7 +214,7 @@ gh pr create --base develop --title "..." --body "..."
 **검증 책임:**
 - PR 전에는 변경 범위에 맞는 로컬 검증 결과(`git diff --check` 등)를 PR 본문이나 세션 요약에 남긴다.
 
-### 2-4. Post-PR Cleanup
+### 2-5. Post-PR Cleanup
 
 feature → develop PR merge 후, 방금 merge된 최신 develop을 로컬에 반영한다.
 
@@ -191,12 +238,34 @@ git push origin --delete feature/{name}
 
 > 이 release cycle과 Public Clean Baseline Gate는 이 프로젝트의 기본 정책이다.
 > project-specific 요구사항에 따라 gate 항목을 조정할 수 있다.
+> 버전·릴리즈 표식(VERSION·tag·릴리즈 노트) 정책은 프로젝트가 자체 수립한다.
 
-`main`은 일반 통합 브랜치가 아니라 **public release snapshot**이다.
+`main`은 일반 통합 브랜치가 아니라 **release snapshot**이다.
 feature를 develop에 병합했다고 곧바로 main PR을 열지 않는다.
 의미 있는 패치(하나 또는 여러 feature 묶음)가 완료되어 release 준비가 됐을 때만 develop → main PR을 만든다.
 
 **머지 방식:** Regular Merge (Merge commit) 원칙 — develop 브랜치의 커밋 히스토리와 feature 단위 커밋을 main에 보존한다. Fast-Forward가 가능하면 허용한다. (DR-017 Amended)
+
+### 3-0. Release Prep Branch
+
+develop → main PR을 열기 전에 짧은 release-prep branch에서 release gate를 먼저 실측한다.
+이 branch는 새 기능을 추가하는 곳이 아니라, release-block 보정과 evidence 수집을 위한 작업 단위다.
+
+```bash
+git checkout develop
+git pull origin develop
+git checkout -b feature/release-prep-{YYYYMMDD}
+```
+
+**Release-prep에서 수행할 일:**
+
+1. project-specific version/tag/release-note 정책이 있으면 현재 `main`, `develop`, 최신 release tag, version file의 관계를 확인한다.
+2. 이미 존재하는 release tag와 같은 version으로 새 release를 만들 수 없으면 project-specific semver 기준에 따라 version을 목표 값으로 올린다.
+3. `docs/STATUS.md`와 `docs/PLAN.md`의 release target 문구가 목표 release와 맞는지 확인하고, 필요한 최소 보정만 반영한다.
+4. §3-1 Public Clean Baseline Gate를 실제 명령으로 확인한다.
+5. project-specific release validation을 수행한다. 최소 evidence는 `git diff --check`, scaffold/onboarding 경로 확인, 필요한 build/test 명령을 포함한다.
+6. 발견된 release-block만 수정한다. 예: archive Work의 `status` 불일치, stale release target, version/tag mismatch, onboarding 경로 stale.
+7. release-prep 변경은 feature → develop PR로 먼저 병합한다. 그 다음에 develop → main release PR을 연다.
 
 ### 3-1. Public Clean Baseline Gate
 
@@ -207,13 +276,12 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 | --- | --- | --- |
 | Working tree | develop working tree가 clean | `git status --short --branch` |
 | STATUS Active Work | `docs/STATUS.md` Active Work 비어 있음 | file inspection |
-| STATUS Blockers/OQ | Open Blocker/OQ 없음. 남길 경우 public 사용자에게 보여도 되는 이유 기록 | file inspection |
-| STATUS Next Actions | 비어 있거나 public 사용자가 따라도 되는 항목만 존재 | file inspection |
+| STATUS Blockers/OQ | Open Blocker/OQ 없음. 남길 경우 외부/이해관계자에게 노출돼도 되는 이유 기록 | file inspection |
+| STATUS Next Actions | 비어 있거나 외부에 노출돼도 되는 항목만 존재 | file inspection |
 | Work lifecycle | `docs/works/*/*.md`에 `status: Done` archive pending 없음 | `rg -n "^status: Done" docs/works` |
 | Work active leakage | release 대상에 internal Active Work가 남지 않음 | `rg -n "^status: Active" docs/works` |
 | Archive state | `docs/archive/docs/works/**` 아래 Work는 모두 `status: Archived` | `rg -n "^status:" docs/archive/docs/works` |
-| `/session-start` output | public clone 첫 `/session-start`가 clean idle 또는 의도한 상태로 시뮬레이션됨 | STATUS 기준 문서 시뮬레이션 |
-| Adoption path | README → onboarding 흐름 정합 | link/path inspection |
+| `/session-start` output | 첫 `/session-start`가 clean idle 또는 의도한 상태로 시뮬레이션됨 | STATUS 기준 문서 시뮬레이션 |
 | Docs cascade | release gate 관련 문서 변경 시 canonical/tool/user-facing cascade 정렬 확인 | targeted cascade check |
 | Validation | `git diff --check` 통과 | `git diff --check` |
 
@@ -230,7 +298,7 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 
 - Active Work가 남아 있는 상태
 - Done archive pending Work가 남아 있는 상태
-- Open Blocker/OQ가 public 사용자에게 혼란을 줄 수 있는 상태
+- Open Blocker/OQ가 외부/이해관계자에게 혼란을 줄 수 있는 상태
 - README 또는 onboarding 경로가 stale한 상태
 - feature branch에서 직접 main으로 PR을 여는 경우
 
@@ -239,6 +307,8 @@ develop → main PR 생성 전 아래 항목을 모두 확인한다.
 ```bash
 gh pr create --base main --head develop --title "release: ..."
 ```
+
+release PR body 또는 release note 초안은 project-specific release note 정책을 따른다. 정책이 없으면 이번 release의 impact, validation evidence, breaking/change notes를 PR body에 명시한다.
 
 ### 3-4. Post-Merge Develop Sync
 
@@ -254,6 +324,33 @@ git merge origin/main       # develop을 main과 동기화
 git push origin develop
 git status                  # "up to date with 'origin/develop'" 확인
 ```
+
+### 3-5. Hotfix Cycle
+
+`main`의 긴급 결함은 `develop`을 거치지 않고 `main` 기준 `hotfix/*` 브랜치에서 수정한다 (§1 Branch Naming).
+
+```bash
+git checkout main
+git pull origin main
+git checkout -b hotfix/{topic}
+# 수정 + commit
+gh pr create --base main --head hotfix/{topic} --title "fix: ..."
+```
+
+- hotfix PR의 base는 `main`이다. feature와 달리 `develop`을 경유하지 않는다.
+- Work ID는 `HOTFIX-YYYYMMDD-NNN`을 사용한다.
+
+**main 병합 후 develop 역병합 (필수):** hotfix가 `main`에만 반영되면 다음 release에서 `develop`이 `main`을 덮어써 수정이 유실된다. main 병합 직후 반드시 `develop`으로 역병합한다.
+
+```bash
+git checkout main
+git pull origin main
+git checkout develop
+git merge origin/main        # hotfix를 develop에 반영
+git push origin develop
+```
+
+> 이는 §3-4 Post-Merge Develop Sync와 동일한 main→develop 동기화다. release든 hotfix든 `main`이 앞서면 `develop`을 즉시 맞춘다.
 
 ## 4. CI Trigger
 
@@ -320,7 +417,7 @@ sh tools/git-hooks/install.sh
 
 ### 이 repo에 맞게 조정
 
-`tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path`와 `awh_is_finalization_file` 목록은 harness 기본값에서 시작한다. 이 repo 고유의 민감 경로(예: 배포 설정, secret 경로)는 해당 함수의 `case` 패턴에 추가한다. hook 로직 자체를 수정할 필요 없이 목록만 확장하면 된다.
+`tools/git-hooks/lib/gate-lists.sh`의 `awh_is_branch_isolation_protected_path`와 `awh_is_finalization_file` 목록은 harness 기본값이며 framework-owned다(upgrade 시 overwrite). 이 repo 고유의 민감 경로(예: 배포 설정, secret 경로)는 `gate-lists.sh`를 편집하지 말고 add-only `.harness/gate-config`의 `[protected]`/`[tracking-state]`/`[finalization]`에 추가한다 — upgrade-safe하며, hook이 기본 목록과 `.harness/gate-config`를 합쳐 읽는다. `[tracking-state]`는 project-specific 경로를 `T1 tracking-state-only` 예외로 분류할 때만 사용한다.
 
 ## 7. Related Documents
 

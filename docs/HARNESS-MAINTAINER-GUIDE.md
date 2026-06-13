@@ -28,6 +28,20 @@ pre-commit / commit-msg hook 설치는 `tools/git-hooks/`가 있는 경우에만
 4. Approval Matrix에 따라 승인 후 수정한다.
 5. 검증 후 Work checkpoint/discovery와 STATUS 필요 여부를 확인한다.
 
+## 2-a. Related Maintainer References
+
+이 문서는 maintainer용 개요와 운영 기준을 설명하는 메인 진입 문서다. 실제 작업에 들어갈 때는 아래 satellite 문서를 같이 봐야 한다.
+
+| 문서 | 언제 함께 읽나 | 역할 |
+| --- | --- | --- |
+| `docs/maintainer/HARNESS-TEST-TAXONOMY.md` | 검증 depth, Tier, `temp/` 정책이 헷갈릴 때 | 검증 구조와 용어의 기준 |
+| `docs/maintainer/SOURCE-REPO-OPERATIONS.md` | source repo 변경 유형별 실행 경로를 고를 때 | 변경 lifecycle별 runbook |
+| `docs/maintainer/VERIFICATION-COMMANDS.md` | 실제 검증 명령이나 release sweep이 필요할 때 | Layer별 검증 catalog |
+| `docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md` | product starter pack / import loop / source-product 경계를 볼 때 | planning pack 기준 문서 |
+| `docs/maintainer/VERSIONING.md` | 버전 bump, tag, release note 판단이 필요할 때 | source repo 버전 정책 |
+
+이 문서 하나만으로 세부 절차를 끝내려 하지 말고, 위 표에서 지금 작업과 직접 맞닿는 문서를 함께 읽는 것이 기본이다.
+
 ## 3. Conventions
 
 ### Language Policy
@@ -83,17 +97,8 @@ related_troubleshooting: []
 
 ### Prompt Convention
 
-Task prompt frontmatter에 포함해야 하는 key:
-
-- `id`
-- `purpose`
-- `portability`
-- `difficulty`
-- `inputs`
-- `output_contract`
-
-Generic prompt는 특정 framework를 가정하지 않는다. Stack-specific prompt는
-`prompts/README.md`에서 optional/example content로 명시해야 한다.
+Live `prompts/` surface는 session-start fallback prompt와 README로 제한한다.
+Generic task prompt나 stack-specific prompt example을 다시 추가하려면 먼저 별도 Work에서 example pack 정책과 scaffold copy boundary를 정한다.
 
 ### Shell Script Convention
 
@@ -131,6 +136,7 @@ Generic prompt는 특정 framework를 가정하지 않는다. Stack-specific pro
 | Generic scaffold behavior | `./scripts/create-harness.sh --dry-run --profile generic sample /tmp/sample` |
 | Source-gitflow scaffold behavior | `./scripts/create-harness.sh --dry-run --workflow source-gitflow sample /tmp/sample` |
 | Tool-surface alignment | targeted `rg` across canonical, tool-specific, user-facing, scaffold surfaces |
+| Validation spine (regression) | `bash scripts/tests/run-harness-checks.sh --all` — syntax·scaffold invariant·DR closure·default template/surface mirror parity·onboarding 전수. 기준·Tier는 `docs/maintainer/HARNESS-TEST-TAXONOMY.md`, 명령 카탈로그는 `docs/maintainer/VERIFICATION-COMMANDS.md` (둘 다 source-only). PR merge 전·마일스톤 완료 시 권장 |
 | Public readiness | stale identity audit and secret/private-info scan |
 
 ## 6. Scaffold Development
@@ -186,11 +192,11 @@ rule이나 workflow 동작이 변경되면 다음 cascade를 확인한다:
 Historical 파일은 편집하지 않고 context 확인 용도로만 참조한다.
 변경된 동작의 live mirror에 해당하는 surface만 업데이트한다. 모든 surface를 일괄 수정하지 않는다.
 
-## 8. Prompt Library
+## 8. Prompt Fallback Surface
 
-Generic prompt는 core이며, stack-specific prompt는 optional example pack이다.
+Live prompt는 session-start fallback surface다.
 
-prompt를 추가하거나, frontmatter field를 변경하거나, generic과 optional section 간에 prompt를 이동할 때는 `prompts/README.md`를 업데이트한다.
+`prompts/*session-start.md`를 변경하면 `prompts/README.md`, session-start canonical procedure, tool-specific command/adapter, scaffold output을 함께 확인한다.
 
 ## 9. Public Release Checks
 
@@ -202,6 +208,8 @@ repository를 public으로 전환하기 전에:
 4. generic scaffold dry-run을 검증한다.
 5. review가 완료될 때까지 GitHub repository visibility가 private 상태임을 확인한다.
 6. GitHub repository ruleset, 보안 설정, 기능 옵션을 `docs/decisions/DR-020-github-repo-settings.md` 기준으로 구성한다.
+
+> **Version release(반복) vs public 전환(1회):** 위 6단계는 repo를 처음 public으로 여는 1회성 점검이다. 이후 버전 bump release(develop → main)마다는 `docs/GIT-WORKFLOW.md` §3-1 Public Clean Baseline Gate(state cleanliness + `Validation spine`·`Surface sweep` evidence row)와 `docs/maintainer/VERIFICATION-COMMANDS.md` "Release Full Sweep"(출하 표면 Layer 전수)을 함께 따른다. tag·VERSION 정합은 `docs/maintainer/VERSIONING.md`.
 
 ## 10. Product Repo Hook Policy
 

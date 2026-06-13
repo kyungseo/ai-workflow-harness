@@ -16,7 +16,7 @@ Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 
 
 docs/STATUS.md를 확인한 뒤, 작업 성격에 맞는 backlog를 선택해 우선순위가 높은 후보 작업을 검토해줘.
 
-- Product track 작업: docs/backlog/PHASE{n}.md
+- Product track 작업: docs/backlog/PRODUCT.md
 - Harness / workflow 작업: docs/backlog/HARNESS.md
 - Scaffold 직후 부팅 작업: docs/STATUS.md Next Actions가 bootstrap/onboarding을 명시할 때 docs/BOOTSTRAP.md
 - 성격이 불명확하면 두 backlog의 제목과 우선순위만 비교하고, 불필요한 상세 로드는 하지 마.
@@ -47,7 +47,7 @@ backlog 후보는 Work ID 없이 제목/slug로 관리하고, Work ID는 /work-p
 대상 Work ID를 명시한 Approval Matrix state-change proposal로 먼저 보고해줘.
 Work ID가 아직 없는 backlog 후보라면 제목/slug를 임시 식별자로 사용하고, Work ID는 `/work-plan [title-or-slug]` 착수 시 확정됨을 명시해줘.
 
-Phase completion criteria, Current phase/focus, Recent Decisions 변경이 함께 필요하면
+Current phase/focus, Recent Decisions 변경이 함께 필요하면
 `STATUS Update Proposal`에 아래 항목을 포함해줘.
 
 - 변경 섹션

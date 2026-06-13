@@ -44,7 +44,7 @@ Tool Surfaces
   .cursor/rules/**
   .agents/skills/**
   .codex/hooks.json
-  prompts/**
+  prompts/*-session-start.md
         |
         v
 Scaffold + Adoption
@@ -89,7 +89,9 @@ Scaffold + Adoption
 |------|------|
 | Core로 유지 | entrypoint, behavior/workflow/protocol docs, STATUS/PLAN/PLAN-SUMMARY, Work/backlog/DR structure, tool command/rule mirror, session-start fallback prompt, scaffold |
 | Core로 전환 완료 | HARNESS-ARCHITECTURE, HARNESS-MAINTAINER-GUIDE (구 DEVELOPER-GUIDE + CODING-CONVENTIONS 통합) |
-| 유지 여부 검토 | troubleshooting, presentations, archive, optional Spring Boot example profile, extended task prompt library |
+| Optional/example로 유지 | optional Spring Boot example profile rules/docs |
+| Archive 보존 | former generic task prompt examples, former Spring/profile prompt examples |
+| 유지 여부 검토 | troubleshooting, presentations, archive |
 | 제거 또는 legacy 격리 완료 | Spring Boot runtime code, Gradle build, common/gateway/services/frontend/tests, Docker/K8s/DB infra, generated build output |
 
 ## Validation Defaults

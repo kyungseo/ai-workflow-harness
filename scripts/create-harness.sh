@@ -15,10 +15,9 @@
 #                              Gitflow branch isolation rules.
 #   --with-optional            Include the Optional source pack (DR-021): heavy
 #                              framework docs (HARNESS-ARCHITECTURE,
-#                              HARNESS-MAINTAINER-GUIDE, WORKFLOW-MANUAL),
-#                              extended prompt bundle, and their companion DRs
-#                              (DR-017, DR-020 — reference closure). Default
-#                              output is minimal.
+#                              HARNESS-MAINTAINER-GUIDE, WORKFLOW-MANUAL)
+#                              and their companion DRs (DR-017, DR-020 —
+#                              reference closure). Default output is minimal.
 #   --check <target-dir>       Report-only drift check. Reads the target's
 #                              .harness/manifest.json and compares each tracked
 #                              framework file against the current source
@@ -372,7 +371,7 @@ for dir in \
   "${TARGET_ROOT}/docs/backlog" \
   "${TARGET_ROOT}/docs/decisions" \
   "${TARGET_ROOT}/docs/works" \
-  "${TARGET_ROOT}/docs/works/phase1" \
+  "${TARGET_ROOT}/docs/works/product" \
   "${TARGET_ROOT}/docs/works/harness" \
   "${TARGET_ROOT}/docs/archive" \
   "${TARGET_ROOT}/docs/archive/docs/works" \
@@ -410,12 +409,21 @@ adapt "${TEMPLATE_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md" \
       "${TARGET_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"      "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
 
-# Optional source pack (DR-021): heavy framework docs. Default scaffold excludes
-# them to keep target context minimal; --with-optional opts in.
+# Optional source pack (DR-021): heavy framework docs + product-track workflow
+# (work-doc). Default scaffold excludes them to keep target context minimal;
+# --with-optional opts in.
 if [[ "${WITH_OPTIONAL}" == true ]]; then
   adapt "${TEMPLATE_ROOT}/docs/HARNESS-ARCHITECTURE.md"      "${TARGET_ROOT}/docs/HARNESS-ARCHITECTURE.md"
   adapt "${TEMPLATE_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"  "${TARGET_ROOT}/docs/HARNESS-MAINTAINER-GUIDE.md"
   adapt "${TEMPLATE_ROOT}/docs/WORKFLOW-MANUAL.md"           "${TARGET_ROOT}/docs/WORKFLOW-MANUAL.md"
+  # work-doc: B-class product-track presentation/report workflow (DR-021).
+  adapt "${TEMPLATE_ROOT}/skills/workflow/work-doc.md" \
+        "${TARGET_ROOT}/skills/workflow/work-doc.md"
+  adapt "${TEMPLATE_ROOT}/.claude/commands/work-doc.md" \
+        "${TARGET_ROOT}/.claude/commands/work-doc.md"
+  ensure_dir "${TARGET_ROOT}/.agents/skills/workflow-work-doc"
+  adapt "${TEMPLATE_ROOT}/.agents/skills/workflow-work-doc/SKILL.md" \
+        "${TARGET_ROOT}/.agents/skills/workflow-work-doc/SKILL.md"
 fi
 
 adapt "${TEMPLATE_ROOT}/docs/decisions/DECISION-TEMPLATE.md" \
@@ -430,6 +438,8 @@ adapt "${TEMPLATE_ROOT}/docs/decisions/DR-014-archive-policy.md" \
       "${TARGET_ROOT}/docs/decisions/DR-014-archive-policy.md"
 adapt "${TEMPLATE_ROOT}/docs/decisions/DR-027-troubleshooting-retrospective-spec.md" \
       "${TARGET_ROOT}/docs/decisions/DR-027-troubleshooting-retrospective-spec.md"
+adapt "${TEMPLATE_ROOT}/docs/decisions/DR-029-dr-registration-triage-draft-lifecycle.md" \
+      "${TARGET_ROOT}/docs/decisions/DR-029-dr-registration-triage-draft-lifecycle.md"
 
 # Optional-pack companion DRs (DR-021 reference closure): the Optional source pack
 # docs reference DR-020 (HARNESS-MAINTAINER-GUIDE), which transitively cites DR-017.
@@ -458,7 +468,8 @@ Superseded DR은 \`docs/archive/docs/decisions/\`로 이동한다.
 - \`Accepted (Amended)\` — 확정 후 세부 수정됨. DR 본문에 수정 범위 명시.
 - \`Accepted (일부 Deferred)\` — 일부 항목 보류. DR 본문에 보류 범위 명시.
 - \`Superseded by DR-XXX\` — 전체 대체됨. archive 이동 후보.
-- \`Draft\` — 초안
+- \`Draft\` — 초안. 아직 확정 전(선택 보류). cascade 감사 대상 아님.
+- \`Draft (Dropped)\` — 채택하지 않기로 한 Draft. 폐기 사유 명시 후 archive 이동, 번호 retire (DR-029).
 
 **Track legend:** \`harness\` = AI workflow·명령·프로토콜 결정 / \`product\` = 적용 프로젝트의 기능·아키텍처 결정
 
@@ -469,6 +480,7 @@ Superseded DR은 \`docs/archive/docs/decisions/\`로 이동한다.
 | DR-013 | Work 파일 기반 작업 단위 체계 | — | Accepted | harness | \`docs/works/{category}/{ID}-{topic}.md\`, Active/Done/Archived 3단계, \`related_work\` 필드 포함 |
 | DR-014 | Archive 구조 정책 | — | Accepted | harness | \`docs/archive/\` 하위 경로 mirror 방식 |
 | DR-027 | Troubleshooting / Retrospective 파일 최소 스펙 | — | Accepted | harness | frontmatter(symptom/track/category/status, date/track/type/scope/author) 도입. track 필드로 harness·product 구분 |
+| DR-029 | DR Registration Triage + Draft DR Lifecycle | — | Accepted | harness | DR 등록 3-way triage(Accepted/Draft/OQ·backlog) + Draft 승격·\`Draft (Dropped)\`·repo-health hygiene surfacing |
 ${OPTIONAL_DR_ROWS}
 위 DR들은 harness가 동반하는 foundational decision이다.
 이 프로젝트 고유의 결정은 \`DR-{NNN}-{topic}.md\`(\`docs/decisions/DECISION-TEMPLATE.md\` 사용)로 추가하고 이 인덱스에 등록한다.
@@ -528,11 +540,14 @@ if [[ "${PROFILE}" == "spring-boot" ]]; then
 fi
 
 # ── Canonical workflow procedures ────────────────────────────────────────────
+# work-doc.md is B-class (--with-optional); excluded from default scaffold.
 for f in "${TEMPLATE_ROOT}"/skills/workflow/*.md; do
+  [[ "$(basename "$f")" == "work-doc.md" ]] && continue
   adapt "$f" "${TARGET_ROOT}/skills/workflow/$(basename "$f")"
 done
 
 for f in "${TEMPLATE_ROOT}"/.claude/commands/*.md; do
+  [[ "$(basename "$f")" == "work-doc.md" ]] && continue
   adapt "$f" "${TARGET_ROOT}/.claude/commands/$(basename "$f")"
 done
 
@@ -567,8 +582,10 @@ if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
 fi
 
 # ── Codex skills ─────────────────────────────────────────────────────────────
+# workflow-work-doc is B-class (--with-optional); excluded from default scaffold.
 for skill_dir in "${TEMPLATE_ROOT}"/.agents/skills/*/; do
   skill_name="$(basename "${skill_dir}")"
+  [[ "${skill_name}" == "workflow-work-doc" ]] && continue
   ensure_dir "${TARGET_ROOT}/.agents/skills/${skill_name}"
   adapt "${skill_dir}SKILL.md" "${TARGET_ROOT}/.agents/skills/${skill_name}/SKILL.md"
 done
@@ -609,9 +626,20 @@ write_text "${TARGET_ROOT}/.claude/settings.json" '{
 '
 
 # ── Cursor config and rules ──────────────────────────────────────────────────
-for f in behavior-principles.mdc coding.mdc debugging.mdc execution.mdc git-commit.mdc output-format.mdc role-harness-maintainer.mdc safety-critical.mdc workflow.mdc; do
+for f in behavior-principles.mdc coding.mdc debugging.mdc execution.mdc git-commit.mdc output-format.mdc role-harness-maintainer.mdc safety-critical.mdc; do
   adapt "${TEMPLATE_ROOT}/.cursor/rules/${f}" "${TARGET_ROOT}/.cursor/rules/${f}"
 done
+
+# workflow.mdc: work-doc routing row only for --with-optional targets (work-doc is B-class).
+# Default targets use a stable filtered template so manifest src/hash remain
+# self-consistent under --check and tier2 invariants.
+if [[ "${WITH_OPTIONAL}" == true ]]; then
+  adapt "${TEMPLATE_ROOT}/.cursor/rules/workflow.mdc" \
+        "${TARGET_ROOT}/.cursor/rules/workflow.mdc"
+else
+  adapt "${TEMPLATE_ROOT}/scripts/templates/default/.cursor/rules/workflow.mdc" \
+        "${TARGET_ROOT}/.cursor/rules/workflow.mdc"
+fi
 
 if [[ "${PROFILE}" == "spring-boot" ]]; then
   adapt "${TEMPLATE_ROOT}/.cursor/rules/java-spring.mdc" "${TARGET_ROOT}/.cursor/rules/java-spring.mdc"
@@ -628,52 +656,15 @@ for f in \
   copy_prompt "$f"
 done
 
-# Optional source pack (DR-021): extended generic prompt bundle. Default excludes
-# them to keep target minimal; --with-optional opts in.
-if [[ "${WITH_OPTIONAL}" == true ]]; then
-  for f in \
-    00-generic-task.prompt.md \
-    01-scaffold-project.prompt.md \
-    03-add-single-feature.prompt.md \
-    05-debug-error.prompt.md \
-    06-write-tests-first.prompt.md \
-    07-refactor-code.prompt.md \
-    09-api-integration.prompt.md \
-    15-write-readme.prompt.md \
-    16-code-review.prompt.md \
-    17-reproduce-and-fix.prompt.md \
-    19-design-feature.prompt.md \
-    20-summarize-work.prompt.md \
-    22-minimal-diff.prompt.md; do
-    copy_prompt "$f"
-  done
-fi
-
-if [[ "${PROFILE}" == "spring-boot" ]]; then
-  for f in \
-    02-scaffold-service.prompt.md \
-    04-security-review.prompt.md \
-    08-split-service.prompt.md \
-    10-add-validation.prompt.md \
-    11-add-resilience.prompt.md \
-    12-performance-fix.prompt.md \
-    13-add-metrics.prompt.md \
-    14-write-migration.prompt.md \
-    18-add-cache.prompt.md \
-    21-create-layer.prompt.md; do
-    copy_prompt "$f"
-  done
-fi
-
 # ── Project gate config seed (.harness/gate-config) ──────────────────────────
-# Class B (project-owned) seed: lets the target ADD its own protected/finalization
+# Class B (project-owned) seed: lets the target ADD its own protected/tracking-state/finalization
 # paths without editing framework-owned tools/git-hooks/lib/gate-lists.sh. Written
 # with write_text so it is NOT recorded in the manifest framework_files set and
 # survives a harness upgrade. Seeded with commented examples only → zero active
 # entries → default gate behavior until the target opts in.
 write_text "${TARGET_ROOT}/.harness/gate-config" '# Project gate config (.harness/gate-config) — project-owned, add-only.
 #
-# Extend the harness default protected/finalization path lists with paths specific
+# Extend the harness default protected/tracking-state/finalization path lists with paths specific
 # to THIS repository, WITHOUT editing framework-owned tools/git-hooks/lib/gate-lists.sh
 # (that file is recorded in the manifest and overwritten on a harness upgrade).
 # This file survives upgrades.
@@ -689,8 +680,9 @@ write_text "${TARGET_ROOT}/.harness/gate-config" '# Project gate config (.harnes
 # In a generic (advisory-only) target it has no hooks; the agent honors it as
 # advisory input per .claude/rules/git-workflow.md.
 #
-# [protected]    block direct commits to these on develop/main (branch isolation)
-# [finalization] treat these as tracking/finalization files (DR-025 bundling gate)
+# [protected]      block direct commits to these on develop/main (branch isolation)
+# [tracking-state] treat these as project-specific T1 tracking-state paths
+# [finalization]   treat these as tracking/finalization files (DR-025 bundling gate)
 #
 # Examples (uncomment and adapt to this repository):
 
@@ -698,6 +690,10 @@ write_text "${TARGET_ROOT}/.harness/gate-config" '# Project gate config (.harnes
 # infra/**
 # db/schema.sql
 # .github/workflows/deploy.yml
+
+[tracking-state]
+# docs/PRODUCT-STATUS.md
+# docs/team-log/**
 
 [finalization]
 # docs/PRODUCT-STATUS.md
@@ -756,6 +752,16 @@ if [[ "${WORKFLOW_MODE}" != "source-gitflow" ]]; then
 "
 fi
 
+# source-gitflow targets present two explicit entry paths in the README so that
+# a later contributor cloning the repo finds the hook install path without reading BOOTSTRAP.md.
+# Generic targets keep a single bootstrap-only line (no clone scenario).
+CLONE_NOTE="git repository는 자동으로 초기화되지 않는다. 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
+\`--workflow source-gitflow\`를 선택하지 않았다면 branch/release policy는 이 target project가 직접 정한다."
+if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
+  CLONE_NOTE="- 최초 설정 (git repository 미초기화): 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
+- 이미 존재하는 repo에 추가 contributor로 합류: \`docs/GIT-WORKFLOW.md §0-1\` Clone 경로를 먼저 확인한다."
+fi
+
 write_text "${TARGET_ROOT}/README.md" "# ${PROJECT_NAME}
 
 > [프로젝트 한 줄 설명 — 채워주세요]
@@ -769,7 +775,7 @@ AI workflow 자체의 개선과 example pack 정비는 Harness track으로 분�
 
 | Track | 목적 | 주요 파일 |
 | --- | --- | --- |
-| Product track | 실제 제품/서비스/콘텐츠 작업과 Phase backlog | \`docs/backlog/PHASE1.md\`, \`docs/works/phase1/\` |
+| Product track | 실제 제품/서비스/콘텐츠 작업과 product backlog | \`docs/backlog/PRODUCT.md\`, \`docs/works/product/\` |
 | Harness track | AI workflow, command/rule, prompt, scaffold, process 개선 | \`docs/backlog/HARNESS.md\`, \`docs/works/harness/\` |
 
 | 파일 | 역할 |
@@ -786,7 +792,7 @@ ${OPTIONAL_README_ROWS}| \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 | \`.claude/commands/\` | \`/session-start\`, \`/work-select\`, \`/work-register\`, \`/work-plan\`, \`/work-close\`, \`/session-summary\` 등 |
 | \`.agents/skills/\` | Codex workflow adapter |
 | \`.codex/hooks.json\` | Codex hook 설정 |
-| \`prompts/\` | 세션 시작 및 태스크 프롬프트 라이브러리 |
+| \`prompts/\` | 세션 시작 fallback prompt |
 
 ### Workflow 구조
 
@@ -811,8 +817,7 @@ claude        # Claude Code 열기
 
 ## 사전 작업
 
-git repository는 자동으로 초기화되지 않는다. 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
-\`--workflow source-gitflow\`를 선택하지 않았다면 branch/release policy는 이 target project가 직접 정한다.
+${CLONE_NOTE}
 ${ENFORCEMENT_NOTE}
 
 ### Framework Files & Updating
@@ -831,11 +836,11 @@ Harness source clone에서 \`scripts/create-harness.sh --check /path/to/project\
 Next Actions가 scaffold bootstrap/onboarding을 가리키면 \`docs/BOOTSTRAP.md\`를 §0부터 순서대로 채운다.
 Bootstrap onboarding에 사용할 prompt는 \`docs/BOOTSTRAP.md\` §8에 있다.
 
-1. \`docs/STATUS.md\` — 프로젝트 목표와 Phase 설명
+1. \`docs/STATUS.md\` — 프로젝트 목표와 Current phase(focus) 설명
 2. \`docs/PLAN-SUMMARY.md\` Project Summary — 제품 목표와 핵심 workflow
 3. \`docs/PLAN-SUMMARY.md\` Implementation Baseline — Runtime/Framework/Build/package 결정 (코드 개발 프로젝트)
 4. \`docs/PLAN.md\` Project Initialization Plan — stack 선택 근거와 초기 구조
-5. \`docs/backlog/PHASE1.md\` — baseline 완료 후 도출한 초기 작업 항목 (Work ID는 /work-plan 착수 시 확정)
+5. \`docs/backlog/PRODUCT.md\` — baseline 완료 후 도출한 초기 작업 항목 (Work ID는 /work-plan 착수 시 확정)
 6. \`docs/BEHAVIOR-PRINCIPLES.md\` — 전역 행동 원칙 확인
 7. \`docs/AGENT-WORKFLOW.md\` — Project Constants와 Verification Defaults
 
@@ -853,10 +858,10 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 
 | Field | Value |
 | --- | --- |
-| Phase | Phase 1 — [프로젝트 목표 한 줄] |
+| Current phase | [프로젝트 focus 또는 목표 한 줄 — 단계(phase) 운영은 optional] |
 | Active plan | — |
 | Bootstrap checklist | \`docs/BOOTSTRAP.md\` |
-| Project backlog | \`docs/backlog/PHASE1.md\` |
+| Project backlog | \`docs/backlog/PRODUCT.md\` |
 | Harness backlog | \`docs/backlog/HARNESS.md\` |
 | Last updated | ${TODAY} |
 
@@ -885,7 +890,7 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 1. Scaffold bootstrap onboarding: \`docs/BOOTSTRAP.md\`를 §0부터 순서대로 채운다
 2. §1 Project Identity, §2 Product Definition 완료 후 \`docs/PLAN-SUMMARY.md\` Project Summary 업데이트
 3. §3 Project Initialization: \`docs/PLAN-SUMMARY.md\` Implementation Baseline 채우기 (코드 개발 프로젝트만)
-4. Implementation Baseline 완료 후 \`docs/backlog/PHASE1.md\`에 초기 작업 후보 등록 (Work ID는 /work-plan 착수 시 확정)
+4. Implementation Baseline 완료 후 \`docs/backlog/PRODUCT.md\`에 초기 작업 후보 등록 (Work ID는 /work-plan 착수 시 확정)
 5. \`docs/AGENT-WORKFLOW.md\` Project Constants와 Verification Defaults 채우기
 6. AI workflow 개선 항목은 \`docs/backlog/HARNESS.md\`로 분리
 7. Claude Code: \`/session-start\`로 첫 세션 시작 | Codex: \`AGENTS.md\` 확인 후 \`/session-start\` intent 실행 | Cursor: \`prompts/cursor-session-start.md\` 사용
@@ -916,9 +921,9 @@ Scaffold 직후 이 파일을 먼저 채운다. 목표는 빈 harness를 프로�
 
 ## 2. Product Definition
 
-제품 목표와 성공 기준을 먼저 확정한다. 이 단계가 완료되지 않으면 Phase 1 backlog를 만들지 않는다.
+제품 목표와 성공 기준을 먼저 확정한다. 이 단계가 완료되지 않으면 product backlog를 만들지 않는다.
 
-- [ ] Phase 1 목표를 한 문장으로 정리
+- [ ] 초기 목표를 한 문장으로 정리
 - [ ] 주요 사용자와 첫 사용 시나리오 정리
 - [ ] 핵심 성공 기준 정의 (§1 Project Identity에서 채운 항목 재확인)
 - [ ] \`docs/PLAN-SUMMARY.md\` Project Summary를 이 정보로 업데이트
@@ -933,17 +938,17 @@ Scaffold 직후 이 파일을 먼저 채운다. 목표는 빈 harness를 프로�
 - [ ] 결정 근거는 \`docs/PLAN.md\` Project Initialization Plan에 기록한다
 - [ ] \`docs/AGENT-WORKFLOW.md\` Project Constants 작성 (Runtime, Framework, Build, Base package/module, Architecture)
 
-> 이 단계가 완료(또는 Not Applicable 처리)되지 않으면 \`docs/backlog/PHASE1.md\`에 기능 후보를 등록하지 않는다.
+> 이 단계가 완료(또는 Not Applicable 처리)되지 않으면 \`docs/backlog/PRODUCT.md\`에 기능 후보를 등록하지 않는다.
 > 기능 candidate 제안 전에 Implementation Baseline Readiness를 먼저 확인한다.
 
-## 4. Phase 1 Backlog Derivation
+## 4. Product Backlog Derivation
 
 §2 Product Definition과 §3 Project Initialization이 완료된 뒤 Product track backlog를 도출한다.
 
-- [ ] \`docs/backlog/PHASE1.md\` Backlog에 초기 작업 후보 등록 — Summary 표 + Details 블록 동시 작성 (Work ID는 /work-plan 착수 시 확정)
+- [ ] \`docs/backlog/PRODUCT.md\` Backlog에 초기 작업 후보 등록 — Summary 표 + Details 블록 동시 작성 (Work ID는 /work-plan 착수 시 확정)
 - [ ] 각 후보에 Done Criteria, Verification, Dependencies 작성
 - [ ] 즉시 착수할 항목이 있으면 \`docs/STATUS.md\` Active Work로 올릴 내용 제안
-- [ ] 큰 작업이면 \`docs/works/phase1/\`에 Work 파일 생성 여부 판단
+- [ ] 큰 작업이면 \`docs/works/product/\`에 Work 파일 생성 여부 판단
 - [ ] 완료 후 \`docs/STATUS.md\` Next Actions에서 scaffold bootstrap onboarding 항목 제거 또는 다음 실제 작업으로 교체
 
 ## 5. Harness Track Setup
@@ -960,11 +965,11 @@ AI workflow 자체의 조정은 Harness track으로 분리한다.
 ## 6. Core Document Fill Order
 
 1. \`docs/BOOTSTRAP.md\` — identity, production 성격, setup checklist
-2. \`docs/STATUS.md\` — 현재 phase, Active Work, OQ, Next Actions
+2. \`docs/STATUS.md\` — Current phase(focus), Active Work, OQ, Next Actions
 3. \`docs/PLAN-SUMMARY.md\` Project Summary — 프로젝트 요약, 제품 목표
 4. \`docs/PLAN-SUMMARY.md\` Implementation Baseline — Runtime/Framework/Build/package 결정 (코드 프로젝트)
 5. \`docs/PLAN.md\` Project Initialization Plan — stack 선택 근거, 초기 구조 (코드 프로젝트)
-6. \`docs/backlog/PHASE1.md\` — Product track backlog (baseline 완료 후)
+6. \`docs/backlog/PRODUCT.md\` — Product track backlog (baseline 완료 후)
 7. \`docs/backlog/HARNESS.md\` — Harness track backlog
 8. \`docs/AGENT-WORKFLOW.md\` — Project Constants, Verification Defaults
 
@@ -1074,9 +1079,9 @@ write_text "${TARGET_ROOT}/docs/PLAN.md" "# PLAN.md — ${PROJECT_NAME}
 
 *(의존성 선택 이유와 추가 기준)*
 
-### Phase 1 Readiness Checklist
+### Product Backlog Readiness Checklist
 
-*(PLAN-SUMMARY.md Implementation Baseline이 Ready 상태여야 Phase 1 feature 후보 등록 가능)*
+*(PLAN-SUMMARY.md Implementation Baseline이 Ready 상태여야 product feature 후보 등록 가능)*
 
 - [ ] Runtime / Language 확정
 - [ ] Framework / Library 확정
@@ -1094,24 +1099,23 @@ write_text "${TARGET_ROOT}/docs/PLAN.md" "# PLAN.md — ${PROJECT_NAME}
 
 *(채워야 함)*
 
-## Phase 계획
+## Roadmap
 
-### Phase 1
+*(채워야 함 — 단계(phase) 운영은 optional. 필요 시 milestone을 Current phase 라벨로 두고 product backlog를 PRODUCT-P{n}으로 분할: DR-031)*
 
 - 목표:
 - 범위:
 "
 
-write_text "${TARGET_ROOT}/docs/backlog/PHASE1.md" "# Product Backlog — Phase 1
+write_text "${TARGET_ROOT}/docs/backlog/PRODUCT.md" "# Product Backlog
 
 ## 상태 요약
 
 | 항목 | 내용 |
 | --- | --- |
-| Phase | Phase 1 |
 | 제품 목표 | — |
 | 주요 사용자 | — |
-| Phase 1 범위 | — |
+| 범위 | — |
 | 상태 | In Progress |
 
 > **Baseline Gate**: \`docs/PLAN-SUMMARY.md\` Implementation Baseline이 비어 있으면 feature candidate은 Not Ready로 보고하고, 첫 후보로 Project Initialization을 제안한다.
@@ -1157,7 +1161,7 @@ write_text "${TARGET_ROOT}/docs/backlog/HARNESS.md" "# Harness Backlog
 AI workflow, command/rule, prompt, scaffold, process 개선 후보를 관리한다.
 
 > Done/Superseded 항목은 이 파일에서 제거된다.
-> 완료 이력: Work 파일이 있는 항목은 \`docs/works/harness/README.md\` Archived 테이블, Work 파일이 없는 항목(Quick Mode)은 \`git log --grep=\"{ID}\"\`로 확인한다.
+> 완료 이력: Work 파일이 있는 항목은 \`docs/archive/docs/works/harness/README.md\` Archived 인덱스, Work 파일이 없는 항목(Quick Mode)은 \`git log --grep=\"{ID}\"\`로 확인한다.
 
 ## Backlog
 
@@ -1204,7 +1208,7 @@ Work 파일 스펙: \`docs/decisions/DR-013-work-file-spec.md\`
 
 | 카테고리 | 경로 | 용도 |
 | --- | --- | --- |
-| phase1/ | \`docs/works/phase1/\` | Product track Phase 1 작업 |
+| product/ | \`docs/works/product/\` | Product track 작업 |
 | harness/ | \`docs/works/harness/\` | Harness track 개선 작업 |
 
 ## Lifecycle
@@ -1218,9 +1222,9 @@ Work 파일 스펙: \`docs/decisions/DR-013-work-file-spec.md\`
 Backlog \`Candidate\`는 후보 pool이다. Work 파일은 착수 승인 후 \`Active\` 상태로 생성한다.
 "
 
-write_text "${TARGET_ROOT}/docs/works/phase1/README.md" "# Phase 1 Work Index
+write_text "${TARGET_ROOT}/docs/works/product/README.md" "# Product Work Index
 
-Product track Phase 1 작업 인덱스다.
+Product track 작업 인덱스다.
 
 ## Active
 
@@ -1234,8 +1238,7 @@ Product track Phase 1 작업 인덱스다.
 
 ## Archived
 
-| ID | Title | actual_end | Archive |
-| --- | --- | --- | --- |
+완전 종결 Work는 archive-side 인덱스 참조: \`docs/archive/docs/works/product/README.md\` (첫 archive 시 생성).
 "
 
 write_text "${TARGET_ROOT}/docs/works/harness/README.md" "# Harness Work Index
@@ -1254,8 +1257,7 @@ Harness track 작업 인덱스다.
 
 ## Archived
 
-| ID | Title | actual_end | Archive |
-| --- | --- | --- | --- |
+완전 종결 Work는 archive-side 인덱스 참조: \`docs/archive/docs/works/harness/README.md\` (첫 archive 시 생성).
 "
 
 touch_file "${TARGET_ROOT}/docs/archive/.gitkeep"
@@ -1304,26 +1306,26 @@ fi
 echo ""
 echo "Bootstrap onboarding targets (propose/fill during first session):"
 echo "  docs/BOOTSTRAP.md      — 프로젝트 identity와 production 성격 기반 setup checklist"
-echo "  docs/STATUS.md         — 프로젝트 목표와 Phase 설명"
+echo "  docs/STATUS.md         — 프로젝트 목표와 Current phase(focus) 설명"
 echo "  docs/PLAN-SUMMARY.md   — Project Summary와 Implementation Baseline"
 echo "  docs/PLAN.md           — Project Initialization Plan"
-echo "  docs/backlog/PHASE1.md — baseline 완료 후 도출한 초기 작업 항목 (Work ID는 /work-plan 착수 시 확정)"
+echo "  docs/backlog/PRODUCT.md — baseline 완료 후 도출한 초기 작업 항목 (Work ID는 /work-plan 착수 시 확정)"
 echo "  docs/AGENT-WORKFLOW.md — Project Constants와 Verification Defaults"
 echo ""
 if [[ "${PROFILE}" == "generic" ]]; then
   echo "Profile: generic"
-  echo "  Spring Boot example-pack rules and prompts were not included."
+  echo "  Spring Boot example-pack rules were not included."
   echo "  Use --profile spring-boot only when Java/Spring examples are useful."
 else
   echo "Profile: spring-boot"
-  echo "  Included Java/Spring example rules and Spring Boot prompt bundle."
+  echo "  Included Java/Spring example rules."
 fi
 if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
   echo "Workflow: source-gitflow"
   echo "  Gate hooks deployed at tools/git-hooks/ (branch isolation + DR-025 finalization gate)."
   echo "  After git init, install them with: sh tools/git-hooks/install.sh"
   echo "  Environment bootstrap runbook: docs/GIT-WORKFLOW.md §0-1"
-  echo "  Tune project-specific protected/finalization paths in .harness/gate-config (add-only, upgrade-safe)."
+  echo "  Tune project-specific protected/tracking-state/finalization paths in .harness/gate-config (add-only, upgrade-safe)."
   echo "  Do not edit framework-owned tools/git-hooks/lib/gate-lists.sh — it is overwritten on harness upgrade."
 fi
 if [[ ! -d "${TARGET_ROOT}/.git" ]]; then
