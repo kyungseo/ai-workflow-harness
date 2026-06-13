@@ -41,7 +41,7 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P2 | Candidate | L3 | Scaffold CLI naming audit |
-| HRN-032 | P2 | Candidate | L2 | Windows 지원 확장 |
+| HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
 | HRN-016 | P3 | Candidate | L1 | `/exit` → Stop hook gap 추적 |
 
 ---
@@ -121,15 +121,21 @@ AI Workflow Harness backlog다.
 
 **Cluster:** W5. Future / Optional
 
-**Task:** macOS 기준 workflow/scaffold 검증을 Windows/WSL/Git Bash까지 정렬
+**Status:** 🔒 **보류(Hold)** — 실제 Windows adopter 또는 환경 robustness 실수요 확인 전 착수하지 않는다. 2026-06-13 실측 기반 scope 재정의.
 
-**Dependencies:**
+**실측 (2026-06-13):** "Windows 지원"을 native(cmd/PowerShell only)까지 넓히는 framing은 과대하다.
 
-- HRN-031 이후 scaffold smoke test
+- Claude Code/Codex Windows 사용자는 대부분 **WSL 또는 Git Bash** 환경이며, 그 환경에서 `create-harness.sh`(bash)·`tools/git-hooks/*`(sh, source-gitflow opt-in)·python은 **이미 동작**한다.
+- `/tmp` 비호환은 검증 spine의 `temp/harness-tests/` 정책으로 **이미 해소**됐다 → 과거 Verification의 "`/tmp` 검증 경로 대체안" 항목은 **stale이라 제거**.
+- 따라서 실질 fragility는 **Stop hook의 `python3` 의존성 1개**로 좁혀진다(`python3`가 아니라 `python`만 있는 환경 — Windows 한정이 아닌 환경 일반 문제).
 
-**Done Criteria:** `/start`와 scaffold 후 첫 세션이 Windows native, WSL, Git Bash 환경에서 어떤 명령·hook·경로 전제를 갖는지 정리하고, 필요한 문서/스크립트 보완안을 반영
+**Task (재정의):** native cmd/PowerShell 지원은 **비목표**. 착수 시 ① WSL/Git Bash 동작 가정을 onboarding 문서에 명시 + 1회 smoke test, ② Stop hook `python3` 의존성을 환경 robustness 관점에서 점검(부재 시 graceful)으로 한정한다.
 
-**Verification:** Windows/WSL/Git Bash별 `/start` 시뮬레이션, `create-harness.sh` 실행 경로, `python3` Stop hook, `/tmp` 검증 경로 대체안 확인
+**Dependencies:** 실제 Windows adopter 발생 또는 `python3` 의존성 실수요.
+
+**Done Criteria:** (착수 시) WSL/Git Bash 전제가 onboarding 문서에 명시되고 `python3` 의존성의 graceful 동작이 확인됨. native cmd/PowerShell 지원은 Done 기준에 포함하지 않는다.
+
+**Verification:** WSL/Git Bash별 `create-harness.sh`·`/start` smoke, Stop hook의 `python3`/`python` fallback 동작 확인. (과거 `/tmp` 대체안 항목은 `temp/` 정책으로 해소되어 제거됨.)
 
 ---
 
