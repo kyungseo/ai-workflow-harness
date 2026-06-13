@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-13 (세션: CHORE-20260613-001 Done — Prompt task library archive + scaffold pruning 완료)
+Last updated: 2026-06-13 (세션: CHORE-20260613-005 Done — work-doc.md B-class 분류 + W3 status 갱신)
 
 ## Current State
 
@@ -73,6 +73,12 @@ Last updated: 2026-06-13 (세션: CHORE-20260613-001 Done — Prompt task librar
    - ✓ **User-facing docs readability rewrite** — CHORE-20260612-002 완료
    - ✓ **Scaffold multi-user clone verification** — CHORE-20260612-003 완료. 발견: G1/G2 Critical gap → "source-gitflow second-contributor entry path 보강" backlog 등록. **W2 Adopter Transition 완결.**
 3. **W3 — Workflow IA Diet** (큰 구조 변경은 결정/최소 정리까지만):
-   - Canonical 개념 계층화, Prompt surface diet, trigger family simplification, repo-health/work-doc slice/class 검토
+   - ✓ **Prompt surface diet** — CHORE-20260612-010 완료
+   - ✓ **Protocol Load Map / Context Routing 최소 정합** — CHORE-20260613-002 완료
+   - ✓ **Operating Tracks 경계 최소 정합** — CHORE-20260613-003 완료
+   - ✓ **repo-health canonical slice 분리** — CHORE-20260613-004 완료
+   - ✓ **work-doc.md B-class 분류** — CHORE-20260613-005 완료
+   - Canonical 개념 계층화 + context-routing restructure (P1, broad — 별도 Work 필요)
+   - trigger family simplification (P2, Canonical restructure 선행)
 4. **W4/W5 — Lifecycle hygiene 및 optional 확장**:
    - Archive policy, Spring Boot MSA TDD option-pack, template pack, CLI naming, Windows, `/exit` gap은 실제 product 운용 후 필요성 재판단
