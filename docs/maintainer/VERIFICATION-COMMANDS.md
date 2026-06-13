@@ -21,7 +21,7 @@ related_work: []
 - `docs/AGENT-WORKFLOW.md` Verification Defaults — 변경 유형별 기본 검증 규칙
 - `docs/maintainer/HARNESS-TEST-TAXONOMY.md` — surface별 검증 기준(무엇/어느 깊이)·Tier 정의·3층 수단 경계
 - `scripts/tests/run-harness-checks.sh` — Tier별 deterministic 검증 runner(`--tier0|--tier1 <target>|--tier2|--all`)
-- `skills/workflow/repo-health.md` — `/repo-health` 전체 절차 및 Required Surface Matrix
+- `skills/workflow/repo-health.md` — `/repo-health` 전체 절차. Required Surface Matrix는 `skills/workflow/repo-health-cascade.md`
 - `docs/HARNESS-RECOVERY-VALIDATION.md` — 실패/복구·Validation Checklist·Commit Approval **판단 정책** (이 파일=명령, 그쪽=판단)
 
 ---
@@ -383,10 +383,10 @@ grep -n "decisions/README" skills/workflow/record-decision.md 2>/dev/null
 ### J10. `/repo-health` 흐름
 
 ```bash
-ls .claude/commands/repo-health.md skills/workflow/repo-health.md
+ls .claude/commands/repo-health.md skills/workflow/repo-health.md skills/workflow/repo-health-cascade.md skills/workflow/repo-health-full.md
 
 # repo-health가 참조하는 파일 실재
-grep -oE 'docs/[A-Z][A-Z-]+\.md' skills/workflow/repo-health.md | sort -u | while read f; do
+grep -h -oE 'docs/[A-Z][A-Z-]+\.md' skills/workflow/repo-health*.md | sort -u | while read f; do
   [ ! -f "$f" ] && echo "repo-health 참조 MISSING: $f"
 done
 ```
@@ -995,7 +995,7 @@ for pair in "GWF(source):docs/GIT-WORKFLOW.md" "GWF(template):scripts/templates/
 done
 ```
 
-> **Surface Matrix 연계:** 위 5 surface 중 하나라도 변경되면 이 Q-static을 실행한다(`skills/workflow/repo-health.md` Surface Matrix가 pointer로 연결). **runner와의 관계(F4):** gate parity의 executable 동반자는 `run-harness-checks.sh`이나, 현재 runner는 이 static parity를 호출하지 않는다 — 통합은 후속 F4. 이번에는 catalog Q-static + repo-health pointer까지만.
+> **Surface Matrix 연계:** 위 5 surface 중 하나라도 변경되면 이 Q-static을 실행한다(`skills/workflow/repo-health-cascade.md` Surface Matrix가 pointer로 연결). **runner와의 관계(F4):** gate parity의 executable 동반자는 `run-harness-checks.sh`이나, 현재 runner는 이 static parity를 호출하지 않는다 — 통합은 후속 F4. 이번에는 catalog Q-static + repo-health pointer까지만.
 
 ---
 
@@ -1385,8 +1385,8 @@ grep -A999 '```bash' docs/VERIFICATION-COMMANDS.md \
 ### M4. repo-health Required Surface Matrix 등재 여부
 
 ```bash
-# repo-health.md가 이 파일을 참조하는가
-grep -n "VERIFICATION-COMMANDS" skills/workflow/repo-health.md
+# repo-health cascade slice가 이 파일을 참조하는가
+grep -n "VERIFICATION-COMMANDS" skills/workflow/repo-health-cascade.md
 
 # AGENT-WORKFLOW.md Verification Defaults가 이 파일을 참조하는가
 grep -n "VERIFICATION-COMMANDS" docs/AGENT-WORKFLOW.md
@@ -1398,7 +1398,7 @@ grep -n "VERIFICATION-COMMANDS" docs/AGENT-WORKFLOW.md
 
 | Surface | 이유 |
 | --- | --- |
-| `skills/workflow/repo-health.md` | Required Surface Matrix pointer 유효성 |
+| `skills/workflow/repo-health-cascade.md` | Required Surface Matrix pointer 유효성 |
 | `docs/AGENT-WORKFLOW.md` | Verification Defaults pointer 유효성 |
 | `docs/HARNESS-QUICK-REFERENCE.md` | one-liner 참조 유효성 |
 | 이 파일 내부 (M1~M4) | 경로·명령 stale, bash 문법, cascade 등재 여부 |
