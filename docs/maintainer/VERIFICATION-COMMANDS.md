@@ -134,7 +134,7 @@ bash scripts/tests/check-scaffold-invariants.sh
 
 > **runner 실행 기준:** PR merge 전 또는 harness 마일스톤 완료 시 `bash scripts/tests/run-harness-checks.sh --all`(scaffold 3모드 + closure + syntax 전수)을 권장한다.
 
-> **`scripts/tests/**` 변경 시 cascade (source-side surface):** `check-scaffold-invariants.sh`·`check-shipped-dr-closure.sh`·`run-harness-checks.sh`는 검증 척추의 executable SSoT다. 변경 시 ① `bash -n scripts/tests/*.sh`(runner `--tier0`에 포함) ② `run-harness-checks.sh --all`로 회귀 확인 ③ `HARNESS-TEST-TAXONOMY.md`(기준·Tier·matrix)와 이 카탈로그(Layer C) pointer 정합을 점검한다. 이들은 **source-only maintainer surface**이므로 scaffold target leak-scan 대상이 아니다(target leak-scan은 framework-owned ship 파일 중심). repo-health 영향 surface 반영은 F4로 둔다.
+> **`scripts/tests/**` 변경 시 cascade (source-side surface):** `check-scaffold-invariants.sh`·`check-shipped-dr-closure.sh`·`check-default-template-parity.sh`·`check-surface-mirror-parity.sh`·`check-onboarding-flows.sh`·`run-harness-checks.sh`는 검증 척추의 executable SSoT다. 변경 시 ① `bash -n scripts/tests/*.sh`(runner `--tier0`에 포함) ② `run-harness-checks.sh --all`로 회귀 확인 ③ `HARNESS-TEST-TAXONOMY.md`(기준·Tier·matrix)와 이 카탈로그(Layer C) pointer 정합을 점검한다. 이들은 **source-only maintainer surface**이므로 scaffold target leak-scan 대상이 아니다(target leak-scan은 framework-owned ship 파일 중심). repo-health 영향 surface 반영은 F4로 둔다.
 
 ---
 
