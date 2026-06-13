@@ -145,12 +145,7 @@ Commit:
 
 ### Operating Tracks
 
-AI Workflow Harness는 적용 대상 repository에 Product track과 Harness track을 함께 심는다.
-
-- Product track은 실제 제품/서비스/콘텐츠 프로젝트의 Phase backlog와 기능 work를 담당한다.
-- Harness track은 AI 작업 방식, tool surface, workflow rule, scaffold, status/process 개선을 담당한다.
-- 이 repository를 harness 자체 개발용 source로 운영하는 경우 Product track backlog가 없을 수 있다.
-- scaffold된 신규/기존 프로젝트는 기본적으로 `docs/backlog/PRODUCT.md`와 `docs/backlog/HARNESS.md`를 함께 가진다.
+Product/Harness track 정의와 source repo 예외는 `docs/AGENT-WORKFLOW.md`의 `Operating Tracks`를 따른다. 이 문서는 상세 protocol 판단이 필요할 때만 조건부로 로드한다.
 
 ### Load Map
 
