@@ -97,17 +97,8 @@ related_troubleshooting: []
 
 ### Prompt Convention
 
-Task prompt frontmatter에 포함해야 하는 key:
-
-- `id`
-- `purpose`
-- `portability`
-- `difficulty`
-- `inputs`
-- `output_contract`
-
-Generic prompt는 특정 framework를 가정하지 않는다. Stack-specific prompt는
-`prompts/README.md`에서 optional/example content로 명시해야 한다.
+Live `prompts/` surface는 session-start fallback prompt와 README로 제한한다.
+Generic task prompt나 stack-specific prompt example을 다시 추가하려면 먼저 별도 Work에서 example pack 정책과 scaffold copy boundary를 정한다.
 
 ### Shell Script Convention
 
@@ -200,11 +191,11 @@ rule이나 workflow 동작이 변경되면 다음 cascade를 확인한다:
 Historical 파일은 편집하지 않고 context 확인 용도로만 참조한다.
 변경된 동작의 live mirror에 해당하는 surface만 업데이트한다. 모든 surface를 일괄 수정하지 않는다.
 
-## 8. Prompt Library
+## 8. Prompt Fallback Surface
 
-Generic prompt는 core이며, stack-specific prompt는 optional example pack이다.
+Live prompt는 session-start fallback surface다.
 
-prompt를 추가하거나, frontmatter field를 변경하거나, generic과 optional section 간에 prompt를 이동할 때는 `prompts/README.md`를 업데이트한다.
+`prompts/*session-start.md`를 변경하면 `prompts/README.md`, session-start canonical procedure, tool-specific command/adapter, scaffold output을 함께 확인한다.
 
 ## 9. Public Release Checks
 

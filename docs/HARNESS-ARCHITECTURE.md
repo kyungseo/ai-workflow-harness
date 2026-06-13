@@ -49,7 +49,7 @@ graph TB
         CURSOR[".cursor/rules/**"]
         SKILLS[".agents/skills/**"]
         CODEXHOOKS[".codex/hooks.json"]
-        PROMPTS["prompts/**"]
+        PROMPTS["prompts/*session-start.md"]
     end
 
     subgraph ADOPT["Adoption"]
@@ -155,7 +155,7 @@ graph LR
     CLAUDE["Claude Code\n.claude/commands + .claude/rules"]
     CODEX["Codex\nAGENTS.md + .agents/skills + .codex/hooks.json"]
     CURSOR["Cursor\n.cursor/rules"]
-    PROMPTS["prompts/**\n(shared fallback)"]
+    PROMPTS["prompts/*session-start.md\n(shared fallback)"]
     SCAFFOLD["create-harness.sh\n+ scripts/templates/**"]
 
     CANON --> CLAUDE

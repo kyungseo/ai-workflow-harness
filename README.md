@@ -143,7 +143,7 @@ flowchart TD
     end
 
     subgraph SURFACE ["Reusable Surfaces"]
-        PROMPTS["prompts/\nfallback/task templates"]
+        PROMPTS["prompts/\nsession-start fallback"]
         HOOKS[".codex/hooks.json\nCodex hooks"]
         SCRIPT["scripts/create-harness.sh\nproject scaffold"]
     end
@@ -483,7 +483,7 @@ main
 | [docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md](docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md) | product starter pack / import loop / source-product 경계를 볼 때 |
 | [docs/maintainer/VERSIONING.md](docs/maintainer/VERSIONING.md) | source repo 버전 bump, tag, release note 판단이 필요할 때 |
 | [docs/maintainer/migrations/](docs/maintainer/migrations/) | 기존 target repo가 framework 변경을 수용할 때 |
-| [prompts/README.md](prompts/README.md) | prompt library 확인 시 |
+| [prompts/README.md](prompts/README.md) | session-start fallback prompt 확인 시 |
 
 </details>
 
@@ -514,7 +514,7 @@ main
 │   ├── maintainer/                        # source-only maintainer reference
 │   └── works/                             # Work 파일
 ├── skills/workflow/                       # canonical workflow 절차
-├── prompts/                               # prompt templates
+├── prompts/                               # session-start fallback prompts
 ├── scripts/create-harness.sh              # scaffold script
 └── tools/git-hooks/                       # source repo 전용 hooks
 ```

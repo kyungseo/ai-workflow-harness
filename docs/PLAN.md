@@ -54,7 +54,7 @@ development workflow다.
 | `skills/workflow/**` | workflow 절차 canonical SSoT |
 | `.claude/commands/**`, `.agents/skills/**` | Claude Code / Codex workflow adapter (canonical mirror) |
 | `.claude/rules/**`, `.cursor/rules/**` | tool-specific rule mirror |
-| `prompts/**` | command를 직접 사용할 수 없는 도구를 위한 prompt template |
+| `prompts/**` | command/adapter를 직접 사용할 수 없는 도구를 위한 session-start fallback prompt |
 | `scripts/create-harness.sh` | 새 repository 또는 기존 repository에 harness 구조를 적용하는 scaffold |
 
 ### 3-a. Externalization Failure Modes Framing
@@ -98,13 +98,12 @@ Milestone 목표:
 - behavior principles, protocol, quick reference, manual
 - `PLAN.md`(장기 project plan, L3 decisions 근거), `PLAN-SUMMARY.md`(Context Routing용 아키텍처 요약)
 - Work / backlog / decision / retrospective 체계
-- generic prompt와 generic scaffold
+- session-start fallback prompt와 generic scaffold
 - tool-specific rule mirror
 
 ### Review Before Keeping
 
 - Optional Spring Boot example profile support
-- Java/Spring-specific prompt bundle as optional example pack
 - Java/Spring-specific Claude/Cursor rules as optional profile surface
 - historical snapshots and presentation drafts
 - product-template 시절의 troubleshooting record
