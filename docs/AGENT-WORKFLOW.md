@@ -33,6 +33,8 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 
 ## Context Routing
 
+Runtime/build/static assumptions는 아래 `Project Constants`에 요약되어 있다.
+
 | Need | Load |
 | --- | --- |
 | 현재 상태 | `docs/STATUS.md` |
