@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260615-002
 priority: P2
-status: Done
+status: Archived
 actual_end: 2026-06-15
 risk: L2
 scope: 언어 정책을 DR-007 단일 SSoT로 통합한다. (1) DR-007에 commit message·PR body·agent console(behavioral)·default/override를 흡수, (2) 산재한 정의(WORKFLOW-MANUAL Appendix C, HARNESS-MAINTAINER-GUIDE, GIT-WORKFLOW §5, rules)를 actionable directive+DR-007 pointer로 정리, (3) AGENTS.md에 commit/PR/console directive 인라인(Codex 근본 fix), (4) BEHAVIOR-PRINCIPLES에 console behavioral 1줄(전 도구 도달), (5) README adopter 기대치 pointer. DR-030은 전략-only로 경계 명시(Draft 유지). 메커니즘(--lang) 미구축.
@@ -149,3 +149,4 @@ pointer-only 통합 금지 — DR-007(문서)은 always-loaded가 아니라 "모
 
 ## Discovery
 - `/session-start` 후속 사용자 질문(언어 정책 위반 2패턴)에서 출발. 전수 조사로 WORKFLOW-MANUAL Appendix C·MAINTAINER-GUIDE 중복 정의, Layer P cascade(VERIFICATION-COMMANDS:1447), commit-msg hook=구조only(한국어 subject 미강제) 발견.
+- 2026-06-15 archive: language-policy patch가 `develop`에 반영되고 `Done` 상태 검증이 끝난 뒤, `1.2.1` patch release prep에서 archive pending queue를 drain했다.

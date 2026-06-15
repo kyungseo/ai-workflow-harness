@@ -3,14 +3,14 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-15 (CHORE-20260615-002 언어 정책 DR-007 SSoT 통합)
+Last updated: 2026-06-15 (release-prep 1.2.1 patch + CHORE-20260615-002 archive)
 
 ## Current State
 
 | Field | Value |
 | --- | --- |
 | Current phase | AWH-004 — Maintenance & Adoption |
-| Current focus | 1.2.0 릴리즈, adopter upgrade/migration, onboarding 현행화 |
+| Current focus | 1.2.1 patch 릴리즈, adopter upgrade/migration, onboarding 현행화 |
 | Project plan | `docs/PLAN.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
