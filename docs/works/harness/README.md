@@ -12,7 +12,6 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260614-001 | post-release 결과 검증 최소 보완 | 2026-06-14 | `docs/works/harness/CHORE-20260614-001-post-release-verification.md` |
 
 ## Archived
 
