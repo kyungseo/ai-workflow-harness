@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260614-001
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: release 후 "절차를 따랐는지"가 아니라 "결과가 실제 맞는지"를 검증하는 최소 1줄씩을 기존 절차에 흡수한다. (1) develop↔main sync 결과 검증(`develop..main` empty)은 **generic**이므로 루트 `docs/GIT-WORKFLOW.md` §3-4 + scaffold 템플릿 `scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md` §3-4 양쪽에 범용문으로 추가. (2) release tag 정합(`ai-workflow-v{VERSION}`)은 source-only이므로 `docs/maintainer/VERSIONING.md` §3 step5에만 추가(템플릿 제외). 독립 post-release 절차 블록 신설은 비범위.
 appetite: 0.1d
@@ -67,3 +67,4 @@ related_work: [CHORE-20260613-019]
 
 - v1.2.0 release 직후 post-release 정합을 수동 점검하며 "결과 검증 step 부재"를 발견. 사용자와 "독립 절차는 과잉, 최소 보완" 합의.
 - 사용자 지적으로 scope 보정: sync 검증은 generic → 템플릿 동반, tag 정합은 source-only → VERSIONING만. release-prep §3-0 템플릿 반영도 함께 검토(정합·leak-safe).
+- 2026-06-15 archive: Done 상태로 archive 대기 중이던 항목을 CHORE-20260615-001(Recent Decisions rolling-trim) 작업 중 drain.
