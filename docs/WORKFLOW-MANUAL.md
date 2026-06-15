@@ -892,31 +892,11 @@ scaffold 직후 첫 세션은 `/session-start`로 시작해 `docs/STATUS.md` Nex
 
 ## Appendix C. Language Rules Summary
 
-| 파일 유형 | 언어 | 이유 |
-| --- | --- | --- |
-| `CLAUDE.md` (루트) | 영어 | Claude instruction: token 효율, 준수율 향상 |
-| `.claude/rules/*.md` | 영어 | Claude가 직접 처리하는 규칙 파일 |
-| `.cursor/rules/*.mdc` | 영어 | Cursor가 직접 처리하는 규칙 파일 |
-| `.claude/settings.json` 설정 key와 command 구조 | 영어 | 도구 설정과 shell command |
-| `.claude/settings.json` hook 출력 메시지 | 한국어 (기술 용어는 영어) | 사용자와 세션에 보이는 안내 |
-| `docs/*.md`, `docs/backlog/`, `docs/decisions/` | 한국어 (기술 용어는 영어) | 사람이 읽는 문서 |
-| `.claude/commands/*.md` | 한국어 (기술 용어는 영어) | 사용자가 직접 읽고 수정 |
-| `prompts/*.md` | 한국어 (기술 용어는 영어) | 사용자가 직접 읽고 복사 |
-| Java 인라인 주석 | 한국어 이유 + 영어 기술 용어 | WHY는 한국어, 기술 용어는 영어로 유지 |
+> 언어 정책의 단일 SSoT는 `docs/decisions/DR-007-language-policy.md`다. 아래는 빠른 참조 digest이며, 전체 규칙(파일 유형 표, commit/PR, agent 출력, default/override, Bilingual Rules 4종)과 정책 변경은 DR-007에서 한다.
 
-> **기술 용어 번역 금지:** `@Transactional`, `N+1`, `Circuit Breaker`, `HttpOnly Cookie`, `Plan Mode` 등은 영어 원문을 유지한다.
-
-### Bilingual Rules
-
-"한국어 주 언어" 파일(docs/, commands/, prompts/ 등)에서 한영 혼용 시 다음 4가지 규칙을 준수한다.
-(DR-007 Amended 2026-05-16 공식화 — 상세: `docs/decisions/DR-007-language-policy.md`)
-
-| Rule | 원칙 | 예시 |
-| --- | --- | --- |
-| **Section & Title** | 섹션명·타이틀은 영문 Title Case로 표기, 한국어 번역 사용 금지 | Active Work, Next Steps, Rationale |
-| **Technical Identity** | 기술 스택명·Framework·Architecture 패턴은 영어 원문 유지 | Kubernetes, Microservices, CI/CD, Spring Boot |
-| **Jargon & Metrics** | 실무 관용어·성능 지표는 영문 표기 | Pain Point, Latency, Throughput, Backlog |
-| **Grammar Continuity** | 영문 명사 뒤 한글 조사·어미는 자연스럽게 결합 | "Kafka를 활용하여", "CI/CD Pipeline을 통해" |
+- **영어 전용:** AI가 instruction으로 직접 처리하는 표면 — `CLAUDE.md`·`AGENTS.md`(루트 entry), `.claude/rules/*.md`, `.cursor/rules/*.mdc`, 도구 설정 key·command 구조.
+- **한국어 주체 + Bilingual Rules:** 사람이 읽는 표면 — `docs/*.md`, `.claude/commands/*.md`, `prompts/*.md`, hook 출력 메시지, commit message·PR body.
+- **Bilingual Rules 요지:** 섹션 타이틀·기술 스택명·실무 관용어·성능 지표는 영문 원문을 유지하고, 조사·어미만 한글로 자연스럽게 결합한다. 기술 용어(`@Transactional`, `N+1`, `Circuit Breaker` 등)는 번역하지 않는다. (4종 상세는 DR-007.)
 
 
 ---

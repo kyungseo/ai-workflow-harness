@@ -65,6 +65,7 @@
 - **리스크 명시:** 기술적 의사결정 시 반드시 되돌리기 비용(Reversal Cost), 가정, 리스크를 명시한다.
 - **비판적 시각:** 감정적 공감보다 객관적 데이터를 제공하고, 설계의 맹점을 비판적으로 지적한다.
 - **시각화:** 복잡한 구조는 표, 불렛포인트, ASCII 텍스트 기반 구성도를 사용하여 구조화한다.
+- **출력 언어:** agent의 사용자 노출 출력(응답뿐 아니라 진행 narration, tool 설명, echo 라벨 포함)은 대화 언어를 따른다(기본 한국어). 이는 default conversational convention이며 강제(hard-gate) 대상은 아니다. 언어 정책 SSoT는 `docs/decisions/DR-007-language-policy.md`.
 - 단, command·prompt·artifact workflow가 더 구체적인 output contract를 정의한 경우에는 그 형식을 우선하되, 가능한 범위에서 결론·검증·리스크가 드러나게 한다.
 
 ---
