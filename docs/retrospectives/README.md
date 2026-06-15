@@ -29,8 +29,7 @@ related_work: []
 
 | 날짜 | 파일 | 주제/Scope | 핵심 결론 |
 |------|------|-----------|---------|
-| 2026-05-24 | [harness-pre-public-review-claude-20260524.md](harness-pre-public-review-claude-20260524.md) | 공개 전 최종 리뷰 | tool surface 4방향 정렬 완료, scaffold 실행 검증 후 공개 준비 완료 |
-| 2026-05-24 | [harness-pre-public-review-codex-20260524.md](harness-pre-public-review-codex-20260524.md) | 공개 전 Codex 최종 리뷰 | scaffold 검증 통과, `harness-*` skill 체계 적합, fresh Codex 세션 trigger 확인만 남음 |
-| 2026-06-06 | [harness-workflow-strictness-20260606.md](harness-workflow-strictness-20260606.md) | source repo workflow 엄격성 평가 | solo 관례 대비 엄격하나 이 repo엔 정합·저비용(과설계 아님), finalization gate의 standalone tracking-only 처리 1곳은 보정 가치 |
 | 2026-06-08 | [harness-identity-policy-first-20260608.md](harness-identity-policy-first-20260608.md) | harness 정체성 — policy-first 방향성, orchestration 확장 범위 | workflow engine 아닌 policy document 시스템. orchestration 정책 정의는 harness 역할, 메커니즘 구현은 도구 역할. 기업 확장도 동일 경계 유지 |
 | 2026-06-08 | [harness-distribution-plugin-model-20260608.md](harness-distribution-plugin-model-20260608.md) | scaffold 배포·업그레이드 방식 한계와 plugin 모델 전환 가능성 | plugin 전환 타당하나 지금은 시기상조. 핵심 병목은 upgrade/migration 로직. shell에서 먼저 구현 후 npm wrapping 검토 순서 |
+| 2026-06-15 | [harness-v1-2-readiness-retrospective-20260615.md](harness-v1-2-readiness-retrospective-20260615.md) | v1.2.0 readiness — W1~W5 완료 후 종합 회고 | 내부 조직 표준화 후보로는 강하나 공개 범용 제품성은 아직 무거움. 다음 병목은 managed upgrade와 happy path 압축 |
+| 2026-06-15 | [harness-internal-managed-upgrade-20260615.md](harness-internal-managed-upgrade-20260615.md) | 내부 조직 표준 하네스 운영을 위한 PR 기반 중앙 upgrade 관리 방향성 | PR 기반 중앙 관리는 유망한 가설이나 first walkthrough 전 비교 우위 미검증. source repo 내부 multi-project 방식은 특수 workspace 옵션으로 제한 |

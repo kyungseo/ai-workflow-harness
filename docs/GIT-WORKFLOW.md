@@ -270,6 +270,9 @@ git checkout develop
 git merge origin/main       # develop을 main과 동기화
 git push origin develop
 git status                  # "up to date with 'origin/develop'" 확인
+
+# sync 결과 검증 (절차 수행이 아니라 결과 정합 확인 — git status 보강)
+git log origin/develop..origin/main --oneline   # 비어 있어야 develop이 main과 완전 sync (release tag 정합은 docs/maintainer/VERSIONING.md §3)
 ```
 
 ### 3-5. Hotfix Cycle
@@ -313,7 +316,7 @@ git push origin develop
 
 ## 5. Commit Message Format
 
-Conventional Commits 형식을 따르며, DR-007 Bilingual Rules를 적용한다.
+Conventional Commits 구조를 따른다. **언어는 DR-007이 SSoT**이며 Bilingual Rules를 적용한다(아래는 그 directive 요약).
 
 ```
 <type>: <subject>
@@ -323,14 +326,16 @@ Conventional Commits 형식을 따르며, DR-007 Bilingual Rules를 적용한다
 
 **Type prefix** (항상 영문): `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `style`, `ci`, `config`, `perf`, `build`, `revert`
 
-**Subject line**: 한국어 주체, 기술 용어·식별자는 영문 유지
+**Subject line**: 한국어 주체, 기술 용어·식별자는 영문 유지. Type prefix는 영문이지만, subject 문장은 한국어 독자가 먼저 이해할 수 있게 쓴다.
 
 ```
-docs: GIT-WORKFLOW.md 생성 — Gitflow 브랜치 전략 및 CI 연동 정의
-fix: TokenRedisRepository SCAN 기반 invalidation 제거
+docs: GIT-WORKFLOW.md에 Gitflow 브랜치 전략과 CI 연동 기준 추가
+fix: TokenRedisRepository의 SCAN 기반 invalidation 제거
 ```
 
 **Body**: 한국어 주체, *why* 중심으로 작성. Subject와 빈 줄로 구분.
+
+**PR body**: commit 메시지와 동일하게 DR-007 언어 정책(한국어 주체 + Bilingual Rules)을 따른다.
 
 상세 규칙: `docs/decisions/DR-007-language-policy.md`
 

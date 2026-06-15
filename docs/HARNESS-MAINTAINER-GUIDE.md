@@ -46,12 +46,7 @@ pre-commit / commit-msg hook 설치는 `tools/git-hooks/`가 있는 경우에만
 
 ### Language Policy
 
-DR-007을 따른다.
-
-- Commit type prefix는 English.
-- Commit subject/body는 Korean primary, technical term은 English 허용.
-- Entry instruction과 tool rule은 instruction 준수에 유리한 경우 English를 사용할 수 있다.
-- User-facing Korean 문서는 section 이름과 technical term을 English로 유지한다.
+언어 정책(파일 유형, commit/PR, agent 출력, default/override)은 `docs/decisions/DR-007-language-policy.md`가 단일 SSoT다. 규칙을 여기에 재서술하지 않는다 — DR-007을 따른다.
 
 ### Documentation Style
 

@@ -45,6 +45,8 @@ MUST use Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-l
 
 **Body** — Korean primary with English technical terms inline; explain *why*, not *what*.
 
+**PR body** — same DR-007 language policy as commit messages: Korean primary + Bilingual Rules.
+
 MUST:
 
 - Keep the message specific to the staged or requested change.
