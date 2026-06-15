@@ -832,6 +832,8 @@ done
 command/rule/prompt 파일이 Korean primary 원칙을 따르는지 확인한다.
 완전 영어 문장 또는 영어 주어 사용이 과도한 파일을 탐지한다.
 
+> **DR-007 2026-06-15 scope 확장 반영:** DR-007이 commit message/PR body/agent 출력까지 SSoT로 흡수했다. commit type prefix는 아래에서 탐지하지만, PR body·agent 출력 언어와 한국어 subject는 behavioral(자연어·human-in-loop)이라 deterministic 패턴을 신설하지 않는다(HARNESS-TEST-TAXONOMY F3 보류 기조 유지). 즉 이 cascade trigger에 대한 결론은 "신규 탐지 패턴 없음, 파일 표면 screening 유지"다.
+
 > **이식성:** `[가-힣]` 한글 range는 GNU grep과 BSD grep(macOS 기본) 양쪽에서 동작하나, UTF-8 locale(`LC_CTYPE`/`LANG`이 `*.UTF-8`)을 전제한다. `grep -P`(PCRE)는 BSD grep에서 `invalid option`으로 실패하므로 사용하지 않는다.
 
 ```bash

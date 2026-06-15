@@ -33,12 +33,15 @@ Available workflow skills are the directories under `.agents/skills/`.
 
 If the matched skill intent is uncertain or multiple skills are equally plausible, confirm the interpreted intent in one line before loading a skill. Do not silently pick one and execute.
 
-## Document Language Policy
+## Language Policy
 
-When creating or editing any document, prompt, command, rule, or hook message — confirm DR-007 applies.
+`docs/decisions/DR-007-language-policy.md` is the single SSoT for language. When creating or editing any document, prompt, command, rule, hook message, **commit message, or PR body** — confirm DR-007 applies.
 
 - **English Only:** `AGENTS.md`, `CLAUDE.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`
 - **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `skills/workflow/*.md`, `.claude/commands/*.md`, `.agents/skills/*/SKILL.md`
+- **Commit message:** English type prefix; Korean-primary subject/body (Bilingual Rules); English co-author trailer.
+- **PR body:** Korean-primary + Bilingual Rules.
+- **Agent user-facing output** (progress narration, tool descriptions, echo labels): follow the conversation language (default Korean). Default conversational convention, not a hard gate.
 
 Full policy: `docs/decisions/DR-007-language-policy.md`
 

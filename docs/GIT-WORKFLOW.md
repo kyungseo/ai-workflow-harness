@@ -316,7 +316,7 @@ git push origin develop
 
 ## 5. Commit Message Format
 
-Conventional Commits 형식을 따르며, DR-007 Bilingual Rules를 적용한다.
+Conventional Commits 구조를 따른다. **언어는 DR-007이 SSoT**이며 Bilingual Rules를 적용한다(아래는 그 directive 요약).
 
 ```
 <type>: <subject>
@@ -334,6 +334,8 @@ fix: TokenRedisRepository의 SCAN 기반 invalidation 제거
 ```
 
 **Body**: 한국어 주체, *why* 중심으로 작성. Subject와 빈 줄로 구분.
+
+**PR body**: commit 메시지와 동일하게 DR-007 언어 정책(한국어 주체 + Bilingual Rules)을 따른다.
 
 상세 규칙: `docs/decisions/DR-007-language-policy.md`
 

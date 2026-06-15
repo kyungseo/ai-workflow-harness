@@ -11,6 +11,10 @@ Linked DRs: DR-007, DR-021, DR-029
 
 모국어(한국어) 사용자와 영어권 사용자 모두에게 효율적인 언어 규정을 어떻게 가져갈 것인가? DR-007은 *source repo의 파일 유형별 언어*(Korean primary + 영어 전용 entry/rule)를 정의하지만, *adopter-facing / scaffold 출력 언어(i18n)* 층위는 다루지 않는다. 이 층위의 정책을 어떻게 정할 것인가?
 
+## Scope Boundary Update (2026-06-15)
+
+DR-007이 2026-06-15 amend로 **현재 효력을 가진 운영 언어 규칙의 단일 SSoT**가 되었다: 파일 유형 + commit message/PR body/agent 출력(behavioral) + "default 한국어 주체 / 단일 override 지점" 선언을 모두 흡수했다(CHORE-20260615-002). 따라서 본 DR의 범위는 **미결 전략 결정만** 남는다 — 1차 청중(primary audience), 양방향 i18n 수요 signal, scaffold 언어 출력 메커니즘(`--lang` 등). 운영 규칙 재서술·override 선언은 DR-007 소관이며 본 DR에서 다루지 않는다. (Open Point "DR-007 amend 범위"는 본 update로 해소 — adopter override 선언까지가 amend 범위였다.)
+
 ## Options Considered
 
 | 선택지 | 장점 | 단점 |
@@ -24,16 +28,16 @@ Linked DRs: DR-007, DR-021, DR-029
 
 ## Open Points
 
+> 아래는 **여전히 미결인 전략 항목만** 남긴다. (2026-06-15 정리: "DR-007 amend 범위"와 "HARNESS.md P2(1)"은 위 Scope Boundary Update로 종결 — amend는 운영 규칙 + adopter override 선언까지였고, P2(1)은 이미 backlog에서 제거됨.)
+
 - 1차 청중(primary audience)을 누구로 둘 것인가? (전략 결정, 미결)
 - 양방향 i18n 수요의 실제 signal이 존재하는가? (현재 미확인 — 선제적 가설인지 확인 필요)
-- 본 DR 채택 시 DR-007을 amend할 범위는?
-- ③ `--lang` 옵션을 택할 경우 artifact 2벌의 maintenance 비용을 어디까지 감내할 것인가?
-- HARNESS.md P2(1) "DR-007 rule scope 명확화"를 본 DR에서 어떻게 흡수·결정할 것인가? (`.claude/rules/*`가 DR-007 대상인지, 대상이면 처리)
+- ③ `--lang` 옵션 등 mirror 자동 동기화/생성 메커니즘을 택할 경우 artifact 유지 비용을 어디까지 감내할 것인가?
 
 ## Promotion Conditions
 
 - 1차 청중과 수요 signal에 대한 판단이 내려지고, 옵션 ①~④ 중 택1(또는 조합)이 확정될 때 Accepted로 승격한다.
-- 승격 시 작성: `Decision`(택한 옵션), `Rationale`, `Consequences`(DR-007 amend 범위, 선택 시 scaffold `--lang` 구현 backlog 등록, P2(1) 처리 결과).
+- 승격 시 작성: `Decision`(택한 옵션), `Rationale`, `Consequences`(선택 시 scaffold `--lang`/mirror 동기화 메커니즘 구현 backlog 등록). DR-007 amend 범위·P2(1)은 본 Draft 단계에서 이미 종결(위 Scope Boundary Update).
 
 ## Decision
 

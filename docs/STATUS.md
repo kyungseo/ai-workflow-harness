@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-15 (CHORE-20260615-001 Recent Decisions rolling-8 trim)
+Last updated: 2026-06-15 (CHORE-20260615-002 언어 정책 DR-007 SSoT 통합)
 
 ## Current State
 
@@ -37,6 +37,7 @@ Last updated: 2026-06-15 (CHORE-20260615-001 Recent Decisions rolling-8 trim)
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-15 | CHORE-20260615-002 / DR-007 amend: 언어 정책을 DR-007 단일 authoritative SSoT로 통합 — Non-File Surfaces(commit/PR/agent console behavioral)+Default·Override 흡수, 산재 정의 정리(MAINTAINER-GUIDE=pure pointer, WORKFLOW-MANUAL Appendix C=최소 digest, GIT-WORKFLOW §5/rules=directive+pointer), AGENTS.md commit/PR/console inline(Codex 도달 fix), BEHAVIOR §5 console convention, README adopter note. DR-030은 전략-only로 경계 정리(Draft). Cross-agent(A=Claude/B=Codex) R1~R3: B P1(단일 override 모순)·P2(DR-030 내부 모순) 수용→DR-007 "authoritative SSoT+mirror 목록 규정"으로 재구성. 릴리즈=독립 PATCH(정합성 복구). 사용자 최종 승인 | Medium |
 | 2026-06-14 | CHORE-20260614-001: post-release 결과 검증 최소 보완 — release "절차 수행"이 아니라 "결과 정합"을 잡는 1줄씩을 기존 절차에 흡수. sync 검증(`develop..main` empty)은 generic이라 루트 `GIT-WORKFLOW.md` §3-4 + scaffold 템플릿 §3-4 양쪽에 범용문, tag 정합(`ai-workflow-v{VERSION}`)은 source-only라 `VERSIONING.md` §3 step5에만. 독립 절차 블록 신설은 과잉으로 기각(§3-4/§2-5/VERSIONING 중복). release-prep §3-0 템플릿 반영도 leak-safe 재확인. Claude red-team(plan+result)+사용자 승인 | Low |
 | 2026-06-13 | CHORE-20260613-020: W1~W5 완료 후 전체 정렬 검토 — `HARNESS-MAINTAINER-GUIDE.md` §5 Validation에 validation spine runner row, §9에 version-release sweep pointer(§3-1/Release Full Sweep/VERSIONING) 추가, `VERIFICATION-COMMANDS.md` scripts/tests cascade note를 3→6 스크립트로 현행화. 산출물 역추적 매트릭스(검증스크립트 6×3 문서, DR 30/30, command 등재) 검증 — gap은 MAINTAINER-GUIDE에 집중, README 2건(PLAN-SUMMARY/SCAFFOLD-BOOTSTRAP)은 의도된 제외/무관으로 비범위. **CHORE-20260613-017/018/019 archive 처리 동반.** Claude red-team(plan+result)+사용자 승인 | Low |
 | 2026-06-13 | CHORE-20260613-019: release 검증 두 체계 연결 — 루트 `GIT-WORKFLOW.md` §3-1 Public Clean Baseline Gate에 `Validation spine`(`run-harness-checks.sh --all`)·`Surface sweep`(Release Full Sweep P0/P1=0) evidence row 추가 + §3-1↔Release Full Sweep 상호 pointer. scaffold 템플릿은 의도적 분리 유지(adopter §3-1 미변경), CI/pre-commit 무배선(DR-036). Claude self red-team(plan+result) + 사용자 승인 | Low |
@@ -44,7 +45,6 @@ Last updated: 2026-06-15 (CHORE-20260615-001 Recent Decisions rolling-8 trim)
 | 2026-06-13 | CHORE-20260613-017: `Validation Spine residual F1` — Layer J-OB(OB0/OB1/OB3/OB4/OB5) + Layer Q core를 `check-onboarding-flows.sh`로 deterministic 승격, Layer J는 human-run catalog 유지, J~S `/tmp/awh-*`→`temp/harness-tests/` 정렬 완료. backlog F1 ✅종결, F3/F4만 잔존. Claude R0/R1 승인 | Low |
 | 2026-06-13 | CHORE-20260613-016: `CI inline assertion ↔ invariants SSoT parity`를 **no-action with explicit rationale**로 종결하고 archive 처리 | Phase 1 분류 결과 CI inline assertions와 `check-scaffold-invariants.sh`는 "같은 검사의 중복 구현"보다 "같은 scaffold surface를 다른 altitude에서 본다"에 가깝고, 실제 overlap이 작아 parity helper/partial convergence가 boundary를 흐릴 가능성이 더 컸기 때문. invariant-only [1]/[3]/[4]는 maintainer-facing structural correctness라 CI required gate 대상이 아님. Claude R0/R1 승인 | Low |
 | 2026-06-13 | CHORE-20260613-015: default template canonical parity guard를 `scripts/tests/check-default-template-parity.sh` + `run-harness-checks.sh --tier0`로 추가하고, related archive pending Work `CHORE-20260613-014`와 함께 archive 처리 | default tracked template pair(`workflow.mdc`, `git-workflow.md`)가 canonical 변경 후 조용히 stale해지는 drift를 source-level deterministic check로 즉시 드러내고, live Work queue를 archive-side index 기준으로 정리하기 위해. Claude R0/R1 review 승인 | Low |
-| 2026-06-13 | CHORE-20260613-013 / DR-038: Archive 누적 관리 정책 종결 — 누적 cost≈0(archive 미로드) 정량 확인, 유일 실비용인 live README hot-path 인덱스(106행)를 archive-side mirrored README로 이전. retention=keep-all(prune/rollup/미이동 기각), 전 category 일관, works/harness outlier를 decisions/retro 기존 패턴에 정합. cascade(DR-016/013 amend, HARNESS-PROTOCOL, work-close/plan, repo-health, scaffold) 정렬 | live working 파일에 무한 증가 archived 인덱스를 두는 구조 모순 해소 + backlog 항목·AWH-OQ-001 종결. tier2 검증 중 pre-existing scaffold cursor manifest-src 버그를 발견·등록. Claude self red-team R0/result review | Medium |
 
 ## Next Actions
 

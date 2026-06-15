@@ -65,6 +65,8 @@ Follow Conventional Commits with Bilingual Rules (per `docs/decisions/DR-007-lan
 
 **Co-author trailer** — always in English (system-generated, do not translate).
 
+**PR body** — same DR-007 language policy as commit messages: Korean primary + Bilingual Rules.
+
 ## Branch Flow
 
 When the user expresses branch merge intent (merging, opening a PR),

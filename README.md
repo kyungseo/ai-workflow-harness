@@ -232,6 +232,8 @@ scripts/create-harness.sh --check /path/to/my-app
 
 scaffold 직후에는 생성된 project directory에서 `/session-start`로 첫 세션을 시작합니다. `docs/STATUS.md`의 Next Actions가 bootstrap onboarding을 가리키면 `docs/BOOTSTRAP.md`를 채워 Product Definition, Implementation Baseline, product backlog를 정리합니다.
 
+**생성되는 artifact의 언어:** 이 harness가 생성하는 문서·rule·commit/PR 규칙은 기본적으로 **한국어 주체 + Bilingual Rules**(기술 용어는 영어)로 작성됩니다. 조직·팀의 주 언어가 다르면 [`docs/decisions/DR-007-language-policy.md`](docs/decisions/DR-007-language-policy.md)(언어 정책 SSoT)를 따라 정책을 바꿀 수 있습니다. 단 entry/rule surface에 directive가 inline되어 있어 한 파일 수정만으로는 적용되지 않으며, DR-007이 **함께 수정할 surface 목록**을 규정합니다.
+
 자세한 첫 세션 절차는 [docs/SCAFFOLD-ONBOARDING-GUIDE.md](docs/SCAFFOLD-ONBOARDING-GUIDE.md)를 보세요. source repository를 유지보수하는 사람이라면, user-facing 문서만 읽지 말고 아래 [Maintainer reference documents](#maintainer-reference-documents)도 함께 확인하세요.
 
 <details>
@@ -465,6 +467,7 @@ main
 | canonical workflow 절차 | [skills/workflow/](skills/workflow/) |
 | 현재 상태 dashboard | [docs/STATUS.md](docs/STATUS.md) |
 | Harness backlog | [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) |
+| 언어 정책 (단일 SSoT) | [docs/decisions/DR-007-language-policy.md](docs/decisions/DR-007-language-policy.md) |
 | Decision Records | [docs/decisions/](docs/decisions/) |
 
 <details>
