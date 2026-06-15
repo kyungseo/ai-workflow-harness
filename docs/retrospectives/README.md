@@ -29,7 +29,6 @@ related_work: []
 
 | 날짜 | 파일 | 주제/Scope | 핵심 결론 |
 |------|------|-----------|---------|
-| 2026-06-08 | [harness-identity-policy-first-20260608.md](harness-identity-policy-first-20260608.md) | harness 정체성 — policy-first 방향성, orchestration 확장 범위 | workflow engine 아닌 policy document 시스템. orchestration 정책 정의는 harness 역할, 메커니즘 구현은 도구 역할. 기업 확장도 동일 경계 유지 |
-| 2026-06-08 | [harness-distribution-plugin-model-20260608.md](harness-distribution-plugin-model-20260608.md) | scaffold 배포·업그레이드 방식 한계와 plugin 모델 전환 가능성 | plugin 전환 타당하나 지금은 시기상조. 핵심 병목은 upgrade/migration 로직. shell에서 먼저 구현 후 npm wrapping 검토 순서 |
 | 2026-06-15 | [harness-v1-2-readiness-retrospective-20260615.md](harness-v1-2-readiness-retrospective-20260615.md) | v1.2.0 readiness — W1~W5 완료 후 종합 회고 | 내부 조직 표준화 후보로는 강하나 공개 범용 제품성은 아직 무거움. 다음 병목은 managed upgrade와 happy path 압축 |
-| 2026-06-15 | [harness-internal-managed-upgrade-20260615.md](harness-internal-managed-upgrade-20260615.md) | 내부 조직 표준 하네스 운영을 위한 PR 기반 중앙 upgrade 관리 방향성 | PR 기반 중앙 관리는 유망한 가설이나 first walkthrough 전 비교 우위 미검증. source repo 내부 multi-project 방식은 특수 workspace 옵션으로 제한 |
+
+> 토론·방향성(brief) 성격의 live 문서는 `docs/briefs/`로 재분류됐다(2026-06-15). 인덱스: [`docs/briefs/README.md`](../briefs/README.md). 이동 대상: harness-identity-policy-first, harness-distribution-plugin-model, harness-internal-managed-upgrade, harness-workflow-engine-vs-manual-first.
