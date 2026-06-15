@@ -73,9 +73,9 @@ semver는 adopter가 소비하는 표면(scaffold output 구조, command/skill s
 
 ## 5. 릴리즈 노트 템플릿
 
-GitHub Release 본문은 아래 구조를 따른다. 전문 지식 없이도 읽히도록 user-friendly하게 쓰고, impact 큰 항목을 강조하며, PR/commit 번호는 넣지 않는다. 항목당 1~2줄.
+GitHub Release 본문은 아래 구조를 따른다. 전문 지식 없이도 읽히도록 user-friendly하게 쓰고, impact 큰 항목을 강조하며, PR/commit 번호는 넣지 않는다. 항목당 1~2줄. `검증` 섹션은 항상 포함한다.
 
-```
+````markdown
 ## <project> vX.Y.Z (YYYY-MM-DD)
 
 <이번 릴리즈가 무엇을 바꾸는지 한 줄 요약>
@@ -95,14 +95,31 @@ GitHub Release 본문은 아래 구조를 따른다. 전문 지식 없이도 읽
 ### ⚠️ 호환성 주의 (기존 사용자)   ← breaking·마이그레이션이 있을 때만
 - ...
 
+### ✅ 검증
+```bash
+# 예시: 실제로 실행한 핵심 검증 명령
+bash scripts/tests/run-harness-checks.sh --all
+git diff --check
+git ls-remote --heads origin develop
+git tag -l "ai-workflow-v$(cat VERSION)"
+```
+
+- Validation spine: ...
+- release diff hygiene: ...
+- post-release result check: ...
+
 ### 📜 전체 변경 내역
 vA.B.C...vX.Y.Z
-```
+````
 
 작성 원칙:
 
 - **핵심 변화를 맨 위에** 둬 독자가 릴리즈의 가치를 먼저 본다. 호환성 주의는 마지막(전체 변경 내역 직전)에 둬 영향받는 기존 사용자가 놓치지 않게 한다.
 - **호환성 주의**는 breaking·마이그레이션이 있을 때만 포함하고, 구체적 영향과 대응(예: "예전 이름 직접 호출 불가", "수동 마이그레이션 필요")을 적는다.
+- **검증 섹션은 필수**다. 해당 릴리즈의 출하 판단 근거로 실제 실행한 최종 검증 명령 전체를 빠짐없이 남긴다.
+- 검증 command는 예시가 아니라 **해당 릴리즈에서 실제 실행한 명령**이어야 하며, 문장 안에 길게 나열하지 말고 반드시 fenced code block (`bash`)으로 감싼다.
+- 탐색·디버깅·재시도 과정의 보조 명령은 제외하고, 출하 판단에 사용한 최종 evidence set만 적는다.
+- code block 아래에는 각 검증의 핵심 결과를 1~2줄로 요약한다. raw output 전체는 붙이지 않는다.
 - 항목은 **사용자 관점 효익**으로 쓰고 PR/commit 번호·내부 식별자는 생략한다. 상세가 필요한 독자는 "전체 변경 내역"의 compare 링크로 보낸다.
 - 섹션 사이 수평선(`---`)은 쓰지 않는다. `###` 헤더로 충분하다.
 - semver상 MINOR라도 breaking을 포함할 수 있다(DR-028 §현 단계 정책). 그 경우 호환성 주의에 반드시 명시한다.
