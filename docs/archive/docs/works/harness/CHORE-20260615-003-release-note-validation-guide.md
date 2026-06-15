@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260615-003
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: `docs/maintainer/VERSIONING.md`의 릴리즈 노트 템플릿을 보강해 `검증` 섹션을 필수화하고, 검증 command를 fenced code block으로 표기하는 가이드를 추가한다. `docs/GIT-WORKFLOW.md`와의 릴리즈 절차 포인터 정합만 확인하며, 새 release 메커니즘이나 i18n 전략 변경은 다루지 않는다.
 appetite: 0.25d
@@ -77,3 +77,4 @@ Trigger: backlog의 `릴리즈 노트 검증 섹션 필수화 + command code-blo
 - `GIT-WORKFLOW.md`의 release-note pointer는 그대로 유효했다. 이번 변경은 pointer 대상인 `VERSIONING.md` 템플릿만 보강하므로 추가 cascade 수정은 필요하지 않았다.
 - 후속 정교화로 "`검증` 섹션의 command는 예시가 아니라 해당 릴리즈의 실제 최종 evidence set 전체"라는 기준을 채택했다. 대신 탐색·디버깅·재시도 명령은 제외해 릴리즈 노트가 승인 근거 중심으로 유지되게 한다.
 - closeout 시 `STATUS.md` Active Work는 애초에 비어 있었으므로 pointer add/remove churn 없이 `Recent Decisions`만 갱신한다. 이 Work는 archive pending `Done` 상태로 유지한다.
+- 2026-06-15: closeout 후 archive 처리. `status: Archived`로 전환하고 `docs/archive/docs/works/harness/`로 이동, live index에서 제거하고 archive-side index에 등재한다.

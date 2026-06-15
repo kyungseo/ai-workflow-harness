@@ -12,8 +12,6 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260615-004 | Brief taxonomy + retrospective reclassification | 2026-06-15 | `docs/works/harness/CHORE-20260615-004-brief-reclassification.md` |
-| CHORE-20260615-003 | Release note validation section + command code-block guide | 2026-06-15 | `docs/works/harness/CHORE-20260615-003-release-note-validation-guide.md` |
 
 ## Archived
 

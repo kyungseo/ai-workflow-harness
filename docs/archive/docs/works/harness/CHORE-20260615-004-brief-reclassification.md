@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260615-004
 priority: P1
-status: Done
+status: Archived
 actual_end: 2026-06-15
 risk: L2
 scope: `docs/briefs/`를 live category로 공식화하고, 기존 방향성 문서를 retrospective에서 brief로 재분류하며, `/work-brief` surface·core protocol·user-facing docs·scaffold까지 최소 cascade를 맞춘다. 이미 진행된 변경을 소급 추적하며, Claude review round로 분류 정합과 과잉 주장 여부를 다시 검토한다.
@@ -184,3 +184,4 @@ Claude review 요청 시 우선 확인할 변경 군집:
 - 2026-06-15: user가 추가로 언급한 `README/manual/guide`, `scaffold`는 이미 이번 diff에서 반영 대상이었다. 따라서 새 review에서는 이 두 축을 "추가 작업 제안"이 아니라 "이미 반영된 군집 검토"로 다루는 편이 맞다.
 - 2026-06-15: Claude R1 결과는 Approved이며 must-fix는 없었다. 남은 F1~F3는 모두 low로, 현재 commit을 막지 않는 polish/판단 항목으로 분류한다.
 - 2026-06-15: `/work-brief` default ship 여부는 `/work-doc`와 달리 "문서 산출물 생성"이 아니라 "live 문서 분류 triage" 성격이 강하다는 차이로 방어 가능하다고 판단했다. 다만 이 판단은 향후 command surface diet 논의에서 다시 열 수 있다.
+- 2026-06-15: closeout(PR #196 merge) 후 archive 처리. `status: Archived`로 전환하고 `docs/archive/docs/works/harness/`로 이동, live index에서 제거하고 archive-side index에 등재한다.
