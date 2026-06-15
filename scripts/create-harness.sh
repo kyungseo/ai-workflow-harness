@@ -376,6 +376,7 @@ for dir in \
   "${TARGET_ROOT}/docs/archive" \
   "${TARGET_ROOT}/docs/archive/docs/works" \
   "${TARGET_ROOT}/docs/archive/snapshots" \
+  "${TARGET_ROOT}/docs/briefs" \
   "${TARGET_ROOT}/docs/retrospectives" \
   "${TARGET_ROOT}/docs/reports" \
   "${TARGET_ROOT}/docs/presentations" \
@@ -1263,6 +1264,42 @@ Harness track 작업 인덱스다.
 touch_file "${TARGET_ROOT}/docs/archive/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/archive/docs/works/.gitkeep"
 touch_file "${TARGET_ROOT}/docs/archive/snapshots/.gitkeep"
+write_text "${TARGET_ROOT}/docs/briefs/README.md" "# Briefs
+
+방향 비교, 경계 정리, 포지션 문서 인덱스.
+
+brief는 \"무슨 일이 있었고 무엇을 배웠는가\"를 남기는 회고가 아니라,
+\"지금 어떤 방향/옵션/경계가 더 타당한가\"를 비교·정리하는 문서다.
+Accepted 결정 자체는 \`docs/decisions/DR-*.md\`가 맡고, 세션/Phase/incident 회고는 \`docs/retrospectives/\`가 맡는다.
+
+## 분류 기준
+
+| 유형 | 경로 | 핵심 질문 |
+| --- | --- | --- |
+| Brief | \`docs/briefs/\` | \"지금 어떤 방향/포지션/옵션 비교가 더 타당한가?\" |
+| Retrospective | \`docs/retrospectives/\` | \"최근 실제로 무엇이 있었고, 무엇을 배웠는가?\" |
+| Decision Record | \`docs/decisions/DR-*.md\` | \"무엇을 최종 결정했고, 왜 되돌리기 비용이 있는가?\" |
+
+## Frontmatter 스펙
+
+\`\`\`yaml
+---
+date: YYYY-MM-DD
+track: harness | product
+type: {e.g. strategy, position, comparison, process, …}
+scope: {무엇을 비교/정리하는지 한 줄}
+author: \"agent:{model-name} | human\"
+related_work: []
+---
+\`\`\`
+
+\`type\`: 예시 목록이며 열거형으로 제한하지 않는다.
+
+## 인덱스
+
+| 날짜 | 파일 | 주제/Scope | 핵심 결론 |
+|------|------|-----------|---------|
+"
 write_text "${TARGET_ROOT}/docs/retrospectives/README.md" "# Retrospectives
 
 회고 인덱스.
@@ -1286,6 +1323,8 @@ related_work: []
 \`type\`: 예시 목록이며 열거형으로 제한하지 않는다.
 
 섹션 구성 최솟값: **결론** (필수) → 내용 (자유) → **Revisit Triggers** (권장) → **연결** (해당 시)
+
+> 토론·방향성 문서는 \`docs/briefs/\`를 사용한다.
 
 ## 인덱스
 

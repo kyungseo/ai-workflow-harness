@@ -65,7 +65,7 @@ AI Workflow Harness backlog다.
 **Dependencies:**
 
 - CHORE-20260611-010에서 정리한 upgrade/migration 메커니즘과 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer T
-- `docs/retrospectives/harness-internal-managed-upgrade-20260615.md`의 Candidate A 판단
+- `docs/briefs/harness-internal-managed-upgrade-20260615.md`의 Candidate A 판단
 - 실제 adopter target 접근 가능 여부와 current target 상태 확인
 - 필요 시 `docs/maintainer/migrations/*.md` note 보강
 

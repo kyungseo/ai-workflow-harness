@@ -57,7 +57,7 @@ Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 
 | **Deep-Dive Evidence / L3 Specs** | `docs/PLAN.md` |
 | **Governance Records** | 관련 의사결정 기록: `docs/decisions/DR-*.md` |
 | **Harness / Protocol Specifics** | `docs/HARNESS-PROTOCOL.md` |
-| **Retrospective Reflection** | `docs/retrospectives/` 내 관련 파일 1개 |
+| **Retrospective / Brief Reflection** | `docs/retrospectives/` 또는 `docs/briefs/` 내 관련 파일 1개 |
 | **Root Cause / Incident Resolution** | 관련 `docs/troubleshooting/` 에셋 |
 
 ### 2.2 Dynamic Web Research

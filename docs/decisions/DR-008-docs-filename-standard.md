@@ -53,6 +53,7 @@ Status: Accepted
 | `docs/archive/docs/` | DR-014 mirror 예외 | archive mirror는 원본 상대 경로와 파일명을 보존해야 추적성이 높음 |
 | `docs/archive/snapshots/` | lowercase topic-date 유지 | snapshot bundle은 사람이 읽는 시점 기록이므로 root 문서 규칙과 분리함 |
 | `docs/retrospectives/` | lowercase topic-date 유지 | 회고 문서는 시계열 기록이며 대량 rename 이익이 낮음 |
+| `docs/briefs/` | lowercase topic-date 유지 | 방향/비교 문서도 시계열 비교와 링크 안정성이 중요해 동일 규칙이 적합함 |
 | `docs/presentations/` | 산출물 naming 유지 | generated artifact와 deck version 이름은 presentation workflow가 관리함 |
 | `docs/VSCode-DevContainer구조.png` | 기존 media 예외로 유지 | 비문서 이미지 asset이며 rename 대비 참조·의미 개선 효과가 낮음 |
 | `.DS_Store` | ignore 상태 확인 | git tracked 파일이 아니며 `.gitignore`가 제외함 |

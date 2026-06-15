@@ -427,6 +427,7 @@ AI는 조건이 충족되어도 파일을 자동으로 수정하지 않습니다
 | `/work-plan {ID\|title-or-slug}` | 특정 작업 시작 | Work 파일 확인, risk 판단, plan 승인 대기 |
 | `/work-resume {ID}` | 중단 작업 재개 | 실제 파일 상태와 STATUS·Work 파일 불일치 확인 |
 | `/work-debug` | 오류 분석 | 원인 근거와 최소 수정 계획 |
+| `/work-brief` | 방향 비교·문서 분류 정리 | brief 작성 또는 retrospective/decision과의 경계 정리 |
 | `/work-doc` | 발표·보고·review package | brief, source, format, quality bar 확인 |
 | `/record-decision` | 결정 기록 | DR 초안 작성 |
 | `/work-close` | Work 완료 | Done 처리와 선택적 archive |
@@ -467,6 +468,7 @@ main
 | canonical workflow 절차 | [skills/workflow/](skills/workflow/) |
 | 현재 상태 dashboard | [docs/STATUS.md](docs/STATUS.md) |
 | Harness backlog | [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) |
+| 방향 비교 / 포지션 문서 | [docs/briefs/README.md](docs/briefs/README.md) |
 | 언어 정책 (단일 SSoT) | [docs/decisions/DR-007-language-policy.md](docs/decisions/DR-007-language-policy.md) |
 | Decision Records | [docs/decisions/](docs/decisions/) |
 
@@ -513,6 +515,7 @@ main
 │   ├── WORKFLOW-MANUAL.md                 # 사용자용 workflow manual
 │   ├── SCAFFOLD-ONBOARDING-GUIDE.md       # scaffold 온보딩 가이드
 │   ├── backlog/                           # 후보 작업
+│   ├── briefs/                            # 방향 비교·포지션 문서
 │   ├── decisions/                         # Decision Records
 │   ├── maintainer/                        # source-only maintainer reference
 │   └── works/                             # Work 파일

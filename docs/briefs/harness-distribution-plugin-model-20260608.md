@@ -230,7 +230,7 @@ Approval Matrix, commit gate, Work tracking, DR 체계 — 이것들은 **팀의
 
 ## 연결
 
-- Q4 질문 원문 및 정체성 논의: [`docs/retrospectives/harness-identity-policy-first-20260608.md`](harness-identity-policy-first-20260608.md)
+- Q4 질문 원문 및 정체성 논의: [`docs/briefs/harness-identity-policy-first-20260608.md`](harness-identity-policy-first-20260608.md)
 - 선행 과제: `docs/backlog/HARNESS.md` — "Harness upgrade/migration 메커니즘" (P1 Candidate)
   - selective migration 로직, version marker, backup 정책, dry-run/apply 경로
 - 관련 문서: `docs/maintainer/migrations/canonical-adapter-rename.md` — 현재 upgrade가 수동인 상황에서 target maintainer가 참조하는 migration note. upgrade 자동화 시 이 문서의 역할도 재정의 필요
