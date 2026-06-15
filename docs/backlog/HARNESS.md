@@ -43,7 +43,7 @@ AI Workflow Harness backlog다.
 | — | P1 | Candidate | L2 | First concrete product planning-pack exercise + import candidate review |
 | — | P2 | Candidate | L3 | Internal managed mode design note + target guardrails (post-walkthrough gate) |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
-| — | P3 | Candidate | L2 | Approval Matrix sub-agent autonomy policy |
+| — | P3 | Candidate | L2 | Sub-agent/Main Agent Authority Boundary |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P3 | Candidate | L3 | Packaging / distribution revisit after upgrade logic proof |
 | HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
@@ -182,21 +182,22 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### Approval Matrix sub-agent autonomy policy
+#### Sub-agent/Main Agent Authority Boundary
 
 **Cluster:** W5. Future / Optional
 
-**Task:** sub-agent / delegated agent 환경에서 Approval Matrix를 어떻게 계층화할지 정책을 정리한다. 핵심은 메커니즘 구현이 아니라 policy다. 예: sub-agent가 위임된 L1 범위 안에서 무엇을 자율로 할 수 있는지, 범위를 넘으면 primary agent에 어떻게 escalate하는지, sub-agent 산출물에 Work tracking / DR / commit gate를 어떻게 적용할지 명시한다. 이 후보는 trigger 전까지 dormant한 future candidate로 둔다.
+**Task:** sub-agent / delegated agent 환경에서 **sub-agent와 main agent의 권한 경계**를 decision-only로 정리한다. 핵심은 메커니즘 구현이 아니라 policy다. sub-agent의 `write/propose` 경계, main agent의 `proposal / conditional approval / final approval` 가능 범위, human final approval 기본 유지 여부와 예외 조건, 그리고 이 차이를 어디에 인코딩할지(spawn prompt / delegation contract / tool 호출 규약)를 명시한다. 또한 single-session 병렬성의 기본 전제로 `disjoint task + isolated worktree`를 둘지 함께 정리한다. 이 후보는 trigger 전까지 dormant한 future candidate로 둔다.
 
 **Dependencies:**
 
 - `docs/briefs/harness-identity-policy-first-20260608.md`의 sub-agent autonomy / policy-mechanism 경계
+- `docs/briefs/harness-sub-agent-concurrency-and-multi-user-tracking-20260616.md`
 - current `docs/AGENT-WORKFLOW.md` Approval Matrix와 Work/DR tracking 규칙
 - 실제 sub-agent 기능이 실용 단계에 들어오는지 여부
 
-**Done Criteria:** sub-agent 자율 범위에 대한 최소 정책 초안이 생기고, "spawn/how" 같은 메커니즘과 "who may approve what" 같은 policy가 분리된다. sub-agent가 PR을 직접 열 수 있는지, human escalation 경계가 어디인지, multi-agent 결과물에도 같은 tracking/approval 규칙을 적용할지 명시한다. trigger 전에는 dormant candidate로 유지된다.
+**Done Criteria:** sub-agent와 main agent의 최소 authority boundary 초안이 생기고, "spawn/how" 같은 메커니즘과 "who may propose/approve/finalize what" 같은 policy가 분리된다. sub-agent가 tracking surface를 직접 write할 수 있는지, main agent가 어떤 조건에서 conditional approval까지 맡을 수 있는지, human final approval을 어디까지 기본값으로 유지할지, multi-agent 결과물의 evidence relay와 escalation 경계가 어디인지 명시한다. multi-user source repo와 internal managed cross-repo는 신규 정책으로 재정의하지 않고 pointer로만 연결된다. trigger 전에는 dormant candidate로 유지된다.
 
-**Verification:** policy matrix review, existing Approval Matrix와 충돌 여부 점검, tool-specific mechanism 비침범 확인. Surface: canonical · tool surface · README/GUIDE/MANUAL.
+**Verification:** policy matrix review, existing Approval Matrix와 충돌 여부 점검, authority encoding surface 후보 검토, `disjoint task + isolated worktree` 전제 하에서 어떤 위험이 줄고 어떤 것은 남는지 점검. Surface: canonical · tool surface · README/GUIDE/MANUAL.
 
 ---
 
