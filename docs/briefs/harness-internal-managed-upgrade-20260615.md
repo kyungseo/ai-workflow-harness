@@ -291,6 +291,38 @@ ai-workflow-harness/
 
 실제 제품 운영의 기본 모델은 독립 target repo + 중앙 PR 관리가 더 낫다.
 
+### 8.1 Option 3 변형 — harness-detached central build (code-only target)
+
+> 추가 경위: 이 항은 §12 Claude R1 Approved 이후, 2026-06-16 user 질문에 대한 평가다 — "product repo에는 하네스를 심지 않고, 중앙 source repo가 외부 product repo에 접근해 구현 작업을 진행하며, product-owned 문서만 별도 체계로 관리하는 옵션은 가능한가." Claude 초안 후 author(Codex) 확인 완료 — Medium/Low 2건 반영(3b를 "모순"이 아니라 harness 경계 밖 운영 모델로 재서술, propagation 부담 표현을 target-side asset 한정으로 정밀화). 핵심 논지(Option 2보다 약한 변형, finalization causality·history independence가 핵심 반대 근거)는 유지.
+
+이 변형은 Option 1·2와 asset 배치가 다르다.
+
+| 구분 | 하네스 asset | product code | tracking truth(STATUS/Work/DR) |
+| --- | --- | --- | --- |
+| Option 1 (PR 기반) | target repo에 심음 | target repo | target repo (코드와 한 곳) |
+| Option 2 (monorepo) | source repo | source repo `projects/` | source repo |
+| Option 3 (detached) | source repo(중앙) | 외부 product repo(코드만) | 중앙으로 분리 — 핵심 쟁점 |
+
+매력은 분명하다. product repo에 framework asset을 배포하지 않으므로 **target-side harness asset propagation 부담은 0에 가깝다**(전파할 framework asset 자체가 없음). 다만 그 부담이 사라지는 대신 중앙 runner/registry/권한/PR orchestration 부담은 오히려 커질 수 있다(§7 운영·보안 리스크와 같은 계열). product repo는 코드만 남아 깨끗하다.
+
+그러나 결정적 쟁점은 **product tracking truth가 어디 사는가**다.
+
+- 3a — tracking도 중앙에 둔다: 사실상 Option 2(monorepo)의 변형이다. "code만 외부로 뺀 monorepo"이며, §8의 Option 2 기각 논거(source/product 경계 흐림, 팀별 권한·CI·history 독립성 약화)가 그대로 적용된다.
+- 3b — tracking을 외부 product repo가 자체 체계로 관리한다: 이건 불가능이 아니라 **harness-native tracking을 포기한 다른 운영 모델**이다. 이 경우 target은 DR-021 의미의 harness target이 아니라 별도 tracking system을 가진 code-only repo가 된다. 중앙은 그 repo에 구현을 기여할 수 있지만, harness의 finalization/STATUS/Work 보장은 더 이상 그대로 적용되지 않는다 — 즉 "하네스로 관리한다"고 부를 수 있는 대상에서 벗어난다.
+
+따라서 harness-native 운영을 유지하려는 한 일관되게 가능한 형태는 3a뿐이고, 이는 Option 2에 cross-repo 단점을 더한 것이다. 3b는 harness 경계 밖 모델이므로 이 brief의 비교 대상이 아니다.
+
+치명적 문제:
+
+1. **Finalization causality 단절** — 하네스는 코드 변경과 STATUS/Work 변경을 같은 commit/PR에 묶으라고 강제한다(DR-024/025, GIT-WORKFLOW). 코드는 product repo, tracking은 중앙 repo면 한 작업의 두 절반이 서로 다른 git history에 흩어진다. 하네스가 막으려는 finalization drift의 구조적 재발이다.
+2. **History 비독립** — product repo `git log`엔 작업 맥락의 절반이 없고 중앙엔 코드가 없다. audit·blame·rollback이 양쪽을 오간다. §4가 Option 1을 선호한 근거("framework 변경이 target history에 남는다")와 정반대로, product work history를 쪼갠다.
+3. **product repo 독립성 상실 (DR-021 충돌)** — product team이 자기 repo만으로 작업 맥락을 못 본다. 하네스 분리·인수인계 시 tracking이 중앙에 묶여 분리가 어렵다. scaffold target 독립성과 충돌한다.
+4. **cross-repo 동시성** — 중앙이 외부 repo를 clone해 작업하는 사이 product team이 직접 push하면 working tree(중앙)와 truth가 분산된다. sub-agent/multi-user concurrency 문제의 cross-repo 확대판이다.
+
+적합한 자리는 기본 운영 모델이 아니라 특수 케이스다 — 중앙이 강하게 통제하는 단기 PoC, product repo가 사실상 read-only 산출물 저장소인 경우, internal reference/sample. 이는 §8이 Option 2를 특수 옵션으로 제한한 것과 같은 결의 결론이며, 오히려 Option 2보다 약하다(Option 2 단점 일부 + 신규 cross-repo causality 단점).
+
+한 문장 트레이드오프: **product repo에 하네스를 심지 않으면 upgrade 전파 부담은 사라지지만, tracking truth가 code와 다른 repo에 살게 되어 하네스의 핵심 불변식(finalization causality)이 깨진다.** Option 1은 이 트레이드오프의 반대편으로, 하네스를 심어 causality를 지키되 전파 비용을 PR 기반 중앙 관리로 줄인다.
+
 ---
 
 ## 9. Plugin/npm 전환 논의와의 관계
