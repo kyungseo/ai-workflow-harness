@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-15 (CHORE-20260615-004 closeout — docs/briefs reclassification)
+Last updated: 2026-06-15 (CHORE-20260615-005 closeout — brief→DR soft handoff hook)
 
 ## Current State
 
@@ -37,6 +37,7 @@ Last updated: 2026-06-15 (CHORE-20260615-004 closeout — docs/briefs reclassifi
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-15 | CHORE-20260615-005: /work-brief canonical에 brief→DR soft handoff hook 강화(Phase 5 checklist + Phase 6 item 3) — Accepted-ready 수렴 시 /record-decision 제안, 강제 아님. adapter 무변경(canonical-only) | brief의 pre-decision 특성상 DR-worthy 결정이 묻히는 silent drift를 soft prompt로 보정(hard gate/진공 최적화 회피) | Low |
 | 2026-06-15 | CHORE-20260615-004: docs/briefs/ live category 신설 + 방향성 문서 4건 retrospective→brief 재분류, /work-brief surface(canonical+3 adapter)·core routing·user-facing·scaffold·repo-health cascade 정합. archive snapshot no-action. Claude R1 Approved(F1~F3 Low: defer/keep/known-pattern) | 회고와 방향 비교 문서를 분리해 IA 정합 | Medium |
 | 2026-06-15 | CHORE-20260615-003: `docs/maintainer/VERSIONING.md` 릴리즈 노트 템플릿에 `검증` 섹션을 필수화하고, 검증 command는 예시가 아닌 해당 릴리즈의 실제 최종 evidence set 전체를 fenced code block으로 남기도록 기준을 명문화 | `v1.2.1` release note 작성 과정에서 검증 표기 방식이 세션 판단에 의존했다. 승인 근거를 정직하게 남기되, 탐색·디버깅·재시도 명령은 제외해 릴리즈 노트 길이와 신뢰성을 함께 관리하기 위해 | Low |
 | 2026-06-15 | CHORE-20260615-002 / DR-007 amend: 언어 정책을 DR-007 단일 authoritative SSoT로 통합 — Non-File Surfaces(commit/PR/agent console behavioral)+Default·Override 흡수, 산재 정의 정리(MAINTAINER-GUIDE=pure pointer, WORKFLOW-MANUAL Appendix C=최소 digest, GIT-WORKFLOW §5/rules=directive+pointer), AGENTS.md commit/PR/console inline(Codex 도달 fix), BEHAVIOR §5 console convention, README adopter note. DR-030은 전략-only로 경계 정리(Draft). Cross-agent(A=Claude/B=Codex) R1~R3: B P1(단일 override 모순)·P2(DR-030 내부 모순) 수용→DR-007 "authoritative SSoT+mirror 목록 규정"으로 재구성. 릴리즈=독립 PATCH(정합성 복구). 사용자 최종 승인 | Medium |
@@ -44,7 +45,6 @@ Last updated: 2026-06-15 (CHORE-20260615-004 closeout — docs/briefs reclassifi
 | 2026-06-13 | CHORE-20260613-020: W1~W5 완료 후 전체 정렬 검토 — `HARNESS-MAINTAINER-GUIDE.md` §5 Validation에 validation spine runner row, §9에 version-release sweep pointer(§3-1/Release Full Sweep/VERSIONING) 추가, `VERIFICATION-COMMANDS.md` scripts/tests cascade note를 3→6 스크립트로 현행화. 산출물 역추적 매트릭스(검증스크립트 6×3 문서, DR 30/30, command 등재) 검증 — gap은 MAINTAINER-GUIDE에 집중, README 2건(PLAN-SUMMARY/SCAFFOLD-BOOTSTRAP)은 의도된 제외/무관으로 비범위. **CHORE-20260613-017/018/019 archive 처리 동반.** Claude red-team(plan+result)+사용자 승인 | Low |
 | 2026-06-13 | CHORE-20260613-019: release 검증 두 체계 연결 — 루트 `GIT-WORKFLOW.md` §3-1 Public Clean Baseline Gate에 `Validation spine`(`run-harness-checks.sh --all`)·`Surface sweep`(Release Full Sweep P0/P1=0) evidence row 추가 + §3-1↔Release Full Sweep 상호 pointer. scaffold 템플릿은 의도적 분리 유지(adopter §3-1 미변경), CI/pre-commit 무배선(DR-036). Claude self red-team(plan+result) + 사용자 승인 | Low |
 | 2026-06-13 | CHORE-20260613-018: `Validation Spine residual F3+F4` 종결 — F3은 mirror parity(canonical↔claude↔agents 3자)+session-start prompt 3종 존재를 `check-surface-mirror-parity.sh`로 Tier 1 승격(runner `--tier0c`, adopter-safe skip), language policy는 정당한 영어 rule 다수(실측 15건)로 deterministic 승격 시 false-positive→**보류**. F4는 Layer K+`repo-health.md`에 runner tier 호출/해석 경계 최소 명시(Quick=tier0/tier1 생성 없음). **`Validation Spine residual (F1-F4)` backlog 항목 전체 종결.** mirror parity는 hard gate가 아닌 수동/repo-health 시점 회귀 탐지 자산(DR-036 무배선 기조). Claude self red-team(plan+result) + 사용자 승인 | Low |
-| 2026-06-13 | CHORE-20260613-017: `Validation Spine residual F1` — Layer J-OB(OB0/OB1/OB3/OB4/OB5) + Layer Q core를 `check-onboarding-flows.sh`로 deterministic 승격, Layer J는 human-run catalog 유지, J~S `/tmp/awh-*`→`temp/harness-tests/` 정렬 완료. backlog F1 ✅종결, F3/F4만 잔존. Claude R0/R1 승인 | Low |
 
 ## Next Actions
 
