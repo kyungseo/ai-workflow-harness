@@ -42,6 +42,34 @@ related_work: []
 
 따라서 현재 결론은 다음과 같다. **1번은 first walkthrough 이후 검증할 기본 가설로 두되 PR 기반 중앙 관리로만 탐색하고, 2번은 기본 전략이 아니라 특수한 내부 workspace 옵션으로 제한한다.** 이 방향은 외부 scaffold의 독립성을 유지하면서, 내부 조직에서는 중앙 최신화의 운영 효율을 얻을 가능성이 있다.
 
+아래 흐름도는 이 문서가 말하는 **"직접 push가 아니라 PR 기반 중앙 관리"**의 최소 개념만 보여준다.
+
+```mermaid
+flowchart LR
+    S["Source Repo<br/>framework update"]
+    M["Central Maintainer<br/>drift 계산 / 변경 준비"]
+    T["Target Repo<br/>project-owned 보존"]
+    B["Upgrade Branch"]
+    P["Upgrade PR<br/>diff + evidence + drift report"]
+    R["Target Reviewer"]
+    D{"Merge?"}
+    G["Merged target history<br/>framework change preserved"]
+    A["Audit trail retained<br/>PR + repo history"]
+    H["보류 / reject / 추가 수정"]
+
+    S --> M
+    M --> T
+    T --> B
+    B --> P
+    P --> R
+    R --> D
+    D -->|Yes| G
+    G --> A
+    D -->|No| H
+```
+
+> **참고:** 여기서 `Source Repo`는 특정 원격 저장소 하나가 아니라, 하네스의 canonical source 역할을 하는 기준 저장소를 뜻한다. 따라서 누군가가 이 source repo를 clone해 자체적으로 운영하면서 여러 scaffold target을 관리하는 경우에도, 본 다이어그램의 PR 기반 중앙 upgrade 개념은 동일하게 적용될 수 있다. 단, 이는 아직 구현된 메커니즘이 아니라 이 brief가 검토하는 운영 방향성이다.
+
 ---
 
 ## 1. 문제 정의
