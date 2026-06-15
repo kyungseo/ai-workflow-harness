@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260615-005 | Brief→DR handoff hook (B-lite) | 2026-06-15 | `docs/works/harness/CHORE-20260615-005-brief-dr-handoff.md` |
 
 ## Archived
 
