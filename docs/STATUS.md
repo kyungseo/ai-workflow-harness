@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-15 (CHORE-20260615-005 closeout — brief→DR soft handoff hook)
+Last updated: 2026-06-15 (Next Actions 현행화 + CHORE-20260615-006/005 archive)
 
 ## Current State
 
@@ -48,31 +48,10 @@ Last updated: 2026-06-15 (CHORE-20260615-005 closeout — brief→DR soft handof
 
 ## Next Actions
 
-> backlog는 확정 실행 계획이 아니라 의견 있는 portfolio view다. 각 항목 착수 시 `/work-plan`에서 논리성·합리성·현재 product 적용 맥락을 다시 검토한다. 별도 Seq 축은 유지하지 않는다(CHORE-20260610-011 (B)).
+> backlog는 확정 실행 계획이 아니라 의견 있는 portfolio view다. live 후보의 단일 source는 `docs/backlog/HARNESS.md`이며, 각 항목 착수 시 `/work-plan`에서 논리성·합리성·현재 product 적용 맥락을 다시 검토한다. 별도 Seq 축은 유지하지 않는다(CHORE-20260610-011 (B)).
 
-1. **W1 — Validation Spine** (이번 주 마무리 전 최우선):
-   - ✓ **harness workflow 검증 테스트 체계 정립** — CHORE-20260611-005에서 검증 척추 Slice 1 도입 완료(taxonomy + tier runner + temp/ 정책). 후속은 F1~F4 + F5(`Source repo maintainer operations manual`)
-   - ✓ **Scaffold/tool-surface regression alignment 체계화** — CHORE-20260611-006에서 leak-scan을 source-gitflow shipped 6파일로 확장 + 검증 척추 흡수 완료. 잔여 deep 통합은 F4(runner→repo-health, CHORE-20260611-008 후속)
-   - ✓ **Product pack verification layer 보강** — CHORE-20260611-007에서 `VERIFICATION-COMMANDS.md` Layer U 신설 완료(stack/profile↔core 경계 concrete + planning pack/import criteria). 후속: W2 산출물 확정 시 concrete 승격, executable 승격은 F3
-   - ✓ **repo-health gate series 보강** — CHORE-20260611-008에서 gate path-list parity Q-static 신설 + source GIT-WORKFLOW finalization pointer·template add-only 정정 완료. `hook exit(1) enforcement`의 framework default slice는 CHORE-20260613-008에서 완료. 잔여: runner→repo-health deep 통합 F4, project extension classification / F2 wiring follow-up
-   - ✓ **Source repo maintainer operations manual** — CHORE-20260611-009에서 `docs/maintainer/SOURCE-REPO-OPERATIONS.md` 신설(변경 lifecycle 순서축 runbook, pointer-only, 배포 surface 0). **W1 Validation Spine 완결.** 잔여 후속은 F1~F4(완료 시 runbook B/C절 update trigger)
-2. **W2 — Adopter Transition** (다음 주 실제 product 적용 준비):
-   - ✓ **Harness upgrade/migration 메커니즘** — CHORE-20260611-010에서 pre-manifest adopter inventory-first + shadow scaffold manifest baseline + Layer T 실행형 검증 정립 완료. 후속: 실제 target 적용 또는 두 번째 adopter 검증 후 DR-034 Accepted 승격 판단
-   - ✓ **Docs cascade 현행화** — CHORE-20260611-011에서 README Documentation Map / maintainer map / onboarding surfaces의 objective cascade 정리 완료. 후속 톤/청중 재작성 작업은 별도 candidate(`User-facing docs readability rewrite`)로 유지
-   - ✓ **Product starter planning pack + feedback import loop** — CHORE-20260612-001에서 source-only planning pack seed/template 기준, ownership 분류, provisional import loop, Layer U structured review aid 정리 완료. 후속: 첫 concrete product use 후 U2~U4 재검토 및 import candidate 실사례 평가
-   - ✓ **User-facing docs readability rewrite** — CHORE-20260612-002 완료
-   - ✓ **Scaffold multi-user clone verification** — CHORE-20260612-003 완료. 발견: G1/G2 Critical gap → "source-gitflow second-contributor entry path 보강" backlog 등록. **W2 Adopter Transition 완결.**
-3. **W3 — Workflow IA Diet** (큰 구조 변경은 결정/최소 정리까지만):
-   - ✓ **Prompt surface diet** — CHORE-20260612-010 완료
-   - ✓ **Protocol Load Map / Context Routing 최소 정합** — CHORE-20260613-002 완료
-   - ✓ **Operating Tracks 경계 최소 정합** — CHORE-20260613-003 완료
-   - ✓ **repo-health canonical slice 분리** — CHORE-20260613-004 완료
-   - ✓ **work-doc.md B-class 분류** — CHORE-20260613-005 완료
-   - ✓ **Canonical 개념 계층화** — CHORE-20260613-002~005로 핵심 목표 달성, 별도 Work 없이 종료
-   - ✓ **trigger family simplification** — CHORE-20260613-006 완료. **W3 Workflow IA Diet 전부 완결.**
-4. **W4/W5 — Lifecycle hygiene 및 optional 확장**:
-   - ✓ **`문서-only 규칙 강제화` 테마 종결 (DR-037)** — doc-only enforcement landscape 검토 결과 branch-isolation만 강제화 대상이었고 완료. 나머지는 기존강제 또는 behavioral(hard-gate 부적합)
-   - ✓ **DR-035 follow-up split 전체 완료** — CHORE-20260613-008 / -010 / -011(F2 무배선·DR-036)
-   - ✓ **Archive 누적 관리 정책 종결 (DR-038)** — archive-side index relocation, retention=keep-all. works/harness 106행 archive-side 이전 + cascade 정렬
-   - ✓ **Validation Spine residual 전부 종결** — F1=CHORE-20260613-017, F2=DR-036, F3/F4=CHORE-20260613-018(mirror/prompt parity Tier 1 승격, language policy 보류, repo-health runner-surface). **W4 잔여 concrete 항목 없음.**
-   - Spring Boot MSA TDD option-pack, template pack, CLI naming, Windows은 실제 product 운용 후 필요성 재판단 (HRN-016 `/exit` gap은 2026-06-14 drop — action 없는 외부 감시, Stop hook이 이미 커버)
+W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcement & Lifecycle)는 종결됐다. 현재 live 후보와 우선순위·gate는 `docs/backlog/HARNESS.md`를 참조한다.
+
+- **지금 막힘 없이 착수 가능한 P1:** Happy path / glossary / operator layering compression
+- **외부 전제가 있는 P1:** `ai-deck-compiler` first real walkthrough (adopter target 접근 필요 — internal managed·packaging·DR-034의 선행 허브), 첫 concrete product planning-pack exercise (실제 product 착수 필요)
+- **gated 후속:** internal managed mode(walkthrough 후, P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), Spring Boot MSA pack(P2), template pack(P2) 등은 backlog의 gate 기준을 따른다

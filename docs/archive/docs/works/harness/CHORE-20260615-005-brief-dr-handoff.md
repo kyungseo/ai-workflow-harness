@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260615-005
 priority: P2
-status: Done
+status: Archived
 actual_end: 2026-06-15
 risk: L2
 scope: `/work-brief` canonical 절차에 brief→DR 핸드오프 hook을 명시 강화한다. brief가 Accepted-ready 결정으로 수렴하면 `/record-decision`을 제안(강제 아님)하도록 Phase 5/6을 sharpen한다. adapter는 thin pointer라 변경하지 않는다.
@@ -78,3 +78,4 @@ bash scripts/tests/check-shipped-dr-closure.sh
 
 - 2026-06-15: B-lite 채택 근거 — 순수 사용자 판단(A)은 silent drift, 자동/hard trigger(B-hard)는 premature crystallization·진공 최적화. soft prompt(B-lite)가 균형점. `harness-workflow-engine-vs-manual-first` brief의 selective-hardening 논리와 정합.
 - 2026-06-15: 조사 결과 canonical Phase 6에 이미 "DR 필요 여부" follow-up hook 존재 → 신설이 아니라 sharpen으로 충분. adapter는 thin이라 canonical-only로 종결.
+- 2026-06-15: closeout(PR #198) 후 archive 처리. `status: Archived`로 전환·`docs/archive/docs/works/harness/`로 이동, live index 제거·archive-side 등재.

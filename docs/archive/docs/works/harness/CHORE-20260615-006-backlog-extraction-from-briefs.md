@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260615-006
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: readiness retrospective 1건과 briefs 3건에서 다음 backlog 후보를 추출해 `docs/backlog/HARNESS.md`에 통폐합 중심으로 반영한다. 기존 후보와 겹치면 detail을 잃지 않고 합치고, 우선순위와 gate를 명시한다.
 appetite: 0.25d
@@ -137,3 +137,4 @@ rg -n "ai-deck-compiler|Happy path|sub-agent|packaging|distribution|internal man
 - user note의 "framework-owned 파일은 중앙 PR 외 변경 금지"와 "target에서는 product code와 harness를 같이 묶어 커밋하지 않기"는 internal managed mode candidate의 핵심 guardrail로 보인다.
 - readiness retrospective는 fleet mode 자체보다 first real walkthrough와 happy path를 먼저 요구한다.
 - `docs/STATUS.md`에는 이 Work의 Active pointer가 없어, 이번 closeout에서는 STATUS update가 필요하지 않았다.
+- 2026-06-15: closeout(PR #199) 후 archive 처리. `status: Archived`로 전환·`docs/archive/docs/works/harness/`로 이동, live index 제거·archive-side 등재. 동일 변경 단위에서 STATUS Next Actions 현행화(backlog 포인터화)도 함께 반영.
