@@ -29,21 +29,23 @@ AI Workflow Harness backlog다.
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
 | W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속은 W3/W4 후보에서 별도 추적 |
-| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002, clone verification 완료 = CHORE-20260612-003) 후속 후보: `ai-deck-compiler` 실제 upgrade walkthrough, 첫 concrete product planning-pack exercise/import review, happy path / onboarding compression |
+| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002, clone verification 완료 = CHORE-20260612-003) 후속 후보: `ai-deck-compiler` first real walkthrough, internal managed mode guardrails(게이트 후), 첫 concrete product planning-pack exercise/import review, happy path / glossary / operator layering compression |
 | W3. Workflow IA Diet ✓ 완결 | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | (Canonical 개념 계층화 핵심 달성 = CHORE-20260613-002~005, Prompt surface diet 완료 = CHORE-20260612-010, work-doc class 완료 = CHORE-20260613-005, trigger family simplification 완료 = CHORE-20260613-006) 전부 완료 |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | (전부 종결) Validation Spine residual F1~F4 = CHORE-20260613-017/018·DR-036, 문서-only 규칙 강제화 = DR-037, Archive 누적 관리 정책 = DR-038, CI inline assertion ↔ invariants SSoT parity = CHORE-20260613-016 no-action closeout |
-| W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, CLI naming audit, Windows 지원 |
+| W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring Boot MSA TDD option-pack, project-state template, sub-agent autonomy policy, packaging/distribution revisit, Windows 지원 |
 
 ### Summary
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | `ai-deck-compiler` actual upgrade walkthrough + DR-034 acceptance judgment |
-| — | P1 | Candidate | L2 | Happy path / onboarding compression |
+| — | P1 | Candidate | L2 | `ai-deck-compiler` first real upgrade walkthrough + DR-034 acceptance judgment |
+| — | P1 | Candidate | L2 | Happy path / glossary / operator layering compression |
 | — | P1 | Candidate | L2 | First concrete product planning-pack exercise + import candidate review |
+| — | P2 | Candidate | L3 | Internal managed mode design note + target guardrails (post-walkthrough gate) |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
+| — | P3 | Candidate | L2 | Approval Matrix sub-agent autonomy policy |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
-| — | P2 | Candidate | L3 | Scaffold CLI naming audit |
+| — | P3 | Candidate | L3 | Packaging / distribution revisit after upgrade logic proof |
 | HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
 
 ---
@@ -56,38 +58,60 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### `ai-deck-compiler` actual upgrade walkthrough + DR-034 acceptance judgment
+#### `ai-deck-compiler` first real upgrade walkthrough + DR-034 acceptance judgment
 
 **Cluster:** W2. Adopter Transition
 
-**Task:** `ai-deck-compiler` 실제 adopter를 대상으로 Layer T upgrade/migration walkthrough를 수행해 pre-manifest inventory, shadow scaffold baseline, selective migration, accepted drift 분류를 실측한다. source 쪽 설계가 문서상 placeholder를 넘어서 실제 adopter friction을 얼마나 줄이는지 확인하고, 결과를 바탕으로 DR-034를 Draft 유지할지 Accepted로 올릴지 판단한다. `harness-internal-managed-upgrade-20260615.md` 기준으로는 internal managed mode 설계(Candidate B/C)의 선행 gate다.
+**Task:** `ai-deck-compiler` 실제 adopter를 대상으로 Layer T upgrade/migration walkthrough를 수행해 **External Adopter Mode** 기준의 first real upgrade 경험을 만든다. pre-manifest inventory, shadow scaffold baseline, selective migration, accepted drift 분류를 실측하고, source 쪽 설계가 문서상 placeholder를 넘어서 실제 adopter friction을 얼마나 줄이는지 확인한다. 결과를 바탕으로 DR-034를 Draft 유지할지 Accepted로 올릴지 판단하며, 동일 target에서 **Internal Managed Mode 후보를 열 필요가 있는지**도 gate로 판정한다.
 
 **Dependencies:**
 
 - CHORE-20260611-010에서 정리한 upgrade/migration 메커니즘과 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer T
 - `docs/briefs/harness-internal-managed-upgrade-20260615.md`의 Candidate A 판단
+- `docs/retrospectives/harness-v1-2-readiness-retrospective-20260615.md`의 "first real walkthrough가 fleet mode의 선행 gate" 판단
+- `docs/briefs/harness-distribution-plugin-model-20260608.md`의 "배포 방식보다 upgrade/migration 로직이 선행" 판단
 - 실제 adopter target 접근 가능 여부와 current target 상태 확인
 - 필요 시 `docs/maintainer/migrations/*.md` note 보강
 
-**Done Criteria:** 실제 adopter walkthrough 결과가 inventory-first 분류와 함께 남고, framework-owned / project-owned / customized / accepted drift 구분이 기록됨. selective migration 후 `--check` 결과와 남은 manual-merge hotspot이 정리되며, DR-034 상태 판단(승격 또는 유지 이유)이 명시된다.
+**Done Criteria:** 실제 adopter walkthrough 결과가 inventory-first 분류와 함께 남고, framework-owned / project-owned / customized / accepted drift 구분이 기록된다. selective migration 후 `--check` 결과와 남은 manual-merge hotspot이 정리되며, DR-034 상태 판단(승격 또는 유지 이유)이 명시된다. 또한 "같은 target에서 internal managed mode를 열 가치가 있는가"에 대한 yes/no 판단과 이유가 남는다.
 
 **Verification:** Layer T walkthrough, `scripts/create-harness.sh --check <target>`, drift summary 기록, maintainer migration note/README pointer 정합 확인. Surface: adopter cascade · scaffold · README/GUIDE/MANUAL.
 
 ---
 
-#### Happy path / onboarding compression
+#### Internal managed mode design note + target guardrails (post-walkthrough gate)
 
 **Cluster:** W2. Adopter Transition
 
-**Task:** v1.2.0 readiness 회고에서 드러난 신규 사용자 부담을 줄이기 위해, scaffold 직후와 이미 scaffold된 project 재진입 시의 happy path를 10분 내 이해 가능한 routing으로 압축한다. 목표는 새 절차를 늘리는 것이 아니라 README/GUIDE/MANUAL의 첫 진입 경로와 "무엇을 먼저 하면 되는가"를 더 얇게 만드는 것이다. **연계:** `docs/retrospectives/harness-v1-2-readiness-retrospective-20260615.md`
+**Task:** 첫 실제 walkthrough에서 반복 비용과 중앙 관리 필요가 관측될 때만, internal managed mode의 최소 정책 초안을 정리한다. 핵심은 메커니즘 구현이 아니라 **guardrail** 정의다: framework-owned 변경을 중앙 PR 경로로만 제안할지, target product repo에서 harness 변경과 product code를 같은 변경 단위로 묶지 않도록 할지, reviewer·rollback·registry write control을 어떻게 둘지 정리한다. 실제 runner/prototype 메커니즘은 이 후보(B) 이후에만 여는 추가 gate된 downstream 단계(Candidate C)로 남긴다.
+
+**Dependencies:**
+
+- `ai-deck-compiler` first real walkthrough 결과와 DR-034 상태 판단
+- `docs/briefs/harness-internal-managed-upgrade-20260615.md` Candidate B / 운영·보안 리스크 / policy-runner 경계
+- `docs/retrospectives/harness-v1-2-readiness-retrospective-20260615.md`의 "fleet mode는 walkthrough 이후 opt-in 후속 후보" 판단
+- 사용자 note: framework-owned 파일 변경 제약, product code와 harness를 같이 묶어 커밋하지 않는 원칙 검토
+
+**Done Criteria:** internal managed mode를 열 조건이 명시되고, 최소 guardrail 초안이 정리된다. 예: `pr-only` 원칙, framework-owned path mutation policy, target review rule, product/harness bundle 금지 여부, registry write-control, rollback 책임. walkthrough 전에는 착수하지 않는다. 또한 runner/prototype은 이 후보의 산출물이 아니라 별도 downstream gate라는 점이 문서상 분리된다.
+
+**Verification:** source 문서 근거 대조, guardrail matrix review, target ownership boundary self-check. Surface: canonical · adopter cascade · README/GUIDE/MANUAL.
+
+---
+
+#### Happy path / glossary / operator layering compression
+
+**Cluster:** W2. Adopter Transition
+
+**Task:** v1.2.0 readiness 회고에서 드러난 신규 사용자 부담을 줄이기 위해, scaffold 직후와 이미 scaffold된 project 재진입 시의 happy path를 10분 내 이해 가능한 routing으로 압축한다. 목표는 새 절차를 늘리는 것이 아니라 README/GUIDE/MANUAL의 첫 진입 경로와 "무엇을 먼저 하면 되는가"를 더 얇게 만들고, 동시에 glossary / concept map / 문서 3층 구조(10분 happy path / daily operator guide / maintainer deep reference)를 분리하는 것이다. **연계:** `docs/retrospectives/harness-v1-2-readiness-retrospective-20260615.md`
 
 **Dependencies:**
 
 - `docs/retrospectives/harness-v1-2-readiness-retrospective-20260615.md`의 onboarding weakness / happy path 제안
+- 같은 문서의 glossary / concept map / operator layering 제안
 - `docs/SCAFFOLD-ONBOARDING-GUIDE.md`, `docs/HARNESS-QUICK-REFERENCE.md`, README의 기존 routing 구조
 - `docs/AGENT-WORKFLOW.md`의 session startup / context routing 원칙
 
-**Done Criteria:** 신규 adopter가 "새 project에 적용할 때", "이미 적용된 project를 시작할 때", "Quick Mode vs Work file 경계", "AI에게 첫 메시지로 무엇을 말할지"를 한 화면 또는 짧은 path로 찾을 수 있다. source-only maintainer 문서와 scaffold target 사용자 문서가 섞이지 않는다.
+**Done Criteria:** 신규 adopter가 "새 project에 적용할 때", "이미 적용된 project를 시작할 때", "Quick Mode vs Work file 경계", "AI에게 첫 메시지로 무엇을 말할지"를 한 화면 또는 짧은 path로 찾을 수 있다. source-only maintainer 문서와 scaffold target 사용자 문서가 섞이지 않는다. 또한 source repo / scaffold target / product repo, framework-owned / project-owned / accepted drift, Work / DR / STATUS / backlog 같은 핵심 용어를 초심자가 빠르게 찾을 수 있는 최소 glossary 또는 concept map이 생긴다.
 
 **Verification:** README/GUIDE/MANUAL routing diff review, stale phrase/link check, scaffold output에서 happy path가 source-only maintainer 문서를 요구하지 않는지 확인. Surface: adopter cascade · scaffold · README/GUIDE/MANUAL.
 
@@ -125,7 +149,7 @@ AI Workflow Harness backlog다.
 - PRD skeleton.
 - DB design / screen / task / test structure template.
 - `.claude/rules/`, `.cursor/rules/` 등 tool-surface wiring.
-- 필요 시 `--with-spring-boot-msa` 또는 유사 옵션. 이름은 `Scaffold CLI naming audit`와 함께 판단한다.
+- 필요 시 `--with-spring-boot-msa` 또는 유사 옵션. 이름과 CLI surface의 **최소 결정**은 이 후보 안에서 ad hoc으로 먼저 정할 수 있고, 더 넓은 naming/distribution cleanup은 `Packaging / distribution revisit after upgrade logic proof` 후보에서 재검토한다.
 
 **Dependencies:**
 
@@ -158,19 +182,40 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### Scaffold CLI naming audit
+#### Approval Matrix sub-agent autonomy policy
 
 **Cluster:** W5. Future / Optional
 
-**Task:** `--workflow`는 실제로 Git/branch flow 선택인데 harness workflow 전체 옵션처럼 오해될 수 있다. 대안: `--branch-flow`, `--git-flow`, `--repo-flow`. 단 no-alias/breaking policy와 upgrade/migration 설계가 얽히므로 즉시 rename하지 않고 option naming + migration note + no-runtime-alias 정책을 함께 검토한다.
+**Task:** sub-agent / delegated agent 환경에서 Approval Matrix를 어떻게 계층화할지 정책을 정리한다. 핵심은 메커니즘 구현이 아니라 policy다. 예: sub-agent가 위임된 L1 범위 안에서 무엇을 자율로 할 수 있는지, 범위를 넘으면 primary agent에 어떻게 escalate하는지, sub-agent 산출물에 Work tracking / DR / commit gate를 어떻게 적용할지 명시한다. 이 후보는 trigger 전까지 dormant한 future candidate로 둔다.
 
 **Dependencies:**
 
-- DR-021, DR-023 no-alias migration 방향, upgrade/migration 후보
+- `docs/briefs/harness-identity-policy-first-20260608.md`의 sub-agent autonomy / policy-mechanism 경계
+- current `docs/AGENT-WORKFLOW.md` Approval Matrix와 Work/DR tracking 규칙
+- 실제 sub-agent 기능이 실용 단계에 들어오는지 여부
 
-**Done Criteria:** rename 여부/시점/마이그레이션 안내를 결정. 유지한다면 docs에서 `--workflow`가 branch/release policy 옵션임을 더 명확히 함
+**Done Criteria:** sub-agent 자율 범위에 대한 최소 정책 초안이 생기고, "spawn/how" 같은 메커니즘과 "who may approve what" 같은 policy가 분리된다. sub-agent가 PR을 직접 열 수 있는지, human escalation 경계가 어디인지, multi-agent 결과물에도 같은 tracking/approval 규칙을 적용할지 명시한다. trigger 전에는 dormant candidate로 유지된다.
 
-**Verification:** CLI help/docs/scaffold generated text grep, old/new option migration impact review
+**Verification:** policy matrix review, existing Approval Matrix와 충돌 여부 점검, tool-specific mechanism 비침범 확인. Surface: canonical · tool surface · README/GUIDE/MANUAL.
+
+---
+
+#### Packaging / distribution revisit after upgrade logic proof
+
+**Cluster:** W5. Future / Optional
+
+**Task:** upgrade/migration 로직이 실제 target에서 검증되고 adopter 수요가 늘어날 때, packaging/distribution layer를 재검토한다. 범위는 npm wrapping, GitHub Releases + versioned install, upgrade discovery UX, 그리고 `--workflow` 명칭 같은 CLI surface clarity를 함께 다룬다. 단 plugin/npm 전환은 로직 검증보다 선행하지 않는다. 특정 option-pack에서 발생하는 국소 naming 마찰은 이 후보를 기다리지 않고 ad hoc으로 먼저 정리할 수 있다.
+
+**Dependencies:**
+
+- `docs/briefs/harness-distribution-plugin-model-20260608.md`의 "배포 방식보다 upgrade logic 선행" 판단
+- `ai-deck-compiler` first real walkthrough 결과
+- shell upgrade/migration 로직 안정화 여부
+- DR-021, DR-023 no-alias migration 방향, CLI/help/generated text 현행 surface
+
+**Done Criteria:** packaging/distribution을 다시 열 조건이 명시되고, npm wrapping / GitHub Releases / naming cleanup 중 무엇을 언제 검토할지 판단 기준이 생긴다. `--workflow` naming audit은 이 후보 안에서 하위 질문으로 흡수한다.
+
+**Verification:** distribution option matrix review, CLI help/docs/scaffold generated text grep, old/new option migration impact review. Surface: scaffold · README/GUIDE/MANUAL · canonical.
 
 ---
 
