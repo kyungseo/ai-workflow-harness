@@ -15,6 +15,21 @@
 #   scripts/tests/scaffold-sandbox.sh list
 #
 # 산출물 위치: ${SANDBOX_ROOT:-<repo>/temp/scaffold-sandbox}/<name>   (temp/ = .gitignore 대상)
+#
+# 예시:
+#   # §1~§5 두께 반복 테스트 (빠른 reset)
+#   scripts/tests/scaffold-sandbox.sh new rfx --git
+#   #  → cd temp/scaffold-sandbox/rfx && claude → /session-start
+#   scripts/tests/scaffold-sandbox.sh reset rfx     # 1초 복원, 다시 테스트
+#
+#   # §0 git-init 흐름 테스트 (no-git)
+#   scripts/tests/scaffold-sandbox.sh new rfx
+#   scripts/tests/scaffold-sandbox.sh new sb --profile spring-boot --workflow source-gitflow
+#
+#   scripts/tests/scaffold-sandbox.sh list     # 목록
+#   scripts/tests/scaffold-sandbox.sh rm rfx   # 정리
+#
+#   옵션 조합별로 sandbox를 이름 붙여 만들 수 있어, generic/spring-boot/source-gitflow/with-optional을 각각 띄워두고 비교 테스트할 수 있습니다.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
