@@ -20,6 +20,12 @@ docs/STATUS.md의 Current State, Active Work, Blockers And Open Questions, Next 
 Done이지만 archive되지 않은 Work 파일이 5개 이상이면, 섹션 6(리스크와 확인 질문)에 PLAN 누적 드리프트 가능성을 soft warning으로 포함한다. 개별 Work마다 T5 판정이 "영향 없음"이었더라도 여러 Work가 완료되면서 `docs/PLAN.md`와 실제 진행 방향 간 괴리가 생길 수 있다. 주기적 PLAN 현행화 검토(`/work-select` 또는 별도 세션)를 권장한다.
 Phase 1 또는 refactor 이전 상세가 필요하고 해당 경로가 실제 존재하는 경우에만 docs/archive/ 또는 docs/archive/snapshots/harness-refactor-20260514/를 추가로 참고해줘.
 
+**Bootstrap-State Rule:** Active Work 없음 + Next Actions가 scaffold bootstrap/onboarding을 가리키는 경우(보통 Current phase가 placeholder),
+- section 1(결론) 첫 줄에 단일 권고를 못박는다: "scaffold 직후 bootstrap onboarding 상태입니다. 다음 단계는 `docs/BOOTSTRAP.md` §0부터 onboarding 시작입니다."
+- section 4는 STATUS Next Actions 항목을 병렬 후보로 나열하지 않는다. onboarding은 §0부터 순서대로 진행하는 단일 경로이므로, 단일 권고("`docs/BOOTSTRAP.md` §0부터 시작")로 출력하고 §1 이후 단계는 그 경로 안의 순서로만 종속 표기한다.
+- section 6 마지막 확인 질문은 1개로 좁힌다: "지금 bootstrap onboarding(§0~)을 시작할까요?"
+- 이 경우 Idle-State Rule 출력은 내지 않는다(상호배타: Next Actions가 비면 Idle, bootstrap을 가리키면 Bootstrap).
+
 **Idle-State Rule:** Active Work 없음 + Next Actions 없음 + archive 대기 Work 없음인 경우,
 - Blockers And Open Questions에 Open 항목이 있으면 section 4에서 idle-state 안내보다 먼저 노출한다.
 - Open Blocker도 없으면 section 4를 아래 형식으로 출력한다. 닫힌 milestone을 next candidate로 자동 확장하지 않는다.
