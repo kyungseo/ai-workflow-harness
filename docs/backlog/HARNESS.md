@@ -129,6 +129,8 @@ AI Workflow Harness backlog다.
 
 intake hook(소비 측)과 planning pack(입력 포맷)은 같은 loop의 양 끝이므로 한 작업으로 묶어 정합을 맞춘다.
 
+**진행:** BOOTSTRAP prepared-brief intake hook은 `CHORE-20260617-001`로 구현 완료 — format-agnostic으로 planning-pack에 비의존(shipped 템플릿은 source-only 경로 비인용). 남은 candidate scope = rfx-hub clean 재온보딩 end-to-end exercise + import candidate review.
+
 **Dependencies:**
 
 - CHORE-20260612-001 planning pack/import loop 기준, `docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md`

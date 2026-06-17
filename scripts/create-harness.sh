@@ -809,6 +809,7 @@ ${OPTIONAL_README_ROWS}| \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 스캐폴딩 직후 첫 \`/session-start\`는 \`docs/STATUS.md\` Next Actions를 먼저 확인한다.
 Next Actions가 scaffold bootstrap/onboarding을 가리키면, 그 세션에서 agent가 \`docs/BOOTSTRAP.md\`를 §0부터 순서대로 안내하며 각 항목을 사용자 승인 후 채운다(사용자가 혼자 수동으로 채우는 절차가 아니다).
 onboarding에 사용할 prompt는 \`docs/BOOTSTRAP.md\` §8에 있다.
+온보딩 시작 시 준비된 project brief/요약본이 있으면 경로·텍스트로 제출해 §1·§2에 반영할 수 있고, 없으면 항목을 한 번에 적거나 대화형으로 진행한다. 정체성·계획은 온보딩이 끝난 뒤에도 언제든 보강할 수 있다.
 
 **Claude Code:**
 \`\`\`bash
@@ -903,6 +904,14 @@ write_text "${TARGET_ROOT}/docs/BOOTSTRAP.md" "# BOOTSTRAP.md — ${PROJECT_NAME
 
 Scaffold 직후 이 파일을 먼저 채운다. 목표는 빈 harness를 프로젝트 identity와 production 성격에 맞게 부팅하는 것이다.
 
+**온보딩 입력 방식 (시작 전 안내):** 여기서 \"준비된 brief\"란 프로젝트의 정체성·목표·주요 사용자·성공 기준·범위를 정리해 둔 요약을 말한다(형식 자유 — 메모·문서·구조화된 planning 산출물 모두 가능). §1·§2(·§4)를 채우기 전 다음 중 하나로 진행한다.
+
+- **준비된 brief가 있으면**: 경로 또는 텍스트로 제출하면 그 내용을 §1·§2(·§4) 초안에 반영한다.
+- **없지만 한 번에 적고 싶으면**: §1·§2 항목(이름·한 줄 설명·주요 사용자·production 성격·성공 기준·제품 목표)을 한 메시지로 적어 제출해도 된다.
+- **그냥 진행하고 싶으면**: agent의 대화형 안내에 따라 단계별로 채운다.
+
+어느 경우든 추측으로 채우지 않고 제출 자료에 없는 항목만 질문한다. 온보딩이 끝난 뒤에도 프로젝트 정체성·계획(\`docs/BOOTSTRAP.md\`·\`docs/STATUS.md\`·\`docs/PLAN-SUMMARY.md\`)은 \`/session-start\` 재실행이나 직접 편집으로 언제든 보강할 수 있다.
+
 ## 0. Repository Setup
 
 - [ ] git repository 초기화 여부 확인: \`git status\` 또는 \`ls .git/\` 실행. \`git status\`가 not a git repository 메시지로 실패하면 no-git bootstrap 상태로 판단
@@ -996,6 +1005,7 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 이 프로젝트를 scaffold 직후 부팅하려고 해.
 다음 순서로 제안해줘:
 
+0. 준비된 project brief/요약본이 있으면 경로·텍스트로 먼저 받아 §1·§2 초안에 반영 (없으면 §1·§2 항목 일괄 제출 또는 대화형 중 선택)
 1. 프로젝트 identity와 production 성격 확인 (§1)
 2. Product Definition: 제품 목표, 주요 사용자, 성공 기준 (§2)
 3. Project Initialization: PLAN-SUMMARY.md Implementation Baseline 결정 (§3, 코드 개발 프로젝트만)
