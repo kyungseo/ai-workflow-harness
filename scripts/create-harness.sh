@@ -757,7 +757,7 @@ fi
 # a later contributor cloning the repo finds the hook install path without reading BOOTSTRAP.md.
 # Generic targets keep a single bootstrap-only line (no clone scenario).
 CLONE_NOTE="git repository는 자동으로 초기화되지 않는다. 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
-\`--workflow source-gitflow\`를 선택하지 않았다면 branch/release policy는 이 target project가 직접 정한다."
+scaffold 할 때 \`--workflow source-gitflow\`를 선택하지 않았다면 branch/release policy는 이 target project가 직접 정한다."
 if [[ "${WORKFLOW_MODE}" == "source-gitflow" ]]; then
   CLONE_NOTE="- 최초 설정 (git repository 미초기화): 첫 세션에서 \`docs/BOOTSTRAP.md\` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
 - 이미 존재하는 repo에 추가 contributor로 합류: \`docs/GIT-WORKFLOW.md §0-1\` Clone 경로를 먼저 확인한다."
@@ -806,6 +806,10 @@ ${OPTIONAL_README_ROWS}| \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 
 ### 첫 세션
 
+스캐폴딩 직후 첫 \`/session-start\`는 \`docs/STATUS.md\` Next Actions를 먼저 확인한다.
+Next Actions가 scaffold bootstrap/onboarding을 가리키면, 그 세션에서 agent가 \`docs/BOOTSTRAP.md\`를 §0부터 순서대로 안내하며 각 항목을 사용자 승인 후 채운다(사용자가 혼자 수동으로 채우는 절차가 아니다).
+onboarding에 사용할 prompt는 \`docs/BOOTSTRAP.md\` §8에 있다.
+
 **Claude Code:**
 \`\`\`bash
 claude        # Claude Code 열기
@@ -814,7 +818,17 @@ claude        # Claude Code 열기
 
 **Codex:** repo root의 \`AGENTS.md\`를 기본 진입점으로 사용하고, 세션 첫 요청은 \`/session-start\` intent로 시작한다. \`prompts/codex-session-start.md\`는 수동 bootstrap이 필요한 fallback이다.
 
-**Cursor:** \`prompts/cursor-session-start.md\` 내용을 세션 시작 시 붙여넣는다.
+**Cursor:** \`prompts/cursor-session-start.md\`의 \`## 1. 기본 세션 시작\` 블록을 세션 시작 시 붙여넣는다.
+
+onboarding에서 채우는 항목과 순서:
+
+1. \`docs/STATUS.md\` — 프로젝트 목표와 Current phase(focus) 설명
+2. \`docs/PLAN-SUMMARY.md\` Project Summary — 제품 목표와 핵심 workflow
+3. \`docs/PLAN-SUMMARY.md\` Implementation Baseline — Runtime/Framework/Build/package 결정 (코드 개발 프로젝트)
+4. \`docs/PLAN.md\` Project Initialization Plan — stack 선택 근거와 초기 구조
+5. \`docs/backlog/PRODUCT.md\` — baseline 완료 후 도출한 초기 작업 항목 (Work ID는 /work-plan 착수 시 확정)
+6. \`docs/BEHAVIOR-PRINCIPLES.md\` — 전역 행동 원칙 확인
+7. \`docs/AGENT-WORKFLOW.md\` — Project Constants와 Verification Defaults
 
 ## 사전 작업
 
@@ -832,18 +846,6 @@ ${ENFORCEMENT_NOTE}
 
 Harness source clone에서 \`scripts/create-harness.sh --check /path/to/project\`를 실행하면 manifest를 기준으로 framework 파일이 source 대비 \`in-sync\`, \`source-updated\`, \`locally-modified\`인지 보고한다.
 현재 자동 upgrade 기능은 제공하지 않는다. 이미 적용한 harness를 최신 source와 맞추려면 \`--check\` 결과를 보고 필요한 파일만 수동으로 selective migration한다.
-
-스캐폴딩 직후 첫 \`/session-start\`에서는 \`docs/STATUS.md\` Next Actions를 확인한다.
-Next Actions가 scaffold bootstrap/onboarding을 가리키면 \`docs/BOOTSTRAP.md\`를 §0부터 순서대로 채운다.
-Bootstrap onboarding에 사용할 prompt는 \`docs/BOOTSTRAP.md\` §8에 있다.
-
-1. \`docs/STATUS.md\` — 프로젝트 목표와 Current phase(focus) 설명
-2. \`docs/PLAN-SUMMARY.md\` Project Summary — 제품 목표와 핵심 workflow
-3. \`docs/PLAN-SUMMARY.md\` Implementation Baseline — Runtime/Framework/Build/package 결정 (코드 개발 프로젝트)
-4. \`docs/PLAN.md\` Project Initialization Plan — stack 선택 근거와 초기 구조
-5. \`docs/backlog/PRODUCT.md\` — baseline 완료 후 도출한 초기 작업 항목 (Work ID는 /work-plan 착수 시 확정)
-6. \`docs/BEHAVIOR-PRINCIPLES.md\` — 전역 행동 원칙 확인
-7. \`docs/AGENT-WORKFLOW.md\` — Project Constants와 Verification Defaults
 
 ---
 
