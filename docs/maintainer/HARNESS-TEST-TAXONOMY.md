@@ -121,6 +121,7 @@ runner(`scripts/tests/run-harness-checks.sh`)는 scaffold로 ship될 수 있다.
 - **근거:** `temp/`는 `.gitignore`에 등록되어 commit 오염이 없고, 과거 scaffold 검증(`temp/gitflow-vfy*`)에서 권한 문제 없이 실생성이 확인됐다. `/tmp`는 환경에 따라 AI 권한 제약으로 dry만 수행되는 경우가 있다.
 - **절차:** `temp/harness-tests/<scenario>-<ts>/`에 생성 → 검증 → 명시적 cleanup. runner가 생성 경로와 cleanup을 책임진다.
 - **catalog 정합:** `VERIFICATION-COMMANDS.md` Layer J/J-OB/Q/R/S manual appendix와 `check-onboarding-flows.sh` helper는 같은 `temp/harness-tests/` 기준을 사용한다. 이 척추는 그 정책 기준을 제공한다.
+- **Manual onboarding sandbox:** `scripts/tests/scaffold-sandbox.sh`는 사람이 scaffold 옵션 조합(`--profile`/`--workflow`/`--with-optional`)별 sandbox를 만들어 `/session-start` 온보딩을 직접 돌려보고 빠르게 reset하며 반복 테스트하는 maintainer 전용 도구다. `temp/scaffold-sandbox/<name>/`에 생성한다(같은 `temp/` 정책). **deterministic check가 아니므로 runner(`run-harness-checks.sh`)에 편입하지 않는다** — `check-onboarding-flows.sh`(자동 assertion)의 human-in-loop 대응물이다.
 
 ---
 
