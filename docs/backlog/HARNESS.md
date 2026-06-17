@@ -40,7 +40,7 @@ AI Workflow Harness backlog다.
 | --- | --- | --- | --- | --- |
 | — | P1 | Candidate | L2 | `ai-deck-compiler` first real upgrade walkthrough + DR-034 acceptance judgment |
 | — | P1 | Candidate | L2 | Happy path / glossary / operator layering compression |
-| — | P1 | Candidate | L2 | First concrete product planning-pack exercise + import candidate review |
+| — | P1 | Candidate | L2 | First concrete planning-pack exercise (rfx-hub) + BOOTSTRAP prepared-brief intake hook + import review |
 | — | P2 | Candidate | L3 | Internal managed mode design note + target guardrails (post-walkthrough gate) |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
 | — | P3 | Candidate | L2 | Sub-agent/Main Agent Authority Boundary |
@@ -117,21 +117,27 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### First concrete product planning-pack exercise + import candidate review
+#### First concrete planning-pack exercise (rfx-hub) + BOOTSTRAP prepared-brief intake hook + import candidate review
 
 **Cluster:** W2. Adopter Transition
 
-**Task:** source-only planning pack skeleton을 첫 concrete product에 적용해 실제 산출물 세트를 만들고, CHORE-20260612-001이 provisional로 남겨둔 source-owned / product-owned / import-candidate 경계를 실측한다. 결과를 바탕으로 Layer U(U2~U4) checklist와 import review aid가 계속 provisional이어야 하는지, 일부를 더 구체화해도 되는지 판단한다.
+**Task:** `rfx-hub`(RFx 대응 engagement 운영 hub) onboarding을 **첫 concrete planning-pack exercise로 공식화**한다. source-only planning pack skeleton을 실제 product에 적용해 산출물 세트를 만들고, CHORE-20260612-001이 provisional로 남긴 source-owned / product-owned / import-candidate 경계를 실측한다.
+
+이 exercise에서 노출된 gap을 함께 보강한다: **준비된 project brief/요약본/planning-pack 산출물을 onboarding이 적시에 intake하지 못한다**(현재 BOOTSTRAP은 순수 대화형 Q&A뿐 — live 세션에서 `temp/rfx-hub-onboarding-handoff.md`를 수동으로 끼워넣어야 했음). 보강:
+- BOOTSTRAP §1 진입 직전 **intake step** 추가 — "준비된 brief/요약본/planning-pack 산출물이 있으면 경로 또는 텍스트로 먼저 받아 §1·§2·(§4) 초안에 반영. 권장 포맷은 PRODUCT-STARTER-PLANNING-PACK. 없으면 대화형 fallback."
+- Bootstrap-State Rule(session-start)에 **보유 여부 선질문** 한 줄.
+
+intake hook(소비 측)과 planning pack(입력 포맷)은 같은 loop의 양 끝이므로 한 작업으로 묶어 정합을 맞춘다.
 
 **Dependencies:**
 
-- CHORE-20260612-001 planning pack/import loop 기준
-- `docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md`
-- 실제 product 착수 timing과 import candidate로 볼 산출물 확보
+- CHORE-20260612-001 planning pack/import loop 기준, `docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md`
+- `rfx-hub` live onboarding test bed, `temp/rfx-hub-onboarding-handoff.md`(ad-hoc planning-pack 선례)
+- session-start Bootstrap-State Rule(#206), BOOTSTRAP §0 git-init 권장 기본값(#207)
 
-**Done Criteria:** 첫 concrete product exercise가 끝나고 planning-pack 산출물의 owner 분류(source/product/import)가 기록된다. import 후보의 일반화 가능 범위와 보류 이유가 남고, Layer U/U4 checklist 또는 review aid의 유지/보강 판단이 정리된다.
+**Done Criteria:** BOOTSTRAP prepared-brief intake hook이 정의되고(없으면 대화형 fallback), `rfx-hub` clean re-scaffold 재온보딩으로 intake→§1/§2/§4 반영이 end-to-end 검증된다. planning-pack 산출물의 owner 분류(source/product/import)가 기록되고, import 후보의 일반화 가능 범위·보류 이유, Layer U/U4 checklist 유지/보강 판단이 정리된다.
 
-**Verification:** Layer U checklist, product artifact → source import mapping review, optional pack/tool-surface spillover 점검. Surface: tool surface · adopter cascade · README/GUIDE/MANUAL.
+**Verification:** Layer U checklist, product artifact → source import mapping review, intake hook fresh-scaffold 재온보딩 검증, optional pack/tool-surface spillover 점검. Surface: scaffold · canonical(session-start) · tool surface · adopter cascade · README/GUIDE/MANUAL.
 
 ---
 
