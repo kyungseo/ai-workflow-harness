@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260617-002
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: no-code onboarding depth (PLAN.md 목표 라우팅 + 운영-모델 step) + SCAFFOLD-ONBOARDING-GUIDE 정합/cascade
 appetite: 1d

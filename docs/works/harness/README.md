@@ -12,8 +12,6 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260617-001 | BOOTSTRAP prepared-brief intake hook | 2026-06-17 | [CHORE-20260617-001-bootstrap-prepared-brief-intake-hook.md](CHORE-20260617-001-bootstrap-prepared-brief-intake-hook.md) |
-| CHORE-20260617-002 | No-code onboarding depth + GUIDE sync | 2026-06-17 | [CHORE-20260617-002-nocode-onboarding-depth-and-guide-sync.md](CHORE-20260617-002-nocode-onboarding-depth-and-guide-sync.md) |
 
 ## Archived
 

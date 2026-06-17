@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260617-001
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: BOOTSTRAP/onboarding에 prepared-brief intake hook 추가 — 입력 방식 안내 + session-start 선질문
 appetite: 1d
