@@ -40,8 +40,7 @@ AI Workflow Harness backlog다.
 | --- | --- | --- | --- | --- |
 | — | P1 | Candidate | L2 | `ai-deck-compiler` first real upgrade walkthrough + DR-034 acceptance judgment |
 | — | P1 | Candidate | L2 | Happy path / glossary / operator layering compression |
-| — | P1 | Candidate | L2 | First concrete planning-pack exercise (rfx-hub) + BOOTSTRAP prepared-brief intake hook + import review |
-| — | P1 | Candidate | L2 | No-code/content onboarding depth — PLAN.md 목표 라우팅 분리 + non-code 운영-모델 step |
+| — | P1 | Candidate | L2 | First concrete planning-pack exercise (fresh no-code scaffold) + import candidate review |
 | — | P2 | Candidate | L3 | Internal managed mode design note + target guardrails (post-walkthrough gate) |
 | — | P2 | Candidate | L3 | Spring Boot MSA TDD option-pack — product engineering pack 후보 |
 | — | P3 | Candidate | L2 | Sub-agent/Main Agent Authority Boundary |
@@ -118,11 +117,11 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### First concrete planning-pack exercise (rfx-hub) + BOOTSTRAP prepared-brief intake hook + import candidate review
+#### First concrete planning-pack exercise (fresh no-code scaffold) + import candidate review
 
 **Cluster:** W2. Adopter Transition
 
-**Task:** `rfx-hub`(RFx 대응 engagement 운영 hub) onboarding을 **첫 concrete planning-pack exercise로 공식화**한다. source-only planning pack skeleton을 실제 product에 적용해 산출물 세트를 만들고, CHORE-20260612-001이 provisional로 남긴 source-owned / product-owned / import-candidate 경계를 실측한다.
+**Task:** 첫 concrete planning-pack exercise를 **fresh no-code scaffold**에서 수행한다(초기 test bed였던 `rfx-hub`는 finding 수집 후 삭제 — 아래 진행 참조). source-only planning pack skeleton을 실제 산출물에 적용해 세트를 만들고, CHORE-20260612-001이 provisional로 남긴 source-owned / product-owned / import-candidate 경계를 실측한다.
 
 이 exercise에서 노출된 gap을 함께 보강한다: **준비된 project brief/요약본/planning-pack 산출물을 onboarding이 적시에 intake하지 못한다**(현재 BOOTSTRAP은 순수 대화형 Q&A뿐 — live 세션에서 `temp/rfx-hub-onboarding-handoff.md`를 수동으로 끼워넣어야 했음). 보강:
 - BOOTSTRAP §1 진입 직전 **intake step** 추가 — "준비된 brief/요약본/planning-pack 산출물이 있으면 경로 또는 텍스트로 먼저 받아 §1·§2·(§4) 초안에 반영. 권장 포맷은 PRODUCT-STARTER-PLANNING-PACK. 없으면 대화형 fallback."
@@ -130,39 +129,17 @@ AI Workflow Harness backlog다.
 
 intake hook(소비 측)과 planning pack(입력 포맷)은 같은 loop의 양 끝이므로 한 작업으로 묶어 정합을 맞춘다.
 
-**진행:** BOOTSTRAP prepared-brief intake hook은 `CHORE-20260617-001`로 구현 완료 — format-agnostic으로 planning-pack에 비의존(shipped 템플릿은 source-only 경로 비인용). 남은 candidate scope = rfx-hub clean 재온보딩 end-to-end exercise + import candidate review.
+**진행:** intake hook(`CHORE-20260617-001`)·no-code onboarding depth(`CHORE-20260617-002`) 구현 완료. rfx-hub(content/research, no-code) 첫 온보딩이 두 gap을 노출시킨 뒤 **finding 수집 완료로 삭제**됨. 남은 candidate scope = **fresh no-code scaffold 재온보딩 end-to-end 검증**(intake hook + no-code depth 동작을 함께 확인) + import candidate review.
 
 **Dependencies:**
 
 - CHORE-20260612-001 planning pack/import loop 기준, `docs/maintainer/PRODUCT-STARTER-PLANNING-PACK.md`
-- `rfx-hub` live onboarding test bed, `temp/rfx-hub-onboarding-handoff.md`(ad-hoc planning-pack 선례)
-- session-start Bootstrap-State Rule(#206), BOOTSTRAP §0 git-init 권장 기본값(#207)
+- fresh no-code scaffold (초기 test bed `rfx-hub`는 finding 수집 후 삭제), `temp/rfx-hub-onboarding-handoff.md`(ad-hoc planning-pack 선례)
+- session-start Bootstrap-State Rule(#206), BOOTSTRAP §0 git-init 권장 기본값(#207), intake hook(#209)·no-code depth(CHORE-20260617-002)
 
-**Done Criteria:** BOOTSTRAP prepared-brief intake hook이 정의되고(없으면 대화형 fallback), `rfx-hub` clean re-scaffold 재온보딩으로 intake→§1/§2/§4 반영이 end-to-end 검증된다. planning-pack 산출물의 owner 분류(source/product/import)가 기록되고, import 후보의 일반화 가능 범위·보류 이유, Layer U/U4 checklist 유지/보강 판단이 정리된다.
+**Done Criteria:** intake hook과 no-code depth가 **fresh no-code scaffold 재온보딩**으로 intake→§1/§2/§4 반영 + no-code thick 부팅이 end-to-end 검증된다. planning-pack 산출물의 owner 분류(source/product/import)가 기록되고, import 후보의 일반화 가능 범위·보류 이유, Layer U/U4 checklist 유지/보강 판단이 정리된다.
 
 **Verification:** Layer U checklist, product artifact → source import mapping review, intake hook fresh-scaffold 재온보딩 검증, optional pack/tool-surface spillover 점검. Surface: scaffold · canonical(session-start) · tool surface · adopter cascade · README/GUIDE/MANUAL.
-
----
-
-#### No-code/content onboarding depth — PLAN.md 목표 라우팅 분리 + non-code 운영-모델 step
-
-**Cluster:** W2. Adopter Transition
-
-**Task:** rfx-hub(content/research, no-code) 첫 대화형 온보딩에서 노출된 gap. BOOTSTRAP이 code-centric이라 no-code 프로젝트가 정체성만 남고 얇게 부팅된다(실측: PLAN.md 전체 미작성 — `## 목표`조차 빈 placeholder, 운영/콘텐츠 구조 단계 부재).
-
-- **gap 1 — PLAN.md 라우팅:** BOOTSTRAP §6 Fill Order가 PLAN.md를 통째로 "코드 프로젝트" 단계(step 5)에 묶어, no-code면 코드 비종속 부분(`## 목표`·roadmap)까지 누락. → 목표/roadmap을 Project Initialization Plan(코드 전용)과 분리해 모든 프로젝트에 라우팅한다.
-- **gap 2 — non-code 운영-모델 step 부재:** 코드 프로젝트의 §3 Implementation Baseline에 대응하는 no-code용 step이 없음. content/research/no-code엔 운영/콘텐츠 모델(artifact 구조·taxonomy·수집/분류/재사용 workflow) step을 §3 대체로 제공한다.
-
-**연계:** planning-pack exercise(rfx-hub) finding에서 도출. intake hook(`CHORE-20260617-001`)과 보완 — intake는 준비된 brief가 있을 때, 이 항목은 대화형 no-code 경로의 깊이. "Happy path / operator layering" 후보와 인접하나 그건 진입 경로 압축, 이건 no-code 부팅 깊이/PLAN 라우팅이라 별개.
-
-**Dependencies:**
-
-- BOOTSTRAP 템플릿(`scripts/create-harness.sh`) §3/§6, PLAN.md·PLAN-SUMMARY 템플릿
-- rfx-hub 온보딩 실측(content/research, no-code) reference, `temp/rfx-hub-onboarding-handoff.md`(no-code 운영 구조 선례)
-
-**Done Criteria:** no-code 프로젝트 온보딩이 (a) PLAN.md `## 목표`/roadmap을 코드 여부와 무관하게 채우도록 라우팅되고, (b) §3 N/A 시 운영/콘텐츠 모델 step으로 대체되어 정체성만 남는 thin 부팅이 해소된다. fresh no-code scaffold 재온보딩으로 검증된다.
-
-**Verification:** BOOTSTRAP §3/§6 + PLAN/PLAN-SUMMARY 템플릿 변경, no-code fresh-scaffold 재온보딩 시뮬레이션. Surface: scaffold · README/GUIDE/MANUAL · (필요시) canonical(session-start/BOOTSTRAP 절차).
 
 ---
 
