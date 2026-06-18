@@ -1,6 +1,6 @@
 # Behavior Principles
 
-모든 AI 도구(Claude Code, Codex, Cursor)에 적용되는 **전역 행동 지침**이다.
+모든 AI 도구(Claude Code, Codex, Antigravity, Cursor)에 적용되는 **전역 행동 지침**이다.
 
 충돌 시 우선순위: **1) 이 문서(전역 행동 원칙) → 2) `docs/AGENT-WORKFLOW.md`(프로젝트 운영 규칙) → 3) 도구별 설정(`.claude/*`, `.cursor/rules/*`)**
 
@@ -74,10 +74,10 @@
 
 **이 repo의 harness 운영 행동을 유도하는 내용을 agent-side 지속 컨텍스트에 저장하지 않는다. harness 문서가 단일 SSoT다.**
 
-- **적용 대상:** repo 밖 agent-side 지속 컨텍스트 — Claude memory(`~/.claude/<proj>/memory/`), Codex 전역 profile/config, Cursor user-level(global) rules. in-repo harness-owned 표면(`.claude/`, `.cursor/rules/`, `.agents/skills/`, `docs/`, `skills/`)은 harness 자체이므로 이 제약의 대상이 아니다.
+- **적용 대상:** repo 밖 agent-side 지속 컨텍스트 — Claude memory(`~/.claude/<proj>/memory/`), Codex 전역 profile/config, Antigravity global customizations·app data(`~/.gemini/config`, `~/.gemini/antigravity`), Cursor user-level(global) rules. in-repo harness-owned 표면(`.claude/`, `.cursor/rules/`, `.agents/skills/`, `docs/`, `skills/`)은 harness 자체이므로 이 제약의 대상이 아니다.
 - **판정 룰:** 저장 내용이 이 harness의 repo-specific operational instruction(repo명·경로, Work·STATUS lifecycle, gate·trigger·cascade, DR closure, branch-flow, commit bundling, approval 절차 등)을 유도하면 **금지**. repo와 무관한 일반 커뮤니케이션 스타일·안전 선호·사용자 프로필·외부 시스템 포인터는 **허용**.
 - **이유:** agent-side 컨텍스트가 행동을 보정하면 harness 동작이 "harness 문서만으로" 유도되는지 검증할 수 없고(문서 결함이 가려짐), 도구마다 보정 여부가 달라 검증 조건이 불균등해진다.
-- **Self-audit:** 각 도구 사용자는 자신의 agent-side 지속 컨텍스트에 위 금지 항목이 있는지 점검하고 제거한다. Claude memory는 알려진 경로에서 직접 점검 가능하나, Codex/Cursor의 repo 밖 컨텍스트는 owner attestation 또는 reviewer self-audit로만 확인한다(자동 검증·hard-gate 대상 아님).
+- **Self-audit:** 각 도구 사용자는 자신의 agent-side 지속 컨텍스트에 위 금지 항목이 있는지 점검하고 제거한다. Claude memory는 알려진 경로에서 직접 점검 가능하나, Codex/Antigravity/Cursor의 repo 밖 컨텍스트는 owner attestation 또는 reviewer self-audit로만 확인한다(자동 검증·hard-gate 대상 아님).
 
 ---
 

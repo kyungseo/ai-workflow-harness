@@ -14,7 +14,7 @@
 - Git
 - Bash compatible shell
 - `rg` for search
-- Claude Code, Codex, or Cursor when testing tool-specific surfaces
+- Claude Code, Codex, Antigravity, or Cursor when testing tool-specific surfaces (Antigravity reuses the Codex `.agents/` surface; no dedicated adapter)
 
 GitHub repository 설정 (ruleset, 보안, 기능 옵션)은 `docs/decisions/DR-020-github-repo-settings.md`를 기준으로 적용한다.
 

@@ -15,7 +15,7 @@
 symptom: {한 줄 증상}
 track: harness | product
 category: {e.g. workflow, scaffold, command, git, tool, feature, api, data, infra, …}
-environment: {e.g. Claude Code, Codex, Cursor, 공통, 기타}
+environment: {e.g. Claude Code, Codex, Antigravity, Cursor, 공통, 기타}
 status: Resolved | Unresolved | Workaround
 related_dr: []
 ---

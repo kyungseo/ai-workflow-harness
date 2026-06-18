@@ -37,7 +37,7 @@ Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORK
 | 문서 | 역할 |
 | --- | --- |
 | `CLAUDE.md` | Claude Code 진입점, 자동 로드 |
-| `AGENTS.md` | Codex 진입점 |
+| `AGENTS.md` | Codex 진입점 (Antigravity도 자동 로드 — Codex surface 공유) |
 | `docs/BEHAVIOR-PRINCIPLES.md` | 전역 행동 원칙 |
 | `docs/AGENT-WORKFLOW.md` | 도구 공통 운영 규칙 |
 | `docs/STATUS.md` | 현재 상태 live board |
@@ -455,7 +455,7 @@ archive 이동 시에는 원본 인덱스에서 행을 제거하고, archive 디
 | T8c | 방향 비교·전략 포지션 정리 필요 | `docs/briefs/` 기록 제안. `docs/briefs/README.md` frontmatter 스펙 적용 |
 | T9 | 발표/보고 산출물 생성 | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |
 | T10 | Work 파일 Done 상태 발견 | archive 승인 여부 제안 |
-| T11 | tool surface 변경 | Claude(`.claude/commands/`, `.claude/rules/`)/Codex(`.agents/skills/`, `.codex/hooks.json`)/Cursor(`.cursor/rules/`)/`prompts/`/README/scaffold 정렬 확인 |
+| T11 | tool surface 변경 | Claude(`.claude/commands/`, `.claude/rules/`)/Codex(`.agents/skills/`, `.codex/hooks.json`; Antigravity가 `.agents/` 공유)/Cursor(`.cursor/rules/`)/`prompts/`/README/scaffold 정렬 확인 |
 | T12 | scaffold source 또는 canonical workflow 변경 | `scripts/create-harness.sh`가 있으면 dry-run + temp scaffold 검증, 없으면 source scaffold 검증 제외. template-level policy 변경은 소형 maintenance release 후보로 취급한다 — main merge 전까지 downstream consumer에게 drift window가 발생하므로 변경 범위와 release timing을 함께 판단한다. |
 | T13 | Product track surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |

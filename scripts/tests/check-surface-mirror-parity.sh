@@ -16,6 +16,12 @@
 #   여기 명시해 coverage 누락을 가시화한다. slice가 늘면 이 목록을 갱신한다.
 #   (default-template-parity.sh의 explicit registry와 동일 철학)
 #
+# Antigravity (Gemini 기반)는 별도 parity 차원이 아니다 — 자체 adapter dir/prompt 없이
+#   root AGENTS.md + .agents/skills/(Codex surface)를 그대로 재사용한다. 따라서 이 스크립트는
+#   Antigravity를 점검하지 않으며, Antigravity는 false-positive를 만들지 않는다.
+#   supported-tools-list parity(문서상 4-tool 나열 정합)는 deterministic 점검이 아니라
+#   judgment/repo-health 시점 점검으로 유지한다(여기에 Antigravity 차원을 추가하지 말 것).
+#
 # Usage:
 #   bash scripts/tests/check-surface-mirror-parity.sh
 #   bash scripts/tests/check-surface-mirror-parity.sh --root <repo-root>

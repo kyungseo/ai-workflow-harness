@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| FEAT-20260618-001 | Antigravity (Gemini 기반) 4번째 지원 도구 추가 | 2026-06-18 | [FEAT-20260618-001-antigravity-support.md](FEAT-20260618-001-antigravity-support.md) |
 
 ## Archived
 

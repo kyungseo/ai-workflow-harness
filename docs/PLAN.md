@@ -19,7 +19,7 @@ development workflow다.
 - session 시작 시 읽어야 할 entry contract를 명확히 한다.
 - `STATUS.md`, Work file, backlog, decision record의 역할을 분리한다.
 - scope approval, state-change approval, commit approval을 명시적 gate로 관리한다.
-- Claude Code, Codex, Cursor가 같은 운영 규칙을 따르도록 entrypoint와 rule surface를 정렬한다.
+- Claude Code, Codex, Antigravity, Cursor가 같은 운영 규칙을 따르도록 entrypoint와 rule surface를 정렬한다.
 - 작업 실패, drift, validation failure가 발생했을 때 recovery flow를 제공한다.
 - 다른 repository에 적용 가능한 generic scaffold를 제공한다.
 - public repository로 공개해도 이해 가능한 문서 구조를 유지한다.
@@ -40,7 +40,7 @@ development workflow다.
 
 | Surface | Role |
 | --- | --- |
-| `AGENTS.md`, `CLAUDE.md` | Codex / Claude Code entrypoint |
+| `AGENTS.md`, `CLAUDE.md` | Codex / Claude Code entrypoint (Antigravity도 `AGENTS.md` 자동 로드 — Codex surface 공유) |
 | `docs/BEHAVIOR-PRINCIPLES.md` | 모든 AI 도구에 적용되는 전역 행동 원칙 |
 | `docs/AGENT-WORKFLOW.md` | 공통 workflow, Approval Matrix, status rule |
 | `docs/HARNESS-PROTOCOL.md` | 상세 protocol reference |

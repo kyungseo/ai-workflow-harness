@@ -38,7 +38,7 @@ Source repo(`ai-workflow-harness`)는 scaffold script, canonical workflow, migra
 Target project는 생성된 `docs/BOOTSTRAP.md`, `docs/STATUS.md`, backlog, Work 파일을 채워 자기 프로젝트 상태를 소유한다.
 `--workflow source-gitflow`를 명시하지 않는 한 source repo의 Gitflow/release gate가 target 기본값으로 강제되지 않는다.
 
-이 harness는 AI 도구(Claude Code / Codex / Cursor)와 함께 프로젝트를 운영하기 위한 워크플로우 프레임워크다.
+이 harness는 AI 도구(Claude Code / Codex / Antigravity / Cursor)와 함께 프로젝트를 운영하기 위한 워크플로우 프레임워크다.
 scaffold 직후에는 빈 껍데기 상태이므로, `docs/BOOTSTRAP.md`의 §0~§9를 순서대로 확인해야
 AI가 프로젝트 맥락을 올바르게 파악하고 실제 작업에 착수할 수 있다.
 
@@ -175,6 +175,7 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 | Claude Code | project root에서 `claude` 실행 후 `/session-start` | `/session-start` |
 | Codex 앱 | scaffold된 project root를 workspace로 열기 | `/session-start` intent: `AGENTS.md 기준으로 STATUS를 요약하고 bootstrap onboarding 흐름을 제안해줘.` |
 | Codex CLI | project root에서 `codex` 실행 | `/session-start` 또는 같은 의미의 자연어 요청 |
+| Antigravity | scaffold된 project root를 workspace로 열기 (root `AGENTS.md` 자동 로드) | `/session-start` 또는 `세션을 시작하자` 같은 자연어 intent |
 | Cursor | project root를 열고 `prompts/cursor-session-start.md` 사용 | session-start prompt 붙여넣기 |
 
 Codex 앱에서는 별도 `codex` 명령을 실행하지 않는다.

@@ -1,6 +1,6 @@
 # docs/AGENT-WORKFLOW.md
 
-Claude Code, Codex, Cursor의 공통 프로젝트 운영 규칙이다.
+Claude Code, Codex, Antigravity, Cursor의 공통 프로젝트 운영 규칙이다.
 루트 `CLAUDE.md`와 `AGENTS.md`는 동등한 도구별 진입점이며, 공유 규칙은 이 파일과 상세 harness protocol 문서가 담당한다.
 전역 행동 원칙은 `docs/BEHAVIOR-PRINCIPLES.md`가 우선하며, 이 문서는 그 원칙을 실행 절차로 구체화한다.
 상세 레퍼런스는 `docs/HARNESS-PROTOCOL.md`를 따른다.
@@ -9,6 +9,7 @@ Claude Code, Codex, Cursor의 공통 프로젝트 운영 규칙이다.
 
 Claude Code는 세션 시작 시 `CLAUDE.md`를 통해 이 파일을 로드한다.
 Codex는 세션 시작 시 `AGENTS.md`를 통해 이 파일을 참조한다.
+Antigravity(Gemini 기반)는 세션 시작 시 root `AGENTS.md`를 자동 로드하고 `.agents/skills/`(Codex surface)를 그대로 소비한다 — 별도 진입 파일 없음.
 Cursor는 session prompt와 `.cursor/rules/`를 통해 이 파일을 참조한다.
 세션 시작 시 harness protocol 전체를 읽지 않는다. 필요한 조건이 생길 때만 `docs/HARNESS-PROTOCOL.md`를 로드한다.
 세션 시작 시 `.claude/commands/*.md` 전체를 읽지 않는다. slash command가 명시적으로 호출되었거나 해당 workflow가 분명히 필요할 때만 관련 command 파일을 로드한다.
