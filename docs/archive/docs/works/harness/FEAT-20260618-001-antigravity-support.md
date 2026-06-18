@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260618-001
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Antigravity (Gemini 기반)를 4번째 지원 도구로 추가 — Codex .agents/ surface 재사용 piggyback
 appetite: 3d
@@ -111,6 +111,8 @@ proof-gated 구조 — **S0(소비 증명)가 support 문구와 후속 scope를 
 ### 선재 이슈 발견 (out-of-scope, 별도 보고)
 
 `run-harness-checks.sh --all`에서 `default-template-parity (workflow_mdc)` FAIL 발견 — **이 Work과 무관한 develop 선재 drift**. 본질: source `.cursor/rules/workflow.mdc`의 `work-brief` routing row가 template default(`scripts/templates/default/.cursor/rules/workflow.mdc`)에 누락(work-brief 추가 시 template 미동기화). 두 workflow.mdc 모두 본 작업에서 미변경(HEAD 동일)이고 parity 체크 입력이 그 둘뿐임을 확인해 인과 분리 확정. surgical 원칙상 본 Work에서 수정하지 않고 별도 PATCH로 등록 제안.
+
+- **Archive 처리 (2026-06-18):** develop→main release gate의 archive pending blocker 해소를 위해 live `docs/works/harness/`에서 archive-side로 이동. Work 결과 자체는 변경 없음.
 
 ## Cross-Agent Review And Discussion
 
