@@ -8,6 +8,7 @@ Canonical workflow procedure for `/work-plan`.
 | --- | --- |
 | Claude Code | `.claude/commands/work-plan.md` |
 | Codex | `.agents/skills/workflow-work-plan/SKILL.md` |
+| Antigravity | Codex adapter 재사용: `.agents/skills/workflow-work-plan/SKILL.md` |
 | Cursor | `.cursor/rules/workflow.mdc` |
 
 Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 상세 절차, checklist, cascade 판단은 이 canonical 파일을 따른다.
@@ -71,7 +72,7 @@ STATUS.md에 이미 Active Work가 있으면:
 
 Harness 구조, command, rule, workflow protocol 변경이면 `docs/HARNESS-PROTOCOL.md`를 필요한 범위만 로드해줘.
 완료된 harness refactor의 배경 근거가 필요하고 해당 파일이 실제 존재할 때만 `docs/archive/docs/HARNESS-REFACTOR-PLAN.md`를 참고해줘.
-`CHORE-*`, `HRN-*`, `PRE-*`, `DOC-*` 또는 계획·아이디어 성격이 강한 작업이면 `docs/retrospectives/`에서 최신/관련 회고 1개만 선택해 반복 리스크와 우선순위 근거를 확인해줘.
+`CHORE-*`, `HRN-*`, `PRE-*`, `DOC-*` 또는 계획·아이디어 성격이 강한 작업이면 `docs/retrospectives/` 또는 `docs/briefs/`에서 최신/관련 문서 1개만 선택해 반복 리스크와 우선순위·방향 근거를 확인해줘.
 
 **2. Troubleshooting 관련 이슈 확인**
 작업이 기존에 발생한 원인 불명의 이슈(오류, 환경 설정 문제 등)와 관련된 경우 `docs/troubleshooting/`에 관련 기록이 있는지 확인해줘.

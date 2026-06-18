@@ -7,7 +7,7 @@ Keep this file thin. Global behavior principles live in `docs/BEHAVIOR-PRINCIPLE
 
 MUST:
 
-- Treat this file and `CLAUDE.md` as equal tool-specific entry points.
+- Treat this file and `CLAUDE.md` as equal tool-specific entry points. Supported tools are Claude Code / Codex / Antigravity (Gemini-based) / Cursor.
 - Read and follow `docs/BEHAVIOR-PRINCIPLES.md` at session start for global behavioral principles that apply to all tasks.
 - Read and follow `docs/AGENT-WORKFLOW.md` at session start for common workflow, context routing, status rules, and validation defaults.
 - Read `docs/STATUS.md` current sections before choosing or continuing work.
@@ -30,6 +30,8 @@ Skill name maps directly to command name (e.g., `/session-start` → `workflow-s
 Each skill adapter must load the matching canonical procedure in `skills/workflow/{name}.md` as Step 0.
 
 Available workflow skills are the directories under `.agents/skills/`.
+
+Antigravity (Gemini-based) consumes this same `.agents/` surface: it auto-loads root `AGENTS.md` and discovers `.agents/skills/workflow-{name}/SKILL.md`, following the identical Step 0 → canonical procedure. No Antigravity-specific adapter exists; the `Antigravity` row in each canonical adapter table reuses the Codex adapter.
 
 If the matched skill intent is uncertain or multiple skills are equally plausible, confirm the interpreted intent in one line before loading a skill. Do not silently pick one and execute.
 

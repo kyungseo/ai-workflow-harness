@@ -10,7 +10,7 @@
 ```mermaid
 graph TB
     USER["User / Maintainer"]
-    AGENT["AI Agent\nClaude Code / Codex / Cursor"]
+    AGENT["AI Agent\nClaude Code / Codex / Antigravity / Cursor"]
 
     subgraph ENTRY["Entry Contract"]
         CLAUDE["CLAUDE.md"]
@@ -116,6 +116,7 @@ flowchart TD
     NEED -->|"Parallel branch / agent conflict"| PARALLEL["docs/HARNESS-PARALLEL-WORK-CONTROLS.md"]
     NEED -->|"Branch / PR / release intent"| GIT["docs/GIT-WORKFLOW.md"]
     NEED -->|"우선순위 / 반복 risk 확인"| RETRO["docs/retrospectives/"]
+    NEED -->|"방향 / 비교 / 포지션 확인"| BRIEF["docs/briefs/"]
     NEED -->|"No"| EXEC["Plan next action"]
 ```
 
@@ -143,7 +144,8 @@ archive, manual, 과거 문서를 일괄 로드하지 않는다.
 | `docs/HARNESS-MAINTAINER-GUIDE.md` | harness 유지보수 가이드 |
 | `docs/WORKFLOW-MANUAL.md` | 사람이 읽는 workflow manual |
 | `README.md` | public-facing quick start와 repo 소개 |
-| `docs/retrospectives/**` | 리뷰 및 학습 산출물 |
+| `docs/retrospectives/**` | 시점 기반 회고 및 학습 산출물 |
+| `docs/briefs/**` | 방향·비교·포지션 문서 |
 | `docs/archive/**` | historical snapshot 및 완료 기록 |
 
 ## 5. Tool Surface Model
@@ -153,7 +155,7 @@ graph LR
     CANON["Canonical docs\nBEHAVIOR / AGENT-WORKFLOW / PROTOCOL"]
     SLICES["Conditional slices\nNAMING / RECOVERY / PARALLEL"]
     CLAUDE["Claude Code\n.claude/commands + .claude/rules"]
-    CODEX["Codex\nAGENTS.md + .agents/skills + .codex/hooks.json"]
+    CODEX["Codex / Antigravity\nAGENTS.md + .agents/skills (+ .codex/hooks.json: Codex)"]
     CURSOR["Cursor\n.cursor/rules"]
     PROMPTS["prompts/*session-start.md\n(shared fallback)"]
     SCAFFOLD["create-harness.sh\n+ scripts/templates/**"]

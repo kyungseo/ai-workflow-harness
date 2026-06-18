@@ -31,14 +31,14 @@ git diff --cached --name-only
 
 | 변경 파일 유형 | Canonical | Tool-specific | User-facing | Scaffold | Historical |
 | --- | --- | --- | --- | --- | --- |
-| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 두 파일 모두 | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.agents/skills/`, `.codex/hooks.json`, `.cursor/rules/`, `prompts/*` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` 섹션, `README.md` | `scripts/create-harness.sh`가 있으면 dry-run 또는 temp scaffold, 없으면 scaffold source 검증 제외 | 관련 retrospective는 snapshot 여부만 확인 |
-| `.claude/commands/*.md` 또는 `.agents/skills/*/SKILL.md` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 대응 `.agents/skills/workflow-{name}/SKILL.md` 또는 `.claude/commands/{name}.md` (suffix mapping: `.claude/commands/{name}.md` ↔ `.agents/skills/workflow-{name}/SKILL.md`), `AGENTS.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` command 섹션 | command/skill 복사 산출물 | 필요 시 관련 Work/retrospective |
-| `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.codex/hooks.json` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 반대 tool rule, hook, prompts | 필요 시 manual/rules 설명 | rule/hook 복사 산출물 | 필요 시 관련 Work/retrospective |
-| `prompts/*` | `docs/AGENT-WORKFLOW.md`, 필요 시 `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, command/skill/rule/hook | `prompts/README.md`, 필요 시 manual prompt 섹션 | prompt 복사 산출물 | 필요 시 관련 Work/retrospective |
+| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 두 파일 모두 | `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.agents/skills/`, `.codex/hooks.json`, `.cursor/rules/`, `prompts/*` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` 섹션, `README.md` | `scripts/create-harness.sh`가 있으면 dry-run 또는 temp scaffold, 없으면 scaffold source 검증 제외 | 관련 retrospective/brief는 snapshot 여부만 확인 |
+| `.claude/commands/*.md` 또는 `.agents/skills/*/SKILL.md` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 대응 `.agents/skills/workflow-{name}/SKILL.md` 또는 `.claude/commands/{name}.md` (suffix mapping: `.claude/commands/{name}.md` ↔ `.agents/skills/workflow-{name}/SKILL.md`), `AGENTS.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md` | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` command 섹션 | command/skill 복사 산출물 | 필요 시 관련 Work/retrospective/brief |
+| `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `.codex/hooks.json` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 반대 tool rule, hook, prompts | 필요 시 manual/rules 설명 | rule/hook 복사 산출물 | 필요 시 관련 Work/retrospective/brief |
+| `prompts/*` | `docs/AGENT-WORKFLOW.md`, 필요 시 `docs/HARNESS-PROTOCOL.md` | `AGENTS.md`, `CLAUDE.md`, command/skill/rule/hook | `prompts/README.md`, 필요 시 manual prompt 섹션 | prompt 복사 산출물 | 필요 시 관련 Work/retrospective/brief |
 | `docs/WORKFLOW-MANUAL.md`, `README.md`, `docs/HARNESS-QUICK-REFERENCE.md` | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | 관련 command/rule/prompt | 변경된 user-facing 문서 상호 참조 | 필요 시 scaffold README/manual 산출물 | snapshot 덮어쓰기 금지 |
 | `scripts/create-harness.sh`가 존재할 때 | `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/SCAFFOLD-BOOTSTRAP.md` | commands/rules/prompts source | generated README/manual expectations | dry-run + temp scaffold + stale phrase search | 필요 시 related Work |
 | `docs/SCAFFOLD-BOOTSTRAP.md` | `docs/HARNESS-PROTOCOL.md` | — | — | `scripts/create-harness.sh`가 있으면 생성 BOOTSTRAP.md 템플릿과 Boot Sequence·Completion Rule 동기화, 없으면 source repo 전용 기준으로 표시 | — |
-| `docs/STATUS.md`, `docs/works/**`, `docs/backlog/**`, `docs/decisions/**` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | session-start/work-resume/work-close/session-summary/record-decision commands | quick reference/manual state sections | work/index scaffold templates | 관련 Work/DR/retrospective |
+| `docs/STATUS.md`, `docs/works/**`, `docs/backlog/**`, `docs/decisions/**`, `docs/briefs/**` | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | session-start/work-resume/work-close/session-summary/record-decision/work-brief commands | quick reference/manual state sections | work/index scaffold templates | 관련 Work/DR/retrospective/brief |
 | `docs/GIT-WORKFLOW.md`, branch/release policy 변경 | `docs/AGENT-WORKFLOW.md` | `.claude/commands/work-plan.md`, `work-close.md`, 대응 SKILL mirror | `docs/WORKFLOW-MANUAL.md` branch 섹션, `docs/HARNESS-QUICK-REFERENCE.md` | `scripts/templates/source-gitflow/docs/GIT-WORKFLOW.md`, generated work-plan/work-close command | 관련 Work |
 | `scripts/templates/**` 변경 | `docs/SCAFFOLD-BOOTSTRAP.md`, `docs/AGENT-WORKFLOW.md` | `scripts/create-harness.sh` | `docs/WORKFLOW-MANUAL.md` scaffold 섹션, `README.md` §10 | dry-run + fresh generation, generated command/skill/rule | 관련 Work |
 | `.claude/commands/{x}.md` ↔ `.agents/skills/workflow-{x}/SKILL.md` mirror pair 변경 | `docs/HARNESS-PROTOCOL.md`, `docs/AGENT-WORKFLOW.md` | 대응 pair 전체 | `docs/HARNESS-QUICK-REFERENCE.md`, 관련 `docs/WORKFLOW-MANUAL.md` 섹션 | scaffold 복사 산출물 | 관련 Work/retrospective |
@@ -53,7 +53,7 @@ git diff --cached --name-only
 ## Required Grep Pack
 
 변경 파일 유형에 맞는 키워드를 골라 실행하고, 결과가 없으면 "no matches"로 보고한다.
-기본 grep 대상은 live surface로 제한한다. `docs/archive/`, `docs/retrospectives/`, `docs/presentations/`, 과거 계획 snapshot은 변경 파일에 포함되었거나 사용자가 historical review를 요청한 경우에만 별도 검색한다.
+기본 grep 대상은 live surface로 제한한다. `docs/archive/`, `docs/retrospectives/`, `docs/briefs/`, `docs/presentations/`, 과거 계획 snapshot은 변경 파일에 포함되었거나 사용자가 historical review를 요청한 경우에만 별도 검색한다.
 
 ```bash
 # Live target set

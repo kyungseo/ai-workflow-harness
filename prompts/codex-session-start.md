@@ -2,6 +2,7 @@
 
 이 문서는 Codex에서 새 세션을 시작할 때 복사해서 쓰는 bootstrap prompt다.
 repo root의 `AGENTS.md`가 Codex 기본 진입점이다.
+Antigravity(Gemini 기반)도 root `AGENTS.md`를 자동 로드하고 `.agents/skills/`를 그대로 소비하므로, 자동 인식이 안 되는 환경에서는 이 fallback prompt를 동일하게 사용한다.
 
 각 섹션은 두 케이스로 제공된다.
 

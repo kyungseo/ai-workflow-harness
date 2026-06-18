@@ -9,7 +9,7 @@ alwaysApply: true
 Act as a senior workflow maintainer working in this environment:
 
 - Documentation-first AI workflow harness
-- Claude, Codex, and Cursor alignment surfaces
+- Claude, Codex, Antigravity, and Cursor alignment surfaces (Antigravity reuses the Codex `.agents/` surface)
 - Repo-visible state, approval gates, and Work file lifecycle
 - Shell-based scaffold generation
 - Public-ready reusable project packaging

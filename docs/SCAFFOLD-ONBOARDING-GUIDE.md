@@ -38,7 +38,7 @@ Source repo(`ai-workflow-harness`)는 scaffold script, canonical workflow, migra
 Target project는 생성된 `docs/BOOTSTRAP.md`, `docs/STATUS.md`, backlog, Work 파일을 채워 자기 프로젝트 상태를 소유한다.
 `--workflow source-gitflow`를 명시하지 않는 한 source repo의 Gitflow/release gate가 target 기본값으로 강제되지 않는다.
 
-이 harness는 AI 도구(Claude Code / Codex / Cursor)와 함께 프로젝트를 운영하기 위한 워크플로우 프레임워크다.
+이 harness는 AI 도구(Claude Code / Codex / Antigravity / Cursor)와 함께 프로젝트를 운영하기 위한 워크플로우 프레임워크다.
 scaffold 직후에는 빈 껍데기 상태이므로, `docs/BOOTSTRAP.md`의 §0~§9를 순서대로 확인해야
 AI가 프로젝트 맥락을 올바르게 파악하고 실제 작업에 착수할 수 있다.
 
@@ -95,7 +95,7 @@ scaffold 후 생성되는 `docs/BOOTSTRAP.md`는 아래 순서로 구성된다.
 | §0 Repository Setup | git 사용 가능 상태 확인 | `git init` 여부, default branch, initial commit 여부 | 현재 git 상태 보고, 승인 후 명령 실행 또는 Not Applicable 처리 |
 | §1 Project Identity | 프로젝트 신원 확정 | 이름, 한 줄 설명, 주요 사용자, production 성격, 배포 방식 | `BOOTSTRAP.md`, `PLAN-SUMMARY.md`, README 보정안 제안 |
 | §2 Product Definition | 제품 목표와 성공 기준 확정 | 초기 목표, 첫 사용자 시나리오, 성공 기준 | `PLAN-SUMMARY.md` Project Summary와 `PLAN.md` 목표 반영 |
-| §3 Project Initialization | 개발 baseline 확정 | Runtime, Framework, Build, package/module, DB, profiles, test strategy | Implementation Baseline, `PLAN.md`, Project Constants 반영 |
+| §3 Project Initialization | 개발 baseline(코드) 또는 운영/콘텐츠 모델(no-code) 확정 | 코드: Runtime/Framework/Build/DB 등 · no-code: artifact 구조·taxonomy·workflow | 코드: Implementation Baseline·`PLAN.md`·Project Constants · no-code: Baseline N/A + `PLAN.md` Initial Structure |
 | §4 Product Backlog Derivation | Product track 후보 생성 | 요구사항, 우선순위, 착수 후보 | `PRODUCT.md` 후보와 Done Criteria/Verification 작성 |
 | §5 Harness Track Setup | harness 자체 조정 분리 | entrypoint, rule, prompt 정비 방향 | `HARNESS.md` 후보 또는 state-change proposal 작성 |
 | §6 Core Document Fill Order | 작성 순서 확인 | 어떤 문서를 먼저 채울지 승인 | 파일별 update 순서와 scope 제안 |
@@ -156,10 +156,11 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 이 프로젝트를 scaffold 직후 부팅하려고 해.
 다음 순서로 제안해줘:
 
+0. 준비된 brief/요약본이 있으면 경로·텍스트로 먼저 받아 §1·§2 초안에 반영 (없으면 §1·§2 일괄 제출 또는 대화형)
 1. 프로젝트 identity와 production 성격 확인 (§1)
 2. Product Definition: 제품 목표, 주요 사용자, 성공 기준 (§2)
-3. Project Initialization: PLAN-SUMMARY.md Implementation Baseline 결정 (§3, 코드 개발 프로젝트만)
-4. Implementation Baseline이 비어 있으면 feature candidate 대신 Project Initialization을 첫 후보로 제안
+3. Project Initialization (§3): 코드 프로젝트는 Implementation Baseline, no-code는 운영/콘텐츠 모델 결정
+4. §3가 비어 있으면 feature candidate 대신 §3(코드: Project Initialization / no-code: 운영 모델)을 첫 후보로 제안
 5. Harness track 정비 항목, example pack 정비 필요 여부 (§5, §7)
 
 파일 수정은 내 승인 전까지 하지 마.
@@ -174,6 +175,7 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 | Claude Code | project root에서 `claude` 실행 후 `/session-start` | `/session-start` |
 | Codex 앱 | scaffold된 project root를 workspace로 열기 | `/session-start` intent: `AGENTS.md 기준으로 STATUS를 요약하고 bootstrap onboarding 흐름을 제안해줘.` |
 | Codex CLI | project root에서 `codex` 실행 | `/session-start` 또는 같은 의미의 자연어 요청 |
+| Antigravity | scaffold된 project root를 workspace로 열기 (root `AGENTS.md` 자동 로드) | `/session-start` 또는 `세션을 시작하자` 같은 자연어 intent |
 | Cursor | project root를 열고 `prompts/cursor-session-start.md` 사용 | session-start prompt 붙여넣기 |
 
 Codex 앱에서는 별도 `codex` 명령을 실행하지 않는다.
@@ -207,6 +209,8 @@ git이 아직 없거나 branch 전략이 정해지지 않았더라도 이 원칙
 
 온보딩을 시작하기 전에 아래 정보를 미리 정리해두면 세션이 훨씬 빠르게 진행된다.
 모르거나 미정인 항목은 공란으로 두어도 된다. AI가 해당 섹션에서 다시 물어본다.
+
+이미 프로젝트 brief·요약본을 정리해 두었다면, 온보딩 시작 시 경로나 텍스트로 제출하면 AI가 §1·§2(·§4) 초안에 반영한다. 없으면 아래 항목을 채워가며 진행하면 된다. 정체성·계획은 온보딩이 끝난 뒤에도 언제든 보강할 수 있다.
 
 ```
 [ ] 프로젝트 이름과 한 줄 설명
@@ -258,7 +262,7 @@ flowchart TD
     subgraph S3["§3 Project Initialization"]
         C1{"사용자: 코드 개발\n프로젝트인가?"}
         C1 -- "Yes" --> C2["사용자: 기술 스택 결정·제공\nAI: PLAN-SUMMARY·PLAN·\nAGENT-WORKFLOW 반영"]
-        C1 -- "No" --> C3["AI: 전 항목\nNot Applicable 처리"]
+        C1 -- "No" --> C3["사용자: 운영/콘텐츠 모델 제공\nAI: Baseline N/A +\nPLAN.md Initial Structure 기록"]
         C2 --> S4
         C3 --> S4
     end
@@ -492,9 +496,10 @@ AI : 아래 파일 4개를 업데이트합니다.
 ```
 You: 이 프로젝트는 문서 사이트야. 코드 개발은 없어.
 
-AI : §3 Project Initialization은 코드 개발 프로젝트에만 해당합니다.
-     Implementation Baseline 전 항목을 Not Applicable로 처리하고 §4로 이동합니다.
-     §4에서는 콘텐츠/문서 작업 후보를 등록합니다.
+AI : §3에서 Implementation Baseline은 전 항목 Not Applicable로 처리합니다.
+     단, 정체성만 남지 않도록 운영/콘텐츠 모델을 함께 정합니다 —
+     artifact·디렉토리 구조, 분류(taxonomy)/명명 규칙, 수집·분류·재사용 workflow를
+     docs/PLAN.md Initial Structure에 기록합니다. 그 뒤 §4로 이동합니다.
 ```
 
 ### DB 전략: 개발용 → 운영용 분리
@@ -743,10 +748,11 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 이 프로젝트를 scaffold 직후 부팅하려고 해.
 다음 순서로 제안해줘:
 
+0. 준비된 brief/요약본이 있으면 경로·텍스트로 먼저 받아 §1·§2 초안에 반영 (없으면 §1·§2 일괄 제출 또는 대화형)
 1. 프로젝트 identity와 production 성격 확인 (§1)
 2. Product Definition: 제품 목표, 주요 사용자, 성공 기준 (§2)
-3. Project Initialization: PLAN-SUMMARY.md Implementation Baseline 결정 (§3, 코드 개발 프로젝트만)
-4. Implementation Baseline이 비어 있으면 feature candidate 대신 Project Initialization을 첫 후보로 제안
+3. Project Initialization (§3): 코드 프로젝트는 Implementation Baseline, no-code는 운영/콘텐츠 모델 결정
+4. §3가 비어 있으면 feature candidate 대신 §3(코드: Project Initialization / no-code: 운영 모델)을 첫 후보로 제안
 5. Harness track 정비 항목, example pack 정비 필요 여부 (§5, §7)
 
 파일 수정은 내 승인 전까지 하지 마.

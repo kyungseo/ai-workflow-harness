@@ -93,6 +93,7 @@ backlog 후보는 제목/slug만 유지한다. Work 파일 생성(착수 승인)
 | `docs/archive/docs/` | 원본 상대 경로와 파일명 mirror | `docs/archive/docs/WORKFLOW-MANUAL-ai-workflow-v1.0.0.md` |
 | `docs/archive/snapshots/` | `{topic}-{YYYYMMDD}` | `harness-refactor-20260514/` |
 | `docs/retrospectives/` | `{topic}-{YYYYMMDD}.md` | `ai-workflow-complexity-review-20260518.md` |
+| `docs/briefs/` | `{topic}-{YYYYMMDD}.md` | `harness-policy-boundary-20260615.md` |
 | `docs/presentations/` | artifact/deck version naming | `harness-v1-team-intro-v1.1.pptx` |
 
 기존 media asset은 의미 보존을 우선한다. 신규 media 파일은 가능하면 lowercase-hyphenated를 사용하되, 사용자 표시명이나 외부 산출물 이름을 보존해야 하면 예외로 둔다.

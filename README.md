@@ -1,7 +1,7 @@
 # ai-workflow-harness
 
 프로젝트에 AI workflow를 적용하기 위한 **manual-first, approval-gated workflow harness**입니다.
-Claude Code, Codex, Cursor 같은 AI 도구가 같은 상태 파일과 같은 절차를 보고 움직이도록 문서, command, skill, scaffold를 함께 제공합니다.
+Claude Code, Codex, Antigravity, Cursor 같은 AI 도구가 같은 상태 파일과 같은 절차를 보고 움직이도록 문서, command, skill, scaffold를 함께 제공합니다.
 
 여러 세션에 걸쳐 AI와 일하다 보면 보통 세 가지 문제가 먼저 생깁니다. 범위가 조금씩 커지고, 승인 없이 파일이 바뀌고, 왜 그렇게 결정했는지가 대화 속에만 남습니다. 이 harness는 workflow engine을 새로 만들지 않고, **계획, 승인, 검증, 기록**으로 그 문제를 제어합니다.
 
@@ -73,7 +73,7 @@ scaffold 후에는 생성된 project directory에서 `/session-start`로 첫 세
 | 구성 | 역할 |
 | --- | --- |
 | Workflow documents | 세션 시작, 작업 선택, 계획, 승인, 검증, 완료 처리 기준 |
-| Tool adapters | Claude Code command, Codex skill, Cursor rule이 같은 canonical workflow를 부르도록 하는 얇은 연결부 |
+| Tool adapters | Claude Code command, Codex skill, Cursor rule이 같은 canonical workflow를 부르도록 하는 얇은 연결부 (Antigravity는 Codex skill 표면을 그대로 재사용) |
 | Scaffold script | 다른 project repository에 이 workflow 구조를 생성하는 `scripts/create-harness.sh` |
 
 이 repository는 사용자의 제품 코드가 들어가는 template가 아닙니다. 적용 대상 프로젝트에는 scaffold 결과물을 생성하고, 그 project가 자기 `STATUS.md`, backlog, Work 파일, decision record를 채워갑니다.
@@ -86,7 +86,7 @@ scaffold 후에는 생성된 project directory에서 `/session-start`로 첫 세
 | Scope drift | AI가 선의로 범위를 넓힘 | Approval Matrix에서 중단 |
 | 상태 소실 | 대화 기록에 의존 | repo-visible dashboard와 Work SSoT |
 | 결정 근거 소실 | commit 또는 기억에 의존 | DR(Decision Record)에 보존 |
-| 도구 전환 drift | Claude/Codex/Cursor가 다르게 행동 | 공통 원칙과 tool adapter 정렬 |
+| 도구 전환 drift | Claude/Codex/Antigravity/Cursor가 다르게 행동 | 공통 원칙과 tool adapter 정렬 |
 
 핵심 원칙은 단순합니다.
 
@@ -104,7 +104,7 @@ scaffold 후에는 생성된 project directory에서 `/session-start`로 첫 세
 1. **Entry points**가 AI 도구별 시작점을 제공합니다.
 2. **Shared operating rules**가 모든 도구의 공통 규칙을 제공합니다.
 3. **Canonical workflow**가 실제 절차의 SSoT입니다.
-4. **Adapters**가 Claude Code, Codex, Cursor의 실행 방식에 맞춰 canonical 절차를 호출합니다.
+4. **Adapters**가 Claude Code, Codex, Antigravity, Cursor의 실행 방식에 맞춰 canonical 절차를 호출합니다. (Antigravity는 Codex adapter 표면을 공유합니다.)
 5. **State files**가 현재 작업과 결정 근거를 repository 안에 남깁니다.
 6. **Scaffold**가 이 구조를 다른 project repository에 설치합니다.
 
@@ -112,7 +112,7 @@ scaffold 후에는 생성된 project directory에서 `/session-start`로 첫 세
 flowchart TD
     subgraph ENTRY ["Tool Entry Points"]
         CLAUDE["CLAUDE.md\nClaude"]
-        AGENTS["AGENTS.md\nCodex"]
+        AGENTS["AGENTS.md\nCodex / Antigravity"]
         CURSOR[".cursor/rules/*.mdc\nCursor"]
     end
 
@@ -130,7 +130,7 @@ flowchart TD
 
     subgraph ADAPTERS ["Tool Adapters"]
         COMMANDS[".claude/commands/{name}.md\nClaude slash command"]
-        CODEX_SKILLS[".agents/skills/workflow-{name}/SKILL.md\nCodex adapter"]
+        CODEX_SKILLS[".agents/skills/workflow-{name}/SKILL.md\nCodex adapter (Antigravity 공유)"]
         CURSOR_WORKFLOW[".cursor/rules/workflow.mdc\nCursor intent routing"]
     end
 
@@ -303,7 +303,7 @@ sh tools/git-hooks/install.sh
 
 ### Human-AI Collaboration Model
 
-이 harness는 AI가 혼자 자동 실행하는 구조가 아니라, 사용자가 방향과 승인을 잡고 여러 AI 도구가 계획·구현·검토 역할을 나누는 협업 구조를 전제합니다. Claude Code와 Codex의 역할은 고정되어 있지 않으며, 작업 성격과 세션 상태에 따라 서로 계획자, 구현자, reviewer가 될 수 있습니다.
+이 harness는 AI가 혼자 자동 실행하는 구조가 아니라, 사용자가 방향과 승인을 잡고 여러 AI 도구가 계획·구현·검토 역할을 나누는 협업 구조를 전제합니다. Claude Code, Codex, Antigravity 등 도구의 역할은 고정되어 있지 않으며, 작업 성격과 세션 상태에 따라 서로 계획자, 구현자, reviewer가 될 수 있습니다.
 
 ```mermaid
 flowchart TD
@@ -409,7 +409,7 @@ AI는 조건이 충족되어도 파일을 자동으로 수정하지 않습니다
 핵심 cascade 규칙은 아래와 같습니다.
 
 - canonical workflow가 바뀌면 tool-specific, user-facing, scaffold surface를 함께 확인합니다.
-- command/rule/prompt/entrypoint가 바뀌면 Claude/Codex/Cursor alignment를 확인합니다.
+- command/rule/prompt/entrypoint가 바뀌면 Claude/Codex/Antigravity/Cursor alignment를 확인합니다. (Antigravity는 Codex 표면을 공유하므로 Codex alignment에 포함됩니다.)
 - `scripts/create-harness.sh` 또는 canonical workflow가 바뀌면 dry-run과 fresh scaffold를 검증합니다.
 - commit 또는 PR 전에는 STATUS Finalization(T15)과 Tracking Finalization(T16)을 확인합니다.
 
@@ -417,7 +417,7 @@ AI는 조건이 충족되어도 파일을 자동으로 수정하지 않습니다
 
 ## Command Map
 
-사용자는 아래 command 이름으로 workflow에 진입합니다. 상세 절차는 `skills/workflow/{name}.md`가 canonical SSoT이고, Claude/Codex/Cursor 표면은 이 절차를 호출하는 adapter입니다.
+사용자는 아래 command 이름으로 workflow에 진입합니다. 상세 절차는 `skills/workflow/{name}.md`가 canonical SSoT이고, Claude/Codex/Cursor 표면은 이 절차를 호출하는 adapter입니다. Antigravity는 Codex 표면(`.agents/skills/`)을 그대로 재사용합니다.
 
 | Command | Use When | Core Action |
 | --- | --- | --- |
@@ -427,6 +427,7 @@ AI는 조건이 충족되어도 파일을 자동으로 수정하지 않습니다
 | `/work-plan {ID\|title-or-slug}` | 특정 작업 시작 | Work 파일 확인, risk 판단, plan 승인 대기 |
 | `/work-resume {ID}` | 중단 작업 재개 | 실제 파일 상태와 STATUS·Work 파일 불일치 확인 |
 | `/work-debug` | 오류 분석 | 원인 근거와 최소 수정 계획 |
+| `/work-brief` | 방향 비교·문서 분류 정리 | brief 작성 또는 retrospective/decision과의 경계 정리 |
 | `/work-doc` | 발표·보고·review package | brief, source, format, quality bar 확인 |
 | `/record-decision` | 결정 기록 | DR 초안 작성 |
 | `/work-close` | Work 완료 | Done 처리와 선택적 archive |
@@ -467,6 +468,7 @@ main
 | canonical workflow 절차 | [skills/workflow/](skills/workflow/) |
 | 현재 상태 dashboard | [docs/STATUS.md](docs/STATUS.md) |
 | Harness backlog | [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) |
+| 방향 비교 / 포지션 문서 | [docs/briefs/README.md](docs/briefs/README.md) |
 | 언어 정책 (단일 SSoT) | [docs/decisions/DR-007-language-policy.md](docs/decisions/DR-007-language-policy.md) |
 | Decision Records | [docs/decisions/](docs/decisions/) |
 
@@ -513,6 +515,7 @@ main
 │   ├── WORKFLOW-MANUAL.md                 # 사용자용 workflow manual
 │   ├── SCAFFOLD-ONBOARDING-GUIDE.md       # scaffold 온보딩 가이드
 │   ├── backlog/                           # 후보 작업
+│   ├── briefs/                            # 방향 비교·포지션 문서
 │   ├── decisions/                         # Decision Records
 │   ├── maintainer/                        # source-only maintainer reference
 │   └── works/                             # Work 파일

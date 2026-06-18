@@ -8,6 +8,7 @@ Canonical workflow procedure for `/repo-health`.
 | --- | --- |
 | Claude Code | `.claude/commands/repo-health.md` |
 | Codex | `.agents/skills/workflow-repo-health/SKILL.md` |
+| Antigravity | Codex adapter 재사용: `.agents/skills/workflow-repo-health/SKILL.md` |
 | Cursor | `.cursor/rules/workflow.mdc` |
 
 Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 상세 절차, checklist, cascade 판단은 이 canonical 파일을 따른다.
@@ -110,6 +111,7 @@ ls tools/git-hooks/    # commit gate hook 파일 확인 (있는 경우만)
 - live `docs/works/*/README.md` index가 Active/Done(Pending) Work 상태와 일치하고, Archived 인덱스는 archive-side `docs/archive/docs/works/*/README.md`와 일치하는가
 - `docs/decisions/README.md` index가 `docs/decisions/DR-*.md` 실제 파일 목록과 일치하는가
 - `docs/retrospectives/README.md` index가 `docs/retrospectives/` 실제 파일 목록과 일치하는가
+- `docs/briefs/README.md` index가 `docs/briefs/` 실제 파일 목록과 일치하는가
 - archive 위치의 Work 파일은 `status: Archived`인가
 - DR 생애주기 양방향: STATUS.md Recent Decisions ↔ `rg` 결과의 DR Status 일치
 - workflow command 또는 skill을 수정한 Active Work의 CP/commit: `.claude/commands/{name}.md`와 `.agents/skills/workflow-{name}/SKILL.md`가 같은 CP/commit에 함께 반영됐는지 확인 (docs/HARNESS-PARALLEL-WORK-CONTROLS.md §Command/Skill Mirror Atomicity)
@@ -176,14 +178,14 @@ ls tools/git-hooks/    # commit gate hook 파일 확인 (있는 경우만)
 |---|---|
 | Session startup / `/session-start` | `BEHAVIOR-PRINCIPLES`, `AGENT-WORKFLOW`, `STATUS` current sections를 넘어 archive/history/manual을 기본 로드하도록 지시하지 않는가 |
 | `/work-plan` | Work ID 확정 및 계획 수립에 필요한 정보만 로드하는가. naming detail 전체, branch policy 전체를 trigger 없이 상시 읽지 않는가 |
-| `/work-resume` | Work/STATUS/file state를 우선하고, 무관한 backlog/manual/retrospective를 기본 로드하지 않는가 |
+| `/work-resume` | Work/STATUS/file state를 우선하고, 무관한 backlog/manual/retrospective/brief를 기본 로드하지 않는가 |
 | `/work-close` | Work Done 처리와 commit strategy를 분리하는가. release gate detail은 branch context가 필요할 때만 확인하는가 |
 | Commit/PR finalization | STATUS/Tracking finalization을 수행하되, 전체 protocol/manual을 반복 로드하지 않는가 |
 | Scaffold onboarding | `STATUS.md` Next Actions pointer 없이 `BOOTSTRAP.md`를 자동 로드하도록 지시하지 않는가 |
 | `/repo-health` 자체 | Quick 모드가 Area H를 실행하지 않는가. command가 report-only를 유지하고 state change를 발생시키지 않는가 |
 
 finding category: **"Workflow Context Weight"** — 일상 workflow가 heavy해진 지점을 P1로 보고한다.
-heavy doc 기준: `HARNESS-PROTOCOL.md` 전체, `WORKFLOW-MANUAL.md`, archive/retrospectives/PLAN, session-start 없이 자동 로드 지시.
+heavy doc 기준: `HARNESS-PROTOCOL.md` 전체, `WORKFLOW-MANUAL.md`, archive/retrospectives/briefs/PLAN, session-start 없이 자동 로드 지시.
 
 ## Report Format
 

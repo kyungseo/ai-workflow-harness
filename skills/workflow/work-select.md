@@ -8,6 +8,7 @@ Canonical workflow procedure for `/work-select`.
 | --- | --- |
 | Claude Code | `.claude/commands/work-select.md` |
 | Codex | `.agents/skills/workflow-work-select/SKILL.md` |
+| Antigravity | Codex adapter 재사용: `.agents/skills/workflow-work-select/SKILL.md` |
 | Cursor | `.cursor/rules/workflow.mdc` |
 
 Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 상세 절차, checklist, cascade 판단은 이 canonical 파일을 따른다.
@@ -27,8 +28,8 @@ baseline이 완료된 뒤에만 feature 후보를 제안해줘. example pack, ro
 backlog 후보는 Work ID 없이 제목/slug로 관리하고, Work ID는 /work-plan 착수 승인 시 확정됨을 명시해줘.
 
 후보 우선순위가 비슷하거나 harness/plan/idea 성격의 작업을 고르는 경우,
-`docs/retrospectives/` 목록 또는 `rg` 검색으로 최신/관련 회고 1개만 선택해 참고해줘.
-회고는 backlog를 대체하지 않고 우선순위 판단 보조 맥락으로만 사용해줘.
+`docs/retrospectives/` 또는 `docs/briefs/` 목록 / `rg` 검색으로 최신/관련 문서 1개만 선택해 참고해줘.
+회고는 반복 리스크와 학습 근거, brief는 방향 비교와 포지션 근거로만 사용하고 backlog를 대체하지 않게 해줘.
 
 각 후보에 대해 아래 항목을 비교해줘.
 

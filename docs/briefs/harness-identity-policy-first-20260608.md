@@ -9,7 +9,7 @@ related_work: [CHORE-20260604-001, CHORE-20260605-001]
 
 # Harness 정체성 — Policy-First 방향성 재정의
 
-> 원문 작성: 2026-06-06 (회고 정리: 2026-06-08)
+> 원문 작성: 2026-06-06 (brief 정리: 2026-06-08)
 
 ---
 
@@ -210,4 +210,4 @@ DR-021(source/target boundary)에서 framework-owned vs. project-owned 분류로
   - `docs/backlog/HARNESS.md` — "Project-state template pack 검토" (Phase C 첫 단계)
   - Approval Matrix sub-agent 자율 범위 정의 — 현재 미등록, 착수 시 신규 backlog 등록 필요
   - `docs/backlog/HARNESS.md` — "canonical weight 경량화 + work-doc.md class 재검토" (canonical 도구-중립성 유지 직결)
-- Q4 상세 분석: [`docs/retrospectives/harness-distribution-plugin-model-20260608.md`](harness-distribution-plugin-model-20260608.md) — simplicity 원칙·외부 harness 벤치마킹·follow-up 수준 판단
+- Q4 상세 분석: [`docs/briefs/harness-distribution-plugin-model-20260608.md`](harness-distribution-plugin-model-20260608.md) — simplicity 원칙·외부 harness 벤치마킹·follow-up 수준 판단
