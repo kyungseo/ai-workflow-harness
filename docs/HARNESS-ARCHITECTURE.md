@@ -10,7 +10,7 @@
 ```mermaid
 graph TB
     USER["User / Maintainer"]
-    AGENT["AI Agent\nClaude Code / Codex / Cursor"]
+    AGENT["AI Agent\nClaude Code / Codex / Antigravity / Cursor"]
 
     subgraph ENTRY["Entry Contract"]
         CLAUDE["CLAUDE.md"]
@@ -155,7 +155,7 @@ graph LR
     CANON["Canonical docs\nBEHAVIOR / AGENT-WORKFLOW / PROTOCOL"]
     SLICES["Conditional slices\nNAMING / RECOVERY / PARALLEL"]
     CLAUDE["Claude Code\n.claude/commands + .claude/rules"]
-    CODEX["Codex\nAGENTS.md + .agents/skills + .codex/hooks.json"]
+    CODEX["Codex / Antigravity\nAGENTS.md + .agents/skills (+ .codex/hooks.json: Codex)"]
     CURSOR["Cursor\n.cursor/rules"]
     PROMPTS["prompts/*session-start.md\n(shared fallback)"]
     SCAFFOLD["create-harness.sh\n+ scripts/templates/**"]

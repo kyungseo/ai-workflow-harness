@@ -8,10 +8,12 @@
 | --- | --- |
 | `skills/workflow/*.md` | 상세 절차, checklist, cascade 판단을 담는 canonical SSoT |
 | `.claude/commands/*.md` | Claude Code slash command adapter |
-| `.agents/skills/workflow-*/SKILL.md` | Codex skill adapter |
+| `.agents/skills/workflow-*/SKILL.md` | Codex skill adapter (Antigravity도 동일 surface를 자동 소비) |
 | `.cursor/rules/workflow.mdc` | Cursor rule adapter |
 
 `.agents/skills/workflow-*`와 이름이 비슷하지만 역할이 다르다. `skills/workflow/`는 공통 절차 원본이고, `.agents/skills/`는 Codex가 discover하는 adapter다.
+
+**Antigravity (Gemini 기반):** 별도 adapter 파일을 두지 않는다. root `AGENTS.md`를 자동 로드하고 `.agents/skills/workflow-*/SKILL.md`(Codex adapter)를 그대로 자동 소비한다(Step 0 → canonical 동일 수행). 따라서 per-command adapter 표의 `Antigravity` 행은 항상 Codex adapter 재사용을 가리킨다.
 
 ## Commands
 

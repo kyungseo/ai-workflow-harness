@@ -41,7 +41,7 @@ work-select → work-plan → review → 구현 → result review → work-close
 | PR | feature → develop (`--base develop`) | `docs/GIT-WORKFLOW.md` §2 |
 | merge / sync | squash merge + develop sync | `docs/GIT-WORKFLOW.md` §2-5 / §3-4 |
 
-> **review 패턴 주의:** 특정 도구를 고정 역할(예: 작성자/리뷰어)로 박지 않는다. 이 repo는 Claude/Codex/Cursor를 함께 전제한다. cross-agent review를 쓸 때만 Round/Consensus Log 관례를 적용한다. `.claude/commands/*`는 adapter이므로 진입 pointer로 쓰지 않고 canonical `skills/workflow/*`를 본다.
+> **review 패턴 주의:** 특정 도구를 고정 역할(예: 작성자/리뷰어)로 박지 않는다. 이 repo는 Claude/Codex/Antigravity/Cursor를 함께 전제한다. cross-agent review를 쓸 때만 Round/Consensus Log 관례를 적용한다. `.claude/commands/*`는 adapter이므로 진입 pointer로 쓰지 않고 canonical `skills/workflow/*`를 본다.
 
 ---
 

@@ -8,7 +8,7 @@
 | 파일 | 역할 |
 | --- | --- |
 | `claude-session-start.md` | Claude Code slash command를 사용할 수 없는 환경의 fallback prompt |
-| `codex-session-start.md` | `AGENTS.md`나 Codex workflow adapter를 사용할 수 없을 때 수동 복원에 쓰는 fallback prompt |
+| `codex-session-start.md` | `AGENTS.md`나 Codex workflow adapter를 사용할 수 없을 때 수동 복원에 쓰는 fallback prompt (Antigravity도 동일 surface를 쓰므로 이 fallback을 공유) |
 | `cursor-session-start.md` | Cursor에서 현재 하네스 상태를 복원하는 session start prompt |
 
 ## 2) Prompt vs Command
@@ -16,7 +16,7 @@
 | 구분 | 사용 위치 | 역할 |
 | --- | --- | --- |
 | `.claude/commands/` | Claude Code | `/session-start`, `/work-select`, `/work-plan`, `/work-close`, `/session-summary` 같은 반복 workflow 실행 |
-| `.agents/skills/workflow-*` | Codex | canonical workflow procedure를 호출하는 Codex adapter |
+| `.agents/skills/workflow-*` | Codex / Antigravity | canonical workflow procedure를 호출하는 adapter (Antigravity가 Codex surface 재사용) |
 | `.cursor/rules/workflow.mdc` | Cursor | workflow intent routing |
 | `prompts/*-session-start.md` | 여러 AI 도구 | command/adapter를 사용할 수 없을 때 세션을 시작하는 fallback |
 

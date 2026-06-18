@@ -10,7 +10,7 @@ Keep this file thin. Global behavior principles live in `docs/BEHAVIOR-PRINCIPLE
 
 MUST:
 
-- Treat this file and `AGENTS.md` as equal tool-specific entry points.
+- Treat this file and `AGENTS.md` as equal tool-specific entry points. Supported tools are Claude Code / Codex / Antigravity (Gemini-based) / Cursor. Antigravity has no dedicated entry file: it auto-loads root `AGENTS.md` and consumes `.agents/skills/` (the Codex surface).
 - Follow `docs/BEHAVIOR-PRINCIPLES.md` for global behavioral principles that apply to all tasks.
 - Follow `docs/AGENT-WORKFLOW.md` for common workflow, context routing, status rules, and validation defaults.
 - Read `docs/STATUS.md` current sections before choosing or continuing work.

@@ -8,6 +8,7 @@ Canonical workflow procedure for `/work-select`.
 | --- | --- |
 | Claude Code | `.claude/commands/work-select.md` |
 | Codex | `.agents/skills/workflow-work-select/SKILL.md` |
+| Antigravity | Codex adapter 재사용: `.agents/skills/workflow-work-select/SKILL.md` |
 | Cursor | `.cursor/rules/workflow.mdc` |
 
 Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 상세 절차, checklist, cascade 판단은 이 canonical 파일을 따른다.

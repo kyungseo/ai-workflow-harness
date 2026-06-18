@@ -23,6 +23,7 @@ When the user's intent matches a workflow operation, first load the matching can
 | Resume interrupted work | `skills/workflow/work-resume.md` |
 | Close Work as Done | `skills/workflow/work-close.md` |
 | Debug a scoped issue | `skills/workflow/work-debug.md` |
+| Create strategy/comparison/position brief or classify a document | `skills/workflow/work-brief.md` |
 | Repository health / cascade audit | `skills/workflow/repo-health.md` |
 | Record a decision as DR | `skills/workflow/record-decision.md` |
 | Merge / PR branch integration | Follow `docs/GIT-WORKFLOW.md` when present |
