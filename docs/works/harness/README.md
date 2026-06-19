@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260619-001 | Deterministic source-parity 검사 CI/pre-commit 배선 검토 | 2026-06-19 | [CHORE-20260619-001-parity-gate-wiring.md](CHORE-20260619-001-parity-gate-wiring.md) |
 
 ## Archived
 

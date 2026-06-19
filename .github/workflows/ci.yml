@@ -24,6 +24,15 @@ jobs:
       - name: Check shell syntax
         run: bash -n scripts/create-harness.sh
 
+      - name: Check source surface parity (default-template + mirror)
+        # Deterministic source-only parity checks (DR-040). Fast (~50ms each),
+        # false-positive≈0. Placed before scaffold-generation steps for fail-fast.
+        # Server-side backstop for PR->{main,develop} and push->main; pre-commit covers commit time.
+        run: |
+          set -euo pipefail
+          bash scripts/tests/check-default-template-parity.sh
+          bash scripts/tests/check-surface-mirror-parity.sh
+
       - name: Validate required checks are not path-filtered
         run: |
           set -euo pipefail
