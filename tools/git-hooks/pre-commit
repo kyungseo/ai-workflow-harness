@@ -106,6 +106,27 @@ if [ -f "$CLOSURE_CHECK" ]; then
     fi
 fi
 
+# Source-parity checks (DR-040) — source repo only; existence-guarded no-op in adopters.
+# Catches default-template / surface-mirror drift at commit time, before it enters history.
+PARITY_DEFAULT="$ROOT/scripts/tests/check-default-template-parity.sh"
+PARITY_MIRROR="$ROOT/scripts/tests/check-surface-mirror-parity.sh"
+if [ -f "$PARITY_DEFAULT" ]; then
+    echo "Checking default template parity..."
+    if ! PARITY_OUT=$(bash "$PARITY_DEFAULT" 2>&1); then
+        echo "$PARITY_OUT"
+        echo "ERROR: default template parity drift — commit 차단 (DR-040)."
+        exit 1
+    fi
+fi
+if [ -f "$PARITY_MIRROR" ]; then
+    echo "Checking surface mirror/prompt parity..."
+    if ! PARITY_OUT=$(bash "$PARITY_MIRROR" 2>&1); then
+        echo "$PARITY_OUT"
+        echo "ERROR: surface mirror/prompt parity drift — commit 차단 (DR-040)."
+        exit 1
+    fi
+fi
+
 if [ "$FINALIZATION_ONLY" -eq 1 ]; then
     echo "WARNING: Staged changes look like a finalization-only commit."
     echo "DR-025 prefers bundling T15/T16 finalization with the substantive work commit."
