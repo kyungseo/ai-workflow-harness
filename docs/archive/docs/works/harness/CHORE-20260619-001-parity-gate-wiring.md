@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260619-001
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: Deterministic source-parity 검사 2종(check-default-template-parity.sh, check-surface-mirror-parity.sh)을 pre-commit + CI에 배선해 drift window를 닫을지, 무배선 유지가 나은지 재검토(DR-036 부분 재검토)하고 결론을 DR로 기록한다.
 appetite: 0.5d
