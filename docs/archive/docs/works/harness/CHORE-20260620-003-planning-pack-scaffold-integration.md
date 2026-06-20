@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260620-003
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: planning-pack template/scaffold/session-start integration model의 low-regret 경계와 defer trigger 결정
 appetite: 1d
@@ -164,6 +164,7 @@ Trigger: D-21 경계 결정 이후 남은 직접 후속. `Planning-pack template
 
 ## Discovery
 
+- 2026-06-20 archive 처리: Done 처리와 PR merge가 완료되어 live Done index에서 archive-side index로 이동한다.
 - "실제 scaffold/template 구현"이라는 D-21 직접 후속은 `Archive decision surfacing`보다 `Planning-pack template/scaffold integration model`에 대응한다.
 - `Archive decision surfacing`은 여전히 유효한 후보지만, auth-session 후보가 archive 안에 묻힌 process gap을 다루는 별도 slice다.
 - `temp/planning-pack-onboarding-workflow.md`는 공식 pack 승격 시 `templates/planning-pack/`, scaffold 배포, session-start 자동 scan까지 제안하지만, 이 제안은 D-24 no-copy 경계와 hidden behavior risk 때문에 그대로 채택하기보다 red-team 검토가 필요하다.

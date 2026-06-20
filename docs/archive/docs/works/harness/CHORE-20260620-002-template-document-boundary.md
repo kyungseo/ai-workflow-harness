@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260620-002
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: D-21 Template document-set의 source-template-owned / scaffold-seed / product-owned / pack-conditional / guide-only 경계를 결정한다. Full 문서셋 작성과 scaffold 구현은 비범위.
 appetite: 1d
@@ -357,6 +357,7 @@ Claude B의 conditional approve를 수용하고 3건 모두 반영했다.
 
 ## Discovery
 
+- 2026-06-20 archive 처리: Done 처리와 PR merge가 완료되어 live Done index에서 archive-side index로 이동한다.
 - `docs/STATUS.md` Active Work는 비어 있었고, CHORE-20260620-001은 Done (Archive Pending) 상태다.
 - Branch Isolation Check: source-gitflow mode에서 `develop` 직접 작업은 실패 조건이므로 feature branch로 분리했다.
 - Backlog 후보에는 CHORE-20260620-001의 D-21 delta payload가 이미 반영되어 있어, 이번 Work는 해당 payload를 재발견하지 않고 결정으로 좁힐 수 있다.
