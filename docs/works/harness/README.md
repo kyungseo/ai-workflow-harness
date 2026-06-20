@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260620-002 | Template Document-Set Boundary Decision | 2026-06-20 | [CHORE-20260620-002-template-document-boundary.md](CHORE-20260620-002-template-document-boundary.md) |
 | CHORE-20260620-001 | Planning-pack Evidence Review (spring-modular-template code-product) | 2026-06-20 | [CHORE-20260620-001-planning-pack-evidence-review.md](CHORE-20260620-001-planning-pack-evidence-review.md) |
 
 ## Archived
