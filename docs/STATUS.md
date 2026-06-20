@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-20 (CHORE-20260620-002 close + DR-041)
+Last updated: 2026-06-20 (CHORE-20260620-003 close)
 
 ## Current State
 
@@ -37,6 +37,7 @@ Last updated: 2026-06-20 (CHORE-20260620-002 close + DR-041)
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-20 | CHORE-20260620-003: Planning-pack template/scaffold integration은 first real walkthrough 전 low-regret decision으로 제한. D-24 no-copy 경계 유지, source template/checklist=1:many·target prepared brief/planning-pack instance=1:1(`code-product-informed`), `PRODUCT-STARTER-PLANNING-PACK.md`는 source-only guide 유지. `workflow-session-start`는 현행 manual 경로/텍스트 입력 default 유지, repo 밖/`.harness/planning-pack/` auto-scan 비채택. `create-harness.sh` 자동 배포·skeleton 경로·`.harness` seed·sibling convention은 first real walkthrough 이후 후보로 defer. Resolver metadata는 planning-pack model에서 제외하고 product engineering option-pack 후보로 route-out | 실제 `scaffold -> session-start -> bootstrap` walkthrough evidence 없이 경로·자동배포·자동탐색을 확정하면 CHORE-002의 evidence-bounded decision 원칙을 깨므로, 지금 안전한 경계만 닫고 residual을 live backlog에 남김 | Low |
 | 2026-06-20 | CHORE-20260620-002 / DR-041: D-21 document-set 경계 결정. Evidence 있는 4개 surface만 2축(ownership/nature)으로 판정 — `ADOPTER-RENAME`은 seed checklist=scaffold-seed, leak-check contract=source-template-owned; `TEMPLATE-ACCEPTANCE`는 shipped adopter artifact이되 pack evidence pointer만 유지; product DR set은 product-owned 적용 기록. `pack/{name}/README.md`를 supported runnable pack canonical local documentation으로 채택하고, D-21 design original §6.4의 `docs/packs/*` 경로 가정만 부분 supersede. `code-product-informed`, 첫 non-code/manual adopter에서 재검토 | product evidence가 `docs/packs/*`가 아니라 pack-local README에 수렴했고, D-21 전체가 아니라 경로 가정만 좁게 정리해야 후속 pack/scaffold 작업의 문서 위치 drift를 줄일 수 있음 | Medium |
 | 2026-06-20 | CHORE-20260620-001: `spring-modular-template` 5+ 사이클(FEAT-001~005, DR-030~033) code-product evidence review. 산출물을 durable routing payload로 — archive 결정 매몰 gap을 신규 candidate `Archive decision surfacing`으로 승격(auth-session 사례), resolver concept(`provides/requires/conflicts/modes`,`selected/resolved_packs`)을 template/scaffold 후보에, pack import principle/impl 분리를 option-pack 후보에, D-21 document-set delta를 신규 D-21 candidate에 등록. code-product only(no-code·manual adopter 미검증, 별도 gate). Codex B R1 request-changes→durable 강화, result conditional-approve→D-21 backlog 승격·3단 표 fix 반영. 구현·scaffold 미선점 | harness가 product 5사이클에 뒤처지지 않게 evidence 환류, archive-burial 재발 방지 | Low |
 | 2026-06-19 | CHORE-20260619-001 / DR-040: deterministic source-parity 검사 2종(default-template, surface-mirror)을 pre-commit + ci.yml에 직접 배선. runner는 무배선 유지(DR-036 불변) — 이 둘은 manual runner에서만 실행되던 enforcement 공백이라 DR-036 "이미 강제됨" 논거 밖(독립 보완). CI=PR(main/develop)+push(main) backstop, pre-commit=commit 조기 차단, single-commit atomicity 요구, adopter SKIP. Codex red-team plan 조건부승인→반영, result Approved(P3 1건 반영) | template/mirror drift window를 release→commit/PR 시점으로 앞당김 | Low |
@@ -44,7 +45,6 @@ Last updated: 2026-06-20 (CHORE-20260620-002 close + DR-041)
 | 2026-06-15 | CHORE-20260615-005: /work-brief canonical에 brief→DR soft handoff hook 강화(Phase 5 checklist + Phase 6 item 3) — Accepted-ready 수렴 시 /record-decision 제안, 강제 아님. adapter 무변경(canonical-only) | brief의 pre-decision 특성상 DR-worthy 결정이 묻히는 silent drift를 soft prompt로 보정(hard gate/진공 최적화 회피) | Low |
 | 2026-06-15 | CHORE-20260615-004: docs/briefs/ live category 신설 + 방향성 문서 4건 retrospective→brief 재분류, /work-brief surface(canonical+3 adapter)·core routing·user-facing·scaffold·repo-health cascade 정합. archive snapshot no-action. Claude R1 Approved(F1~F3 Low: defer/keep/known-pattern) | 회고와 방향 비교 문서를 분리해 IA 정합 | Medium |
 | 2026-06-15 | CHORE-20260615-003: `docs/maintainer/VERSIONING.md` 릴리즈 노트 템플릿에 `검증` 섹션을 필수화하고, 검증 command는 예시가 아닌 해당 릴리즈의 실제 최종 evidence set 전체를 fenced code block으로 남기도록 기준을 명문화 | `v1.2.1` release note 작성 과정에서 검증 표기 방식이 세션 판단에 의존했다. 승인 근거를 정직하게 남기되, 탐색·디버깅·재시도 명령은 제외해 릴리즈 노트 길이와 신뢰성을 함께 관리하기 위해 | Low |
-| 2026-06-15 | CHORE-20260615-002 / DR-007 amend: 언어 정책을 DR-007 단일 authoritative SSoT로 통합 — Non-File Surfaces(commit/PR/agent console behavioral)+Default·Override 흡수, 산재 정의 정리(MAINTAINER-GUIDE=pure pointer, WORKFLOW-MANUAL Appendix C=최소 digest, GIT-WORKFLOW §5/rules=directive+pointer), AGENTS.md commit/PR/console inline(Codex 도달 fix), BEHAVIOR §5 console convention, README adopter note. DR-030은 전략-only로 경계 정리(Draft). Cross-agent(A=Claude/B=Codex) R1~R3: B P1(단일 override 모순)·P2(DR-030 내부 모순) 수용→DR-007 "authoritative SSoT+mirror 목록 규정"으로 재구성. 릴리즈=독립 PATCH(정합성 복구). 사용자 최종 승인 | Medium |
 
 ## Next Actions
 
