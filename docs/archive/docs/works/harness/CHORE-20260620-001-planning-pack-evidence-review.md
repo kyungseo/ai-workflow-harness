@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260620-001
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: spring-modular-template의 5+ 사이클 code-product evidence를 source repo 관점에서 되짚어 source-owned/product-owned/import-candidate 경계를 실측하고, 인접 후보·DR로 라우팅한다. 추출·분류·라우팅까지이며 resolver/scaffold/template 구현과 no-code 재온보딩은 별도 축.
 appetite: 1d
@@ -290,6 +290,7 @@ direction-level concern 수용: "후속 후보가 필요한 evidence는 Work 내
 
 ## Discovery
 
+- 2026-06-20 archive 처리: Done 처리와 PR merge가 완료되어 live Done index에서 archive-side index로 이동한다.
 - 사용자 선택: product 5+ 사이클 후 review-first(harness가 product에 뒤처지지 않게). Codex 의견과 Claude 교정(scope 규율·stale candidate·라우팅 경계) 반영.
 - candidate scope가 P1 시점에 작성돼 stale — 002~005·DR-030~033·pack/multi-pack evidence를 포함하도록 갱신 필요.
 - archive 결정 매몰이 active gap으로 노출(auth-session 수동 승격). 이 Work의 acute 처리 대상.
