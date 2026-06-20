@@ -34,6 +34,8 @@ AI Workflow Harness backlog다.
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | (전부 종결) Validation Spine residual F1~F4 = CHORE-20260613-017/018·DR-036, 문서-only 규칙 강제화 = DR-037, Archive 누적 관리 정책 = DR-038, CI inline assertion ↔ invariants SSoT parity = CHORE-20260613-016 no-action closeout |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring modular/product engineering option-pack, project-state template, sub-agent autonomy policy, packaging/distribution revisit, Windows 지원 |
 
+**Adopter evidence set:** 현재 scaffold된 실제 적용 프로젝트는 `ai-deck-compiler`, `rfx-hub`, `spring-modular-template` 3개로 본다. `base-msa-template`은 `ai-workflow-harness`의 mirror/reference 입력이므로 scaffold target evidence set에서 제외한다.
+
 ### Summary
 
 | ID | Priority | Status | Risk | Title |
