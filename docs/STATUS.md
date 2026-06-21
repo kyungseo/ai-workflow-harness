@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-21 (adopter migration playbook ready)
+Last updated: 2026-06-21 (spring adopter walkthrough closed)
 
 ## Current State
 
@@ -51,6 +51,6 @@ Last updated: 2026-06-21 (adopter migration playbook ready)
 
 W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcement & Lifecycle)는 종결됐다. 현재 live 후보와 우선순위·gate는 `docs/backlog/HARNESS.md`를 참조한다.
 
-- **지금 막힘 없이 착수 가능한 P1:** `spring-modular-template` adopter upgrade walkthrough — playbook 기준 read-only target probe + ownership classification부터 시작하고, temp rehearsal/real apply는 owner gate로 분리. 그 다음 Happy path / glossary / operator layering compression
+- **지금 막힘 없이 착수 가능한 P1:** `spring-modular-template` product DR namespace renumber/apply follow-up 판단 — CHORE-20260621-005에서 확인한 blocker(`DR-030`~`DR-033` product low-band vs DR-042 high-band policy)를 실제 apply로 풀지, grandfather/defer할지 owner decision. 그 다음 source-ref policy 후보 또는 Happy path / glossary / operator layering compression
 - **외부 전제가 있는 P1:** 첫 concrete product planning-pack exercise (실제 product 착수 필요)
 - **gated 후속:** DR-034 promotion 판단(현재 evidence=ai-deck 1건. spring-modular-template walkthrough 후 2nd adopter/helper signal 재검토), internal managed mode(walkthrough 후, P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), Spring Boot MSA pack(P2), template pack(P2) 등은 backlog의 gate 기준을 따른다
