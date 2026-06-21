@@ -40,7 +40,7 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | `ai-deck-compiler` first real upgrade walkthrough + DR-034 acceptance judgment |
+| — | P1 | Candidate | L2 | `ai-deck-compiler` 실제 adopter 마이그레이션 (real apply): manifest baseline + customized entrypoint merge + decision-index closure → DR-034 promotion 증거 |
 | — | P1 | Candidate | L2 | Happy path / glossary / operator layering compression |
 | — | P1 | Candidate | L2 | First concrete planning-pack evidence review (`spring-modular-template` P1 + fresh no-code follow-up) |
 | — | P3 | Candidate | L2 | Archive decision surfacing stronger mechanism (2nd occurrence gate) |
@@ -62,24 +62,24 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### `ai-deck-compiler` first real upgrade walkthrough + DR-034 acceptance judgment
+#### `ai-deck-compiler` 실제 adopter 마이그레이션 (real apply) — DR-034 promotion 증거
 
 **Cluster:** W2. Adopter Transition
 
-**Task:** `ai-deck-compiler` 실제 adopter를 대상으로 Layer T upgrade/migration walkthrough를 수행해 **External Adopter Mode** 기준의 first real upgrade 경험을 만든다. pre-manifest inventory, shadow scaffold baseline, selective migration, accepted drift 분류를 실측하고, source 쪽 설계가 문서상 placeholder를 넘어서 실제 adopter friction을 얼마나 줄이는지 확인한다. 결과를 바탕으로 DR-034를 Draft 유지할지 Accepted로 올릴지 판단하며, 동일 target에서 **Internal Managed Mode 후보를 열 필요가 있는지**도 gate로 판정한다.
+**상태 메모:** `CHORE-20260621-002`가 이 후보의 **temp baseline-acquisition 재실측 부분**을 완료했다 — current source 기준 `78 tracked → 78 in-sync → 0 drifted` 수렴, locally-modified 32개 분류(customized-must-merge 6 / framework-update-candidate 26 / accepted-drift 0), DR-034 Draft 재확인, internal managed gate `defer` 판정. 그러나 이는 temp simulation이고 **실제 target은 변경하지 않았다.** 이 후보는 그 남은 **real adopter migration**으로 re-scope됐다.
+
+**Task:** `ai-deck-compiler`의 clean base branch에서 manifest baseline을 실제로 심고, framework-update 26개를 파일별 diff review로 적용하고, customized entrypoint 6개(`CLAUDE.md`/`AGENTS.md`/`.gitignore` + session-start prompt 3개)를 project identity 보존하며 manual merge하고, `docs/decisions/README.md` decision-index closure를 보강한다. 이 real migration이 DR-034 promotion 조건("실제 target migration")을 충족하는 1번째 evidence가 되고, Internal managed mode / Packaging 후보의 "first real walkthrough" 선행 gate도 이 real apply로 충족된다. (cross-agent: 이 후보부터 role swap — Claude=author/driver, Codex=red team reviewer.)
 
 **Dependencies:**
 
-- CHORE-20260611-010에서 정리한 upgrade/migration 메커니즘과 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer T
-- `docs/briefs/harness-internal-managed-upgrade-20260615.md`의 Candidate A 판단
-- `docs/retrospectives/harness-v1-2-readiness-retrospective-20260615.md`의 "first real walkthrough가 fleet mode의 선행 gate" 판단
-- `docs/briefs/harness-distribution-plugin-model-20260608.md`의 "배포 방식보다 upgrade/migration 로직이 선행" 판단
-- 실제 adopter target 접근 가능 여부와 current target 상태 확인
-- 필요 시 `docs/maintainer/migrations/*.md` note 보강
+- `CHORE-20260621-002` evidence: Walkthrough Output, Locally-Modified Classification(must-merge 6 / framework-update 26)
+- DR-034 customized framework entrypoint merge-not-overwrite 규칙
+- `ai-deck-compiler` clean base branch 확보(현재 로컬은 미완 `feature/ai-coding-tool-pilot-review-deck`이므로 분리 필요) + cross-repo write owner 승인
+- `docs/maintainer/migrations/manifest-check-baseline.md` 절차, `docs/maintainer/VERIFICATION-COMMANDS.md` Layer T
 
-**Done Criteria:** 실제 adopter walkthrough 결과가 inventory-first 분류와 함께 남고, framework-owned / project-owned / customized / accepted drift 구분이 기록된다. selective migration 후 `--check` 결과와 남은 manual-merge hotspot이 정리되며, DR-034 상태 판단(승격 또는 유지 이유)이 명시된다. 또한 "같은 target에서 internal managed mode를 열 가치가 있는가"에 대한 yes/no 판단과 이유가 남는다.
+**Done Criteria:** `ai-deck-compiler`에 manifest baseline이 실제로 심기고 framework-update 26개가 적용된다. customized entrypoint 6개의 manual merge 결과(보존한 project identity 명시)가 기록된다. `docs/decisions/README.md` 생성 + product DR row 등록으로 scaffold invariant가 PASS한다. `--check`는 framework in-sync + customized entrypoint는 accepted-drift로 이유 기록 상태가 된다. real migration 1건 기준 DR-034 Accepted 승격 여부 판단이 남는다.
 
-**Verification:** Layer T walkthrough, `scripts/create-harness.sh --check <target>`, drift summary 기록, maintainer migration note/README pointer 정합 확인. Surface: adopter cascade · scaffold · README/GUIDE/MANUAL.
+**Verification:** `scripts/create-harness.sh --check <ai-deck>`, `scripts/tests/check-scaffold-invariants.sh <ai-deck>`, customized entrypoint diff 보존 확인, accepted-drift 이유 기록. Surface: adopter cascade · scaffold · README/GUIDE/MANUAL.
 
 ---
 
