@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260621-002 | ai-deck-compiler Baseline-Acquisition Walkthrough | 2026-06-21 | `docs/works/harness/CHORE-20260621-002-ai-deck-compiler-upgrade-walkthrough.md` |
 
 ## Archived
 
