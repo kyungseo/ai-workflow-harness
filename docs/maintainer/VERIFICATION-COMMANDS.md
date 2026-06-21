@@ -1099,6 +1099,7 @@ ls temp/harness-tests/manual-ob-generic/prompts/*session-start.md 2>/dev/null \
 
 기존 scaffold target을 현재 source baseline으로 올리는 upgrade/migration 검증이다.
 full `--upgrade`/`--refresh` helper는 아직 없다. pre-manifest target은 inventory-first + shadow scaffold baseline 방식으로 검증한다.
+전체 판단 순서와 real apply gate는 `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`가 맡고, 이 Layer T는 실행 명령 카탈로그만 제공한다.
 
 ### T0. target probe
 
