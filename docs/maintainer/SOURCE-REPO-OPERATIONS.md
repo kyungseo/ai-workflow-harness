@@ -119,6 +119,7 @@ work-select → work-plan → review → 구현 → result review → work-close
 ## G. adopter upgrade / migration entry (source-only)
 
 이미 scaffold된 target을 새 source version으로 올릴 때의 진입 경로다. 세부 명령은 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer T와 관련 `docs/maintainer/migrations/*.md` note를 따른다.
+반복 가능한 절차·classification·temp rehearsal·real apply gate는 `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`를 따른다.
 
 ```text
 target read-only probe
