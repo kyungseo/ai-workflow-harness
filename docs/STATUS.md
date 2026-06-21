@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-21 (CHORE-20260621-003 close)
+Last updated: 2026-06-21 (CHORE-20260621-004 done)
 
 ## Current State
 
@@ -37,6 +37,7 @@ Last updated: 2026-06-21 (CHORE-20260621-003 close)
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-21 | CHORE-20260621-004 / DR-042: adopter/product DR namespace를 high-band로 분리(framework/source=799번 이하, product/adopter-local=800–999번, 정확히 3자리 `DR-NNN`만 허용, `PDR-`/4자리 ID는 도구 cascade 전 금지). `ai-deck-compiler` 실제 apply 완료(PR #51 merged): product DR `014/021/022/023` → `801/802/803/804`, decision-index 생성, `--check` 78/65/13 with accepted-drift, invariant `[1]~[4]` PASS(`[5]` expected). DR-034 actual target migration evidence 1건 확보, 단 Accepted 승격은 보류하고 Draft 유지 | CHORE-003에서 발견한 real-apply blocker(product DR namespace collision)를 정책으로 닫고 실제 adopter repo까지 적용하기 위해 | Medium |
 | 2026-06-21 | CHORE-20260621-003: ai-deck real-apply 직전 rehearsal(temp result tree). migration body는 defend 가능(framework surface migration + source-retired 20 제거 + 3-way 30블록 stance 보존 + accepted-drift 13 + leak 0, `--check` 78/65/13, invariant 0-drift fail은 F1 expected). 그러나 실제 ai-deck apply 미수행 → real-apply blocker로 adopter product DR namespace 충돌 발견(framework `DR-014-archive` vs adopter `DR-014-ppt` + product `021/022/023` 번호공간). DR-034 "실제 target migration" condition은 **UNMET** — promotion evidence 후보만 기록(Draft 유지). 후속 Work(reserved high-band 정책 + DR renumber cascade + decision-index + real apply)로 re-scope. Claude A / Codex B cross-agent. RF2: `PDR-`는 `DR-[0-9]{3}` 도구 cascade 없이 quick fix 금지 | 정책 공백을 temp 검증이 아니라 실제 apply 경로에서 발견한 것이 차별 가치 | Medium |
 | 2026-06-21 | CHORE-20260621-002: ai-deck-compiler pre-manifest baseline-acquisition 재실측(temp-only). current source `78 tracked → 0 drifted` 수렴은 `CLAUDE.md`/`AGENTS.md`/`.gitignore`+session-start prompt 포함 32개 locally-modified를 덮어쓴 **overwrite-convergence**이며 preservation-safe 아님. DR-034에 customized framework entrypoint=blind overwrite 금지·manual merge 규칙 durable 추가. 실제 target apply 미수행 → backlog 후보를 real adopter 마이그레이션 residual로 re-scope. internal managed gate defer. Codex A / Claude B cross-agent | 가장 오래된 adopter에서 baseline 경로 regression 재확인 + customized-entrypoint 보존 공백을 정책에 못박기 위해 | Medium |
 | 2026-06-21 | CHORE-20260621-001: archive-burial 방지를 backlog auto-row가 아닌 lightweight triage prompt로 한정. `/work-close`는 Done 처리 중(archive 결정 전) `Needs-Triage:` 메모를 Work `Discovery`에 남기고, archive-now 경로에서는 그 메모를 한 번 더 재표면화한다. `/session-start`는 archive 대기 Work에서 `Needs-Triage:` 줄만 읽어 fallback surface를 제공하며, stronger mechanism/DR은 2nd occurrence gate 뒤의 backlog residual로 유지 | auth-session buried-case는 adopter repo 1건이므로 source harness self-governance를 넘는 일반 메커니즘으로 과대 규약화하지 않고, lightweight closeout triage와 durable residual만 먼저 닫기 위해 | Low |
@@ -51,5 +52,5 @@ Last updated: 2026-06-21 (CHORE-20260621-003 close)
 W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcement & Lifecycle)는 종결됐다. 현재 live 후보와 우선순위·gate는 `docs/backlog/HARNESS.md`를 참조한다.
 
 - **지금 막힘 없이 착수 가능한 P1:** Happy path / glossary / operator layering compression
-- **외부 전제가 있는 P1:** adopter product DR namespace 정책 + `ai-deck-compiler` real apply (rehearsal=CHORE-20260621-003 완료, migration body defend·DR namespace blocker 발견; 후속=reserved high-band 정책 + DR renumber cascade + decision-index + 실제 apply/PR → DR-034 "실제 target migration" condition·internal managed·packaging 선행 허브), 첫 concrete product planning-pack exercise (실제 product 착수 필요)
-- **gated 후속:** internal managed mode(walkthrough 후, P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), Spring Boot MSA pack(P2), template pack(P2) 등은 backlog의 gate 기준을 따른다
+- **외부 전제가 있는 P1:** 첫 concrete product planning-pack exercise (실제 product 착수 필요)
+- **gated 후속:** DR-034 promotion 판단(실제 target migration evidence 1건 확보 후 Draft 유지, 2nd adopter/helper signal 재검토), internal managed mode(walkthrough 후, P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), Spring Boot MSA pack(P2), template pack(P2) 등은 backlog의 gate 기준을 따른다
