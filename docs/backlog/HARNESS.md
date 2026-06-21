@@ -40,7 +40,7 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | `ai-deck-compiler` 실제 adopter 마이그레이션 (real apply): manifest baseline + customized entrypoint merge + decision-index closure → DR-034 promotion 증거 |
+| — | P1 | Candidate | L2 | adopter product DR namespace 정책 + `ai-deck-compiler` real apply (CHORE-003 rehearsal 후속): reserved high-band 정책 + DR renumber cascade + decision-index + 실제 apply/PR |
 | — | P1 | Candidate | L2 | Happy path / glossary / operator layering compression |
 | — | P1 | Candidate | L2 | First concrete planning-pack evidence review (`spring-modular-template` P1 + fresh no-code follow-up) |
 | — | P3 | Candidate | L2 | Archive decision surfacing stronger mechanism (2nd occurrence gate) |
@@ -62,24 +62,24 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### `ai-deck-compiler` 실제 adopter 마이그레이션 (real apply) — DR-034 promotion 증거
+#### adopter product DR namespace 정책 + `ai-deck-compiler` real apply (CHORE-003 rehearsal 후속)
 
 **Cluster:** W2. Adopter Transition
 
-**상태 메모:** `CHORE-20260621-002`가 이 후보의 **temp baseline-acquisition 재실측 부분**을 완료했다 — current source 기준 `78 tracked → 78 in-sync → 0 drifted` 수렴, locally-modified 32개 분류(customized-must-merge 6 / framework-update-candidate 26 / accepted-drift 0), DR-034 Draft 재확인, internal managed gate `defer` 판정. 그러나 이는 temp simulation이고 **실제 target은 변경하지 않았다.** 이 후보는 그 남은 **real adopter migration**으로 re-scope됐다.
+**상태 메모:** `CHORE-20260621-002`가 temp baseline-acquisition 재실측을, `CHORE-20260621-003`이 **real-apply 직전 rehearsal**(temp result tree)을 완료했다. rehearsal에서 migration body(framework surface migration + source-retired 20 제거 + 3-way merge 30블록 stance 보존 + accepted-drift 13 + leak 0)는 defend 가능했으나, **실제 ai-deck repo는 한 글자도 apply하지 않았고**, real-apply blocker로 **adopter product DR namespace 정책 공백**이 발견됐다(framework `DR-014-archive` seed가 adopter `DR-014-ppt`와 충돌; product `DR-021/022/023`도 framework 번호 공간과 시한폭탄 충돌). DR-034 "actual target migration" condition은 여전히 **UNMET**.
 
-**Task:** `ai-deck-compiler`의 clean base branch에서 manifest baseline을 실제로 심고, framework-update 26개를 파일별 diff review로 적용하고, customized entrypoint 6개(`CLAUDE.md`/`AGENTS.md`/`.gitignore` + session-start prompt 3개)를 project identity 보존하며 manual merge하고, `docs/decisions/README.md` decision-index closure를 보강한다. 이 real migration이 DR-034 promotion 조건("실제 target migration")을 충족하는 1번째 evidence가 되고, Internal managed mode / Packaging 후보의 "first real walkthrough" 선행 gate도 이 real apply로 충족된다. (cross-agent: 이 후보부터 role swap — Claude=author/driver, Codex=red team reviewer.)
+**Task:** ① **adopter/product DR namespace 정책 결정** — 단기 안전안=예약 고대역(`DR-8xx`/`DR-9xx`, 기존 `DR-[0-9]{3}` 도구 호환). 장기 `PDR-`는 `check-scaffold-invariants`/`check-shipped-dr-closure`/`VERIFICATION-COMMANDS`/decision template·index rule cascade까지 묶어야 하므로 별도 판단(quick fix 금지). 정책은 DR로 기록. ② ai-deck product DR 4개(`014-ppt`/`021`/`022`/`023`) renumber cascade — **product 파일(`PLAN.md`/`skills/create-deck.md` 등) 참조 포함이라 product scope, owner 승인 필요.** ③ `docs/decisions/README.md` decision-index 생성(invariant `[3]` closure). ④ `CHORE-20260621-003` temp result tree 기반으로 실제 ai-deck `feature/*` branch apply + PR. 이 ④가 DR-034 "실제 target migration" condition을 충족하는 1번째 evidence.
 
 **Dependencies:**
 
-- `CHORE-20260621-002` evidence: Walkthrough Output, Locally-Modified Classification(must-merge 6 / framework-update 26)
-- DR-034 customized framework entrypoint merge-not-overwrite 규칙
-- `ai-deck-compiler` clean base branch 확보(현재 로컬은 미완 `feature/ai-coding-tool-pilot-review-deck`이므로 분리 필요) + cross-repo write owner 승인
-- `docs/maintainer/migrations/manifest-check-baseline.md` 절차, `docs/maintainer/VERIFICATION-COMMANDS.md` Layer T
+- `CHORE-20260621-003` rehearsal result: temp tree `temp/chore-20260621-003/ai-deck-copy`, accepted-drift 13 정확 목록, source-retired 20, 5분류 owner sign-off, base trust audit(`a6d4497`)
+- DR-034 customized entrypoint merge-not-overwrite 규칙 + promotion condition
+- ai-deck `docs/GIT-WORKFLOW.md`(source-gitflow), clean base `7941585`, cross-repo write owner 승인
+- DR namespace 정책 = `DR-[0-9]{3}` 전제 도구들과의 호환 확인
 
-**Done Criteria:** `ai-deck-compiler`에 manifest baseline이 실제로 심기고 framework-update 26개가 적용된다. customized entrypoint 6개의 manual merge 결과(보존한 project identity 명시)가 기록된다. `docs/decisions/README.md` 생성 + product DR row 등록으로 scaffold invariant가 PASS한다. `--check`는 framework in-sync + customized entrypoint는 accepted-drift로 이유 기록 상태가 된다. real migration 1건 기준 DR-034 Accepted 승격 여부 판단이 남는다.
+**Done Criteria:** adopter/product DR namespace 정책이 DR로 결정된다(단기 reserved band 채택 + 장기 PDR cascade 범위 명시). ai-deck product DR 4개가 정책대로 renumber되고 product 참조 cascade가 정합된다. `docs/decisions/README.md` 생성으로 invariant `[3]` PASS. ai-deck `feature/*` branch에 실제 apply + PR(base develop). real apply 후 `--check`=framework in-sync + customized accepted-drift, DR-034 "실제 target migration" condition 충족 여부 + Accepted 승격 판단이 기록된다.
 
-**Verification:** `scripts/create-harness.sh --check <ai-deck>`, `scripts/tests/check-scaffold-invariants.sh <ai-deck>`, customized entrypoint diff 보존 확인, accepted-drift 이유 기록. Surface: adopter cascade · scaffold · README/GUIDE/MANUAL.
+**Verification:** namespace 정책 적용 후 `scripts/tests/check-shipped-dr-closure.sh`·`scripts/tests/check-scaffold-invariants.sh <ai-deck>` PASS, `scripts/create-harness.sh --check <ai-deck>`, customized entrypoint diff 보존 확인. Surface: adopter cascade · scaffold · docs/decisions · product 참조.
 
 ---
 
