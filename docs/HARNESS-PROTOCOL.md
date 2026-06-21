@@ -454,7 +454,7 @@ archive 이동 시에는 원본 인덱스에서 행을 제거하고, archive 디
 | T8b | 세션·Phase·이슈 회고 필요 | `docs/retrospectives/` 기록 제안. DR-027 frontmatter 스펙 적용 |
 | T8c | 방향 비교·전략 포지션 정리 필요 | `docs/briefs/` 기록 제안. `docs/briefs/README.md` frontmatter 스펙 적용 |
 | T9 | 발표/보고 산출물 생성 | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |
-| T10 | Work 파일 Done 상태 발견 | archive 승인 여부 제안 |
+| T10 | Work 파일 Done 상태 발견 | archive 승인 여부 제안 + (있으면) `Needs-Triage:` 메모 surface |
 | T11 | tool surface 변경 | Claude(`.claude/commands/`, `.claude/rules/`)/Codex(`.agents/skills/`, `.codex/hooks.json`; Antigravity가 `.agents/` 공유)/Cursor(`.cursor/rules/`)/`prompts/`/README/scaffold 정렬 확인 |
 | T12 | scaffold source 또는 canonical workflow 변경 | `scripts/create-harness.sh`가 있으면 dry-run + temp scaffold 검증, 없으면 source scaffold 검증 제외. template-level policy 변경은 소형 maintenance release 후보로 취급한다 — main merge 전까지 downstream consumer에게 drift window가 발생하므로 변경 범위와 release timing을 함께 판단한다. |
 | T13 | Product track surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
@@ -472,6 +472,7 @@ archive 이동 시에는 원본 인덱스에서 행을 제거하고, archive 디
 - DR Draft는 Accepted 전까지 PLAN cascade를 발동하지 않는다.
 - T8/T8b는 기록 제안만 수행한다. 원인 분석이나 해결을 자동으로 시작하지 않는다.
 - T10은 archive 제안만 수행한다. 사용자 승인 전 `git mv`를 실행하지 않는다.
+- T10에서 forward-relevant buried decision이 있으면 backlog row를 자동 생성하지 않고 Work `Discovery`에 `Needs-Triage:` 메모만 남길 수 있다. `/session-start`는 archive 대기 Work에서 이 메모만 다시 surface한다. 이는 triage-only reminder이며 정식 candidate 승격은 owner 승인 하의 `/work-select`·`/work-plan`에서 판단한다.
 - T11은 관련 tool surface를 확인 대상으로 추가하지만 자동 수정하지 않는다. 발견 -> 제안 -> 승인 순서를 따른다.
 - T12는 `scripts/create-harness.sh`가 있는 source repository에서만 temp target 검증을 수행하고 생성물을 live tree로 복사하지 않는다. scaffold 적용 repository처럼 script가 없으면 Skipped / Not Applicable로 보고한다.
 - T13은 Product track surface의 작은 작업을 빠르게 닫기 위한 규칙이다.

@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-20 (CHORE-20260620-003 close)
+Last updated: 2026-06-21 (CHORE-20260621-001 close)
 
 ## Current State
 
@@ -37,6 +37,7 @@ Last updated: 2026-06-20 (CHORE-20260620-003 close)
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-06-21 | CHORE-20260621-001: archive-burial 방지를 backlog auto-row가 아닌 lightweight triage prompt로 한정. `/work-close`는 Done 처리 중(archive 결정 전) `Needs-Triage:` 메모를 Work `Discovery`에 남기고, archive-now 경로에서는 그 메모를 한 번 더 재표면화한다. `/session-start`는 archive 대기 Work에서 `Needs-Triage:` 줄만 읽어 fallback surface를 제공하며, stronger mechanism/DR은 2nd occurrence gate 뒤의 backlog residual로 유지 | auth-session buried-case는 adopter repo 1건이므로 source harness self-governance를 넘는 일반 메커니즘으로 과대 규약화하지 않고, lightweight closeout triage와 durable residual만 먼저 닫기 위해 | Low |
 | 2026-06-20 | CHORE-20260620-003: Planning-pack template/scaffold integration은 first real walkthrough 전 low-regret decision으로 제한. D-24 no-copy 경계 유지, source template/checklist=1:many·target prepared brief/planning-pack instance=1:1(`code-product-informed`), `PRODUCT-STARTER-PLANNING-PACK.md`는 source-only guide 유지. `workflow-session-start`는 현행 manual 경로/텍스트 입력 default 유지, repo 밖/`.harness/planning-pack/` auto-scan 비채택. `create-harness.sh` 자동 배포·skeleton 경로·`.harness` seed·sibling convention은 first real walkthrough 이후 후보로 defer. Resolver metadata는 planning-pack model에서 제외하고 product engineering option-pack 후보로 route-out | 실제 `scaffold -> session-start -> bootstrap` walkthrough evidence 없이 경로·자동배포·자동탐색을 확정하면 CHORE-002의 evidence-bounded decision 원칙을 깨므로, 지금 안전한 경계만 닫고 residual을 live backlog에 남김 | Low |
 | 2026-06-20 | CHORE-20260620-002 / DR-041: D-21 document-set 경계 결정. Evidence 있는 4개 surface만 2축(ownership/nature)으로 판정 — `ADOPTER-RENAME`은 seed checklist=scaffold-seed, leak-check contract=source-template-owned; `TEMPLATE-ACCEPTANCE`는 shipped adopter artifact이되 pack evidence pointer만 유지; product DR set은 product-owned 적용 기록. `pack/{name}/README.md`를 supported runnable pack canonical local documentation으로 채택하고, D-21 design original §6.4의 `docs/packs/*` 경로 가정만 부분 supersede. `code-product-informed`, 첫 non-code/manual adopter에서 재검토 | product evidence가 `docs/packs/*`가 아니라 pack-local README에 수렴했고, D-21 전체가 아니라 경로 가정만 좁게 정리해야 후속 pack/scaffold 작업의 문서 위치 drift를 줄일 수 있음 | Medium |
 | 2026-06-20 | CHORE-20260620-001: `spring-modular-template` 5+ 사이클(FEAT-001~005, DR-030~033) code-product evidence review. 산출물을 durable routing payload로 — archive 결정 매몰 gap을 신규 candidate `Archive decision surfacing`으로 승격(auth-session 사례), resolver concept(`provides/requires/conflicts/modes`,`selected/resolved_packs`)을 template/scaffold 후보에, pack import principle/impl 분리를 option-pack 후보에, D-21 document-set delta를 신규 D-21 candidate에 등록. code-product only(no-code·manual adopter 미검증, 별도 gate). Codex B R1 request-changes→durable 강화, result conditional-approve→D-21 backlog 승격·3단 표 fix 반영. 구현·scaffold 미선점 | harness가 product 5사이클에 뒤처지지 않게 evidence 환류, archive-burial 재발 방지 | Low |
@@ -44,7 +45,6 @@ Last updated: 2026-06-20 (CHORE-20260620-003 close)
 | 2026-06-18 | FEAT-20260618-001 / DR-039: Antigravity(Gemini 기반)를 4번째 지원 도구로 추가 — 별도 미러·진입 파일 없이 Codex `.agents/` surface consumer로 piggyback. root AGENTS.md 자동 로드 + `.agents/skills/` 자동 소비 실측 확정, 도구 나열 surface Claude→Codex→Antigravity→Cursor 정합, BEHAVIOR §6 self-audit 보강. cross-agent R1~R3(A=Claude/B=Codex/C=Antigravity) 반영. 부수: 선재 default-template-parity drift(work-brief row) 동반 수정. Exit Trigger로 엔진 분화 시 격리 재검토 | multi-agent 이식성 확장 + adopter 수요(실사용) | Medium |
 | 2026-06-15 | CHORE-20260615-005: /work-brief canonical에 brief→DR soft handoff hook 강화(Phase 5 checklist + Phase 6 item 3) — Accepted-ready 수렴 시 /record-decision 제안, 강제 아님. adapter 무변경(canonical-only) | brief의 pre-decision 특성상 DR-worthy 결정이 묻히는 silent drift를 soft prompt로 보정(hard gate/진공 최적화 회피) | Low |
 | 2026-06-15 | CHORE-20260615-004: docs/briefs/ live category 신설 + 방향성 문서 4건 retrospective→brief 재분류, /work-brief surface(canonical+3 adapter)·core routing·user-facing·scaffold·repo-health cascade 정합. archive snapshot no-action. Claude R1 Approved(F1~F3 Low: defer/keep/known-pattern) | 회고와 방향 비교 문서를 분리해 IA 정합 | Medium |
-| 2026-06-15 | CHORE-20260615-003: `docs/maintainer/VERSIONING.md` 릴리즈 노트 템플릿에 `검증` 섹션을 필수화하고, 검증 command는 예시가 아닌 해당 릴리즈의 실제 최종 evidence set 전체를 fenced code block으로 남기도록 기준을 명문화 | `v1.2.1` release note 작성 과정에서 검증 표기 방식이 세션 판단에 의존했다. 승인 근거를 정직하게 남기되, 탐색·디버깅·재시도 명령은 제외해 릴리즈 노트 길이와 신뢰성을 함께 관리하기 위해 | Low |
 
 ## Next Actions
 
