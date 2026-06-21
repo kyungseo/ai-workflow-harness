@@ -172,6 +172,8 @@ rsync -a --delete --exclude .git "${TARGET}/" "${TARGET_COPY}/"
 Phase 2에서 선택한 baseline을 기준으로 `TARGET_COPY`에 classification table을 적용한다.
 구체적인 방법은 `cp`, `git diff`/`git apply`, manual editor merge, generated patch 등으로 달라질 수 있다. 중요한 것은 result tree가 재현 가능하고, 모든 변경이 classification에 매핑된다는 점이다.
 
+> 환경 주의: scripted batch에서 `cp`/`rm`이 `-i`(interactive)로 alias돼 있으면 loop 안의 프롬프트가 stdin을 소비해 batch가 깨진다. 스크립트에서는 `command cp -f`/`command rm -f`처럼 alias를 우회하고 비대화 플래그를 명시한다. 3-way 자동 병합이 필요하면 `git merge-file -p <OURS> <BASE> <THEIRS>`가 stance/framework 변경을 라인 단위로 합치고 겹치는 부분만 conflict로 남긴다.
+
 최소 rehearsal 산출물:
 
 - final action이 포함된 classification table
@@ -197,16 +199,27 @@ bash scripts/tests/check-scaffold-invariants.sh "${TARGET_COPY}"
 - accepted-drift가 예상되면 `check-scaffold-invariants.sh` `[5]`가 실패할 수 있다. 이때도 `[1]`~`[4]`가 통과할 때만 expected로 기록한다.
 - `[3]` decision-index closure failure는 accepted-drift가 아니다. index/namespace blocker로 다룬다.
 - product DR 또는 historical ID를 renumber할 때는 live refs와 archive refs를 분리해 검색한다.
+- **검증기 scope 분리:** `check-shipped-dr-closure.sh`는 **source repo의 shipped-DR closure 전용**이다(adopter product DR을 검증하지 않는다). adopter target의 DR 검증은 `check-scaffold-invariants.sh <target>` `[1]`(no-dangling)·`[3]`(index closure) + `docs/decisions/README.md` diff + live grep으로 한다. source 정책 DR을 새로 추가/수정한 경우에만 source 쪽에서 `check-shipped-dr-closure.sh`를 돌린다.
+- **literal DR-token 트랩(반드시 주의):** DR 검사들은 `DR-[0-9]{3}` regex로 동작하므로, **band/namespace를 설명하는 문서(`HARNESS-NAMING-RULES.md`, `docs/decisions/README.md`)에 `DR-800`·`DR-999` 같은 리터럴 3자리 토큰을 쓰면 "seed 밖 DR 인용"으로 잡혀 `check-shipped-dr-closure`/invariant `[1]`·`[3]`가 FAIL한다.** band 표기는 `DR-8xx`/`DR-9xx`(x=숫자, regex 미매칭) + 평문 숫자(`800–999번`)로 self-describe한다. 신규 source policy DR 자체는 shipped surface가 그 토큰을 인용하지 않으면 비shipped로 두고 본문 self-describe한다.
+- **leak 검사 해석:** `[2]` no-source-only-leakage는 **core A-class + source-gitflow shipped 파일 subset**만 본다(전체 grep과 scope가 다르다). 그래서 `prompts/README.md`·`README.md`의 source-repo 언급은 invariant에 안 잡힐 수 있다. 또 leak이 **migration이 만든 것인지 pre-existing인지**를 orig baseline 대비 확인한다(pre-existing leak을 정리하는 건 net 개선이지만 그렇게 기록한다).
 
 유용한 grep patterns:
 
 ```bash
-# live old decision refs, excluding archive if appropriate
-grep -RIn "DR-014\|DR-021\|DR-022\|DR-023" \
+# live old PRODUCT decision refs (renumber 후 0이어야)
+# ⚠️ DR 번호 모호성: 같은 번호가 product와 framework 양쪽에 있을 수 있다.
+#    예) ai-deck의 DR-014 = product(ppt 언어) AND framework(archive 정책).
+#    renumber 후에도 framework DR-014(archive) refs는 정상적으로 남으므로,
+#    이 grep 결과는 "product 맥락"만 세고 framework archive refs는 제외해야 한다.
+#    절대 naive `s/DR-014/DR-NEW/g` blanket-replace 금지 — framework refs를 망친다.
+grep -RIn "DR-021\|DR-022\|DR-023" \
   "${TARGET_COPY}/docs" "${TARGET_COPY}/skills" \
   --exclude-dir=archive || true
+# DR-014처럼 product/framework 공유 번호는 content로 분기해 확인:
+grep -RIn "DR-014" "${TARGET_COPY}/docs" "${TARGET_COPY}/skills" \
+  --exclude-dir=archive | grep -ivE 'archive|mirror' || true   # 남으면 product 잔존 의심
 
-# product/source name leakage
+# product/source name leakage (단, invariant [2]는 core A-class subset만 검사 — scope 차이 유의)
 grep -RIn "ai-workflow-harness" \
   "${TARGET_COPY}/docs" "${TARGET_COPY}/prompts" "${TARGET_COPY}/skills" || true
 ```
@@ -222,6 +235,15 @@ blocker 예시:
 - target product files에 승인 범위 밖 renumbering 또는 semantic edit이 필요함
 - target branch policy가 계획된 branch name 또는 merge method와 충돌함
 - temp result 생성 이후 source가 바뀜
+
+**source 자기수정 시 baseline 재생성(자주 발생):** migration Work 자체가 **shipped framework source 파일**(예: 정책 DR이 `HARNESS-NAMING-RULES.md` 같은 shipped 문서를 갱신)을 수정하면, 먼저 만든 shadow scaffold/manifest baseline이 stale해진다. 그러면 temp result의 `--check` drift가 일시적으로 1 늘어난다(해당 framework 파일이 `source-updated`로 잡힘). 이는 blocker가 아니라 **예상된 baseline 무효화**다. 처리:
+
+```text
+1) 바뀐 framework 파일을 temp result에 current source로 sync (framework-update/PURE-OLD인 경우)
+2) current source로 shadow scaffold 재생성 + 새 manifest를 temp result에 replant
+3) --check 재확인 → 의도한 accepted-drift count로 복귀
+4) 단, 새로 추가한 source policy DR이 scaffold adapt block에 들어가는지 확인 — 들어가면 adopter에 shipped되어 manifest tracked count가 바뀐다. 정책/maintainer DR은 보통 adapt block에 넣지 않아 manifest 불변.
+```
 
 해결 패턴:
 
@@ -292,6 +314,8 @@ promotion wording은 보수적으로 쓴다.
 - 좋음: "actual target migration evidence 1 acquired"
 - 나쁨: adopter 1건만 migration했는데 "upgrade logic accepted/proven"이라고 쓰기
 
+> commit gate 주의: 이 migration Work들은 산출물이 doc/tracking(Work file·STATUS·decision·playbook)에 집중돼 코드 변경이 없을 수 있다. 그러면 source closeout commit이 DR-025 finalization gate에 "finalization-only"로 잡혀 막힌다. 번들할 substantive code 커밋이 없는 정당한 경우이므로, override trailer(`AWH-Gate-Override: finalization-split` + `AWH-Gate-Reason: <문서/tracking 산출물, 번들할 code 없음>`)로 durable 기록을 남기고 통과시킨다. local-only branch면 substantive commit에 `--amend`로 번들하는 쪽이 먼저다.
+
 ## Adopter-Specific Notes
 
 ### `ai-deck-compiler`
@@ -302,8 +326,9 @@ promotion wording은 보수적으로 쓴다.
 - 중요한 merge surfaces: `CLAUDE.md`, `AGENTS.md`, `.gitignore`, session-start prompts
 - source-retired old command/skill surfaces 제거 필요
 - product skills 보존 필요
-- product DR namespace collision이 policy 결정 전 real apply를 차단
-- final target state는 의도적으로 accepted-drift 유지
+- product DR namespace collision(`DR-014` product ppt vs framework archive 등)이 policy 결정 전 real apply를 차단
+- final target state는 의도적으로 accepted-drift 유지(13 paths)
+- blocker 해결: DR-042 high-band 정책(product/adopter `DR-8xx`~`DR-9xx`) 후 product DR `014/021/022/023`→`801/802/803/804` renumber + decision-index 생성, 그 뒤 실제 apply(PR #51). DR-014는 framework(archive)/product(ppt) 공유 번호라 content로 분기해 product만 renumber했다.
 
 ### `spring-modular-template`
 
