@@ -65,11 +65,15 @@ A writes Work + plan -> B red-team review -> A response -> consensus
 
 ## Phase 1. Target Probe
 
-먼저 read-only로 target 상태를 확인한다.
+먼저 read-only로 source ref와 target 상태를 확인한다. released upgrade proof의 기본 source baseline은 released `main` 또는 release tag다. `develop`/current checkout 기준 probe는 internal dogfooding 또는 pre-release tracking 예외로 라벨링한다.
 
 ```bash
 TARGET="<target-repo>"
 
+git branch --show-current
+git rev-parse --short HEAD
+git describe --tags --always --dirty
+cat VERSION
 git -C "${TARGET}" status --short --branch
 git -C "${TARGET}" log --oneline -n 12
 test -f "${TARGET}/docs/GIT-WORKFLOW.md" && sed -n '1,180p' "${TARGET}/docs/GIT-WORKFLOW.md"
@@ -79,15 +83,21 @@ bash scripts/create-harness.sh --check "${TARGET}" || true
 
 기록할 항목:
 
+- source baseline label: released `main`/tag 또는 develop/current checkout exception
+- source branch, `HEAD`, `git describe --tags --always --dirty`, `VERSION`
 - target base branch와 current `HEAD`
 - `origin/develop`, `origin/main`, local branch 일치 여부
 - target branch naming과 PR base policy
 - `.harness/manifest.json` 존재 여부
 - current `--check` 결과. 단, 아직 proof로 취급하지 않는다
 
+`VERSION` 문자열만으로 source parity를 주장하지 않는다. 같은 `VERSION` 값이어도 `main`, `develop`, feature checkout의 비교 결과가 다를 수 있다.
+
 target이 dirty면 멈춘다. owner가 mixed state를 명시 승인하지 않는 한, 무관한 product work 위에서 migration하지 않는다.
 
 ## Phase 2. Baseline 선택
+
+source-ref baseline(DR-028)과 target manifest/shadow baseline(DR-034)을 분리한다. 먼저 source가 released tag/main인지, 아니면 develop/current checkout 예외인지 라벨링한다. 그 다음 target에 사용할 manifest/3-way/shadow baseline을 고른다.
 
 사용 가능한 baseline 중 가장 강한 것을 선택한다.
 

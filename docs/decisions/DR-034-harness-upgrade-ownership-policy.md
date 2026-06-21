@@ -15,6 +15,8 @@ Linked DRs: DR-021, DR-028, DR-029, DR-033
 
 `scripts/create-harness.sh --check <target-dir>`는 `.harness/manifest.json`을 읽어 framework-owned 파일의 source 대비 상태를 보고한다. manifest는 scaffold 생성 시점에 만들어지며, 기존 target에 manifest만 사후 주입하는 별도 command는 아직 없다.
 
+이 문서에서 말하는 baseline은 target 쪽 manifest/shadow scaffold baseline이다. source repo의 어느 ref를 비교 기준으로 삼는지는 DR-028이 맡는다. released upgrade proof의 기본 source-ref baseline은 released `main` 또는 release tag이며, `develop`/current checkout probe는 pre-release tracking 예외로 라벨링해야 한다.
+
 실 adopter `/Users/kyungseo/dev-home/vibe/ai-deck-compiler`는 `.harness/manifest.json`이 없는 pre-manifest target이다. 따라서 `--check`만으로는 upgrade 범위와 drift를 알 수 없고, command/skill/rule/document inventory와 manifest baseline 획득 정책이 먼저 필요하다.
 
 ## Draft Decision

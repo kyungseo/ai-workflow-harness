@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260621-006 | Upgrade Baseline Source-Ref Policy And Check Visibility | 2026-06-21 | `docs/works/harness/CHORE-20260621-006-upgrade-baseline-source-ref-policy.md` |
 | CHORE-20260621-005 | spring-modular-template Adopter Upgrade Walkthrough | 2026-06-21 | `docs/works/harness/CHORE-20260621-005-spring-adopter-upgrade-walkthrough.md` |
 | CHORE-20260621-004 | Adopter DR Namespace Policy + ai-deck Real Apply | 2026-06-21 | `docs/works/harness/CHORE-20260621-004-adopter-dr-namespace-apply.md` |
 | CHORE-20260621-003 | ai-deck-compiler Real Adopter Migration (rehearsal) | 2026-06-21 | `docs/works/harness/CHORE-20260621-003-ai-deck-real-migration.md` |

@@ -154,6 +154,25 @@ sha256_of() {
   fi
 }
 
+is_clean_release_desc() {
+  local desc="$1"
+  [[ "${desc}" =~ ^ai-workflow-v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+}
+
+print_source_ref_report() {
+  local branch="unknown" sha="unknown" desc="unknown"
+  if git -C "${TEMPLATE_ROOT}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    branch="$(git -C "${TEMPLATE_ROOT}" symbolic-ref --short HEAD 2>/dev/null || printf 'detached')"
+    sha="$(git -C "${TEMPLATE_ROOT}" rev-parse --short HEAD 2>/dev/null || printf 'unknown')"
+    desc="$(git -C "${TEMPLATE_ROOT}" describe --tags --always --dirty 2>/dev/null || printf 'unknown')"
+  fi
+
+  echo "  source ref       : ${branch} @ ${sha} (${desc})"
+  if [[ "${desc}" != "unknown" ]] && ! is_clean_release_desc "${desc}"; then
+    echo "  WARNING          : source checkout is not a clean release tag; treat this --check as pre-release/current-checkout evidence, not released upgrade proof"
+  fi
+}
+
 # Manifest accumulator: adapt() appends one JSON object per framework file.
 # Hash basis = normalized source-template hash (DR-021/023 / OQ-10):
 # the source file before single-token substitution, so it is project-agnostic.
@@ -236,6 +255,8 @@ do_check() {
     echo "ERROR: target dir not found: ${target}" >&2
     return 2
   fi
+  echo "harness --check: ${target}"
+  print_source_ref_report
   if [[ ! -f "${manifest}" ]]; then
     echo "untracked target / pre-manifest scaffold: ${target}"
     echo "  (.harness/manifest.json 없음 — manifest 도입 이전 scaffold이거나 harness 비대상)"
@@ -248,8 +269,8 @@ do_check() {
   field() { grep "\"$1\"" "${manifest}" | head -1 | sed -E "s/.*\"$1\": \"?([^\",]*)\"?.*/\1/"; }
 
   local m_version m_project
-  m_version="$(field harness_version)"
-  m_project="$(field project_name)"
+  m_version="$(field harness_version || true)"
+  m_project="$(field project_name || true)"
   if [[ -z "${m_version}" || -z "${m_project}" ]] || ! grep -q '"framework_files"' "${manifest}"; then
     echo "ERROR: invalid manifest (harness_version/project_name/framework_files 누락): ${manifest}" >&2
     echo "migration note: manifest가 오래되었거나 불완전하면 command/skill/rule inventory를 먼저 작성하세요." >&2
@@ -284,7 +305,6 @@ do_check() {
     gate_line="none (.harness/gate-config absent; defaults only)"
   fi
 
-  echo "harness --check: ${target}"
   echo "  manifest version : ${m_version}   (current source: ${HARNESS_VERSION})"
   [[ "${m_version}" != "${HARNESS_VERSION}" ]] && echo "  version delta    : ${m_version} -> ${HARNESS_VERSION}"
   echo "  enforcement      : ${posture}"
