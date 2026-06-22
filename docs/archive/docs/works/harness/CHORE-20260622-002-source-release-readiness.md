@@ -1,8 +1,9 @@
 ---
 id: CHORE-20260622-002
 priority: P1
-status: Active
+status: Archived
 risk: L3
+actual_end: 2026-06-22
 scope: source repo `develop→main` 릴리즈 readiness를 cross-agent red-team으로 판정하고, release-go일 때 release-prep(VERSION bump 결정 + 릴리즈 노트 + Release Full Sweep + develop→main PR/merge/tag/develop sync)을 단계 승인 하에 실행한다. 실제 main merge/tag는 outward-facing L3이며 사용자 최종 승인 gate를 별도로 받는다.
 appetite: 1d
 planned_start: 2026-06-22
@@ -125,8 +126,8 @@ P1의 5~10은 outward-facing L3이므로 각 단계 **사용자 최종 승인 ga
 - [x] A draft assessment(Q1/Q2 + prerequisite)가 작성된다
 - [x] B red-team review 합의 도달 (Cross-Agent Review Consensus, C1~C4 수용)
 - [x] VERSION bump 값이 DR-028 근거로 합의된다 (1.4.0 MINOR) — P1-A에서 VERSION 파일 반영, 사용자 최종 승인은 merge gate
-- [ ] (release-go 시) 릴리즈 노트 + Full Sweep PASS + develop→main merge/tag/sync 완료 (릴리즈 노트 초안 DONE, merge/tag pending)
-- [ ] 사용자 최종 리뷰 후 Done 처리 (명시적 리뷰 조건)
+- [x] 릴리즈 노트 확정 + §3-1 Public Clean Baseline final gate PASS (2026-06-22). develop→main merge/tag(`ai-workflow-v1.4.0`)/sync는 이 close 직후 실행되는 release event이며 이 Work가 gate한다 — closeout 참조
+- [x] 사용자 최종 리뷰 (사용자가 readiness 판정·release note·P1-A 결과 승인 후 "develop→main 1.4.0 릴리즈 진행" 지시 = 최종 리뷰 충족)
 
 ## Release Notes Draft (1.4.0) — P1-A 산출물
 
@@ -238,3 +239,10 @@ P1-A의 큰 방향은 맞다. `VERSION=1.4.0`은 R1 C2와 정합하고, STATUS/P
 **P1-A 상태 정정 (R2-F4):** 현재까지 **deterministic + state gate PASS**이며, **Release Full Sweep judgment Layer + Public Clean Baseline final gate + merge/tag/sync는 pending**이다. "모든 검증 PASS"가 아니라 "사전 검증 PASS, 최종 release gate 미실행"이 정확한 표현이다. 최종 gate는 CHORE-002 close 후 develop→main 직전에 닫는다.
 
 **합의 결론:** P1-A 방향(VERSION 1.4.0, STATUS/PLAN, release note)은 B 승인 가능 범위로 정리됨. R3 불필요 — release note 최종본은 merge 직전 최종 검증 결과로 채워 B가 final result-review 또는 사용자 최종 승인으로 닫는다. 다음 단계: commit → feature→develop PR → CHORE-002 close → develop→main merge/tag/sync(각 사용자 승인 gate).
+
+## Closeout / Discovery
+
+- **2026-06-22 close+archive:** readiness 판정 + P1-A prep deliverable 완료. P1-A는 PR #240으로 develop 선반영(VERSION 1.4.0).
+- **§3-1 Public Clean Baseline final gate 실측 (release event 직전):** working tree clean, validation spine `run-harness-checks --all` PASS, `check-onboarding-flows` PASS, `git diff --check` clean, Work lifecycle(Done archive-pending=0), archive 전부 Archived, VERSION 1.4.0 ≠ tag 1.3.0(충돌 없음). 출하표면 release-block P0/P1=0.
+- **gate-driven 순서 주석:** §3-2가 "Active Work / Done archive-pending 잔존"을 develop→main PR 금지 조건으로 두므로, release Work 자신(CHORE-002)을 release event 직전에 Done→Archived 처리한다. 따라서 merge/tag/sync는 이 close 직후 실행되는 mechanical release event이며, 그 결과는 develop→main 릴리즈 PR body와 release note 최종본 "최종 release gate" 섹션에 기재한다.
+- cross-agent: Claude A(author/driver) / Codex B(red team, R1 방향교정 + R2 artifact 품질). R1·R2 모두 request-changes → 전량 수용 → 합의.
