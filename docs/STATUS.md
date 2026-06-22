@@ -27,6 +27,7 @@ Last updated: 2026-06-21 (source-ref baseline policy closed)
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| CHORE-20260622-001 | spring-modular-template Product DR Namespace Renumber (DR-042 Apply) — 방향 확정: high-band 유지, spring apply 승인 대기 | `docs/works/harness/CHORE-20260622-001-spring-product-dr-renumber.md` |
 
 ## Blockers And Open Questions
 

@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| CHORE-20260622-001 | spring-modular-template Product DR Namespace Renumber (DR-042 Apply) | `docs/works/harness/CHORE-20260622-001-spring-product-dr-renumber.md` |
 
 ## Done (Archive Pending)
 
