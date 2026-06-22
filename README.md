@@ -106,7 +106,8 @@ scaffold 후에는 생성된 project directory에서 `/session-start`로 첫 세
 3. **Canonical workflow**가 실제 절차의 SSoT입니다.
 4. **Adapters**가 Claude Code, Codex, Antigravity, Cursor의 실행 방식에 맞춰 canonical 절차를 호출합니다. (Antigravity는 Codex adapter 표면을 공유합니다.)
 5. **State files**가 현재 작업과 결정 근거를 repository 안에 남깁니다.
-6. **Scaffold**가 이 구조를 다른 project repository에 설치합니다.
+6. **검증·릴리즈 표면**이 scaffold drift, hook/CI 정합성, 릴리즈 버전을 확인합니다.
+7. **Scaffold**가 이 구조를 다른 project repository에 설치합니다.
 
 ```mermaid
 flowchart TD
@@ -146,6 +147,9 @@ flowchart TD
         PROMPTS["prompts/\nsession-start fallback"]
         HOOKS[".codex/hooks.json\nCodex hooks"]
         SCRIPT["scripts/create-harness.sh\nproject scaffold"]
+        TESTS["scripts/tests/\n검증 spine"]
+        CI[".github/workflows/\nPR/main 검증"]
+        VERSION["VERSION\n릴리즈 mirror"]
     end
 
     CLAUDE --> BP --> AW --> HP
@@ -169,10 +173,13 @@ flowchart TD
 
     HP --> HQ
     HP --> SCRIPT
+    HP --> TESTS
     SCRIPT --> SKILL_FLOW
     SCRIPT --> COMMANDS
     SCRIPT --> CODEX_SKILLS
     SCRIPT --> CURSOR_WORKFLOW
+    TESTS --> CI
+    VERSION --> SCRIPT
 
     AGENTS --> CODEX_SKILLS
     AGENTS --> HOOKS
@@ -469,6 +476,9 @@ main
 | 현재 상태 dashboard | [docs/STATUS.md](docs/STATUS.md) |
 | Harness backlog | [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) |
 | 방향 비교 / 포지션 문서 | [docs/briefs/README.md](docs/briefs/README.md) |
+| 문제 해결 기록 | [docs/troubleshooting/README.md](docs/troubleshooting/README.md) |
+| 회고 / readiness review | [docs/retrospectives/README.md](docs/retrospectives/README.md) |
+| 완료된 Work와 과거 기록 | [docs/archive/](docs/archive/) |
 | 언어 정책 (단일 SSoT) | [docs/decisions/DR-007-language-policy.md](docs/decisions/DR-007-language-policy.md) |
 | Decision Records | [docs/decisions/](docs/decisions/) |
 
@@ -500,11 +510,13 @@ main
 .
 ├── AGENTS.md                              # Codex 진입점
 ├── CLAUDE.md                              # Claude Code 진입점
-├── .agents/skills/                        # Codex workflow adapters
-├── .claude/commands/                      # Claude slash commands
-├── .claude/rules/                         # path-scoped rules
+├── VERSION                                # 릴리즈 버전 mirror
+├── .agents/skills/                        # Codex용 workflow adapter
+├── .claude/commands/                      # Claude용 slash command
+├── .claude/rules/                         # 경로별 규칙
 ├── .codex/hooks.json                      # Codex hook 설정
-├── .cursor/rules/                         # Cursor rules
+├── .cursor/rules/                         # Cursor 규칙
+├── .github/workflows/                     # PR/main 검증 workflow
 ├── docs/
 │   ├── BEHAVIOR-PRINCIPLES.md             # 전역 행동 원칙
 │   ├── AGENT-WORKFLOW.md                  # 공통 workflow
@@ -514,15 +526,21 @@ main
 │   ├── STATUS.md                          # 현재 dashboard
 │   ├── WORKFLOW-MANUAL.md                 # 사용자용 workflow manual
 │   ├── SCAFFOLD-ONBOARDING-GUIDE.md       # scaffold 온보딩 가이드
+│   ├── archive/                           # 완료 Work와 과거 기록
 │   ├── backlog/                           # 후보 작업
 │   ├── briefs/                            # 방향 비교·포지션 문서
-│   ├── decisions/                         # Decision Records
-│   ├── maintainer/                        # source-only maintainer reference
+│   ├── decisions/                         # 의사결정 기록(Decision Records)
+│   ├── maintainer/                        # source 전용 maintainer 참조
+│   ├── retrospectives/                    # 회고와 readiness review
+│   ├── troubleshooting/                   # 문제 해결 기록
 │   └── works/                             # Work 파일
-├── skills/workflow/                       # canonical workflow 절차
-├── prompts/                               # session-start fallback prompts
-├── scripts/create-harness.sh              # scaffold script
-└── tools/git-hooks/                       # source repo 전용 hooks
+├── skills/workflow/                       # 표준 workflow 절차
+├── prompts/                               # 세션 시작 fallback prompt
+├── scripts/
+│   ├── create-harness.sh                  # scaffold 생성 script
+│   ├── templates/                         # workflow별 scaffold template
+│   └── tests/                             # 검증 spine
+└── tools/git-hooks/                       # source repo 전용 hook
 ```
 
 ---
