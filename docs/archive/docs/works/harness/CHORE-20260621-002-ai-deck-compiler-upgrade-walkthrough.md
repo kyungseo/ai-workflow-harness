@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260621-002
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: ai-deck-compiler를 pre-manifest baseline-acquisition 재실측 대상으로 삼아 2026-06-11 simulation 대비 current source delta, shadow scaffold baseline, selective migration 분류, DR-034 promotion 조건, internal managed mode gate 보류/진입 조건을 실제 evidence로 정리한다. 구현 목표는 중앙 managed mode 자체가 아니라 External Adopter Mode의 현실 검증이다.
 appetite: 1d
@@ -390,3 +390,5 @@ Claude B의 Request changes를 **전면 수용**한다. 측정값 자체(`78 tra
 - current source 재실측 결과, manifest-tracked baseline acquisition은 `78 tracked, 78 in-sync, 0 drifted`까지 수렴했다. 다만 scaffold invariant는 target-local `docs/decisions/README.md` 부재로 실패하므로, 실제 adopter 전환은 decision index closure를 별도 보강해야 한다.
 - `78 tracked, 78 in-sync, 0 drifted`는 `CLAUDE.md`/`AGENTS.md`/`.gitignore`와 session-start prompt 3개를 포함한 32개 `locally-modified` 파일을 shadow baseline으로 덮어쓴 temp-only overwrite-convergence다. 실제 adopter migration에서는 최소 이 6개 entrypoint/prompt를 customized-must-merge로 다뤄야 하며, 나머지 framework update 후보도 diff review 전 safe apply로 볼 수 없다.
 - Closeout(2026-06-21): owner 승인 하 Work Done 처리. **5b Forward-Relevant Decision Triage 결과 `Needs-Triage: 없음`** — 이 Work의 deferred 결정(실제 adopter apply, upgrade 도구화, internal managed mode)이 모두 live backlog 후보에 매핑되므로 별도 triage 메모를 만들지 않는다(real apply는 재scope된 `ai-deck-compiler 실제 adopter 마이그레이션` 후보, 도구화는 `Packaging / distribution revisit`, managed는 `Internal managed mode` 후보). archive는 보류해 다음 `/session-start`에서 archive-pending으로 보고되게 둔다.
+
+- 2026-06-22 archive: Done housekeeping(`/session-start` 배치 archive). Needs-Triage 없음 — deferred 결정(real apply/도구화/managed mode)이 모두 backlog 후보에 매핑됨.

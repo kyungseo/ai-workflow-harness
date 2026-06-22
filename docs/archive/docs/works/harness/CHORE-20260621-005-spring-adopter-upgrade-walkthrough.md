@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260621-005
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: spring-modular-template adopter upgrade walkthrough를 playbook 기준 read-only target probe와 ownership classification slice로 착수하고, temp rehearsal/real apply는 owner gate로 분리한다.
 appetite: 1d
@@ -508,3 +508,5 @@ Codex A gate proposal:
 - CP5 gate proposal: do not open temp rehearsal in this Work. Close after owner final approval, then split product DR renumber/apply to a follow-up Work if desired.
 - 2026-06-21 closeout: owner final approval received. Work Done 처리. Temp rehearsal/real apply는 열지 않는다.
 - Needs-Triage: `spring-modular-template` product DR namespace renumber/apply follow-up — CHORE-005 blocker(`DR-030`~`DR-033` product low-band vs DR-042 high-band policy)를 실제 target apply로 풀지, grandfather/defer할지 owner decision 필요.
+
+- 2026-06-22 archive: Done housekeeping. **Needs-Triage(spring product DR namespace renumber/apply)는 CHORE-20260622-001로 해소** — high-band 유지 결정 + spring product DR 800~804 real-apply + spring main 반영(PR #11/#12). 메모는 historical record로 보존한 채 archive.

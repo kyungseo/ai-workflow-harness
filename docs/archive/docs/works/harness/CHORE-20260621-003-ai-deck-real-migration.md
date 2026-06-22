@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260621-003
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: ai-deck-compiler를 실제로 harness current source 기준으로 마이그레이션한다 — clean base branch에서 manifest baseline plant, framework-update 26개 적용, customized entrypoint 6개 manual merge(project identity 보존), decision-index closure, invariant PASS, DR-034 promotion 판단. cross-repo write이며 harness source 변경은 비범위(이 Work file/STATUS tracking만 harness repo).
 appetite: 2-3d
@@ -360,3 +360,5 @@ merge 후 `CLAUDE.md`/`AGENTS.md`/`.gitignore`/session-start prompt는 current s
 
 ### 후속 Work (등록 대상)
 `adopter DR namespace policy + ai-deck real apply`: ① reserved high-band `DR-8xx/9xx` 정책 결정(단기, 장기 PDR은 tool cascade 별도) ② ai-deck product DR 4개 renumber cascade(PLAN.md/create-deck.md 등 product 참조 포함) ③ decision-index 생성 ④ 실제 ai-deck `feature/*` branch apply/PR.
+
+- 2026-06-22 archive: Done housekeeping(`/session-start` 배치 archive). 후속(high-band 정책 + ai-deck real apply)은 CHORE-20260621-004에서 완료(PR #51).
