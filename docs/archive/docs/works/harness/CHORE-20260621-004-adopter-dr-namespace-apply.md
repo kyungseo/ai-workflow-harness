@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260621-004
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: adopter/product DR namespace 정책을 high-band(800-999)으로 결정·DR 기록하고, ai-deck product DR 4개 renumber cascade + decision-index 생성 + CHORE-003 rehearsal result 기반 실제 ai-deck apply/PR까지 수행한다. real apply로 DR-034 "실제 target migration" condition evidence 확보 판단. 장기 PDR-/4자리 전환은 비범위(별도 Work, tool cascade).
 appetite: 2-3d
@@ -302,3 +302,5 @@ Codex B의 **Request changes를 7건 전면 accept**한다. 방향(reserved-band
 - 이번 real apply는 DR-034의 "actual target migration"에 해당하는 **evidence 1건**을 확보했다.
 - 단, evidence는 같은 ai-deck 계열에서 이어진 1건이고, 13 accepted-drift/수동 보존 판단/namespace 정책 Work가 필요했다는 helper signal이 남는다.
 - 따라서 **DR-034는 Draft 유지**한다. Accepted 승격은 2nd adopter 또는 helper 경로 정리 후 별도 owner-approved decision으로 판단한다.
+
+- 2026-06-22 archive: Done housekeeping(`/session-start` 배치 archive). ai-deck high-band real apply 완료(PR #51 merged), DR-034는 Draft 유지.

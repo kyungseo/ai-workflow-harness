@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260621-006
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: adopter upgrade/apply evidence의 source baseline 기준을 released main/tag 기본값으로 명시하고, develop/current checkout 예외 라벨 및 --check source-ref visibility를 보강한다.
 appetite: 1d
@@ -306,3 +306,5 @@ Accepted.
 - Backlog candidate `Upgrade baseline source-ref policy and --check ref visibility` 착수.
 - `spring-modular-template` walkthrough는 source baseline을 develop/current checkout으로 라벨링해 honest-close했지만, durable policy는 아직 DR/playbook/tool output에 박히지 않았다.
 - `VERSION=1.3.0`만으로 main/develop parity를 주장할 수 없다. release tag line과 checkout ref를 함께 기록해야 한다.
+
+- 2026-06-22 archive: Done housekeeping(`/session-start` 배치 archive). DR-028 amendment + playbook + `--check` source-ref visibility 반영 완료.
