@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260622-001
 priority: P1
-status: Done
+status: Archived
 risk: L2
 actual_end: 2026-06-22
 scope: spring-modular-template adopter repo의 product-local DR(DR-001/030/031/032/033)을 DR-042 high-band(DR-800~804)로 real-apply renumber하고 reference cascade를 정합화한다. 실제 변경은 spring repo feature branch + PR에서 수행하고, source repo는 follow-up Work 등록과 closeout 기록만 한다.
@@ -290,3 +290,4 @@ Codex B R1에서 특히 의심할 질문(red team):
 - branch: source repo `develop` + source-gitflow → `feature/CHORE-20260622-001-spring-product-dr-renumber` 생성.
 - 2026-06-22 방향 선회(C4): 사용자 의견으로 high-band renumber 대신 harness/product DR namespace 원천 분리 가능성을 검토하기로 함. status→Hold. spring repo는 끝까지 미착수(read-only probe 결과만 보유). 후속은 `docs/briefs/dr-namespace-redesign-20260622.md`.
 - 실측(tooling 비용 근거): `DR-[0-9]{3}` regex가 `check-shipped-dr-closure.sh`(seed parse·body grep·filename self-ref), `check-scaffold-invariants.sh`([1] dangling, [3] README index closure, `docs/decisions/DR-*.md` flat glob), `tools/git-hooks/*`, `create-harness.sh` adapt에 박혀 있음. `--check`는 manifest `framework_files[].path` 기반이라 product DR은 추적하지 않음(framework-owned만). `docs/decisions/`는 scaffold가 일부 framework DR을 seed하되 project-owned 추가 허용 디렉토리.
+- 2026-06-22 archive: Done 처리 + develop merge(PR #237) 후 archive. **잔여 framework surface upgrade는 비범위** — backlog 후보 `spring-modular-template framework surface upgrade (CHORE-005 잔여 drift apply)`로 등록(cross-agent+단계 승인으로 별도 진행). DR namespace successor(②b/③)도 backlog 후보 등록(DR-042 Policy Horizon trigger gated). source `develop→main` 릴리즈는 누적 20커밋 별도 release로 보류.
