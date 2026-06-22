@@ -401,6 +401,7 @@ for dir in \
   "${TARGET_ROOT}/docs/reports" \
   "${TARGET_ROOT}/docs/presentations" \
   "${TARGET_ROOT}/docs/troubleshooting" \
+  "${TARGET_ROOT}/docs/user" \
   "${TARGET_ROOT}/.claude/rules" \
   "${TARGET_ROOT}/.claude/commands" \
   "${TARGET_ROOT}/.cursor/rules" \
@@ -429,6 +430,8 @@ adapt "${TEMPLATE_ROOT}/docs/HARNESS-RECOVERY-VALIDATION.md"  "${TARGET_ROOT}/do
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md" \
       "${TARGET_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"      "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
+adapt "${TEMPLATE_ROOT}/docs/user/README.md"                  "${TARGET_ROOT}/docs/user/README.md"
+adapt "${TEMPLATE_ROOT}/docs/user/CROSS-REVIEW-MANUAL.md"     "${TARGET_ROOT}/docs/user/CROSS-REVIEW-MANUAL.md"
 
 # Optional source pack (DR-021): heavy framework docs + product-track workflow
 # (work-doc). Default scaffold excludes them to keep target context minimal;
@@ -806,6 +809,7 @@ AI workflow 자체의 개선과 example pack 정비는 Harness track으로 분�
 | \`docs/BEHAVIOR-PRINCIPLES.md\` | 전역 행동 원칙 |
 | \`docs/STATUS.md\` | 현재 작업 상태 |
 | \`docs/HARNESS-QUICK-REFERENCE.md\` | 세션 실행 규칙 요약 |
+| \`docs/user/CROSS-REVIEW-MANUAL.md\` | 선택적 cross-agent review 사용법 |
 | \`docs/BOOTSTRAP.md\` | scaffold 직후 프로젝트 부팅 checklist |
 | \`docs/AGENT-WORKFLOW.md\` | 공통 운영 규칙 |
 ${OPTIONAL_README_ROWS}| \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
