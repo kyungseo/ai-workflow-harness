@@ -15,6 +15,8 @@ Linked DRs: DR-021, DR-028, DR-029, DR-033
 
 `scripts/create-harness.sh --check <target-dir>`는 `.harness/manifest.json`을 읽어 framework-owned 파일의 source 대비 상태를 보고한다. manifest는 scaffold 생성 시점에 만들어지며, 기존 target에 manifest만 사후 주입하는 별도 command는 아직 없다.
 
+이 문서에서 말하는 baseline은 target 쪽 manifest/shadow scaffold baseline이다. source repo의 어느 ref를 비교 기준으로 삼는지는 DR-028이 맡는다. released upgrade proof의 기본 source-ref baseline은 released `main` 또는 release tag이며, `develop`/current checkout probe는 pre-release tracking 예외로 라벨링해야 한다.
+
 실 adopter `/Users/kyungseo/dev-home/vibe/ai-deck-compiler`는 `.harness/manifest.json`이 없는 pre-manifest target이다. 따라서 `--check`만으로는 upgrade 범위와 drift를 알 수 없고, command/skill/rule/document inventory와 manifest baseline 획득 정책이 먼저 필요하다.
 
 ## Draft Decision
@@ -32,6 +34,8 @@ Linked DRs: DR-021, DR-028, DR-029, DR-033
    - 자동 overwrite helper는 아직 제공하지 않는다. temp simulation 또는 target migration Work에서 파일별로 diff를 보고 `target-missing`, hard invariant-breaking drift, manual-merge candidate, accepted drift로 분류한 뒤 반영한다.
 4. **Project-owned/customized 파일은 자동 overwrite하지 않는다.**
    - `docs/STATUS.md`, `docs/PLAN.md`, backlog, Work, product DR, product code, package/build files, `.harness/gate-config` 같은 target-local state는 보존한다.
+   - `CLAUDE.md`, `AGENTS.md`, `.gitignore`, session-start prompt처럼 manifest에는 framework-owned path로 잡히지만 adopter가 project identity와 local workflow를 보정하기 쉬운 entrypoint는 customized framework entrypoint로 분류한다.
+   - customized framework entrypoint가 `locally-modified`로 나타나면 blind overwrite하지 않고 manual merge candidate로 다룬다. 이 파일들을 current source baseline으로 덮어써서 얻은 `0 drift`는 preservation-safe evidence가 아니라 overwrite-convergence evidence다.
    - 다만 invariant가 요구하는 index/seed 파일은 project-owned 보강이 필요할 수 있다. 예: target에 product DR이 있는데 `docs/decisions/README.md`가 없으면 index를 생성하고 product DR row를 등록한다.
 5. **첫 `--check`는 drift 분포를 허용한다.**
    - pre-manifest target에 baseline을 심은 직후 `--check`가 반드시 drift 0이어야 하는 것은 아니다.
@@ -55,6 +59,7 @@ Linked DRs: DR-021, DR-028, DR-029, DR-033
 
 - 두 번째 adopter 또는 실제 target migration에서 shadow scaffold baseline 방식이 재현 가능함을 확인한다.
 - project-owned/customized 파일 보존 기준이 추가 사례에서도 유지된다.
+- customized framework entrypoint(`CLAUDE.md`, `AGENTS.md`, `.gitignore`, session-start prompt 등)의 merge-not-overwrite 기준이 실제 adopter migration에서 작동함을 확인한다. 단순 `0 drift`가 아니라 adopter identity 보존 여부를 함께 확인해야 한다.
 - `manifest-init` 또는 `--upgrade-plan` 같은 helper가 필요하다는 반복 signal이 생기면 Accepted 승격 전 별도 결정으로 분리한다.
 
 ## Consequences
@@ -64,6 +69,7 @@ Linked DRs: DR-021, DR-028, DR-029, DR-033
 - `docs/maintainer/VERIFICATION-COMMANDS.md` Layer T는 shadow scaffold baseline 방식과 inventory-first 분류를 검증한다.
 - target-specific product state는 source repo가 자동으로 판단하지 않는다. target repo AI/maintainer가 accepted drift와 project-owned 보존 결정을 기록한다.
 - pre-manifest target에는 과거 source baseline이 없으므로 `locally-modified`는 3-way merge가 아니라 current source vs adopter의 2-way diff로만 판단한다. 이 한계는 Accepted 승격 전 baseline 보관 또는 helper 필요성의 근거가 된다.
+- `0 drift`는 충분조건이 아니다. locally-modified customized framework entrypoint를 덮어써서 drift를 없앤 경우, manifest 자기일관성은 맞아도 adopter customization 보존은 검증되지 않는다.
 
 ## Reversal Cost
 
@@ -72,3 +78,4 @@ Medium — Draft이므로 정책 강제력은 낮지만, 후속 adopter migratio
 ## Linked Work
 
 - CHORE-20260611-010
+- CHORE-20260621-002
