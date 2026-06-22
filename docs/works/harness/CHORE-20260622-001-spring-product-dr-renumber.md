@@ -1,8 +1,9 @@
 ---
 id: CHORE-20260622-001
 priority: P1
-status: Active
+status: Done
 risk: L2
+actual_end: 2026-06-22
 scope: spring-modular-template adopter repo의 product-local DR(DR-001/030/031/032/033)을 DR-042 high-band(DR-800~804)로 real-apply renumber하고 reference cascade를 정합화한다. 실제 변경은 spring repo feature branch + PR에서 수행하고, source repo는 follow-up Work 등록과 closeout 기록만 한다.
 appetite: 1d
 planned_start: 2026-06-22
@@ -154,15 +155,15 @@ git -C <spring> checkout -B feature/CHORE-20260622-001-product-dr-renumber origi
 
 ## Done Criteria
 
-- [ ] Codex B R1 red-team review와 Codex A response, Consensus Log가 Cross-Agent Review에 기록된다.
-- [ ] spring repo에서 DR-001/030/031/032/033 → DR-800/801/802/803/804 파일 rename + 제목 heading 수정 완료(V3).
-- [ ] live product-context 참조 cascade(문서/코드, `docs/archive/**` 제외)가 disambiguation 가드 준수로 반영된다.
-- [ ] archive Work 파일(FEAT-001~005)은 본문·frontmatter 보존(미변경)된다 — Done-immutability.
-- [ ] framework DR 6개 파일은 diff에 나타나지 않음(byte-for-byte unchanged)을 확인한다(V2).
-- [ ] 검증 통과: V1 live old-ref=0, V2 framework untouched, V3 rename/heading, V4 README 신규 5행 + `--check` drift 없음 + `git diff --check`.
-- [ ] spring PR(`--base develop`)이 생성/merge되고 PR URL+merge SHA가 기록된다.
-- [ ] Codex B result review + 사용자 최종 승인 후 `/work-close` 가능 상태.
-- [ ] DR-042 Linked Work 갱신 + 2nd real-apply evidence 보수적 기록, DR-034 무변화 명시.
+- [x] Codex B R1 red-team review와 Codex A response, Consensus Log가 Cross-Agent Review에 기록된다. (R1~R4 + Result Review = C1~C10)
+- [x] spring repo에서 DR-001/030/031/032/033 → DR-800/801/802/803/804 파일 rename + 제목 heading 수정 완료(V3).
+- [x] live product-context 참조 cascade(문서/코드, `docs/archive/**` 제외)가 disambiguation 가드 준수로 반영된다. (33 files)
+- [x] archive Work 파일(FEAT-001~005)은 본문·frontmatter 보존(미변경)된다 — Done-immutability. (V1 archive 제외, diff 미출현)
+- [x] framework DR 6개 파일은 diff에 나타나지 않음(byte-for-byte unchanged)을 확인한다(V2). + `tools/git-hooks/pre-commit`(framework DR-033) 추가 보존.
+- [x] 검증 통과: V1 live old-ref=0, V2 framework untouched, V3 rename/heading, V4 README 신규 5행 + `--check` drift 없음 + `git diff --check`.
+- [x] spring PR(`--base develop`)이 생성/merge되고 PR URL+merge SHA가 기록된다. (PR #11 squash `54caf6e`, release PR #12 merge `a4ae551` → spring main 반영)
+- [x] Codex B result review + 사용자 최종 승인 후 `/work-close` 가능 상태. (C10 Approve + 사용자 승인)
+- [x] DR-042 Linked Work 갱신 + 2nd real-apply evidence 보수적 기록, DR-034 무변화 명시. (Linked Work=CHORE-20260622-001; evidence 아래 Discovery; DR-034 #1 UNMET 유지)
 
 ## Verification
 
@@ -243,6 +244,9 @@ Codex B R1에서 특히 의심할 질문(red team):
   - **P2-f**: 축4(`--check` product tracking)를 "먼저 답"하면 namespace 결정이 과대해짐 → **default No/Deferred**, 선택한 namespace가 나중에 B를 수용 가능한지만 평가. 사용자가 명시적으로 원할 때만 yes 승격.
   - A response: **4개 수용.** mapping table 추가, ②a/②b 분리, ③ enforcement level 추가, 축4 default-deferred 재구성. 구조 분리 비교를 **②b vs ③**로 좁힘.
 - **C8 (resolved by C9):** mapping table + ②b/③ 재비교 후 방향 — R4 Approve.
+- **C10 (2026-06-22) — Result Review: Codex B Approve.** spring high-band renumber 구현 결과 검토 통과(blocking 없음). 확인: old product DR 파일(001/030~033) 부재, new DR-800~804 + heading 존재, live old-ref 잔존=framework allowlist뿐, `tools/git-hooks/pre-commit`의 DR-033=framework shipped-DR-closure 보존 승인, `docs/archive/**` 미변경 승인, `git diff --check` 통과, `--check` 신규 framework drift 없음(7 drifted=변경 전 동일). **P3(optional) 반영:** DR-804 본문 `DR-802은`→`DR-802는` 조사 교정(끝소리 자음→모음 flip). 다음=사용자 최종 승인 후 spring commit. (이 기록은 source closeout 커밋에 번들 — 현재 uncommitted)
+- **A 구현 노트(disambiguation 발견):** `tools/git-hooks/pre-commit`의 `DR-033`은 framework DR-033(shipped-dr-closure)이라 allowlist에 추가·보존. 원래 plan에 없던 2번째 framework-lineage surface(첫째=4개 framework DR 파일 `Linked DRs:`). V2 검증을 "framework DR 6파일 + pre-commit 미변경"으로 확장 적용함.
+
 - **C9 (2026-06-22) — 최종 결정: ① high-band 유지 (decision-ready).** R4 Codex B = Approve / decision-ready, blocking 없음. Codex B 실무 추천 = 피로도·매몰 비용·adopter 수·blast radius 고려 시 ①. **사용자 최종 결정 = ① high-band 유지** (구조적으론 ②b/③가 깔끔하나 현재 비용/위험/매몰 비용 때문에 ① 채택). spring은 high-band renumber로 종료, ai-deck 무변경 보존.
   - **Regret guardrails(명시):** (1) high-band=1.x 단기 비용 최적화 정책, (2) `PDR-`/②b는 rejected 아닌 deferred successor(②a·③도 successor 보존), (3) 재검토 trigger=product DR friction 반복/adopter 증가/product DR 누적, (4) prefix 전환 시 regex snippet 아닌 **fixture-driven spike**(`PDR-001`→`DR-001` 오인식 방지 fixture 선행), (5) 축4 `--check product tracking`=Deferred.
   - **DR-042 amendment 판단:** 본문 직접 수정은 사용자 승인 대기. guardrail durability는 closeout evidence로도 가능하나, policy SSoT(DR-042)에 "Policy Horizon/Deferred Successor" amendment가 더 durable — 제안만 하고 미수정.
@@ -259,15 +263,21 @@ Codex B R1에서 특히 의심할 질문(red team):
 - CP3 (2026-06-22): 사용자 의견으로 방향 선회. status→Hold. spring real apply 미착수 유지. namespace redesign brief 작성으로 이관. — 완료
 - CP4 (2026-06-22): R2 Codex B(brief revise 요구) 4 finding 수용. brief 4축 재구성, 축4(B) 디커플. — 완료
 - CP5 (2026-06-22): R3 Codex B 4 finding 수용. mapping table 추가, ②a/②b 분리, ③ enforcement level, 축4 default-Deferred. — 완료
-- CP6 (2026-06-22): R4 Approve + 사용자 최종 결정 = **① high-band 유지**. status Hold→Active로 재개. regret guardrails 기록(C9). plan update 완료, spring 미착수. — 진행 중
+- CP6 (2026-06-22): R4 Approve + 사용자 최종 결정 = **① high-band 유지**. status Hold→Active. regret guardrails(C9). DR-042 Policy Horizon amendment + source checkpoint commit `6aa99e0`. — 완료
+- CP7 (2026-06-22): spring real apply 실행(승인) — DR-001/030~033→DR-800~804, 33 files(5 rename+28 mod), V1~V4 green, pre-commit framework-DR 발견·보존. Codex B Result Review = **Approve**(C10), P3 조사 교정 반영. spring commit `58222f6`. — 완료
+- CP8 (2026-06-22): spring 릴리즈 완료 — PR #11(feature→develop, squash `54caf6e`) + PR #12(develop→main, merge `a4ae551`). spring **main까지 반영**, develop==main 동기화. Work Done 처리. source closeout(feature→develop only, main 미반영=사용자 결정). — 완료
 
 ## Next Actions
 
-- → **(사용자 승인 대기)** DR-042 amendment 여부: "Policy Horizon/Deferred Successor" caveat를 DR-042 본문에 durable로 남길지, Work closeout evidence로 충분한지 결정.
-- → **(사용자 승인 후)** spring repo feature branch에서 high-band renumber 실행 — Slice B/C(R1 반영분 유지: archive/live 분리, framework lineage allowlist exact, rename/heading 직접 검증).
-- → 이후 Slice D: Codex B result review → 사용자 최종 승인 → `/work-close` → spring PR(`--base develop`) merge → source closeout(DR-042 Linked Work, evidence + regret caveat).
-- ai-deck: 무변경 보존(① 결정으로 기존 high-band 작업 유지).
-- spring real apply: 승인 전 미착수 — 별도 사용자 승인 전 착수 금지(이번 턴 미착수).
+- → **(사용자 최종 승인 대기)** spring commit: 33 files(rename 5 + mod 28) 단일 커밋. 승인 후 commit → PR(`--base develop`, spring) → merge.
+- (완료) Slice D source closeout: Work Done + README + STATUS pointer 제거를 단일 source closeout 커밋에 번들 → source feature→develop PR(squash). source main 미반영(사용자 결정).
+- ai-deck: 무변경 보존(① 결정).
+
+## DR-042 Real-Apply Evidence (보수적)
+
+- **2nd real-apply evidence 1건 확보:** `spring-modular-template` product DR `DR-001/030/031/032/033 → DR-800/801/802/803/804` high-band renumber 적용, spring `main` 반영(PR #11 squash `54caf6e`, release PR #12 merge `a4ae551`). 33 files(5 rename + 28 mod), framework lineage·archive 보존, `--check` framework drift 0.
+- **DR-034 무변화:** spring은 manifest target이라 DR-034 promotion #1(pre-manifest shadow scaffold baseline)을 테스트하지 않음 → 여전히 UNMET. 이 Work는 DR-034 promotion을 전진시키지 않는다(과장 금지).
+- **ai-deck(1st apply)와 합쳐 high-band 적용 adopter 2건.** 단 둘 다 manifest/agent-mediated 경로이며 manual external adopter equivalence는 미검증(별도 axis).
 
 ## Discovery
 

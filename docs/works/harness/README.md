@@ -7,12 +7,12 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
-| CHORE-20260622-001 | spring-modular-template Product DR Namespace Renumber (DR-042 Apply) | `docs/works/harness/CHORE-20260622-001-spring-product-dr-renumber.md` |
 
 ## Done (Archive Pending)
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260622-001 | spring-modular-template Product DR Namespace Renumber (DR-042 Apply) | 2026-06-22 | `docs/works/harness/CHORE-20260622-001-spring-product-dr-renumber.md` |
 | CHORE-20260621-006 | Upgrade Baseline Source-Ref Policy And Check Visibility | 2026-06-21 | `docs/works/harness/CHORE-20260621-006-upgrade-baseline-source-ref-policy.md` |
 | CHORE-20260621-005 | spring-modular-template Adopter Upgrade Walkthrough | 2026-06-21 | `docs/works/harness/CHORE-20260621-005-spring-adopter-upgrade-walkthrough.md` |
 | CHORE-20260621-004 | Adopter DR Namespace Policy + ai-deck Real Apply | 2026-06-21 | `docs/works/harness/CHORE-20260621-004-adopter-dr-namespace-apply.md` |
