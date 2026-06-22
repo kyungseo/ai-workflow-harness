@@ -508,10 +508,10 @@ main
 
 ```text
 .
-├── AGENTS.md                              # Codex 진입점
+├── AGENTS.md                              # Codex / Antigravity 진입점
 ├── CLAUDE.md                              # Claude Code 진입점
 ├── VERSION                                # 릴리즈 버전 mirror
-├── .agents/skills/                        # Codex용 workflow adapter
+├── .agents/skills/                        # Codex / Antigravity workflow adapter
 ├── .claude/commands/                      # Claude용 slash command
 ├── .claude/rules/                         # 경로별 규칙
 ├── .codex/hooks.json                      # Codex hook 설정
