@@ -3,14 +3,14 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-21 (source-ref baseline policy closed)
+Last updated: 2026-06-22 (1.4.0 release prep active)
 
 ## Current State
 
 | Field | Value |
 | --- | --- |
 | Current phase | AWH-004 — Maintenance & Adoption |
-| Current focus | 1.3.0 minor 릴리즈, adopter upgrade/migration, onboarding 현행화 |
+| Current focus | 1.4.0 minor 릴리즈 prep (develop→main), adopter upgrade/migration, onboarding 현행화 |
 | Project plan | `docs/PLAN.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
@@ -27,6 +27,7 @@ Last updated: 2026-06-21 (source-ref baseline policy closed)
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| CHORE-20260622-002 | Source develop→main Release Readiness + Release Prep (1.4.0) | `docs/works/harness/CHORE-20260622-002-source-release-readiness.md` |
 
 ## Blockers And Open Questions
 
@@ -55,5 +56,5 @@ W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcem
 - **지금 막힘 없이 착수 가능한 P1:** Happy path / glossary / operator layering compression. (이전 P1 `spring-modular-template` product DR namespace renumber/apply는 CHORE-20260622-001로 완료 — high-band 유지 결정 + spring `main` 반영)
 - **외부 전제가 있는 P1:** 첫 concrete product planning-pack exercise (실제 product 착수 필요)
 - **후속(별도 진행, backlog 등록됨):** `spring-modular-template` framework surface upgrade(CHORE-005 잔여 7 drift apply — renumber와 분리, cross-agent+단계 승인으로 진행), DR namespace successor(②b/③) 재검토(DR-042 Policy Horizon trigger gated)
-- **운영 보류:** source `develop→main` 릴리즈 — develop이 main보다 20 commit 앞섬(누적 harness 분). 이번 작업 단독 릴리즈가 아니라 의도적 별도 release 이벤트로 보류
+- **진행 중 (CHORE-20260622-002):** source `develop→main` 1.4.0 릴리즈 prep — develop이 main보다 22 commit 앞섬(누적 harness 분)을 release 이벤트로 전환. cross-agent readiness 합의 완료(release-go 조건부), P1에서 VERSION bump·릴리즈 노트·Full Sweep 후 단계 승인 하에 merge/tag
 - **gated 후속:** DR-034 promotion 판단(high-band 적용 adopter 2건=ai-deck+spring이나 둘 다 manifest/agent-mediated 경로 → #1 pre-manifest shadow baseline 여전히 UNMET), internal managed mode(walkthrough 후, P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), Spring Boot MSA pack(P2), template pack(P2) 등은 backlog의 gate 기준을 따른다
