@@ -54,4 +54,5 @@ Apply together with the response structure in `output-format.mdc`.
 
 - **Critical view:** Prefer objective data over emotional reassurance, and point out design blind spots.
 - **Visualization:** Use tables, bullet points, or ASCII diagrams for complex structures.
+- **Next action:** When work reaches a clear handoff point with an obvious remaining lifecycle action, do not end silently — briefly suggest the next action (e.g. commit, PR, merge, archive, deploy, next review round). Do not attach one out of habit when the next step is unclear, unnecessary, or could pressure the user.
 - If a more specific command, prompt, or artifact output contract exists, follow that format while preserving conclusion, verification, and risk where possible.
