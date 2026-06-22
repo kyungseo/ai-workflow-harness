@@ -435,6 +435,7 @@ AI는 조건이 충족되어도 파일을 자동으로 수정하지 않습니다
 | `/work-resume {ID}` | 중단 작업 재개 | 실제 파일 상태와 STATUS·Work 파일 불일치 확인 |
 | `/work-debug` | 오류 분석 | 원인 근거와 최소 수정 계획 |
 | `/work-brief` | 방향 비교·문서 분류 정리 | brief 작성 또는 retrospective/decision과의 경계 정리 |
+| `/cross-review` | 선택적 cross-agent review | review packet, findings, driver response, user decision gate 정리 |
 | `/work-doc` | 발표·보고·review package | brief, source, format, quality bar 확인 |
 | `/record-decision` | 결정 기록 | DR 초안 작성 |
 | `/work-close` | Work 완료 | Done 처리와 선택적 archive |
@@ -467,6 +468,7 @@ main
 | --- | --- |
 | 세션 실행 규칙 빠른 확인 | [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) |
 | 사용자용 workflow 설명 | [docs/WORKFLOW-MANUAL.md](docs/WORKFLOW-MANUAL.md) |
+| 선택적 cross-agent review 사용법 | [docs/user/CROSS-REVIEW-MANUAL.md](docs/user/CROSS-REVIEW-MANUAL.md) |
 | scaffold 직후 첫 온보딩 | [docs/SCAFFOLD-ONBOARDING-GUIDE.md](docs/SCAFFOLD-ONBOARDING-GUIDE.md) |
 | 공통 운영 규칙 | [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) |
 | 상세 protocol | [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) |
@@ -533,6 +535,7 @@ main
 │   ├── maintainer/                        # source 전용 maintainer 참조
 │   ├── retrospectives/                    # 회고와 readiness review
 │   ├── troubleshooting/                   # 문제 해결 기록
+│   ├── user/                              # 사용자용 task별 guide
 │   └── works/                             # Work 파일
 ├── skills/workflow/                       # 표준 workflow 절차
 ├── prompts/                               # 세션 시작 fallback prompt
