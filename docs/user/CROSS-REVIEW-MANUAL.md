@@ -7,6 +7,21 @@
 
 절차의 SSoT는 `skills/workflow/cross-review.md`다. 이 문서는 사용자가 언제, 어떤 방식으로 그 workflow를 쓰면 좋은지 설명하는 manual이다.
 
+## What This Does Not Solve
+
+`/cross-review`는 **manual relay protocol**이다.
+agent orchestration이나 자동 handoff 기능이 아니다.
+
+그래서 아래는 그대로 사용자 몫으로 남는다.
+
+- 한 agent가 만든 relay packet을 다른 agent에게 전달하기
+- reviewer 응답을 다시 driver에게 가져오기
+- 다음 round를 돌릴지, 멈출지 결정하기
+- commit, PR, merge 같은 lifecycle action 승인하기
+
+이 workflow가 줄이는 것은 복붙 자체가 아니라 매번 즉흥으로 만들던 packet 형식, reviewer 태도, finding 정리, driver response 기록이다.
+전달 자동화가 핵심 pain이라면 `/cross-review`가 아니라 별도 agent orchestration 후보로 검토해야 한다.
+
 ## Core Mechanism
 
 | Element | Meaning |
@@ -20,8 +35,7 @@
 | Driver Response | driver가 finding별로 `accept`, `revise`, `defend`, `needs-user` 중 하나로 응답한 기록. |
 | Decision Gate | agent끼리 닫으면 안 되는 쟁점을 사용자 결정으로 올리는 지점. |
 
-이 workflow는 agent 호출을 자동화하지 않는다.
-사용자가 한 agent의 출력물을 다른 agent에게 전달해야 하는 상황에서, 전달 내용과 응답 정리를 표준화한다.
+이 workflow는 사용자가 한 agent의 출력물을 다른 agent에게 전달해야 하는 상황에서, 전달 내용과 응답 정리를 표준화한다.
 
 ## When To Use
 

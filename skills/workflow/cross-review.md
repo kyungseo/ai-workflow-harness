@@ -18,6 +18,21 @@ Adapter는 Step 0, hard-stop 요약, entry mechanism만 보유한다. 상세 절
 
 `/cross-review`는 review relay protocol이다. 기본 workflow gate가 아니다.
 
+### Manual Relay Limit
+
+`/cross-review`는 **manual relay protocol**이다.
+agent 간 메시지 전달, reviewer 호출, 응답 수집, round 진행을 자동화하지 않는다.
+사용자가 여전히 packet을 다른 agent에게 전달하고, reviewer 응답을 다시 driver에게 가져와야 한다.
+
+이 workflow가 줄이는 것은 전달 노동 자체가 아니라 아래의 즉흥성이다.
+
+- relay packet 구성 방식
+- reviewer의 red-team posture 누락
+- finding과 driver response 기록 방식
+- user decision gate로 올릴 쟁점의 분류
+
+agent 간 자동 전달, durable orchestration, tool 간 runtime coordination이 필요하면 이 workflow가 아니라 별도 orchestration 후보로 다룬다.
+
 MUST:
 
 - 사용자가 cross-agent review를 요청했거나 Work plan/Done Criteria가 cross-review를 명시한 경우에만 사용한다.
