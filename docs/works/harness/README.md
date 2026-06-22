@@ -7,7 +7,6 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
-| CHORE-20260622-002 | Source develop→main Release Readiness + Release Prep | `docs/works/harness/CHORE-20260622-002-source-release-readiness.md` |
 
 ## Done (Archive Pending)
 
