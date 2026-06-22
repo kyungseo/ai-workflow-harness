@@ -54,4 +54,6 @@ W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcem
 
 - **지금 막힘 없이 착수 가능한 P1:** Happy path / glossary / operator layering compression. (이전 P1 `spring-modular-template` product DR namespace renumber/apply는 CHORE-20260622-001로 완료 — high-band 유지 결정 + spring `main` 반영)
 - **외부 전제가 있는 P1:** 첫 concrete product planning-pack exercise (실제 product 착수 필요)
-- **gated 후속:** DR-034 promotion 판단(high-band 적용 adopter 2건=ai-deck+spring이나 둘 다 manifest/agent-mediated 경로 → #1 pre-manifest shadow baseline 여전히 UNMET), DR namespace successor(②b/③) 재검토(DR-042 Policy Horizon trigger: product DR friction 반복/adopter 증가/누적), internal managed mode(walkthrough 후, P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), Spring Boot MSA pack(P2), template pack(P2) 등은 backlog의 gate 기준을 따른다
+- **후속(별도 진행, backlog 등록됨):** `spring-modular-template` framework surface upgrade(CHORE-005 잔여 7 drift apply — renumber와 분리, cross-agent+단계 승인으로 진행), DR namespace successor(②b/③) 재검토(DR-042 Policy Horizon trigger gated)
+- **운영 보류:** source `develop→main` 릴리즈 — develop이 main보다 20 commit 앞섬(누적 harness 분). 이번 작업 단독 릴리즈가 아니라 의도적 별도 release 이벤트로 보류
+- **gated 후속:** DR-034 promotion 판단(high-band 적용 adopter 2건=ai-deck+spring이나 둘 다 manifest/agent-mediated 경로 → #1 pre-manifest shadow baseline 여전히 UNMET), internal managed mode(walkthrough 후, P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), Spring Boot MSA pack(P2), template pack(P2) 등은 backlog의 gate 기준을 따른다

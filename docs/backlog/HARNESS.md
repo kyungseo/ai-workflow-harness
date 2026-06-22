@@ -49,6 +49,8 @@ AI Workflow Harness backlog다.
 | — | P3 | Candidate | L2 | Sub-agent/Main Agent Authority Boundary |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P3 | Candidate | L3 | Packaging / distribution revisit after upgrade logic proof |
+| — | P2 | Candidate | L2 | spring-modular-template framework surface upgrade (CHORE-005 잔여 drift apply) |
+| — | P3 | Candidate | L3 | DR namespace successor 평가 (②b product-only prefix / ③ directory) — DR-042 Policy Horizon trigger gated |
 | HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
 
 ---
@@ -77,6 +79,42 @@ AI Workflow Harness backlog다.
 **Done Criteria:** internal managed mode를 열 조건이 명시되고, 최소 guardrail 초안이 정리된다. 예: `pr-only` 원칙, framework-owned path mutation policy, target review rule, product/harness bundle 금지 여부, registry write-control, rollback 책임. walkthrough 전에는 착수하지 않는다. 또한 runner/prototype은 이 후보의 산출물이 아니라 별도 downstream gate라는 점이 문서상 분리된다.
 
 **Verification:** source 문서 근거 대조, guardrail matrix review, target ownership boundary self-check. Surface: canonical · adopter cascade · README/GUIDE/MANUAL.
+
+---
+
+#### spring-modular-template framework surface upgrade (CHORE-005 잔여 drift apply)
+
+**Cluster:** W2. Adopter Transition
+
+**Task:** CHORE-20260622-001은 spring의 **product DR namespace renumber만** 적용했다. CHORE-20260621-005 probe가 식별한 **framework surface drift는 미반영 상태로 남아 있다.** 이 잔여 drift를 cross-agent + 단계별 승인 흐름으로 실제 apply한다. 현재 `--check` 7 drifted:
+
+- `source-updated`(framework upgrade 후보): `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-NAMING-RULES.md`(DR-042 high-band 정책 본문 carrier — renumber는 했으나 규칙 문서 미동기), `skills/workflow/session-start.md`, `skills/workflow/work-close.md`
+- `locally-modified`(rename-cleanup 후보): `tools/git-hooks/install.sh`, `tools/git-hooks/lib/gate-lists.sh` (stale `base-spring-modular-template` 잔재)
+- `locally-modified`(preserve, upgrade 대상 아님): `docs/AGENT-WORKFLOW.md` (product-customized)
+
+또한 `--check`는 manifest-tracked 파일만 보므로, spring scaffold 이후 source에 **신규 추가/retired된 framework surface**는 별도 inventory가 필요하다(이 7건보다 넓은 작업).
+
+**Dependencies:** CHORE-20260621-005 read-only probe + ownership classification, CHORE-20260622-001 renumber 결과, `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`, DR-034 ownership policy.
+
+**Done Criteria:** source-updated 4건 + hook rename-cleanup 2건이 disambiguation/preservation 가드 하에 apply되고, `AGENT-WORKFLOW.md`는 보존된다. 신규/retired framework surface inventory 수행 여부 결정. cross-agent(author/reviewer) + 단계별 승인으로 진행하고 spring `main`까지 반영.
+
+**Verification:** target `--check` drift 0(또는 명시 accepted-drift), framework lineage/product 보존, `git diff --check`. Surface: adopter cascade · canonical · tool surface.
+
+---
+
+#### DR namespace successor 평가 (②b product-only prefix / ③ directory)
+
+**Cluster:** W2. Adopter Transition
+
+**Task:** CHORE-20260622-001에서 DR namespace를 **① high-band 유지**로 확정하되, ②b product-only prefix(`DR-`/`PDR-`)와 ③ asymmetric directory를 **deferred successor**로 남겼다(DR-042 Policy Horizon amendment). 재검토 trigger 충족 시 successor 전환을 평가한다.
+
+**Trigger (DR-042 Policy Horizon):** product DR friction 반복 / adopter 수 증가 / product DR 누적. token-grammar spike는 regex snippet이 아니라 **fixture-driven**으로 진행하고, 특히 `PDR-001` 내부 `DR-001` 오인식 방지 fixture가 선행되어야 한다.
+
+**Dependencies:** `docs/briefs/dr-namespace-redesign-20260622.md` (4축 비교 + target-state mapping), `docs/decisions/DR-042` Policy Horizon, `scripts/tests/check-shipped-dr-closure.sh`·`check-scaffold-invariants.sh`·`tools/git-hooks/*`·`create-harness.sh`의 `DR-[0-9]{3}` touchpoint.
+
+**Done Criteria:** trigger 충족 확인 후 ②b vs ③ 재비교(brief 4축 기준), 채택 시 token-grammar/path-aware spike scope + DR-042 amend/supersede 결정. 채택하지 않으면 high-band 유지 근거 갱신. 매몰 비용(ai-deck/spring high-band 되돌림)을 결정에 포함.
+
+**Verification:** fixture-driven spike(채택 시), `--check`/invariants/closure 회귀, decision-index. Surface: tool surface · canonical · adopter cascade.
 
 ---
 
