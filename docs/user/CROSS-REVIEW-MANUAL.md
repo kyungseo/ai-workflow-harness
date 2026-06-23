@@ -103,35 +103,57 @@ Setup -> Relay Packet -> Reviewer Findings -> Driver Response -> User Decision G
 
 ## How To Ask
 
-### Create A Relay Packet
+target은 Work 파일, brief, PR, 코드 변경, 세션에서 방금 작성한 plan draft 등 어느 것이든 된다.
+round log 저장 위치(Work 파일의 `Cross-Agent Review And Discussion`)와 review 대상(target)은 별개다.
+reviewer의 red-team posture는 relay packet에 기본 포함되므로 invocation 프롬프트에 반복하지 않아도 된다.
+custom focus, 재론 금지 범위, specialist 추가가 필요할 때만 명시한다.
+
+### 필수 항목만
+
+relay packet 생성 — 역할, 대상, review 종류만 지정한다:
+
+```text
+/cross-review 네가 driver, Codex가 reviewer야. 이 Work plan을 plan review로 시작해줘.
+```
+
+```text
+/cross-review 네가 driver, Claude가 reviewer야. 방금 작성한 이 구현 계획을 plan review로 시작해줘.
+```
+
+```text
+/cross-review 네가 driver, Codex가 reviewer야. 이 Work 결과물을 result review로 보낼 packet 만들어줘.
+```
+
+reviewer 응답 ingest:
+
+```text
+/cross-review 아래 reviewer 응답을 ingest해줘.
+[reviewer 응답 붙여넣기]
+```
+
+follow-up round:
+
+```text
+/cross-review R0 must-fix 반영 확인만 하는 R1 follow-up packet 만들어줘.
+```
+
+### Custom Focus 포함
+
+기본 red-team posture 외에 특정 축을 강조하거나, 재론 금지 범위를 지정하거나, specialist를 추가할 때 쓴다:
 
 ```text
 /cross-review
-이 Work를 Claude에게 result review로 보낼 relay packet을 만들어줘.
-Reviewer는 red-team 관점으로 방향성, hidden cost, rollback, cascade 누락을 의심하게 해줘.
+네가 driver, Codex가 reviewer야.
+docs/decisions/DR-042-....md를 plan review로 시작해줘.
+custom focus: adopter namespace 충돌 영향과 scaffold cascade 누락을 집중적으로 봐줘.
+재론 금지: DR-028 source-ref baseline 결정은 확정됨.
 ```
-
-또는:
-
-```text
-cross-agent review relay packet을 만들어줘.
-대상은 docs/briefs/example.md이고, reviewer는 방향 자체를 의심하는 red-team 역할이야.
-```
-
-### Ingest Reviewer Findings
 
 ```text
 /cross-review
-아래 reviewer 응답을 ingest해서 finding table과 driver response로 정리해줘.
-P1은 먼저 반영 방향을 제안하고, 사용자 결정이 필요한 건 needs-user로 올려줘.
-```
-
-### Run A Follow-Up Round
-
-```text
-/cross-review
-R0 must-fix 반영이 정확히 닫혔는지만 확인하는 R1 follow-up packet을 만들어줘.
-큰 방향은 재론하지 말고 closure 확인만 요청해줘.
+네가 driver, Codex가 reviewer, Claude가 security specialist야.
+이 구현 변경사항을 result review로 시작해줘.
+specialist는 인증·세션 저장 방식만 봐줘.
 ```
 
 ## Reviewer Posture
