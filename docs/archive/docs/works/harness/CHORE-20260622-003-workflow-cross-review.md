@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260622-003
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: optional cross-agent review relay workflow를 canonical 절차와 tool adapter로 추가한다. 기본 프로세스 gate로 강제하지 않고, driver/reviewer 역할·round packet·findings·driver response·user decision gate를 표준화한다.
 appetite: 0.5d
@@ -314,3 +314,4 @@ Verdict: approve
 - 2026-06-22: Claude R2 manual + closeout review verdict `approve`. Nice-to-have로 manual SSoT pointer와 tool role example caveat를 반영했다.
 - 2026-06-22: R2 반영 후 Validation PASS — `git diff --check`, `bash scripts/tests/check-default-template-parity.sh`, `bash scripts/tests/run-harness-checks.sh --tier0`, `bash scripts/create-harness.sh --dry-run cross-review /tmp/awh-cross-review`.
 - Needs-Triage: workflow skill 전반의 tool invocation suppression asymmetry — cross-review는 trigger narrowing으로 닫았지만, Codex/AG intent routing과 Claude `disable-model-invocation` 비대칭은 전체 workflow skill 공통 구조라 다음 후보 선별 시 별도 검토 가치가 있다.
+- 2026-06-23: Archived. 위 Needs-Triage 항목은 `docs/backlog/HARNESS.md`에 lean P3 후보("Workflow skill tool invocation suppression asymmetry 검토")로 등록 후 archive 처리. brief `rule-asset-generalization-strategy-20260622.md`의 option-pack 작업(축 A P1 / 축 B P2)과는 별개 surface임을 확인.
