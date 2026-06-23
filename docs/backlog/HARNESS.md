@@ -53,6 +53,7 @@ AI Workflow Harness backlog다.
 | — | P3 | Candidate | L3 | DR namespace successor 평가 (②b product-only prefix / ③ directory) — DR-042 Policy Horizon trigger gated |
 | — | P3 | Candidate | L2 | `.claude/rules/git-workflow.md` thin adapter화 (Branch Flow·Post-PR·Commit Message 상세 → GIT-WORKFLOW.md 위임) |
 | — | P1 | Candidate | L2 | Safety rule layer 정규화 (축 A: A1 always / A2 path-scoped, Codex·AG는 shared safety doc) |
+| — | P3 | Candidate | L2 | Workflow skill tool invocation suppression asymmetry 검토 (Codex/AG intent routing vs Claude disable-model-invocation) |
 | HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
 
 ---
@@ -322,6 +323,22 @@ bash scripts/tests/check-default-template-parity.sh
 bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule-thin-adapter
 ```
 수동: source-gitflow scaffold에서 branch isolation 안내가 충분한지, generic scaffold에서 hook enforcement 문구가 남지 않았는지 확인. Surface: tool surface · scaffold · adopter cascade.
+
+---
+
+#### Workflow skill tool invocation suppression asymmetry 검토
+
+**Cluster:** Harness workflow surface cleanup
+
+**Task:** workflow skill 호출 억제 메커니즘이 도구마다 다르다. Claude adapter는 `disable-model-invocation: true`로 자동 호출을 막아 명시적 `/command`만 허용하지만, Codex/Antigravity는 `docs-workflow.md` Command Intent Recognition + `.agents/skills/` intent routing(ambiguity-confirm guard 포함)에 의존한다. `CHORE-20260622-003`(cross-review)에서 trigger narrowing으로 국소 케이스만 닫았다. 전체 workflow skill에 대해 호출 억제를 통일할지, 비대칭을 의도적으로 유지할지 검토한다. 이는 *command 호출* 문제로, *rule 적용* 비대칭(축 A safety)과는 surface가 다르다.
+
+**Dependencies:** CHORE-20260622-003 Discovery residual, `.claude/commands/*.md` frontmatter(`disable-model-invocation`), `docs-workflow.md` Command Intent Recognition. 메커니즘 배경 참고: `docs/briefs/rule-asset-generalization-strategy-20260622.md` §3(Codex skill = intent-matched workflow adapter임을 규명).
+
+**Done Criteria:** 4툴 invocation suppression 차이를 정리하고 통일 필요 여부를 결정한다. 통일하지 않으면 비대칭 유지 근거를 기록한다.
+
+**Priority note:** 실제 cross-tool misfire(상태 변경 workflow command가 사람 명시 호출 없이 자율 발동) 관측이 없어 P3. 1건이라도 관측되면 P2 승격.
+
+**Verification:** adapter frontmatter grep, intent-routing surface 대조. Surface: tool surface · canonical · adopter cascade.
 
 ---
 

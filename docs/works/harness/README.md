@@ -12,7 +12,6 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260622-003 | Optional Cross-Agent Review Workflow | 2026-06-22 | [CHORE-20260622-003-workflow-cross-review.md](CHORE-20260622-003-workflow-cross-review.md) |
 
 ## Archived
 
