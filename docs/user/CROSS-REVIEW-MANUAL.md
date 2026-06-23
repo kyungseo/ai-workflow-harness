@@ -106,30 +106,32 @@ Setup -> Relay Packet -> Reviewer Findings -> Driver Response -> User Decision G
 target은 Work 파일, brief, PR, 코드 변경, 세션에서 방금 작성한 plan draft 등 어느 것이든 된다.
 round log 저장 위치(Work 파일의 `Cross-Agent Review And Discussion`)와 review 대상(target)은 별개다.
 reviewer의 red-team posture는 relay packet에 기본 포함되므로 invocation 프롬프트에 반복하지 않아도 된다.
+driver는 항상 현재 대화 중인 agent이므로 명시하지 않아도 된다. reviewer 이름과 target만 지정하면 된다.
+review type(plan/result)은 모호할 때만 명시한다. code 변경·PR은 보통 생략 가능하다.
 custom focus, 재론 금지 범위, specialist 추가가 필요할 때만 명시한다.
 
 ### 필수 항목만
 
-relay packet 생성 — 역할, 대상, review 종류만 지정한다:
+relay packet 생성 — reviewer, target, 필요 시 review 종류만 지정한다:
 
 ```text
-/cross-review 네가 driver, Codex가 reviewer야. 이 Work plan을 plan review로 시작해줘.
+/cross-review 이 Work plan을 Codex에게 plan review로 보낼 packet 만들어줘.
 ```
 
 ```text
-/cross-review 네가 driver, Claude가 reviewer야. 방금 작성한 이 구현 계획을 plan review로 시작해줘.
+/cross-review 방금 작성한 이 구현 계획을 Claude에게 plan review로 보낼 packet 만들어줘.
 ```
 
 ```text
-/cross-review 네가 driver, Codex가 reviewer야. 이 Work 결과물을 result review로 보낼 packet 만들어줘.
+/cross-review 이 Work 결과물을 Codex에게 result review로 보낼 packet 만들어줘.
 ```
 
 ```text
-/cross-review 네가 driver, Codex가 reviewer야. 현재 브랜치 변경사항을 code review로 보낼 packet 만들어줘.
+/cross-review 현재 브랜치 변경사항을 Codex가 리뷰할 수 있도록 packet 만들어줘.
 ```
 
 ```text
-/cross-review 네가 driver, Claude가 reviewer야. PR #42를 result review로 보낼 packet 만들어줘.
+/cross-review PR #42를 Claude가 리뷰할 수 있도록 packet 만들어줘.
 ```
 
 reviewer 응답 ingest:
@@ -151,17 +153,15 @@ follow-up round:
 
 ```text
 /cross-review
-네가 driver, Codex가 reviewer야.
-docs/decisions/DR-042-....md를 plan review로 시작해줘.
+docs/decisions/DR-042-....md를 Codex에게 plan review로 보낼 packet 만들어줘.
 custom focus: adopter namespace 충돌 영향과 scaffold cascade 누락을 집중적으로 봐줘.
 재론 금지: DR-028 source-ref baseline 결정은 확정됨.
 ```
 
 ```text
 /cross-review
-네가 driver, Codex가 reviewer, Claude가 security specialist야.
-이 구현 변경사항을 result review로 시작해줘.
-specialist는 인증·세션 저장 방식만 봐줘.
+이 구현 변경사항을 Codex에게 result review로 보낼 packet 만들어줘.
+security specialist로 Claude도 추가해줘. Claude는 인증·세션 저장 방식만 봐줘.
 ```
 
 ## Reviewer Posture
