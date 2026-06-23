@@ -124,6 +124,14 @@ relay packet 생성 — 역할, 대상, review 종류만 지정한다:
 /cross-review 네가 driver, Codex가 reviewer야. 이 Work 결과물을 result review로 보낼 packet 만들어줘.
 ```
 
+```text
+/cross-review 네가 driver, Codex가 reviewer야. 현재 브랜치 변경사항을 code review로 보낼 packet 만들어줘.
+```
+
+```text
+/cross-review 네가 driver, Claude가 reviewer야. PR #42를 result review로 보낼 packet 만들어줘.
+```
+
 reviewer 응답 ingest:
 
 ```text
