@@ -50,6 +50,7 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P3 | Candidate | L3 | Packaging / distribution revisit after upgrade logic proof |
 | — | P3 | Candidate | L2 | Adopter upgrade accepted-drift 표현 + upgrade helper (CHORE-20260624-001 residual) |
+| — | P3 | Candidate | L3 | PLAN-SUMMARY.md → PROJECT-CONTEXT.md rename feasibility / migration brief |
 | — | P3 | Candidate | L3 | DR namespace successor 평가 (②b product-only prefix / ③ directory) — DR-042 Policy Horizon trigger gated |
 | — | P3 | Candidate | L2 | `.claude/rules/git-workflow.md` thin adapter화 (Branch Flow·Post-PR·Commit Message 상세 → GIT-WORKFLOW.md 위임) |
 | — | P1 | Candidate | L2 | Safety rule layer 정규화 (축 A: A1 always / A2 path-scoped, Codex·AG는 shared safety doc) |
@@ -100,6 +101,20 @@ AI Workflow Harness backlog다.
 **Dependencies:** DR-034(Draft, non-promotion) · DR-043 · `docs/maintainer/{ADOPTER-UPGRADE-MIGRATION-PLAYBOOK,VERIFICATION-COMMANDS}.md`.
 
 **Verification(후속 시):** `--check`/invariants 회귀, adopter replay. Surface: tool surface · canonical · adopter cascade.
+
+---
+
+#### PLAN-SUMMARY.md → PROJECT-CONTEXT.md rename feasibility / migration brief
+
+**Cluster:** W2. Adopter Transition
+
+**Task:** CHORE-20260624-002 / DR-043에서 product constants home을 `docs/PLAN-SUMMARY.md` Implementation Baseline으로 amend했다. 이 선택은 scaffold 현실(`PLAN-SUMMARY.md`가 이미 owned Implementation Baseline을 생성)과 blast radius 최소화 측면에서 맞았지만, 파일명 `PLAN-SUMMARY`가 product-owned operational context home 역할과 어긋나는 찝찝함이 남아 있다. `PLAN-SUMMARY.md`를 `PROJECT-CONTEXT.md` 같은 이름으로 rename할 가치가 있는지 feasibility / migration brief를 작성한다. 이 후보는 rename 실행이 아니라 검토 Work이며, rename을 택할 경우 source/scaffold/prompts/playbook/adopter migration을 한 번에 검토해야 한다.
+
+**Dependencies:** CHORE-20260624-002, DR-043(Accepted Amended), `docs/PLAN-SUMMARY.md` Implementation Baseline/Verification Defaults, `scripts/create-harness.sh`, `docs/BOOTSTRAP.md`, `docs/SCAFFOLD-BOOTSTRAP.md`, `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`, `docs/maintainer/VERIFICATION-COMMANDS.md`, generated scaffold/adopter references.
+
+**Done Criteria:** keep-as-is vs rename(`PROJECT-CONTEXT.md` 또는 대안) 비교가 작성된다. source/scaffold/prompts/playbook/adopter migration touchpoint가 `rg PLAN-SUMMARY` 기준으로 목록화된다. rename 시 필요한 DR-043 amend/supersede 여부, one-time adopter migration 절차, rollback strategy, compatibility/pointer period 필요 여부가 정리된다. 실행으로 이어질 경우 별도 Work scope와 validation matrix가 제안된다. 증거가 약하면 `PLAN-SUMMARY.md` 유지 + naming caveat 문서화로 닫는다.
+
+**Verification:** rename feasibility diff review, `rg "PLAN-SUMMARY|PROJECT-CONTEXT"` touchpoint inventory, scaffold dry-run impact 판단, adopter upgrade playbook impact review, prompt/tool surface stale reference check. Surface: canonical · scaffold · tool surface · adopter cascade · README/GUIDE/MANUAL.
 
 ---
 
