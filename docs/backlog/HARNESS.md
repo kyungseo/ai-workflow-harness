@@ -89,13 +89,17 @@ AI Workflow Harness backlog다.
 
 **Cluster:** W2. Adopter Transition
 
-**Task:** source upgrade를 adopter에 적용할 때, product-customized 파일(`docs/AGENT-WORKFLOW.md` 등)의 accepted-drift가 scaffold invariant `[5] manifest+--check 자기일관성`을 **매 upgrade마다 반복적으로 깨는** 구조다(CHORE-20260624-001 spring 적용에서 R1-Codex-RR로 확인). PR을 막는 문제는 아니지만, manifest schema에 accepted-drift first-class 표현이 없어 `[5]` FAIL이 "회귀"인지 "의도된 drift"인지 매번 수동 판별해야 한다.
+**Status:** **monitor-only / defer** (CHORE-20260624-003 disposition으로 downscope). 즉시 구현 대상 아님.
 
-**Dependencies:** DR-034 ownership policy, `scripts/create-harness.sh` --check/manifest schema, `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md` Phase 6.
+**Task:** 구버전 manifest-target 업그레이드의 잔여 ergonomics(manifest rebaseline·`source-updated` 수동 처리)를 줄이는 도구/schema 후보. CHORE-20260624-002(DR-043)가 가장 구체적이던 `docs/AGENT-WORKFLOW.md` accepted-drift case를 framework-pure화로 **이미 닫았으므로**, accepted-drift schema(축 ⓑ)의 근거는 약하다. 절차는 playbook/Layer T로 닫혀 노동만 남는다.
 
-**Done Criteria:** accepted-drift를 manifest/`--check`에서 1급으로 표현(예: per-path accepted 표식)하거나, `--upgrade`/`--refresh` helper가 product-preserve 파일을 자동 분리하는 방안을 결정. 채택 시 invariant `[5]` 해석 규칙 갱신.
+**Trigger (이것이 충족되면 후속 Work를 연다):** DR-043 이후 adopter upgrade 2건 이상에서 동일 manual rebaseline operator 오류 반복, 또는 AGENT-WORKFLOW 외 framework 파일에서 accepted-drift 보존 반복 관측.
 
-**Verification:** `--check`/invariants 회귀, adopter replay. Surface: tool surface · canonical · adopter cascade.
+**후보(trigger 시):** 축 ⓐ → `--check output 개선`(source-updated=manifest hash 신호 설명, 저비용) 우선, 그 다음 `--upgrade-plan`(report-only)·`manifest-rebaseline`. 축 ⓑ → accepted-drift schema/sidecar(L3 cascade, 강한 evidence 필요).
+
+**Dependencies:** DR-034(Draft, non-promotion) · DR-043 · `docs/maintainer/{ADOPTER-UPGRADE-MIGRATION-PLAYBOOK,VERIFICATION-COMMANDS}.md`.
+
+**Verification(후속 시):** `--check`/invariants 회귀, adopter replay. Surface: tool surface · canonical · adopter cascade.
 
 ---
 
