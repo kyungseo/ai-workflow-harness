@@ -49,7 +49,7 @@ AI Workflow Harness backlog다.
 | — | P3 | Candidate | L2 | Sub-agent/Main Agent Authority Boundary |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P3 | Candidate | L3 | Packaging / distribution revisit after upgrade logic proof |
-| — | P2 | Candidate | L2 | spring-modular-template framework surface upgrade (CHORE-005 잔여 drift apply) |
+| — | P3 | Candidate | L2 | Adopter upgrade accepted-drift 표현 + upgrade helper (CHORE-20260624-001 residual) |
 | — | P3 | Candidate | L3 | DR namespace successor 평가 (②b product-only prefix / ③ directory) — DR-042 Policy Horizon trigger gated |
 | — | P3 | Candidate | L2 | `.claude/rules/git-workflow.md` thin adapter화 (Branch Flow·Post-PR·Commit Message 상세 → GIT-WORKFLOW.md 위임) |
 | — | P1 | Candidate | L2 | Safety rule layer 정규화 (축 A: A1 always / A2 path-scoped, Codex·AG는 shared safety doc) |
@@ -85,23 +85,17 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### spring-modular-template framework surface upgrade (CHORE-005 잔여 drift apply)
+#### Adopter upgrade accepted-drift 표현 + upgrade helper (CHORE-20260624-001 residual)
 
 **Cluster:** W2. Adopter Transition
 
-**Task:** CHORE-20260622-001은 spring의 **product DR namespace renumber만** 적용했다. CHORE-20260621-005 probe가 식별한 **framework surface drift는 미반영 상태로 남아 있다.** 이 잔여 drift를 cross-agent + 단계별 승인 흐름으로 실제 apply한다. 현재 `--check` 7 drifted:
+**Task:** source upgrade를 adopter에 적용할 때, product-customized 파일(`docs/AGENT-WORKFLOW.md` 등)의 accepted-drift가 scaffold invariant `[5] manifest+--check 자기일관성`을 **매 upgrade마다 반복적으로 깨는** 구조다(CHORE-20260624-001 spring 적용에서 R1-Codex-RR로 확인). PR을 막는 문제는 아니지만, manifest schema에 accepted-drift first-class 표현이 없어 `[5]` FAIL이 "회귀"인지 "의도된 drift"인지 매번 수동 판별해야 한다.
 
-- `source-updated`(framework upgrade 후보): `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-NAMING-RULES.md`(DR-042 high-band 정책 본문 carrier — renumber는 했으나 규칙 문서 미동기), `skills/workflow/session-start.md`, `skills/workflow/work-close.md`
-- `locally-modified`(rename-cleanup 후보): `tools/git-hooks/install.sh`, `tools/git-hooks/lib/gate-lists.sh` (stale `base-spring-modular-template` 잔재)
-- `locally-modified`(preserve, upgrade 대상 아님): `docs/AGENT-WORKFLOW.md` (product-customized)
+**Dependencies:** DR-034 ownership policy, `scripts/create-harness.sh` --check/manifest schema, `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md` Phase 6.
 
-또한 `--check`는 manifest-tracked 파일만 보므로, spring scaffold 이후 source에 **신규 추가/retired된 framework surface**는 별도 inventory가 필요하다(이 7건보다 넓은 작업).
+**Done Criteria:** accepted-drift를 manifest/`--check`에서 1급으로 표현(예: per-path accepted 표식)하거나, `--upgrade`/`--refresh` helper가 product-preserve 파일을 자동 분리하는 방안을 결정. 채택 시 invariant `[5]` 해석 규칙 갱신.
 
-**Dependencies:** CHORE-20260621-005 read-only probe + ownership classification, CHORE-20260622-001 renumber 결과, `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`, DR-034 ownership policy.
-
-**Done Criteria:** source-updated 4건 + hook rename-cleanup 2건이 disambiguation/preservation 가드 하에 apply되고, `AGENT-WORKFLOW.md`는 보존된다. 신규/retired framework surface inventory 수행 여부 결정. cross-agent(author/reviewer) + 단계별 승인으로 진행하고 spring `main`까지 반영.
-
-**Verification:** target `--check` drift 0(또는 명시 accepted-drift), framework lineage/product 보존, `git diff --check`. Surface: adopter cascade · canonical · tool surface.
+**Verification:** `--check`/invariants 회귀, adopter replay. Surface: tool surface · canonical · adopter cascade.
 
 ---
 

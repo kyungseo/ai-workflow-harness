@@ -1156,6 +1156,7 @@ Layer T walkthrough 결과에는 `framework-owned / project-owned / customized /
 ### T2. shadow scaffold baseline 생성
 
 shadow scaffold는 target과 **동일 project-name**을 사용한다. `adapt()`가 project-name을 치환하므로 이름이 다르면 hash 비교가 오염된다.
+shadow scaffold의 `--profile`/`--workflow`도 **target `.harness/manifest.json`의 `profile`/`workflow_mode`와 일치**시킨다. 다르면 tracked `framework_files` 집합 자체가 달라져 rebaseline이 오염된다(예: `spring-boot` target을 `generic`으로 shadow하면 profile-specific 파일이 누락된다). 아래 예의 `generic`은 generic target 기준이며, target profile에 맞춰 바꾼다.
 
 ```bash
 PROJECT_NAME="<target-project-name>"

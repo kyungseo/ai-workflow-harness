@@ -166,6 +166,8 @@ batch operation은 이 표가 생긴 뒤에만 허용한다. batch는 편의 수
 
 - classification table 없이 "source를 target 위에 복사"
 
+> **`framework-update`는 raw copy가 아니라 adapt-render다.** scaffold `adapt()`는 source의 `ai-workflow-harness`(source_identity)를 target project-name으로 치환한다. framework 파일(특히 `tools/git-hooks/*`)을 raw로 복사하면 source identity가 박혀 `--check` forward-render 비교에서 다시 `locally-modified`로 잡히고 `[2]` leak도 만든다. 반드시 `sed s/ai-workflow-harness/<project-name>/g` 렌더(또는 shadow scaffold 산출물) 후 적용한다.
+
 ## Phase 5. Temp Rehearsal
 
 절대 direct target write로 시작하지 않는다. 먼저 temp result tree를 만든다.
@@ -205,6 +207,7 @@ bash scripts/tests/check-scaffold-invariants.sh "${TARGET_COPY}"
 해석 규칙:
 
 - `--check`의 `0 drifted`는 자동 성공이 아니다. customization을 덮어써서 나온 값이 아닌지 확인한다.
+- **`source-updated`는 콘텐츠 신호가 아니라 manifest 신호다.** `--check`는 target 파일 내용이 아니라 manifest recorded `sha256`과 현재 source hash를 비교한다(`create-harness.sh` do_check). 따라서 **manifest-target을 새 source baseline으로 올릴 때 framework 파일만 복사하면 recorded hash가 옛 값이라 계속 `source-updated`로 남는다.** drift를 지우려면 **콘텐츠 적용 + manifest recorded `sha256` rebaseline(새 source 기준)** 을 함께 해야 한다. 가장 안전한 경로는 같은 project-name/profile/workflow로 shadow scaffold를 재생성해 새 manifest를 target에 심는 것이다(pre-manifest뿐 아니라 구버전 manifest-target 업그레이드에도 동일 적용).
 - accepted-drift는 모든 path가 이름과 이유를 가진 경우에만 허용한다.
 - accepted-drift가 예상되면 `check-scaffold-invariants.sh` `[5]`가 실패할 수 있다. 이때도 `[1]`~`[4]`가 통과할 때만 expected로 기록한다.
 - `[3]` decision-index closure failure는 accepted-drift가 아니다. index/namespace blocker로 다룬다.
