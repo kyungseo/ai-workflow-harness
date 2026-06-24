@@ -173,12 +173,9 @@ ID prefix와 파일명 상세 기준:
 
 ## Project Constants
 
-- Runtime: Markdown 문서와 shell script. 별도 application runtime 불필요.
-- Framework: Manual-first AI Workflow Harness
-- Build: core workflow 문서에는 build 없음. scaffold script는 shell 기반.
-- Architecture: Entry contract + state and work tracking + approval gate + tool-surface mirror + scaffold
-- Base package/module: 해당 없음
-- Active state file: `docs/STATUS.md`
+product-specific 값(Runtime / Framework / Build / Architecture / Base package 등)은 framework가 소유하지 않는다. 각 프로젝트의 operational home은 `docs/PLAN-SUMMARY.md`의 `Implementation Baseline` 섹션이다. 이 파일에는 framework convention만 둔다.
+
+- Active state file: `docs/STATUS.md` (framework convention)
 
 ## Verification Defaults
 
@@ -186,6 +183,8 @@ ID prefix와 파일명 상세 기준:
 - Workflow/protocol/tool-surface change: canonical -> tool-specific -> user-facing -> scaffold cascade 점검
 - Scaffold change: `scripts/create-harness.sh`가 있으면 `bash -n scripts/create-harness.sh`, generic dry-run, 필요 시 temp 실제 생성. scaffold 적용 repository처럼 script가 없으면 Skipped / Not Applicable로 보고
 - Public release prep: secret/private-info scan, stale project identity audit
+
+project-specific 검증 명령(test/build 등, 예: `./gradlew test`)은 framework default가 아니며 `docs/PLAN-SUMMARY.md`의 `Verification Defaults` 섹션을 따른다.
 
 검증을 실행할 수 없다면 이유와 남은 risk를 보고한다.
 

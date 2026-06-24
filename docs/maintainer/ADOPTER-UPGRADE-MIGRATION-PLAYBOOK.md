@@ -168,6 +168,13 @@ batch operation은 이 표가 생긴 뒤에만 허용한다. batch는 편의 수
 
 > **`framework-update`는 raw copy가 아니라 adapt-render다.** scaffold `adapt()`는 source의 `ai-workflow-harness`(source_identity)를 target project-name으로 치환한다. framework 파일(특히 `tools/git-hooks/*`)을 raw로 복사하면 source identity가 박혀 `--check` forward-render 비교에서 다시 `locally-modified`로 잡히고 `[2]` leak도 만든다. 반드시 `sed s/ai-workflow-harness/<project-name>/g` 렌더(또는 shadow scaffold 산출물) 후 적용한다.
 
+> **DR-043 `docs/AGENT-WORKFLOW.md` one-time migration (값 유실 방지, 자동 추론 금지).** source가 AGENT-WORKFLOW를 framework-pure(product constants는 `docs/PLAN-SUMMARY.md` Implementation Baseline pointer)로 전환한 뒤, 기존 adopter의 `docs/AGENT-WORKFLOW.md`(accepted-drift)는 단순 overwrite하지 않는다:
+> 1. **분류 gate:** target `docs/AGENT-WORKFLOW.md` diff가 Project Constants / product Verification Defaults **값만** 갈렸는지 확인. 그 외 local edit이 섞였으면 `merge` 또는 `blocker`로 둔다.
+> 2. target의 product constants / 검증 명령을 `docs/PLAN-SUMMARY.md` Implementation Baseline / Verification Defaults로 이동·병합.
+> 3. PLAN-SUMMARY 값 보존 확인 후 AGENT-WORKFLOW를 framework pointer 버전(adapt-rendered)으로 교체.
+> 4. manifest rebaseline 후 `--check`에서 `docs/AGENT-WORKFLOW.md`가 `accepted-drift`→`framework-update`(in-sync)로 정리됐는지 확인.
+> 이 절차를 누락하면 product constants가 overwrite로 유실된다.
+
 ## Phase 5. Temp Rehearsal
 
 절대 direct target write로 시작하지 않는다. 먼저 temp result tree를 만든다.

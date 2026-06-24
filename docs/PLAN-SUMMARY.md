@@ -9,6 +9,7 @@
 - **역할:** `PLAN.md` / `STATUS.md` / 핵심 surface에서 파생된 세션 context 요약(derived cache). 독립 이력·결정 저장소가 아니다.
 - **갱신 조건:** `PLAN.md` 또는 `STATUS.md`에 실질적 변경이 있을 때 stale 여부를 판정하고 필요한 경우만 갱신한다. T5(PLAN 영향 판단) step 또는 closeout/finalization에서 판정한다.
 - **금지:** 자체 변경 이력 누적 금지. L3 결정 근거 기록 금지(→ `docs/decisions/DR-*.md`). 이 파일에서 독립적 의사결정 추적 금지.
+- **derived 예외 (DR-043):** 일반 roadmap/decision/history는 derived다. 단 `Implementation Baseline`과 product `Verification Defaults` 섹션은 **product-owned operational home**이다(`docs/AGENT-WORKFLOW.md`는 이 섹션을 pointer로 참조). source repo에서는 이 섹션을 "source project constants summary"로 좁히고, L3 근거·변경 이력은 `PLAN.md`/DR에 둔다.
 - **갱신 책임:** T5 배선 지점(`/work-plan`, `/record-decision`, `/work-close`, commit/PR finalization, phase transition)에서 PLAN 변경이 있으면 이 파일의 stale 여부도 함께 판정한다.
 
 ## Project Summary
@@ -16,6 +17,24 @@
 `ai-workflow-harness`는 AI-assisted development workflow를 운영하기 위한
 manual-first harness다. 특정 application runtime보다 session entry, state tracking,
 approval gate, validation, recovery, tool-surface alignment를 다룬다.
+
+## Implementation Baseline
+
+> product-owned operational home (DR-043). source project constants summary로 좁힌다 — 변경 이력·L3 근거는 `PLAN.md`/DR에 둔다. `docs/AGENT-WORKFLOW.md` Project Constants는 이 섹션을 pointer로 참조한다.
+
+| 항목 | 결정 내용 |
+| --- | --- |
+| Runtime / Language | Markdown 문서 + shell script. 별도 application runtime 불필요 |
+| Framework | Manual-first AI Workflow Harness |
+| Build tool | core workflow 문서는 build 없음. scaffold는 shell 기반 |
+| Base package / Module | 해당 없음 |
+| Architecture | Entry contract + state/work tracking + approval gate + tool-surface mirror + scaffold |
+
+## Verification Defaults
+
+> source project verification summary — product test/build 명령의 owned home (DR-043, derived 예외). framework default(Documentation/Workflow/Scaffold/Public release)는 `docs/AGENT-WORKFLOW.md`가 보유하므로 여기 중복하지 않는다.
+
+- source project-specific test/build 명령: 해당 없음(문서/shell harness). 상세 검증 카탈로그는 `scripts/tests/*` 및 `docs/maintainer/VERIFICATION-COMMANDS.md` 참조.
 
 ## Core Architecture
 
