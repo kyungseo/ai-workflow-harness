@@ -3,14 +3,14 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-22 (CHORE-20260622-003 closeout)
+Last updated: 2026-06-24 (spring-modular handoff/backlog alignment)
 
 ## Current State
 
 | Field | Value |
 | --- | --- |
 | Current phase | AWH-004 — Maintenance & Adoption |
-| Current focus | 1.4.0 minor 릴리즈 prep (develop→main), adopter upgrade/migration, onboarding 현행화 |
+| Current focus | Adopter evidence/backlog alignment, spring-modular handoff follow-up, planning-pack evidence review |
 | Project plan | `docs/PLAN.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
@@ -49,10 +49,9 @@ Last updated: 2026-06-22 (CHORE-20260622-003 closeout)
 
 > backlog는 확정 실행 계획이 아니라 의견 있는 portfolio view다. live 후보의 단일 source는 `docs/backlog/HARNESS.md`이며, 각 항목 착수 시 `/work-plan`에서 논리성·합리성·현재 product 적용 맥락을 다시 검토한다. 별도 Seq 축은 유지하지 않는다(CHORE-20260610-011 (B)).
 
-W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcement & Lifecycle)는 종결됐다. 현재 live 후보와 우선순위·gate는 `docs/backlog/HARNESS.md`를 참조한다.
+W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcement & Lifecycle)의 기반 작업은 종결됐다. 현재 live 후보와 우선순위·gate는 `docs/backlog/HARNESS.md`를 참조한다.
 
-- **지금 막힘 없이 착수 가능한 P1:** Happy path / glossary / operator layering compression. (이전 P1 `spring-modular-template` product DR namespace renumber/apply는 CHORE-20260622-001로 완료 — high-band 유지 결정 + spring `main` 반영)
-- **외부 전제가 있는 P1:** 첫 concrete product planning-pack exercise (실제 product 착수 필요)
-- **후속(별도 진행, backlog 등록됨):** DR namespace successor(②b/③) 재검토(DR-042 Policy Horizon trigger gated), adopter upgrade accepted-drift 표현 + upgrade helper(CHORE-20260624-001 residual, P3). (이전 `spring-modular-template` framework surface upgrade는 CHORE-20260624-001로 완료 — v1.4.0 baseline apply + spring `main` 반영)
-- **릴리즈 (CHORE-20260622-002, 완료처리):** source `develop→main` 1.4.0 릴리즈 — cross-agent readiness 합의(release-go 조건부) + VERSION 1.4.0 bump + §3-1 final gate PASS 후 release event 실행. Work는 Archived
-- **gated 후속:** DR-034 promotion 판단(high-band 적용 adopter 2건=ai-deck+spring이나 둘 다 manifest/agent-mediated 경로 → #1 pre-manifest shadow baseline 여전히 UNMET), internal managed mode(walkthrough 후, P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), Spring Boot MSA pack(P2), template pack(P2) 등은 backlog의 gate 기준을 따른다
+- **지금 막힘 없이 착수 가능한 P1:** Happy path / glossary / operator layering compression.
+- **handoff-backed P1:** First concrete planning-pack evidence review (`spring-modular-template` handoff 결과 + fresh no-code follow-up). Spring repo의 PRODUCT backlog normalization 결과는 이 source evidence review의 입력으로만 소비한다.
+- **monitor-only / deferred:** adopter upgrade accepted-drift 표현 + upgrade helper(CHORE-20260624-001 residual, P3), planning-pack skeleton/scaffold integration(trigger-gated), Spring modular/product engineering option-pack(trigger-gated, source-ready 아님).
+- **gated 후속:** DR-034 promotion 판단(high-band 적용 adopter 2건=ai-deck+spring이나 둘 다 manifest/agent-mediated 경로 → #1 pre-manifest shadow baseline 여전히 UNMET), DR namespace successor(②b/③) 재검토(DR-042 Policy Horizon trigger gated), internal managed mode(walkthrough 후, P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), project-state template pack(P2) 등은 backlog의 gate 기준을 따른다.
