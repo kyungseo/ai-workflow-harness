@@ -1173,6 +1173,9 @@ write_text "${TARGET_ROOT}/docs/backlog/PRODUCT.md" "# Product Backlog
 제품 목표에서 도출한 후보 작업을 우선 등록한다.
 AI workflow, command/rule, prompt, scaffold 개선은 \`docs/backlog/HARNESS.md\`로 분리한다.
 
+> Done/Superseded 항목은 이 파일에서 제거된다.
+> 완료 이력: Work 파일이 있는 항목은 \`docs/archive/docs/works/product/README.md\` Archived 인덱스, Work 파일이 없는 항목(Quick Mode)은 \`git log --grep=\"{ID}\"\`로 확인한다.
+
 ## Backlog
 
 ### Summary
@@ -1200,8 +1203,6 @@ AI workflow, command/rule, prompt, scaffold 개선은 \`docs/backlog/HARNESS.md\
 
 ---
 -->
-
-## Done
 "
 
 write_text "${TARGET_ROOT}/docs/backlog/HARNESS.md" "# Harness Backlog
