@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260624-001
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: spring-modular-template adopter repo의 framework surface drift(현재 12, source 1.4.0 기준)를 v1.4.0 release tag baseline으로 selective apply한다. 11건(source-updated 9 + hook 2) adapt-render apply + .harness/manifest.json은 v1.4.0 shadow manifest 통째 교체로 rebaseline, product-customized docs/AGENT-WORKFLOW.md는 콘텐츠 보존(accepted-drift). read-only delta probe로 신규/retired framework surface를 나열만 하고 별도 backlog route-out. cross-agent review(/cross-review, Claude driver / Codex reviewer)로 진행하고 spring develop→main까지 반영.
 appetite: 1d

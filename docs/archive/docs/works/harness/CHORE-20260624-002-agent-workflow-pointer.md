@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260624-002
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: docs/AGENT-WORKFLOW.md를 framework-owned 순수 운영 규칙으로 만들고 product-specific Project Constants/Verification Defaults 값은 product-owned surface(docs/PLAN-SUMMARY.md Implementation Baseline)로 이동/병합한다. adopter가 AGENT-WORKFLOW.md를 accepted-drift 없이 framework-update로 받게 한다. 단순 overwrite가 아닌 target별 one-time migration이므로 upgrade playbook/verification에 절차를 명시한다. cross-agent review(Claude driver/Codex reviewer)로 진행.
 appetite: 1d

@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260624-003
 priority: P3
-status: Done
+status: Archived
 risk: L2
 scope: 구버전 manifest-target을 새 release tag로 올릴 때의 반복 위험(파일만 복사 시 source-updated 잔존·manifest rebaseline 필요·accepted-drift가 invariant [5] 깨짐·--check 분해 한계·shadow profile/workflow/name 일치)을 일반화해 줄이는 방안을 **설계·결정 경계까지만** 정리한다. 구현은 하지 않는다(helper/schema로 가면 L3 후속 분리). 후보(--upgrade-plan / manifest-rebaseline / accepted-drift schema·sidecar / --check output 개선 / playbook-only)를 비교하고 채택/보류 경계를 둔다. cross-agent review(Claude driver/Codex reviewer).
 appetite: 0.5d
