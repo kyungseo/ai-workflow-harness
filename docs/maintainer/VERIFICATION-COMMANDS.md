@@ -1156,6 +1156,7 @@ Layer T walkthrough 결과에는 `framework-owned / project-owned / customized /
 ### T2. shadow scaffold baseline 생성
 
 shadow scaffold는 target과 **동일 project-name**을 사용한다. `adapt()`가 project-name을 치환하므로 이름이 다르면 hash 비교가 오염된다.
+shadow scaffold의 `--profile`/`--workflow`도 **target `.harness/manifest.json`의 `profile`/`workflow_mode`와 일치**시킨다. 다르면 tracked `framework_files` 집합 자체가 달라져 rebaseline이 오염된다(예: `spring-boot` target을 `generic`으로 shadow하면 profile-specific 파일이 누락된다). 아래 예의 `generic`은 generic target 기준이며, target profile에 맞춰 바꾼다.
 
 ```bash
 PROJECT_NAME="<target-project-name>"
@@ -1215,6 +1216,8 @@ bash scripts/tests/check-scaffold-invariants.sh "${TARGET_COPY}"
 ```
 
 첫 `--check`는 drift 분포가 나오는 것이 정상이다. drift 0을 강제하지 말고, framework drift와 accepted drift를 분류한다. 단 source repo invariant 전체를 통과시키려면 manifest-tracked drift는 최종적으로 in-sync 또는 명시적 accepted drift로 정리되어야 한다.
+
+> **DR-043 product-constants 보존 check.** 이전에 `docs/AGENT-WORKFLOW.md`가 product constants/Verification Defaults 때문에 `accepted-drift`였다면, drift를 제거(framework pointer 버전으로 교체)하기 **전에** 그 product 값이 target의 `docs/PLAN-SUMMARY.md` Implementation Baseline / Verification Defaults로 보존됐는지 먼저 확인한다. 보존 없이 framework-update로 정리하면 product runtime/build/architecture 값이 유실된다. 확인 예: `grep -A12 'Implementation Baseline' "${TARGET}/docs/PLAN-SUMMARY.md"`로 값 이동을 본 뒤 AGENT-WORKFLOW 교체.
 
 실측(CHORE-20260611-010, `ai-deck-compiler` temp copy):
 

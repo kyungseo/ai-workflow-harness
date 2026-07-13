@@ -3,7 +3,7 @@
 Date: 2026-06-11
 Status: Draft
 Track: harness
-Linked DRs: DR-021, DR-028, DR-029, DR-033
+Linked DRs: DR-021, DR-028, DR-029, DR-033, DR-043
 
 <!-- Draft: CHORE-20260611-010에서 실 adopter 1건(ai-deck-compiler)을 기준으로 작성. 두 번째 adopter 또는 실제 target apply 후 Accepted 승격을 검토한다. -->
 

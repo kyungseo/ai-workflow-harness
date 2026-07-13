@@ -201,15 +201,44 @@ check_target() {
     echo "  FAIL: .harness/manifest.json 없음"
     c5_fail=1
   else
-    for f5 in '"manifest_version"' '"harness_version"' '"hash_mode": "normalized_source_template"' '"framework_files"'; do
-      grep -q "${f5}" "${manifest}" || { echo "  FAIL: manifest 필드 누락: ${f5}"; c5_fail=1; }
-    done
-    # 갓 생성한 target은 source 대비 drift 0이어야 한다(자기일관성)
-    if grep -q '"path"' "${manifest}"; then
-      local drift_line
-      drift_line="$("${REPO_ROOT}/scripts/create-harness.sh" --check "${TARGET}" 2>/dev/null | grep 'summary:')"
+    # Manifest 해석은 --check와 동일하게 JSON grammar 기준(python3)으로 판정한다
+    # (CHORE-20260713-003 R1-F3: formatting-sensitive grep은 --check가 지원하는
+    # compact/pretty JSON을 거부해 parser 계약이 갈라진다). hash_mode 계약과
+    # canonical provenance 필수화는 --check validator가 SSoT로 강제하므로(아래
+    # 자기일관성 호출에서 invalid manifest는 exit 2 → FAIL로 잡힘) 여기서는
+    # invariant 고유 필드(manifest_version 등)의 존재만 JSON으로 확인한다.
+    if [[ -n "${HARNESS_CHECK_FORCE_NO_PYTHON:-}" ]] || ! command -v python3 >/dev/null 2>&1; then
+      echo "  FAIL: manifest 필드 검사에 python3 필요 (--check와 동일한 fail-closed 계약)"
+      c5_fail=1
+    elif ! python3 - "${manifest}" <<'PY'
+import json, sys
+try:
+    m = json.load(open(sys.argv[1], encoding="utf-8"))
+except (OSError, ValueError) as e:
+    sys.stderr.write("  FAIL: manifest JSON parse 실패: %s\n" % e); sys.exit(1)
+missing = [k for k in ("manifest_version", "harness_version", "framework_files") if k not in m]
+if missing:
+    sys.stderr.write("  FAIL: manifest 필드 누락: %s\n" % ", ".join(missing)); sys.exit(1)
+PY
+    then
+      c5_fail=1
+    fi
+    # 갓 생성한 target은 source 대비 drift 0이어야 한다(자기일관성).
+    # --check는 조건 없이 항상 호출한다(R1b-F1: 과거 '"path"' substring guard는
+    # entry 없는 invalid manifest를 검사 없이 통과시켰다). --check 실패(invalid
+    # manifest exit 2, untracked exit 3 포함)는 set -euo pipefail로 스크립트가
+    # 중간 종료되지 않도록 exit code를 잡아 명시적 FAIL로 변환한다.
+    local check_out drift_line check_rc
+    check_rc=0
+    check_out="$("${REPO_ROOT}/scripts/create-harness.sh" --check "${TARGET}" 2>&1)" || check_rc=$?
+    if [[ "${check_rc}" -ne 0 ]]; then
+      echo "  FAIL: --check 실패 (exit ${check_rc}) — invalid manifest 또는 판정 불가"
+      printf '%s\n' "${check_out}" | tail -3 | sed 's/^/    /'
+      c5_fail=1
+    else
+      drift_line="$(printf '%s' "${check_out}" | grep 'summary:' || true)"
       if ! printf '%s' "${drift_line}" | grep -q ', 0 drifted'; then
-        echo "  FAIL: --check 자기일관성 위반 → ${drift_line}"
+        echo "  FAIL: --check 자기일관성 위반 → ${drift_line:-summary 출력 없음}"
         c5_fail=1
       fi
     fi

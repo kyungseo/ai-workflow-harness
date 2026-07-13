@@ -30,6 +30,7 @@ INVARIANTS="${SCRIPT_DIR}/check-scaffold-invariants.sh"
 CLOSURE="${SCRIPT_DIR}/check-shipped-dr-closure.sh"
 DEFAULT_TEMPLATE_PARITY="${SCRIPT_DIR}/check-default-template-parity.sh"
 MIRROR_PARITY="${SCRIPT_DIR}/check-surface-mirror-parity.sh"
+MANIFEST_CONTRACT="${SCRIPT_DIR}/check-manifest-contract.sh"
 
 RC=0
 mark_fail() { RC=1; }
@@ -173,6 +174,16 @@ run_tier2() {
   gen_and_check "default"
   gen_and_check "optional" --with-optional
   gen_and_check "gitflow" --workflow source-gitflow
+  echo "== Tier 2b: manifest contract behavior matrix (temp/ fixtures) =="
+  if [[ -f "${MANIFEST_CONTRACT}" ]]; then
+    if bash "${MANIFEST_CONTRACT}"; then
+      echo "  OK: manifest contract matrix"
+    else
+      echo "  FAIL: manifest contract matrix"; mark_fail
+    fi
+  else
+    echo "  SKIP (N/A): check-manifest-contract.sh 없음"
+  fi
 }
 
 # ── 디스패치 ─────────────────────────────────────────────────────────────────

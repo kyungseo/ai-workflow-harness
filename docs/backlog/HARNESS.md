@@ -28,13 +28,23 @@ AI Workflow Harness backlog다.
 
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
-| W1. Validation Spine ✓ 완결 | 이번 주 이후 큰 하네스 변경을 줄이더라도 regression을 잡을 수 있는 최소 검증 척추를 만든다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속은 W3/W4 후보에서 별도 추적 |
-| W2. Adopter Transition | 다음 주 실제 product scaffold 운영에 필요한 적용·업그레이드·온보딩 흐름을 준비한다 | (upgrade/migration 완료 = CHORE-20260611-010, docs cascade 완료 = CHORE-20260611-011, planning pack 완료 = CHORE-20260612-001, readability rewrite 완료 = CHORE-20260612-002, clone verification 완료 = CHORE-20260612-003) 후속 후보: `ai-deck-compiler` first real walkthrough, internal managed mode guardrails(게이트 후), 첫 concrete product planning-pack evidence review(`spring-modular-template` P1 완료 반영), planning-pack template/scaffold integration model, happy path / glossary / operator layering compression |
+| W1. Validation Spine ✓ 완결 | 큰 하네스 변경 이후에도 regression을 잡는 최소 검증 척추를 유지한다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속은 W3/W4 후보에서 별도 추적 |
+| W2. Adopter Transition | 실제 adopter 운영에서 나온 적용·업그레이드·온보딩 evidence를 source backlog로 되돌린다 | (기반 완료 = upgrade/migration CHORE-20260611-010, docs cascade CHORE-20260611-011, planning pack CHORE-20260612-001, readability rewrite CHORE-20260612-002, clone verification CHORE-20260612-003) live 후보: happy path/glossary/operator compression, 첫 concrete planning-pack evidence review(`spring-modular-template` handoff + fresh no-code follow-up), planning-pack skeleton/scaffold integration(trigger-gated), adopter upgrade accepted-drift/helper(monitor-only), internal managed mode guardrails(게이트 후), DR namespace successor(Policy Horizon gated) |
 | W3. Workflow IA Diet ✓ 완결 | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | (Canonical 개념 계층화 핵심 달성 = CHORE-20260613-002~005, Prompt surface diet 완료 = CHORE-20260612-010, work-doc class 완료 = CHORE-20260613-005, trigger family simplification 완료 = CHORE-20260613-006) 전부 완료 |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | (전부 종결) Validation Spine residual F1~F4 = CHORE-20260613-017/018·DR-036, 문서-only 규칙 강제화 = DR-037, Archive 누적 관리 정책 = DR-038, CI inline assertion ↔ invariants SSoT parity = CHORE-20260613-016 no-action closeout |
-| W5. Future / Optional | 실제 product 운용 후 필요가 확인되면 확장한다 | Spring modular/product engineering option-pack, project-state template, sub-agent autonomy policy, packaging/distribution revisit, Windows 지원 |
+| W5. Future / Optional | 실제 product 운용 후 필요가 확인된 확장만 다룬다 | Spring modular/product engineering option-pack(trigger-gated, source-ready 아님), project-state template, sub-agent autonomy policy, packaging/distribution revisit, Windows 지원 |
+| W6. Durability Follow-up (2026-07 direction review) | CHORE-20260713-001의 4축 판정(brief `harness-longterm-durability-review-20260713.md`)을 evidence-gated로 실행한다. **축②는 2026-07-13 해제됨(CHORE-20260713-002 — manifest 보유 target의 agent-first 방향 한정, 비오염 operator·pre-manifest는 residual). manifest contract 정비는 CHORE-20260713-003으로 완료** | 축②: upgrade 절차 diet(canary gate, 선행 조건 충족) = P2, DR-034 manifest-target 분기 amend = P3. 축③: UF-06 auto-merge(P2) → `.claude/rules/git-workflow.md` thin adapter화(P2 상향) 순서. 축④: UF-01/02 deterministic guard 비교, UF-08 quick-fix(P2) |
 
-**Adopter evidence set:** 현재 scaffold된 실제 적용 프로젝트는 `ai-deck-compiler`, `rfx-hub`, `spring-modular-template` 3개로 본다. `base-msa-template`은 `ai-workflow-harness`의 mirror/reference 입력이므로 scaffold target evidence set에서 제외한다.
+**Adopter evidence set (2026-07-13 실측 현행화, CHORE-20260713-001):** 현재 scaffold된 실제 적용 프로젝트는 4개다. `base-msa-template`은 `ai-workflow-harness`의 mirror/reference 입력이므로 scaffold target evidence set에서 제외한다.
+
+| Repo | harness_version | Profile | Baseline | 비고 |
+| --- | --- | --- | --- | --- |
+| `ai-deck-compiler` | 1.3.0 | generic | manifest (78 files) | 1 minor behind |
+| `spring-modular-template` | 1.4.0 | spring-boot | manifest (82 files) | 현행. UF buffer 보유(UF-01~08 intake됨) |
+| `rfx-hub` | 1.2.1 | generic | manifest (72 files) | 재구축되어 활성(과거 "finding 수집 후 삭제" 기록은 stale — 정정). 2 minor behind, agent-first upgrade 실험 대상 |
+| `toolstead` | 1.4.0 | generic | manifest (83 files) | 신규. Skillstead/SessionCue 멀티 product |
+
+4개 모두 manifest baseline이며 pre-manifest adopter는 없다. rfx-hub/toolstead에는 upstream feedback 채널(UF section)이 없다 — 채널 표준화 여부는 별도 판단.
 
 ### Summary
 
@@ -49,8 +59,22 @@ AI Workflow Harness backlog다.
 | — | P3 | Candidate | L2 | Sub-agent/Main Agent Authority Boundary |
 | — | P2 | Candidate | L2 | Project-state template pack 검토 |
 | — | P3 | Candidate | L3 | Packaging / distribution revisit after upgrade logic proof |
-| — | P2 | Candidate | L2 | spring-modular-template framework surface upgrade (CHORE-005 잔여 drift apply) |
+| — | P3 | Candidate | L2 | Adopter upgrade accepted-drift 표현 + upgrade helper (CHORE-20260624-001 residual) |
+| — | P3 | Candidate | L3 | PLAN-SUMMARY.md → PROJECT-CONTEXT.md rename feasibility / migration brief |
 | — | P3 | Candidate | L3 | DR namespace successor 평가 (②b product-only prefix / ③ directory) — DR-042 Policy Horizon trigger gated |
+| — | P2 | Candidate | L2 | `.claude/rules/git-workflow.md` thin adapter화 (Branch Flow·Post-PR·Commit Message 상세 → GIT-WORKFLOW.md 위임) — 축③ block-replication 실측으로 P3→P2 상향, UF-06 뒤 착수 |
+| — | P1 | Candidate | L2 | Fleet upgrade to 1.5.0 — spring·ai-deck·rfx (tag 기준 agent-first) + toolstead fresh-session canary 보류 |
+| — | P2 | Candidate | L2 | Upgrade 절차 diet — agent-first 경로 정식화 + playbook 축소 (canary gate) |
+| — | P3 | Candidate | L2 | DR-034 amendment — manifest-target agent-first 분기 추가 |
+| — | P1 | Candidate | L2 | Safety rule layer 정규화 (축 A: A1 always / A2 path-scoped, Codex·AG는 shared safety doc) |
+| — | P3 | Candidate | L2 | Workflow skill tool invocation suppression asymmetry 검토 (Codex/AG intent routing vs Claude disable-model-invocation) |
+| — | P2 | Candidate | L2 | Product CI workflow seam + harness-validate 경계 가드 (UF-01) |
+| — | P3 | Candidate | L2 | Review manifest-boundary 점검 — checklist vs deterministic guard 비교 (UF-02) |
+| — | P3 | Candidate | L2 | GIT-WORKFLOW ruleset의 GitHub plan 의존성 안내 (UF-03) |
+| — | P3 | Candidate | L2 | Generic closeout invariant/decision impact hook (UF-05) |
+| — | P2 | Candidate | L2 | Auto-merge + deferred sync default branch-flow (UF-06, thin-adapter 후보와 dependency) |
+| — | P3 | Candidate | L2 | User-facing documentation authoring standard 일반화 (UF-07) |
+| — | P2 | Candidate | L2 | Scaffold `.env` deny wildcard 교정 quick-fix (UF-08, fixture gate 필수) |
 | HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
 
 ---
@@ -82,23 +106,35 @@ AI Workflow Harness backlog다.
 
 ---
 
-#### spring-modular-template framework surface upgrade (CHORE-005 잔여 drift apply)
+#### Adopter upgrade accepted-drift 표현 + upgrade helper (CHORE-20260624-001 residual)
 
 **Cluster:** W2. Adopter Transition
 
-**Task:** CHORE-20260622-001은 spring의 **product DR namespace renumber만** 적용했다. CHORE-20260621-005 probe가 식별한 **framework surface drift는 미반영 상태로 남아 있다.** 이 잔여 drift를 cross-agent + 단계별 승인 흐름으로 실제 apply한다. 현재 `--check` 7 drifted:
+**Status:** **monitor-only / defer** (CHORE-20260624-003 disposition으로 downscope). 즉시 구현 대상 아님.
 
-- `source-updated`(framework upgrade 후보): `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-NAMING-RULES.md`(DR-042 high-band 정책 본문 carrier — renumber는 했으나 규칙 문서 미동기), `skills/workflow/session-start.md`, `skills/workflow/work-close.md`
-- `locally-modified`(rename-cleanup 후보): `tools/git-hooks/install.sh`, `tools/git-hooks/lib/gate-lists.sh` (stale `base-spring-modular-template` 잔재)
-- `locally-modified`(preserve, upgrade 대상 아님): `docs/AGENT-WORKFLOW.md` (product-customized)
+**Task:** 구버전 manifest-target 업그레이드의 잔여 ergonomics(manifest rebaseline·`source-updated` 수동 처리)를 줄이는 도구/schema 후보. CHORE-20260624-002(DR-043)가 가장 구체적이던 `docs/AGENT-WORKFLOW.md` accepted-drift case를 framework-pure화로 **이미 닫았으므로**, accepted-drift schema(축 ⓑ)의 근거는 약하다. 절차는 playbook/Layer T로 닫혀 노동만 남는다.
 
-또한 `--check`는 manifest-tracked 파일만 보므로, spring scaffold 이후 source에 **신규 추가/retired된 framework surface**는 별도 inventory가 필요하다(이 7건보다 넓은 작업).
+**Trigger (이것이 충족되면 후속 Work를 연다):** DR-043 이후 adopter upgrade 2건 이상에서 동일 manual rebaseline operator 오류 반복, 또는 AGENT-WORKFLOW 외 framework 파일에서 accepted-drift 보존 반복 관측.
 
-**Dependencies:** CHORE-20260621-005 read-only probe + ownership classification, CHORE-20260622-001 renumber 결과, `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`, DR-034 ownership policy.
+**후보(trigger 시):** 축 ⓐ → `--check output 개선`(source-updated=manifest hash 신호 설명, 저비용) 우선, 그 다음 `--upgrade-plan`(report-only)·`manifest-rebaseline`. 축 ⓑ → accepted-drift schema/sidecar(L3 cascade, 강한 evidence 필요).
 
-**Done Criteria:** source-updated 4건 + hook rename-cleanup 2건이 disambiguation/preservation 가드 하에 apply되고, `AGENT-WORKFLOW.md`는 보존된다. 신규/retired framework surface inventory 수행 여부 결정. cross-agent(author/reviewer) + 단계별 승인으로 진행하고 spring `main`까지 반영.
+**Dependencies:** DR-034(Draft, non-promotion) · DR-043 · `docs/maintainer/{ADOPTER-UPGRADE-MIGRATION-PLAYBOOK,VERIFICATION-COMMANDS}.md`.
 
-**Verification:** target `--check` drift 0(또는 명시 accepted-drift), framework lineage/product 보존, `git diff --check`. Surface: adopter cascade · canonical · tool surface.
+**Verification(후속 시):** `--check`/invariants 회귀, adopter replay. Surface: tool surface · canonical · adopter cascade.
+
+---
+
+#### PLAN-SUMMARY.md → PROJECT-CONTEXT.md rename feasibility / migration brief
+
+**Cluster:** W2. Adopter Transition
+
+**Task:** CHORE-20260624-002 / DR-043에서 product constants home을 `docs/PLAN-SUMMARY.md` Implementation Baseline으로 amend했다. 이 선택은 scaffold 현실(`PLAN-SUMMARY.md`가 이미 owned Implementation Baseline을 생성)과 blast radius 최소화 측면에서 맞았지만, 파일명 `PLAN-SUMMARY`가 product-owned operational context home 역할과 어긋나는 찝찝함이 남아 있다. `PLAN-SUMMARY.md`를 `PROJECT-CONTEXT.md` 같은 이름으로 rename할 가치가 있는지 feasibility / migration brief를 작성한다. 이 후보는 rename 실행이 아니라 검토 Work이며, rename을 택할 경우 source/scaffold/prompts/playbook/adopter migration을 한 번에 검토해야 한다.
+
+**Dependencies:** CHORE-20260624-002, DR-043(Accepted Amended), `docs/PLAN-SUMMARY.md` Implementation Baseline/Verification Defaults, `scripts/create-harness.sh`, `docs/BOOTSTRAP.md`, `docs/SCAFFOLD-BOOTSTRAP.md`, `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`, `docs/maintainer/VERIFICATION-COMMANDS.md`, generated scaffold/adopter references.
+
+**Done Criteria:** keep-as-is vs rename(`PROJECT-CONTEXT.md` 또는 대안) 비교가 작성된다. source/scaffold/prompts/playbook/adopter migration touchpoint가 `rg PLAN-SUMMARY` 기준으로 목록화된다. rename 시 필요한 DR-043 amend/supersede 여부, one-time adopter migration 절차, rollback strategy, compatibility/pointer period 필요 여부가 정리된다. 실행으로 이어질 경우 별도 Work scope와 validation matrix가 제안된다. 증거가 약하면 `PLAN-SUMMARY.md` 유지 + naming caveat 문서화로 닫는다.
+
+**Verification:** rename feasibility diff review, `rg "PLAN-SUMMARY|PROJECT-CONTEXT"` touchpoint inventory, scaffold dry-run impact 판단, adopter upgrade playbook impact review, prompt/tool surface stale reference check. Surface: canonical · scaffold · tool surface · adopter cascade · README/GUIDE/MANUAL.
 
 ---
 
@@ -153,6 +189,8 @@ intake hook(소비 측)과 planning pack(입력 포맷)은 같은 loop의 양 �
 
 **Scope split (CHORE-20260620-001, R1 F4):** code-product evidence review는 `CHORE-20260620-001`(5+ 사이클: FEAT-001~005, DR-030~033)에서 수행한다. 결론은 **code-product only** — prepared-brief flow는 agent-mediated code-product에서 작동했으나 manual external adopter·no-code target은 **미검증**(negative conclusion). 따라서 **fresh no-code scaffold 재온보딩 end-to-end 검증은 이 Work 비범위로 남는 별도 residual axis**이며, code-product 결론을 no-code adopter equivalence로 확장하지 않는다.
 
+**2026-06-24 handoff alignment:** `temp/spring-modular-handoff-20260624.md`는 Claude R2 review에서 approve됐다. 이 handoff는 신규 Work row가 아니라 이 기존 P1 candidate의 착수/갱신 입력으로만 사용한다. Source 쪽 적용 범위는 ① `spring-modular-template`이 planning-pack을 prepared brief로 소비했고 target repo에 통째 복사하지 않았는지 기록, ② spring outputs를 source-generalizable principle / product-local implementation / import-candidate로 분류, ③ Layer U wording/path 보강 필요 여부 판단, ④ fresh no-code replay를 별도 trigger로 유지하는 것이다. Spring repo의 PRODUCT backlog 정리는 spring-side agent가 handoff를 읽고 existing row / existing row update / new candidate / defer-only note로 normalization한 결과를 evidence input으로 소비하되, harness backlog에 중복 row를 만들지 않는다.
+
 **Evidence boundary:** `spring-modular-template` P1은 planning-pack prepared brief가 agent-mediated onboarding input으로 작동함을 보여준다. 다만 planning-pack 생성, scaffold, brief 소비가 모두 harness-side agent 흐름으로 이어졌으므로, external adopter가 수동으로 scaffold 후 planning-pack을 발견·전달·검증하는 UX와 동일하다고 단정하지 않는다. manual adopter equivalence는 clean target replay 또는 fresh scaffold 재온보딩으로 별도 검증한다.
 
 **Dependencies:**
@@ -161,8 +199,9 @@ intake hook(소비 측)과 planning pack(입력 포맷)은 같은 loop의 양 �
 - fresh no-code scaffold (초기 test bed `rfx-hub`는 finding 수집 후 삭제), `temp/rfx-hub-onboarding-handoff.md`(ad-hoc planning-pack 선례)
 - session-start Bootstrap-State Rule(#206), BOOTSTRAP §0 git-init 권장 기본값(#207), intake hook(#209)·no-code depth(CHORE-20260617-002)
 - `spring-modular-template` P1 결과: planning-pack D-24 prepared-brief flow, `docs/ADOPTER-RENAME.md`, Testcontainers troubleshooting, PRODUCT backlog/Work closeout evidence
+- `temp/spring-modular-handoff-20260624.md`(Claude R2 approve), `temp/p1-core-slice.md`, `temp/pack-multipack-concept.md`, `temp/harness-template-coupling-graduation-charter-DRAFT.md`
 
-**Done Criteria:** `spring-modular-template` P1 evidence에서 ① D-24 prepared-brief flow가 실제로 작동했는지, ② planning-pack을 target repo에 복사하지 않은 경계가 유지됐는지, ③ adopter rename/placeholder leak check를 source acceptance로 끌어올릴지, ④ product repo 산출물 중 source option-pack/import 후보가 무엇인지 정리한다. 또한 intake hook과 no-code depth가 **fresh no-code scaffold 재온보딩**으로 intake→§1/§2/§4 반영 + no-code thick 부팅이 end-to-end 검증된다. planning-pack 산출물의 owner 분류(source/product/import)가 기록되고, import 후보의 일반화 가능 범위·보류 이유, Layer U/U4 checklist 유지/보강 판단이 정리된다.
+**Done Criteria:** `spring-modular-template` P1 evidence에서 ① D-24 prepared-brief flow가 실제로 작동했는지, ② planning-pack을 target repo에 복사하지 않은 경계가 유지됐는지, ③ adopter rename/placeholder leak check를 source acceptance로 끌어올릴지, ④ product repo 산출물 중 source option-pack/import 후보가 무엇인지 정리한다. 또한 intake hook과 no-code depth가 **fresh no-code scaffold 재온보딩**으로 intake→§1/§2/§4 반영 + no-code thick 부팅이 end-to-end 검증된다. planning-pack 산출물의 owner 분류(source/product/import)가 기록되고, import 후보의 일반화 가능 범위·보류 이유, Layer U/U4 checklist 유지/보강 판단이 정리된다. Spring-side backlog normalization 결과가 있으면 dependency/size/priority/evidence 분류를 source evidence review 입력으로 반영하되, 기존 source P1 row 갱신 원칙과 no-new-row 경계가 유지된다.
 
 **Verification:** Layer U checklist, product artifact → source import mapping review, intake hook fresh-scaffold 재온보딩 검증, optional pack/tool-surface spillover 점검. Surface: scaffold · canonical(session-start) · tool surface · adopter cascade · README/GUIDE/MANUAL.
 
@@ -188,6 +227,8 @@ intake hook(소비 측)과 planning pack(입력 포맷)은 같은 loop의 양 �
 
 **Task:** `CHORE-20260620-003` low-regret decision에 따라, first real onboarding walkthrough 이후에만 planning-pack skeleton path/file-set과 scaffold/session-start integration mechanism을 다시 연다. 현재 기준은 D-24 no-copy 경계 유지, manual prepared-brief input default 유지, repo 밖 auto-scan 비채택이다. Deferred 대상은 source skeleton 경로(`scripts/templates/` 하위 reconcile vs 새 top-level convention), `create-harness.sh` 자동 배포, `.harness/planning-pack/` seed, sibling path convention, session-start prompt 보강 여부다.
 
+**2026-06-24 handoff alignment:** `spring-modular-template` handoff는 이 후보를 즉시 구현하라는 trigger가 아니다. Spring 사례만으로 `.harness/planning-pack/` seed, auto-discovery, scaffold 배포를 열지 않는다. Manual external adopter 또는 fresh no-code target에서 planning-pack discovery/전달 friction이 관측될 때 다시 연다.
+
 **Trigger:** prepared brief 또는 planning-pack이 실제 target에서 `scaffold -> session-start -> bootstrap` 흐름으로 end-to-end 소비된다. 특히 manual external adopter 또는 no-code scaffold target에서 planning-pack discovery/전달 friction이 관측되면 즉시 재검토한다.
 
 **Dependencies:** CHORE-20260620-003 decision output, D-24 no-copy boundary, DR-041 pack-local README decision, first real onboarding walkthrough evidence.
@@ -202,6 +243,8 @@ intake hook(소비 측)과 planning pack(입력 포맷)은 같은 loop의 양 �
 
 **Cluster:** W5. Future / Optional
 
+> **축 B 입력:** 기존 `.claude/rules/java-spring.md`·`testing.md`(+ `.cursor` 미러)의 재설계가 이 후보에 흡수된다. `testing`→`spring-testing` 네이밍 교정, canonical+4툴 adapter 멀티에이전트화, base-msa 잔재 정리. 상세 방향은 `docs/briefs/rule-asset-generalization-strategy-20260622.md` 축 B 절 참조.
+
 **Task:** 실제 신규 product에서 검증된 product engineering 산출물을 바탕으로 Spring Boot 기반 option-pack을 설계한다. `spring-modular-template`의 방향은 classic MSA가 아니라 **modular monolith first + extractable seams**이므로, 기존 "Spring Boot MSA TDD option-pack" 명칭은 채택 장벽을 만들 수 있다. 기존 "coding guide" 단일 문서 발상도 범위가 좁으므로, PRD/TRD/code conventions/user flow/DB design/screen/tasks/test structure/loop 절차를 포함할 수 있는 product engineering pack으로 재정의한다. 단, 처음부터 source repo에 과잉 일반화하지 않고 product repo에서 검증된 뒤 source repo로 import한다.
 
 **Evidence payload — import 후보 (CHORE-20260620-001, R1 F2/F4 ④):** `spring-modular-template` 검증 산출물을 principle / product-local impl로 분리한다.
@@ -210,6 +253,10 @@ intake hook(소비 측)과 planning pack(입력 포맷)은 같은 loop의 양 �
 - import 시 principle을 일반화하고 impl은 reference로만 둔다(성급한 코드 복사 금지).
 
 **Evidence payload — pack catalog / resolver (CHORE-20260620-001 R1 F3, CHORE-20260620-003 D8 route-out):** resolver metadata는 planning-pack authoring/intake model이 아니라 product engineering pack catalog 후보로 다룬다. `spring-modular-template` multi-pack 실증에서 `observability-export`가 `local-deploy` substrate를 **requires**하고, `run-observe`가 두 pack 동시 존재를 guard하며, `observability-export`는 metrics export capability를 **provides**했다. Source-generalizable shape(구현은 이 후보 gate): pack catalog에 `provides / requires / conflicts / modes`, target manifest에 `selected_packs` vs `resolved_packs`(transitive 포함)·`resolution.added`. DR-033(multi-pack 합성 컨벤션)·DR-032(`pack/{name}/` 레이아웃)가 product-local precedent다.
+
+**2026-07-13 UF-04 evidence 흡수 (CHORE-20260713-001 S1):** spring UF-04(Spring Boot optional rule/profile surface refresh)의 정제 evidence — CHORE-20260630-001 per-file disposition matrix, FEAT-20260701-001 auto-config scan-독립 표준(DR-811), FEAT-20260702-002 structure-agnostic wording 필요성(DR-817), CHORE-20260703-001 M2 bounded invariant 4 family — 를 이 후보의 concrete input으로 추가한다. 상세는 spring repo UF-04 원문 참조. 별도 row는 만들지 않는다.
+
+**2026-06-24 handoff alignment:** `temp/spring-modular-handoff-20260624.md` §10.4와 `temp/harness-template-coupling-graduation-charter-DRAFT.md` 기준, source option-pack은 아직 ready가 아니다. 현재는 spring product development를 더 진행하고, import 후보를 파일이 아니라 principle 중심으로만 추적한다. 특히 pack boundary(app artifact dependency activation + endpoint/security surface), multi-pack composition guard, conditional export dependencies, auth-session pack boundary, module boundary generic rule pattern은 product slice 하나 이상에서 더 검증된 뒤 source-generalizable boundary를 판단한다.
 
 **후보 구성:**
 
@@ -287,6 +334,184 @@ intake hook(소비 측)과 planning pack(입력 포맷)은 같은 loop의 양 �
 **Done Criteria:** packaging/distribution을 다시 열 조건이 명시되고, npm wrapping / GitHub Releases / naming cleanup 중 무엇을 언제 검토할지 판단 기준이 생긴다. `--workflow` naming audit은 이 후보 안에서 하위 질문으로 흡수한다.
 
 **Verification:** distribution option matrix review, CLI help/docs/scaffold generated text grep, old/new option migration impact review. Surface: scaffold · README/GUIDE/MANUAL · canonical.
+
+---
+
+#### `.claude/rules/git-workflow.md` thin adapter화
+
+**Cluster:** Harness workflow surface cleanup
+
+**Task:** `.claude/rules/git-workflow.md`에서 Branch Flow, Post-PR Merge Cleanup, Commit Message Format 상세 예시 3개 섹션을 제거하고 `docs/GIT-WORKFLOW.md`로 위임한다. Branch Isolation Check(protected file list 포함), Pre-commit sequence, Commit Approval 상세(STATUS/Tracking Finalization, work-close bundling, tracking-only override)는 Claude Code auto-load에 남긴다. 예상 파일 크기 약 40% 감소.
+
+**Rationale:** `temp/work-plans/12-claude-git-workflow-thin-adapter.md` Claude Code 당사자 검토 의견 참조. **P3→P2 상향(2026-07-13):** CHORE-20260713-001 축③ 실측 — commit-format normative block이 canonical+2 adapter에 복제(block-replication gate 충족). UF-06(canonical 정책 변경) 뒤에 착수한다. Branch Isolation guard는 PR intent 이전에도 작동해야 하므로 auto-load 유지가 필수; Branch Flow·Post-PR·Commit Message 상세는 PR intent 시점에 로드되는 `docs/GIT-WORKFLOW.md`로 충분히 커버된다.
+
+**Dependencies:**
+- `docs/GIT-WORKFLOW.md` — Branch Flow·Post-PR 상세 SSoT 확인
+- `scripts/templates/default/.claude/rules/git-workflow.md` — generic scaffold template 동기화
+- `scripts/tests/check-default-template-parity.sh` — parity helper 갱신 필요
+- **UF-06(auto-merge default branch-flow) 후보와 같은 파일 표면** — merge하지 않되 착수 순서 조율: UF-06 canonical 정책 변경을 먼저 확정한 뒤 thin-adapter 정리(중복 이동 후 재변경 방지)
+
+**검토 필요 (변경 시):**
+- `docs/maintainer/VERIFICATION-COMMANDS.md` grep 명령의 기대 문자열 변경 여부
+- `skills/workflow/repo-health-cascade.md` gate path-list parity row 설명 갱신 여부
+- source-gitflow scaffold target의 `.claude/rules/git-workflow.md`도 같은 thin adapter로 충분한지 별도 판단
+
+**Done Criteria:** 3개 섹션 제거 후 Claude Code 세션에서 branch isolation(FAIL/Warning)과 commit approval 흐름이 정상 작동한다. generic scaffold template과 parity helper가 새 구조를 기준으로 갱신된다.
+
+**Verification:**
+```bash
+git diff --check
+bash scripts/tests/run-harness-checks.sh --tier0
+bash scripts/tests/check-default-template-parity.sh
+bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule-thin-adapter
+```
+수동: source-gitflow scaffold에서 branch isolation 안내가 충분한지, generic scaffold에서 hook enforcement 문구가 남지 않았는지 확인. Surface: tool surface · scaffold · adopter cascade.
+
+---
+
+#### Workflow skill tool invocation suppression asymmetry 검토
+
+**Cluster:** Harness workflow surface cleanup
+
+**Task:** workflow skill 호출 억제 메커니즘이 도구마다 다르다. Claude adapter는 `disable-model-invocation: true`로 자동 호출을 막아 명시적 `/command`만 허용하지만, Codex/Antigravity는 `docs-workflow.md` Command Intent Recognition + `.agents/skills/` intent routing(ambiguity-confirm guard 포함)에 의존한다. `CHORE-20260622-003`(cross-review)에서 trigger narrowing으로 국소 케이스만 닫았다. 전체 workflow skill에 대해 호출 억제를 통일할지, 비대칭을 의도적으로 유지할지 검토한다. 이는 *command 호출* 문제로, *rule 적용* 비대칭(축 A safety)과는 surface가 다르다.
+
+**Dependencies:** CHORE-20260622-003 Discovery residual, `.claude/commands/*.md` frontmatter(`disable-model-invocation`), `docs-workflow.md` Command Intent Recognition. 메커니즘 배경 참고: `docs/briefs/rule-asset-generalization-strategy-20260622.md` §3(Codex skill = intent-matched workflow adapter임을 규명).
+
+**Done Criteria:** 4툴 invocation suppression 차이를 정리하고 통일 필요 여부를 결정한다. 통일하지 않으면 비대칭 유지 근거를 기록한다.
+
+**Priority note:** 실제 cross-tool misfire(상태 변경 workflow command가 사람 명시 호출 없이 자율 발동) 관측이 없어 P3. 1건이라도 관측되면 P2 승격.
+
+**Verification:** adapter frontmatter grep, intent-routing surface 대조. Surface: tool surface · canonical · adopter cascade.
+
+---
+
+#### Safety rule layer 4툴 정규화 (축 A)
+
+**Cluster:** Harness rule-asset 재설계
+
+**Task:** `docs/briefs/rule-asset-generalization-strategy-20260622.md` 축 A 실행. 현재 stack-agnostic 안전 의도가 Claude `infra.md`(path-scoped: `infra/**`, Dockerfile)와 Cursor `safety-critical.mdc`(always-apply, `rm -rf`/`sudo`/secret 포함, 더 넓음)로 **메커니즘·범위 비대칭**이고 Codex/Antigravity엔 repo-local rule surface로는 **부재**다. workflow canonical화의 SSoT+adapter 문제의식을 재사용해 **`skills/safety/*.md`를 SSoT로 두되**(canonical rule document — Codex skill 아님; namespace는 brief 미해결 결정), 적용 메커니즘은 workflow(호출형)와 달리 별도 설계한다. 축 A는 **A1(destructive/privileged/secret, always)** 과 **A2(infra/deploy/environment, path-scoped)** 로 나뉜다. Codex/AG는 always-rule surface가 없으므로 `.agents/skills/`(호출형)가 아니라 **`AGENTS.md` entry contract가 로드하는 shared safety doc**으로 반영하며, thin-entry 원칙상 본문 인라인은 제외한다(brief §3). base-msa와 무관한 보편 자산이므로 product 검증을 기다리지 않고 source-first로 진행 가능.
+
+**Dependencies:** brief 축 A·§1(A1/A2)·§3, 기존 `infra.md`·`safety-critical.mdc` 내용, `skills/workflow/` canonical+adapter 패턴(원칙만 재사용), BEHAVIOR-PRINCIPLES §6(harness가 안전 SSoT) 및 실행 guard 부재 확인, `scripts/create-harness.sh` line 544(infra.md default-copy)·650(cursor `safety-critical.mdc` default 블록).
+
+**Done Criteria:** A1/A2 각각의 명칭 확정, `skills/safety/` canonical SSoT + 적용 정규화(A1 always / A2 path-scoped / Codex·AG는 `AGENTS.md → shared safety doc`), scaffold copy matrix 정합. core 상시포함 기본, `--no-safety` opt-out은 기본 제외. canonical namespace(`skills/{domain}` vs `rules/`)·language policy(위치별 상이)·A1/A2 rollback 단위(한 PR vs 분리)를 함께 결정.
+
+**Verification:** scaffold dry-run에서 4툴 안전 surface 소비 확인(특히 `AGENTS.md` entry consumption). 기존 `check-surface-mirror-parity`는 command surface만 보므로 **rule parity check 신설**(canonical 존재·adapter pointer 존재·A1/A2 surface 존재·scaffold copy matrix 포함; 내용 동등성은 제외). `git diff --check`. Surface: tool surface · scaffold · canonical · adopter cascade.
+
+> **축 B 참고:** stack-specific `java-spring`/`testing` 재설계(네이밍·option-pack·product import)는 아래 "Spring modular/product engineering option-pack 후보"에 흡수한다. brief 축 B 절 참조.
+
+---
+
+#### Fleet upgrade to 1.5.0 — 3 repo agent-first + toolstead canary 보류
+
+**Cluster:** W6. Durability Follow-up
+
+**Task:** `ai-workflow-v1.5.0` released tag 기준으로 spring-modular-template·ai-deck-compiler·rfx-hub를 agent-first 방식(CHORE-20260713-002 CP1 체크리스트)으로 upgrade한다. rebaseline 시 manifest가 provenance 필드를 획득하고 `hash_mode`가 canonical로 전환된다. spring은 DR-043 one-time migration 상태 확인 포함. **toolstead는 이 Work에서 제외 — fresh-session canary로 별도 수행**(upgrade 절차 diet의 canary gate 겸용: 새 세션에서 최소 체크리스트만으로 informed-driver 오염 없는 측정 확보).
+
+**Dependencies:** `ai-workflow-v1.5.0` tag(CHORE-20260713-004 release), CHORE-20260713-002 체크리스트·provenance 형식, DR-043 migration gate(playbook Manifest field 계약 절).
+
+**Done Criteria:** 3 repo가 1.5.0 tag baseline으로 upgrade되고 post-hoc `--check`(clean tag)에서 provenance match + 기대 drift만 잔존. 각 repo PR merge. toolstead canary는 착수하지 않고 보류 기록.
+
+**Verification:** repo별 post-hoc `--check`(provenance 4분류 출력 확인), accepted-drift 보존(spring AGENT-WORKFLOW 등), `git diff --check`. Surface: adopter cascade.
+
+---
+
+#### Upgrade 절차 diet — agent-first 경로 정식화 + playbook 축소 (canary gate)
+
+**Cluster:** W6. Durability Follow-up
+
+**Task:** 축② 해제(CHORE-20260713-002)에 따라 agent-first 경로(최소 체크리스트 + manifest 계약 + post-hoc `--check`)를 문서화된 정식 경로로 승격하고, `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`의 procedural duplication을 축소한다. 제거 후보 surface와 fallback을 먼저 열거하고 contract/`--check`는 유지·강화한다.
+
+**Canary gate (CHORE-20260713-002 R1-Codex-F6):** procedural duplication 축소까지만 선행 가능. **비오염 operator 1건 또는 fresh-session canary 1건에서 artifact·보존 분류 재검증을 통과하기 전에는 default 경로 전환·기존 playbook 삭제를 승인하지 않는다.**
+
+**Dependencies:** CHORE-20260713-002 CP1(체크리스트·측정), brief 축② amendment, ~~manifest contract 정비(선행 권장)~~ **선행 조건 충족 — CHORE-20260713-003 완료**(tolerant parser가 pretty-print 함정 구조 제거, provenance 계약 확정).
+
+**Done Criteria:** agent-first 체크리스트의 정식 위치 결정·문서화, 축소/유지 대상 목록, canary gate 조건 명문화(통과 전 default 미전환).
+
+**Verification:** playbook diff review, fresh-session canary 시뮬레이션 계획, `--check` 회귀. Surface: canonical(maintainer docs) · adopter cascade.
+
+---
+
+#### DR-034 amendment — manifest-target agent-first 분기 추가
+
+**Cluster:** W6. Durability Follow-up
+
+**Task:** DR-034(Draft, upgrade ownership)에 "manifest 보유 target의 agent-first selective upgrade" 경로를 **별도 분기로 추가**하는 amendment. pre-manifest shadow baseline 정책은 유효 유지(제거·대체 아님 — CHORE-20260713-002 R1-Codex-F5), status 승격은 비대상(promotion conditions 별도 유지).
+
+**Dependencies:** CHORE-20260713-002 CP2, DR-034 Draft, rfx PR #12·ai-deck PR #52 evidence.
+
+**Done Criteria:** amendment 초안 + 두 경로(pre-manifest shadow baseline / manifest-target agent-first)의 적용 조건 경계가 명시된다.
+
+**Verification:** DR 문서 review, decisions index 갱신. Surface: canonical(decisions).
+
+---
+
+#### Spring UF-01~08 intake disposition (2026-07-13, CHORE-20260713-001 S1)
+
+**Cluster:** W2. Adopter Transition
+
+> 발견 맥락·상세 근거의 SSoT는 `spring-modular-template` repo `docs/backlog/HARNESS.md` §Upstream Harness Feedback. 여기는 source-side disposition만 유지하며, 문제 분류 기준이고 해결책은 착수 시 비교한다(CHORE-20260713-001 R0-Codex-F4).
+
+| UF | Disposition | 문제 (source 관점) | 비고 |
+| --- | --- | --- | --- |
+| UF-01 | 신규 P2 | scaffold가 product-owned CI seam(출발점)을 제공하지 않고, manifest-tracked `harness-validate.yml`을 직접 고치는 오류 경로에 가드가 없음. 해결 후보(starter stub 동봉 / 파일 헤더 주석 / repo-health 감지)는 착수 시 비교 | 표면 추가 시 net-new surface 기본 억제 적용(owner·lifecycle·upgrade 비용 입증) |
+| UF-02 | 신규 P3 | cross-agent review가 manifest-tracked(harness-owned) 파일 경계를 점검 항목으로 갖지 않음 — checklist 한 줄 추가(문서 무게) vs manifest-aware deterministic guard를 비교 후 결정 | 축④ enforcement evidence이기도 함 |
+| UF-03 | 신규 P3 (L2 — protected workflow 문서 표면) | `docs/GIT-WORKFLOW.md` §GitHub Ruleset이 free-private plan 제약(403)을 미안내 — 문서 gap + 적용 시점 체크리스트 | 저비용 doc-fix |
+| UF-04 | 기존 흡수 | Spring rule/profile drift + 정제 evidence → **"Spring modular/product engineering option-pack 후보"의 입력으로 흡수**, 신규 row 없음 | 해당 섹션에 pointer 추가됨 |
+| UF-05 | 신규 P3 | closeout 시 product-local invariant/decision lifecycle protocol을 conditional-load하는 generic hook이 canonical(`work-close`)에 없음 — neutral pointer만 upstream, 정책 본문은 product-local 소유 | |
+| UF-06 | 신규 P2 | Post-PR 규칙이 agent의 CI green polling 대기를 기본값으로 유도(토큰 낭비) — `gh pr merge --auto` + 조건부 deferred sync를 canonical(GIT-WORKFLOW.md) default로 변경 | **dependency:** `.claude/rules/git-workflow.md` thin adapter화 후보와 같은 파일 표면 — merge 금지(별개 문제: canonical 정책 변경 vs projection 중복 제거), 착수 순서만 조율(UF-06 canonical 변경 → thin-adapter 정리 순 권장). UF-03과 `--auto` 서술 정합화 |
+| UF-07 | 신규 P3 | adopter-facing 문서 authoring standard가 source에 없음 — spring product-local guide **Promote 완료** evidence 기반으로 generalize 여부 판단 | 기존 P1 "Happy path / glossary" Work에서 흡수 검토 가능 |
+| UF-08 | 신규 P2 quick-fix (L2 — scaffold 표면) | scaffold `.claude/settings.json`의 `Read(./.env.*)` deny가 committed `.env.example`까지 차단 → cross-tool 대리 편집 우회 발생. deny를 secret-file contract(`.env`, `.env.local`, `.env.*.local`)와 정합화 | **필수 gate:** secret-file negative fixture + sanitized `.env.example` positive fixture 동반 (CHORE-20260713-001 R0-Codex-F4) |
+
+**Per-candidate details (R1-Codex-F6 — Summary 신규 7행의 1:1 대응):**
+
+##### UF-01 — Product CI workflow seam + harness-validate 경계 가드 (P2, L2)
+
+- **Task:** scaffold가 product CI 출발점을 제공하지 않고, manifest-tracked `harness-validate.yml`을 직접 고치는 오류 경로에 가드가 없다. 해결 후보 비교: ⓐ 주석 처리된 product CI starter stub 동봉, ⓑ `harness-validate.yml` 헤더 경고 주석, ⓒ repo-health의 manifest-tracked 파일 수정 감지. stub(표면 추가)은 net-new surface 기본 억제 gate 통과 필요.
+- **Dependencies:** spring UF-01 원문, `scripts/templates/source-gitflow/.github/workflows/`, CHORE-20260713-001 축④ 판정(deterministic guard 방향).
+- **Done Criteria:** 후보 비교 결정 기록 + 채택안 scaffold 반영. adopter가 product CI를 별도 product-owned workflow로 시작하도록 유도됨.
+- **Verification:** scaffold dry-run 파일 목록, source-gitflow 온보딩 시뮬레이션. Surface: scaffold · adopter cascade.
+
+##### UF-02 — Review manifest-boundary 점검 (P3, L2)
+
+- **Task:** cross-agent review가 manifest-tracked(harness-owned) 파일 경계를 점검 항목으로 갖지 않는다. checklist 한 줄 추가(문서 무게 증가) vs manifest-aware deterministic guard를 비교 후 결정 — guard 채택 시 checklist는 추가하지 않는다.
+- **Dependencies:** `skills/workflow/work-plan.md`·`cross-review.md`, UF-01 후보 ⓒ(중복 가능 — 함께 판단), 축④ 판정.
+- **Done Criteria:** 비교 결정 + 채택안 반영, 근거 기록.
+- **Verification:** work-plan/cross-review 절차 시뮬레이션, mirror parity. Surface: canonical · tool surface.
+
+##### UF-03 — GIT-WORKFLOW ruleset의 GitHub plan 의존성 안내 (P3, L2)
+
+- **Task:** §GitHub Ruleset에 "public 또는 GitHub Pro/Team 이상" plan 의존성과 free-private 대체 경로(수동 규율 또는 `--auto`)를 안내하고, plan 전환 시 일괄 적용할 required check 목록 체크리스트를 추가한다. UF-06 채택 시 `--auto` 서술을 정합화한다.
+- **Dependencies:** `docs/GIT-WORKFLOW.md` §GitHub Ruleset, UF-06 후보.
+- **Done Criteria:** free-private adopter가 403 대체 경로를 문서에서 바로 찾는다.
+- **Verification:** 문서 diff review, stale phrase 점검. Surface: canonical · adopter cascade(source-gitflow scaffold).
+
+##### UF-05 — Generic closeout invariant/decision impact hook (P3, L2)
+
+- **Task:** canonical `work-close`에 "product-local invariant/decision lifecycle protocol이 있으면 conditional-load해 disposition을 남긴다"는 neutral pointer를 추가한다. 정책 본문·state·trigger는 product-local 소유이며 upstream이 강제하지 않는다.
+- **Dependencies:** `skills/workflow/work-close.md` + 4-tool adapter, spring `docs/INVARIANT-LIFECYCLE.md` 선례, DR-013 Discovery disposition data-shape.
+- **Done Criteria:** pointer 1개로 구현(신규 표면 없음), protocol 없는 repo에서 no-op 확인.
+- **Verification:** work-close 시뮬레이션(protocol 유/무 각 1회), mirror parity. Surface: canonical · tool surface · adopter cascade.
+
+##### UF-06 — Auto-merge + deferred sync default branch-flow (P2, L2)
+
+- **Task:** Post-PR 규칙이 agent의 CI green polling 대기를 기본값으로 유도한다. `gh pr merge --auto`(발사 후 종료)를 default merge 경로로, develop sync는 조건부 연기(후속이 독립적이면 batch sync, 의존적이면 stack/통합/merge 확인 후 분기)로 canonical(`docs/GIT-WORKFLOW.md`)에 규정한다.
+- **Dependencies:** `docs/GIT-WORKFLOW.md` §2-5·§3-4, `.claude/rules/git-workflow.md` Post-PR 섹션, **thin-adapter화 후보와 착수 순서 조율(UF-06 canonical 변경 먼저)**, UF-03 `--auto` 서술 정합.
+- **Done Criteria:** default 경로가 `--auto`로 규정되고 sync 연기 조건이 명시된다. rule mirror·scaffold template 동기화 판단 기록.
+- **Verification:** 문서 diff, rule mirror 정합, default template parity. Surface: canonical · tool surface · scaffold.
+
+##### UF-07 — User-facing documentation authoring standard 일반화 (P3, L2)
+
+- **Task:** spring product-local guide(Promote 완료, FEAT-20260703-003)를 근거로 source generalize 여부를 판단한다. 채택 시 3단계 해설법·diagram 선택 기준·current-truth rule의 위치(maintainer guide 확장 vs 신규 canonical)와 DR-007 pointer boundary를 결정한다. 기존 P1(happy path/glossary) Work에서 흡수 검토 가능.
+- **Dependencies:** spring `docs/USER-FACING-DOCUMENTATION-GUIDE.md` + M1 적용 evidence, DR-007, happy path P1 후보.
+- **Done Criteria:** generalize/흡수/defer 결정 + 근거. 신규 표면이면 억제 gate 통과 기록.
+- **Verification:** 문서 diff review, DR-007 경계 확인. Surface: canonical · README/GUIDE/MANUAL.
+
+##### UF-08 — Scaffold `.env` deny wildcard 교정 quick-fix (P2, L2)
+
+- **Task:** scaffold `.claude/settings.json`의 `Read(./.env.*)` deny를 secret-file contract(`.env`, `.env.local`, `.env.*.local` 차단 / committed `.env.example` readable)와 정합화한다. 별도 secret convention(`.env.production` 등)은 wildcard 암묵 처리 대신 `.gitignore`·deny·문서에 명시.
+- **Dependencies:** `scripts/create-harness.sh` settings 생성 블록, `.gitignore` env contract, spring UF-08 원문.
+- **Done Criteria:** sanitized `.env.example` readable + secret env deny 유지. **필수 gate: secret-file negative fixture + sanitized example positive fixture가 scaffold 검증에 추가된다.**
+- **Verification:** scaffold dry-run + fixture 실행(`scripts/tests/`). Surface: scaffold · tool surface.
 
 ---
 

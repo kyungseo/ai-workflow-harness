@@ -173,6 +173,30 @@ print_source_ref_report() {
   fi
 }
 
+# Source provenance recorded into the manifest at scaffold/rebaseline time
+# (CHORE-20260713-003 R0-F2). Contract: the per-file sha256 hashes are the
+# authoritative drift evidence; source_ref/source_commit/source_dirty are a
+# provenance aid for version-skew diagnosis (DR-028), never a drift verdict.
+# source_ref prefers a clean exact harness release tag; otherwise git describe.
+# All three degrade to unknown/false when the source is not a git checkout.
+SOURCE_COMMIT="unknown"
+SOURCE_DIRTY=false
+SOURCE_REF="unknown"
+if git -C "${TEMPLATE_ROOT}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  SOURCE_COMMIT="$(git -C "${TEMPLATE_ROOT}" rev-parse HEAD 2>/dev/null || printf 'unknown')"
+  if [[ -n "$(git -C "${TEMPLATE_ROOT}" status --porcelain 2>/dev/null)" ]]; then
+    SOURCE_DIRTY=true
+  fi
+  EXACT_TAG="$(git -C "${TEMPLATE_ROOT}" describe --tags --exact-match --match 'ai-workflow-v*' 2>/dev/null || true)"
+  if [[ -n "${EXACT_TAG}" && "${SOURCE_DIRTY}" == false ]]; then
+    SOURCE_REF="${EXACT_TAG}"
+  else
+    # fallback uses the same harness release tag filter as the exact-match path
+    # (R1-F5); --always degrades to a bare commit label when no tag matches.
+    SOURCE_REF="$(git -C "${TEMPLATE_ROOT}" describe --tags --match 'ai-workflow-v*' --always --dirty 2>/dev/null || printf 'unknown')"
+  fi
+fi
+
 # Manifest accumulator: adapt() appends one JSON object per framework file.
 # Hash basis = normalized source-template hash (DR-021/023 / OQ-10):
 # the source file before single-token substitution, so it is project-agnostic.
@@ -264,18 +288,95 @@ do_check() {
     return 3
   fi
 
-  # field extractor for my own controlled single-line JSON format
-  local field
-  field() { grep "\"$1\"" "${manifest}" | head -1 | sed -E "s/.*\"$1\": \"?([^\",]*)\"?.*/\1/"; }
-
-  local m_version m_project
-  m_version="$(field harness_version || true)"
-  m_project="$(field project_name || true)"
-  if [[ -z "${m_version}" || -z "${m_project}" ]] || ! grep -q '"framework_files"' "${manifest}"; then
-    echo "ERROR: invalid manifest (harness_version/project_name/framework_files 누락): ${manifest}" >&2
-    echo "migration note: manifest가 오래되었거나 불완전하면 command/skill/rule inventory를 먼저 작성하세요." >&2
+  # Manifest parsing is python3-only (JSON grammar — CHORE-20260713-003 R0-F1).
+  # Fail closed: without python3 no drift verdict is produced (exit 2), instead of
+  # the former line-oriented grep parser silently misreading non-single-line JSON.
+  # HARNESS_CHECK_FORCE_NO_PYTHON=1 is a test-only hook simulating python3 absence.
+  if [[ -n "${HARNESS_CHECK_FORCE_NO_PYTHON:-}" ]] || ! command -v python3 >/dev/null 2>&1; then
+    echo "ERROR: --check requires python3 to parse ${manifest} (any JSON layout)." >&2
+    echo "       Install python3 and re-run. No drift verdict was produced (fail closed)." >&2
     return 2
   fi
+
+  # Parse+validate via python3, emitting a normalized TSV the bash loop consumes:
+  #   META\t<key>\t<value>            (header fields; empty when absent)
+  #   ENTRY\t<path>\t<src>\t<sha256>  (one per framework file)
+  # Validates required fields, entry shape, and the hash_mode contract
+  # (canonical: source_template_raw; legacy alias: normalized_source_template;
+  # anything else = invalid manifest).
+  local parsed
+  parsed="$(mktemp)"
+  if ! python3 - "${manifest}" > "${parsed}" <<'PYEOF'
+import json, re, sys
+path = sys.argv[1]
+def die(msg):
+    sys.stderr.write("invalid manifest (%s)\n" % msg); sys.exit(1)
+def tsv_unsafe(s):
+    # any control char that could split/garble the TSV line protocol (R1-F4)
+    return any(c in s for c in "\t\r\n")
+try:
+    with open(path, encoding="utf-8") as fh:
+        m = json.load(fh)
+except (OSError, ValueError) as e:
+    die("JSON parse failed: %s" % e)
+if not isinstance(m, dict):
+    die("top-level must be an object")
+def sfield(k):
+    v = m.get(k, "")
+    return v if isinstance(v, str) else ""
+if not sfield("harness_version") or not sfield("project_name"):
+    die("harness_version/project_name 누락")
+hash_mode = m.get("hash_mode")
+if hash_mode not in ("source_template_raw", "normalized_source_template"):
+    die("unknown hash_mode: %r; expected source_template_raw "
+        "or legacy alias normalized_source_template" % (hash_mode,))
+# Canonical manifests must carry structured provenance (R1-F1); the legacy
+# alias alone may omit it (degrades to `unknown (legacy)` downstream).
+if hash_mode == "source_template_raw":
+    sr, sc, sd = m.get("source_ref"), m.get("source_commit"), m.get("source_dirty")
+    if not (isinstance(sr, str) and sr) or not (isinstance(sc, str) and sc) or not isinstance(sd, bool):
+        die("canonical hash_mode requires non-empty string source_ref/source_commit and boolean source_dirty")
+    # full 40-hex or the explicit no-git sentinel; anything else is not
+    # reproducible provenance and must not silently enter skew comparison (R1-F2)
+    if sc != "unknown" and not re.fullmatch(r"[0-9a-f]{40}", sc):
+        die("source_commit must be a full 40-hex sha or 'unknown'")
+files = m.get("framework_files")
+if not isinstance(files, list) or not files:
+    die("framework_files 누락 또는 빈 목록")
+for k in ("harness_version", "project_name", "workflow_mode", "hash_mode",
+          "source_ref", "source_commit"):
+    v = sfield(k)
+    if tsv_unsafe(v):
+        die("field %s contains control characters" % k)
+    print("META\t%s\t%s" % (k, v))
+sd = m.get("source_dirty")
+print("META\tsource_dirty\t%s" % ("true" if sd is True else "false" if sd is False else ""))
+for i, e in enumerate(files):
+    ok = isinstance(e, dict) and all(
+        isinstance(e.get(k), str) and e.get(k) for k in ("path", "src", "sha256"))
+    if not ok:
+        die("framework_files[%d] must have string path/src/sha256" % i)
+    if tsv_unsafe(e["path"]) or tsv_unsafe(e["src"]):
+        die("framework_files[%d] path/src contains control characters" % i)
+    if not re.fullmatch(r"[0-9a-f]{64}", e["sha256"]):
+        die("framework_files[%d] sha256 must be 64-hex" % i)
+    print("ENTRY\t%s\t%s\t%s" % (e["path"], e["src"], e["sha256"]))
+PYEOF
+  then
+    echo "ERROR: invalid manifest: ${manifest}" >&2
+    echo "migration note: manifest가 오래되었거나 불완전하면 command/skill/rule inventory를 먼저 작성하세요." >&2
+    rm -f "${parsed}"
+    return 2
+  fi
+
+  meta() { awk -F'\t' -v k="$1" '$1=="META" && $2==k {print $3; exit}' "${parsed}"; }
+  local m_version m_project m_hash_mode m_source_ref m_source_commit m_source_dirty
+  m_version="$(meta harness_version)"
+  m_project="$(meta project_name)"
+  m_hash_mode="$(meta hash_mode)"
+  m_source_ref="$(meta source_ref)"
+  m_source_commit="$(meta source_commit)"
+  m_source_dirty="$(meta source_dirty)"
 
   # Enforcement posture from workflow_mode. workflow_mode is intentionally NOT in
   # the invalid-manifest set above: an old/partial manifest without it degrades to
@@ -283,10 +384,8 @@ do_check() {
   # workflow_mode does not prove `.git/hooks` installation, so source-gitflow is
   # reported `hook-capable`, never `hook-gated` (no overclaim of active enforcement).
   local m_workflow posture
-  # `|| true`: workflow_mode is optional (degrade target). Under `set -euo pipefail`
-  # a missing field makes field()'s grep fail and pipefail would abort the script,
-  # so tolerate the empty result and fall through to the `unknown` posture.
-  m_workflow="$(field workflow_mode || true)"
+  # workflow_mode is optional (degrade target): empty falls through to `unknown`.
+  m_workflow="$(meta workflow_mode)"
   case "${m_workflow}" in
     generic)        posture="advisory-only (no hook files)" ;;
     source-gitflow) posture="hook-capable (source-gitflow hook files present; run tools/git-hooks/install.sh to activate)" ;;
@@ -309,26 +408,44 @@ do_check() {
   [[ "${m_version}" != "${HARNESS_VERSION}" ]] && echo "  version delta    : ${m_version} -> ${HARNESS_VERSION}"
   echo "  enforcement      : ${posture}"
   echo "  gate config      : ${gate_line}"
+
+  # Source provenance judgment (CHORE-20260713-003 R0-F3). Four states:
+  #   legacy (no source_commit) / expected upgrade delta (version+commit differ) /
+  #   version-skew WARN (same version, different commit) / dirty WARN (DR-028).
+  # Per-file hashes below remain the authoritative drift evidence; this block is
+  # a provenance aid only and never changes a file's drift status.
+  local cur_commit="unknown"
+  if git -C "${TEMPLATE_ROOT}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    cur_commit="$(git -C "${TEMPLATE_ROOT}" rev-parse HEAD 2>/dev/null || printf 'unknown')"
+  fi
+  if [[ -z "${m_source_commit}" ]]; then
+    echo "  source provenance: unknown (legacy manifest — source_commit 미기록; 다음 rebaseline 시 기록됨)"
+  else
+    echo "  source provenance: recorded ${m_source_ref:-unknown} @ ${m_source_commit:0:12} (dirty: ${m_source_dirty:-unknown})"
+    # Skew comparison only when BOTH commits are real full shas (R1-F2): the
+    # explicit no-git sentinel `unknown` is not reproducible provenance and
+    # must not produce a false version-skew WARN.
+    if [[ "${m_source_commit}" == "unknown" || "${cur_commit}" == "unknown" ]]; then
+      echo "  source provenance: non-reproducible (recorded or current commit unknown — skew 비교 생략)"
+    elif [[ "${m_source_commit}" != "${cur_commit}" ]]; then
+      if [[ "${m_version}" == "${HARNESS_VERSION}" ]]; then
+        echo "  WARNING          : version-skew — same harness_version (${m_version}) but different source commit (recorded ${m_source_commit:0:12}, current ${cur_commit:0:12})"
+      else
+        echo "  source delta     : expected upgrade source delta (recorded ${m_source_commit:0:12} -> current ${cur_commit:0:12})"
+      fi
+    fi
+    if [[ "${m_source_dirty}" == "true" ]]; then
+      echo "  WARNING          : recorded source was dirty at scaffold/rebaseline time (DR-028: treat recorded provenance as non-release evidence)"
+    fi
+  fi
   echo ""
 
   local total=0 insync=0 drift=0
-  local line rel_dst rel_src recorded cur_src_hash tgt_hash rendered_hash status
-  local check_list
-  check_list="$(mktemp)"
+  local tag rel_dst rel_src recorded cur_src_hash tgt_hash rendered_hash status
 
-  # iterate framework_files entries: select by "path" (entry-only; avoids the
-  # hash_algorithm metadata line). '|| true' so an empty set does not trip set -e.
-  grep '"path"' "${manifest}" > "${check_list}" 2>/dev/null || true
-  if [[ ! -s "${check_list}" ]]; then
-    echo "ERROR: invalid manifest (framework_files 엔트리 없음): ${manifest}" >&2
-    rm -f "${check_list}"
-    return 2
-  fi
-  while IFS= read -r line; do
-    [[ "${line}" == *'"path"'* ]] || continue
-    rel_dst="$(printf '%s' "${line}" | sed -E 's/.*"path": "([^"]*)".*/\1/')"
-    rel_src="$(printf '%s' "${line}" | sed -E 's/.*"src": "([^"]*)".*/\1/')"
-    recorded="$(printf '%s' "${line}" | sed -E 's/.*"sha256": "([^"]*)".*/\1/')"
+  # iterate normalized ENTRY rows (python3 already validated shape + non-empty set)
+  while IFS=$'\t' read -r tag rel_dst rel_src recorded; do
+    [[ "${tag}" == "ENTRY" ]] || continue
     total=$((total + 1))
 
     if [[ ! -f "${TEMPLATE_ROOT}/${rel_src}" ]]; then
@@ -363,8 +480,8 @@ do_check() {
       drift=$((drift + 1))
       echo "  [${status}] ${rel_dst}"
     fi
-  done < "${check_list}"
-  rm -f "${check_list}"
+  done < "${parsed}"
+  rm -f "${parsed}"
 
   echo ""
   echo "summary: ${total} tracked, ${insync} in-sync, ${drift} drifted"
@@ -384,6 +501,12 @@ else
   echo "  Project : ${PROJECT_NAME}"
   echo "  Target  : ${TARGET_ROOT}"
 fi
+# Scaffold-time provenance warning (DR-028 / CHORE-20260713-003 R0-F2): a manifest
+# baselined on a dirty or non-release source is recorded as such and flagged here.
+if [[ "${SOURCE_DIRTY}" == true ]] || { [[ "${SOURCE_REF}" != "unknown" ]] && ! is_clean_release_desc "${SOURCE_REF}"; }; then
+  echo "  WARNING : source checkout is not a clean release tag (${SOURCE_REF}, dirty: ${SOURCE_DIRTY})"
+  echo "            manifest provenance will record this; treat as pre-release evidence (DR-028)"
+fi
 echo ""
 
 # ── Directory structure ──────────────────────────────────────────────────────
@@ -401,6 +524,7 @@ for dir in \
   "${TARGET_ROOT}/docs/reports" \
   "${TARGET_ROOT}/docs/presentations" \
   "${TARGET_ROOT}/docs/troubleshooting" \
+  "${TARGET_ROOT}/docs/user" \
   "${TARGET_ROOT}/.claude/rules" \
   "${TARGET_ROOT}/.claude/commands" \
   "${TARGET_ROOT}/.cursor/rules" \
@@ -429,6 +553,8 @@ adapt "${TEMPLATE_ROOT}/docs/HARNESS-RECOVERY-VALIDATION.md"  "${TARGET_ROOT}/do
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md" \
       "${TARGET_ROOT}/docs/HARNESS-PARALLEL-WORK-CONTROLS.md"
 adapt "${TEMPLATE_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"      "${TARGET_ROOT}/docs/HARNESS-QUICK-REFERENCE.md"
+adapt "${TEMPLATE_ROOT}/docs/user/README.md"                  "${TARGET_ROOT}/docs/user/README.md"
+adapt "${TEMPLATE_ROOT}/docs/user/CROSS-REVIEW-MANUAL.md"     "${TARGET_ROOT}/docs/user/CROSS-REVIEW-MANUAL.md"
 
 # Optional source pack (DR-021): heavy framework docs + product-track workflow
 # (work-doc). Default scaffold excludes them to keep target context minimal;
@@ -724,6 +850,18 @@ write_text "${TARGET_ROOT}/.harness/gate-config" '# Project gate config (.harnes
 # Records harness version + framework-owned file list/hash so the target knows
 # its baseline and `--check` can report drift. Framework files were accumulated
 # by adapt(); B-class seeds (write_text) are intentionally excluded.
+#
+# Field contract (CHORE-20260713-003):
+#   generated_at   — date the CURRENT manifest baseline was generated or
+#                    rebaselined (updates on every regeneration; not a
+#                    "first scaffold" timestamp).
+#   hash_mode      — canonical: source_template_raw = sha256 of the source
+#                    template file's raw bytes BEFORE identity substitution
+#                    (project-agnostic). Legacy alias accepted by --check:
+#                    normalized_source_template (same semantics, old name).
+#   source_ref/source_commit/source_dirty — provenance of the source checkout
+#                    at scaffold/rebaseline time. Provenance aid only: per-file
+#                    sha256 stays the authoritative drift evidence.
 if [[ "${DRY_RUN}" != true ]]; then
   # strip trailing comma+newline from the accumulated rows
   MANIFEST_BODY="${MANIFEST_ROWS%,
@@ -737,8 +875,11 @@ if [[ "${DRY_RUN}" != true ]]; then
   \"workflow_mode\": \"${WORKFLOW_MODE}\",
   \"with_optional\": ${WITH_OPTIONAL},
   \"project_name\": \"${PROJECT_NAME}\",
+  \"source_ref\": \"${SOURCE_REF}\",
+  \"source_commit\": \"${SOURCE_COMMIT}\",
+  \"source_dirty\": ${SOURCE_DIRTY},
   \"hash_algorithm\": \"sha256\",
-  \"hash_mode\": \"normalized_source_template\",
+  \"hash_mode\": \"source_template_raw\",
   \"framework_files\": [
 ${MANIFEST_BODY}
   ]
@@ -806,6 +947,7 @@ AI workflow 자체의 개선과 example pack 정비는 Harness track으로 분�
 | \`docs/BEHAVIOR-PRINCIPLES.md\` | 전역 행동 원칙 |
 | \`docs/STATUS.md\` | 현재 작업 상태 |
 | \`docs/HARNESS-QUICK-REFERENCE.md\` | 세션 실행 규칙 요약 |
+| \`docs/user/CROSS-REVIEW-MANUAL.md\` | 선택적 cross-agent review 사용법 |
 | \`docs/BOOTSTRAP.md\` | scaffold 직후 프로젝트 부팅 checklist |
 | \`docs/AGENT-WORKFLOW.md\` | 공통 운영 규칙 |
 ${OPTIONAL_README_ROWS}| \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
@@ -847,11 +989,11 @@ onboarding에서 채우는 항목과 순서:
 
 1. \`docs/STATUS.md\` — 프로젝트 목표와 Current phase(focus) 설명
 2. \`docs/PLAN-SUMMARY.md\` Project Summary — 제품 목표와 핵심 workflow
-3. \`docs/PLAN-SUMMARY.md\` Implementation Baseline — Runtime/Framework/Build/package 결정 (코드 개발 프로젝트)
+3. \`docs/PLAN-SUMMARY.md\` Implementation Baseline / Verification Defaults — Runtime/Framework/Build/package 결정 + product 검증 명령 (코드 개발 프로젝트). product constants의 operational home
 4. \`docs/PLAN.md\` Project Initialization Plan — stack 선택 근거와 초기 구조
 5. \`docs/backlog/PRODUCT.md\` — baseline 완료 후 도출한 초기 작업 항목 (Work ID는 /work-plan 착수 시 확정)
 6. \`docs/BEHAVIOR-PRINCIPLES.md\` — 전역 행동 원칙 확인
-7. \`docs/AGENT-WORKFLOW.md\` — Project Constants와 Verification Defaults
+7. \`docs/AGENT-WORKFLOW.md\` — framework convention만 확인(product 값은 채우지 않음 — 위 3에서 PLAN-SUMMARY에 둔다)
 
 ## 사전 작업
 
@@ -917,7 +1059,7 @@ write_text "${TARGET_ROOT}/docs/STATUS.md" "# STATUS.md — ${PROJECT_NAME}
 2. §1 Project Identity, §2 Product Definition 완료 후 \`docs/PLAN-SUMMARY.md\` Project Summary 업데이트
 3. §3 Project Initialization: \`docs/PLAN-SUMMARY.md\` Implementation Baseline 채우기 (코드 개발 프로젝트만)
 4. Implementation Baseline 완료 후 \`docs/backlog/PRODUCT.md\`에 초기 작업 후보 등록 (Work ID는 /work-plan 착수 시 확정)
-5. \`docs/AGENT-WORKFLOW.md\` Project Constants와 Verification Defaults 채우기
+5. product constants/검증 명령은 \`docs/PLAN-SUMMARY.md\` Implementation Baseline/Verification Defaults에 둔다 (\`docs/AGENT-WORKFLOW.md\`는 framework convention만)
 6. AI workflow 개선 항목은 \`docs/backlog/HARNESS.md\`로 분리
 7. Claude Code: \`/session-start\`로 첫 세션 시작 | Codex/Antigravity: \`AGENTS.md\` 확인 후 \`/session-start\` intent 실행 | Cursor: \`prompts/cursor-session-start.md\` 사용
 "
@@ -974,14 +1116,12 @@ Scaffold 직후 이 파일을 먼저 채운다. 목표는 빈 harness를 프로�
 - [ ] 결정된 항목은 Readiness를 Ready로 업데이트한다
 - [ ] 코드 개발이 필요 없는 항목은 Readiness를 Not Applicable로 표시한다
 - [ ] 결정 근거는 \`docs/PLAN.md\` Project Initialization Plan에 기록한다
-- [ ] \`docs/AGENT-WORKFLOW.md\` Project Constants 작성 (Runtime, Framework, Build, Base package/module, Architecture)
-
+- [ ] product 검증 명령(test/build)은 \`docs/PLAN-SUMMARY.md\` Verification Defaults에 기록한다. \`docs/AGENT-WORKFLOW.md\`는 framework convention만 — product 값을 채우지 않는다
 **no-code 프로젝트 (content/research/문서·운영 중심):** Implementation Baseline은 전 항목 Not Applicable로 두되, 정체성만 남지 않도록 운영/콘텐츠 모델을 정한다.
 
 - [ ] \`docs/PLAN-SUMMARY.md\` Implementation Baseline 전 항목을 Not Applicable로 표시한다
 - [ ] 운영/콘텐츠 모델을 \`docs/PLAN.md\` Initial Structure에 기록한다 — artifact·디렉토리 구조, 분류(taxonomy)/명명 규칙, 수집·분류·재사용 workflow
-- [ ] \`docs/AGENT-WORKFLOW.md\` Project Constants를 운영 기준으로 작성 (Runtime=문서/no-code, Architecture=콘텐츠·운영 구조)
-
+- [ ] 운영 기준 요약(Runtime=문서/no-code, Architecture=콘텐츠·운영 구조)은 \`docs/PLAN-SUMMARY.md\` Implementation Baseline에 둔다. \`docs/AGENT-WORKFLOW.md\`는 framework convention만
 > 이 단계가 완료(또는 Not Applicable 처리)되지 않으면 \`docs/backlog/PRODUCT.md\`에 기능 후보를 등록하지 않는다.
 > 기능 candidate 제안 전에 Implementation Baseline Readiness를 먼저 확인한다.
 
@@ -1000,7 +1140,7 @@ Scaffold 직후 이 파일을 먼저 채운다. 목표는 빈 harness를 프로�
 AI workflow 자체의 조정은 Harness track으로 분리한다.
 
 - [ ] tool entrypoint(\`AGENTS.md\`, \`CLAUDE.md\`)가 프로젝트에 맞는지 확인
-- [ ] \`docs/AGENT-WORKFLOW.md\` Verification Defaults 작성
+- [ ] product 검증 명령은 \`docs/PLAN-SUMMARY.md\` Verification Defaults에 둔다. \`docs/AGENT-WORKFLOW.md\` framework Verification Defaults는 그대로 둔다
 - [ ] \`README.md\`, \`docs/PLAN-SUMMARY.md\`, \`AGENTS.md\`, \`CLAUDE.md\`에 프로젝트 identity 보정이 필요한지 확인
 - [ ] \`.claude/rules/\`, \`.cursor/rules/\`, \`prompts/\`에 role/rule/prompt naming 보정이 필요한지 확인
 - [ ] command/rule/prompt 조정이 필요하면 \`docs/backlog/HARNESS.md\`에 후보 등록 (Work ID는 /work-plan 착수 승인 시 확정)
@@ -1016,7 +1156,7 @@ AI workflow 자체의 조정은 Harness track으로 분리한다.
 6. \`docs/PLAN.md\` Project Initialization Plan — stack 선택 근거, 초기 구조 (코드 프로젝트) / no-code는 운영·콘텐츠 모델을 Initial Structure에 기록
 7. \`docs/backlog/PRODUCT.md\` — Product track backlog (baseline 완료 후)
 8. \`docs/backlog/HARNESS.md\` — Harness track backlog
-9. \`docs/AGENT-WORKFLOW.md\` — Project Constants, Verification Defaults
+9. \`docs/AGENT-WORKFLOW.md\` — framework convention만 확인 (product 값은 5의 PLAN-SUMMARY에 둔다)
 
 ## 7. Example Pack Review
 
@@ -1171,6 +1311,9 @@ write_text "${TARGET_ROOT}/docs/backlog/PRODUCT.md" "# Product Backlog
 제품 목표에서 도출한 후보 작업을 우선 등록한다.
 AI workflow, command/rule, prompt, scaffold 개선은 \`docs/backlog/HARNESS.md\`로 분리한다.
 
+> Done/Superseded 항목은 이 파일에서 제거된다.
+> 완료 이력: Work 파일이 있는 항목은 \`docs/archive/docs/works/product/README.md\` Archived 인덱스, Work 파일이 없는 항목(Quick Mode)은 \`git log --grep=\"{ID}\"\`로 확인한다.
+
 ## Backlog
 
 ### Summary
@@ -1198,8 +1341,6 @@ AI workflow, command/rule, prompt, scaffold 개선은 \`docs/backlog/HARNESS.md\
 
 ---
 -->
-
-## Done
 "
 
 write_text "${TARGET_ROOT}/docs/backlog/HARNESS.md" "# Harness Backlog
@@ -1394,7 +1535,7 @@ echo "  docs/STATUS.md         — 프로젝트 목표와 Current phase(focus) �
 echo "  docs/PLAN-SUMMARY.md   — Project Summary와 Implementation Baseline"
 echo "  docs/PLAN.md           — Project Initialization Plan"
 echo "  docs/backlog/PRODUCT.md — baseline 완료 후 도출한 초기 작업 항목 (Work ID는 /work-plan 착수 시 확정)"
-echo "  docs/AGENT-WORKFLOW.md — Project Constants와 Verification Defaults"
+echo "  docs/AGENT-WORKFLOW.md — framework convention만 (product 값은 PLAN-SUMMARY Implementation Baseline)"
 echo ""
 if [[ "${PROFILE}" == "generic" ]]; then
   echo "Profile: generic"
