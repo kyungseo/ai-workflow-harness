@@ -72,6 +72,7 @@ AI Workflow Harness backlog다.
 | — | P3 | Candidate | L2 | User-facing documentation authoring standard 일반화 (UF-07) |
 | — | P2 | Candidate | L2 | Scaffold `.env` deny wildcard 교정 quick-fix (UF-08, fixture gate 필수) |
 | — | P2 | Candidate | L2 | Branch isolation gate에 `skills/` canonical 보호 편입 (skills/workflow·skills/safety — pre-existing gap) |
+| — | P3 | Candidate | L1 | root README에 upgrade default-entry(AGENT-FIRST) 발견 가능성 pointer 추가 |
 | HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
 
 ---
@@ -360,6 +361,20 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 **Priority note:** 실제 cross-tool misfire(상태 변경 workflow command가 사람 명시 호출 없이 자율 발동) 관측이 없어 P3. 1건이라도 관측되면 P2 승격.
 
 **Verification:** adapter frontmatter grep, intent-routing surface 대조. Surface: tool surface · canonical · adopter cascade.
+
+---
+
+#### root README에 upgrade default-entry(AGENT-FIRST) 발견 가능성 pointer 추가
+
+**Cluster:** Harness workflow surface cleanup
+
+**Task:** root `README.md`의 Adopter Modes And Maintenance/upgrade 안내가 manifest-target upgrade의 default entry(`docs/maintainer/ADOPTER-UPGRADE-AGENT-FIRST.md`)를 직접 가리키지 않는다. front door에서 새 경로의 발견 가능성을 높이는 pointer 1~2줄 추가. (출처: CHORE-20260713-007 R1 nice-to-have defer → -006 Needs-Triage 메모의 backlog 승격 — archive 후 표면화 경로가 없어 등록.)
+
+**Dependencies:** `docs/maintainer/ADOPTER-UPGRADE-AGENT-FIRST.md`(CHORE-20260713-006), README Adopter Modes 절.
+
+**Done Criteria:** README에서 upgrade 의도의 독자가 AGENT-FIRST(default)와 playbook(fallback)의 존재를 1 hop에 발견한다. maintainer 상세를 README에 복제하지 않는다(pointer-only).
+
+**Verification:** README diff review, stale link check. Surface: README/GUIDE/MANUAL.
 
 ---
 
