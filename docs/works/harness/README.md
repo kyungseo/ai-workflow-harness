@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260713-001 | Harness direction review + adopter evidence intake + backlog 재정렬 | 2026-07-13 | [CHORE-20260713-001-direction-review-backlog-realignment.md](CHORE-20260713-001-direction-review-backlog-realignment.md) |
 
 ## Archived
 

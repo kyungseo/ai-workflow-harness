@@ -3,14 +3,14 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-06-24 (spring-modular handoff/backlog alignment)
+Last updated: 2026-07-13 (direction review / durability follow-up)
 
 ## Current State
 
 | Field | Value |
 | --- | --- |
 | Current phase | AWH-004 — Maintenance & Adoption |
-| Current focus | Adopter evidence/backlog alignment, spring-modular handoff follow-up, planning-pack evidence review |
+| Current focus | Durability follow-up(축②③④ evidence-gated, backlog W6), UF intake 반영, planning-pack evidence review |
 | Project plan | `docs/PLAN.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
@@ -37,6 +37,7 @@ Last updated: 2026-06-24 (spring-modular handoff/backlog alignment)
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-07-13 | CHORE-20260713-001: 3주 휴면 후 direction review — **전면 rewrite 불필요** 공식화, 4축 판정(① policy retain / ② upgrade refactor-**provisional** / ③ projection rule-surface 한정 / ④ enforcement 보완, brief `harness-longterm-durability-review-20260713`). rfx-hub 1.2.1→1.4.0 agent-first upgrade 실험(rfx PR #12 merged)으로 축② feasibility 실증(71/72 in-sync) — heterogeneous replay(ai-deck) 전까지 script/playbook 축소 금지. spring UF-01~08 intake(신규 7행+details, UF-04 흡수), adopter 4-repo 정정(version-skew 2건 발견), backlog W6 cluster 등록. bounded heuristic("deterministic contract·verification 있을 때 agent 위임 기본 후보")은 DR 아닌 brief 가설. cross-review R0/R0b/R1/R1b(Claude driver / Codex reviewer) 합의 종결 | stale backlog 위에서 P1을 고르는 순서 오류 방지 + 사용자 방향 가설("절차 기계장치 대신 checklist+agent")의 evidence-bounded 검증 | Low |
 | 2026-06-24 | CHORE-20260624-003: 구버전 manifest-target upgrade helper / accepted-drift schema는 **defer / monitor-only** 결정(설계 Work). DR-043이 AGENT-WORKFLOW accepted-drift(가장 구체적 `[5]` 반복 case)를 닫아 schema(축 ⓑ) 근거 약화, 절차는 playbook/Layer T로 닫힘(축 ⓐ 노동만 잔존). 새 helper/schema 미구현, low-cost `--check output 개선`만 trigger-gated future. numeric trigger(adopter upgrade 2건+ 동일 rebaseline 오류 또는 AGENT-WORKFLOW 외 framework accepted-drift 반복) 충족 시 후속 Work. DR-034 Draft 유지(non-promotion). backlog residual downscope. cross-review R0/R1(Codex approve) | 표본 2건으로 도구/schema를 과대 설계하지 않고 evidence-bounded defer | Low |
 | 2026-06-24 | CHORE-20260624-002 / DR-043(Accepted Amended): framework-owned core 문서(`AGENT-WORKFLOW.md`)는 product-specific 값을 담지 않고 pointer만 둔다. product runtime/build/architecture/base-package + project 검증 명령의 home = `PLAN-SUMMARY.md` Implementation Baseline(scaffold가 이미 생성하는 owned 섹션; derived 규칙은 그 섹션만 예외). framework convention(`Active state file`)·Verification framework defaults는 AGENT-WORKFLOW 유지. 기존 adopter는 one-time migration(분류 gate, 값 유실 방지) 필수. EXECUTE-전 home을 PLAN.md→PLAN-SUMMARY로 amend(scaffold 현실 보존). cross-review R0/R1(Codex), N3 replay로 spring divergence=product 값뿐 확인 | CHORE-20260624-001에서 남은 `AGENT-WORKFLOW.md` 단일 accepted-drift(adopter upgrade마다 invariant `[5]` 반복 실패)의 근본 원인을 닫기 위해 | Medium |
 | 2026-06-24 | CHORE-20260624-001: spring-modular-template framework surface를 `ai-workflow-v1.4.0` tag baseline으로 upgrade. shadow re-scaffold(spring-boot/source-gitflow)로 11개 framework 파일 adapt-render + `.harness/manifest.json` whole-replace rebaseline, `docs/AGENT-WORKFLOW.md` accepted-drift 보존. `--check` 82/81/1(AGENT 단일 accepted), invariant `[1]~[4] OK`/`[5] expected`. cross-review(R0/R0b/R1, Claude driver·Codex reviewer): R0b에서 `--check` source-updated=manifest hash 신호라 content copy만으론 drift 미해소 + adapt-render 필수 발견. spring PR #13(feature→develop)+#14(develop→main) merged. source-only maintainer 보강 3건(playbook Phase4·6, VERIFICATION T2 — shipped baseline 무영향) | manifest-target adopter를 released baseline으로 정합화하고 upgrade 절차 공백(rebaseline/adapt-render/profile match)을 maintainer 문서에 못박기 위해 | Medium |
@@ -49,9 +50,11 @@ Last updated: 2026-06-24 (spring-modular handoff/backlog alignment)
 
 > backlog는 확정 실행 계획이 아니라 의견 있는 portfolio view다. live 후보의 단일 source는 `docs/backlog/HARNESS.md`이며, 각 항목 착수 시 `/work-plan`에서 논리성·합리성·현재 product 적용 맥락을 다시 검토한다. 별도 Seq 축은 유지하지 않는다(CHORE-20260610-011 (B)).
 
-W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcement & Lifecycle)의 기반 작업은 종결됐다. 현재 live 후보와 우선순위·gate는 `docs/backlog/HARNESS.md`를 참조한다.
+W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcement & Lifecycle)의 기반 작업은 종결됐다. 2026-07-13 direction review(CHORE-20260713-001) 결과 **전면 rewrite 불필요**가 공식화됐고, 실행 후속은 backlog **W6. Durability Follow-up** cluster가 evidence-gated로 관리한다(판정 상세: brief `harness-longterm-durability-review-20260713.md`).
 
-- **지금 막힘 없이 착수 가능한 P1:** Happy path / glossary / operator layering compression.
+- **첫 착수 추천:** ai-deck-compiler 1.3.0→1.4.0 **agent-first upgrade replay** (W6, P2) — 축② provisional 해제 gate. 성공 시 script/playbook 축소와 DR-034 amend 판단이 열린다.
+- **지금 막힘 없이 착수 가능한 P1:** Happy path / glossary / operator layering compression, Safety rule layer 정규화(축 A).
 - **handoff-backed P1:** First concrete planning-pack evidence review (`spring-modular-template` handoff 결과 + fresh no-code follow-up). Spring repo의 PRODUCT backlog normalization 결과는 이 source evidence review의 입력으로만 소비한다.
-- **monitor-only / deferred:** adopter upgrade accepted-drift 표현 + upgrade helper(CHORE-20260624-001 residual, P3), planning-pack skeleton/scaffold integration(trigger-gated), Spring modular/product engineering option-pack(trigger-gated, source-ready 아님).
-- **gated 후속:** DR-034 promotion 판단(high-band 적용 adopter 2건=ai-deck+spring이나 둘 다 manifest/agent-mediated 경로 → #1 pre-manifest shadow baseline 여전히 UNMET), DR namespace successor(②b/③) 재검토(DR-042 Policy Horizon trigger gated), internal managed mode(walkthrough 후, P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), project-state template pack(P2) 등은 backlog의 gate 기준을 따른다.
+- **W6 P2 후속:** manifest contract 정비(tolerant parser·source-ref·`generated_at`), UF-06 auto-merge default → thin-adapter화(순서 고정), UF-08 scaffold deny quick-fix, UF-01 product CI seam.
+- **monitor-only / deferred:** upgrade helper residual(P3 — manifest contract 정비가 축ⓐ 흡수 가능), planning-pack skeleton/scaffold integration(trigger-gated), Spring modular/product engineering option-pack(trigger-gated, UF-04 evidence 흡수됨).
+- **gated 후속:** DR-034 promotion/amend 판단(agent-first replay 결과 입력), DR namespace successor(DR-042 Policy Horizon gated), internal managed mode(P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), project-state template pack(P2) 등은 backlog의 gate 기준을 따른다.
