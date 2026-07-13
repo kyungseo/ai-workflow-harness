@@ -33,7 +33,7 @@ AI Workflow Harness backlog다.
 | W3. Workflow IA Diet ✓ 완결 | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | (Canonical 개념 계층화 핵심 달성 = CHORE-20260613-002~005, Prompt surface diet 완료 = CHORE-20260612-010, work-doc class 완료 = CHORE-20260613-005, trigger family simplification 완료 = CHORE-20260613-006) 전부 완료 |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | (전부 종결) Validation Spine residual F1~F4 = CHORE-20260613-017/018·DR-036, 문서-only 규칙 강제화 = DR-037, Archive 누적 관리 정책 = DR-038, CI inline assertion ↔ invariants SSoT parity = CHORE-20260613-016 no-action closeout |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인된 확장만 다룬다 | Spring modular/product engineering option-pack(trigger-gated, source-ready 아님), project-state template, sub-agent autonomy policy, packaging/distribution revisit, Windows 지원 |
-| W6. Durability Follow-up (2026-07 direction review) | CHORE-20260713-001의 4축 판정(brief `harness-longterm-durability-review-20260713.md`)을 evidence-gated로 실행한다. **축②는 2026-07-13 해제됨(CHORE-20260713-002 — manifest 보유 target의 agent-first 방향 한정, 비오염 operator·pre-manifest는 residual)** | 축②: manifest contract 정비 = P2, upgrade 절차 diet(canary gate) = P2, DR-034 manifest-target 분기 amend = P3. 축③: UF-06 auto-merge(P2) → `.claude/rules/git-workflow.md` thin adapter화(P2 상향) 순서. 축④: UF-01/02 deterministic guard 비교, UF-08 quick-fix(P2) |
+| W6. Durability Follow-up (2026-07 direction review) | CHORE-20260713-001의 4축 판정(brief `harness-longterm-durability-review-20260713.md`)을 evidence-gated로 실행한다. **축②는 2026-07-13 해제됨(CHORE-20260713-002 — manifest 보유 target의 agent-first 방향 한정, 비오염 operator·pre-manifest는 residual). manifest contract 정비는 CHORE-20260713-003으로 완료** | 축②: upgrade 절차 diet(canary gate, 선행 조건 충족) = P2, DR-034 manifest-target 분기 amend = P3. 축③: UF-06 auto-merge(P2) → `.claude/rules/git-workflow.md` thin adapter화(P2 상향) 순서. 축④: UF-01/02 deterministic guard 비교, UF-08 quick-fix(P2) |
 
 **Adopter evidence set (2026-07-13 실측 현행화, CHORE-20260713-001):** 현재 scaffold된 실제 적용 프로젝트는 4개다. `base-msa-template`은 `ai-workflow-harness`의 mirror/reference 입력이므로 scaffold target evidence set에서 제외한다.
 
@@ -63,7 +63,6 @@ AI Workflow Harness backlog다.
 | — | P3 | Candidate | L3 | PLAN-SUMMARY.md → PROJECT-CONTEXT.md rename feasibility / migration brief |
 | — | P3 | Candidate | L3 | DR namespace successor 평가 (②b product-only prefix / ③ directory) — DR-042 Policy Horizon trigger gated |
 | — | P2 | Candidate | L2 | `.claude/rules/git-workflow.md` thin adapter화 (Branch Flow·Post-PR·Commit Message 상세 → GIT-WORKFLOW.md 위임) — 축③ block-replication 실측으로 P3→P2 상향, UF-06 뒤 착수 |
-| — | P2 | Candidate | L2 | Manifest contract 정비 — tolerant parser·source-ref·generated_at (축② 후속) |
 | — | P2 | Candidate | L2 | Upgrade 절차 diet — agent-first 경로 정식화 + playbook 축소 (canary gate) |
 | — | P3 | Candidate | L2 | DR-034 amendment — manifest-target agent-first 분기 추가 |
 | — | P1 | Candidate | L2 | Safety rule layer 정규화 (축 A: A1 always / A2 path-scoped, Codex·AG는 shared safety doc) |
@@ -409,7 +408,7 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 
 **Canary gate (CHORE-20260713-002 R1-Codex-F6):** procedural duplication 축소까지만 선행 가능. **비오염 operator 1건 또는 fresh-session canary 1건에서 artifact·보존 분류 재검증을 통과하기 전에는 default 경로 전환·기존 playbook 삭제를 승인하지 않는다.**
 
-**Dependencies:** CHORE-20260713-002 CP1(체크리스트·측정), brief 축② amendment, manifest contract 정비(선행 권장 — parser 관용화가 pretty-print 함정을 구조 제거).
+**Dependencies:** CHORE-20260713-002 CP1(체크리스트·측정), brief 축② amendment, ~~manifest contract 정비(선행 권장)~~ **선행 조건 충족 — CHORE-20260713-003 완료**(tolerant parser가 pretty-print 함정 구조 제거, provenance 계약 확정).
 
 **Done Criteria:** agent-first 체크리스트의 정식 위치 결정·문서화, 축소/유지 대상 목록, canary gate 조건 명문화(통과 전 default 미전환).
 
@@ -428,20 +427,6 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 **Done Criteria:** amendment 초안 + 두 경로(pre-manifest shadow baseline / manifest-target agent-first)의 적용 조건 경계가 명시된다.
 
 **Verification:** DR 문서 review, decisions index 갱신. Surface: canonical(decisions).
-
----
-
-#### Manifest contract 정비 — tolerant parser·source-ref·generated_at (축② 후속)
-
-**Cluster:** W6. Durability Follow-up
-
-**Task:** CHORE-20260713-001 R1-Codex-F2/R1b 비교 축 실행: ① `--check` parser의 JSON 관용화 — single-line 제약은 semantic contract가 아니라 parser 구현 제약이므로 **tolerant parser로 교정**(entry-format 계약화는 R1b에서 선택지 제외), 기존 `hash_algorithm`/`hash_mode` 필드의 충분/부족 정의 포함. ② scaffold/upgrade 시 source `git describe` 기록으로 version-skew(rfx·toolstead 2건 실측) 구조 해소 — DR-028 정합. ③ `generated_at` 의미(최초 scaffold vs rebaseline) 계약 정의. script/playbook 축소는 **비범위**(ai-deck replay gate 뒤). 기존 monitor-only 후보(upgrade helper residual)의 축ⓐ `--check output 개선`과 겹치면 이 후보가 흡수한다.
-
-**Dependencies:** CHORE-20260713-001 CP2 관측(pretty-print 함정·generated_at 미정), DR-028, `scripts/create-harness.sh` --check.
-
-**Done Criteria:** tolerant parser 반영 + source-ref 기록 배선 + 필드 의미 정의가 maintainer 문서에 기록된다. pretty-print manifest fixture가 검증에 추가된다.
-
-**Verification:** `--check` 회귀(정상/pretty-print/구버전 manifest fixture), scaffold dry-run, invariants. Surface: scaffold · tool surface · canonical(maintainer docs).
 
 ---
 
