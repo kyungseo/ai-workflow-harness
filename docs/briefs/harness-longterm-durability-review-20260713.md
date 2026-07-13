@@ -34,7 +34,9 @@ related_work: [CHORE-20260713-001]
 
 Gate no-go(우회 실측 1건, 2026-05 Resolved 후 재발 없음, deadlock 0). Approval Matrix·state machine·manual-first 정체성이 작업을 막았다는 기록이 없다. "정책 과다" 인상(비공식 평가)은 실측 미지지로 기록한다. 신규 adopter 인지 부하는 별개 문제로 기존 P1(happy path/glossary)이 소유한다.
 
-### ② distribution·upgrade — refactor (provisional)
+### ② distribution·upgrade — refactor (provisional → **해제됨 2026-07-13, 범위 한정**)
+
+> **Amendment (CHORE-20260713-002):** heterogeneous replay(ai-deck-compiler — source-gitflow + accepted-drift 13 + code product)가 artifact 독립 재검증(`--check` 78/65/13, hash 78/78, 보존 13/13)을 통과해 provisional을 해제한다. **해제 범위는 "manifest 보유 heterogeneous target의 agent-first upgrade 방향"으로 한정** — 비오염 operator process 효율, external manual adopter, pre-manifest baseline acquisition은 unobserved residual로 유지한다. script/playbook 축소는 canary gate(비오염 operator 1건 또는 fresh-session canary 1건 재검증) 통과 전 default 전환·삭제 금지.
 
 **유지(contract/verification):** manifest 계약(framework-owned 선언 + path/src 매핑), `--check` 검증, release tag baseline.
 **방향(provisional — R1-Codex-F1):** playbook Phase 절차·shadow re-scaffold·수기 rebaseline → **agent-first 최소 체크리스트**. 근거는 rfx-hub 1.2.1→1.4.0 실험의 **feasibility**(generic/no-code target 1건, informed-driver 오염, 최종 artifact 동등성 71/72 in-sync는 공정 검증이나 process 비교는 비오염·재현 조건 아님). **heterogeneous replay(code/accepted-drift target 또는 비오염 operator) 1건 이상 전까지 provisional refactor direction으로 유지**하며, script/playbook 축소 실행 판정은 그 이후 gate로 남긴다.
@@ -63,7 +65,7 @@ UF-01(문서 rule 위반이 실행 gate 부재로 review 2라운드 통과)이 s
 
 | Trigger | 재개방 대상 |
 | --- | --- |
-| **heterogeneous replay 1건+** (code/accepted-drift target 또는 비오염 operator의 agent-first upgrade) | 축② provisional 해제 판단 + bounded heuristic의 DR 승격 재평가 |
+| ~~heterogeneous replay 1건+~~ **충족(2026-07-13, ai-deck replay)** — 축② 해제됨(manifest-target 한정) | 잔여 trigger: **비오염 operator 1건 또는 fresh-session canary 1건** → script/playbook 축소 default 전환 gate + bounded heuristic의 DR 승격 재평가 |
 | 외부 manual adopter 첫 등장 또는 adopter ≥ 6 | 축② distribution(script 유지 필요성, plugin/marketplace 표면) |
 | 다음 신규 프로젝트 adopt 시점 | scaffold-as-skill을 CP2 방식 실험으로 검증 |
 | 축① 우회·단축 독립 2건+ 재관측 | 축① policy 재개방 |
