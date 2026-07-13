@@ -538,6 +538,7 @@ main
 │   ├── user/                              # 사용자용 task별 guide
 │   └── works/                             # Work 파일
 ├── skills/workflow/                       # 표준 workflow 절차
+├── skills/safety/                         # safety rule layer canonical (A1 always / A2 path-scoped)
 ├── prompts/                               # 세션 시작 fallback prompt
 ├── scripts/
 │   ├── create-harness.sh                  # scaffold 생성 script

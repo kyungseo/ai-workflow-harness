@@ -293,7 +293,7 @@ Product track의 작고 명확한 L1은 Work 파일 없이 Quick Mode로 끝낼 
 workflow 절차의 SSoT는 `skills/workflow/{name}.md`(canonical)이고, 도구별 표면은 그 절차를 호출하는 adapter다. 구조와 파일 목록은 source repo README의 Document Layers·Repository Layout를 참조한다.
 
 - `.claude/settings.json` — Claude Code 설정(`defaultMode: plan`, `permissions.deny` 위험 명령 차단, `hooks.Stop` 세션 종료 전 `/session-summary` reminder). `/exit` 직접 입력 시 hook이 발동하지 않으므로 `/session-summary` 후 종료를 권장한다.
-- `.claude/rules/*.md` — path-scoped 규칙(편집 경로에 자동 적용): `docs-workflow`, `git-workflow`, `infra`, optional `java-spring`/`testing`.
+- `.claude/rules/*.md` — path-scoped/always 규칙(편집 경로에 자동 적용): `docs-workflow`, `git-workflow`, `safety-critical`(A1 always), `infra`(A2), optional `java-spring`/`testing`. safety rule의 canonical SSoT는 `skills/safety/`다.
 - `.claude/commands/{name}.md` / `.agents/skills/workflow-{name}/SKILL.md` / `.cursor/rules/workflow.mdc` — Claude/Codex/Cursor adapter (Antigravity는 Codex의 `.agents/skills/`를 공유, 별도 파일 없음). 12개 command 목록과 용도는 [§5 Slash Commands Reference](#5-slash-commands-reference) 참조.
 - `prompts/` — session-start fallback prompt. Command/adapter를 쓸 수 없을 때 세션 시작 복원에 사용한다. (→ [Appendix A](#appendix-a-prompt-fallback-usage))
 
@@ -818,9 +818,12 @@ scaffold 직후 첫 세션은 `/session-start`로 시작해 `docs/STATUS.md` Nex
 - [ ] **`.claude/rules/`** 파일 복사 및 프로젝트에 맞게 조정
   - `docs-workflow.md` — 문서 유지 원칙
   - `git-workflow.md` — 커밋 전 절차 (변경 불필요)
-  - `infra.md` — 인프라 안전 규칙
+  - `safety-critical.md` — 실행 안전 A1 (always — canonical `skills/safety/safety-critical.md`의 thin projection, 변경 불필요)
+  - `infra.md` — 인프라 안전 A2 (path-scoped — canonical `skills/safety/infra.md`의 thin projection, 변경 불필요)
   - `java-spring.md` → 사용 언어/프레임워크에 맞게 수정
   - `testing.md` → 프로젝트 테스트 전략에 맞게 수정
+
+- [ ] **canonical `skills/safety/` 1벌** 복사 (A1 `safety-critical.md` always / A2 `infra.md` path-scoped — 4툴 공용 SSoT, Codex/Antigravity는 root `AGENTS.md` Safety Rule Layer 절이 로드)
 
 - [ ] **canonical `skills/workflow/` 1벌 + tool adapter** 복사 및 프로젝트 Phase명·backlog 경로 조정
   - canonical 12개: `skills/workflow/{name}.md` — `session-start`, `work-select`, `work-register`, `work-plan`, `work-resume`, `work-debug`, `work-brief`, `work-doc`, `work-close`, `session-summary`, `record-decision`, `repo-health`
@@ -893,9 +896,10 @@ scaffold 직후 첫 세션은 `/session-start`로 시작해 `docs/STATUS.md` Nex
 - docs/archive/ (빈 폴더)
 - docs/WORKFLOW-MANUAL.md (선택, 사용자 매뉴얼)
 - .claude/settings.json (defaultMode=plan, 금지 명령 목록)
-- .claude/rules/ (docs-workflow, git-workflow, infra, [언어]-[프레임워크], testing)
+- .claude/rules/ (docs-workflow, git-workflow, safety-critical, infra, [언어]-[프레임워크], testing)
 - .claude/commands/ (session-start, work-select, work-register, work-plan, work-resume, work-debug, work-brief, work-doc, work-close, session-summary, record-decision, repo-health)
 - skills/workflow/ (command별 canonical workflow 절차)
+- skills/safety/ (safety rule layer canonical — A1 always / A2 path-scoped)
 - .cursor/rules/ (선택, Cursor를 사용할 경우)
 - prompts/ (session-start fallback prompt)
 

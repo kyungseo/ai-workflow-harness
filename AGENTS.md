@@ -22,6 +22,12 @@ NEVER:
 - Duplicate shared rules here.
 - Bypass `docs/STATUS.md` or the Approval Matrix.
 
+## Safety Rule Layer
+
+- At session start, load and follow `skills/safety/safety-critical.md` (A1 — always-applied guard for destructive, privileged, and secret-touching actions).
+- When working on infrastructure, deployment, or environment files (`infra/**`, `.devcontainer/**`, Dockerfile, docker-compose), also load `skills/safety/infra.md` (A2 — path-scoped).
+- These are canonical rule documents, not invokable skills. Fail-closed bootstrap guard: if a canonical file cannot be read, do not run destructive or privileged commands and do not expose secrets without explicit user approval.
+
 ## Codex Skill Routing
 
 When a workflow command is invoked or its intent is matched,
@@ -39,7 +45,7 @@ If the matched skill intent is uncertain or multiple skills are equally plausibl
 
 `docs/decisions/DR-007-language-policy.md` is the single SSoT for language. When creating or editing any document, prompt, command, rule, hook message, **commit message, or PR body** — confirm DR-007 applies.
 
-- **English Only:** `AGENTS.md`, `CLAUDE.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`
+- **English Only:** `AGENTS.md`, `CLAUDE.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`, `skills/safety/*.md` (canonical rule documents; the directory `README.md` is Korean-primary)
 - **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `skills/workflow/*.md`, `.claude/commands/*.md`, `.agents/skills/*/SKILL.md`
 - **Commit message:** English type prefix; Korean-primary subject/body (Bilingual Rules); English co-author trailer.
 - **PR body:** Korean-primary + Bilingual Rules.

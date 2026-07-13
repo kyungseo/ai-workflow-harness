@@ -1,7 +1,7 @@
 # DR-007: 파일 유형별 작성 언어 원칙
 
 Date: 2026-05-11
-Amended: 2026-05-16, 2026-06-15
+Amended: 2026-05-16, 2026-06-15, 2026-07-13
 Status: Accepted (Amended)
 Linked DRs: DR-030
 
@@ -21,6 +21,7 @@ Linked DRs: DR-030
 | `CLAUDE.md` (루트), `AGENTS.md` | AI instruction 진입점. 영어가 token 효율과 instruction 준수율이 높음 |
 | `.claude/rules/*.md` | Claude가 instruction으로 직접 처리 |
 | `.cursor/rules/*.mdc` | Cursor가 instruction으로 직접 처리 |
+| `skills/safety/*.md` | machine-consumed canonical rule document — 4개 tool adapter/entry가 직접 로드하는 instruction 표면 (Amendment 2026-07-13, CHORE-20260713-007. 단 디렉토리 `README.md`는 사람용 인덱스라 한국어 주 언어) |
 | `.claude/settings.json` 설정 key와 command 구조 | 도구 설정과 shell command는 영어 기반으로 유지 |
 | Frontmatter 키 (`paths`, `name`, `description` 등) | 도구가 파싱하는 메타데이터 — 파일 유형 무관 전역 적용 |
 

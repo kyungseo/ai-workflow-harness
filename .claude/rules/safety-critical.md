@@ -1,7 +1,6 @@
 ---
-description: Critical safety limits for destructive, privileged, and secret-touching actions (A1) — thin projection of the canonical rule.
-globs:
-alwaysApply: true
+paths:
+  - "**"
 ---
 
 # Safety-Critical Rules (A1)

@@ -1,9 +1,7 @@
 ---
-paths:
-  - "infra/**"
-  - ".devcontainer/**"
-  - "**/Dockerfile"
-  - "**/docker-compose*.yml"
+description: Infrastructure safety rules (A2) — thin projection of the canonical rule for infra/deploy/environment files.
+globs: infra/**,.devcontainer/**,**/Dockerfile,**/docker-compose*.yml
+alwaysApply: false
 ---
 
 # Infrastructure Rules (A2)

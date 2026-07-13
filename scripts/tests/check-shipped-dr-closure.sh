@@ -63,6 +63,7 @@ shipped_docs() {
   find .claude/rules .claude/commands .agents/skills .cursor/rules \
        -type f \( -name '*.md' -o -name '*.mdc' \) 2>/dev/null
   find skills/workflow -type f -name '*.md' 2>/dev/null
+  find skills/safety -type f -name '*.md' 2>/dev/null
   find prompts -type f -name '*session-start.md' 2>/dev/null
 }
 

@@ -13,6 +13,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
 | CHORE-20260713-006 | Upgrade 절차 diet — agent-first 경로 정식화 + playbook 축소 | 2026-07-13 | [CHORE-20260713-006-upgrade-procedure-diet.md](CHORE-20260713-006-upgrade-procedure-diet.md) |
+| CHORE-20260713-007 | Safety rule layer 정규화 (축 A) | 2026-07-13 | [CHORE-20260713-007-safety-rule-layer.md](CHORE-20260713-007-safety-rule-layer.md) |
 
 ## Archived
 

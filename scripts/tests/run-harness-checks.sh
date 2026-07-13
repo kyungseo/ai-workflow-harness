@@ -30,6 +30,7 @@ INVARIANTS="${SCRIPT_DIR}/check-scaffold-invariants.sh"
 CLOSURE="${SCRIPT_DIR}/check-shipped-dr-closure.sh"
 DEFAULT_TEMPLATE_PARITY="${SCRIPT_DIR}/check-default-template-parity.sh"
 MIRROR_PARITY="${SCRIPT_DIR}/check-surface-mirror-parity.sh"
+RULE_PARITY="${SCRIPT_DIR}/check-rule-surface-parity.sh"
 MANIFEST_CONTRACT="${SCRIPT_DIR}/check-manifest-contract.sh"
 
 RC=0
@@ -95,6 +96,16 @@ run_tier0() {
     fi
   else
     echo "  SKIP (N/A): check-surface-mirror-parity.sh 없음"
+  fi
+  echo "== Tier 0d: rule surface parity (source-level, static) =="
+  if [[ -f "${RULE_PARITY}" ]]; then
+    if bash "${RULE_PARITY}"; then
+      echo "  OK: rule surface parity"
+    else
+      echo "  FAIL: rule surface parity"; mark_fail
+    fi
+  else
+    echo "  SKIP (N/A): check-rule-surface-parity.sh 없음"
   fi
 }
 
@@ -183,6 +194,16 @@ run_tier2() {
     fi
   else
     echo "  SKIP (N/A): check-manifest-contract.sh 없음"
+  fi
+  echo "== Tier 2c: rule surface parity (scaffold + manifest tracked entries) =="
+  if [[ -f "${RULE_PARITY}" ]]; then
+    if bash "${RULE_PARITY}" --scaffold; then
+      echo "  OK: rule surface parity (--scaffold)"
+    else
+      echo "  FAIL: rule surface parity (--scaffold)"; mark_fail
+    fi
+  else
+    echo "  SKIP (N/A): check-rule-surface-parity.sh 없음"
   fi
 }
 
