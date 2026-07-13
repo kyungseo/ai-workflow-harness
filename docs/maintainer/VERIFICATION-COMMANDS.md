@@ -1099,7 +1099,7 @@ ls temp/harness-tests/manual-ob-generic/prompts/*session-start.md 2>/dev/null \
 
 기존 scaffold target을 현재 source baseline으로 올리는 upgrade/migration 검증이다.
 full `--upgrade`/`--refresh` helper는 아직 없다. pre-manifest target은 inventory-first + shadow scaffold baseline 방식으로 검증한다.
-전체 판단 순서와 real apply gate는 `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`가 맡고, 이 Layer T는 실행 명령 카탈로그만 제공한다.
+default/fallback route 판정은 `docs/maintainer/ADOPTER-UPGRADE-AGENT-FIRST.md`의 Entry Conditions **판정식**을 따른다. 판정이 fallback이면 `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`(판단 순서·real apply gate 담당)를 쓴다. 이 Layer T는 두 route 공용 실행 명령 카탈로그만 제공한다.
 
 source-ref baseline 기본값은 released `main` 또는 release tag다(DR-028). `develop`/current checkout에서 실행한 probe는 pre-release tracking 예외로 라벨링하고, released upgrade proof로 쓰지 않는다.
 
@@ -1114,12 +1114,17 @@ git branch --show-current
 git rev-parse --short HEAD
 git describe --tags --always --dirty
 cat VERSION
+git -C "${TARGET}" status --short --branch
+git -C "${TARGET}" log --oneline -n 12
+test -f "${TARGET}/docs/GIT-WORKFLOW.md" && sed -n '1,180p' "${TARGET}/docs/GIT-WORKFLOW.md"
 test -f "${TARGET}/.harness/manifest.json" \
   && echo "manifest target" \
   || echo "pre-manifest target"
 
 bash scripts/create-harness.sh --check "${TARGET}" || true
 ```
+
+target `status`(clean 확인)·최근 log·`docs/GIT-WORKFLOW.md`(branch policy)는 clean-target gate와 branch policy 확인의 executable surface다 — AGENT-FIRST Entry Conditions와 playbook Phase 1이 모두 이 카탈로그를 가리킨다.
 
 판정:
 

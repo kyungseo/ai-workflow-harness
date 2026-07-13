@@ -119,16 +119,18 @@ work-select → work-plan → review → 구현 → result review → work-close
 ## G. adopter upgrade / migration entry (source-only)
 
 이미 scaffold된 target을 새 source version으로 올릴 때의 진입 경로다. 세부 명령은 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer T와 관련 `docs/maintainer/migrations/*.md` note를 따른다.
-반복 가능한 절차·classification·temp rehearsal·real apply gate는 `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`를 따른다.
+**default/fallback route 판정의 SSoT는 `docs/maintainer/ADOPTER-UPGRADE-AGENT-FIRST.md`의 Entry Conditions 판정식이다.** 판정이 default면 AGENT-FIRST, fallback이면 `docs/maintainer/ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`의 절차·classification·temp rehearsal·real apply gate를 따른다.
 
 ```text
 target read-only probe
-  → manifest 유무 확인
-  → inventory-first 분류(framework-owned / project-owned / customized)
-  → 관련 policy / migration note 확인
-  → temp/ shadow scaffold baseline 생성
-  → temp/ selective migration simulation
-  → target repo에서 별도 Work로 적용
+  → AGENT-FIRST Entry Conditions 판정식 적용
+  → default: AGENT-FIRST 경로
+  → fallback:
+      inventory-first 분류(framework-owned / project-owned / customized)
+      → 관련 policy / migration note 확인
+      → temp/ shadow scaffold baseline 생성
+      → temp/ selective migration simulation
+      → target repo에서 별도 Work로 적용
 ```
 
 주의:
