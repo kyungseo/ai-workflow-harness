@@ -8,6 +8,9 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md`, archive 구조�
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260713-008 | Happy path / glossary / operator layering compression | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-008-happy-path-compression.md` |
+| CHORE-20260713-007 | Safety rule layer 정규화 (축 A) — DR-044 | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-007-safety-rule-layer.md` |
+| CHORE-20260713-006 | Upgrade 절차 diet — agent-first 경로 정식화 + playbook 축소 | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-006-upgrade-procedure-diet.md` |
 | CHORE-20260713-005 | Fleet upgrade to 1.5.0 — 3 repo agent-first | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-005-fleet-upgrade-150.md` |
 | CHORE-20260713-004 | 1.5.0 릴리즈 (release readiness + event) | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-004-release-150.md` |
 | CHORE-20260713-003 | Manifest contract 정비 — tolerant parser·source-ref·필드 계약 | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-003-manifest-contract.md` |

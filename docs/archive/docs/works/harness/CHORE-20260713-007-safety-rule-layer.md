@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260713-007
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Safety rule layer 4툴 정규화 (brief rule-asset-generalization 축 A) — A1(destructive/privileged/secret, always)/A2(infra/deploy/environment, path-scoped) 분리, skills/safety/ canonical SSoT 신설, Claude/Cursor adapter 정규화, Codex/AG는 AGENTS.md entry contract 경로로 반영, scaffold copy matrix 정합 + rule parity check 신설. 축 B(java-spring/testing stack rule)와 --no-safety opt-out은 비범위.
 appetite: 1d
@@ -101,6 +101,7 @@ Driver 제안 (R0 review 대상):
 
 ## Discovery
 
+- Archived: 2026-07-13 — 당일 완료 3건(-006/-007/-008) batch archive (arbiter 지시).
 - 착수: 2026-07-13, backlog "Safety rule layer 정규화 (축 A)" candidate 착수. branch `feature/safety-rule-layer`.
 - 실측: scaffold 참조 지점은 brief 기록(544·650)이 아니라 line 670(Claude)·776(Cursor). `skills/`에는 `workflow/`만 존재 — `skills/safety/`는 신설.
 - Done: 2026-07-13, cross-review R0/R1(request-changes)→R1b(approve, reviewer 독립 `--all` exit 0) + Codex runtime evidence + arbiter 최종 승인(DR-044 확인 포함).
