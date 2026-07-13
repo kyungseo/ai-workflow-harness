@@ -7,7 +7,17 @@ AI Workflow Harness의 일상 실행 규칙이다.
 
 ## 1. Session Start
 
-항상 먼저 `docs/STATUS.md`의 현재 섹션만 확인한다.
+**이미 적용된 프로젝트에 돌아온 사람이라면 (1-2-3):**
+
+1. AI에게 첫 메시지로 `/session-start`를 입력한다 (command를 쓸 수 없으면 `prompts/`의 fallback prompt 사용).
+2. 보고된 Active Work / Next Actions에서 이어갈 작업을 고른다 — 비어 있으면 `/work-select`.
+3. **Quick Mode vs Work 파일 경계:** Product track의 작고 명확한 L1 변경만 Work 파일 없이 Quick Mode로 처리한다. harness/workflow 표면을 건드리거나 애매하면 기본 L2 + Work 파일이 안전하다 (경계 SSoT: `docs/AGENT-WORKFLOW.md` Risk Levels).
+
+**모르면 일단 `/session-start`** — AI가 상태를 읽고 다음 행동을 제안한다.
+
+---
+
+이하는 AI 세션 실행 규칙이다. 항상 먼저 `docs/STATUS.md`의 현재 섹션만 확인한다.
 
 이 harness는 적용 대상 repository에서 두 트랙을 운영한다.
 

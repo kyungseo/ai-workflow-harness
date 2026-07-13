@@ -13,19 +13,20 @@ Claude Code, Codex, Antigravity, Cursor 같은 AI 도구가 같은 상태 파일
 
 | 목적 | 시작 위치 |
 | --- | --- |
-| 내 프로젝트에 AI workflow를 적용하고 싶습니다 | [Apply The Harness To Your Project](#apply-the-harness-to-your-project) |
+| 내 프로젝트에 AI workflow를 **처음 적용**하고 싶습니다 | 아래 "새 프로젝트에 적용하기" 1-2-3 → 상세는 [Apply The Harness To Your Project](#apply-the-harness-to-your-project) |
+| **이미 harness가 적용된 프로젝트**에서 작업을 시작합니다 | 이 README가 아니라 **그 프로젝트 repo의 `docs/HARNESS-QUICK-REFERENCE.md` §1** — AI에게 첫 메시지로 `/session-start`를 입력하면 됩니다 |
 | 이 repository를 fork/clone해서 나만의 harness source로 키우고 싶습니다 | [Adopter Modes And Maintenance](#adopter-modes-and-maintenance) |
 | 이 upstream repository에 기여하고 싶습니다 | [Contributing](#contributing) |
-| workflow 개념부터 보고 싶습니다 | [Workflow Overview](#workflow-overview) |
+| workflow 개념·용어부터 보고 싶습니다 | [Workflow Overview](#workflow-overview) · [Orientation Glossary](#orientation-glossary) |
 
 > [!IMPORTANT]
 > 이 repository 자체를 직접 project-local workspace로 전환하지 마세요. 이 repository는 harness source입니다. 실제 제품, 서비스, 문서 프로젝트에는 `scripts/create-harness.sh`로 별도 project directory에 scaffold를 생성해 적용합니다.
 
-처음 보는 사람이라면 이 순서로 시작하면 가장 덜 헷갈립니다.
+**새 프로젝트에 적용하기 (1-2-3):**
 
-1. 내 프로젝트에 적용하려는 경우: `scripts/create-harness.sh`로 별도 project directory를 만든다.
-2. 생성된 project directory에서 `/session-start`를 실행한다.
-3. `docs/STATUS.md`가 bootstrap onboarding을 가리키면 [Scaffold Onboarding Guide](docs/SCAFFOLD-ONBOARDING-GUIDE.md)로 이동한다.
+1. `scripts/create-harness.sh <project-name> <target-dir>`로 별도 project directory를 만든다.
+2. 생성된 directory에서 AI에게 **첫 메시지로 `/session-start`**를 입력한다 (command를 쓸 수 없는 환경이면 `prompts/`의 fallback prompt를 복사해 사용).
+3. `docs/STATUS.md`가 bootstrap onboarding을 가리키면 [Scaffold Onboarding Guide](docs/SCAFFOLD-ONBOARDING-GUIDE.md)를 따라 §0부터 채운다.
 
 ### Requirements
 
@@ -56,6 +57,7 @@ scaffold 후에는 생성된 project directory에서 `/session-start`로 첫 세
 - [Adopter Modes And Maintenance](#adopter-modes-and-maintenance)
 - [Workflow Overview](#workflow-overview)
 - [Core Concepts](#core-concepts)
+- [Orientation Glossary](#orientation-glossary)
 - [Command Map](#command-map)
 - [Git Flow](#git-flow)
 - [Documentation Map](#documentation-map)
@@ -423,6 +425,22 @@ AI는 조건이 충족되어도 파일을 자동으로 수정하지 않습니다
 
 ---
 
+## Orientation Glossary
+
+처음 보는 사람을 위한 **비규범 orientation 요약**입니다 — 용어가 "무엇을 구분하는 말인지"와 "더 자세히 볼 곳"만 안내합니다. 판정 기준·절차의 SSoT는 각 pointer 문서입니다.
+
+| 용어 그룹 | 무엇을 구분하나 | 더 볼 곳 |
+| --- | --- | --- |
+| source repo / scaffold target / product repo | harness 원본(이 repo) / scaffold로 framework 파일을 받는 적용 위치(target) / product 코드·상태를 소유하는 repo — target과 product는 보통 같은 물리 repo이며 역할이 다르다 | [What This Repository Is](#what-this-repository-is) |
+| framework-owned / project-owned / accepted drift | upgrade 때 harness가 관리하는 파일 / 프로젝트 소유 파일 / 의도적으로 다르게 유지하기로 **기록·승인된** 파일 | tracked baseline·drift 신호: 적용 repo의 `.harness/manifest.json` + `--check` ([Apply 절](#apply-the-harness-to-your-project)) · accepted-drift 판정·기록 절차: [docs/maintainer/ADOPTER-UPGRADE-AGENT-FIRST.md](docs/maintainer/ADOPTER-UPGRADE-AGENT-FIRST.md) (source-only) |
+| Work / DR / STATUS / backlog | 작업 단위 기록(SSoT) / 결정 기록 / 현재 dashboard / 후보 목록 | [Core Concepts §State Storage](#state-storage) |
+| Tier / Layer / runner | 검증 깊이 등급 / 검증 명령 묶음 / 검증 실행기 | Tier·runner: [docs/maintainer/HARNESS-TEST-TAXONOMY.md](docs/maintainer/HARNESS-TEST-TAXONOMY.md) · Layer: [docs/maintainer/VERIFICATION-COMMANDS.md](docs/maintainer/VERIFICATION-COMMANDS.md) (모두 source-only) |
+| shipped surface / source-only surface | scaffold로 target에 배포되는 파일 vs 이 source repo 전용 파일 | [docs/maintainer/README.md](docs/maintainer/README.md) 문서 표면 분류 (source-only) |
+
+**모르면 일단 이렇게:** 적용된 프로젝트 안이라면 AI에게 `/session-start` — 필요한 문서는 AI가 조건에 따라 로드하고, 다음 행동을 제안합니다.
+
+---
+
 ## Command Map
 
 사용자는 아래 command 이름으로 workflow에 진입합니다. 상세 절차는 `skills/workflow/{name}.md`가 canonical SSoT이고, Claude/Codex/Cursor 표면은 이 절차를 호출하는 adapter입니다. Antigravity는 Codex 표면(`.agents/skills/`)을 그대로 재사용합니다.
@@ -465,25 +483,43 @@ main
 
 ## Documentation Map
 
+문서는 세 층으로 나뉩니다. 자신의 상황에 맞는 층의 **primary entry**부터 읽으세요. (이 재배치는 최소 재포장 1차이며, 층별 본문 재작성이 아닙니다.)
+
+### 10-Minute Path — 처음 적용하거나 개념을 잡을 때
+
+Primary entry: [Start Here](#start-here)
+
 | 목적 | 문서 |
 | --- | --- |
-| 세션 실행 규칙 빠른 확인 | [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md) |
+| scaffold 직후 첫 온보딩 | [docs/SCAFFOLD-ONBOARDING-GUIDE.md](docs/SCAFFOLD-ONBOARDING-GUIDE.md) |
+| 용어가 낯설 때 | [Orientation Glossary](#orientation-glossary) |
+
+### Daily Operator — 적용된 프로젝트에서 일상 작업할 때
+
+Primary entry: 적용 repo 안의 `docs/HARNESS-QUICK-REFERENCE.md` (이 repo 기준: [docs/HARNESS-QUICK-REFERENCE.md](docs/HARNESS-QUICK-REFERENCE.md))
+
+| 목적 | 문서 |
+| --- | --- |
 | 사용자용 workflow 설명 | [docs/WORKFLOW-MANUAL.md](docs/WORKFLOW-MANUAL.md) |
 | 선택적 cross-agent review 사용법 | [docs/user/CROSS-REVIEW-MANUAL.md](docs/user/CROSS-REVIEW-MANUAL.md) |
-| scaffold 직후 첫 온보딩 | [docs/SCAFFOLD-ONBOARDING-GUIDE.md](docs/SCAFFOLD-ONBOARDING-GUIDE.md) |
 | 공통 운영 규칙 | [docs/AGENT-WORKFLOW.md](docs/AGENT-WORKFLOW.md) |
-| 상세 protocol | [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) |
-| source repo Git 정책 | [docs/GIT-WORKFLOW.md](docs/GIT-WORKFLOW.md) |
-| source-only maintainer 문서 지도 | [docs/maintainer/README.md](docs/maintainer/README.md) |
 | canonical workflow 절차 | [skills/workflow/](skills/workflow/) |
 | 현재 상태 dashboard | [docs/STATUS.md](docs/STATUS.md) |
 | Harness backlog | [docs/backlog/HARNESS.md](docs/backlog/HARNESS.md) |
+| Decision Records · 언어 정책(단일 SSoT: [DR-007](docs/decisions/DR-007-language-policy.md)) | [docs/decisions/](docs/decisions/) |
+
+### Maintainer Deep Reference — 이 source repo를 유지보수할 때
+
+Primary entry: [docs/maintainer/README.md](docs/maintainer/README.md)
+
+| 목적 | 문서 |
+| --- | --- |
+| 상세 protocol | [docs/HARNESS-PROTOCOL.md](docs/HARNESS-PROTOCOL.md) |
+| source repo Git 정책 | [docs/GIT-WORKFLOW.md](docs/GIT-WORKFLOW.md) |
 | 방향 비교 / 포지션 문서 | [docs/briefs/README.md](docs/briefs/README.md) |
 | 문제 해결 기록 | [docs/troubleshooting/README.md](docs/troubleshooting/README.md) |
 | 회고 / readiness review | [docs/retrospectives/README.md](docs/retrospectives/README.md) |
 | 완료된 Work와 과거 기록 | [docs/archive/](docs/archive/) |
-| 언어 정책 (단일 SSoT) | [docs/decisions/DR-007-language-policy.md](docs/decisions/DR-007-language-policy.md) |
-| Decision Records | [docs/decisions/](docs/decisions/) |
 
 <details>
 <summary>Maintainer reference documents</summary>

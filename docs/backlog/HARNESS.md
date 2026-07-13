@@ -29,7 +29,7 @@ AI Workflow Harness backlog다.
 | Cluster | Goal | Backlog Items |
 | --- | --- | --- |
 | W1. Validation Spine ✓ 완결 | 큰 하네스 변경 이후에도 regression을 잡는 최소 검증 척추를 유지한다 | (전부 완료) 검증 척추 spine 도입 = CHORE-20260611-005, scaffold/tool-surface leak-scan alignment = CHORE-20260611-006, product pack 검증 Layer U = CHORE-20260611-007, gate path-list parity = CHORE-20260611-008, source repo maintainer operations manual = CHORE-20260611-009. 잔여 후속은 W3/W4 후보에서 별도 추적 |
-| W2. Adopter Transition | 실제 adopter 운영에서 나온 적용·업그레이드·온보딩 evidence를 source backlog로 되돌린다 | (기반 완료 = upgrade/migration CHORE-20260611-010, docs cascade CHORE-20260611-011, planning pack CHORE-20260612-001, readability rewrite CHORE-20260612-002, clone verification CHORE-20260612-003) live 후보: happy path/glossary/operator compression, 첫 concrete planning-pack evidence review(`spring-modular-template` handoff + fresh no-code follow-up), planning-pack skeleton/scaffold integration(trigger-gated), adopter upgrade accepted-drift/helper(monitor-only), internal managed mode guardrails(게이트 후), DR namespace successor(Policy Horizon gated) |
+| W2. Adopter Transition | 실제 adopter 운영에서 나온 적용·업그레이드·온보딩 evidence를 source backlog로 되돌린다 | (기반 완료 = upgrade/migration CHORE-20260611-010, docs cascade CHORE-20260611-011, planning pack CHORE-20260612-001, readability rewrite CHORE-20260612-002, clone verification CHORE-20260612-003) live 후보: 첫 concrete planning-pack evidence review(`spring-modular-template` handoff + fresh no-code follow-up), planning-pack skeleton/scaffold integration(trigger-gated), adopter upgrade accepted-drift/helper(monitor-only), internal managed mode guardrails(게이트 후), DR namespace successor(Policy Horizon gated). happy path/glossary/operator compression = CHORE-20260713-008 완료(최소 재포장 1차 — full repack은 회고 §8 trigger 대기) |
 | W3. Workflow IA Diet ✓ 완결 | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | (Canonical 개념 계층화 핵심 달성 = CHORE-20260613-002~005, Prompt surface diet 완료 = CHORE-20260612-010, work-doc class 완료 = CHORE-20260613-005, trigger family simplification 완료 = CHORE-20260613-006) 전부 완료 |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | (전부 종결) Validation Spine residual F1~F4 = CHORE-20260613-017/018·DR-036, 문서-only 규칙 강제화 = DR-037, Archive 누적 관리 정책 = DR-038, CI inline assertion ↔ invariants SSoT parity = CHORE-20260613-016 no-action closeout |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인된 확장만 다룬다 | Spring modular/product engineering option-pack(trigger-gated, source-ready 아님), project-state template, sub-agent autonomy policy, packaging/distribution revisit, Windows 지원 |
@@ -50,7 +50,6 @@ AI Workflow Harness backlog다.
 
 | ID | Priority | Status | Risk | Title |
 | --- | --- | --- | --- | --- |
-| — | P1 | Candidate | L2 | Happy path / glossary / operator layering compression |
 | — | P1 | Candidate | L2 | First concrete planning-pack evidence review (`spring-modular-template` P1 + fresh no-code follow-up) |
 | — | P3 | Candidate | L2 | Archive decision surfacing stronger mechanism (2nd occurrence gate) |
 | — | P2 | Candidate | L2 | Planning-pack skeleton/scaffold integration after first real walkthrough |
@@ -149,25 +148,6 @@ AI Workflow Harness backlog다.
 **Done Criteria:** trigger 충족 확인 후 ②b vs ③ 재비교(brief 4축 기준), 채택 시 token-grammar/path-aware spike scope + DR-042 amend/supersede 결정. 채택하지 않으면 high-band 유지 근거 갱신. 매몰 비용(ai-deck/spring high-band 되돌림)을 결정에 포함.
 
 **Verification:** fixture-driven spike(채택 시), `--check`/invariants/closure 회귀, decision-index. Surface: tool surface · canonical · adopter cascade.
-
----
-
-#### Happy path / glossary / operator layering compression
-
-**Cluster:** W2. Adopter Transition
-
-**Task:** v1.2.0 readiness 회고에서 드러난 신규 사용자 부담을 줄이기 위해, scaffold 직후와 이미 scaffold된 project 재진입 시의 happy path를 10분 내 이해 가능한 routing으로 압축한다. 목표는 새 절차를 늘리는 것이 아니라 README/GUIDE/MANUAL의 첫 진입 경로와 "무엇을 먼저 하면 되는가"를 더 얇게 만들고, 동시에 glossary / concept map / 문서 3층 구조(10분 happy path / daily operator guide / maintainer deep reference)를 분리하는 것이다. **연계:** `docs/retrospectives/harness-v1-2-readiness-retrospective-20260615.md`
-
-**Dependencies:**
-
-- `docs/retrospectives/harness-v1-2-readiness-retrospective-20260615.md`의 onboarding weakness / happy path 제안
-- 같은 문서의 glossary / concept map / operator layering 제안
-- `docs/SCAFFOLD-ONBOARDING-GUIDE.md`, `docs/HARNESS-QUICK-REFERENCE.md`, README의 기존 routing 구조
-- `docs/AGENT-WORKFLOW.md`의 session startup / context routing 원칙
-
-**Done Criteria:** 신규 adopter가 "새 project에 적용할 때", "이미 적용된 project를 시작할 때", "Quick Mode vs Work file 경계", "AI에게 첫 메시지로 무엇을 말할지"를 한 화면 또는 짧은 path로 찾을 수 있다. source-only maintainer 문서와 scaffold target 사용자 문서가 섞이지 않는다. 또한 source repo / scaffold target / product repo, framework-owned / project-owned / accepted drift, Work / DR / STATUS / backlog 같은 핵심 용어를 초심자가 빠르게 찾을 수 있는 최소 glossary 또는 concept map이 생긴다.
-
-**Verification:** README/GUIDE/MANUAL routing diff review, stale phrase/link check, scaffold output에서 happy path가 source-only maintainer 문서를 요구하지 않는지 확인. Surface: adopter cascade · scaffold · README/GUIDE/MANUAL.
 
 ---
 
@@ -425,7 +405,7 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 | UF-04 | 기존 흡수 | Spring rule/profile drift + 정제 evidence → **"Spring modular/product engineering option-pack 후보"의 입력으로 흡수**, 신규 row 없음 | 해당 섹션에 pointer 추가됨 |
 | UF-05 | 신규 P3 | closeout 시 product-local invariant/decision lifecycle protocol을 conditional-load하는 generic hook이 canonical(`work-close`)에 없음 — neutral pointer만 upstream, 정책 본문은 product-local 소유 | |
 | UF-06 | 신규 P2 | Post-PR 규칙이 agent의 CI green polling 대기를 기본값으로 유도(토큰 낭비) — `gh pr merge --auto` + 조건부 deferred sync를 canonical(GIT-WORKFLOW.md) default로 변경 | **dependency:** `.claude/rules/git-workflow.md` thin adapter화 후보와 같은 파일 표면 — merge 금지(별개 문제: canonical 정책 변경 vs projection 중복 제거), 착수 순서만 조율(UF-06 canonical 변경 → thin-adapter 정리 순 권장). UF-03과 `--auto` 서술 정합화 |
-| UF-07 | 신규 P3 | adopter-facing 문서 authoring standard가 source에 없음 — spring product-local guide **Promote 완료** evidence 기반으로 generalize 여부 판단 | 기존 P1 "Happy path / glossary" Work에서 흡수 검토 가능 |
+| UF-07 | 신규 P3 | adopter-facing 문서 authoring standard가 source에 없음 — spring product-local guide **Promote 완료** evidence 기반으로 generalize 여부 판단 | happy path P1(CHORE-20260713-008)은 routing compression으로 종결 — 흡수 안 됨, 독립 P3 유지 |
 | UF-08 | 신규 P2 quick-fix (L2 — scaffold 표면) | scaffold `.claude/settings.json`의 `Read(./.env.*)` deny가 committed `.env.example`까지 차단 → cross-tool 대리 편집 우회 발생. deny를 secret-file contract(`.env`, `.env.local`, `.env.*.local`)와 정합화 | **필수 gate:** secret-file negative fixture + sanitized `.env.example` positive fixture 동반 (CHORE-20260713-001 R0-Codex-F4) |
 
 **Per-candidate details (R1-Codex-F6 — Summary 신규 7행의 1:1 대응):**
@@ -467,8 +447,8 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 
 ##### UF-07 — User-facing documentation authoring standard 일반화 (P3, L2)
 
-- **Task:** spring product-local guide(Promote 완료, FEAT-20260703-003)를 근거로 source generalize 여부를 판단한다. 채택 시 3단계 해설법·diagram 선택 기준·current-truth rule의 위치(maintainer guide 확장 vs 신규 canonical)와 DR-007 pointer boundary를 결정한다. 기존 P1(happy path/glossary) Work에서 흡수 검토 가능.
-- **Dependencies:** spring `docs/USER-FACING-DOCUMENTATION-GUIDE.md` + M1 적용 evidence, DR-007, happy path P1 후보.
+- **Task:** spring product-local guide(Promote 완료, FEAT-20260703-003)를 근거로 source generalize 여부를 판단한다. 채택 시 3단계 해설법·diagram 선택 기준·current-truth rule의 위치(maintainer guide 확장 vs 신규 canonical)와 DR-007 pointer boundary를 결정한다. (happy path P1 = CHORE-20260713-008은 routing compression으로 종결 — 이 후보를 흡수하지 않음, 독립 유지.)
+- **Dependencies:** spring `docs/USER-FACING-DOCUMENTATION-GUIDE.md` + M1 적용 evidence, DR-007. (happy path P1 의존은 CHORE-20260713-008 종결로 해제.)
 - **Done Criteria:** generalize/흡수/defer 결정 + 근거. 신규 표면이면 억제 gate 통과 기록.
 - **Verification:** 문서 diff review, DR-007 경계 확인. Surface: canonical · README/GUIDE/MANUAL.
 
