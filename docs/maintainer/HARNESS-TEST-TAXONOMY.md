@@ -40,7 +40,7 @@ harness workflow 변경 시 **무엇을 / 어느 깊이로 / 어떤 수단으로
 
 **경계 원칙:**
 
-- **executable assertion**은 "기계적으로 PASS/FAIL이 갈리고 false-positive가 거의 없는, 회귀로 잠글 가치가 있는" 점검만 담는다. 핵심 불변식은 scaffold invariants(`check-scaffold-invariants.sh`)·DR closure(`check-shipped-dr-closure.sh`)이며, parity(`check-default-template-parity.sh`·`check-surface-mirror-parity.sh`)·onboarding(`check-onboarding-flows.sh`) helper가 더해져 있다.
+- **executable assertion**은 "기계적으로 PASS/FAIL이 갈리고 false-positive가 거의 없는, 회귀로 잠글 가치가 있는" 점검만 담는다. 핵심 불변식은 scaffold invariants(`check-scaffold-invariants.sh`)·DR closure(`check-shipped-dr-closure.sh`)이며, parity(`check-default-template-parity.sh`·`check-surface-mirror-parity.sh`·`check-rule-surface-parity.sh`)·onboarding(`check-onboarding-flows.sh`) helper가 더해져 있다. rule parity는 safety rule layer(`skills/safety/` canonical ↔ 4툴 adapter/entry)의 존재·pointer·scope semantics·copy matrix를 검사한다(static = runner Tier 0d, `--scaffold` 실생성+manifest tracked entry = Tier 2c). 내용 동등성은 검사하지 않는다 — adapter는 thin projection이다.
 - **command catalog**는 더 넓은(판단 개입·false-positive 가능) 점검을 human-run 명령으로 유지한다. executable로 승격된 항목은 catalog가 **스크립트를 pointer로만** 보유하고 명령을 중복 보유하지 않는다(Layer C→invariants, Layer I→closure가 이미 그렇다).
 - **repo-health**는 위 둘을 *호출·해석*하는 judgment 표면이다. 자체적으로 deterministic 불변식을 재구현하지 않는다.
 - onboarding / hook처럼 multi-scenario 생성과 git 동작이 섞인 deterministic core는 **별도 helper script**로 둘 수 있다. runner는 여전히 thin orchestrator로 유지한다.

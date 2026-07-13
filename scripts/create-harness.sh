@@ -532,6 +532,7 @@ for dir in \
   "${TARGET_ROOT}/.codex" \
   "${TARGET_ROOT}/.harness" \
   "${TARGET_ROOT}/skills/workflow" \
+  "${TARGET_ROOT}/skills/safety" \
   "${TARGET_ROOT}/prompts"; do
   ensure_dir "${dir}"
 done
@@ -667,7 +668,7 @@ related_dr: []
 "
 
 # ── Claude Code config ───────────────────────────────────────────────────────
-for f in docs-workflow.md infra.md; do
+for f in docs-workflow.md infra.md safety-critical.md; do
   adapt "${TEMPLATE_ROOT}/.claude/rules/${f}" "${TARGET_ROOT}/.claude/rules/${f}"
 done
 
@@ -691,6 +692,11 @@ fi
 for f in "${TEMPLATE_ROOT}"/skills/workflow/*.md; do
   [[ "$(basename "$f")" == "work-doc.md" ]] && continue
   adapt "$f" "${TARGET_ROOT}/skills/workflow/$(basename "$f")"
+done
+
+# ── Canonical safety rule layer (A1 always / A2 path-scoped) ─────────────────
+for f in "${TEMPLATE_ROOT}"/skills/safety/*.md; do
+  adapt "$f" "${TARGET_ROOT}/skills/safety/$(basename "$f")"
 done
 
 for f in "${TEMPLATE_ROOT}"/.claude/commands/*.md; do
@@ -773,7 +779,7 @@ write_text "${TARGET_ROOT}/.claude/settings.json" '{
 '
 
 # ── Cursor config and rules ──────────────────────────────────────────────────
-for f in behavior-principles.mdc coding.mdc debugging.mdc execution.mdc git-commit.mdc output-format.mdc role-harness-maintainer.mdc safety-critical.mdc; do
+for f in behavior-principles.mdc coding.mdc debugging.mdc execution.mdc git-commit.mdc infra.mdc output-format.mdc role-harness-maintainer.mdc safety-critical.mdc; do
   adapt "${TEMPLATE_ROOT}/.cursor/rules/${f}" "${TARGET_ROOT}/.cursor/rules/${f}"
 done
 
@@ -952,6 +958,7 @@ AI workflow 자체의 개선과 example pack 정비는 Harness track으로 분�
 | \`docs/AGENT-WORKFLOW.md\` | 공통 운영 규칙 |
 ${OPTIONAL_README_ROWS}| \`docs/works/\` | Work 파일 (큰 작업의 SSoT) |
 | \`skills/workflow/\` | workflow 상세 절차의 canonical SSoT |
+| \`skills/safety/\` | safety rule layer의 canonical SSoT (A1 always / A2 path-scoped) |
 | \`.claude/commands/\` | \`/session-start\`, \`/work-select\`, \`/work-register\`, \`/work-plan\`, \`/work-close\`, \`/session-summary\` 등 |
 | \`.agents/skills/\` | Codex workflow adapter |
 | \`.codex/hooks.json\` | Codex hook 설정 |

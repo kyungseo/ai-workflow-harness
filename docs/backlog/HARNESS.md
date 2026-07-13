@@ -64,7 +64,6 @@ AI Workflow Harness backlog다.
 | — | P3 | Candidate | L3 | DR namespace successor 평가 (②b product-only prefix / ③ directory) — DR-042 Policy Horizon trigger gated |
 | — | P2 | Candidate | L2 | `.claude/rules/git-workflow.md` thin adapter화 (Branch Flow·Post-PR·Commit Message 상세 → GIT-WORKFLOW.md 위임) — 축③ block-replication 실측으로 P3→P2 상향, UF-06 뒤 착수 |
 | — | P3 | Candidate | L2 | DR-034 amendment — manifest-target agent-first 분기 추가 |
-| — | P1 | Candidate | L2 | Safety rule layer 정규화 (축 A: A1 always / A2 path-scoped, Codex·AG는 shared safety doc) |
 | — | P3 | Candidate | L2 | Workflow skill tool invocation suppression asymmetry 검토 (Codex/AG intent routing vs Claude disable-model-invocation) |
 | — | P2 | Candidate | L2 | Product CI workflow seam + harness-validate 경계 가드 (UF-01) |
 | — | P3 | Candidate | L2 | Review manifest-boundary 점검 — checklist vs deterministic guard 비교 (UF-02) |
@@ -380,22 +379,6 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 **Priority note:** 실제 cross-tool misfire(상태 변경 workflow command가 사람 명시 호출 없이 자율 발동) 관측이 없어 P3. 1건이라도 관측되면 P2 승격.
 
 **Verification:** adapter frontmatter grep, intent-routing surface 대조. Surface: tool surface · canonical · adopter cascade.
-
----
-
-#### Safety rule layer 4툴 정규화 (축 A)
-
-**Cluster:** Harness rule-asset 재설계
-
-**Task:** `docs/briefs/rule-asset-generalization-strategy-20260622.md` 축 A 실행. 현재 stack-agnostic 안전 의도가 Claude `infra.md`(path-scoped: `infra/**`, Dockerfile)와 Cursor `safety-critical.mdc`(always-apply, `rm -rf`/`sudo`/secret 포함, 더 넓음)로 **메커니즘·범위 비대칭**이고 Codex/Antigravity엔 repo-local rule surface로는 **부재**다. workflow canonical화의 SSoT+adapter 문제의식을 재사용해 **`skills/safety/*.md`를 SSoT로 두되**(canonical rule document — Codex skill 아님; namespace는 brief 미해결 결정), 적용 메커니즘은 workflow(호출형)와 달리 별도 설계한다. 축 A는 **A1(destructive/privileged/secret, always)** 과 **A2(infra/deploy/environment, path-scoped)** 로 나뉜다. Codex/AG는 always-rule surface가 없으므로 `.agents/skills/`(호출형)가 아니라 **`AGENTS.md` entry contract가 로드하는 shared safety doc**으로 반영하며, thin-entry 원칙상 본문 인라인은 제외한다(brief §3). base-msa와 무관한 보편 자산이므로 product 검증을 기다리지 않고 source-first로 진행 가능.
-
-**Dependencies:** brief 축 A·§1(A1/A2)·§3, 기존 `infra.md`·`safety-critical.mdc` 내용, `skills/workflow/` canonical+adapter 패턴(원칙만 재사용), BEHAVIOR-PRINCIPLES §6(harness가 안전 SSoT) 및 실행 guard 부재 확인, `scripts/create-harness.sh` line 544(infra.md default-copy)·650(cursor `safety-critical.mdc` default 블록).
-
-**Done Criteria:** A1/A2 각각의 명칭 확정, `skills/safety/` canonical SSoT + 적용 정규화(A1 always / A2 path-scoped / Codex·AG는 `AGENTS.md → shared safety doc`), scaffold copy matrix 정합. core 상시포함 기본, `--no-safety` opt-out은 기본 제외. canonical namespace(`skills/{domain}` vs `rules/`)·language policy(위치별 상이)·A1/A2 rollback 단위(한 PR vs 분리)를 함께 결정.
-
-**Verification:** scaffold dry-run에서 4툴 안전 surface 소비 확인(특히 `AGENTS.md` entry consumption). 기존 `check-surface-mirror-parity`는 command surface만 보므로 **rule parity check 신설**(canonical 존재·adapter pointer 존재·A1/A2 surface 존재·scaffold copy matrix 포함; 내용 동등성은 제외). `git diff --check`. Surface: tool surface · scaffold · canonical · adopter cascade.
-
-> **축 B 참고:** stack-specific `java-spring`/`testing` 재설계(네이밍·option-pack·product import)는 아래 "Spring modular/product engineering option-pack 후보"에 흡수한다. brief 축 B 절 참조.
 
 ---
 
