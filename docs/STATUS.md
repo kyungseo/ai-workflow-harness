@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-07-13 (CHORE-20260713-008 완료 — happy path 2-surface compression + Orientation Glossary)
+Last updated: 2026-07-13 (CHORE-20260713-009 완료 — CI PR head ref race hardening)
 
 ## Current State
 
