@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260713-006
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Upgrade 절차 diet — agent-first 경로를 정식 문서 표면으로 승격(체크리스트 정식 위치 결정·문서화), ADOPTER-UPGRADE-MIGRATION-PLAYBOOK의 procedural duplication 축소(제거/유지 목록 열거 후 실행), default 경로 전환 명문화, bounded heuristic DR 승격 여부 결정. contract·`--check`·blocker handling·evidence boundary는 유지·강화. DR-034 amend 실행, script 변경, adopter repo 변경은 비범위.
 appetite: 1d
@@ -82,6 +82,7 @@ Driver 제안 (R0 반영 개정 — 원안은 R0 packet·git history 참조):
 
 ## Discovery
 
+- Archived: 2026-07-13 — 당일 완료 3건(-006/-007/-008) batch archive (arbiter 지시).
 - 착수: 2026-07-13, backlog W6 "Upgrade 절차 diet — agent-first 경로 정식화 + playbook 축소" candidate 착수. branch `feature/upgrade-procedure-diet`.
 - 실측: `agent-first` 문자열이 `docs/maintainer/`·`docs/decisions/`·`skills/`·`scripts/`·`prompts/`에 부재 — 정식 표면 승격이 이 Work의 실체임을 확인.
 - Done: 2026-07-13, cross-review R0/R1/R1b(request-changes)→R1c(approve, default 전환 가) + two-route fresh-session simulation 2건 PASS + arbiter 최종 승인.

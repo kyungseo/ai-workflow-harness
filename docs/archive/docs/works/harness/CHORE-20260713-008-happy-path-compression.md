@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260713-008
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: Happy path / glossary / operator layering compression — 2-surface bounded cascade. source README Start Here(새 적용 1-2-3 + target Quick Reference pointer) + shipped docs/HARNESS-QUICK-REFERENCE.md(재진입·Quick vs Work·AI 첫 메시지), README 비규범 Orientation Glossary(회고 §4.4 5그룹), Documentation Map 3그룹 재배치(최소 재포장 1차). Quick Reference는 shipped surface — scaffold cascade 포함. 신규 문서 생성·WORKFLOW-MANUAL/ONBOARDING-GUIDE/generated README 재작성·3층 full 재포장은 비범위 (0.5-day bounded slice).
 appetite: 0.5d
@@ -68,6 +68,7 @@ v1.2.0 readiness 회고(`harness-v1-2-readiness-retrospective-20260615.md`)가 �
 
 ## Discovery
 
+- Archived: 2026-07-13 — 당일 완료 3건(-006/-007/-008) batch archive (arbiter 지시).
 - 착수: 2026-07-13, backlog W2 "Happy path / glossary / operator layering compression" candidate 착수. branch `feature/happy-path-compression`.
 - Done: 2026-07-13, cross-review R0/R1(request-changes)→R1b(approve) + reviewer 독립 routing simulation 2건 PASS + arbiter 최종 승인.
 - Needs-Triage: full 3-layer repack — 이번 slice는 "최소 재포장 1차"(3그룹 재배치)까지만 수행. 회고 §8 trigger("줄였는데도 혼란 반복") 관측 시 별도 후보로 개봉할 가치.
