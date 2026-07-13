@@ -7,6 +7,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | Work File |
 |----|-------|-----------|
+| CHORE-20260713-004 | 1.5.0 릴리즈 + fleet upgrade | [CHORE-20260713-004-release-150.md](CHORE-20260713-004-release-150.md) |
 
 ## Done (Archive Pending)
 
