@@ -1,14 +1,15 @@
 # ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md (source-only)
 
-이미 harness가 적용된 adopter repository를 최신 source baseline으로 올릴 때 쓰는 maintainer playbook이다.
+harness가 적용된 adopter repository를 최신 source baseline으로 올릴 때의 **fallback playbook**이다.
 이 문서는 `ai-workflow-harness` **source repo 전용**이며 scaffold target으로 배포되지 않는다.
 
-> 지금은 "업그레이드 기능을 만든다"보다 **"업그레이드 판단 근육을 만든다"**에 가깝다. 이 playbook은 그 운동 기록지이고, 다음 adopter walkthrough들은 반복 훈련이다. 어느 순간 같은 판단이 2~3번 반복되면, 그때 자동화하거나 정책으로 승격한다.
+> **Default entry는 `docs/maintainer/ADOPTER-UPGRADE-AGENT-FIRST.md`다** — route 판정의 SSoT는 그 문서의 **Entry Conditions 판정식**이다. 판정이 fallback을 가리키는 모든 case(대표: pre-manifest target의 shadow baseline acquisition, external manual adopter, ownership 불확실 target, temp rehearsal이 필요한 고위험 변경, blocker handling)를 이 playbook이 담당한다. Phase 4(ownership classification·adapt-render·DR-043 gate)와 Phase 6(verification 해석·manifest field 계약)은 route와 무관하게 양쪽이 참조하는 **authoritative section**이다.
 
 ## Evidence Boundary
 
 이 playbook은 `ai-deck-compiler` walkthrough(CHORE-20260621-002/003/004)에서 확인된 절차를 일반화한 것이다.
-Claude/Codex가 실제로 어떤 임시 shell 조합을 몇 번 시도했는지까지 재현하는 문서가 아니라, 다음 adopter(`spring-modular-template`, `rfx-hub` 등)에서 반복 가능한 **판단 순서와 gate**를 정리한다.
+Claude/Codex가 실제로 어떤 임시 shell 조합을 몇 번 시도했는지까지 재현하는 문서가 아니라, adopter에서 반복 가능한 **판단 순서와 gate**를 정리한다.
+이후 manifest-target upgrade는 agent-first 경로로 검증됐고(ai-deck replay CHORE-20260713-002, toolstead fresh-session canary — AGENT-FIRST 문서 Evidence Boundary 참조) default entry가 그쪽으로 이동했다. 이 playbook의 절차 상세는 **fallback 경로(pre-manifest·manual·고위험) 기준 evidence**로 유지된다 — 그 경로들은 여전히 unobserved residual이며 폐기 evidence가 없다.
 
 중요한 교훈:
 
@@ -67,19 +68,7 @@ A writes Work + plan -> B red-team review -> A response -> consensus
 
 먼저 read-only로 source ref와 target 상태를 확인한다. released upgrade proof의 기본 source baseline은 released `main` 또는 release tag다. `develop`/current checkout 기준 probe는 internal dogfooding 또는 pre-release tracking 예외로 라벨링한다.
 
-```bash
-TARGET="<target-repo>"
-
-git branch --show-current
-git rev-parse --short HEAD
-git describe --tags --always --dirty
-cat VERSION
-git -C "${TARGET}" status --short --branch
-git -C "${TARGET}" log --oneline -n 12
-test -f "${TARGET}/docs/GIT-WORKFLOW.md" && sed -n '1,180p' "${TARGET}/docs/GIT-WORKFLOW.md"
-test -f "${TARGET}/.harness/manifest.json" && echo "manifest target" || echo "pre-manifest target"
-bash scripts/create-harness.sh --check "${TARGET}" || true
-```
+probe 명령 카탈로그는 `docs/maintainer/VERIFICATION-COMMANDS.md` Layer T (T0)를 사용한다. 추가로 target branch policy(`docs/GIT-WORKFLOW.md`)와 최근 log를 함께 확인한다.
 
 기록할 항목:
 
@@ -104,7 +93,7 @@ source-ref baseline(DR-028)과 target manifest/shadow baseline(DR-034)을 분리
 | Baseline 유형 | 사용 시점 | 의미 | 주의 |
 | --- | --- | --- | --- |
 | 3-way adoption commit | target history에 scaffold adoption commit이 있음 | BASE=adoption, THEIRS=target current, OURS=current source | BASE가 clean scaffold였는지, product edit이 이미 섞였는지 audit 필요 |
-| manifest target | target에 `.harness/manifest.json`이 이미 있음 | manifest가 tracked source baseline을 제공 | manifest가 accepted-drift를 표현하지 못할 수 있음 |
+| manifest target | target에 `.harness/manifest.json`이 이미 있음 | manifest가 tracked source baseline을 제공 — **default는 AGENT-FIRST 경로** (이 playbook에 남아 있다면 fallback 사유를 기록) | manifest가 accepted-drift를 표현하지 못할 수 있음 |
 | shadow scaffold | pre-manifest 또는 history 신뢰도가 낮음 | 같은 project-name/workflow/profile로 current source scaffold 생성 | 2-way 한정. 과거 adopter intent를 history에서 추론할 수 없음 |
 
 3-way migration 기준:
@@ -342,6 +331,8 @@ promotion wording은 보수적으로 쓴다.
 > commit gate 주의: 이 migration Work들은 산출물이 doc/tracking(Work file·STATUS·decision·playbook)에 집중돼 코드 변경이 없을 수 있다. 그러면 source closeout commit이 DR-025 finalization gate에 "finalization-only"로 잡혀 막힌다. 번들할 substantive code 커밋이 없는 정당한 경우이므로, override trailer(`AWH-Gate-Override: finalization-split` + `AWH-Gate-Reason: <문서/tracking 산출물, 번들할 code 없음>`)로 durable 기록을 남기고 통과시킨다. local-only branch면 substantive commit에 `--amend`로 번들하는 쪽이 먼저다.
 
 ## Adopter-Specific Notes
+
+> **현행화 라벨 (2026-07-13):** fleet 4개 adopter(ai-deck·spring·rfx·toolstead)는 모두 1.5.0 manifest baseline으로 정렬 완료됐다(CHORE-20260713-005 + toolstead canary). 아래 spring/rfx의 "예상 패턴"은 실측 전 작성된 기록이며, 이후 upgrade는 agent-first 경로로 수행됐다. 이 노트들은 fallback 경로 참고용 역사 기록으로 유지한다.
 
 ### `ai-deck-compiler`
 
