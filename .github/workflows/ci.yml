@@ -249,7 +249,18 @@ jobs:
           fi
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          PR_NUMBER="${{ github.event.pull_request.number }}"
           TYPES="feat|fix|docs|style|refactor|chore|config|test|perf|ci|build|revert"
+          # A queued PR job can start after merge and head-branch deletion. In that
+          # case checkout lacks the event head object, while GitHub still retains
+          # the PR head ref. Fetch it only for this recovery path.
+          if ! git cat-file -e "${HEAD_SHA}^{commit}" 2>/dev/null; then
+            echo "INFO: event head commit is missing; fetching refs/pull/${PR_NUMBER}/head."
+            git fetch --no-tags origin \
+              "+refs/pull/${PR_NUMBER}/head:refs/remotes/pull/${PR_NUMBER}/head"
+          fi
+          git cat-file -e "${HEAD_SHA}^{commit}" 2>/dev/null \
+            || { echo "ERROR: event head commit remains unavailable: ${HEAD_SHA}"; exit 1; }
           # Compute the range as an independent command first so a failed range
           # (bad/missing base or head sha) fails closed under `set -e` instead of
           # silently passing an empty loop (process substitution would swallow it).
