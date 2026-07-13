@@ -455,7 +455,7 @@ archive 이동 시에는 원본 인덱스에서 행을 제거하고, archive 디
 | T8c | 방향 비교·전략 포지션 정리 필요 | `docs/briefs/` 기록 제안. `docs/briefs/README.md` frontmatter 스펙 적용 |
 | T9 | 발표/보고 산출물 생성 | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |
 | T10 | Work 파일 Done 상태 발견 | archive 승인 여부 제안 + (있으면) `Needs-Triage:` 메모 surface |
-| T11 | tool surface 변경 | Claude(`.claude/commands/`, `.claude/rules/`)/Codex(`.agents/skills/`, `.codex/hooks.json`; Antigravity가 `.agents/` 공유)/Cursor(`.cursor/rules/`)/`prompts/`/README/scaffold 정렬 확인 |
+| T11 | tool surface 변경 | Claude(`.claude/commands/`, `.claude/rules/`)/Codex(`.agents/skills/`, `.codex/hooks.json`; Antigravity가 `.agents/` 공유)/Cursor(`.cursor/rules/`)/safety canonical(`skills/safety/` — rule adapter가 이를 투영)/`prompts/`/README/scaffold 정렬 확인 |
 | T12 | scaffold source 또는 canonical workflow 변경 | `scripts/create-harness.sh`가 있으면 dry-run + temp scaffold 검증, 없으면 source scaffold 검증 제외. template-level policy 변경은 소형 maintenance release 후보로 취급한다 — main merge 전까지 downstream consumer에게 drift window가 발생하므로 변경 범위와 release timing을 함께 판단한다. |
 | T13 | Product track surface Quick Mode L1 변경 | no Work/no STATUS 기본 |
 | T14 | Harness/workflow surface 변경 | 기본 L2로 scope/cascade 확인 |
@@ -505,11 +505,12 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 
 | 변경 대상 | 반드시 확인할 표면 |
 | --- | --- |
-| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | `skills/workflow/`, `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.cursor/rules/`, `.agents/skills/`, `.codex/hooks.json`, `prompts/`, `scripts/create-harness.sh`가 있으면 scaffold source |
+| `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` | `skills/workflow/`, `skills/safety/`, `AGENTS.md`, `CLAUDE.md`, `.claude/commands/`, `.claude/rules/`, `.cursor/rules/`, `.agents/skills/`, `.codex/hooks.json`, `prompts/`, `scripts/create-harness.sh`가 있으면 scaffold source |
 | `skills/workflow/*.md` | `.claude/commands/` adapter, `.agents/skills/workflow-{name}/SKILL.md` adapter, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md`, `docs/HARNESS-QUICK-REFERENCE.md`, `scripts/create-harness.sh`가 있으면 scaffold source |
 | `.claude/commands/*.md` | `skills/workflow/{name}.md`, `AGENTS.md` skill routing pointer, `.agents/skills/workflow-{name}/SKILL.md`, `.cursor/rules/workflow.mdc`, `prompts/*session-start.md`, `docs/HARNESS-QUICK-REFERENCE.md` |
 | `.agents/skills/*/SKILL.md` | `skills/workflow/{name}.md`, `.claude/commands/` 대응 파일, `AGENTS.md` skill routing pointer |
-| `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc` | 반대 tool rule, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` |
+| `skills/safety/*.md` (canonical rule document) | `.claude/rules/{safety-critical,infra}.md`·`.cursor/rules/{safety-critical,infra}.mdc` thin projection, `AGENTS.md` Safety Rule Layer 절, `scripts/create-harness.sh` copy matrix, `scripts/tests/check-rule-surface-parity.sh` |
+| `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc` | 반대 tool rule, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`. safety rule(thin projection)이면 `skills/safety/` canonical과 `check-rule-surface-parity.sh` |
 | `.codex/hooks.json` | `AGENTS.md`, `docs/HARNESS-PROTOCOL.md` hook 관련 섹션 |
 | `prompts/*session-start.md` | `prompts/README.md`, `AGENTS.md`, `CLAUDE.md`, relevant command/rule |
 | `scripts/create-harness.sh`가 존재할 때 | `docs/SCAFFOLD-BOOTSTRAP.md`와 Boot Sequence·Completion Rule 동기화 확인, generic/spring-boot dry-run, temp scaffold 생성 결과, scaffold 내부 stale phrase 검색 |

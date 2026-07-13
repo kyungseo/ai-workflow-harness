@@ -21,6 +21,8 @@ related_work: []
 
 이 문서는 방향 비교이며 실행 결정을 확정하지 않는다. 실제 착수는 별도 Work로 분리하고 `/work-plan`에서 재검토한다.
 
+> **Amendment (2026-07-13, CHORE-20260713-007) — 축 A 실행 완료:** `skills/safety/` canonical SSoT(A1 `safety-critical` always / A2 `infra` path-scoped, English — DR-007 amend) + 4툴 thin projection(Claude/Cursor adapter는 load directive+bootstrap guard, Codex/AG는 root `AGENTS.md` Safety Rule Layer 절)으로 정규화됐다. 구조 결정은 **DR-044(Accepted)**로 기록. 미해결 결정 중 namespace(`skills/safety/` 채택)·언어(English+DR-007 amend)·opt-out(불채택)·rollback(한 PR, 독립 되돌림 구조)이 확정됐다. **축 B는 계속 open** — option-pack backlog 경로 유지.
+
 ---
 
 ## 질문 / 배경

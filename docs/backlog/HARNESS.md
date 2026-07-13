@@ -72,6 +72,7 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | Auto-merge + deferred sync default branch-flow (UF-06, thin-adapter 후보와 dependency) |
 | — | P3 | Candidate | L2 | User-facing documentation authoring standard 일반화 (UF-07) |
 | — | P2 | Candidate | L2 | Scaffold `.env` deny wildcard 교정 quick-fix (UF-08, fixture gate 필수) |
+| — | P2 | Candidate | L2 | Branch isolation gate에 `skills/` canonical 보호 편입 (skills/workflow·skills/safety — pre-existing gap) |
 | HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
 
 ---
@@ -115,7 +116,7 @@ AI Workflow Harness backlog다.
 
 **후보(trigger 시):** 축 ⓐ → `--check output 개선`(source-updated=manifest hash 신호 설명, 저비용) 우선, 그 다음 `--upgrade-plan`(report-only)·`manifest-rebaseline`. 축 ⓑ → accepted-drift schema/sidecar(L3 cascade, 강한 evidence 필요).
 
-**Dependencies:** DR-034(Draft, non-promotion) · DR-043 · `docs/maintainer/{ADOPTER-UPGRADE-MIGRATION-PLAYBOOK,VERIFICATION-COMMANDS}.md`.
+**Dependencies:** DR-034(Draft, non-promotion) · DR-043 · `docs/maintainer/{ADOPTER-UPGRADE-AGENT-FIRST,ADOPTER-UPGRADE-MIGRATION-PLAYBOOK,VERIFICATION-COMMANDS}.md` (CHORE-20260713-006 이후 default entry = AGENT-FIRST).
 
 **Verification(후속 시):** `--check`/invariants 회귀, adopter replay. Surface: tool surface · canonical · adopter cascade.
 
@@ -379,6 +380,20 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 **Priority note:** 실제 cross-tool misfire(상태 변경 workflow command가 사람 명시 호출 없이 자율 발동) 관측이 없어 P3. 1건이라도 관측되면 P2 승격.
 
 **Verification:** adapter frontmatter grep, intent-routing surface 대조. Surface: tool surface · canonical · adopter cascade.
+
+---
+
+#### Branch isolation gate에 `skills/` canonical 보호 편입 (pre-existing gap)
+
+**Cluster:** Harness workflow surface cleanup
+
+**Task:** branch isolation 보호 목록(`tools/git-hooks/lib/gate-lists.sh` `awh_is_branch_isolation_protected_path` case + `.claude/rules/git-workflow.md` protected 파일 목록)에 `skills/` canonical이 전부 빠져 있다. adapter(`.claude/commands/**`·`.claude/rules/**`·`.cursor/rules/**`·`.agents/skills/**`)와 prompt는 보호되는데 그 원본인 canonical SSoT(`skills/workflow/**` — workflow 절차, `skills/safety/**` — 안전 rule)는 develop/main 직접 commit이 가능한 비정합. CHORE-20260713-007이 `skills/safety/`를 신설하며 gap 표면이 안전 rule까지 확장됨을 확인했다(2026-07-13 문서 정합 점검에서 발견 — pre-existing이므로 -007 scope에 넣지 않고 분리).
+
+**Dependencies:** `tools/git-hooks/lib/gate-lists.sh`(framework-owned — 직접 수정 후 harness upgrade 시 전파), `.claude/rules/git-workflow.md` 보호 목록, `scripts/templates/default/.claude/rules/git-workflow.md`(generic template parity), gate path-list parity 검증(`skills/workflow/repo-health-cascade.md` 관련 row), DR-036/DR-039 계열 gate 정책.
+
+**Done Criteria:** `skills/workflow/**`·`skills/safety/**`(또는 `skills/**`)가 protected 목록에 편입되고, hook·rule 문서·generic template 3면이 정합. 기존 tracking-state 예외(T1 bounded warning)와의 상호작용 검토. adopter cascade는 다음 upgrade에서 수용됨을 명시.
+
+**Verification:** `bash scripts/tests/run-harness-checks.sh --tier0`(template parity 포함), gate path-list parity 확인, develop에서 skills/ 파일 staged 시 hook FAIL 시뮬레이션. Surface: tool surface(hook·rule) · scaffold(template) · adopter cascade.
 
 ---
 

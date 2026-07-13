@@ -38,6 +38,8 @@ Gate no-go(우회 실측 1건, 2026-05 Resolved 후 재발 없음, deadlock 0). 
 
 > **Amendment (CHORE-20260713-002):** heterogeneous replay(ai-deck-compiler — source-gitflow + accepted-drift 13 + code product)가 artifact 독립 재검증(`--check` 78/65/13, hash 78/78, 보존 13/13)을 통과해 provisional을 해제한다. **해제 범위는 "manifest 보유 heterogeneous target의 agent-first upgrade 방향"으로 한정** — 비오염 operator process 효율, external manual adopter, pre-manifest baseline acquisition은 unobserved residual로 유지한다. script/playbook 축소는 canary gate(비오염 operator 1건 또는 fresh-session canary 1건 재검증) 통과 전 default 전환·삭제 금지.
 
+> **Amendment (CHORE-20260713-006) — 축② 종결:** canary gate가 toolstead fresh-session canary(1.5.0, `--check` 83/83/0, 질문 0회)로 충족된 뒤 upgrade 절차 diet가 실행 완료됐다. `docs/maintainer/ADOPTER-UPGRADE-AGENT-FIRST.md`가 manifest-target upgrade의 default entry(route 판정식 SSoT)로 신설됐고 기존 playbook은 fallback으로 재배치됐다(safety surface 보존). **bounded heuristic의 범용 DR 승격은 보류** — evidence가 manifest 보유 harness upgrade domain에 한정되어 이 brief의 가설 지위를 유지하며, DR-034 amendment 입력 문구로만 좁혀 기록됐다(backlog P3). 이 brief의 축② revisit trigger는 소비 완료.
+
 **유지(contract/verification):** manifest 계약(framework-owned 선언 + path/src 매핑), `--check` 검증, release tag baseline.
 **방향(provisional — R1-Codex-F1):** playbook Phase 절차·shadow re-scaffold·수기 rebaseline → **agent-first 최소 체크리스트**. 근거는 rfx-hub 1.2.1→1.4.0 실험의 **feasibility**(generic/no-code target 1건, informed-driver 오염, 최종 artifact 동등성 71/72 in-sync는 공정 검증이나 process 비교는 비오염·재현 조건 아님). **heterogeneous replay(code/accepted-drift target 또는 비오염 operator) 1건 이상 전까지 provisional refactor direction으로 유지**하며, script/playbook 축소 실행 판정은 그 이후 gate로 남긴다.
 

@@ -13,12 +13,13 @@ Antigravity(Gemini 기반)도 root `AGENTS.md`를 자동 로드하고 `.agents/s
 
 1. `AGENTS.md` — Codex 진입점
 2. `docs/BEHAVIOR-PRINCIPLES.md` — 전역 행동 원칙
-3. `docs/AGENT-WORKFLOW.md` — 공통 운영 규칙
-4. `docs/STATUS.md` — 현재 작업 상태
-5. `docs/BOOTSTRAP.md` — `docs/STATUS.md` Next Actions가 scaffold bootstrap/onboarding을 명시할 때
-6. `docs/HARNESS-PROTOCOL.md` — workflow/harness 상세 기준이 필요할 때
-7. `docs/HARNESS-QUICK-REFERENCE.md` — 빠른 실행 규칙 확인
-8. `docs/PLAN-SUMMARY.md` — project / harness architecture 요약이 필요할 때
+3. `skills/safety/safety-critical.md` — 실행 안전 rule (A1, always). infra/deploy/environment 파일 작업 시 `skills/safety/infra.md`(A2)도 로드
+4. `docs/AGENT-WORKFLOW.md` — 공통 운영 규칙
+5. `docs/STATUS.md` — 현재 작업 상태
+6. `docs/BOOTSTRAP.md` — `docs/STATUS.md` Next Actions가 scaffold bootstrap/onboarding을 명시할 때
+7. `docs/HARNESS-PROTOCOL.md` — workflow/harness 상세 기준이 필요할 때
+8. `docs/HARNESS-QUICK-REFERENCE.md` — 빠른 실행 규칙 확인
+9. `docs/PLAN-SUMMARY.md` — project / harness architecture 요약이 필요할 때
 
 작업 선택 기준:
 
@@ -44,7 +45,7 @@ AGENTS.md Codex Skill Routing에 따라 /session-start에 대응하는 workflow 
 **AGENTS.md 없음:**
 
 ```text
-AGENTS.md, docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md를 읽어줘.
+AGENTS.md, docs/BEHAVIOR-PRINCIPLES.md, skills/safety/safety-critical.md, docs/AGENT-WORKFLOW.md를 읽어줘.
 그다음 docs/STATUS.md의 Current State, Active Work, Blockers And Open Questions, Next Actions만 확인해줘.
 
 Codex에서는 .claude/commands를 직접 실행하지 말고, 동일한 절차를 수동으로 수행해줘.
