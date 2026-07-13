@@ -8,6 +8,10 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md`, archive 구조�
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260713-004 | 1.5.0 릴리즈 (release readiness + event) | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-004-release-150.md` |
+| CHORE-20260713-003 | Manifest contract 정비 — tolerant parser·source-ref·필드 계약 | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-003-manifest-contract.md` |
+| CHORE-20260713-002 | ai-deck-compiler 1.3.0→1.4.0 agent-first upgrade replay | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-002-aideck-agent-first-replay.md` |
+| CHORE-20260713-001 | Harness direction review + adopter evidence intake + backlog 재정렬 | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-001-direction-review-backlog-realignment.md` |
 | CHORE-20260624-003 | Manifest-target upgrade helper / accepted-drift 설계 (defer/monitor-only) | 2026-06-24 | `docs/archive/docs/works/harness/CHORE-20260624-003-upgrade-helper-design.md` |
 | CHORE-20260624-002 | AGENT-WORKFLOW product constants pointer-only 전환 | 2026-06-24 | `docs/archive/docs/works/harness/CHORE-20260624-002-agent-workflow-pointer.md` |
 | CHORE-20260624-001 | spring-modular-template framework surface upgrade | 2026-06-24 | `docs/archive/docs/works/harness/CHORE-20260624-001-spring-fw-upgrade.md` |

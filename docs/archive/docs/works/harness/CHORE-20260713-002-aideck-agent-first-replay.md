@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260713-002
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: ai-deck-compiler 1.3.0→1.4.0 agent-first upgrade replay — CHORE-20260713-001 축② provisional 해제 gate. heterogeneous target 조건(source-gitflow workflow + accepted-drift 보유 + code product)에서 CP2와 동일한 최소 체크리스트 방식으로 upgrade를 수행하고 노동·함정·품질을 측정·대조한다. script/playbook 축소 실행과 DR-034 amend 실행은 비범위(판정 입력만 산출).
 appetite: 0.5d
@@ -52,6 +52,8 @@ CHORE-20260713-001의 축② 판정은 **refactor(provisional)** — 해제 조�
 - accepted-drift 오판(보존해야 할 로컬 수정을 덮어씀) → 3-way 분류 + 개별 diff 리뷰로 완화, ai-deck feature branch라 rollback 용이. **Reversal Cost: Low.**
 
 ## Discovery
+
+- Archived: 2026-07-13 — 1.5.0 release 전 §3-1 Public Clean Baseline gate 충족을 위한 batch archive (CHORE-20260713-004 R1-Codex-F3).
 
 - 착수: 2026-07-13, backlog W6 "ai-deck-compiler 1.3.0→1.4.0 agent-first upgrade replay" candidate 착수.
 - 실측: ai-deck develop clean, 1.3.0, generic profile + **source-gitflow**, 78 files.

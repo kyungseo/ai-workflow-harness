@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260713-001
 priority: P1
-status: Done
+status: Archived
 risk: L2
 scope: 3주 휴면 후 재가동 점검. ① adopter evidence intake(spring UF-01~08 문제 분류 triage + 4-repo 실측 inventory — rfx-hub 재구축/1.2.1, toolstead 신규/1.4.0, upgrade 노동·drift·cascade defect 측정), ② S1→S2 structural trigger screen(go/no-go gate) 통과 축에 한해 4축(policy semantics / distribution·upgrade / tool projection / enforcement·runtime) retain/refactor/replace 판정, ③ backlog 재우선순위화로 이어 착수 가능한 상태 확보. 실제 리팩토링 실행은 별도 gated 후속 Work로 분리. cross-agent review(Claude driver / Codex red-team reviewer, R0 request-changes 반영).
 appetite: 1.5d
@@ -213,6 +213,8 @@ R0b 확정 임계값 대조 결과. Screening 판정이며 교체 승인이 아�
 - STATUS 갱신은 Approval Matrix에 따라 제안 후 승인 대기(아래 제안). PLAN T5 판단: AWH-004 maintenance 범위 내 후속 추가 수준 — PLAN 본문 변경 불요, PLAN-SUMMARY stale 없음.
 
 ## Discovery
+
+- Archived: 2026-07-13 — 1.5.0 release 전 §3-1 Public Clean Baseline gate 충족을 위한 batch archive (CHORE-20260713-004 R1-Codex-F3).
 
 - 2026-07-13 착수. backlog의 P1 후보들("happy path/glossary", "planning-pack evidence review")보다 이 재가동 점검을 선행하는 이유: backlog 자체가 adopter 현실 대비 stale이므로, stale한 우선순위 위에서 P1을 고르는 것이 순서 오류.
 - 실측(착수 시): `~/dev-home/rfx-hub` 존재, manifest `harness_version: 1.2.1` (no-code, engagements/knowledge 구조). `~/dev-home/vibe/toolstead` 존재, manifest `harness_version: 1.4.0` (Skillstead/SessionCue). UF buffer는 spring에만 존재(8건). rfx-hub/toolstead는 UF 채널 자체가 없음 → evidence 채널 표준화 여부도 S1 판단 대상.

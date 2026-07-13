@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260713-003
 priority: P2
-status: Done
+status: Archived
 risk: L2
 scope: Manifest contract 정비(R0 반영) — ① --check parser python3 단일화(부재 시 actionable exit 2 fail closed), ② structured provenance(source_ref+source_commit+source_dirty, ref 판정 4분류 — same-version skew만 WARN), ③ hash_mode 신규 canonical 값+legacy alias·generated_at=rebaseline 날짜 계약, ④ table-driven fixture behavior matrix. per-file hash=authoritative/source ref=보조 우선순위 명시. entry-format 계약화 제외(-001 R1b), playbook diet 비범위.
 appetite: 0.5d
@@ -60,6 +60,8 @@ related_work: [CHORE-20260713-001, CHORE-20260713-002]
 - parser 교체 회귀(기존 single-line manifest 오판) → behavior matrix fixture + 실 adopter read-only 확인으로 완화. **python3 부재 환경에서 `--check` 사용 불가가 명시적 동작이 됨**(fail closed — 조용한 오판보다 안전, README가 이미 python3 전제). 신규 hash_mode 값은 구버전 script의 `--check`와 cross-version 하위호환 fixture로 확인. **Reversal Cost: Low~Medium**(script 단일 파일 revert 가능, 신규 필드는 additive).
 
 ## Discovery
+
+- Archived: 2026-07-13 — 1.5.0 release 전 §3-1 Public Clean Baseline gate 충족을 위한 batch archive (CHORE-20260713-004 R1-Codex-F3).
 
 - 착수: 2026-07-13, backlog W6 "Manifest contract 정비" candidate 착수.
 - **Release-prep handoff (R0b non-blocking):** 다음 minor release note에 포함할 것 — ⓐ `--check`가 python3 필수(fail closed)로 전환, ⓑ manifest 신규 필드(`source_ref`/`source_commit`/`source_dirty`)와 `hash_mode` canonical 값 `source_template_raw`(legacy alias 계속 허용 — 기존 adopter 조치 불요), ⓒ version-skew WARN 신설. cross-version 주의: 구버전 script의 `--check`는 신규 필드를 무시하고 legacy hash_mode literal invariant를 볼 수 있음 → 신규 manifest를 구버전 script로 검사하지 말 것.
