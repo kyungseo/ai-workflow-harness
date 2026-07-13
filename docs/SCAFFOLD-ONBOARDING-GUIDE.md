@@ -783,5 +783,6 @@ docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md, docs/BOOTST
 > - `docs/BOOTSTRAP.md` — AI가 온보딩 시 사용하는 체크리스트 원본
 > - `docs/HARNESS-QUICK-REFERENCE.md` — 세션 실행 규칙 요약
 > - `skills/workflow/` — workflow command별 canonical 절차
+> - `skills/safety/` — safety rule layer canonical (A1 always / A2 path-scoped, 4툴 공용)
 > - `docs/WORKFLOW-MANUAL.md` — optional pack에 포함될 수 있는 전체 워크플로우 매뉴얼
 > - `docs/AGENT-WORKFLOW.md` — 공통 운영 규칙 (Project Constants, Approval Matrix)

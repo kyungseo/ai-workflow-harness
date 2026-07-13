@@ -127,6 +127,7 @@ flowchart TD
     subgraph CANON ["Canonical Workflow"]
         SKILL_README["skills/workflow/README.md\ncanonical index"]
         SKILL_FLOW["skills/workflow/{name}.md\ncommand별 상세 절차"]
+        SAFETY_CANON["skills/safety/{name}.md\nsafety rule canonical (A1/A2)"]
     end
 
     subgraph ADAPTERS ["Tool Adapters"]
