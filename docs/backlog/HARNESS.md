@@ -63,6 +63,7 @@ AI Workflow Harness backlog다.
 | — | P3 | Candidate | L3 | PLAN-SUMMARY.md → PROJECT-CONTEXT.md rename feasibility / migration brief |
 | — | P3 | Candidate | L3 | DR namespace successor 평가 (②b product-only prefix / ③ directory) — DR-042 Policy Horizon trigger gated |
 | — | P2 | Candidate | L2 | `.claude/rules/git-workflow.md` thin adapter화 (Branch Flow·Post-PR·Commit Message 상세 → GIT-WORKFLOW.md 위임) — 축③ block-replication 실측으로 P3→P2 상향, UF-06 뒤 착수 |
+| — | P1 | Candidate | L2 | Fleet upgrade to 1.5.0 — spring·ai-deck·rfx (tag 기준 agent-first) + toolstead fresh-session canary 보류 |
 | — | P2 | Candidate | L2 | Upgrade 절차 diet — agent-first 경로 정식화 + playbook 축소 (canary gate) |
 | — | P3 | Candidate | L2 | DR-034 amendment — manifest-target agent-first 분기 추가 |
 | — | P1 | Candidate | L2 | Safety rule layer 정규화 (축 A: A1 always / A2 path-scoped, Codex·AG는 shared safety doc) |
@@ -397,6 +398,20 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 **Verification:** scaffold dry-run에서 4툴 안전 surface 소비 확인(특히 `AGENTS.md` entry consumption). 기존 `check-surface-mirror-parity`는 command surface만 보므로 **rule parity check 신설**(canonical 존재·adapter pointer 존재·A1/A2 surface 존재·scaffold copy matrix 포함; 내용 동등성은 제외). `git diff --check`. Surface: tool surface · scaffold · canonical · adopter cascade.
 
 > **축 B 참고:** stack-specific `java-spring`/`testing` 재설계(네이밍·option-pack·product import)는 아래 "Spring modular/product engineering option-pack 후보"에 흡수한다. brief 축 B 절 참조.
+
+---
+
+#### Fleet upgrade to 1.5.0 — 3 repo agent-first + toolstead canary 보류
+
+**Cluster:** W6. Durability Follow-up
+
+**Task:** `ai-workflow-v1.5.0` released tag 기준으로 spring-modular-template·ai-deck-compiler·rfx-hub를 agent-first 방식(CHORE-20260713-002 CP1 체크리스트)으로 upgrade한다. rebaseline 시 manifest가 provenance 필드를 획득하고 `hash_mode`가 canonical로 전환된다. spring은 DR-043 one-time migration 상태 확인 포함. **toolstead는 이 Work에서 제외 — fresh-session canary로 별도 수행**(upgrade 절차 diet의 canary gate 겸용: 새 세션에서 최소 체크리스트만으로 informed-driver 오염 없는 측정 확보).
+
+**Dependencies:** `ai-workflow-v1.5.0` tag(CHORE-20260713-004 release), CHORE-20260713-002 체크리스트·provenance 형식, DR-043 migration gate(playbook Manifest field 계약 절).
+
+**Done Criteria:** 3 repo가 1.5.0 tag baseline으로 upgrade되고 post-hoc `--check`(clean tag)에서 provenance match + 기대 drift만 잔존. 각 repo PR merge. toolstead canary는 착수하지 않고 보류 기록.
+
+**Verification:** repo별 post-hoc `--check`(provenance 4분류 출력 확인), accepted-drift 보존(spring AGENT-WORKFLOW 등), `git diff --check`. Surface: adopter cascade.
 
 ---
 

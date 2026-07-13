@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-07-13 (manifest contract 정비 완료 — parser 단일화·provenance 계약)
+Last updated: 2026-07-13 (1.5.0 release prep — readiness 진행 중)
 
 ## Current State
 
@@ -52,7 +52,7 @@ Last updated: 2026-07-13 (manifest contract 정비 완료 — parser 단일화·
 
 W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcement & Lifecycle)의 기반 작업은 종결됐다. 2026-07-13 direction review(CHORE-20260713-001) 결과 **전면 rewrite 불필요**가 공식화됐고, 실행 후속은 backlog **W6. Durability Follow-up** cluster가 evidence-gated로 관리한다(판정 상세: brief `harness-longterm-durability-review-20260713.md`).
 
-- **첫 착수 추천:** **Upgrade 절차 diet** (W6, P2 — agent-first 경로 정식화 + playbook 축소) — 선행 조건(manifest contract 정비, CHORE-20260713-003) 충족. **canary gate 유의:** 비오염 operator 1건 또는 fresh-session canary 재검증 통과 전에는 default 경로 전환·기존 playbook 삭제 금지.
+- **첫 착수 추천:** **Fleet upgrade to 1.5.0** (W6, P1) — `ai-workflow-v1.5.0` release(CHORE-20260713-004) 직후 spring·ai-deck·rfx 3건 agent-first upgrade. **toolstead는 fresh-session canary로 보류**(diet canary gate 겸용 — 새 세션에서 수행할 것). 그 다음 **Upgrade 절차 diet**(P2 — canary 통과 전 default 전환·playbook 삭제 금지).
 - **지금 막힘 없이 착수 가능한 P1:** Happy path / glossary / operator layering compression, Safety rule layer 정규화(축 A).
 - **handoff-backed P1:** First concrete planning-pack evidence review (`spring-modular-template` handoff 결과 + fresh no-code follow-up). Spring repo의 PRODUCT backlog normalization 결과는 이 source evidence review의 입력으로만 소비한다.
 - **W6 P2 후속:** UF-06 auto-merge default → thin-adapter화(순서 고정), UF-08 scaffold deny quick-fix, UF-01 product CI seam. P3: DR-034 manifest-target 분기 amend.

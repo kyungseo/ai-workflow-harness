@@ -13,9 +13,6 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
-| CHORE-20260713-003 | Manifest contract 정비 — tolerant parser·source-ref·필드 계약 | 2026-07-13 | [CHORE-20260713-003-manifest-contract.md](CHORE-20260713-003-manifest-contract.md) |
-| CHORE-20260713-002 | ai-deck-compiler 1.3.0→1.4.0 agent-first upgrade replay | 2026-07-13 | [CHORE-20260713-002-aideck-agent-first-replay.md](CHORE-20260713-002-aideck-agent-first-replay.md) |
-| CHORE-20260713-001 | Harness direction review + adopter evidence intake + backlog 재정렬 | 2026-07-13 | [CHORE-20260713-001-direction-review-backlog-realignment.md](CHORE-20260713-001-direction-review-backlog-realignment.md) |
 
 ## Archived
 
