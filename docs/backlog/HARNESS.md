@@ -33,7 +33,7 @@ AI Workflow Harness backlog다.
 | W3. Workflow IA Diet ✓ 완결 | source/target 경계, canonical weight, optional pack, trigger 구조를 더 가볍게 정렬한다 | (Canonical 개념 계층화 핵심 달성 = CHORE-20260613-002~005, Prompt surface diet 완료 = CHORE-20260612-010, work-doc class 완료 = CHORE-20260613-005, trigger family simplification 완료 = CHORE-20260613-006) 전부 완료 |
 | W4. Enforcement And Lifecycle | 반복되는 운영 실수를 hook/CI/test 또는 closeout 절차로 줄인다 | (전부 종결) Validation Spine residual F1~F4 = CHORE-20260613-017/018·DR-036, 문서-only 규칙 강제화 = DR-037, Archive 누적 관리 정책 = DR-038, CI inline assertion ↔ invariants SSoT parity = CHORE-20260613-016 no-action closeout |
 | W5. Future / Optional | 실제 product 운용 후 필요가 확인된 확장만 다룬다 | Spring modular/product engineering option-pack(trigger-gated, source-ready 아님), project-state template, sub-agent autonomy policy, packaging/distribution revisit, Windows 지원 |
-| W6. Durability Follow-up (2026-07 direction review) | CHORE-20260713-001의 4축 판정(brief `harness-longterm-durability-review-20260713.md`)을 evidence-gated로 실행한다. **축②는 2026-07-13 해제됨(CHORE-20260713-002 — manifest 보유 target의 agent-first 방향 한정, 비오염 operator·pre-manifest는 residual). manifest contract 정비는 CHORE-20260713-003으로 완료** | 축②: upgrade 절차 diet(canary gate, 선행 조건 충족) = P2, DR-034 manifest-target 분기 amend = P3. 축③: UF-06 auto-merge(P2) → `.claude/rules/git-workflow.md` thin adapter화(P2 상향) 순서. 축④: UF-01/02 deterministic guard 비교, UF-08 quick-fix(P2) |
+| W6. Durability Follow-up (2026-07 direction review) | CHORE-20260713-001의 4축 판정(brief `harness-longterm-durability-review-20260713.md`)을 evidence-gated로 실행한다. **축② 해제(-002)·contract 정비(-003)·1.5.0 release(-004)·fleet 3건 upgrade(-005) 완료** | 축②: toolstead fresh-session canary(P1, diet gate 겸용) → upgrade 절차 diet(P2), DR-034 manifest-target 분기 amend = P3. 축③: UF-06 auto-merge(P2) → `.claude/rules/git-workflow.md` thin adapter화(P2 상향) 순서. 축④: UF-01/02 deterministic guard 비교, UF-08 quick-fix(P2) |
 
 **Adopter evidence set (2026-07-13 실측 현행화, CHORE-20260713-001):** 현재 scaffold된 실제 적용 프로젝트는 4개다. `base-msa-template`은 `ai-workflow-harness`의 mirror/reference 입력이므로 scaffold target evidence set에서 제외한다.
 
@@ -63,7 +63,7 @@ AI Workflow Harness backlog다.
 | — | P3 | Candidate | L3 | PLAN-SUMMARY.md → PROJECT-CONTEXT.md rename feasibility / migration brief |
 | — | P3 | Candidate | L3 | DR namespace successor 평가 (②b product-only prefix / ③ directory) — DR-042 Policy Horizon trigger gated |
 | — | P2 | Candidate | L2 | `.claude/rules/git-workflow.md` thin adapter화 (Branch Flow·Post-PR·Commit Message 상세 → GIT-WORKFLOW.md 위임) — 축③ block-replication 실측으로 P3→P2 상향, UF-06 뒤 착수 |
-| — | P1 | Candidate | L2 | Fleet upgrade to 1.5.0 — spring·ai-deck·rfx (tag 기준 agent-first) + toolstead fresh-session canary 보류 |
+| — | P1 | Candidate | L2 | toolstead 1.5.0 fresh-session canary upgrade (upgrade 절차 diet의 canary gate 겸용 — 반드시 새 세션에서) |
 | — | P2 | Candidate | L2 | Upgrade 절차 diet — agent-first 경로 정식화 + playbook 축소 (canary gate) |
 | — | P3 | Candidate | L2 | DR-034 amendment — manifest-target agent-first 분기 추가 |
 | — | P1 | Candidate | L2 | Safety rule layer 정규화 (축 A: A1 always / A2 path-scoped, Codex·AG는 shared safety doc) |
@@ -401,17 +401,19 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 
 ---
 
-#### Fleet upgrade to 1.5.0 — 3 repo agent-first + toolstead canary 보류
+#### toolstead 1.5.0 fresh-session canary upgrade
 
 **Cluster:** W6. Durability Follow-up
 
-**Task:** `ai-workflow-v1.5.0` released tag 기준으로 spring-modular-template·ai-deck-compiler·rfx-hub를 agent-first 방식(CHORE-20260713-002 CP1 체크리스트)으로 upgrade한다. rebaseline 시 manifest가 provenance 필드를 획득하고 `hash_mode`가 canonical로 전환된다. spring은 DR-043 one-time migration 상태 확인 포함. **toolstead는 이 Work에서 제외 — fresh-session canary로 별도 수행**(upgrade 절차 diet의 canary gate 겸용: 새 세션에서 최소 체크리스트만으로 informed-driver 오염 없는 측정 확보).
+**Task:** toolstead를 `ai-workflow-v1.5.0` tag 기준으로 upgrade하되, **반드시 새(fresh) 세션에서 최소 체크리스트만으로 수행**한다 — CHORE-20260713-005(spring·ai-deck·rfx 완료)에서 의도적으로 제외한 마지막 fleet 항목이며, informed-driver 오염 없는 측정으로 **upgrade 절차 diet의 canary gate**를 겸한다. toolstead의 develop-스냅샷 skew도 이때 해소(provenance 획득).
 
-**Dependencies:** `ai-workflow-v1.5.0` tag(CHORE-20260713-004 release), CHORE-20260713-002 체크리스트·provenance 형식, DR-043 migration gate(playbook Manifest field 계약 절).
+**체크리스트(canary 세션에 줄 것):** ① source tag 기준 framework-owned 파일 식별·비교(identity 치환 감안) ② 로컬 수정 보존 — 애매하면 목록 보고 ③ 변경/보존/불확실 목록 보고 ④ feature branch + commit은 사용자 승인 후. **절차 playbook·과거 Work 기록 참조 금지(canary 조건).**
 
-**Done Criteria:** 3 repo가 1.5.0 tag baseline으로 upgrade되고 post-hoc `--check`(clean tag)에서 provenance match + 기대 drift만 잔존. 각 repo PR merge. toolstead canary는 착수하지 않고 보류 기록.
+**Dependencies:** `ai-workflow-v1.5.0` tag, 1.5.0 manifest 계약(단 canary 세션에 사전 제공하지 않음 — 스스로 발견하는지가 측정 대상).
 
-**Verification:** repo별 post-hoc `--check`(provenance 4분류 출력 확인), accepted-drift 보존(spring AGENT-WORKFLOW 등), `git diff --check`. Surface: adopter cascade.
+**Done Criteria:** toolstead 1.5.0 baseline + provenance 획득, post-hoc `--check`(clean tag) 기대 상태. **canary 측정 기록**(스텝·함정·질문 횟수)이 diet Work의 gate 판정 입력으로 남는다.
+
+**Verification:** post-hoc `--check`, 보존 파일 diff, canary 측정 기록 review. Surface: adopter cascade.
 
 ---
 
