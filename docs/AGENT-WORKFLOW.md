@@ -55,7 +55,7 @@ Runtime/build/static assumptions는 아래 `Project Constants`에 요약되어 �
 | 방향 비교·포지션·전략 문서 확인 | `docs/briefs/` |
 | 이슈 해결 내역 확인 | `docs/troubleshooting/` |
 | 과거 Phase 맥락 | `docs/archive/` |
-| adopter/관련 repo의 로컬 위치·관계 확인 (cross-repo 작업) | `docs/maintainer/REPO-MAP.md` — source repo 전용(scaffold 적용 repository에는 없음 — adopter는 `docs/PLAN-SUMMARY.md`의 local pointer가 있으면 그것을 따르고, 없으면 N/A) |
+| adopter/관련 repo의 로컬 위치·관계 확인 (cross-repo 작업) | `docs/maintainer/REPO-MAP.md` — source repo 전용(scaffold 적용 repository에는 없음 — adopter는 `docs/STATUS.md` Current State의 `Local repo map` row가 있으면 그것을 따르고, 없으면 N/A) |
 
 조건이 없으면 추가 문서를 로드하지 않는다.
 core 문서에 조건부로만 실행되는 상세 절차·체크리스트가 축적될 경우, 별도 slice 파일로 분리하고 조건부 pointer로 교체한다.
