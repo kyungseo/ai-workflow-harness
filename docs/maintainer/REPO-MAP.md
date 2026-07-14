@@ -19,7 +19,7 @@ living data(harness_version·baseline·profile·UF 채널 보유 여부)는 `doc
 
 이 파일이 fleet 위치 정보의 SSoT다 — adopter로 복제하지 않는다(drift 방지).
 
-- 운영자가 scaffold한 adopter는 자기 repo의 product-owned 문서(`docs/PLAN-SUMMARY.md` Implementation Baseline)에 conditional pointer 1줄을 둔다. 권장 문구:
-  > Local repo map (cross-repo 작업 시에만 로드): `~/dev-home/vibe/ai-workflow-harness/docs/maintainer/REPO-MAP.md` (machine-local — 이 운영 환경 밖에서는 N/A)
+- 운영자가 scaffold한 adopter는 자기 repo의 `docs/STATUS.md` Current State 표에 pointer row 1줄을 둔다. Current State는 4개 도구 전부가 매 세션 로드하는 유일한 adopter-owned 표면이라 trigger 가시성이 확보된다(조건부 로드인 `docs/PLAN-SUMMARY.md`에 두면 cross-repo 경로 질문에서 pointer가 발화하지 않음이 실측됨 — 2026-07-14 toolstead 세션). 권장 문구:
+  > `| Local repo map | ~/dev-home/vibe/ai-workflow-harness/docs/maintainer/REPO-MAP.md (machine-local — cross-repo 작업 시 로드) |`
 - 외부 adopter에는 해당 없음 — scaffold는 이 파일을 배포하지 않고 pointer도 생성하지 않는다.
 - agent-side 지속 컨텍스트(Claude memory, 전역 config 등)에 이 map을 저장하지 않는다 — `docs/BEHAVIOR-PRINCIPLES.md` §6(repo명·경로는 harness 문서가 SSoT).
