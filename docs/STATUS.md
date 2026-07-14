@@ -3,7 +3,7 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-07-13 (CHORE-20260713-009 완료 — CI PR head ref race hardening)
+Last updated: 2026-07-14 (CHORE-20260714-001 완료 — UF-08 scaffold env deny contract)
 
 ## Current State
 
@@ -53,6 +53,6 @@ Last updated: 2026-07-13 (CHORE-20260713-009 완료 — CI PR head ref race hard
 W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcement & Lifecycle)의 기반 작업은 종결됐다. 2026-07-13 direction review(CHORE-20260713-001) 결과 **전면 rewrite 불필요**가 공식화됐고, 실행 후속은 backlog **W6. Durability Follow-up** cluster가 evidence-gated로 관리한다(판정 상세: brief `harness-longterm-durability-review-20260713.md`).
 
 - **첫 착수 추천 (handoff-backed P1):** First concrete planning-pack evidence review (`spring-modular-template` handoff 결과 + fresh no-code follow-up). Spring repo의 PRODUCT backlog normalization 결과는 이 source evidence review의 입력으로만 소비한다. (막힘 없던 P1 3건 — upgrade diet -006·safety layer -007·happy path -008 — 은 2026-07-13 모두 완료.)
-- **W6 P2 후속:** UF-06 auto-merge default → thin-adapter화(순서 고정), UF-08 scaffold deny quick-fix, UF-01 product CI seam. P3: DR-034 manifest-target 분기 amend.
+- **W6 P2 후속:** UF-06 auto-merge default → thin-adapter화(순서 고정), UF-01 product CI seam. P3: DR-034 manifest-target 분기 amend. UF-08 scaffold deny quick-fix는 CHORE-20260714-001로 완료.
 - **monitor-only / deferred:** upgrade helper residual(P3 — manifest contract 정비가 축ⓐ 흡수 가능), planning-pack skeleton/scaffold integration(trigger-gated), Spring modular/product engineering option-pack(trigger-gated, UF-04 evidence 흡수됨).
 - **gated 후속:** DR-034 promotion/amend 판단(agent-first replay 결과 입력), DR namespace successor(DR-042 Policy Horizon gated), internal managed mode(P2), packaging revisit(P3), sub-agent autonomy(P3, dormant), project-state template pack(P2) 등은 backlog의 gate 기준을 따른다.

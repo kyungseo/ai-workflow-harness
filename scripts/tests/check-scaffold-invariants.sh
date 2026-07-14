@@ -7,6 +7,8 @@
 #   2) no-source-only-leakage : core A-class 출력에 source-only 식별자/경로가 누수됐는가
 #   3) decisions/README index <-> DR 파일 closure
 #   4) root README 파일표 <-> optional docs on-disk 일치 (S5, 모드 무관)
+#   5) manifest + --check 자기일관성
+#   6) Claude env read permission contract fixture matrix
 #
 # Scope (DR-021 boundary):
 #   - core A-class (hard-fail): entrypoint/protocol/rule/command/skill/cursor/session-start/decisions
@@ -26,6 +28,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+ENV_PERMISSION_CONTRACT="${SCRIPT_DIR}/check-env-permission-contract.sh"
 
 TARGET_ARG="${1:-}"
 TMPLIST="$(mktemp)"
@@ -247,6 +250,19 @@ PY
   if [[ "${c5_fail}" -eq 0 ]]; then
     echo "  OK: manifest 형식 + --check 자기일관성(drift 0)"
   else
+    FAIL=1
+  fi
+
+  # [6] Claude env read permission contract fixture matrix
+  echo ""
+  echo "== [6] Claude env read permission contract (hard-fail) =="
+  if [[ ! -f "${ENV_PERMISSION_CONTRACT}" ]]; then
+    echo "  FAIL: check-env-permission-contract.sh 없음"
+    FAIL=1
+  elif bash "${ENV_PERMISSION_CONTRACT}" "${TARGET}/.claude/settings.json"; then
+    echo "  OK: secret env deny + .env.example readable"
+  else
+    echo "  FAIL: env read permission contract 위반"
     FAIL=1
   fi
 
