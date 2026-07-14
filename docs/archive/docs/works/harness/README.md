@@ -8,6 +8,8 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md`, archive 구조�
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260714-001 | Scaffold env deny contract correction (UF-08) | 2026-07-14 | `docs/archive/docs/works/harness/CHORE-20260714-001-scaffold-env-deny-contract.md` |
+| CHORE-20260713-009 | CI PR head ref race hardening | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-009-ci-pr-head-ref-race.md` |
 | CHORE-20260713-008 | Happy path / glossary / operator layering compression | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-008-happy-path-compression.md` |
 | CHORE-20260713-007 | Safety rule layer 정규화 (축 A) — DR-044 | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-007-safety-rule-layer.md` |
 | CHORE-20260713-006 | Upgrade 절차 diet — agent-first 경로 정식화 + playbook 축소 | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-006-upgrade-procedure-diet.md` |

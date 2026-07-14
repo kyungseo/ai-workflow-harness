@@ -42,9 +42,9 @@ AI Workflow Harness backlog다.
 | `ai-deck-compiler` | 1.3.0 | generic | manifest (78 files) | 1 minor behind |
 | `spring-modular-template` | 1.4.0 | spring-boot | manifest (82 files) | 현행. UF buffer 보유(UF-01~08 intake됨) |
 | `rfx-hub` | 1.2.1 | generic | manifest (72 files) | 재구축되어 활성(과거 "finding 수집 후 삭제" 기록은 stale — 정정). 2 minor behind, agent-first upgrade 실험 대상 |
-| `toolstead` | 1.4.0 | generic | manifest (83 files) | 신규. Skillstead/SessionCue 멀티 product |
+| `toolstead` | 1.4.0 | generic | manifest (83 files) | 신규. Skillstead/SessionCue 멀티 product. UF buffer 보유(TS-UF-01~02 intake됨, 2026-07-14) |
 
-4개 모두 manifest baseline이며 pre-manifest adopter는 없다. rfx-hub/toolstead에는 upstream feedback 채널(UF section)이 없다 — 채널 표준화 여부는 별도 판단.
+4개 모두 manifest baseline이며 pre-manifest adopter는 없다. rfx-hub에는 upstream feedback 채널(UF section)이 없다 — 채널 표준화 여부는 별도 판단. UF 번호 namespace는 adopter별이다: 무접두 `UF-NN`은 spring, `TS-UF-NN`은 toolstead.
 
 ### Summary
 
@@ -70,6 +70,7 @@ AI Workflow Harness backlog다.
 | — | P3 | Candidate | L2 | Generic closeout invariant/decision impact hook (UF-05) |
 | — | P2 | Candidate | L2 | Auto-merge + deferred sync default branch-flow (UF-06, thin-adapter 후보와 dependency) |
 | — | P3 | Candidate | L2 | User-facing documentation authoring standard 일반화 (UF-07) |
+| — | P2 | Candidate | L2 | harness-validate commit-msg backstop을 실제 advisory로 정렬 — release PR hard-block 해소 (TS-UF-01) |
 | — | P2 | Candidate | L2 | Branch isolation gate에 `skills/` canonical 보호 편입 (skills/workflow·skills/safety — pre-existing gap) |
 | — | P3 | Candidate | L1 | root README에 upgrade default-entry(AGENT-FIRST) 발견 가능성 pointer 추가 |
 | HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
@@ -442,6 +443,7 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 
 - **Task:** §GitHub Ruleset에 "public 또는 GitHub Pro/Team 이상" plan 의존성과 free-private 대체 경로(수동 규율 또는 `--auto`)를 안내하고, plan 전환 시 일괄 적용할 required check 목록 체크리스트를 추가한다. UF-06 채택 시 `--auto` 서술을 정합화한다.
 - **Dependencies:** `docs/GIT-WORKFLOW.md` §GitHub Ruleset, UF-06 후보.
+- **Corroboration:** toolstead TS-UF-02(2026-07-14) — 첫 release 중 PRIVATE + free User plan에서 ruleset/branch-protection API 403 독립 재현. 신규 intake 아님, 실행은 이 후보가 소유(toolstead backlog §UF-02 원문 참조).
 - **Done Criteria:** free-private adopter가 403 대체 경로를 문서에서 바로 찾는다.
 - **Verification:** 문서 diff review, stale phrase 점검. Surface: canonical · adopter cascade(source-gitflow scaffold).
 
@@ -465,6 +467,29 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 - **Dependencies:** spring `docs/USER-FACING-DOCUMENTATION-GUIDE.md` + M1 적용 evidence, DR-007. (happy path P1 의존은 CHORE-20260713-008 종결로 해제.)
 - **Done Criteria:** generalize/흡수/defer 결정 + 근거. 신규 표면이면 억제 gate 통과 기록.
 - **Verification:** 문서 diff review, DR-007 경계 확인. Surface: canonical · README/GUIDE/MANUAL.
+
+---
+
+#### toolstead TS-UF-01~02 intake disposition (2026-07-14)
+
+**Cluster:** W2. Adopter Transition
+
+> 발견 맥락·상세 근거의 SSoT는 `toolstead` repo `docs/backlog/HARNESS.md` §Upstream Harness Feedback Evidence(첫 develop→main release, 2026-07-14). 여기는 source-side disposition만 유지한다. UF 번호는 adopter별 namespace라 spring UF-NN과 무관하며, source-side 표기는 `TS-UF-NN`을 쓴다.
+
+| UF | Disposition | 문제 (source 관점) | 비고 |
+| --- | --- | --- | --- |
+| TS-UF-01 | 신규 P2 | scaffold 템플릿 `harness-validate.yml`의 commit-msg backstop이 이름("advisory")과 달리 hard-fail(`exit "$FAIL"`)이며 release PR skip이 없다 — develop→main PR은 develop 전체 history가 검사 범위라, pre-enforcement 비관례 commit이 1건이라도 있으면 모든 release PR이 영구 차단된다 | source 자체 `ci.yml`은 동일 step에 release-PR skip + "required check 미wiring(DR-020)" 주석 + head-ref race 보정(CHORE-20260713-009)을 이미 보유 — 템플릿만 미전파. 해결 방향 = 기존 패턴 porting |
+| TS-UF-02 | corroboration (신규 row 없음) | free-private repo에서 GitHub Ruleset/required check 403 — spring UF-03과 동일 이슈의 독립 재현 | 기존 UF-03 후보에 corroboration 주석 추가됨. 실행 ownership 변화 없음 |
+
+**Per-candidate details:**
+
+##### TS-UF-01 — harness-validate commit-msg backstop을 실제 advisory로 정렬 (P2, L2)
+
+- **Task:** `scripts/templates/source-gitflow/.github/workflows/harness-validate.yml`의 backstop step을 이름과 일치하게 정렬한다. source `ci.yml`의 기존 패턴 porting이 1차 후보: (a) develop→main release PR skip(historical commit이 release를 hard-block하지 않게), (b) head-ref race 보정(refs/pull fetch, CHORE-20260713-009), (c) 로그 문구 `ERROR:` → advisory 문구 정합 또는 step 유지 여부 판단. adopter는 이 check를 required로 wiring할 수 있으므로(GIT-WORKFLOW §0-1) skip 방식과 required-check 관계를 함께 결정한다.
+- **Evidence:** toolstead 첫 release PR #48(2026-07-14) hard-block — 원인은 pre-enforcement 비관례 commit `761fe3d` 1건. source 실측(2026-07-14): 4 adopter 중 toolstead만 비관례 history 보유(spring·rfx-hub·ai-deck main history는 전부 conventional이라 미표면화 — 트리거는 release 수행 여부가 아니라 비관례 commit의 존재). toolstead는 unblock을 위해 manifest-tracked 파일을 로컬 수정(PR #49, `continue-on-error: true`)한 governance 예외 상태 — **upstream 반영 후 다음 toolstead upgrade에서 이 divergence 해소(로컬 fix 회수)를 확인해야 한다.**
+- **Dependencies:** `scripts/templates/source-gitflow/.github/workflows/harness-validate.yml`, source `.github/workflows/ci.yml` 동일 step(porting 원본), `docs/GIT-WORKFLOW.md` §0-1·§4, spring UF-01 후보 ⓒ(manifest-tracked 파일 로컬 수정 감지 — toolstead 제안 (c)와 동일 표면, 여기서 중복 실행하지 않고 UF-01 착수 시 함께 판단).
+- **Done Criteria:** 템플릿 backstop이 release PR을 historical commit으로 hard-block하지 않고, 이름("advisory")과 동작·required-check 관계가 문서화된다. toolstead divergence 회수 경로가 명시된다.
+- **Verification:** 템플릿 diff + toolstead 재현 시나리오(비관례 historical commit + release PR) 시뮬레이션, GIT-WORKFLOW 서술 정합. Surface: scaffold · adopter cascade · canonical(GIT-WORKFLOW).
 
 ---
 
