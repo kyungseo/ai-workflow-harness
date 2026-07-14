@@ -16,6 +16,7 @@ scaffold 적용 repository에는 존재하지 않으므로, 다른 문서가 이
 | `HARNESS-TEST-TAXONOMY.md` | surface별 검증 기준, Tier 정의, `temp/` 정책, runner와 catalog의 역할 경계 |
 | `VERIFICATION-COMMANDS.md` | Layer별 검증 명령 카탈로그 + "Release Full Sweep" 릴리즈 전수 점검 프리셋 |
 | `VERSIONING.md` | semver 기준·tag 매핑·bump 절차의 SSoT (근거: DR-028) |
+| `REPO-MAP.md` | 운영자 로컬 환경의 adopter·관련 repo 위치/관계 map (machine-local, cross-repo 작업 시 로드) |
 | `migrations/` | source framework 변경을 기존 target repo가 수용하는 migration note 인덱스 |
 
 **여기에 두지 않는 것:** scaffold/온보딩 표면 문서(`docs/SCAFFOLD-BOOTSTRAP.md`, `docs/SCAFFOLD-ONBOARDING-GUIDE.md`)와 Optional source pack(`docs/HARNESS-ARCHITECTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`)은 성격이 달라 `docs/` 루트에 유지한다.
@@ -30,7 +31,7 @@ DR-021은 source/target 경계를 **물리 디렉토리 이동 없이** logical 
 | `SCAFFOLD-ONBOARDING-GUIDE.md` | adopter (도입 시) | source-only (미배포) | `docs/` 루트 |
 | `HARNESS-ARCHITECTURE.md` | maintainer / contributor | optional-pack | `docs/` 루트 |
 | `HARNESS-MAINTAINER-GUIDE.md` | maintainer | optional-pack | `docs/` 루트 |
-| `HARNESS-TEST-TAXONOMY.md`, `VERIFICATION-COMMANDS.md`, `VERSIONING.md`, `ADOPTER-UPGRADE-AGENT-FIRST.md`, `ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`, `PRODUCT-STARTER-PLANNING-PACK.md`, `migrations/` | maintainer | source-only (미배포) | `docs/maintainer/` |
+| `HARNESS-TEST-TAXONOMY.md`, `VERIFICATION-COMMANDS.md`, `VERSIONING.md`, `REPO-MAP.md`, `ADOPTER-UPGRADE-AGENT-FIRST.md`, `ADOPTER-UPGRADE-MIGRATION-PLAYBOOK.md`, `PRODUCT-STARTER-PLANNING-PACK.md`, `migrations/` | maintainer | source-only (미배포) | `docs/maintainer/` |
 | `SOURCE-REPO-OPERATIONS.md` | source maintainer / AI driver | source-only (미배포) | `docs/maintainer/` |
 
 > SCAFFOLD-ONBOARDING-GUIDE는 source-only이나 *도입 시 source/clone에서 읽는* adopter용이라 루트에 둔다 (maintainer 전용 자산과 성격이 다름).
