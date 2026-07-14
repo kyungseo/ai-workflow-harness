@@ -40,7 +40,7 @@ harness workflow 변경 시 **무엇을 / 어느 깊이로 / 어떤 수단으로
 
 **경계 원칙:**
 
-- **executable assertion**은 "기계적으로 PASS/FAIL이 갈리고 false-positive가 거의 없는, 회귀로 잠글 가치가 있는" 점검만 담는다. 핵심 불변식은 scaffold invariants(`check-scaffold-invariants.sh`)·DR closure(`check-shipped-dr-closure.sh`)이며, parity(`check-default-template-parity.sh`·`check-surface-mirror-parity.sh`·`check-rule-surface-parity.sh`)·onboarding(`check-onboarding-flows.sh`) helper가 더해져 있다. rule parity는 safety rule layer(`skills/safety/` canonical ↔ 4툴 adapter/entry)의 존재·pointer·scope semantics·copy matrix를 검사한다(static = runner Tier 0d, `--scaffold` 실생성+manifest tracked entry = Tier 2c). 내용 동등성은 검사하지 않는다 — adapter는 thin projection이다.
+- **executable assertion**은 "기계적으로 PASS/FAIL이 갈리고 false-positive가 거의 없는, 회귀로 잠글 가치가 있는" 점검만 담는다. 핵심 불변식은 scaffold invariants(`check-scaffold-invariants.sh`)·DR closure(`check-shipped-dr-closure.sh`)이며, parity(`check-default-template-parity.sh`·`check-surface-mirror-parity.sh`·`check-rule-surface-parity.sh`)·onboarding(`check-onboarding-flows.sh`)·env permission contract(`check-env-permission-contract.sh`) helper가 더해져 있다. rule parity는 safety rule layer(`skills/safety/` canonical ↔ 4툴 adapter/entry)의 존재·pointer·scope semantics·copy matrix를 검사한다(static = runner Tier 0d, `--scaffold` 실생성+manifest tracked entry = Tier 2c). 내용 동등성은 검사하지 않는다 — adapter는 thin projection이다.
 - **command catalog**는 더 넓은(판단 개입·false-positive 가능) 점검을 human-run 명령으로 유지한다. executable로 승격된 항목은 catalog가 **스크립트를 pointer로만** 보유하고 명령을 중복 보유하지 않는다(Layer C→invariants, Layer I→closure가 이미 그렇다).
 - **repo-health**는 위 둘을 *호출·해석*하는 judgment 표면이다. 자체적으로 deterministic 불변식을 재구현하지 않는다.
 - onboarding / hook처럼 multi-scenario 생성과 git 동작이 섞인 deterministic core는 **별도 helper script**로 둘 수 있다. runner는 여전히 thin orchestrator로 유지한다.
@@ -54,7 +54,7 @@ Tier는 실행 비용·결정성·생성 여부 순서다.
 
 | Tier | 의미 | scaffold 생성 | 예시 |
 | --- | --- | --- | --- |
-| Tier 0 | syntax / 무결성. 생성 없음 | 없음 | `bash -n create-harness.sh`, `git diff --check` |
+| Tier 0 | syntax / 무결성. 생성 없음 | 없음 | `bash -n create-harness.sh`, `git diff --check`, source env permission fixture matrix |
 | Tier 1 | **제공된 target만** 검사하는 deterministic assertion. 생성 없음 | 없음 | `check-scaffold-invariants.sh <target>`, `check-shipped-dr-closure.sh` |
 | Tier 2 | scaffold를 **실제 생성한 뒤** 검사하는 simulation | **있음 → repo-local `temp/`** | invariants no-arg(생성), Layer J/J-OB/Q OB 시나리오 |
 
@@ -68,7 +68,7 @@ Tier는 실행 비용·결정성·생성 여부 순서다.
 
 | Surface | Tier 0 | Tier 1 (target 제공) | Tier 2 (생성) | 현재 자산 / gap |
 | --- | --- | --- | --- | --- |
-| scaffold 출력 | `bash -n` | invariants 5종 (`<target>`) | invariants no-arg 3모드(default/optional/source-gitflow) / OB 시나리오 | 자산: invariants ✓ (leak-scan은 source-gitflow shipped set 포함) |
+| scaffold 출력 | `bash -n` + source env permission fixture | invariants 6종 (`<target>`, env permission 포함) | invariants no-arg 3모드(default/optional/source-gitflow) / OB 시나리오 | 자산: invariants ✓ (leak-scan은 source-gitflow shipped set 포함) |
 | tool surface (adapter/rule/skill mirror) | — | mirror 존재·쌍 일치 (`check-surface-mirror-parity.sh`) | — | 자산: mirror/prompt parity ✓ (F3) — 과잉반복·adapter 비대 판단은 catalog/judgment 유지 |
 | cascade (canonical→adapter→user→scaffold) | — | 변경 surface→영향 surface 매핑 | — | gap: repo-health --cascade(judgment)만 |
 | canonical / 공통 규칙 | — | DR 참조 closure(closure ✓), Superseded 참조 탐지 | — | 자산: closure ✓ |
@@ -88,7 +88,7 @@ Tier는 실행 비용·결정성·생성 여부 순서다.
 
 | 플래그 | 의미 | scaffold 생성 |
 | --- | --- | --- |
-| `--tier0` | syntax/무결성(`bash -n`, `git diff --check`) | 없음 |
+| `--tier0` | syntax/무결성(`bash -n`, `git diff --check`) + source env permission fixture matrix | 없음 |
 | `--tier1 <target>` | **target 인자 필수** — closure + invariants `<target>`(기존 target 검사만) | 없음 |
 | `--tier2` | `temp/harness-tests/<label>-<ts>/`에 **default minimal + `--with-optional` + `--workflow source-gitflow` 세 모드** 생성 후 각각 invariants + cleanup(기존 no-arg와 동일 coverage). source-gitflow 모드는 `GIT-WORKFLOW.md`/hooks 등 shipped 표면을 leak-scan에 포함 | **있음 → `temp/`** |
 | `--all` | tier0 + source-level tier1(closure) + tier2(**실제 생성 포함, 세 모드**), exit code 누적 | tier2 단계만 |
@@ -110,6 +110,7 @@ runner(`scripts/tests/run-harness-checks.sh`)는 scaffold로 ship될 수 있다.
 
 - `scripts/create-harness.sh` 부재 → 생성·`bash -n`·tier2·invariants는 SKIP(N/A).
 - `scripts/tests/check-scaffold-invariants.sh` 부재 → invariants step SKIP.
+- `scripts/tests/check-env-permission-contract.sh` 부재 → source permission step SKIP. Scaffold invariant에서 helper가 필요한 source checkout은 부재를 FAIL로 처리.
 - `scripts/tests/check-shipped-dr-closure.sh`는 자체 guard 보유(source 부재 시 자체 SKIP).
 - guard로 빠진 step은 실패가 아니다 — adopter repo에서 runner가 깨지지 않도록 한다.
 

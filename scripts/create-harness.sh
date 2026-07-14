@@ -750,7 +750,8 @@ write_text "${TARGET_ROOT}/.claude/settings.json" '{
     "defaultMode": "plan",
     "deny": [
       "Read(./.env)",
-      "Read(./.env.*)",
+      "Read(./.env.local)",
+      "Read(./.env.*.local)",
       "Read(./.claude/settings.local.json)",
       "Read(./secrets/**)",
       "Read(./**/*.key)",

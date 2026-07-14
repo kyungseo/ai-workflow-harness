@@ -32,6 +32,7 @@ DEFAULT_TEMPLATE_PARITY="${SCRIPT_DIR}/check-default-template-parity.sh"
 MIRROR_PARITY="${SCRIPT_DIR}/check-surface-mirror-parity.sh"
 RULE_PARITY="${SCRIPT_DIR}/check-rule-surface-parity.sh"
 MANIFEST_CONTRACT="${SCRIPT_DIR}/check-manifest-contract.sh"
+ENV_PERMISSION_CONTRACT="${SCRIPT_DIR}/check-env-permission-contract.sh"
 
 RC=0
 mark_fail() { RC=1; }
@@ -106,6 +107,16 @@ run_tier0() {
     fi
   else
     echo "  SKIP (N/A): check-rule-surface-parity.sh 없음"
+  fi
+  echo "== Tier 0e: source Claude env read permission contract =="
+  if [[ -f "${ENV_PERMISSION_CONTRACT}" ]]; then
+    if bash "${ENV_PERMISSION_CONTRACT}" "${REPO_ROOT}/.claude/settings.json"; then
+      echo "  OK: source env read permission contract"
+    else
+      echo "  FAIL: source env read permission contract"; mark_fail
+    fi
+  else
+    echo "  SKIP (N/A): check-env-permission-contract.sh 없음"
   fi
 }
 

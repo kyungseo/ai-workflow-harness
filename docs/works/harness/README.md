@@ -12,6 +12,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md` 참조.
 
 | ID | Title | actual_end | Work File |
 |----|-------|------------|-----------|
+| CHORE-20260714-001 | Scaffold env deny contract correction | 2026-07-14 | [Work](CHORE-20260714-001-scaffold-env-deny-contract.md) |
 | CHORE-20260713-009 | CI PR head ref race hardening | 2026-07-13 | [Work](CHORE-20260713-009-ci-pr-head-ref-race.md) |
 
 ## Archived

@@ -794,7 +794,8 @@ scaffold 직후 첫 세션은 `/session-start`로 시작해 `docs/STATUS.md` Nex
     "permissions": {
       "defaultMode": "plan",
       "deny": [
-        "Read(./.env)", "Read(./.env.*)", "Read(./secrets/**)",
+        "Read(./.env)", "Read(./.env.local)", "Read(./.env.*.local)",
+        "Read(./secrets/**)",
         "Bash(sudo *)", "Bash(rm -rf*)", "Bash(rm -r *)",
         "Bash(kubectl *)", "Bash(terraform *)"
       ]
