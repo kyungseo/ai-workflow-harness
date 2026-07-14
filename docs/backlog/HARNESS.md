@@ -44,7 +44,7 @@ AI Workflow Harness backlog다.
 | `rfx-hub` | 1.2.1 | generic | manifest (72 files) | 재구축되어 활성(과거 "finding 수집 후 삭제" 기록은 stale — 정정). 2 minor behind, agent-first upgrade 실험 대상 |
 | `toolstead` | 1.4.0 | generic | manifest (83 files) | 신규. Skillstead/SessionCue 멀티 product. UF buffer 보유(TS-UF-01~02 intake됨, 2026-07-14) |
 
-4개 모두 manifest baseline이며 pre-manifest adopter는 없다. rfx-hub에는 upstream feedback 채널(UF section)이 없다 — 채널 표준화 여부는 별도 판단. UF 번호 namespace는 adopter별이다: 무접두 `UF-NN`은 spring, `TS-UF-NN`은 toolstead.
+4개 모두 manifest baseline이며 pre-manifest adopter는 없다. rfx-hub에는 upstream feedback 채널(UF section)이 없다 — 채널 표준화 여부는 별도 판단. UF 번호 namespace는 adopter별이다: 무접두 `UF-NN`은 spring, `TS-UF-NN`은 toolstead. 각 repo의 로컬 경로·관계는 `docs/maintainer/REPO-MAP.md`(source-only) 참조.
 
 ### Summary
 
