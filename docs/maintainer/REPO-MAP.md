@@ -13,7 +13,9 @@ living data(harness_version·baseline·profile·UF 채널 보유 여부)는 `doc
 | `~/dev-home/vibe/toolstead` | adopter | tool 중앙 저장소 — Skillstead/SessionCue 멀티 product 운용 |
 | `~/dev-home/rfx-hub` | adopter | **`vibe/` 밖 위치 주의** |
 | `~/dev-home/vibe/public-release-playbook` | reference | release-gate 참고용으로 생성한 repo |
-| `~/dev-home/vibe/ref` | reference | 외부 참고용 저장소 모음 |
+| `~/dev-home/vibe/ref` | reference | 외부 참고용 저장소 모음 — upstream clone이며 수정·push하지 않는다. 구체 목록은 이 파일에 기록하지 않고, 각 분석 brief가 대상 repo와 snapshot을 소유한다 |
+| `~/dev-home/vibe/claude-personal` | personal config | Claude Code 전역 지침·개인 skill SSoT — `~/.claude`에 symlink 설치 (private, 2026-07-17 생성) |
+| `~/dev-home/vibe/codex-personal` | personal config | Codex 전역 AGENTS.md·개인 skill SSoT — `~/.codex`에 symlink 설치 (private, 2026-07-17 생성) |
 
 ## Adopter Consumption
 
