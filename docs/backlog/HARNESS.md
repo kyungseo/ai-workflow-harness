@@ -73,6 +73,7 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | harness-validate commit-msg backstop을 실제 advisory로 정렬 — release PR hard-block 해소 (TS-UF-01) |
 | — | P2 | Candidate | L2 | Branch isolation gate에 `skills/` canonical 보호 편입 (skills/workflow·skills/safety — pre-existing gap) |
 | — | P3 | Candidate | L1 | root README에 upgrade default-entry(AGENT-FIRST) 발견 가능성 pointer 추가 |
+| — | P2 | Candidate | L2 | Commit approval에 repo visibility 인지 추가 — public repo 일상 commit의 정보 노출 gate |
 | HRN-032 | P2 | Hold | L2 | Windows 지원 확장 (WSL/Git Bash robustness로 scope 축소, 실수요 전 보류) |
 
 ---
@@ -389,6 +390,33 @@ bash scripts/create-harness.sh --dry-run git-rule-thin-adapter /tmp/awh-git-rule
 **Done Criteria:** `skills/workflow/**`·`skills/safety/**`(또는 `skills/**`)가 protected 목록에 편입되고, hook·rule 문서·generic template 3면이 정합. 기존 tracking-state 예외(T1 bounded warning)와의 상호작용 검토. adopter cascade는 다음 upgrade에서 수용됨을 명시.
 
 **Verification:** `bash scripts/tests/run-harness-checks.sh --tier0`(template parity 포함), gate path-list parity 확인, develop에서 skills/ 파일 staged 시 hook FAIL 시뮬레이션. Surface: tool surface(hook·rule) · scaffold(template) · adopter cascade.
+
+---
+
+#### Commit approval에 repo visibility 인지 추가 (public-repo 정보 노출 gate)
+
+**Cluster:** Harness workflow surface cleanup
+
+**Task:** 2026-07-17 `docs/maintainer/REPO-MAP.md` 갱신에서 public repo인 이 repo의 develop에
+공개 부적합한 내부 운영 상세가 담긴 commit이 push됐고, owner 승인 하에 force-push로 이력을
+정정했다. 근본 원인: Commit Approval 보고 항목
+(validation·diff summary·commit message)에 "대상 repo가 public인지, 이 diff가 공개되어도 되는지"
+관점이 없다. release 시점에는 public-release 검증(secret/private-info scan)과 release guide 계열
+gate가 있지만 **일상 commit에는 대응 gate가 없다.** 후보 조치: (1) `.claude/rules/git-workflow.md`
+Commit Approval 절과 canonical 대응 표면에 visibility-aware 점검 문구 추가 — public repo 대상 commit
+승인 보고에 정보 노출 관점 확인을 포함. (2) hook 레벨 강제는 `gh` 의존·오탐 비용이 있어 rule 문구
+우선으로 하고, hook 편입은 착수 시 재평가.
+
+**Dependencies:** `.claude/rules/git-workflow.md` Commit Approval 절 + generic template parity,
+`docs/GIT-WORKFLOW.md`. `.claude/rules/git-workflow.md` thin adapter화 후보(P2, 축③)와 순서 조정 —
+thin adapter화가 선행되면 canonical 쪽에 반영한다. 사례 evidence: 2026-07-17 REPO-MAP force-push 정정.
+
+**Done Criteria:** commit/push 승인 보고 규칙에 대상 repo visibility 확인과 공개 적합성 점검이
+명시되고 rule·canonical·template 3면이 정합한다. 일상 commit 점검과 release 시점 gate(public-release
+playbook·release guide)의 역할 경계가 문구로 구분된다.
+
+**Verification:** rule ↔ template parity 대조, public repo에서 내부 흔적이 담긴 diff의 승인 보고
+시뮬레이션으로 visibility 항목 포함 확인. Surface: tool surface(rule) · scaffold(template) · canonical.
 
 ---
 
