@@ -42,7 +42,7 @@ AI Workflow Harness backlog다.
 | `ai-deck-compiler` | 1.3.0 | generic | manifest (78 files) | 1 minor behind |
 | `spring-modular-template` | 1.4.0 | spring-boot | manifest (82 files) | 현행. UF buffer 보유(UF-01~08 intake됨) |
 | `rfx-hub` | 1.2.1 | generic | manifest (72 files) | 재구축되어 활성(과거 "finding 수집 후 삭제" 기록은 stale — 정정). 2 minor behind, agent-first upgrade 실험 대상 |
-| `toolstead` | 1.4.0 | generic | manifest (83 files) | 신규. Skillstead/SessionCue 멀티 product. UF buffer 보유(TS-UF-01~02 intake됨, 2026-07-14) |
+| `toolstead` | 1.4.0 | generic | manifest (83 files) | 신규. Skillstead/SessionCue 멀티 product. UF buffer 보유(TS-UF-01~03 intake됨, 2026-07-14~26) |
 
 4개 모두 manifest baseline이며 pre-manifest adopter는 없다. rfx-hub에는 upstream feedback 채널(UF section)이 없다 — 채널 표준화 여부는 별도 판단. UF 번호 namespace는 adopter별이다: 무접두 `UF-NN`은 spring, `TS-UF-NN`은 toolstead. 각 repo의 로컬 경로·관계는 `docs/maintainer/REPO-MAP.md`(source-only) 참조.
 
@@ -71,6 +71,7 @@ AI Workflow Harness backlog다.
 | — | P2 | Candidate | L2 | Auto-merge + deferred sync default branch-flow (UF-06, thin-adapter 후보와 dependency) |
 | — | P3 | Candidate | L2 | User-facing documentation authoring standard 일반화 (UF-07) |
 | — | P2 | Candidate | L2 | harness-validate commit-msg backstop을 실제 advisory로 정렬 — release PR hard-block 해소 (TS-UF-01) |
+| — | P1 | Candidate | L2 | Routine feature→develop finalization의 bounded batch approval unit (TS-UF-03) |
 | — | P2 | Candidate | L2 | Branch isolation gate에 `skills/` canonical 보호 편입 (skills/workflow·skills/safety — pre-existing gap) |
 | — | P3 | Candidate | L1 | root README에 upgrade default-entry(AGENT-FIRST) 발견 가능성 pointer 추가 |
 | — | P2 | Candidate | L2 | Commit approval에 repo visibility 인지 추가 — public repo 일상 commit의 정보 노출 gate |
@@ -498,16 +499,17 @@ playbook·release guide)의 역할 경계가 문구로 구분된다.
 
 ---
 
-#### toolstead TS-UF-01~02 intake disposition (2026-07-14)
+#### toolstead TS-UF-01~03 intake disposition (2026-07-14~26)
 
 **Cluster:** W2. Adopter Transition
 
-> 발견 맥락·상세 근거의 SSoT는 `toolstead` repo `docs/backlog/HARNESS.md` §Upstream Harness Feedback Evidence(첫 develop→main release, 2026-07-14). 여기는 source-side disposition만 유지한다. UF 번호는 adopter별 namespace라 spring UF-NN과 무관하며, source-side 표기는 `TS-UF-NN`을 쓴다.
+> 발견 맥락·상세 근거의 SSoT는 `toolstead` repo `docs/backlog/HARNESS.md` §Upstream Harness Feedback Evidence(TS-UF-01~03). 여기는 source-side disposition만 유지한다. UF 번호는 adopter별 namespace라 spring UF-NN과 무관하며, source-side 표기는 `TS-UF-NN`을 쓴다.
 
 | UF | Disposition | 문제 (source 관점) | 비고 |
 | --- | --- | --- | --- |
 | TS-UF-01 | 신규 P2 | scaffold 템플릿 `harness-validate.yml`의 commit-msg backstop이 이름("advisory")과 달리 hard-fail(`exit "$FAIL"`)이며 release PR skip이 없다 — develop→main PR은 develop 전체 history가 검사 범위라, pre-enforcement 비관례 commit이 1건이라도 있으면 모든 release PR이 영구 차단된다 | source 자체 `ci.yml`은 동일 step에 release-PR skip + "required check 미wiring(DR-020)" 주석 + head-ref race 보정(CHORE-20260713-009)을 이미 보유 — 템플릿만 미전파. 해결 방향 = 기존 패턴 porting |
 | TS-UF-02 | corroboration (신규 row 없음) | free-private repo에서 GitHub Ruleset/required check 403 — spring UF-03과 동일 이슈의 독립 재현 | 기존 UF-03 후보에 corroboration 주석 추가됨. 실행 ownership 변화 없음 |
+| TS-UF-03 | 신규 P1 | exact preview와 validation이 확정된 routine feature→develop finalization도 commit·push·PR·CI·merge·sync/cleanup을 여러 독립 승인처럼 유도한다. 동일 결정 범위를 state-bound unit으로 표현하는 경로가 없어 owner round-trip과 handoff 재승인이 반복된다 | 기존 개별 승인 경로는 유지한다. batch는 exact state·ordered actions에 결속하고 material drift·CI failure·partial mutation에서 즉시 중단한다. release·tag·settings·deployment·force operation 등은 제외 |
 
 **Per-candidate details:**
 
@@ -518,6 +520,14 @@ playbook·release guide)의 역할 경계가 문구로 구분된다.
 - **Dependencies:** `scripts/templates/source-gitflow/.github/workflows/harness-validate.yml`, source `.github/workflows/ci.yml` 동일 step(porting 원본), `docs/GIT-WORKFLOW.md` §0-1·§4, spring UF-01 후보 ⓒ(manifest-tracked 파일 로컬 수정 감지 — toolstead 제안 (c)와 동일 표면, 여기서 중복 실행하지 않고 UF-01 착수 시 함께 판단).
 - **Done Criteria:** 템플릿 backstop이 release PR을 historical commit으로 hard-block하지 않고, 이름("advisory")과 동작·required-check 관계가 문서화된다. toolstead divergence 회수 경로가 명시된다.
 - **Verification:** 템플릿 diff + toolstead 재현 시나리오(비관례 historical commit + release PR) 시뮬레이션, GIT-WORKFLOW 서술 정합. Surface: scaffold · adopter cascade · canonical(GIT-WORKFLOW).
+
+##### TS-UF-03 — Routine feature→develop finalization의 bounded batch approval unit (P1, L2)
+
+- **Task:** owner가 exact preview를 확인하고 명시적으로 선택한 경우에만 routine feature→develop finalization을 하나의 bounded batch approval unit으로 실행하는 optional 경로를 설계한다. unit은 exact branch·base·diff/checkpoint·commit/PR preview·ordered actions에 결속하며, staging → commit → current feature branch push → `base=develop` PR → required CI 관찰 → green·mergeable squash merge → preview에 포함된 sync/cleanup 순서만 허용한다. Agent·tool·session 변경만으로 재승인하지 않되 byte-identical state를 read-only로 재검증해야 하며, material drift·CI/review failure·merge conflict·partial remote state·새 mutation 필요 시 남은 action을 중단하고 re-preview한다. 기존 개별 승인 경로는 유지하고 develop→main release, tag/GitHub Release/assets, workflow dispatch/rerun, repository settings/visibility, public announcement, production deployment, force/history rewrite, CI 우회, unrelated cleanup은 batch 밖에 둔다.
+- **Evidence:** adopter TS-UF-03 원문이 6개 source surface와 제안 (a)~(f)의 authoritative payload를 보유한다. source backlog에는 실행 후보와 disposition만 유지하고 product·PR·local path 식별 metadata는 복제하지 않는다.
+- **Dependencies:** `docs/AGENT-WORKFLOW.md` Approval Matrix / State And Closeout Rules, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-RECOVERY-VALIDATION.md` Commit Approval, `docs/HARNESS-QUICK-REFERENCE.md`, `docs/GIT-WORKFLOW.md` feature finalization flow, lifecycle 다음 질문을 내는 `skills/workflow/*` canonical과 4-tool adapter. UF-06은 merge default, visibility-aware commit approval 후보는 공개 정보 점검을 소유하므로 같은 surface를 건드려도 별도 scope로 유지한다.
+- **Done Criteria:** optional batch contract의 binding·preconditions·ordered actions·mandatory stop/re-preview·excluded action이 canonical에 명시되고 기존 individual approval path가 보존된다. 동일 state의 cross-session continuation과 partial failure 뒤 stop 규칙이 4개 tool에서 동등하게 작동하며, adopter upgrade에서 로컬 divergence 없이 소비된다.
+- **Verification:** happy path, commit 전 diff drift, CI failure, base drift/merge conflict, excluded release/tag/settings 요청, byte-identical session handoff, partial remote mutation failure를 simulation한다. Claude Code/Codex/Antigravity/Cursor procedure parity와 scaffold/adopter cascade를 확인하고 불필요한 workflow dispatch/rerun 0건을 검증한다. Surface: canonical · tool surface · scaffold · adopter cascade · QUICK-REFERENCE/GIT-WORKFLOW.
 
 ---
 
