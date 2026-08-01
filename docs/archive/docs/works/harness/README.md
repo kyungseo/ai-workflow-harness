@@ -8,6 +8,7 @@ Work 파일 스펙은 `docs/decisions/DR-013-work-file-spec.md`, archive 구조�
 
 | ID | Title | actual_end | Archive |
 |----|-------|------------|---------|
+| CHORE-20260801-001 | v1 Maintenance Freeze Disposition | 2026-08-01 | `docs/archive/docs/works/harness/CHORE-20260801-001-v1-maintenance-freeze.md` |
 | CHORE-20260714-001 | Scaffold env deny contract correction (UF-08) | 2026-07-14 | `docs/archive/docs/works/harness/CHORE-20260714-001-scaffold-env-deny-contract.md` |
 | CHORE-20260713-009 | CI PR head ref race hardening | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-009-ci-pr-head-ref-race.md` |
 | CHORE-20260713-008 | Happy path / glossary / operator layering compression | 2026-07-13 | `docs/archive/docs/works/harness/CHORE-20260713-008-happy-path-compression.md` |

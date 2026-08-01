@@ -3,14 +3,14 @@
 AI Workflow Harness repository의 현재 프로젝트 상태 문서다.
 이 파일은 dashboard로 유지하고, 작업별 세부 계획과 기록은 `docs/works/`에 둔다.
 
-Last updated: 2026-07-14 (CHORE-20260714-001 완료 — UF-08 scaffold env deny contract)
+Last updated: 2026-08-01 (CHORE-20260801-001 — v1 maintenance freeze disposition)
 
 ## Current State
 
 | Field | Value |
 | --- | --- |
 | Current phase | AWH-004 — Maintenance & Adoption |
-| Current focus | Durability follow-up(축②③④ evidence-gated, backlog W6), UF intake 반영, planning-pack evidence review |
+| Current focus | Maintenance-only — 신규 feature·workflow intake 중단, blocking defect exception만 별도 승인 |
 | Project plan | `docs/PLAN.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
 | Quick reference | `docs/HARNESS-QUICK-REFERENCE.md` |
@@ -37,6 +37,7 @@ Last updated: 2026-07-14 (CHORE-20260714-001 완료 — UF-08 scaffold env deny 
 
 | Date | Decision | Reason | Reversal Cost |
 | --- | --- | --- | --- |
+| 2026-08-01 | **v1 maintenance-only disposition.** 신규 feature·UF intake를 착수하지 않는다. 기존 backlog·DR·brief·adopter evidence는 삭제·이관하지 않고 historical operational evidence로 보존한다. 예외는 evidence 수집·upgrade·안전한 운영을 막거나 data/security integrity를 위협하는 blocking defect이며 매번 별도 Owner 승인을 받는다. | 현재 지원 범위를 명확히 하면서 기존 evidence와 blocking maintenance 능력을 보존 | Low — Owner가 v1 active development를 재승인하면 disposition을 갱신 |
 | 2026-07-13 | CHORE-20260713-008: happy path **2-surface compression** — source README Start Here(새 적용 1-2-3 + 재진입 시 target Quick Reference pointer) + shipped `HARNESS-QUICK-REFERENCE.md` §1(재진입 1-2-3·Quick vs Work 경계·"모르면 `/session-start`" escape). README **Orientation Glossary**(회고 §4.4 5그룹, 비규범 1줄+pointer) + Documentation Map **3그룹 재배치**(10-Minute/Daily Operator/Maintainer Deep + primary entry — **최소 재포장 1차**, full repack은 회고 §8 trigger 대기). reviewer 독립 routing simulation 2건 PASS, cross-review R0/R1(request-changes)→R1b(approve). Quick Reference 변경은 다음 릴리즈부터 target 전파 | v1.2.0 회고의 onboarding weakness(happy path 두께·용어 DSL·maintainer-brain)를 실제 독자 위치 기준으로 bounded 압축 — 문서 수 불증가 | Low |
 | 2026-07-13 | CHORE-20260713-007 / DR-044(Accepted): **safety rule layer 4툴 정규화(축 A)** — canonical SSoT `skills/safety/`(A1 실행 안전 always / A2 infra 안전 path-scoped, English — DR-007 amend), adapter는 thin projection(load directive+bootstrap guard, 전문 복제 금지), Codex/AG는 root `AGENTS.md` Safety Rule Layer 절로 소비(**repo-local 안전 surface 0 → 4툴 확보**). 승인 경계는 state-changing/destructive 한정 — read-only·bounded temp cleanup 허용(R1 실사용 결함 교정: 안전 rule이 deterministic runner를 차단하던 문제 해소, reviewer 독립 `--all` exit 0). scaffold default 편입(manifest tracked +5), `check-rule-surface-parity.sh` Tier 0d/2c 신설. evidence 경계: Codex current-entry runtime + AG contract/static (over-claim 금지). cross-review R0/R1(request-changes)→R1b(approve) | tool 간 safety coverage 비대칭(구조 결함) 해소 + 신규 scaffold default 일관성 — 사고 실적 아닌 구조 근거 (1-day bounded parity slice) | Medium |
 | 2026-07-13 | CHORE-20260713-006 / upgrade 절차 diet: `docs/maintainer/ADOPTER-UPGRADE-AGENT-FIRST.md` **신설 — manifest-target upgrade의 default entry**(route 판정식 SSoT: "4개 조건 전부 충족 AND fallback override 없음 → default" + non-negotiable gate 4 + 최소 체크리스트 8단계). 기존 playbook은 **fallback 재배치**(pre-manifest·manual·고위험 — safety surface 전부 보존, Phase 4·6은 양 route 공용 authoritative). Layer T T0에 target clean·branch policy probe 명령 보강. two-route fresh-session simulation 2건 PASS + cross-review 5라운드(R0/R1/R1b request-changes → R1c approve) 후 default 전환 확정. **bounded heuristic 범용 DR 승격은 보류** — evidence가 manifest 보유 harness upgrade domain 한정, DR-034 amendment 입력 문구로만 기록(W6 P3) | 절차 문서를 default 계약 경로와 fallback 절차 경로로 이층화해 upgrade 노동을 줄이되, unobserved residual 경로(pre-manifest·external manual)의 safety surface는 보존 | Low~Medium |
@@ -44,11 +45,14 @@ Last updated: 2026-07-14 (CHORE-20260714-001 완료 — UF-08 scaffold env deny 
 | 2026-07-13 | CHORE-20260713-005: fleet upgrade to 1.5.0 — spring(#82)·ai-deck(#53)·rfx(#13) 3건 agent-first 완료. post-hoc `--check`(clean tag) 전건 provenance match·skew 0·source-updated 0: spring 87/80/7(정제 rule 7종 = 신규 accepted-drift, **AGENT-WORKFLOW framework-pure 전환 — DR-043 migration 값 유실 0 확인**), ai-deck 83/70/13(전건 보존), rfx 77/76/1. 모든 manifest가 신규 contract(provenance 3필드·hash_mode canonical·generated_at=rebaseline) 획득. **toolstead는 의도적 보류 — fresh-session canary**(diet gate 겸용, backlog P1) | fleet를 released tag 균일 baseline으로 정렬해 후속 upgrade 비용 최소화 + canary 측정 기회 보존 | Low |
 | 2026-07-13 | CHORE-20260713-004 / release `ai-workflow-v1.5.0`: source develop→main 1.5.0 minor 릴리즈. 구성 = DR-043 framework-pure AGENT-WORKFLOW + `/cross-review` workflow 신설 + manifest contract 정비(-003). cross-agent readiness(R1 conditional → F1~F3 반영 → R1b 기계 교정 → release-go), half-implemented 0, **MINOR 판정 적정**(reviewer 확인). release note 호환성 4항목(**DR-043 one-time migration 필수** 명시, "조치 불요"는 hash_mode/provenance 한정) + `/cross-review` manual-relay 경계. **fleet upgrade는 release Work에서 분리**(R1-F3 lifecycle deadlock 해소) — backlog W6 P1(spring·ai-deck·rfx + toolstead fresh-session canary 보류) | fleet 균일 baseline 요구를 DR-028 정합 경로(released tag)로 충족 — develop 직접 반영안은 version-skew 재생산이라 기각 | Medium |
 | 2026-07-13 | CHORE-20260713-003: manifest contract 정비 — `--check` parser **python3 단일화**(fail closed, pretty-print/compact 정상 판정), manifest **structured provenance**(`source_ref`/`source_commit`/`source_dirty`) + version-skew 4분류 판정(same-version+commit-delta만 WARN), `hash_mode` canonical `source_template_raw`+legacy alias, `generated_at`=rebaseline 날짜 계약, per-file hash=authoritative 우선순위 playbook 문서화. behavior matrix 20 case + invariant delegation 회귀 tier2 편입. legacy adopter 하위호환 유지(toolstead 83/83). cross-review 5라운드(R0 request-changes→R0b approve→R1 request-changes→R1b request-changes→R1c approve) — reviewer가 구현 결함 5건+2건을 실측 fixture로 적발·교정 | version-skew 3/3 실측과 CP2 pretty-print 함정의 구조적 해소 — upgrade 절차 diet(agent-first 정식화)의 선행 계약 확보 | Low~Medium |
-| 2026-07-13 | CHORE-20260713-002: ai-deck 1.3.0→1.4.0 agent-first upgrade replay 성공(`--check` 78/65/13, accepted-drift 13/13 보존, reviewer 독립 재검증 hash 78/78) → **축② provisional 해제 확정 — "manifest 보유 heterogeneous target의 agent-first upgrade 방향" 한정**(비오염 operator·external manual adopter·pre-manifest 경로는 residual). 후속 W6 등록: upgrade 절차 diet(canary gate — 비오염 1건 또는 fresh-session canary 재검증 전 default 전환·playbook 삭제 금지), DR-034 manifest-target 분기 amend(pre-manifest shadow baseline 유효 유지). version-skew 3/3 실측(ai-deck도 1.4.0 직전 develop 스냅샷) → manifest contract 정비 근거 확정. ai-deck PR #52 merged. cross-review R1(Codex conditional→consensus, 해제 가 판정) | agent-first 방향의 bounded validation을 reviewer 독립 검증 하에 확정하고 driver self-판정을 방지(사용자 지적으로 review 추가) | Low |
 
 ## Next Actions
 
 > backlog는 확정 실행 계획이 아니라 의견 있는 portfolio view다. live 후보의 단일 source는 `docs/backlog/HARNESS.md`이며, 각 항목 착수 시 `/work-plan`에서 논리성·합리성·현재 product 적용 맥락을 다시 검토한다. 별도 Seq 축은 유지하지 않는다(CHORE-20260610-011 (B)).
+
+> **Maintenance freeze:** 아래 후보와 `docs/backlog/HARNESS.md` 항목은 historical evidence로 보존되며 현재 실행
+> authorization이 아니다. blocking defect exception은 `Current focus`와 2026-08-01 Recent Decision 기준으로
+> 별도 Owner 승인을 받은 경우에만 착수한다.
 
 W1~W4(Validation Spine / Adopter Transition 기반 / Workflow IA Diet / Enforcement & Lifecycle)의 기반 작업은 종결됐다. 2026-07-13 direction review(CHORE-20260713-001) 결과 **전면 rewrite 불필요**가 공식화됐고, 실행 후속은 backlog **W6. Durability Follow-up** cluster가 evidence-gated로 관리한다(판정 상세: brief `harness-longterm-durability-review-20260713.md`).
 
